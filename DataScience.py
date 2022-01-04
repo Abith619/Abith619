@@ -1,4 +1,15 @@
 #                                                          Projects
+#                                                 The Data Analysis Process
+""" Problem definition
+    Data extraction
+    Data cleaning
+    Data transformation
+    Data exploration
+    Predictive modeling
+    Model validation/test
+    Visualization and interpretation of results
+    Deployment of the solution"""
+
 #                                                                   encryption(+) & Decryption(-)
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 key = 4
@@ -33,6 +44,140 @@ import pandas as pd
 import quandl
 df = quandl.get("WIKIPEDIA/GOOGL")
 print(df.head())
+
+#                                                                                                                       Numpy - Basic Opeartions
+#                                                  Arithmetic Operators
+a = np.arange(4)      # O/p = array([0, 1, 2, 3])
+a
+a+4
+a*2
+b = np.arange(4,8) # b = array([4, 5, 6, 7])
+np.sin(b)          # array([–0.        , –0.95892427, –0.558831  ,  1.9709598 ])
+a * np.sqrt(b)     # array([ 0.        ,  2.23606798,  4.89897949,  7.93725393])
+A = np.arange(0, 9).reshape(3, 3)      # Multi-Dimensional
+B = np.ones((3, 3))
+np.dot(A,B)        # Dot product
+A.dot(B)
+np.dot(B,A)
+#                                               Increment and Decrement Operators
+a = np.arange(4) # o/p = array([0, 1, 2, 3])
+a += 1           # o/p = array([1, 2, 3, 4])
+a -= 1           # o/p = array([0, 1, 2, 3])
+#                                                     Universal Functions (ufunc)
+np.sqrt(a)
+np.sin(a)
+np.log(a)
+#                                                          Aggregate Functions
+# the sum of all the elements in an array is an aggregate function
+a = np.array([3.3, 4.5, 1.2, 5.7, 0.3])
+a.sum()
+a.min()
+a.max()
+a.mean()
+a.std()
+#                                                                                                 Indexing, Slicing, and Iterating
+#                                                      indexing = [,,]
+a = np.arange(10, 16) # array([10, 11, 12, 13, 14, 15])
+a[4,-1]
+#                                                       Slicing
+# extract portions of an array to generate new ones (copies)
+# arrays are views onto the same underlying buffer
+# sequence of numbers separated by colons (‘:’) within the square brackets
+a = np.arange(10, 16)
+# array([10, 11, 12, 13, 14, 15])
+a[1:5] # array([11, 12, 13, 14])
+# extract from the previous portion an item, skip a specific number of following items, then extract the next, and skip again ...,
+# you can use a third number that defines the gap in the sequence of the elements between one element and the next one to take. 
+# For example, with a value of 2, the array will take the elements in an alternating fashion.
+a[1:5:2] # array([11, 13])
+a[1:5] # Out[8]: array([11, 12, 13, 14])
+# to extract from the previous portion an item, skip a specific number of following items, then extract the next, and skip again 
+a[1:5:2] # Out[9]: array([11, 13])
+a[::2]   # Out[10]: array([10, 12, 14])
+a[:5:2]  # Out[11]: array([10, 12, 14])
+a[:5:]   # Out[13]: array([10, 11, 12, 13, 14])
+A = np.arange(10, 19).reshape((3, 3))
+A[0,:]   # Out[16]: array([10, 11, 12]), selects only columns
+A[:,0]   # array([10, 13, 16])
+# if you want to extract a smaller matrix then you need to explicitly define all intervals with indexes that define them.
+A[0:2, 0:2]  # array([[10, 11],
+#                    [13, 14]])
+#                                  array of indexes
+A[[0,2], 0:2] # array([[10, 11],
+#                     [16, 17]])
+#                                                                       Iterating an Array
+# apply an iteration to apply a function on the rows or on the columns or on an individual item
+# launch an aggregate function that returns a value calculated for every single column or on every single row = apply_along_axis()
+# apply_along_axis() = 3args = the aggregate function, the axis, the array
+# if the axis equals 0, then the iteration evaluates the elements column by column
+# if the axis equals 1 then the iteration evaluates the elements row by row
+for i in a:
+    print(i)
+# to make an iteration element by element use the for loop on A.flat
+for item in A.flat:
+    print(item)
+#                                                                        apply_along_axis()
+np.apply_along_axis(np.mean, axis=0, arr=A) # array([13., 14., 15.])
+np.apply_along_axis(np.mean, axis=1, arr=A) # array([11., 14., 17.])
+# using a ufunc is how to perform one iteration element-by-element.
+# iteration both by column and by row
+def foo(x):
+    return x/2
+np.apply_along_axis(foo, axis=1, arr=A)
+np.apply_along_axis(foo, axis=1, arr=A) # same o/p
+
+# Create Vector, matrix, Dot product
+# calculating the impact of an environment with object using vector directions
+vector_a = np.array([1, 2, 3])
+vector_b = np.array([3, 4, 5])
+#                                            calculate dot product of vectors
+np.dot(vector_a,vector_b) # o/p = 26
+vector_a @ vector_b  #    # o/p = 26
+#                                                                                          create a matrix
+matrix = np.array(
+    [
+        [0, 4, 7],
+        [2, 5, 8],
+        [6, 1, 9]
+    ]
+)
+matrix[1, 1] # o/p = 5
+matrix.T     #  o/p = array([[1, 2],
+#                          [4, 5]])
+for i in matrix:
+    print(i)
+    matrix_transpose = zip(*matrix) # * = taking the value of the matrix
+    print(matrix_transpose)
+    for i in matrix_transpose:
+        print(i)
+# o/p = [1 4] /n <zip object at 0x7f666d354400> /n (1, 2) /n (4, 5) /n [2 5] /n <zip object at 0x7f666dea2880> /n (1, 2) /n (4, 5)
+print(np.transpose(matrix))
+#                                                     to find the rank of the matrix
+np.linalg.matrix_rank(matrix)   # o/p = 2
+#                                                           return diagonal elements
+matrix.diagonal()
+#                                                          calculate the trace of matrix
+matrix.diagonal().sum()
+#                                                              return minimum element
+np.min(matrix)
+np.max(matrix)  #                                                 return maximum element
+#                                                        find maximum element in each row 
+np.max(matrix, axis=0)
+#                                                       find maximum element in each column
+np.max(matrix, axis=1)
+#                                                            return determinant of matrix
+np.linalg.det(matrix)
+#                                                                 return mean of matrix
+np.mean(matrix)
+#                                                              return standard deviation of matrix
+np.std(matrix)
+#                                                                 add & subtract two matrix
+np.add(matrix_a,matrix_b)
+np.subtract(matrix_a,matrix_b)
+#                                                              find the variance of the matrix
+np.var(matrix)
+
+
 
 #                                                                                                                        Extract features from Dictionary
 import Numpy as np
