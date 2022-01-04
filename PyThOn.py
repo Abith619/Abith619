@@ -61,6 +61,9 @@ print(message)
 # my_list
 # [1, 2, 3, 'A new item'] my_int
 # 10
+def fun():
+    print("Abith")
+fun()
 def Abithfunction():                      # function call without argument
     print("Function Executed")
 Abithfunction()
@@ -91,16 +94,23 @@ def f():                  # Global scope
     s = "Abith"
     print("s")
 f()
-
+# data can be customized to passing into a function
 from functools import partial                                 # partial parameters are added dynamically
 def fun(f,a, b, c):
     return f*1000 + a *100 + b*10 + c
 g = partial(fun,a=6,b=1,c=9)
 print(g(0))
-
+#                            Listing -packing 
 def fun1(a,b,i):                                         # packing
     my_list = [6,1,9]                             # source-code
 fun1(*my_list)                                           # un-packing
+#                                                                                        unpacking dictionary
+def fun(a, b, i):
+    print(a, b, i)
+d = {'a':6, 'b':1, "i":9}
+fun(*d)                                          # to get the variables 
+fun(**d)                                         # to get the value of variables
+
 
 #                                                                                                                                  $ Range()
 # # Generates List of Numbers in syntax with endValue = -1
@@ -112,9 +122,9 @@ fun1(*my_list)                                           # un-packing
 #                                                                  $ Random number generator
 # choice()
 import random
-    ...: sequence=[1,4,6,10]
-    ...: random.choice(sequence)
-    ...: random.random()
+sequence=[1,4,6,10]
+random.choice(sequence)
+random.random()
 # 0.34486332358477956, 0.6366111987379882
 #                                                                                          randrange (begin,end,step)
 random.randrange(10,20,2)
@@ -269,18 +279,32 @@ print("the number of occurrence of 3 after 3rd position is : ", end="")
 print(lis.count(3))
 # """
 #                                                                                                                                       class :
-"""  # any Attribute defined within a class definition but not within a fun() = class Attribute 
+# any Attribute defined within a class definition but not within a fun() = class Attribute 
 # it can share across all instances of the class, # changes are Visible to all other Instances
-#                                                                                                                                  class object concept
+#                                                                                                                               class object concept
+
+Class Class_Name:
+Object_Name = Class_Name()
+Object_Name.Method_Name()
+
 Class pen:
 a = 10
 b = a+10
 print("b")
 penObject = pen
-
+#                            object types
+import abc
+class FourWheelVehicle (abc.ABC):
+    @abc.abstractmethod
+    def SpeedUp( self ):
+        pass
+class Car(FourWheelVehicle) :
+    def SpeedUp(self):
+        print(" Running! ")
+        s = Car()
+        print( isinstance(s, FourWheelVehicle))
+#                                           
 self = current object
-
-"""
 class myclass:
     __hiddenVariable = int(0)                                                     # hidden number of myclass
 def add(self, increment):self.__hiddenVariable += print(self.__hiddenVariable)
@@ -330,7 +354,7 @@ def GetData(self):
     print("self.val=> " + self.val)
 c = MyData("Abith")
 c.GetData()
-"""
+# 
 class Employee:
     def __init__(self,name,id):
         self.id = id;
@@ -348,7 +372,66 @@ class Student:
 student = student()
 student.show(name="Abith")
 
-"""
+#                                                        determination of performance percentage of the employee
+# multiple inheritance subject where the child class is responsible for calling the methods implied in its corresponding parent class.
+#Define a class as 'Individual'#
+import sys
+class Individual:  #                               individual class defenition
+    def __init__(self):  #    Constructor
+        Valid_genders = ['Male','Female','transgender']
+        self.Employee_Name = input( " Enter Name of the Employee : " )
+        self.Employee_age = input( " Enter age of the Employee : " )
+print( " Valid gender values are " )
+print( " 1. Male " )
+print( " 2. Female " )
+print( " 3. Transgender " )
+try:
+    Employee_gender = input( " Enter gender of the Employee : " )
+    if Employee_gender not in Valid_genders:
+        raise Exception('valueerror')
+except Exception as valueerror:
+print("PLEASE ENTER A VALID GENDER")
+sys.exit(0)
+#                                                                       Method
+def display(self):
+    print( " ! ! ! ! ! EMPLOYEE PERFORMANCE CALCULATOR ! ! ! ! ! " )
+    print( "  Employee Name : " , self.Employee_Name )
+    print( " Employee Age : " , self.Employee_age )
+#                                                               Define a class as 'Evaluated_Rating'      #
+class Evaluated_Rating:
+    def __init__(self):
+        self.department = input( " department of the Employee : " )
+        print( " Note : An employee produces more than 50 units with 7 average minutes perunit in a day " )
+self.Productivity = int(input( " Average productive units by the employee per day : " ) )
+self.production_time = int(input( " Average production time for one unit by the employee :  " ) )
+#                         Method
+def display(self):
+    print( " Employee Deparment : " , self.department )
+    performance_percentage = (self.Productivity * self.production_time)/100
+    print( " Performance percentage : " , performance_percentage )
+    if (performance_percentage > 4 ) :
+        print(" THE EMPLOYEE HAS SCORED RATING 3 ")
+    elif (performance_percentage > 6 ) :
+        print(" THE EMPLOYEE HAS SCORED RATING 2 ")
+    elif (performance_percentage > 9):
+        print(" THE EMPLOYEE HAS SCORED RATING 1 ")
+class Employee(Individual, Evaluated_Rating):
+    def __init__(self):
+        Individual.__init__(self) #       Call ' Individual ' super class constructor
+        Evaluated_Rating.__init__(self) # Call ' Evaluated_Rating ' super class constructor
+def result(self):
+    Individual.display(self)  # Call method of class 'Individual'
+    Evaluated_Rating.display(self) # Call method of class 'Evaluated_Rating'
+#                        Objects of class 'Employee1'
+Employee1 = Employee()
+Employee1.result()  #                  object using the methods of the declared class
+#                   Objects of class 'Employee'    
+Employee2 = Employee()
+Employee2.result()               # object using the methods of the declared class
+print("                                                                           ")
+print( "Note: The instances get initialized with the given values Successfully " )
+
+
 #                                                                                                  Constructor = Default Child => Class name + Function Name
 # constructor functions automatically call functions when objects are created
 # normal functions = object.display(); we have to call function manually
@@ -467,7 +550,7 @@ class pen:
     program to create a pen
 }
 }
-"""
+
 #                                                                                                                          $   Abstraction
 # hide internal functions & show only essential (class attributes)
 # without creating an Object in Encapsulated
@@ -489,7 +572,42 @@ class Abith:
   system.out.println(javaFunObject.b);
 }     
 }
-"""
+#                                                                                                                  abstract method
+import abc
+class Myinterface( abc.ABC ):
+    @abc.abstractclassmethod
+    def disp( ):
+        pass
+print(" Hello from Myclass ")
+class Myclass(Myinterface):
+    def disp(s):
+        print(" Hello from Myclass ")
+o1=Myclass()
+o1.disp()
+#                                                        abstract class implement by multiple derive classes
+import abc
+class FourWheelVehicle (abc.ABC):
+    @abc.abstractmethod
+    def SpeedUp( self ):
+        pass
+class Car(FourWheelVehicle) :
+    def SpeedUp(self):
+        print(" Running! ")
+class TwoWheelVehicle (abc.ABC) :
+    @abc.abstractmethod
+    def SpeedUp(self):
+        pass
+class Bike(TwoWheelVehicle) :
+    def SpeedUp(self) :
+        print(" Running!.. ")
+a = Bike ()
+s = Car()
+print( isinstance(s, FourWheelVehicle))
+print( isinstance(s, TwoWheelVehicle))
+print( isinstance(a, FourWheelVehicle))
+print( isinstance(a, TwoWheelVehicle))
+# o.p = True, False, False, True
+
 
 #                                                                                                                                 $ Inheritance
 # building blocks of any scalable & maintainable piece in a software
@@ -543,15 +661,14 @@ print(isinstance(AbithInstance, Abi))
 #                                        Multiple Inheritance(4 Types) = Multiple Class
 # Multiplier
 #   $
-'''
 def multiplier():
     Return[lambda]
     x, i = i:i * x
     for i in range(4)]
-'''
+
 #                                                                                                                          Multiple Inheritance in Python
 
-'''
+
 print([m(2) for m in multiplier()])
 print([m(3) for m in multiplier()])
 # syntax of multiple inheritances involving three base classes and a derived class
@@ -668,6 +785,106 @@ print( " " )
 Object3 = Child_class(50,30)                         # parent class object
 print("Subracted value :" , Object3.subraction() )
 
+#                                                                                           Interface
+# template for designing classes
+# class contains nonabstract methods. 
+# Abstract methods are those methods without implementation without the body
+# implementation of these abstract methods is defined by classes that implement an interface
+# Python does not require that a class which is implements an interface to provide the definition for all the abstract methods of an interface
+# to Create Interface = Informal Interfaces & Formal Interfaces
+#                                                                                                       Informal Interfaces
+# Protocols or Duck Typing. The duck typing is actually we execute a method on the object as we expected an object to have, instead of checking the type of an object.
+# protocol because it is informal and cannot be formally enforced. 
+# It is mostly defined by templates or demonstrates in the documentations. """
+# methods we usually use – __len__, __iter__, __contains__
+#                                     __len__, __contains__
+class Fruits :
+    def __init__( self, ele):
+        self.__ele = ele
+    def __contains__( self, ele):
+        return ele in self.__ele
+    def __len__( self ):
+        return len( self.__ele)
+Fruits_list = Fruits([ "Apple", "Banana", "Orange" ])  
+print(len(Fruits_list))                                # protocol to get size
+print("Apple" in Fruits_list)                          # protocols to get container
+print("Mango" in Fruits_list)                          # check the membership by using the in operator.
+print("Orange" not in Fruits_list)  
+
+#                                                                      Formal Interfaces
+# interface or base classes define as an abstract class in nature and the abstract class contains some methods as abstrac
+# Abstract Base Classes
+import abc
+class Myinterface( abc.ABC ):
+    @abc.abstractclassmethod
+    def disp():
+     pass
+class Myclass( Myinterface ) :
+    pass
+#                                                    derived class defines an abstract method
+import abc
+class Myinterface( abc.ABC ):
+    @abc.abstractclassmethod
+    def disp( ):
+        pass
+#                            print(" Hello from Myclass ")
+class Myclass(Myinterface):
+    def disp( ):
+        pass
+    print(" Hello from Myclass ")
+o1=Myclass()
+
+#                             derived class which defines an abstract method with the proper definition
+import abc
+class Myinterface( abc.ABC ):
+    @abc.abstractclassmethod
+    def disp( ):
+        pass
+#                  print(" Hello from Myclass ")
+class Myclass(Myinterface):
+    def disp(s):
+        print(" Hello from Myclass ")
+o1=Myclass()
+o1.disp()
+#                                                           Example of object types
+
+import abc
+class FourWheelVehicle (abc.ABC):
+    @abc.abstractmethod
+    def SpeedUp( self ):
+        pass
+class Car(FourWheelVehicle) :
+    def SpeedUp(self):
+        print(" Running! ")
+        s = Car()
+        print( isinstance(s, FourWheelVehicle))
+
+#                                                        abstract class implement by multiple derive classes
+import abc
+class FourWheelVehicle (abc.ABC):
+    @abc.abstractmethod
+    def SpeedUp( self ):
+        pass
+class Car(FourWheelVehicle) :
+    def SpeedUp(self):
+        print(" Running! ")
+class TwoWheelVehicle (abc.ABC) :
+    @abc.abstractmethod
+    def SpeedUp(self):
+        pass
+class Bike(TwoWheelVehicle) :
+    def SpeedUp(self) :
+        print(" Running!.. ")
+a = Bike ()
+s = Car()
+print( isinstance(s, FourWheelVehicle))
+print( isinstance(s, TwoWheelVehicle))
+print( isinstance(a, FourWheelVehicle))
+print( isinstance(a, TwoWheelVehicle))
+# o.p = True, False, False, True
+
+
+
 #                                                                                                                            basic-Concepts
 # function name = library name
 # indentation statement ends with : , = = assign a value, == = decrement the values
@@ -679,14 +896,13 @@ print("Subracted value :" , Object3.subraction() )
 # bind names to class Instance = class MyClass(object): / common = 10 / def __init__(self): / self.variable = 3 / def myfunction(self, arg1, arg2):
 # return self.variable / class instance = MyClass() / class instance.myfunction(1, 2) / class instance2 = MyClass() / class instance.common / def __init__(self, arg1): / self.variable = 3 / print arg1 / class instance = OtherClass("hello")
 print "Hello, World!" ; print "This is second line"
-# In python, you can use single quotes '', double quotes "" and even triple quotes ''' """ to represent string literals ''' """
+# In python, you can use single quotes '', double quotes "" and even triple quotes  to represent string literals
 word = 'word'
 sentence = "This is a one line sentence."
 para = """This is a paragraph 
 which has multiple lines"""
 
-"""
-"""
+
 # convert data structures to strings with the use of the pickle library using file I/O :                                 $ Convert string using pickle lib
 my-file.write("This is a sample string")
 my file.close()
@@ -700,8 +916,8 @@ loaded-list = pickle.load(my-file)
 my file.close()
 print(loaded-list)
 ['This', 'is', 4, 13327]
-"""
-"""
+
+
 # 
  #                                                                                                                         (With) File Handling
 # dir(object) = object.__doc__ to find its document string
@@ -757,7 +973,7 @@ print(loaded-list)
 # exit
 
 # 
-"""
+
 #                                                                                                                          $    dictionary
 #                                                                                                                                Dictionary
 # Un Ordered collection of key & value pairs as hashes
