@@ -468,44 +468,44 @@ penObject:  # access the class method using Object
 #                                                                                                                         declaring private methods (def)
 
 # Private methods and variables can be declared with the addition of two or more underscores and at most one trailing one. You can also bind names to class instances
-# class MyClass(object):
-# common = 10
-# def __init__(self):
-# self.variable = 3
-# def myfunction(self, arg1, arg2):
-# return self.variable
-# >>> class instance = MyClass()
-# >>> class instance.myfunction(1, 2)
+class MyClass(object):
+    common = 10
+def __init__(self):
+    self.variable = 3
+def myfunction(self, arg1, arg2):
+    return self.variable
+class instance = MyClass()
+class instance.myfunction(1, 2)
 # 3
-# >>> class instance2 = MyClass()
-# >>> class instance.common
+class instance2 = MyClass()
+class instance.common
 # 10
-# >>> class instance2.common
+class instance2.common
 # 10
-# >>> MyClass.common = 30
-# >>> class instance.common
+MyClass.common = 30
+class instance.common
 # 30
-# >>> class instance2.common
+class instance2.common
 # 30
-# >>> class instance.common = 10
-# >>> class instance.common
+class instance.common = 10
+class instance.common
 # 10
-# >>> class instance2.common
+class instance2.common
 # 30
-# >>> MyClass.common = 50
-# >>> class instance.common
+MyClass.common = 50
+class instance.common
 # 10
-# >>> class instance2.common
+class instance2.common
 # 50
-# def __init__(self, arg1):
-# self.variable = 3
-# print arg1
-# >>> class instance = OtherClass("hello")
+def __init__(self, arg1):
+    self.variable = 3
+    print arg1
+class instance = OtherClass("hello")
 # hello
-# >>> class instance.myfunction(1, 2)
+class instance.myfunction(1, 2)
 # 3
-# >>> class instance.test = 10
-# >>> class instance.test
+class instance.test = 10
+class instance.test
 # 10
 #
 
@@ -931,46 +931,46 @@ print(loaded-list)
 # myFile = open("file.txt", "r", "w", "a"), myFile.close(), a = append
 # 'a+" = read/append, "ab+" = append/read modes on binary Files
 #                                                                  Program for File Handling
-# import os
-# def listfile(types):
-# current_path,filename = os.path.split(os.path.abspath(__file__))
+import os
+def listfile(types):
+    current_path,filename = os.path.split(os.path.abspath(__file__))
 #                                                                 Nested Looping Section in The Program
 # Outer  For Loop
-# for path,dir,file in os.walk(current_path):
-# file_name = str(file)
+for path,dir,file in os.walk(current_path):
+    file_name = str(file)
 #                                                                  Inner For Loop
-# for type in types:
-# if file_name.endswith(type):
-# print(file_name)
-# def deletefile(types):
-# choice2 = input("Please enter the file to delete : ")
-# os.remove(choice2)
-# types = [".txt']",".srt]",".py]"]
+for type in types:
+    if file_name.endswith(type):
+        print(file_name)
+def deletefile(types):
+    choice2 = input("Please enter the file to delete : ")
+    os.remove(choice2)
+types = [".txt']",".srt]",".py]"]
 #                                                                     Header Area
-# print(" = = = = = = = = = = = = = = = = = = = = = " )
-# print(" $$$$$$$$$$$$$ FILE HANDELING $$$$$$$$$$$$ ")
-# print(" = = = = = = = = = = = = = = = = = = = = = ")
+print(" = = = = = = = = = = = = = = = = = = = = = " )
+print(" $$$$$$$$$$$$$ FILE HANDELING $$$$$$$$$$$$ ")
+print(" = = = = = = = = = = = = = = = = = = = = = ")
 # File Listing
-# File_list = listfile(types)
+File_list = listfile(types)
 #                                                                  File Operation
 # 
-# print("                      ")
-# print(" %%%%%%%%%%%%%%%%%%%%")
-# print(" SELECT AN OPERATION ")
-# print(" %%%%%%%%%%%%%%%%%%%%")
-# print( " DEL - Delete a file Type ")
-# print( " END - EXIT ")
-# choice = input(" Please enter the desired operation : ")
-# if choice == 'DEL':
-# File_deletion = deletefile(types)
-# listfile(types)
-# exit
-# if choice == 'END':
-# Print( Bye Bye )
-# exit
-# else:
-# Print( Invalid Option )
-# exit
+print("                      ")
+print(" %%%%%%%%%%%%%%%%%%%%")
+print(" SELECT AN OPERATION ")
+print(" %%%%%%%%%%%%%%%%%%%%")
+print( " DEL - Delete a file Type ")
+print( " END - EXIT ")
+choice = input(" Please enter the desired operation : ")
+if choice == 'DEL':
+    File_deletion = deletefile(types)
+    listfile(types)
+    exit
+    if choice == 'END':
+        Print( "Bye Bye" )
+        exit
+    else:
+        Print( "Invalid Option" )
+        exit
 
 # 
 
@@ -1097,24 +1097,22 @@ num = int( input())
 num = num + 10
 print (num)
 #                                                       $    Converting int to float
-#  x = 10
-#    print(x,'is of type:',type(x))
-#    x = float(x)
-#   print(x,'is of type:',type(x))
+x = 10
+print(x,'is of type:',type(x))
+x = float(x)
+print(x,'is of type:',type(x))
 #                                                              Adding Strings
-# year = 35
-# greeting = "this year is " + str(2020)
+year = 35
+greeting = "this year is " + str(2020)
 # greeting = o/p
 #                                                                           Input()
-# num  = input (‘Enter the number: ‘)
+num  = input (‘Enter the number: ‘)
 # enter the number: 10
-# num
-# ‘10’
 # Here 10 is not a number, this is a string.
 # To convert this into a number we can use int( ) or float( ) functions.
-# int( ‘10’ )
+int( ‘10’ )
 # 3
-# float(‘10’)
+float(‘10’)
 # 3.0 = o/p
 #                                                                  presenting or formatting output
 variable='15'                                                                                      $ Explicit
@@ -1245,13 +1243,13 @@ In[3]: print(str(a))
 #    (eg) numpy.remainder() function can be used in List or Array,
 
 # sample code = $
-# import numpy as np
-# arr1 = np.array([7, -6, 9])
-# arr2 = np.array([3, 4, 3])
-# rem_arr = np.remainder(arr1, arr2)
-# print("Dividend array is: ", arr1)
-# print("Divisor array is: ", arr2)
-# print("Remainder array is : ", rem_arr)
+import numpy as np
+arr1 = np.array([7, -6, 9])
+arr2 = np.array([3, 4, 3])
+rem_arr = np.remainder(arr1, arr2)
+print("Dividend array is: ", arr1)
+print("Divisor array is: ", arr2)
+print("Remainder array is : ", rem_arr)
 # $$ Output: /usr/bin/python3.9 /home/abith/Documents/work.py
 # """ Dividend array is:  [ 7 -6  9]
 # Divisor array is:  [3 4 3]
@@ -1267,32 +1265,32 @@ In[3]: print(str(a))
 #  Operator Precedence = name = "Alex" $ age = 25 $ if name == "Alex" or name =="John" $ print("Hi!") $ else: $ print("TatA")
 #  Operator Associativity used to Determine , Calculates or executes in left to right or right to left
 
-# >>> a = 9
-# >>> b = 65
-# >>> print("Bitwise AND Operator On 9 and 65 is = ", a & b)
-# >>> print("Bitwise OR Operator On 9 and 65 is = ", a | b)
-# >>> print("Bitwise EXCLUSIVE OR Operator On 9 and 65 is = ", a ^ b)
-# >>> print("Bitwise NOT Operator On 9 is = ", ~a)
-# >>> print("Bitwise LEFT SHIFT Operator On 9 is = ", a << 1)
-# >>> print("Bitwise RIGHT SHIFT Operator On 65 is = ", b >> 1)
+a = 9
+b = 65
+print("Bitwise AND Operator On 9 and 65 is = ", a & b)
+print("Bitwise OR Operator On 9 and 65 is = ", a | b)
+print("Bitwise EXCLUSIVE OR Operator On 9 and 65 is = ", a ^ b)
+print("Bitwise NOT Operator On 9 is = ", ~a)
+print("Bitwise LEFT SHIFT Operator On 9 is = ", a << 1)
+print("Bitwise RIGHT SHIFT Operator On 65 is = ", b >> 1)
 
 # Modulus Operator : math.fmod(), -ve number, float, ZeroDivisionError, numpy,                                                       % Modulus
 # math.fmod (eg) import math \ print(math.fmod(-5, 3))
-# $ a = 12.5
-# b = 0
-# try:
-#     print( f '{a} % {b} = {a % b}' )
-#     except ZeroDivisionErrr as zde:
-#         print("We cannot divide by 0")
+a = 12.5
+b = 0
+try:
+    print( f '{a} % {b} = {a % b}' )
+    except ZeroDivisionErrr as zde:
+        print("We cannot divide by 0")
 
 #     NumPy modulus = import numpy as np
-# a = 10
-# b = 3
-# print(np.mod(a, b))
+a = 10
+b = 3
+print(np.mod(a, b))
 #    Numpy Array = import numpy as np
-# a = np.array([2, -4, 7])
-# b = np.array([2,3,4])
-# print(np.mod(a, b))
+a = np.array([2, -4, 7])
+b = np.array([2,3,4])
+print(np.mod(a, b))
 
 #                                                                                                                    """   Syntax Variable and DataTypes..."""
 
@@ -1312,23 +1310,24 @@ In[3]: print(str(a))
 # code Structure : Source file->Compiler->Output : Library Modules for Virtual Machine->code+Lib
 #
 # Flow Control Statement = Python’s flow control statements are ‘while’, ‘for’ and ‘if’. For a switch, you need to use ‘if’. For enumerating through list members, use ‘for’. For obtaining a number list, use range (number).
-# rangelist = range(10)
-# print rangelist
-# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] for number in rangelist:
-# if number in (3, 4, 7, 9):
-# break
-# else:
-# continue
-# else:
-# pass
-# if rangelist[1] == 2:
-# print "The second item (lists are 0-based) is 2"
-# elif rangelist[1] == 3:
-# print "The second item (lists are 0-based) is 3"
-# else:
-# print "Dunno"
-# while rangelist[1] == 1:
-# pass
+rangelist = range(10)
+print (rangelist)
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+for number in rangelist:
+    if number in (3, 4, 7, 9):
+        break
+    else:
+        continue
+else:
+    pass
+if rangelist[1] == 2:
+    print ("The second item (lists are 0-based) is 2")
+elif rangelist[1] == 3:
+    print ("The second item (lists are 0-based) is 3")
+else:
+    print ("Dunno")
+while rangelist[1] == 1:
+    pass
 #                                                                                                                               $  Variable Scope
 # Local Variables = Reached only within the defined scope 
 def fun():
@@ -1362,10 +1361,13 @@ Dictionary - Mappings
 
 #                                                                                                                             Variable   Conditions
 
-# >>> lst1 = [1, 2, 3] >>> lst2 = [3, 4, 5] >>> print [x * y for x in lst1 for y in lst2] [3, 4, 5, 6, 8, 10, 9, 12, 15] >>> print [x for x in lst1 if 4 > x > 1] [2, 3] # Check if a condition is true for any items.
+lst1 = [1, 2, 3]
+lst2 = [3, 4, 5]
+print([x * y for x in lst1 for y in lst2] [3, 4, 5, 6, 8, 10, 9, 12, 15])
+print ([x for x in lst1 if 4 > x > 1] [2, 3]) # Check if a condition is true for any items.
 # # "any" returns true if any item in the list is true.
-# >>> any([i % 3 for i in [3, 3, 4, 4, 3]])
-# True
+any([i % 3 for i in [3, 3, 4, 4, 3]])
+True
 # # This is because 4 % 3 = 1, and 1 is true, so any()
 # # returns True.
 # # Check for how many items a condition is true.
@@ -1375,21 +1377,20 @@ Dictionary - Mappings
 # [2, 3] >>> del lst1
 #
 #                                                                                                                           Global variables
-# number = 5
-# def myfunc():
-# # This will print 5.
-# print number
+number = 5
+def myfunc():
+    print (number)
 # def another-func():
 # # This raises an exception because the variable has not
 # # been bound before printing. Python knows that it an
 # # object will be bound to it later and creates a new, local
 # # object instead of accessing the global one.
-# print number:
-# number = 3
-# def furtherance():
-# global number
-#            # This will correctly change the global.
-# number = 3
+print number:
+number = 3
+def furtherance():
+global number
+#                  # This will correctly change the global.
+number = 3
 
 #                                                                                                                                     S Array's & NuMpy
 #                                                               Array functions
@@ -1421,11 +1422,11 @@ print(yes)
 newList = list(("1", "2", "3", "4"))
 print(newList)
 
-# import array as arr
-# from array import *
-# array(typecode [,initializer])
-# for i in a
-# print a[i]
+import array as arr
+from array import *
+array(typecode [,initializer])
+for i in a
+print a[i]
 
 # TypeCode	PythonType	Value
 #  i         int	    2
@@ -1454,24 +1455,24 @@ print("Element at 2nd index: " , a[2])
 # 
 # 
 #                                                                                                                         $ searching 8 from array
-# # for num in [1, 19, 8, 0, 9, 30, 29]:
-# # print(num)
+for num in [1, 19, 8, 0, 9, 30, 29]:
+    print(num)
 #                                                        # # if number is 8 print message as found and break the loop
-# # if(num==8):
-# # print("number 8 is found")
-# # break
-# # in(break) = sum of 1st 5 integers
-# # num = (1, 2, 3, 4, 5, 6, 7, 8, 9)
-# # sum = 0
-# # counter = 0
+if(num==8):
+    print("number 8 is found")
+    break
+in(break) = sum of 1st 5 integers
+num = (1, 2, 3, 4, 5, 6, 7, 8, 9)
+sum = 0
+counter = 0
 #                                                                      # # parsing the tuple
-# # for i in num:
-# # sum = sum + i
-# # counter = counter + 1
-# # if counter == 5:
-# # break
-# # print("Sum of the first",counter)
-# # print("integers is: ",sum)
+for i in num:
+    sum = sum + i
+    counter = counter + 1
+    if counter == 5:
+        break
+    print("Sum of the first",counter)
+    print("integers is: ",sum)
 #                                                                          $   Array length
 #                                         len( given_arr_name )
 import array as arr1
@@ -1536,7 +1537,7 @@ print(sample_array )
 # Tuples = () = immutable & not apply to index / print("Tuple = ", t) re=sorted(t)
 # returnSecond() +> based on 2nd element of tuple
 # (eg) def returnSecond( L ):
-# return L[1]
+return L[1]
 # list = [ ('a', 40), ('b', 30), ('c', 20), ('d', 10) ] / sorted list = sorted(list, key = returnSecond) / print(':', sortedList)
 # sort (), list.sort(),fun= Ascending & Descending:  Reverse passing = True or False, tim-sort = merge & Time
 # sort()=> list.sort(key = ..., reverse = ...)  $ help( lis.sort ) $ print("list = ", l) / l.sort()  .
@@ -1546,30 +1547,33 @@ print(sample_array )
 # functions are passed in key arguments , len() => used to pass the key argument
 # sort based on length in ascending order using len()
 # $ word = "hello"
-# length = len(word)
-# print( "the length of word is ", length)
-# l = [ "aaa", "bbbbba", "ccc", "d" ]
-# print("list = ", l)
-# print( "length of the list is ", len() )
-# l.sort( key = len )
-# print("sorted list = ", l)
-# l.sort(key = len, reverse = True)
-# print("sorted list with reverse = ", l)
-# sort based on 2nd character =  def / sort_onSecondChar(word): / return word[1] l.sort(key = sort_onSecondChar) /
-# print("sorted list based on second character = ", l) = returns new sorted list.
-# Sorted fun with reverse parameter = print("List = ", l)re=sorted(l,reverse=True )
-# Sorted fun with key parameters = print("List = ", l)re=sorted(l, key = len)
+length = len(word)
+print( "the length of word is ", length)
+l = [ "aaa", "bbbbba", "ccc", "d" ]
+print("list = ", l)
+print( "length of the list is ", len() )
+l.sort( key = len )
+print("sorted list = ", l)
+l.sort(key = len, reverse = True)
+print("sorted list with reverse = ", l)
+sort based on 2nd character =  def / sort_onSecondChar(word): / return word[1] l.sort(key = sort_onSecondChar) /
+print("sorted list based on second character = ", l) = returns new sorted list.
+# Sorted fun with reverse parameter = 
+print("List = ", l)re=sorted(l,reverse=True )
+# Sorted fun with key parameters = 
+print("List = ", l)re=sorted(l, key = len)
 # sorting list of tuple with lambda => sortedList = sorted(list, key = lambda x : x[1]) 
-# print( "sorted list = ", sortedList ) --> altering the lambda function
-# sortedlist = sorted(students, key=lambda stud : / stud[2]) / print("name","marks") / for x in stored list: / print(x[0],x[1])
+print( "sorted list = ", sortedList ) --> altering the lambda function
+sortedlist = sorted(students, key=lambda stud :
+stud[2]) 
+print("name","marks") / for x in stored list: / print(x[0],x[1])
 
-"""
 # 
-# print (sorted(List))
-# print ("\nSorted list with Reverse sort by setting reverse keyword to True:",)
-# print (sorted(List, reverse = True) )
-# print ("\nOriginal list without any modifications :",)
-# print (List)
+print (sorted(List))
+print ("\nSorted list with Reverse sort by setting reverse keyword to True:",)
+print (sorted(List, reverse = True) )
+print ("\nOriginal list without any modifications :",)
+print (List)
 print (sorted(Set))
 print (sorted(Dict))
 print (sorted(str))
@@ -1586,66 +1590,67 @@ iterable: This is not an optional parameter, it is a sequence of string to be so
 #
 #                                            Code:
 #                                # creating string
-# msg = "Hello!, how are you"
-# print("The original message is : ")
-# print(msg)
+msg = "Hello!, how are you"
+print("The original message is : ")
+print(msg)
 #                                                              # using sorted() method to get list of sorted characters
-# alt_msg = sorted(msg)
-# print( "The output of the sorted() method is :  " )
-# print( alt_msg )
+alt_msg = sorted(msg)
+print( "The output of the sorted() method is :  " )
+print( alt_msg )
 #                                                                # using join() method to join list of sorted characters           join()
-# sort_msg = "".join(alt_msg)
-# print( "The sorted message is :  " )
-# print( sort_msg )
+sort_msg = "".join(alt_msg)
+print( "The sorted message is :  " )
+print( sort_msg )
 
 # sorting the string                                                                                                         sort using while loop
 #                                   $ Code:
-# string = "Sample string to sort alphabetical order."
-# print( "The original string is : " )
-# print( string )
+string = "Sample string to sort alphabetical order."
+print( "The original string is : " )
+print( string )
 #                                          # using sorted() method to get list of sorted characters with ascending order
-# list_string=list( string )
-# print( "The list of string is : " )
-# print( list_string )
-# list_string = list(string)
-# i = 0
-# while i < len( list_string ):
-# key = i
-# j = i+1
-# while j < len( list_string ):
-# if list_string[key] > list_string[j]:
-# key = j
-# j += 1
-# list_string[i],list_string[key] = list_string[key],list_string[i] i += 1
-# print( "The list of sorted string is : " )
-# print( list_string )
-# new_string = "".join(list_string )
-# print( "The sorted string is : " )
-# print(new_string)
+list_string=list( string )
+print( "The list of string is : " )
+print( list_string )
+list_string = list(string)
+i = 0
+while i < len( list_string ):
+    key = i
+    j = i+1
+    while j < len( list_string ):
+    if list_string[key] > list_string[j]:
+        key = j
+        j += 1
+list_string[i],list_string[key] = list_string[key],list_string[i] i += 1
+print( "The list of sorted string is : " )
+print( list_string )
+new_string = "".join(list_string )
+print( "The sorted string is : " )
+print(new_string)
 
 # using for loop in python which is also a implementation of bubble sort.                                                           Using for Loop
 #                       $   Code:
 #                           # creating string
-# string = "This is a sample string"
-# new_string = [] print( "The original string is : " )
-# print( string )
+string = "This is a sample string"
+new_string = [] print( "The original string is : " )
+print( string )
 # # woith out using sorted() method to get list of sorted characters
-# list_string=list(string)
-# print( "The list of string is : " )
-# print(list_string)
-# list_string=list(string)
-# len_s=len(list_string)
-# for i in range(len_s-1):
-# for j in range(len_s-i-1):
-# if list_string[j]>list_string[j+1]:
-# list_string[j],list_string[j+1]=list_string[j+1],list_string[j] for m in list_string:
-# new_string+=m
-# print( "The list of sorted string is : " )
-# print(new_string)
-# sort_string = "".join(new_string)
-# print( "The sorted string is : " )
-# print(sort_string)
-"""
+list_string=list(string)
+print( "The list of string is : " )
+print(list_string)
+list_string=list(string)
+len_s=len(list_string)
+for i in range(len_s-1):
+for j in range(len_s-i-1):
+    if list_string[j]>list_string[j+1]:
+        list_string[j],list_string[j+1]=list_string[j+1],list_string[j]
+        for m in list_string:
+            new_string+=m
+            print( "The list of sorted string is : " )
+            print(new_string)
+sort_string = "".join(new_string)
+print( "The sorted string is : " )
+print(sort_string)
+
 #                                                                                                                                   Sorting Algorithms - Top 6 = Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Heap Sort, Radix Sort
 #                                                                                                                                     Bubble sorting
 # Sorting data in effortless, rational, recurring Exchange in Queue Structure, Low-Efficiency
@@ -1658,12 +1663,12 @@ iterable: This is not an optional parameter, it is a sequence of string to be so
 # for iterator_2 in range(0, length-iterator_1-1):
 #                                                     # From 0 to n-i-1 the array value needs to be looped upon
 #                              # when an element greater than the next element then the collected element needs to be swapped.
-# if array[iterator_2] > array[iterator_2 + 1] :
-# array[iterator_2], array[iterator_2 + 1] = array[iterator_2 + 1], array[iterator_2] # Driver code to test above
-# array = [75,34,54,56,78,1] bubble_Sort(array)
-# print ("Array values after sorting:")
-# for i in range(len(array)):
-# print ("%d" %array[i])
+if array[iterator_2] > array[iterator_2 + 1] :
+    array[iterator_2], array[iterator_2 + 1] = array[iterator_2 + 1], array[iterator_2] # Driver code to test above
+    array = [75,34,54,56,78,1] bubble_Sort(array)
+    print ("Array values after sorting:")
+for i in range(len(array)):
+    print ("%d" %array[i])
 #                                              First Run
 # (6 1 4 3)  -> (1 6 4 2): Here 1st two elements get swapped if the order is not correct.
 # (1 6 4 2)  -> (1 4 6 2): Here, the next two elements get swapped if the order is not correct. 
@@ -1681,114 +1686,114 @@ iterable: This is not an optional parameter, it is a sequence of string to be so
 # def bubble_Sort(arr):
 # m = len(arr)
 #                                                                 # Traverse through all the array elements
-# for u in range(m):
-# for v in range(0, m-u-1):
+for u in range(m):
+for v in range(0, m-u-1):
 #                                                                # traverse the array from 0 to m-u-1
 #                                                       # Swap if the element is greater than adjacent next one
-# if arr[v] > arr[v+1] :
-# arr[v], arr[v+1] = arr[v+1], arr[v]
+if arr[v] > arr[v+1] :
+arr[v], arr[v+1] = arr[v+1], arr[v]
 #  #                                                  # To print array after bubble sort, you need to follow code:
-# for i in range(len(arr)):
-# print("%d" %arr[i]),
+for i in range(len(arr)):
+print("%d" %arr[i]),
 #                                                      # here arr will be your array.
 #                                                                                                      $ Code Format
-# for i in range(len(arr)):
-# print ("%d" %arr[i]),
+for i in range(len(arr)):
+print ("%d" %arr[i]),
 #                                                                                                                                Selection Sort
 # Finding min or least value & positioning from unsorted sets, unsorted sublist is the complete key list
-# $ import sys
-# Array = [63, 75, 13, 2, 441] # loop through each and every element in the array
-# for element1 in range(len(Array)):
-# # To determine the least element in the remaining list
-# minimum_idx = element1
-# for element2 in range(element1+1, len(Array)):
-# if Array[minimum_idx] > Array[element2]:
-# min_idx = element2
+import sys
+Array = [63, 75, 13, 2, 441] # loop through each and every element in the array
+for element1 in range(len(Array)):
+ # To determine the least element in the remaining list
+minimum_idx = element1
+for element2 in range(element1+1, len(Array)):
+if Array[minimum_idx] > Array[element2]:
+min_idx = element2
 # # swap the determined least element with the  previous element in the list
-# Array[element1], Array[minimum_idx] = Array[minimum_idx], Array[element1] # main code
-# print ("Array after getting sorted by selection sort")
-# for i in range(len(Array)):
-# print("%d" %Array[i])
+Array[element1], Array[minimum_idx] = Array[minimum_idx], Array[element1] # main code
+print ("Array after getting sorted by selection sort")
+for i in range(len(Array)):
+print("%d" %Array[i])
 
 #                                                                                                                               Insertion Sorting
 # Compared in a sequential order and then rearranged in one specific order, similar to arranging cards
 # $ def insertion_Sort(array):
 # # pass through 1 to len(array)
-# for temp_element1 in range(1, len(array)):
-# key = array[temp_element1] # Move elements of array[0..i-1], that are
+for temp_element1 in range(1, len(array)):
+key = array[temp_element1] # Move elements of array[0..i-1], that are
 # # greater than key, to one position ahead
 # # of their current position
-# temp_element2 = temp_element1 -1
-# while temp_element2 >= 0 and key < array[temp_element2] :
-# array[temp_element2 + 1] = array[temp_element2] temp_element2 -= 1
-# array[temp_element2 + 1] = key
-# # Driver code to test above
-# array = [75,34,54,56,78,1] insertion_Sort(array)
-# for i in range(len(array)):
-# print ("% d" % array[i])
+temp_element2 = temp_element1 -1
+while temp_element2 >= 0 and key < array[temp_element2] :
+    array[temp_element2 + 1] = array[temp_element2] temp_element2 -= 1
+    array[temp_element2 + 1] = key
+ # Driver code to test above
+array = [75,34,54,56,78,1] insertion_Sort(array)
+for i in range(len(array)):
+    print ("% d" % array[i])
 
 #                                                                                                                                      Merge Sort
 # Divide & conquer Algorithm, input is sliced in 2 half , merge sorting in 1st & 2nd half then merged
 #                                                                      recursive approach of implementing the merge sort
 #                                                                                   Code:
-# def mergeSort(ar_list):
-# if len(ar_list) > 1:
-# mid = len(ar_list) // 2
-# left = ar_list[:mid] right = ar_list[mid:] # Recursive call on each half
-# mergeSort(left)
-# mergeSort(right)
-# # Two iterators for traversing the left and right half
-# i = 0
-# j = 0
-# # Iterator for the main list
-# k = 0
-# while i < len(left) and j < len(right):
-# if left[i] < right[j]:
-# # The value from the left half has been used
-# ar_list[k] = left[i] # Move the iterator forward
-# i += 1
-# else:
-# ar_list[k] = right[j] j += 1
-# k += 1
+def mergeSort(ar_list):
+if len(ar_list) > 1:
+mid = len(ar_list) // 2
+left = ar_list[:mid] right = ar_list[mid:] # Recursive call on each half
+mergeSort(left)
+mergeSort(right)
+# Two iterators for traversing the left and right half
+i = 0
+j = 0
+# Iterator for the main list
+k = 0
+while i < len(left) and j < len(right):
+if left[i] < right[j]:
+# The value from the left half has been used
+ar_list[k] = left[i] # Move the iterator forward
+i += 1
+else:
+ar_list[k] = right[j] j += 1
+k += 1
 #                                  # For all the remaining values
-# while i < len(left):
-# ar_list[k] = left[i] i += 1
-# k += 1
-# while j < len(right):
-# ar_list[k]=right[j] j += 1
-# k += 1
-# ar_list = [12, 7, 2, 9, 4, 15, 5] mergeSort(ar_list)
-# print(ar_list)
+while i < len(left):
+    ar_list[k] = left[i] i += 1
+    k += 1
+while j < len(right):
+    ar_list[k]=right[j] j += 1
+    k += 1
+    ar_list = [12, 7, 2, 9, 4, 15, 5] mergeSort(ar_list)
+    print(ar_list)
 
 #                                                                Bottom-up approach implementation of merge sort
-# $ def merge(left, right):
-# result = [] x, y = 0, 0
-# for k in range(0, len(left) + len(right)):
-# if x == len(left): # if at the end of 1st half,
-# result.append(right[y]) # add all values of 2nd half
-# y += 1
-# elif y == len(right): # if at the end of 2nd half,
-# result.append(left[x]) # add all values of 1st half
-# x += 1
-# elif right[y] < left[x]:
-# result.append(right[y])
-# y += 1
-# else:
-# result.append(left[x])
-# x += 1
-# return result
-# def mergesort(ar_list):
-# length = len(ar_list)
-# size = 1
-# while size < length:
-# size+=size # initializes at 2 as described
-# for pos in range(0, length, size):
-# start = pos
-# mid  = pos + int(size / 2)
-# end = pos + size
-# left = ar_list[ start : mid ] right = ar_list[ mid : end ] ar_list[start:end] = merge(left, right)
-# return ar_list
-# ar_list = [33, 42, 9, 37, 8, 47, 5] print(mergesort(ar_list))
+def merge(left, right):
+result = [] x, y = 0, 0
+for k in range(0, len(left) + len(right)):
+if x == len(left): # if at the end of 1st half,
+    result.append(right[y]) # add all values of 2nd half
+    y += 1
+elif y == len(right): # if at the end of 2nd half,
+    result.append(left[x]) # add all values of 1st half
+    x += 1
+elif right[y] < left[x]:
+    result.append(right[y])
+    y += 1
+else:
+    result.append(left[x])
+    x += 1
+    return result
+def mergesort(ar_list):
+    length = len(ar_list)
+    size = 1
+while size < length:
+    size+=size # initializes at 2 as described
+    for pos in range(0, length, size):
+        start = pos
+        mid  = pos + int(size / 2)
+        end = pos + size
+        left = ar_list[ start : mid ] right = ar_list[ mid : end ] ar_list[start:end] = merge(left, right)
+        return ar_list
+        ar_list = [33, 42, 9, 37, 8, 47, 5] print(mergesort(ar_list))
 
 #                                                                        Sample()
 # $ def mergeSort(array):
@@ -1798,32 +1803,32 @@ iterable: This is not an optional parameter, it is a sequence of string to be so
 # split = array[mid:] # splitting the array into 2 halves
 # merge_Sort(divide) # first half of the sorting
 # merge_Sort(split) # second half of the sorting
-# i = j = k = 0
+i = j = k = 0
 #                            # Copy data to temp arrayays divide[] and split[] while i < len(divide) and j < len(split):
-# if divide[i] < split[j]:
-# array[k] = divide[i] i+=1
-# else:
-# array[k] = split[j] j+=1
-# k+=1
+if divide[i] < split[j]:
+    array[k] = divide[i] i+=1
+else:
+    array[k] = split[j] j+=1
+    k+=1
 #                                              # Checking if any element was left
-# while i < len(divide):
-# array[k] = divide[i] i+=1
-# k+=1
-# while j < len(split):
-# array[k] = split[j] j+=1
-# k+=1
+while i < len(divide):
+    array[k] = divide[i] i+=1
+    k+=1
+while j < len(split):
+    array[k] = split[j] j+=1
+    k+=1
 #                                              # Code to print the list
-# def print divide ist(array):
-# for i in range(len(array)):
-# print(array[i],end=" ")
-# print()
+def print divide ist(array):
+    for i in range(len(array)):
+        print(array[i],end=" ")
+        print()
 # # driver code to test the above code
-# if __name__ == '__main__':
-# array = [12, 2, 93, 65, 76, 27] print ("Given array is", end="\n")
-# print divide-list(array)
-# merge_Sort(array)
-# print("Sorted array is: ", end="\n")
-# print-individualistic(array)
+if __name__ == '__main__':
+    array = [12, 2, 93, 65, 76, 27] print ("Given array is", end="\n")
+    print divide-list(array)
+merge_Sort(array)
+print("Sorted array is: ", end="\n")
+print-individualistic(array)
 
 #                                                                                                                                Heap Sort
 
@@ -1856,73 +1861,73 @@ if max_val != 100:
 print ("Values after performing heapsort")
 for count in range(num):
     print ("%d" %val-arr[count]),
-"""
+
 # like selection sorting, segregates the input as sorted & non-Sorted elements,  the algorithm loops in such a manner on the non sorted region so that on each loop, the largest value will be pushed into the sorted region. This process will be continued across all the elements in the unsorted region.
 # A max heap is created from the given input list. The last value is then swapped with the first value repeatedly, and also, the value range is comparatively decreased by one. This process takes place until the range shrinks to 1.
-# $ def heap_sort(Ordering, number, i):
-# largest = i # Initialize largest as root
-# left= 2 * i + 1     # left = 2*i + 1
-# right= 2 * i + 2     # right = 2*i + 2
+def heap_sort(Ordering, number, i):
+largest = i # Initialize largest as root
+left= 2 * i + 1     # left = 2*i + 1
+right= 2 * i + 2     # right = 2*i + 2
 #                                                            # to verify the left child of root is greater than the root
-# if left< number and Ordering[i] < Ordering[left]:
-# largest = left
-# # to verify the right child of root is greaterightthan the root
-# if right < number  and Ordering[largest] < Ordering[right]:
-# largest = right
+if left< number and Ordering[i] < Ordering[left]:
+    largest = left
+# to verify the right child of root is greaterightthan the root
+if right < number  and Ordering[largest] < Ordering[right]:
+    largest = right
 # # swap roots on necessity
-# if largest != i:
-# Ordering[i],Ordering[largest] = Ordering[largest],Ordering[i] # swap
+if largest != i:
+    Ordering[i],Ordering[largest] = Ordering[largest],Ordering[i] # swap
 # # Heapify the root.
-# heap_sort(Ordering, number, largest)
-# # main function for Ordering sorting
-# def heapSort(Ordering):
-# number = len(Ordering)
-# # max heap build process.
-# for i in range(number, -1, -1):
-# heap_sort(Ordering, number, i)
-# # extract of all the elements in the given heap
-# for i in range(number-1, 0, -1):
-# Ordering[i], Ordering[0] = Ordering[0], Ordering[i] # swap
-# heap_sort(Ordering, i, 0)
+heap_sort(Ordering, number, largest)
+# main function for Ordering sorting
+def heapSort(Ordering):
+    number = len(Ordering)
+# max heap build process.
+for i in range(number, -1, -1):
+    heap_sort(Ordering, number, i)
+# extract of all the elements in the given heap
+for i in range(number-1, 0, -1):
+    Ordering[i], Ordering[0] = Ordering[0], Ordering[i] # swap
+    heap_sort(Ordering, i, 0)
 # # main section of the code
-# Ordering = [ 12, 11, 13, 5, 6, 7 ,56 ,45 ,67 ,78 ,34 ,4 ,33] heapSort(Ordering)
-# number = len(Ordering)
-# print ( "Sorted Ordering value is" )
-# for i in range( number):
-# print ( " %d " %Ordering[i])
+Ordering = [ 12, 11, 13, 5, 6, 7 ,56 ,45 ,67 ,78 ,34 ,4 ,33] heapSort(Ordering)
+number = len(Ordering)
+print ( "Sorted Ordering value is" )
+for i in range( number):
+    print ( " %d " %Ordering[i])
 
 #                                                                                                                                Radix Sort
 
 # no comparing the keyed elements, This is achieved by means of generating a bucket according to the radix value for elements with more than one digit involved; the technique is applied for all the digits in the element. It is also termed as bucket sort. This sorting technique tends to be too quick in their suitable environments.
-# $ def radix_sort(The_list, base=10):
-# if The_list == []:
-# return
-# def Input_factory(numeral, base):
-# def Input(The_list, index):
-# return ((The_list[index]//(base**numeral)) % base)
-# return Input
-# greatest = max(The_list)
-# exponent = 0
-# while base**exponent <= greatest:
-# The_list = sort_count(The_list, base - 1, Input_factory(exponent, base))
-# exponent = exponent + 1
-# return The_list
-# def sort_count(The_list, greatest, Input):
-# count = [0]*(greatest + 1)
-# for i in range(len(The_list)):
-# count[Input(The_list, i)] = count[Input(The_list, i)] + 1
-# # to determine the last index for each of the element
-# count[0] = count[0] - 1
-# # zero-based indexing decrement
-# for i in range(1, greatest + 1):
-# count[i] = count[i] + count[i - 1] output_value = [None]*len(The_list)
-# for i in range(len(The_list) - 1, -1, -1):
-# output_value[count[Input(The_list, i)]] = The_list[i] count[Input(The_list, i)] = count[Input(The_list, i)] - 1
-# return output_value
-# The_list = input('Enter the list of (non-negative) numbers: ').split()
-# The_list = [int(x) for x in The_list] sorted_list = radix_sort(The_list)
-# print( ' Radix oriented sorted output :  ' , end='')
-# print(sorted_list)
+def radix_sort(The_list, base=10):
+    if The_list == []:
+        return
+def Input_factory(numeral, base):
+def Input(The_list, index):
+    return ((The_list[index]//(base**numeral)) % base)
+    return Input
+    greatest = max(The_list)
+    exponent = 0
+while base**exponent <= greatest:
+    The_list = sort_count(The_list, base - 1, Input_factory(exponent, base))
+    exponent = exponent + 1
+    return The_list
+def sort_count(The_list, greatest, Input):
+    count = [0]*(greatest + 1)
+    for i in range(len(The_list)):
+        count[Input(The_list, i)] = count[Input(The_list, i)] + 1
+        # to determine the last index for each of the element
+        count[0] = count[0] - 1
+# zero-based indexing decrement
+for i in range(1, greatest + 1):
+    count[i] = count[i] + count[i - 1] output_value = [None]*len(The_list)
+for i in range(len(The_list) - 1, -1, -1):
+    output_value[count[Input(The_list, i)]] = The_list[i] count[Input(The_list, i)] = count[Input(The_list, i)] - 1
+    return output_value
+The_list = input('Enter the list of (non-negative) numbers: ').split()
+The_list = [int(x) for x in The_list] sorted_list = radix_sort(The_list)
+print( ' Radix oriented sorted output :  ' , end='')
+print(sorted_list)
 #
 
 # $ Python -m pdb program.py Run a program in                                                                                            Debug Mode
@@ -1932,11 +1937,11 @@ for count in range(num):
 
 # Copying Objects : (1) Shallow Clone = 2 objects in same address
 #  (eg) fruits=["apples","banana","orange"]
-# x=fruits.copy()
-# print(x)
+x=fruits.copy()
+print(x)
 #
 # (2) Deep Clone = Separate Address for each Object
-# x=fruits.deepcopy()
+x=fruits.deepcopy()
 
 # Built-in Types : Mutable = Numbers,string,tuples : UnMutable = List,Dictionaries,Sets
 # characteristics of a Class= template or blueprint
@@ -1945,55 +1950,55 @@ for count in range(num):
 # Overload Constructor __init__
 
 
-"""
+
 
 
 #                                              Syntax                                                                             if Statement
 # if-statement : if, if-else, elif, Switch Statement, Nested-if. ==, =, !=, <, <=, >, >= if = Yes or No
 # if p > r or q > r: / print
 # if-else = if / print / else / print
-"""                                                   Sample
+#                                                   Sample
 a = 619
 if [a > 618]:
     print("initial if")
-    """
+    
 #                                                                                                             ELIF
 #                                                                                                             => in end of statement:, ... / ... else-if code block
 # Nested if = target of previous if statement. use :, []
 
-"""check_variable = 619
+check_variable = 619
 if (check_variable == 219):
-print("Wrong Checking next val in elif")
+    print("Wrong Checking next val in elif")
 elif (check_variable == 419):
-print("The Value is Incorrect")
+    print("The Value is Incorrect")
 elif (check_variable == 619):
-print("Hi Abith")
-"""
+    print("Hi Abith")
+
 #                                                                                                           if-else
-# a = 10
-# b = 20
-# if a > b:
-# print("a is greater than b")
-# else:
-# print("b is greater than a")
+a = 10
+b = 20
+if a > b:
+    print("a is greater than b")
+else:
+    print("b is greater than a")
 #                                                                                                                                        LOOP
 #                                                                                                parsing
 # $ Below example is a use-case of finding first leap year from 2000 to 2005
 # # parsing through the year from 2000 to 2005
-# for year in range(2000,2005):
-# #checking whether the year is leap year or not
-# if year%4==0 and year%100!=0:
-# print("year is first leap year" ,year)
-# break
+for year in range(2000,2005):
+# checking whether the year is leap year or not
+if year%4==0 and year%100!=0:
+    print("year is first leap year" ,year)
+    break
 #                                       print all prime numbers between 0 and 20.
-# for n in range(0, 20):
+for n in range(0, 20):
 # # Since all the  prime numbers are always greater than 1
-# if n> 1:
-# for i in range(2, n):
-# if (n % i) == 0:
-# break
-# else:
-# print(n)
+if n> 1:
+for i in range(2, n):
+if (n % i) == 0:
+    break
+else:
+    print(n)
 
 #                                                                                                                              While Loop
 
@@ -2004,46 +2009,46 @@ print("Hi Abith")
 # sum=0            /     i=math.floor(i/10)
 # while i>0:       /     print(sum)       /    (Loop Completed)
 #
-# $ I=1
-# While(1):
-# Print “We are in the loop”
-# If(i>10):
-# print ”Here break statement works”
-# break
-# I=i+1
-# print I
-# print “I am out of the loop”
+I=1
+While(1):
+Print “We are in the loop”
+If(i>10):
+print ”Here break statement works”
+break
+I=i+1
+print I
+print “I am out of the loop”
 #                                        search 9 using while loop
-# $ i = 0;
-# # While condition
-# while 1:
-# print(i)
-# i=i+1;
-# if i == 9:
-# # break if 9 is found
-# break;
-# print("out of loop");
+i = 0;
+# While condition
+while 1:
+    print(i)
+    i=i+1;
+if i == 9:
+    # break if 9 is found
+    break;
+    print("out of loop");
 #
 #               $       print the variable from 2 to 5 and decremented by 2
-# counter = 5
-# While counter >=2:
-#    print("counter =", counter)
-#    counter = counter -2
+counter = 5
+While counter >=2:
+print("counter =", counter)
+counter = counter -2
 #                                             sum of 1st 5 integers
-# $ sum = 0
-# counter = 0
-# while(counter<10):
-# sum = sum + counter
-# counter = counter + 1
-# if counter == 5:
-# break
-# print("Sum of the first ",counter)
-# print("integers is: ", sum)
+sum = 0
+counter = 0
+while(counter<10):
+    sum = sum + counter
+    counter = counter + 1
+if counter == 5:
+    break
+print("Sum of the first ",counter)
+print("integers is: ", sum)
 #                                                                                                                             While  Decrement
-# counter = 0
-# # while(counter<=10):
-# print ("counter = "counter)
-# counter = Counter -2
+counter = 0
+while(counter<=10):
+    print ("counter = "counter)
+    counter = Counter -2
 #                                                                                                               sorting the string using while loop in python.
 #                                                Code:
 #                                                      creating string
@@ -2080,9 +2085,9 @@ print(new_string)
 # If not condition:
 # break;
 #                                                                                                                           Matching a string
-# Import = import string
-# import random
-# import time
+import string
+import random
+import time
 #                                                                                 Variable section
 # endeavourNext = ''
 # completed = False
@@ -2095,22 +2100,22 @@ print(new_string)
 # endeavourThis = ''.join(random.choice(propableCharacters)
 # for i in range(len(t)))
 #                                                                           Iterate While Completed Is False
-# while completed == False:
-# print(endeavourThis)
-# endeavourNext = ''
-# completed = True
-# for i in range(len(t)):
-# if endeavourThis[i] != t[i]:
-# completed = False
-# endeavourNext += random.choice(propableCharacters)
-# else:
-# endeavourNext += t[i]
-#                                                                         Increment the iterator += 1
-# endeavourThis = endeavourNext
-# time.sleep(0.1)
+while completed == False:
+    print(endeavourThis)
+    endeavourNext = ''
+    completed = True
+for i in range(len(t)):
+if endeavourThis[i] != t[i]:
+    completed = False
+    endeavourNext += random.choice(propableCharacters)
+else:
+    endeavourNext += t[i]
+    #                                                                         Increment the iterator += 1
+endeavourThis = endeavourNext
+time.sleep(0.1)
 #                                                                          Driver Code
-# print("Target match found after " +
-# str(iterator) + " iterators")
+print("Target match found after " +
+str(iterator) + " iterators")
 
 #                                                                                                                                 ForLoop
 # traverse or iterate over a sequence (list, tuple, string) or other iterable objects.
@@ -2122,70 +2127,70 @@ print(new_string)
 """for i in range(1,11): / for(j in range(1,3)):
 print(i)                   print(j)              """
 #
-# $ a=[ ‘A’,’B’,’C’,’D’,’E’,’F’,’G’,’H’] for I in a:
-# print “We are in loop with”
-# print i
-# if i==’G’:
-# print ”Here Break statement is triggered”
-# break
-# print ”We are outside the loop”
+a=[ ‘A’,’B’,’C’,’D’,’E’,’F’,’G’,’H’] for I in a:
+print “We are in loop with”
+print i
+if i==’G’:
+    print ”Here Break statement is triggered”
+    break
+print ”We are outside the loop”
 #                                                                                                                        Iterating on String (Loop through it)
-# print("\nString Iteration")
-# string1 = "hello"
-# for i in string1 :
-# print(i)
+print("\nString Iteration")
+string1 = "hello"
+for i in string1 :
+    print(i)
 #                                                                          $ Iterating Looping fetching values from list
-# pets = ["cats", "dogs", "rabbits", "cow"]
-# for Looping-value in pets:
-# print (Looping-value)
+pets = ["cats", "dogs", "rabbits", "cow"]
+for Looping-value in pets:
+    print (Looping-value)
 #                                                                                                                                 Enumeration
 # Enumeration is Looping a Multi-Dimensional Array, The list will have More than 1 column to be taken out
-# pets = ["cats", "dogs", "rabbits", "cow"]
-# for index, Looping-value in enumerate(pets)
-#  print(index, Looping-value)
+pets = ["cats", "dogs", "rabbits", "cow"]
+for index, Looping-value in enumerate(pets)
+print(index, Looping-value)
 #                                                                                                                          Turtle Graphing Technique
 # Function eg
-# import turtle
-# def border(obj1, panel_x, panel_y):
-# obj1.penup()
-# obj1.home()
-# obj1.forward(panel_x / 2)
-# obj1.right(90)
-# obj1.forward(panel_y / 2)
-# obj1.setheading(180)
-# obj1.pencolor('red')
-# obj1.pendown()
-# obj1.pensize(10)
-# for distance in (panel_x, panel_y, panel_x, panel_y):
-# obj1.forward(distance)
-# obj1.right(90)
-# obj1.penup()
-# obj1.home()
-# def square(obj1, size, color):
-# obj1.pencolor(color)
-# obj1.pendown()
-# for i in range(4):
-# obj1.forward(size)
-# obj1.right(90)
-# def main():
-# panel = turtle.Screen()
-# panel.title('Square Demo')
-# panel_x, panel_y = panel.screensize()
-# obj1 = turtle.Turtle()
-# border(obj1, panel_x, panel_y)
-# colors = ['red', 'orange', 'yellow', 'green', 'blue', 'violet'] obj1.pensize(3)
-# for i, color in enumerate(colors):
-# square(obj1, (panel_y / 2) / 10 * (i+1), color)
-# print('Hit any key to exit')
-# dummy = input()
+import turtle
+def border(obj1, panel_x, panel_y):
+    obj1.penup()
+    obj1.home()
+    obj1.forward(panel_x / 2)
+    obj1.right(90)
+    obj1.forward(panel_y / 2)
+    obj1.setheading(180)
+    obj1.pencolor('red')
+    obj1.pendown()
+    obj1.pensize(10)
+for distance in (panel_x, panel_y, panel_x, panel_y):
+    obj1.forward(distance)
+    obj1.right(90)
+    obj1.penup()
+    obj1.home()
+def square(obj1, size, color):
+    obj1.pencolor(color)
+    obj1.pendown()
+for i in range(4):
+    obj1.forward(size)
+    obj1.right(90)
+def main():
+    panel = turtle.Screen()
+    panel.title('Square Demo')
+    panel_x, panel_y = panel.screensize()
+    obj1 = turtle.Turtle()
+    border(obj1, panel_x, panel_y)
+    colors = ['red', 'orange', 'yellow', 'green', 'blue', 'violet'] obj1.pensize(3)
+for i, color in enumerate(colors):
+    square(obj1, (panel_y / 2) / 10 * (i+1), color)
+    print('Hit any key to exit')
+    dummy = input()
 #                                                                                            Main Program Call
 # if __name__ == '__main__':
 # main()
 #                                                                                                                               Enumeration
-# myDictionary = {"peter":38, },
-# myDictionary = {"key1 :value1 , key2:value2, key3:value3}
-# print ( myDictionary["peter"])
-# myDictionary = dict{ "peter":38, "":51 )
+myDictionary = {"peter":38, },
+myDictionary = {"key1 :value1 , key2:value2, key3:value3}
+print ( myDictionary["peter"])
+myDictionary = dict{ "peter":38, "":51 )
 print ( mydictionary, ["peter"])
 # range(start, end, step) = values from start value to end values  $                                                                 Range
 
@@ -2217,32 +2222,32 @@ print(sort_string)
 #                                                                                     Count to be processed
 # var1=int(input("Count of elements for the dictionry:"))
 #                                                                                  print (Key Elements)
-# for x in range(0,var1):
-# element=int(input("Element item entered" + str(x+1) + ":"))
-# Key_elements.append(element)
+for x in range(0,var1):
+    element=int(input("Element item entered" + str(x+1) + ":"))
+    Key_elements.append(element)
 #                                                                                Print (Value Elements)
-# for x in range(0,var1):
-# element=int(input("Element item entered" + str(x+1) + ":"))
-# value_elements.append(element)
-# d=dict(zip(Key_elements,value_elements))
-# #Print Section
-# print("The formulated dictionary is:")
-# print(d)
+for x in range(0,var1):
+    element=int(input("Element item entered" + str(x+1) + ":"))
+    value_elements.append(element)
+    d=dict(zip(Key_elements,value_elements))
+#Print Section
+print("The formulated dictionary is:")
+print(d)
 #                                                                                                                               Infinite Loops
 # A loop becomes infinite loop if the condition given never becomes false. It keeps on running
-# a = 1
-# while(a == 1)
-# n=int(input("enter the number"))
-# print("you entered:" , n)
+a = 1
+while(a == 1)
+n=int(input("enter the number"))
+print("you entered:" , n)
 #                                                                                                                                Nested loops
-# for iterating_variable#1 in sequence#1:
-# for iterating_variable#2 in sequence#2:
-# statements(s)
-# statements(s)
-# while expression#1:
-# while expression#2:
-# statement(s)
-# statement(s)
+for iterating_variable#1 in sequence#1:
+for iterating_variable#2 in sequence#2:
+    statements(s)
+    statements(s)
+while expression#1:
+    while expression#2:
+        statement(s)
+        statement(s)
 #                                                                                                                               Switch Statement
 # Switch Statement = while LOOP = while condition statisfy do the process : Continue Loop
 # if-else-if ladder statement = > Switch-case => not an inbuilt function
@@ -2261,28 +2266,28 @@ print(sort_string)
 # key_3: value_3/method_3(),
 # ::
 #
-# def get_week_day(argument) :           (argument=day)
-# switcher = {
-# 0: "Sunday",
-# 1: "monday",
-# }
-# return switcher.get(argument, "Invalid Day")
-# if __name__ == "__main__":
-# print(get_week_day(0))
-# print(get_week_day(1))
+def get_week_day(argument) : #          (argument=day)
+    switcher = {
+        0: "Sunday",
+        1: "monday",
+        }
+        return switcher.get(argument, "Invalid Day")
+if __name__ == "__main__":
+    print(get_week_day(0))
+    print(get_week_day(1))
 
 
 #                                                                                                                        Break statement in the Nested Loop
 
-# num = [1, 2, 3] # Array of Character
-# str = ['y' ,'x', 'z'] # outer loop
-# for i in num:
-# print("Number of items: " ,i)
-# # inner loop
-# for j in str:
-# if j == 'z':
-# break
-# print(" String of items: " ,j)
+num = [1, 2, 3] # Array of Character
+str = ['y' ,'x', 'z'] # outer loop
+for i in num:
+    print("Number of items: " ,i)
+# inner loop
+for j in str:
+if j == 'z':
+    break
+print(" String of items: " ,j)
 
 # """                                                                  Loop control statements =                          break, Continue, Pass
 # """
@@ -2290,26 +2295,26 @@ print(sort_string)
 # for i in ""Abith: / if(i=="t"): / break / else: / print(i) O/P = A / b / i
 #
 # $ (eg)                                                                  Loop Control Code (eg)
-# var_a = 1
-# var_b = 2
-# while var_a < var_b:
-# print(" Code enters while loop ")
-# var_c = ["SUV","sedan","hatchback","End"] for iterator in var_c:
-# if iterator == "SUV":
-# print("Hyundai creata")
-# print("Mahindra bolero")
-# print("---------------")
-# if iterator == "sedan":
-#                                                                                                                           Loop Control Statement: Pass
-# pass
-# if iterator =="hatchback":
-# print("Renault Kwid")
-# print("suzuki alto")
-# print("---------------")
-# if iterator == "End":
-#                                                                                                                         Loop Control Statement: Break
-# break
-# var_a = var_a+1
+var_a = 1
+var_b = 2
+while var_a < var_b:
+    print(" Code enters while loop ")
+var_c = ["SUV","sedan","hatchback","End"] for iterator in var_c:
+if iterator == "SUV":
+    print("Hyundai creata")
+    print("Mahindra bolero")
+    print("---------------")
+if iterator == "sedan":
+    #                                                                                                                           Loop Control Statement: Pass
+    pass
+if iterator =="hatchback":
+    print("Renault Kwid")
+    print("suzuki alto")
+    print("---------------")
+if iterator == "End":
+    #                                                                                                                         Loop Control Statement: Break
+    break
+var_a = var_a+1
 #                                                                                                                               Continues Loop
 
 # Continues Loop = for / if / continue / else / print() :
@@ -2319,35 +2324,35 @@ print(sort_string)
 # Pass = terminate, divert the flow of loops in a program , break statement to exit the loop, while used in inner loop the flow of execution if diverted to the next statement in outer loop
 # def prod():/ for in range(10) ; / for j in range(): / print i*j / if i*j>50 / return = break function
 #                                              to use without calling function :
-# for in range(10);
-# for j in range(10):
-# print i*j
-# if i*j>50:
-# break
-# else:
-# continue                                     # this will be executed if the loop ended normally (no break)
-# break                               # this will be executed if 'continue' was skipped (break)                               Break
+for in range(10);
+for j in range(10):
+    print i*j
+if i*j>50:
+    break
+else:
+    continue                                     # this will be executed if the loop ended normally (no break)
+break                               # this will be executed if 'continue' was skipped (break)                               Break
 #  if the product of two numbers is > 50 then break if true,
 #
-# a=[‘a’,’b’,’1’] for I in a;
-# if (i.is_numeric()):
-# break
-# print a
-# print ‘Found a number in the list’
+a=[‘a’,’b’,’1’] for I in a;
+if (i.is_numeric()):
+    break
+print a
+print ‘Found a number in the list’
 #
 #                                            # Prints out
-# 0,1,2,3,4 count = 0
-# while True:
-# print(count)
-# count += 1 if
-# count >= 5:
-# break
+0,1,2,3,4 count = 0
+while True:
+    print(count)
+    count += 1 if
+    count >= 5:
+    break
 #                                                                                                                                  $ Continue
 #                                 # Prints out only odd numbers - 1,3,5,7,9
-# for x in range(10):
+for x in range(10):
 #                                 # Check if x is even
-# if x % 2 == 0:
-# continue
+if x % 2 == 0:
+    continue
 
 #                                                                                                                          Exception & ErroR Handling
 
@@ -2359,22 +2364,104 @@ print(sort_string)
 # Generic except block = Unknown exceptions: except: / print("")
 # import random / from time import clock / random-int = random.randint(1, 100) / print random-int
 
-#                                                                                                                              Exception
-# def some_function():
-# try:
-# 10 / 0
-# except ZeroDivisionError:
-# print "Oops, invalid."
-# else:
-# pass
-# finally:
-# print "We're done with that."
-# >>> some_function()
-# Oops, invalid.
-# We're done with that
+#                                                                                                                              Exception-handling
+def some_function():
+    try:
+        10 / 0
+    except ZeroDivisionError:
+        print("Oops, invalid.")
+        else:
+            pass
+        print("We're done with that.")
+# custom exception
+class User_Exception1( Exception ):
+class User_Exception2( Exception ):
+    try:                 # Executed on top of suspicious code
+        except User_Exception1:
+            except User_Exception2:
+                else:
+#   This piece will be executed when a user_exception 1 is triggeredexcept User_Exception2:   This piece will be executed when a user_exception 1 is triggered else:
 
+#                                                                                     Implement Custom Exception
+class Error(Exception):
+    """Base class for other exceptions"""
+    pass
+class To_small_value_exception(Error):
+    """This exception will be raised when the keyed in value is too small"""
+    pass
+class To_large_value_exception(Error):
+    """ This exception will be raised when the keyed in value is too large"""
+    pass
+Check_value = 10
+while True:
+    try:
+        Input_Number = int(input("Enter a number: "))
+        if Input_Number < Check_value:
+            raise To_small_value_exception
+        elif Input_Number > Check_value:
+            raise To_large_value_exception
+            break
+        except To_small_value_exception:
+            print("The keyed in value is very small")
+            print()
+        except To_large_value_exception:
+            print("The keyed in value is very large")
+            print()
+            print("The keyed in value is acceptable!!.")
 
+# The user defined exceptions are declared here
+class Error(Exception):
+    """ Base class for other exceptions """
+pass
+class Not_Suitable_value_exception(Error):
+    """ This exception will be raised when the keyed in value is not in range """
+pass
+while True:
+    try:
+        Input_Number = int(input("Enter a number: "))
+        if Input_Number not in range(1,10):
+            raise Not_Suitable_value_exception
+            break
+    except Not_Suitable_value_exception:
+        print("The keyed in value is not suitable")
+        print()
+        print("The keyed in value is acceptable!!.")
 
+# 
+class Error(Exception):
+    """ Base class for other exceptions """
+pass
+class Not_Suitable_value_exception(Error):
+    """ This exception will be raised when the keyed in value is not integer """
+pass
+while True:
+    try:
+        Input_Number = input("Enter a number: ")
+        if not Input_Number.isdigit():
+            raise Not_Suitable_value_exception
+            break
+    except Not_Suitable_value_exception:
+        print("The keyed in value is not suitable")
+        print()
+        print("The keyed in value is acceptable!!.")
+
+# 
+class Error(Exception):
+    """ Base class for other exceptions """
+    pass
+class Not_Suitable_value_exception(Error):
+    """ This exception will be raised when the keyed in value is not positive """
+    pass
+while True:
+    try:
+        Input_Number = int(input("Enter a number: "))
+        if Input_Number == 0:
+            raise Not_Suitable_value_exception
+            break
+    except Not_Suitable_value_exception:
+        print("The keyed in value is not positive")
+        print()
+        print("The keyed in value is positive!!.")
 
 #                                                                                                                               Socket programing
 #                                                  $ Socket Server (TCP)
@@ -2431,18 +2518,18 @@ print(message)
 c = np.array([[(1.5,2,3), (4,5,6)], [(3,2,1), (4,5,6)]], dtype = float)
 #
 #                                                                                                                           Arithmatic Operations in Numpy
-# x = np.array ( [5,6,7] )
-# y = np.array ( [2,3,8] )
-# Result = x - y
-# Result = np.subtract(x,y), add, divide, multiply, Exponentiation = exp(x), Square root = sqrt(x), Cosine = cos(b), Sine = sin(x)
+x = np.array ( [5,6,7] )
+y = np.array ( [2,3,8] )
+Result = x - y
+Result = np.subtract(x,y), add, divide, multiply, Exponentiation = exp(x), Square root = sqrt(x), Cosine = cos(b), Sine = sin(x)
 
 #                                                                                                                               Sub-setting
 # Fetching a single element out of an array by using the index values
 # a = np.array([(1,2,3), (4,5,6)], type = int)
 # a[0][1] \ O/P = 2
 #                                                                                                                          $      Slicing
-# a = np.array( [4,6,9] )
-# a[0:2], a[a<2]
+a = np.array( [4,6,9] )
+a[0:2], a[a<2]
 
 #                                                                                                                           Exercise Programs
 
@@ -2450,96 +2537,96 @@ c = np.array([[(1.5,2,3), (4,5,6)], [(3,2,1), (4,5,6)]], dtype = float)
 # Using list comprehension
 #                                                                     # Python code to convert list of tuples into list
 #                                                                              # List of tuple initialization
-# lt = [('Geeks', 2), ('For', 4), ('geek', '6')]
+lt = [('Geeks', 2), ('For', 4), ('geek', '6')]
 #                                                 # using list comprehension
-# out = [item for t in lt for item in t]
+out = [item for t in lt for item in t]
 #                                                 # printing output
-# print(out)
+print(out)
 # Using itertools
 #                                             # Python code to convert list of tuple into list
 #                                                        # Importing
-# import itertools
+import itertools
 #                                        # List of tuple initialization
-# tuple = [(1, 2), (3, 4), (5, 6)]
+tuple = [(1, 2), (3, 4), (5, 6)]
 #                                                                                                                               # Using itertools
-# out = list(itertools.chain(*tuple))
+out = list(itertools.chain(*tuple))
 #                                                     # printing output
-# print(out)
+print(out)
 # Using iteration
 #                                        # Python code to convert list of tuple into list
 #                                        # List of tuple initialization
-# tup = [(1, 2), (3, 4), (5, 6)]
+tup = [(1, 2), (3, 4), (5, 6)]
 #                                       # result list initialization
-# result = []
-# for t in tup:
-#     for x in t:
-#         result.append(x)
+result = []
+for t in tup:
+    for x in t:
+        result.append(x)
 #                                             # printing output
-# print(result)
-# Using sum
+print(result)
+Using sum
 #                                               # Python code to convert list of tuple into list
 #                                                 # List of tuple initialization
-# tup = [(1, 2), (3, 4), (5, 6)]
+tup = [(1, 2), (3, 4), (5, 6)]
 #                                                       # using sum function()
-# out = list(sum(tup, ()))
+out = list(sum(tup, ()))
 #                                                 # printing output
-# print(out)
+print(out)
 # Using operator and reduce
 #                                                         # Python code to convert list of tuple into list
-# import operator
-# from functools import reduce
+import operator
+from functools import reduce
 #                                                            # List of tuple initialization
-# tup = [(1, 2), (3, 4), (5, 6)]
+tup = [(1, 2), (3, 4), (5, 6)]
 #                                                               # printing output
-# print(list(reduce(operator.concat, tup)))
+print(list(reduce(operator.concat, tup)))
 #                                                                                                                                  Using lambda
 #                                                          # List of tuple initialization
-# tup = [(1, 2), (3, 4), (5, 6)]
+tup = [(1, 2), (3, 4), (5, 6)]
 #                                         # Using map for 0 index
-# b = map(lambda x: x[0], tup)
+b = map(lambda x: x[0], tup)
 #                                         # Using map for 1 index
-# c = map(lambda x: x[1], tup)
+c = map(lambda x: x[1], tup)
 #                                            # converting to list
-# b = list(b)
-# c = list(c)
+b = list(b)
+c = list(c)
 #                                              # Combining output
-# out = b + c
+out = b + c
 #                                             # printing output
-# print(out)
+print(out)
 #                                      Typecasting to tuple can be done by simply using                                        tuple(list_name).
 #                                            # list into a tuple
-# def convert(list):
-#     return tuple(list)
+def convert(list):
+    return tuple(list)
 #                                              # Driver function
-# list = [1, 2, 3, 4]
-# print(convert(list))
+list = [1, 2, 3, 4]
+print(convert(list))
 #                                                Output:
 # (1, 2, 3, 4)
 #                                                Approach #2 :
 # A small variation to the above approach is to                                                                              use a loop inside tuple()
 #                                               # list into a tuple
-# def convert(list):
-#     return tuple(i for i in list)
+def convert(list):
+    return tuple(i for i in list)
 #                                                # Driver function
-# list = [1, 2, 3, 4]
-# print(convert(list))
+list = [1, 2, 3, 4]
+print(convert(list))
 #                                           Output:
-# (1, 2, 3, 4)
-# Approach #3 : Using (*list, )
+(1, 2, 3, 4)
+#3 : Using (*list, )
 #                                                   # Python3 program to                                                 convert a  list into a tuple
-# def convert(list):
-#     return (*list, )
+def convert(list):
+    return (*list, )
 #                                                          # Driver function
-# list = [1, 2, 3, 4]
-# print(convert(list))
+list = [1, 2, 3, 4]
+print(convert(list))
 #                                                      Output:
 # (1, 2, 3, 4)
 
 #                                                                                py code
-# x = {1,2,4,4,5}
-# x.add(5)
-# x.add(6)
-# print('x')
+x = {1,2,4,4,5}
+x.add(5)
+x.add(6)
+print('x')
 #                                                                                html code
 #
 # <pre><font color="#008700">In [</font><font color="#33DA7A"><b>10</b></font><font color="#008700">]: </font>x = {<font color="#008700">1</font>,<font color="#008700">2</font>,<font color="#008700">3</font>,<font color="#008700">4</font>,<font color="#008700">5</font>}
@@ -2573,7 +2660,7 @@ print("this is my doc string:" , __doc__)
 sys.exit (0)
 
 #                                                                                                                           Happy Birthday Program
-"""
+
 import os
 import subprocess
 import time
@@ -2621,5 +2708,4 @@ time.sleep((float(display_rate * t_total) / data_length) * correction)
 if _f != data_length / display_rate - 1:
     os.system("clear")
 raw_input()
-"""
 #
