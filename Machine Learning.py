@@ -6,10 +6,12 @@
 # Make simulated data regression using plotting , Pre-processing ,
 # Minimum,Max Scale using Standard Deviation (standard.scaler)
 # Libraries Import: Sklearn.datasets , numpy , matplotlib.pyplot as plt, make_blobs
-# plt.scatter ,
+# plot.scatter
 # create an array, filter-dataframe.dropna , isNan(x)
 # Shuffle Values , Null Values
 # Generate dataset to print a matrix : 
+from pandas.core.frame import DataFrame
+
 print(matrix(runif(6*3), n row=6, n col=3))
 # create imputer object: 
 impute = SimpleImpute(missing_values=np.nan, Strategy=‘most_frequent’)
@@ -46,10 +48,14 @@ distinct_value.transform(pdframe["treatment_score"]) # transform data into value
 # map data with corresponding values
 pdframe["treatment_score"] # normal is 0, strong is 1, weak is 2
 # transforming the values to the numbers
-
-# map values using mappers
-
-
+#                                            map values using mappers, (specific_values)
+myscale = {
+    'strong' : 6,
+    'weak' : 1, # raw data
+    'normal' : 9
+}
+pdframe['myscale'] = pdframe['treatment_score'].replace(myscale) # replacing a value in a column
+pdframe
 
 #                                                                  Feature Selection
 from sklearn import datasets
@@ -113,9 +119,12 @@ load iris.dataset
 sepal Length & Width, petal Length & Width
 x = iris.data, y = iris.target
 from iris load setosa
-iris.setosa = to Find the category
-Supervised Learning
-K-means, DBSCAN = Cluster Models
+iris_df = pd.DataFrame(iris, columns =iris.feature_names )
+iris_df['sepal length (cm)']
+iris_df
+# iris.setosa = to Find the category
+# Supervised Learning
+# K-means, DBSCAN = Cluster Models
 # non-Supervised Learning = Support Vector Classifier = no Output
 #                                                            Methods
 # Collect the Data
@@ -214,8 +223,21 @@ X = X.astype(int)
 chi2_algorithm = SelectKBest(chi2, k=2)
 X_Output = chi2_algorithm.fit_transform(x, y)
 print("Reduced number of features", X_Output.shape[1])
-#                                                                                                                                 Non-Supervised Learning
+#                                                                                                                                 Un-Supervised Learning
+# models itself find the hidden patterns and insights from the given data
+# cannot be directly applied to a regression or classification problem because unlike supervised learning
+# find the underlying structure of dataset, group that data according to similarities, and represent that dataset in a compressed format
+# clustering = svd, pca, k-means 
+# Assocation = Association Rule Mining or Market basket analysis
+# Assocation analysis = Apriori, fp-growth,Eclat Association mining identifies sets of items which often occur together in your dataset
+# to analyze large dataset to find patterns 
+# Algorithms = k-means clustering, Decision tree, KNN (k-nearest neighbors), Hierarchal clustering, Anomaly detection,
+# Neural Networks, Principle Component Analysis, Independent Component Analysis, Apriori algorithm, Singular value decomposition
+# finds the hidden patterns in data.
+
 #                                                                                           Clustering - KMeans
+# 
+# hidden Markow Model
 from sklearn import datasets
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
@@ -226,7 +248,127 @@ scaler = StandardScaler()
 X_std = scaler.fit_transform(X)
 clt = KMeans()
 
-# 
+#                                                                                           Supervised Learning
+# Datasets, training_sets, Labels, Annotations
+# Classification, Regression
+# Data + Algorithm = Predict Model
+# Algorithms
+# Regression = Linear, Polynomial
+# Decision Tree , Random forest, 
+# Classification = knn, trees, svm, nalve-bayes, Logistic Regression
+# The model will identify the fruit and predict the output using a suitable algorithm.
+# various algorithms such as Linear Regression, Logistic Regression,
+# Support Vector Machine, Multi-class Classification, Decision tree, Bayesian Logic
+Y=f(X)
+
+#                                                                                                                 Regression
+# Linear Regression, Logistic Regression, Polynomial Regression, Support Vector Regression,Decision Tree Regression
+# Random Forest Regression, Ridge Regression, Lisso Regression
 
 
+#                                                                                                              Data preprocessing
+# Reader, 
+# Splitter = partitioning data into training & performs Sreatification
+# Loader = Loads images , Transformer = adjusting or rezize, crop
+# augumenter to increase the training set additional images are synthesized by randomly augmenting (flipping, rotating, …) images
+# Batcher & Network: GPU-based machine learning demands that image and label data are grouped in mini-batches 
+# via a Batcher before passed on to the Network for training or inference
+# Logger = employed to write training losses or accuracies to a log file
+"""Importing datasets = import csv file using Spyder->variable explorer
+Finding Missing Data
+Encoding Categorical Data
+Splitting dataset into training and test set
+Feature scaling"""
+data_set= pd.read_csv('Dataset.csv') # to read dataset
+#                                              Extracting independent variables
+iloc[ ] #                              method of Pandas library.
+x= data_set.iloc[:,:-1].values
+#                                              Extracting dependent variable
+y= data_set.iloc[:,3].values
+#                                                                                     Handling Missing data
+# deleting the particular row
+# calculating the mean
+#                             handling missing data (Replacing missing data with the mean value)  
+from sklearn.preprocessing import Imputer  
+imputer= Imputer(missing_values ='NaN', strategy='mean', axis = 0)  
+#                                              Fitting imputer object to the independent variables x.   
+imputerimputer= imputer.fit(x[:, 1:3])  
+#                                                 Replacing missing data with the calculated mean value  
+x[:, 1:3]= imputer.transform(x[:, 1:3])
 
+#                                                                                     Encoding Categorical data
+# (eg.Country, and Purchased)
+#                                          For Country variable
+from sklearn.preprocessing import LabelEncoder  
+label_encoder_x= LabelEncoder()  # imported LabelEncoder class of sklearn library
+x[:, 0]= label_encoder_x.fit_transform(x[:, 0])
+#                                              Dummy Variables
+# number of columns equal to the number of categories.
+# OneHotEncoder class of preprocessing library
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder  
+label_encoder_x= LabelEncoder()  
+x[:, 0]= label_encoder_x.fit_transform(x[:, 0])  
+#                                                      Encoding for dummy variables  
+onehot_encoder= OneHotEncoder(categorical_features= [0])    
+x= onehot_encoder.fit_transform(x).toarray()
+#                                                         For Purchased Variable
+# purchased variable has only two categories yes or no
+# not using OneHotEncoder class
+labelencoder_y= LabelEncoder()  
+y= labelencoder_y.fit_transform(y)
+# Splitting the Dataset into the Training set and Test set
+from sklearn.model_selection import train_test_split  
+x_train, x_test, y_train, y_test= train_test_split(x, y, test_size= 0.2, random_state=0)
+#                                                                                          Feature Scaling
+# to standardize the independent variables of the dataset in a specific range
+# our variables in the same range and in the same scale so that no any variable dominate the other variable.
+Euclidean distance between A and B = root value of (x2-x1)2+(y2-y1)2
+# two ways to perform feature scaling
+# Standardization, Normalization
+from sklearn.preprocessing import StandardScaler
+st_x= StandardScaler()  
+x_train= st_x.fit_transform(x_train)
+x_test= st_x.transform(x_test)
+
+#                                                                           ciphertext
+# converts the plaintext to ciphertext and ciphertext to plain text
+pip install simple-crypt
+from simplecrypt import encrypt, decrypt
+message = "Hello!! Welcome to AIM!!"
+ciphercode = encrypt('AIM', message)
+print(ciphercode)
+# call the decrypt function and decode the original message from this ciphertext
+original = decrypt('AIM', ciphercode)
+print(original)
+#                                                   encryption and decrypting the files
+class Encryptor():
+    def key_create(self):
+        key = Fernet.generate_key()
+        return key
+    def key_write(self, key, key_name):
+with open(key_name, 'wb') as mykey:
+    mykey.write(key)
+def key_load(self, key_name):
+    with open(key_name, 'rb') as mykey:
+        key = mykey.read()
+        return key
+def file_encrypt(self, key, original_file, encrypted_file):
+    f = Fernet(key)
+with open(original_file, 'rb') as file:
+    original = file.read()
+    encrypted = f.encrypt(original)
+with open (encrypted_file, 'wb') as file:
+    file.write(encrypted)
+def file_decrypt(self, key, encrypted_file, decrypted_file):
+     f = Fernet(key)
+with open(encrypted_file, 'rb') as file:
+    encrypted = file.read()
+    decrypted = f.decrypt(encrypted)
+with open(decrypted_file, 'wb') as file:
+    file.write(decrypted)
+    encryptor=Encryptor()
+    mykey=encryptor.key_create()
+encryptor.key_write(mykey, 'mykey.key')
+loaded_key=encryptor.key_load('mykey.key')
+encryptor.file_encrypt(loaded_key, 'grades.csv', 'enc_grades.csv')
+encryptor.file_decrypt(loaded_key, 'enc_grades.csv', 'dec_grades.csv')

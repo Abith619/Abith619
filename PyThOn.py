@@ -281,8 +281,13 @@ print(lis.count(3))
 #                                                                                                                                       class :
 # any Attribute defined within a class definition but not within a fun() = class Attribute 
 # it can share across all instances of the class, # changes are Visible to all other Instances
-#                                                                                                                               class object concept
+# Attributes, Behaviour are defined
+# human = class, abith = object
+# data, functions are bundled as Unit
 
+#                                                                                                                               object
+# Identity, Properities, behaviour
+# setting values
 Class Class_Name:
 Object_Name = Class_Name()
 Object_Name.Method_Name()
