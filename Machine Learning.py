@@ -264,141 +264,7 @@ Y=f(X)
 #                                                                                                                 Regression
 # Linear Regression, Logistic Regression, Polynomial Regression, Support Vector Regression,Decision Tree Regression
 # Random Forest Regression, Ridge Regression, Lisso Regression
-
-#                                                                                      Linear Regression
-# makes predictions for continuous/real or numeric variables such as sales, salary, age, product price
-# Simple Linear Regression = to predict the value of a numerical dependent variable
-# Multiple Linear regression = more than one independent variable is used to predict the value of a numerical dependent variable
-#                                  Linear Regression Line
-# Positive Linear Relationship = dependent variable increases on the Y-axis and independent variable increases on X-axis
-# Negative Linear Relationship = dependent variable decreases on the Y-axis and independent variable increases on the X-axis
-#                                   Finding the best fit line
-# the error between predicted values and actual values should be minimized(least error)
-#                                            Cost function
-# Cost function = to find the best fit line, to find the accuracy of the mapping function(Hypothesis function)
-# Mean Squared Error (MSE)  = avg(squared error occurred between the predicted values and actual values)
-#                                                Residuals
-# distance between the actual value and predicted values
-#                                              Gradient Descent
-# minimize the MSE by calculating the gradient of the cost function
-# to update the coefficients of the line by reducing the cost function
-# a random selection of values of coefficient and then iteratively update the values to reach the minimum cost function
-#                                              Model Performance
-# R-squared method = measures the strength of the relationship between the dependent and independent variables on a scale of 0-100%.
-# coefficient of determination, or coefficient of multiple determination for multiple regression
-#                                             Assumptions of Linear Regression
-# Linear relationship = linear relationship between the dependent and independent variables
-# Small or no multicollinearity between the features = high-correlation between the independent variables.
-#                                                        Homoscedasticity Assumption
-# the error term is the same for all the values of independent variables
-#                                                    Normal distribution
-# Normal distribution of error terms = checked using the q-q plot
-# the plot shows a straight line without any deviation, which means the error is normally distributed
-#                                                                    No autocorrelations
-# any correlation in the error term, then it will drastically reduce the accuracy of the model
-# occours when dependency between residual errors
-#                                                                                            Simple Linear Regression
-# dependent variable must be a continuous/real value
-# Forecasting new observations, Model the relationship between the two variables
-#                                                          Simple Linear Regression Model
-y= a0+a1x+ ε"""a0= It is the intercept of the Regression line (can be obtained putting x=0)
-a1= It is the slope of the regression line, which tells whether the line is increasing or decreasing.
-ε = The error term. (For a good model it will be negligible)"""
-# We want to find out if there is any correlation between these two variables
-# We will find the best fit line for the dataset.
-# How the dependent variable is changing by changing the dependent variable.
-#                     Step 1: Data Pre-processing
-import numpy as nm  
-import matplotlib.pyplot as mtp  
-import pandas as pd  
-# Next, we will load the dataset into our code:
-data_set= pd.read_csv('Salary_Data.csv')
-# extract the dependent and independent variables from the given dataset
-x= data_set.iloc[:, :-1].values
-y= data_set.iloc[:, 1].values
-# split both variables into the test set and training set
-from sklearn.model_selection import train_test_split
-x_train, x_test, y_train, y_test= train_test_split(x, y, test_size= 1/3, random_state=0)
-#                                        Fitting the Simple Linear Regression to the Training Set
-# overfitting can produce misleading R-squared values, regression coefficients, and p-values
-# import the LinearRegression class of the linear_model library from the scikit learn, regressor = object of the class
-#                                      Fitting the Simple Linear Regression model to the training dataset  
-from sklearn.linear_model import LinearRegression
-regressor= LinearRegression()
-regressor.fit(x_train, y_train) # fit() method to fit our Simple Linear Regression object to the training set
-# o/p = LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None, normalize=False)
-#                                     Prediction of test, training-set result(Training)
-# Visualizing the Training set results, performance of our model 
-mtp.scatter(x_train, y_train, color="green")   # create a scatter plot of observations.
-mtp.plot(x_train, x_pred, color="red")    # plot the regression line, predicted salary for training set x_pred, and color of the line
-mtp.title("Salary vs Experience (Training Dataset)")  # title for the plot
-mtp.xlabel("Years of Experience")  # assign labels for x-axis and y-axis
-mtp.ylabel("Salary(In Rupees)")  
-mtp.show()
-#                                          visualizing the Test set results(Test)
-mtp.scatter(x_test, y_test, color="blue")   # Test
-mtp.plot(x_train, x_pred, color="red")      # Train
-mtp.title("Salary vs Experience (Test Dataset)")  
-mtp.xlabel("Years of Experience")  
-mtp.ylabel("Salary(In Rupees)")  
-mtp.show()
-#                                                                                                    Multiple Linear Regression
-# response variable is affected by more than one predictor variable
-# (MLR) is to model the linear relationship between the explanatory (independent) variables and response (dependent) variable
-# linear relationship between a single dependent continuous variable and more than one independent variable
-# For MLR, the dependent or target variable(Y) must be the continuous/real
-# predictor or independent variable may be of continuous or categorical form
-Y= b0+b1x1+ b2x2+ b3x3+...... bnxn       ............... (a)
-"""Y= Output/Response variable
-b0, b1, b2, b3 , bn....= Coefficients of the model.
-x1, x2, x3, x4,...= Various Independent/feature variable"""
-#                Assumptions for Multiple Linear Regression
-# Multivariate Normality = residuals are normally distributed.
-# No Multicollinearity = independent variables are not highly correlated with each other, tested using Variance Inflation Factor (VIF) values
-# Homoscedasticity = variance of error terms are similar across the values of the independent variables
-# at least two independent variables, which can be nominal, ordinal, or interval/ratio level variables.
-# The regression residuals must be normally distributed, MLR assumes little or no multicollinearity in data
-#                                                             implementation of Multiple Linear Regression model
-#                                                 Problem
-"""We have a dataset of 50 start-up companies. This dataset contains five main information: 
-R&D Spend, Administration Spend, Marketing Spend, State, and Profit for a financial year. Our goal is to create a model that can 
-easily determine which company has a maximum profit, and which is the most affecting factor for the profit of a company."""
-#                                Data Pre-processing Steps
-import numpy as nm  
-import matplotlib.pyplot as mtp  
-import pandas as pd
-#                   importing datasets  
-data_set= pd.read_csv('50_CompList.csv')
-#                   Extracting Independent and dependent Variable  
-x= data_set.iloc[:, :-1].values
-y= data_set.iloc[:, 4].values
-#                                         Encoding Dummy Variables
-#                      Catgorical data  
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder  
-labelencoder_x= LabelEncoder()  
-x[:, 3]= labelencoder_x.fit_transform(x[:,3])  
-onehotencoder= OneHotEncoder(categorical_features= [3])    #  create the dummy variables
-x= onehotencoder.fit_transform(x).toarray()
-#                               avoiding the dummy variable trap
-x = x[:, 1:]
-#                           Splitting the dataset into training and test set.  
-from sklearn.model_selection import train_test_split
-x_train, x_test, y_train, y_test= train_test_split(x, y, test_size= 0.2, random_state=0)
-
-# Fitting the MLR model to the training set
-from sklearn.linear_model import LinearRegression  
-regressor= LinearRegression()  
-regressor.fit(x_train, y_train)
-# o/p = LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None, normalize=False)
-# Predicting the result of the test set
-y_pred= regressor.predict(x_test) #               create a y_pred vector
-#                                 check the score for training dataset and test dataset
-print('Train Score: ', regressor.score(x_train, y_train))
-print('Test Score: ', regressor.score(x_test, y_test))
-"""Effectiveness of Independent variable on prediction.
-Predicting the impact of changes
-to find the relations between two or more variables""" 
-#                                                                                   Terminologies Related to the Regression Analysis
+#                                                              Terminologies Related to the Regression Analysis
 # Dependent Variable = a target variable to predict or understand is called the dependent variable
 # Independent Variable (predictor) = used to predict the values of the dependent variables
 # Multicollinearity = variables are highly correlated with eachother
@@ -407,7 +273,105 @@ to find the relations between two or more variables"""
 # Underfitting = number of variables scarcely fits a given model
 # Heteroscedasticity (heteroskedasticity) = while reading variable’s standard error (SE) measured over a given time is not constant
 #                                                                                         $         Linear Regression
-# Analyzing trends, sales estimates, Salary forecasting, Real estate prediction, Arriving at ETAs in traffic.
+# Analyzing trends, sales estimates, Salary forecasting, Real estate prediction, Arriving at ETAs in traffic
+# for continuous/real or numeric variables such as sales, salary, age, product price
+# 2 Types = Simple Linear Regression = numerical dependent variable
+# Multiple Linear regression = more than one numerical dependent variable
+# Linear Regression Line = Positive Linear Relationship + Negative Linear Relationship
+# the best fit line = error between predicted values and actual values should be minimized(least error)
+#                                                         Cost function
+# estimate the values of the coefficient for the best fit line.(Hypothesis function)
+# optimizes the regression coefficients or weights. It measures how a linear regression model is performing
+# Mean Squared Error (MSE) = average of squared error occurred between the predicted values and actual values
+"""Yi = Actual value
+(a1xi+a0)= Predicted value"""
+#                                                           Residuals
+# distance between the actual value and predicted values
+# If the observed points are far from the regression line, then the residual will be high, and so cost function will high
+# If the scatter points are close to the regression line, then the residual will be small and hence the cost function.
+#                                                         Gradient Descent
+# minimize the MSE by calculating the gradient of the cost function
+# to update the coefficients of the line by reducing the cost function
+# by a random selection of values of coefficient and then iteratively update the values to reach the minimum cost function.
+#                                                                     Model Performance
+#         R-squared method(fit)
+# coefficient of determination, or coefficient of multiple determination 
+# it measures the strength of the relationship between the dependent and independent variables on a scale of 0-100%.
+#                            formal checks while building a Linear Regression model
+# Linear relationship between the features and target, between the dependent and independent variables
+# Small or no multicollinearity between the features, high-correlation between the independent variables
+#                                                               Homoscedasticity Assumption
+# error term is the same for all the values of independent variables. With homoscedasticity, 
+# there should be no clear pattern distribution of data in the scatter plot.
+
+#                                                                                                           Backward elimination
+# smartly trained to come out with better recognition of real-world objects
+# to remove those features that do not have a significant effect on the dependent variable or prediction of output
+# array of ones all elements of that array are “1”
+# 5% significance level for P-value, P-value = 0.05
+#                                                   Fit the model with all features
+import statsmodels.api as sm 
+X_train_opt = np.append(arr = np.ones((274,1)).astype(int), values = X_train, axis = 1) 
+X_train_opt = X_train_opt[:,[0, 1, 2, 3, 4, 5, 6, 7]] 
+regressor_OLS = sm.OLS(endog = y_train, exog = X_train_opt).fit()
+regressor_OLS.summary()
+# to build a model in Machine Learning
+"""All-in
+Backward Elimination
+Forward Selection
+Bidirectional Elimination
+Score Comparison"""
+# Step 1 : to select a significance level to stay in the model. (SL=0.05)
+import statsmodels.api as smf
+#         Adding a column in matrix of features :
+x = nm.append(arr = nm.ones((50,1)).astype(int), values=x, axis=1)
+# Step 2 : Fit the complete model with all possible predictors/independent variables
+x_opt=x [:, [0,1,2,3,4,5]]  
+regressor_OLS=sm.OLS(endog = y, exog=x_opt).fit()  
+regressor_OLS.summary()
+# Step 3 : Choose the predictor which has the highest P-value
+# If P-value >SL, go to step 4.
+# Else Finish, and Our model is ready
+# Step 4 : Remove that predictor
+# Step 5 : Rebuild and fit the model with the remaining variables
+"""This process is used to optimize the performance of the MLR model
+as it will only include the most affecting feature and remove the least affecting feature"""
+# Sample program
+import numpy as nm
+import matplotlib.pyplot as mtp
+import pandas as pd
+#                                                         importing datasets  
+data_set= pd.read_csv('50_CompList.csv')
+#                                                         Extracting Independent and dependent Variable  
+x= data_set.iloc[:, :-1].values
+y= data_set.iloc[:, 4].values
+#                                                         Catgorical data
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+labelencoder_x= LabelEncoder()
+x[:, 3]= labelencoder_x.fit_transform(x[:,3])
+onehotencoder= OneHotEncoder(categorical_features= [3])
+x= onehotencoder.fit_transform(x).toarray()
+#                                                         Avoiding the dummy variable trap:  
+x = x[:, 1:]
+#                                                         Splitting the dataset into training and test set
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test= train_test_split(x, y, test_size= 0.2, random_state=0)
+#                                                         Fitting the MLR model to the training set
+from sklearn.linear_model import LinearRegression
+regressor= LinearRegression()
+regressor.fit(x_train, y_train)
+#                                                         Predicting the Test set result
+y_pred= regressor.predict(x_test)
+#                                                         Checking the score
+print('Train Score: ', regressor.score(x_train, y_train))
+print('Test Score: ', regressor.score(x_test, y_test))
+
+#                                                                                         $     Polynominal Regression
+# 
+y= b0+b1x1+ b2x12+ b2x13+...... bnx1n
+# the original features are converted into Polynomial features of required degree (2,3,..,n) and then modeled using a linear model
+
+
 #                                                                                         $     Logistic regression(sigmoid function)
 # categorical variable such as 0 or 1, Yes or No, True or False, Spam or not spam
 # sigmoid function is used to model the data, sig(x)=1/1+e^-x
@@ -424,25 +388,6 @@ to find the relations between two or more variables"""
 # each branch represent the result of the test, and each leaf node represents the final decision or result
 # is constructed starting from the root node/parent node (dataset), which splits into left and right child nodes (subsets of dataset).
 # These child nodes are further divided into their children node, and themselves become the parent node of those nodes
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn import tree
-pd.set_option('display.max_columns',None)
-df = pd.read_csv("train.csv")
-df.head()
-df.drop(['PassengerId','SibSp','Name','Parch','Fare','Ticket','Cabin','Embarked'],axis='columns',inplace=True)
-df.head()
-inputs = df.drop('Survived',axis='columns')
-target = df.Survived
-inputs.Sex = inputs.Sex.map({'male': 1, 'female': 2})
-inputs.head()
-inputs.Age[:10]
-inputs.Age = inputs.Age.fillna(inputs.Age.mean())
-inputs.Age[:10]
-X_train, X_test, y_train, y_test = train_test_split(inputs,target,test_size=0.2)
-model = tree.DecisionTreeClassifier()
-model.fit(X_train,y_train)
-model.score(X_test,y_test)
 #                                                                                           $      Random Forest Regression
 # ensemble learning method which combines multiple decision trees and predicts the final output based on the average of each tree output
 # g(x)= f0(x)+ f1(x)+ f2(x)+.,,,
@@ -476,7 +421,7 @@ iloc[ ] #                              method of Pandas library.
 x= data_set.iloc[:,:-1].values
 #                                              Extracting dependent variable
 y= data_set.iloc[:,3].values
-#                                                                                     Handling Missing data
+#                                                                                                       Handling Missing data
 # deleting the particular row
 # calculating the mean
 #                             handling missing data (Replacing missing data with the mean value)  
@@ -487,7 +432,7 @@ imputerimputer= imputer.fit(x[:, 1:3])
 #                                                 Replacing missing data with the calculated mean value  
 x[:, 1:3]= imputer.transform(x[:, 1:3])
 
-#                                                                                     Encoding Categorical data
+#                                                                                                   Encoding Categorical data
 # (eg.Country, and Purchased)
 #                                          For Country variable
 from sklearn.preprocessing import LabelEncoder  
@@ -499,7 +444,7 @@ x[:, 0]= label_encoder_x.fit_transform(x[:, 0])
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder  
 label_encoder_x= LabelEncoder()  
 x[:, 0]= label_encoder_x.fit_transform(x[:, 0])  
-#                                                      Encoding for dummy variables  
+#                                                                                                Encoding for dummy variables  
 onehot_encoder= OneHotEncoder(categorical_features= [0])    
 x= onehot_encoder.fit_transform(x).toarray()
 #                                                         For Purchased Variable
@@ -510,7 +455,7 @@ y= labelencoder_y.fit_transform(y)
 # Splitting the Dataset into the Training set and Test set
 from sklearn.model_selection import train_test_split  
 x_train, x_test, y_train, y_test= train_test_split(x, y, test_size= 0.2, random_state=0)
-#                                                                                          Feature Scaling
+#                                                                                                                 Feature Scaling
 # to standardize the independent variables of the dataset in a specific range
 # our variables in the same range and in the same scale so that no any variable dominate the other variable.
 Euclidean distance between A and B = root value of (x2-x1)2+(y2-y1)2
@@ -521,7 +466,7 @@ st_x= StandardScaler()
 x_train= st_x.fit_transform(x_train)
 x_test= st_x.transform(x_test)
 
-#                                                                           ciphertext
+#                                                                                                                  ciphertext
 # converts the plaintext to ciphertext and ciphertext to plain text
 pip install simple-crypt
 from simplecrypt import encrypt, decrypt
@@ -531,7 +476,7 @@ print(ciphercode)
 # call the decrypt function and decode the original message from this ciphertext
 original = decrypt('AIM', ciphercode)
 print(original)
-#                                                   encryption and decrypting the files
+#                                                                                               encryption and decrypting the files
 class Encryptor():
     def key_create(self):
         key = Fernet.generate_key()
