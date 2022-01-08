@@ -367,15 +367,58 @@ print('Train Score: ', regressor.score(x_train, y_train))
 print('Test Score: ', regressor.score(x_test, y_test))
 
 #                                                                                         $     Polynominal Regression
-# 
+# non-linear Datasets are used
 y= b0+b1x1+ b2x12+ b2x13+...... bnx1n
 # the original features are converted into Polynomial features of required degree (2,3,..,n) and then modeled using a linear model
+# it depends on the coefficients, which are arranged in a linear fashion
+# Simple Linear Regression equation:         
+y = b0+b1x
+# Multiple Linear Regression equation:         
+y= b0+b1x+ b2x2+ b3x3+....+ bnxn
+# Polynomial Regression equation:         
+y= b0+b1x + b2x2+ b3x3+....+ bnxn
+# non-linear relationship between the Position levels and the salaries, Bluffing detector regression
+#                                                                Data Pre-processing
+# we will not use feature scaling, and also we will not split our dataset into training and test set
 
+# Build a Linear Regression model and fit it to the dataset
+from sklearn.linear_model import LinearRegression  
+lin_regs= LinearRegression()  
+lin_regs.fit(x,y)
+#                                                      Build a Polynomial Regression model and fit it to the dataset  
+from sklearn.preprocessing import PolynomialFeatures  
+poly_regs= PolynomialFeatures(degree= 2)  
+x_poly= poly_regs.fit_transform(x)  
+lin_reg_2 =LinearRegression()  
+lin_reg_2.fit(x_poly, y)
+#                                                     Visualize the result for Linear Regression model
+mtp.scatter(x,y,color="blue")
+mtp.plot(x,lin_regs.predict(x), color="red")
+mtp.title("Bluff detection model(Linear Regression)")
+mtp.xlabel("Position Levels")
+mtp.ylabel("Salary")
+mtp.show()
+#                                                     Visualizing the result for Polynomial Regression
+mtp.scatter(x,y,color="blue")  
+mtp.plot(x, lin_reg_2.predict(poly_regs.fit_transform(x)), color="red")  
+mtp.title("Bluff detection model(Polynomial Regression)")  
+mtp.xlabel("Position Levels")  
+mtp.ylabel("Salary")  
+mtp.show()
+#                                                        Predicting the output with Linear Regression model
+lin_pred = lin_regs.predict([[6.5]])
+print(lin_pred)
+#                                                         Predicting the output with Polynomial Regression model
+poly_pred = lin_reg_2.predict(poly_regs.fit_transform([[6.5]]))
+print(poly_pred)
 
 #                                                                                         $     Logistic regression(sigmoid function)
 # categorical variable such as 0 or 1, Yes or No, True or False, Spam or not spam
 # sigmoid function is used to model the data, sig(x)=1/1+e^-x
 # Binary(0/1, pass/fail), Multi(cats, dogs, lions), Ordinal(low, medium, high)
+
+
+
 #                                                                                         $   Support Vector Machine
 # Kernel : is a function used to map a lower-dimensional data into higher dimensional data
 # Hyperplane: SVM is a separation line between two classes
