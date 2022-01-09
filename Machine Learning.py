@@ -147,6 +147,128 @@ from sklearn import decomposition, datasets
 from sklearn.preprocessing import StandardScaler
 dataset = datasets.load_breast_cancer()
 dataset '
+
+#                                                                                          Classification Algorithm
+# Classes can be called as targets/labels or categories
+y=f(x)  # y = categorical output
+# (eg) = Email Spam Detector
+# class A and Class B
+#                                                   Binary Classifier
+# YES or NO, MALE or FEMALE, SPAM or NOT SPAM, CAT or DOG, etc
+#                                                   Multi-class Classifier
+# Classifications of types of crops, music
+#                                                                                     Learners
+# Lazy Learners = firstly stores the training dataset and wait until it receives the test dataset
+# (eg) =  K-NN algorithm, Case-based reasoning
+# Eager Learners = develop a classification model based on a training dataset before receiving a test dataset
+# (eg) = Decision Trees, Naïve Bayes, ANN
+#                                                                   Types of ML Classification Algorithms
+# Linear Models = Logistic Regression, Support Vector Machines
+#                                                        Logistic Regression
+# binary classification of data-points, of the two classes (1 or 0)
+# (eg predict whether it will rain today or not, based on the current weather conditions
+# Hypothesis = derive the likelihood of the event, data fit to log(), that creates an S-shaped curve known as “sigmoid”, 0Sigmoid Curve
+#                                                        Support Vector Machines (svm)
+# plotting in the n-dimensional space
+#                                                       Non-linear Models
+# K-Nearest Neighbours = pattern recognition, data mining, and intrusion detection
+# the KNN classifies the coordinates into groups that are identified by a specific attribute
+#                                                                            Naïve Bayes
+# an extension of the Bayes theorem wherein each feature assumes independence
+# easy and quick way to predict the class of the dataset, multi-class prediction
+#                                                                                                 Decision Tree Classification
+# used for both predictions & classifications, 2Types = Induction & Pruning
+# map the various outcomes that are a result of the consequences or decisions
+# result of various hierarchical steps that will help you to reach certain decisions
+#                                                                                                  Random Forest Classification
+# ensemble learning method that is used for classification, regression and other tasks that can be performed with the help of the decision trees
+# correct the habit of overfitting to the training set,  more accurate than the decision trees
+#                                                                                           Evaluating a Classification model
+#                              Log Loss or Cross-Entropy Loss
+# good binary Classification model, the value of log loss should be near to 0
+?(ylog(p)+(1?y)log(1?p))
+#                                              Confusion Matrix(error matrix.)
+# predictions result in a summarized form, total number of correct predictions and incorrect predictions
+# O/P => Matrix(Actual Positive, Negative : Predicted Positive, Negative)
+#                                                            AUC-ROC curve
+# Area Under the Curve(AUC), Receiver Operating Characteristics Curve(ROC)
+# to visualize the performance of the multi-class classification model
+# The ROC curve is plotted with TPR and FPR, where TPR (True Positive Rate) on Y-axis and FPR(False Positive Rate) on X-axis
+
+#                                                                                                K-Nearest Neighbor(KNN) Algorithm
+# stores all the available data and classifies a new data point based on the similarity
+#  non-parametric algorithm, lazy learner algorithm,  Euclidean distance of K number of neighbors
+"""Step 1 : Select the number K of the neighbors
+Step 2: Calculate the Euclidean distance of K number of neighbors
+Step 3: Take the K nearest neighbors as per the calculated Euclidean distance.
+Step 4: Among these k neighbors, count the number of the data points in each category.
+Step 5: Assign the new data points to that category for which the number of the neighbor is maximum"""
+#                                                                                            implementation of the KNN algorithm
+#                                                                Data Pre-Processing Step
+#                                            importing libraries
+import numpy as nm
+import matplotlib.pyplot as mtp
+import pandas as pd
+#                                        importing datasets  
+data_set= pd.read_csv('user_data.csv')  
+#                                       Extracting Independent and dependent Variable  
+x= data_set.iloc[:, [2,3]].values
+y= data_set.iloc[:, 4].values
+#                                           Splitting the dataset into training and test set.  
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test= train_test_split(x, y, test_size= 0.25, random_state=0)
+#                                                         feature Scaling
+from sklearn.preprocessing import StandardScaler
+st_x= StandardScaler()
+x_train= st_x.fit_transform(x_train)
+x_test= st_x.transform(x_test)
+#                                                      Fitting K-NN classifier to the Training data
+"""n_neighbors: To define the required neighbors of the algorithm. Usually, it takes 5.
+metric='minkowski': This is the default parameter and it decides the distance between the points.
+p=2: It is equivalent to the standard Euclidean metric."""
+from sklearn.neighbors import KNeighborsClassifier
+classifier= KNeighborsClassifier(n_neighbors=5, metric='minkowski', p=2 )
+classifier.fit(x_train, y_train)
+#                                                              Predicting the test set result
+y_pred= classifier.predict(x_test)
+#                                               Creating the Confusion Matrix
+from sklearn.metrics import confusion_matrix
+cm= confusion_matrix(y_test, y_pred)
+#                                                        Visulaizing the trianing set result  
+from matplotlib.colors import ListedColormap
+x_set, y_set = x_train, y_train
+x1, x2 = nm.meshgrid(nm.arange(start = x_set[:, 0].min() - 1, stop = x_set[:, 0].max() + 1, step  =0.01),
+nm.arange(start = x_set[:, 1].min() - 1, stop = x_set[:, 1].max() + 1, step = 0.01))
+mtp.contourf(x1, x2, classifier.predict(nm.array([x1.ravel(), x2.ravel()]).T).reshape(x1.shape),
+alpha = 0.75, cmap = ListedColormap(('red','green' )))
+mtp.xlim(x1.min(), x1.max())
+mtp.ylim(x2.min(), x2.max())
+for i, j in enumerate(nm.unique(y_set)):
+    mtp.scatter(x_set[y_set == j, 0], x_set[y_set == j, 1],
+        c = ListedColormap(('red', 'green'))(i), label = j)
+mtp.title('K-NN Algorithm (Training set)')
+mtp.xlabel('Age')
+mtp.ylabel('Estimated Salary')
+mtp.legend()
+mtp.show()
+#                                                            Visualizing the test set result  
+from matplotlib.colors import ListedColormap  
+x_set, y_set = x_test, y_test  
+x1, x2 = nm.meshgrid(nm.arange(start = x_set[:, 0].min() - 1, stop = x_set[:, 0].max() + 1, step  =0.01),  
+nm.arange(start = x_set[:, 1].min() - 1, stop = x_set[:, 1].max() + 1, step = 0.01))  
+mtp.contourf(x1, x2, classifier.predict(nm.array([x1.ravel(), x2.ravel()]).T).reshape(x1.shape),  
+alpha = 0.75, cmap = ListedColormap(('red','green' )))  
+mtp.xlim(x1.min(), x1.max())  
+mtp.ylim(x2.min(), x2.max())  
+for i, j in enumerate(nm.unique(y_set)):  
+    mtp.scatter(x_set[y_set == j, 0], x_set[y_set == j, 1],  
+        c = ListedColormap(('red', 'green'))(i), label = j)  
+mtp.title('K-NN algorithm(Test set)')  
+mtp.xlabel('Age')  
+mtp.ylabel('Estimated Salary')  
+mtp.legend()  
+mtp.show()
+
 #                                                                                                                               Standarize feautures
 StandardScaler = Converting the data into Scaler Standard
 scaler = StandardScaler()
@@ -416,8 +538,69 @@ print(poly_pred)
 # categorical variable such as 0 or 1, Yes or No, True or False, Spam or not spam
 # sigmoid function is used to model the data, sig(x)=1/1+e^-x
 # Binary(0/1, pass/fail), Multi(cats, dogs, lions), Ordinal(low, medium, high)
+# fit an "S" shaped logistic function, which predicts two maximum values (0 or 1)
+# range between -[infinity] to +[infinity], then take logarithm of the equation
+# 3 Types = Binomial = 0 or 1, Pass or Fail,, Multinomial = cat", "dogs", or "sheep", Ordinal = "low", "Medium", or "High"
+#                                                                                   Implementation of Logistic Regression (Binomial)
+# Data Pre-processing step
+# importing libraries, Datasets
+#                                Extracting Independent and dependent Variable  
+x= data_set.iloc[:, [2,3]].values  
+y= data_set.iloc[:, 4].values 
+#                                Splitting the dataset into training and test set.  
+from sklearn.model_selection import train_test_split  
+x_train, x_test, y_train, y_test= train_test_split(x, y, test_size= 0.25, random_state=0)
+#                                                       feature Scaling  
+from sklearn.preprocessing import StandardScaler    
+st_x= StandardScaler()    
+x_train= st_x.fit_transform(x_train)    
+x_test= st_x.transform(x_test)
+#                                     Fitting Logistic Regression to the Training set
+from sklearn.linear_model import LogisticRegression  
+classifier= LogisticRegression(random_state=0)  
+classifier.fit(x_train, y_train)
+#                                     Predicting the Test Result
+y_pred= classifier.predict(x_test)
+#                                     Test Accuracy of the result
+#        Creating the Confusion matrix  
+from sklearn.metrics import confusion_matrix  
+cm= confusion_matrix()
+#                                      Visualizing the training set result
+from matplotlib.colors import ListedColormap
+x_set, y_set = x_train, y_train
+x1, x2 = nm.meshgrid(nm.arange(start = x_set[:, 0].min() - 1, stop = x_set[:, 0].max() + 1, step  =0.01),  # range of -1(minimum) to 1 (maximum)
+nm.arange(start = x_set[:, 1].min() - 1, stop = x_set[:, 1].max() + 1, step = 0.01))  # nm.meshgrid command to create a rectangular grid
+mtp.contourf(x1, x2, classifier.predict(nm.array([x1.ravel(), x2.ravel()]).T).reshape(x1.shape), # mtp.contourf command - To create a filled contour
+alpha = 0.75, cmap = ListedColormap(('purple','green' ))) # classifier.predict to show the predicted data points predicted by the classifier
+mtp.xlim(x1.min(), x1.max())
+mtp.ylim(x2.min(), x2.max())
+for i, j in enumerate(nm.unique(y_set)):
+    mtp.scatter(x_set[y_set == j, 0], x_set[y_set == j, 1],
+        c = ListedColormap(('purple', 'green'))(i), label = j)
+mtp.title('Logistic Regression (Training set)')
+mtp.xlabel('Age')
+mtp.ylabel('Estimated Salary')
+mtp.legend()
+mtp.show()
 
-
+#                                                      Linear Classifier
+#              Visualizing the test set result:
+from matplotlib.colors import ListedColormap
+x_set, y_set = x_test, y_test
+x1, x2 = nm.meshgrid(nm.arange(start = x_set[:, 0].min() - 1, stop = x_set[:, 0].max() + 1, step  =0.01),
+nm.arange(start = x_set[:, 1].min() - 1, stop = x_set[:, 1].max() + 1, step = 0.01))
+mtp.contourf(x1, x2, classifier.predict(nm.array([x1.ravel(), x2.ravel()]).T).reshape(x1.shape),
+alpha = 0.75, cmap = ListedColormap(('purple','green' )))
+mtp.xlim(x1.min(), x1.max())
+mtp.ylim(x2.min(), x2.max())
+for i, j in enumerate(nm.unique(y_set)):
+    mtp.scatter(x_set[y_set == j, 0], x_set[y_set == j, 1],
+        c = ListedColormap(('purple', 'green'))(i), label = j)
+mtp.title('Logistic Regression (Test set)')
+mtp.xlabel('Age')
+mtp.ylabel('Estimated Salary')
+mtp.legend()
+mtp.show()
 
 #                                                                                         $   Support Vector Machine
 # Kernel : is a function used to map a lower-dimensional data into higher dimensional data
@@ -425,6 +608,68 @@ print(poly_pred)
 # in SVR, line which helps to predict the continuous variables and cover most of the datapoints
 # Boundary lines are the two lines apart from hyperplane, which creates a margin for datapoints
 # Support vectors are the datapoints which are nearest to the hyperplane and opposite class
+# 2 Types = Linear = dataset can be classified into two classes by using a single straight line, Non-Linear
+# Linear SVM = coordinates in either green or blue
+# distance between the vectors and the hyperplane is called as margin
+# hyperplane with maximum margin is called the optimal hyperplane.
+# Non-Linear SVM = 3rd dimension(Z), To find the descision boundary
+z=x2 +y2
+#                                                                               Implementation of Support Vector Machine
+#                                        Data Pre-processing step
+#                                                 Extracting Independent and dependent Variable  
+x= data_set.iloc[:, [2,3]].values
+y= data_set.iloc[:, 4].values
+#                                                   Splitting the dataset into training and test set.  
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test= train_test_split(x, y, test_size= 0.25, random_state=0)
+#                                                        feature Scaling  
+from sklearn.preprocessing import StandardScaler
+st_x= StandardScaler()
+x_train= st_x.fit_transform(x_train)
+x_test= st_x.transform(x_test)
+#                                            Fitting the SVM classifier to the training set
+from sklearn.svm import SVC         # "Support vector classifier"  
+classifier = SVC(kernel='linear', random_state=0)  
+classifier.fit(x_train, y_train)
+#                                            Predicting the test set result
+y_pred= classifier.predict(x_test)
+#                                       Creating the Confusion matrix  
+from sklearn.metrics import confusion_matrix  
+cm= confusion_matrix(y_test, y_pred)
+#                                               Visualizing the training set result
+from matplotlib.colors import ListedColormap
+x_set, y_set = x_train, y_train
+x1, x2 = nm.meshgrid(nm.arange(start = x_set[:, 0].min() - 1, stop = x_set[:, 0].max() + 1, step  =0.01),
+nm.arange(start = x_set[:, 1].min() - 1, stop = x_set[:, 1].max() + 1, step = 0.01))
+mtp.contourf(x1, x2, classifier.predict(nm.array([x1.ravel(), x2.ravel()]).T).reshape(x1.shape),
+alpha = 0.75, cmap = ListedColormap(('red', 'green')))
+mtp.xlim(x1.min(), x1.max())
+mtp.ylim(x2.min(), x2.max())
+for i, j in enumerate(nm.unique(y_set)):
+    mtp.scatter(x_set[y_set == j, 0], x_set[y_set == j, 1],
+        c = ListedColormap(('red', 'green'))(i), label = j)
+mtp.title('SVM classifier (Training set)')
+mtp.xlabel('Age')
+mtp.ylabel('Estimated Salary')
+mtp.legend()
+mtp.show()
+#                                   Visualizing the test set result
+from matplotlib.colors import ListedColormap
+x_set, y_set = x_test, y_test
+x1, x2 = nm.meshgrid(nm.arange(start = x_set[:, 0].min() - 1, stop = x_set[:, 0].max() + 1, step  =0.01),
+nm.arange(start = x_set[:, 1].min() - 1, stop = x_set[:, 1].max() + 1, step = 0.01))
+mtp.contourf(x1, x2, classifier.predict(nm.array([x1.ravel(), x2.ravel()]).T).reshape(x1.shape),
+alpha = 0.75, cmap = ListedColormap(('red','green' )))
+mtp.xlim(x1.min(), x1.max())
+mtp.ylim(x2.min(), x2.max())
+for i, j in enumerate(nm.unique(y_set)):
+    mtp.scatter(x_set[y_set == j, 0], x_set[y_set == j, 1],
+        c = ListedColormap(('red', 'green'))(i), label = j)
+mtp.title('SVM classifier (Test set)')
+mtp.xlabel('Age')
+mtp.ylabel('Estimated Salary')
+mtp.legend()
+mtp.show()
 #                                                                                             $      Decision Tree Regression
 # solve problems for both categorical and numerical data
 # tree-like structure in which each internal node represents the "test" for an attribute, 
