@@ -149,6 +149,7 @@ dataset = datasets.load_breast_cancer()
 dataset '
 
 #                                                                                          Classification Algorithm
+# to categorize our data into a desired and distinct number of classes where we can assign label to each class
 # Classes can be called as targets/labels or categories
 y=f(x)  # y = categorical output
 # (eg) = Email Spam Detector
@@ -168,6 +169,177 @@ y=f(x)  # y = categorical output
 # binary classification of data-points, of the two classes (1 or 0)
 # (eg predict whether it will rain today or not, based on the current weather conditions
 # Hypothesis = derive the likelihood of the event, data fit to log(), that creates an S-shaped curve known as “sigmoid”, 0Sigmoid Curve
+
+#                                                                                                 Decision Tree Classification
+# used for both predictions & classifications, 2Types = Induction & Pruning
+# map the various outcomes that are a result of the consequences or decisions
+# result of various hierarchical steps that will help you to reach certain decisions
+#  tree-structured classifier, where internal nodes represent the features of a dataset, 
+# branches represent the decision rules and each leaf node represents the outcome
+# Decision Node, Leaf Node(Output), Splitting, Branch/Sub Tree, Pruning, Parent/Child node, 
+"""Step 1 : Begin the tree with the root node, says S, which contains the complete dataset.
+Step 2 : Find the best attribute in the dataset using Attribute Selection Measure (ASM).
+Step 3 : Divide the S into subsets that contains possible values for the best attributes.
+Step 4 : Generate the decision tree node, which contains the best attribute.
+Step 5 : Recursively make new decision trees using the subsets of the dataset created in step -3. Continue this process until a stage is 
+reached where you cannot further classify the nodes and called the final node as a leaf node."""
+# select the best attribute for the nodes of the tree = Information Gain, Gini Index
+#                                                          Information Gain
+# measurement of changes in entropy after the segmentation of a dataset based on an attribute
+Information Gain= Entropy(S)- [(Weighted Avg) # *Entropy(each feature)
+#                                                                Entropy
+#  metric to measure the impurity in a given attribute
+Entropy(s)= -P(yes)log2 P(yes)- P(no) log2 P(no)
+#                                                                 Gini Index
+#  measure of impurity or purity used while creating a decision tree in the CART(Classification and Regression Tree) algorithm
+# creates binary splits, and the CART algorithm uses the Gini index to create binary splits
+Gini Index= 1- ∑jPj2
+#                                                                   Pruning
+# Getting an Optimal Decision tree
+# technique that decreases the size of the learning tree without reducing accuracy
+# 2 Types = Cost Complexity Pruning, Reduced Error Pruning
+#                                                                     Implementation of Decision Tree
+"""Data Pre-processing step
+Fitting a Decision-Tree algorithm to the Training set
+Predicting the test result
+Test accuracy of the result(Creation of Confusion matrix)
+Visualizing the test set result."""
+#                                    importing datasets  
+data_set= pd.read_csv('user_data.csv')  
+#                                    Extracting Independent and dependent Variable  
+x= data_set.iloc[:, [2,3]].values  
+y= data_set.iloc[:, 4].values  
+#                                    Splitting the dataset into training and test set.  
+from sklearn.model_selection import train_test_split  
+x_train, x_test, y_train, y_test= train_test_split(x, y, test_size= 0.25, random_state=0)  
+#                                   feature Scaling  
+from sklearn.preprocessing import StandardScaler    
+st_x= StandardScaler()  
+x_train= st_x.fit_transform(x_train)    
+x_test= st_x.transform(x_test)
+#                                                             Fitting a Decision-Tree algorithm to the Training set
+#                        Splitting the dataset into training and test set.  
+from sklearn.model_selection import train_test_split  
+x_train, x_test, y_train, y_test= train_test_split(x, y, test_size= 0.25, random_state=0)  
+#                                                feature Scaling  
+from sklearn.preprocessing import StandardScaler    
+st_x= StandardScaler()  
+x_train= st_x.fit_transform(x_train)    
+x_test= st_x.transform(x_test)
+# "criterion='entropy': Criterion is used to measure the quality of split
+# random_state=0": For generating the random states
+#                                  Predicting the test result
+y_pred= classifier.predict(x_test)
+#                                         Test accuracy of the result (Creation of Confusion matrix)
+from sklearn.metrics import confusion_matrix
+cm= confusion_matrix(y_test, y_pred)
+#                                                                      Visualizing the training set result
+from matplotlib.colors import ListedColormap  
+x_set, y_set = x_train, y_train  
+x1, x2 = nm.meshgrid(nm.arange(start = x_set[:, 0].min() - 1, stop = x_set[:, 0].max() + 1, step  =0.01),  
+nm.arange(start = x_set[:, 1].min() - 1, stop = x_set[:, 1].max() + 1, step = 0.01))  
+mtp.contourf(x1, x2, classifier.predict(nm.array([x1.ravel(), x2.ravel()]).T).reshape(x1.shape),  
+alpha = 0.75, cmap = ListedColormap(('purple','green' )))  
+mtp.xlim(x1.min(), x1.max())  
+mtp.ylim(x2.min(), x2.max())  
+fori, j in enumerate(nm.unique(y_set)):  
+mtp.scatter(x_set[y_set == j, 0], x_set[y_set == j, 1],  
+        c = ListedColormap(('purple', 'green'))(i), label = j)  
+mtp.title('Decision Tree Algorithm (Training set)')  
+mtp.xlabel('Age')  
+mtp.ylabel('Estimated Salary')  
+mtp.legend()  
+mtp.show()
+
+#                                                                                                  Random Forest Classification
+# ensemble learning method that is used for classification, regression and other tasks that can be performed with the help of the decision trees
+# correct the habit of overfitting to the training set,  more accurate than the decision trees
+#                                                                                           Evaluating a Classification model
+#                              Log Loss or Cross-Entropy Loss
+# good binary Classification model, the value of log loss should be near to 0
+?(ylog(p)+(1?y)log(1?p))
+#                                              Confusion Matrix(error matrix.)
+# predictions result in a summarized form, total number of correct predictions and incorrect predictions
+# O/P => Matrix(Actual Positive, Negative : Predicted Positive, Negative)
+#                                                            AUC-ROC curve
+# Area Under the Curve(AUC), Receiver Operating Characteristics Curve(ROC)
+# to visualize the performance of the multi-class classification model
+# The ROC curve is plotted with TPR and FPR, where TPR (True Positive Rate) on Y-axis and FPR(False Positive Rate) on X-axis
+
+
+#                                                                                                K-Nearest Neighbor(KNN) Algorithm
+# stores all the available data and classifies a new data point based on the similarity
+#  non-parametric algorithm, lazy learner algorithm,  Euclidean distance of K number of neighbors
+"""Step 1 : Select the number K of the neighbors
+Step 2: Calculate the Euclidean distance of K number of neighbors
+Step 3: Take the K nearest neighbors as per the calculated Euclidean distance.
+Step 4: Among these k neighbors, count the number of the data points in each category.
+Step 5: Assign the new data points to that category for which the number of the neighbor is maximum"""
+#                                                                                            implementation of the KNN algorithm
+#                                                                Data Pre-Processing Step
+#                                            importing libraries
+import numpy as nm
+import matplotlib.pyplot as mtp
+import pandas as pd
+#                                        importing datasets  
+data_set= pd.read_csv('user_data.csv')  
+#                                       Extracting Independent and dependent Variable  
+x= data_set.iloc[:, [2,3]].values
+y= data_set.iloc[:, 4].values
+#                                           Splitting the dataset into training and test set.  
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test= train_test_split(x, y, test_size= 0.25, random_state=0)
+#                                                         feature Scaling
+from sklearn.preprocessing import StandardScaler
+st_x= StandardScaler()
+x_train= st_x.fit_transform(x_train)
+x_test= st_x.transform(x_test)
+#                                                      Fitting K-NN classifier to the Training data
+"""n_neighbors: To define the required neighbors of the algorithm. Usually, it takes 5.
+metric='minkowski': This is the default parameter and it decides the distance between the points.
+p=2: It is equivalent to the standard Euclidean metric."""
+from sklearn.neighbors import KNeighborsClassifier
+classifier= KNeighborsClassifier(n_neighbors=5, metric='minkowski', p=2 )
+classifier.fit(x_train, y_train)
+#                                                              Predicting the test set result
+y_pred= classifier.predict(x_test)
+#                                               Creating the Confusion Matrix
+from sklearn.metrics import confusion_matrix
+cm= confusion_matrix(y_test, y_pred)
+#                                                        Visulaizing the trianing set result  
+from matplotlib.colors import ListedColormap
+x_set, y_set = x_train, y_train
+x1, x2 = nm.meshgrid(nm.arange(start = x_set[:, 0].min() - 1, stop = x_set[:, 0].max() + 1, step  =0.01),
+nm.arange(start = x_set[:, 1].min() - 1, stop = x_set[:, 1].max() + 1, step = 0.01))
+mtp.contourf(x1, x2, classifier.predict(nm.array([x1.ravel(), x2.ravel()]).T).reshape(x1.shape),
+alpha = 0.75, cmap = ListedColormap(('red','green' )))
+mtp.xlim(x1.min(), x1.max())
+mtp.ylim(x2.min(), x2.max())
+for i, j in enumerate(nm.unique(y_set)):
+    mtp.scatter(x_set[y_set == j, 0], x_set[y_set == j, 1],
+        c = ListedColormap(('red', 'green'))(i), label = j)
+mtp.title('K-NN Algorithm (Training set)')
+mtp.xlabel('Age')
+mtp.ylabel('Estimated Salary')
+mtp.legend()
+mtp.show()
+#                                                            Visualizing the test set result  
+from matplotlib.colors import ListedColormap  
+x_set, y_set = x_test, y_test  
+x1, x2 = nm.meshgrid(nm.arange(start = x_set[:, 0].min() - 1, stop = x_set[:, 0].max() + 1, step  =0.01),  
+nm.arange(start = x_set[:, 1].min() - 1, stop = x_set[:, 1].max() + 1, step = 0.01))  
+mtp.contourf(x1, x2, classifier.predict(nm.array([x1.ravel(), x2.ravel()]).T).reshape(x1.shape),  
+alpha = 0.75, cmap = ListedColormap(('red','green' )))  
+mtp.xlim(x1.min(), x1.max())  
+mtp.ylim(x2.min(), x2.max())  
+for i, j in enumerate(nm.unique(y_set)):  
+    mtp.scatter(x_set[y_set == j, 0], x_set[y_set == j, 1],  
+        c = ListedColormap(('red', 'green'))(i), label = j)  
+mtp.title('K-NN algorithm(Test set)')  
+mtp.xlabel('Age')  
+mtp.ylabel('Estimated Salary')  
+mtp.legend()  
+mtp.show()
 #                                                        Support Vector Machines (svm)
 # plotting in the n-dimensional space
 #                                                       Non-linear Models
@@ -267,98 +439,6 @@ mtp.legend()
 mtp.show()
 
 
-#                                                                                                 Decision Tree Classification
-# used for both predictions & classifications, 2Types = Induction & Pruning
-# map the various outcomes that are a result of the consequences or decisions
-# result of various hierarchical steps that will help you to reach certain decisions
-#                                                                                                  Random Forest Classification
-# ensemble learning method that is used for classification, regression and other tasks that can be performed with the help of the decision trees
-# correct the habit of overfitting to the training set,  more accurate than the decision trees
-#                                                                                           Evaluating a Classification model
-#                              Log Loss or Cross-Entropy Loss
-# good binary Classification model, the value of log loss should be near to 0
-?(ylog(p)+(1?y)log(1?p))
-#                                              Confusion Matrix(error matrix.)
-# predictions result in a summarized form, total number of correct predictions and incorrect predictions
-# O/P => Matrix(Actual Positive, Negative : Predicted Positive, Negative)
-#                                                            AUC-ROC curve
-# Area Under the Curve(AUC), Receiver Operating Characteristics Curve(ROC)
-# to visualize the performance of the multi-class classification model
-# The ROC curve is plotted with TPR and FPR, where TPR (True Positive Rate) on Y-axis and FPR(False Positive Rate) on X-axis
-
-#                                                                                                K-Nearest Neighbor(KNN) Algorithm
-# stores all the available data and classifies a new data point based on the similarity
-#  non-parametric algorithm, lazy learner algorithm,  Euclidean distance of K number of neighbors
-"""Step 1 : Select the number K of the neighbors
-Step 2: Calculate the Euclidean distance of K number of neighbors
-Step 3: Take the K nearest neighbors as per the calculated Euclidean distance.
-Step 4: Among these k neighbors, count the number of the data points in each category.
-Step 5: Assign the new data points to that category for which the number of the neighbor is maximum"""
-#                                                                                            implementation of the KNN algorithm
-#                                                                Data Pre-Processing Step
-#                                            importing libraries
-import numpy as nm
-import matplotlib.pyplot as mtp
-import pandas as pd
-#                                        importing datasets  
-data_set= pd.read_csv('user_data.csv')  
-#                                       Extracting Independent and dependent Variable  
-x= data_set.iloc[:, [2,3]].values
-y= data_set.iloc[:, 4].values
-#                                           Splitting the dataset into training and test set.  
-from sklearn.model_selection import train_test_split
-x_train, x_test, y_train, y_test= train_test_split(x, y, test_size= 0.25, random_state=0)
-#                                                         feature Scaling
-from sklearn.preprocessing import StandardScaler
-st_x= StandardScaler()
-x_train= st_x.fit_transform(x_train)
-x_test= st_x.transform(x_test)
-#                                                      Fitting K-NN classifier to the Training data
-"""n_neighbors: To define the required neighbors of the algorithm. Usually, it takes 5.
-metric='minkowski': This is the default parameter and it decides the distance between the points.
-p=2: It is equivalent to the standard Euclidean metric."""
-from sklearn.neighbors import KNeighborsClassifier
-classifier= KNeighborsClassifier(n_neighbors=5, metric='minkowski', p=2 )
-classifier.fit(x_train, y_train)
-#                                                              Predicting the test set result
-y_pred= classifier.predict(x_test)
-#                                               Creating the Confusion Matrix
-from sklearn.metrics import confusion_matrix
-cm= confusion_matrix(y_test, y_pred)
-#                                                        Visulaizing the trianing set result  
-from matplotlib.colors import ListedColormap
-x_set, y_set = x_train, y_train
-x1, x2 = nm.meshgrid(nm.arange(start = x_set[:, 0].min() - 1, stop = x_set[:, 0].max() + 1, step  =0.01),
-nm.arange(start = x_set[:, 1].min() - 1, stop = x_set[:, 1].max() + 1, step = 0.01))
-mtp.contourf(x1, x2, classifier.predict(nm.array([x1.ravel(), x2.ravel()]).T).reshape(x1.shape),
-alpha = 0.75, cmap = ListedColormap(('red','green' )))
-mtp.xlim(x1.min(), x1.max())
-mtp.ylim(x2.min(), x2.max())
-for i, j in enumerate(nm.unique(y_set)):
-    mtp.scatter(x_set[y_set == j, 0], x_set[y_set == j, 1],
-        c = ListedColormap(('red', 'green'))(i), label = j)
-mtp.title('K-NN Algorithm (Training set)')
-mtp.xlabel('Age')
-mtp.ylabel('Estimated Salary')
-mtp.legend()
-mtp.show()
-#                                                            Visualizing the test set result  
-from matplotlib.colors import ListedColormap  
-x_set, y_set = x_test, y_test  
-x1, x2 = nm.meshgrid(nm.arange(start = x_set[:, 0].min() - 1, stop = x_set[:, 0].max() + 1, step  =0.01),  
-nm.arange(start = x_set[:, 1].min() - 1, stop = x_set[:, 1].max() + 1, step = 0.01))  
-mtp.contourf(x1, x2, classifier.predict(nm.array([x1.ravel(), x2.ravel()]).T).reshape(x1.shape),  
-alpha = 0.75, cmap = ListedColormap(('red','green' )))  
-mtp.xlim(x1.min(), x1.max())  
-mtp.ylim(x2.min(), x2.max())  
-for i, j in enumerate(nm.unique(y_set)):  
-    mtp.scatter(x_set[y_set == j, 0], x_set[y_set == j, 1],  
-        c = ListedColormap(('red', 'green'))(i), label = j)  
-mtp.title('K-NN algorithm(Test set)')  
-mtp.xlabel('Age')  
-mtp.ylabel('Estimated Salary')  
-mtp.legend()  
-mtp.show()
 
 #                                                                                                                               Standarize feautures
 StandardScaler = Converting the data into Scaler Standard
@@ -516,7 +596,13 @@ Y=f(X)
 #                                                               Homoscedasticity Assumption
 # error term is the same for all the values of independent variables. With homoscedasticity, 
 # there should be no clear pattern distribution of data in the scatter plot.
-
+"""                                                                                Types of Regression Algorithm:
+Simple Linear Regression
+Multiple Linear Regression
+Polynomial Regression
+Support Vector Regression
+Decision Tree Regression
+Random Forest Regression"""
 #                                                                                                           Backward elimination
 # smartly trained to come out with better recognition of real-world objects
 # to remove those features that do not have a significant effect on the dependent variable or prediction of output
