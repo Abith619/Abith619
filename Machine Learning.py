@@ -147,7 +147,6 @@ from sklearn import decomposition, datasets
 from sklearn.preprocessing import StandardScaler
 dataset = datasets.load_breast_cancer()
 dataset '
-
 #                                                                                          Classification Algorithm
 # to categorize our data into a desired and distinct number of classes where we can assign label to each class
 # Classes can be called as targets/labels or categories
@@ -183,6 +182,7 @@ Step 3 : Divide the S into subsets that contains possible values for the best at
 Step 4 : Generate the decision tree node, which contains the best attribute.
 Step 5 : Recursively make new decision trees using the subsets of the dataset created in step -3. Continue this process until a stage is 
 reached where you cannot further classify the nodes and called the final node as a leaf node."""
+node = output
 # select the best attribute for the nodes of the tree = Information Gain, Gini Index
 #                                                          Information Gain
 # measurement of changes in entropy after the segmentation of a dataset based on an attribute
@@ -527,9 +527,8 @@ print("Reduced number of features", X_Output.shape[1])
 # Algorithms = k-means clustering, Decision tree, KNN (k-nearest neighbors), Hierarchal clustering, Anomaly detection,
 # Neural Networks, Principle Component Analysis, Independent Component Analysis, Apriori algorithm, Singular value decomposition
 # finds the hidden patterns in data.
-
-#                                                                                           Clustering - KMeans
-# 
+#                                                                                           Clustering
+# K-means
 # hidden Markow Model
 from sklearn import datasets
 from sklearn.preprocessing import StandardScaler
@@ -540,6 +539,70 @@ Y = iris.target
 scaler = StandardScaler()
 X_std = scaler.fit_transform(X)
 clt = KMeans()
+
+#                                                              DBSCAN Clustering
+# Density-based spatial clustering of applications with noise
+"""different distance measures. E.g. K-Means (distance between points), Affinity propagation (graph distance), 
+Mean-shift (distance between points), DBSCAN (distance between nearest points), Gaussian mixtures (Mahalanobis distance to centers), 
+Spectral clustering (graph distance)"""
+# It can discover clusters of different shapes and sizes from a large amount of data, which is containing noise and outliers
+# 2 Parameters = minPts = The minimum number of points (a threshold) clustered together for a region to be considered dense., 
+# eps (ε) = A distance measure that will be used to locate the points in the neighborhood of any point.
+"""Core — This is a point that has at least m points within distance n from itself.
+Border — This is a point that has at least one Core point at a distance n.
+Noise — This is a point that is neither a Core nor a Border. And it has less than m points within distance n from itself"""
+# Algorithmic steps for DBSCAN clustering
+#   implementation using sklearn
+import numpy as np
+from sklearn.cluster import DBSCAN
+from sklearn import metrics
+from sklearn.datasets import make_blobs
+from sklearn.preprocessing import StandardScaler
+#                                                  Generate sample data
+centers = [[1, 1], [-1, -1], [1, -1]]
+X, labels_true = make_blobs(n_samples=750, centers=centers, cluster_std=0.4,
+                            random_state=0)
+X = StandardScaler().fit_transform(X)
+#                                                                 Compute DBSCAN
+db = DBSCAN(eps=0.3, min_samples=10).fit(X)
+core_samples_mask = np.zeros_like(db.labels_, dtype=bool)
+core_samples_mask[db.core_sample_indices_] = True
+labels = db.labels_
+#                                                     Number of clusters in labels, ignoring noise if present.
+n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
+n_noise_ = list(labels).count(-1)
+print('Estimated number of clusters: %d' % n_clusters_)
+print('Estimated number of noise points: %d' % n_noise_)
+print("Homogeneity: %0.3f" % metrics.homogeneity_score(labels_true, labels))
+print("Completeness: %0.3f" % metrics.completeness_score(labels_true, labels))
+print("V-measure: %0.3f" % metrics.v_measure_score(labels_true, labels))
+print("Adjusted Rand Index: %0.3f"
+      % metrics.adjusted_rand_score(labels_true, labels))
+print("Adjusted Mutual Information: %0.3f"
+      % metrics.adjusted_mutual_info_score(labels_true, labels))
+print("Silhouette Coefficient: %0.3f"
+      % metrics.silhouette_score(X, labels))
+#                                                            Plot result
+import matplotlib.pyplot as plt
+%matplotlib inline
+#                                                       Black removed and is used for noise instead.
+unique_labels = set(labels)
+colors = [plt.cm.Spectral(each)
+          for each in np.linspace(0, 1, len(unique_labels))]
+for k, col in zip(unique_labels, colors):
+    if k == -1:
+        # Black used for noise.
+        col = [0, 0, 0, 1]
+    class_member_mask = (labels == k)
+    xy = X[class_member_mask & core_samples_mask]
+    plt.plot(xy[:, 0], xy[:, 1], 'o', markerfacecolor=tuple(col),
+             markeredgecolor='k', markersize=14)
+    xy = X[class_member_mask & ~core_samples_mask]
+    plt.plot(xy[:, 0], xy[:, 1], 'o', markerfacecolor=tuple(col),
+             markeredgecolor='k', markersize=6)
+plt.title('Estimated number of clusters: %d' % n_clusters_)
+plt.show()
+
 
 #                                                                                           Supervised Learning
 # Datasets, training_sets, Labels, Annotations
@@ -870,8 +933,27 @@ Build forest by repeating steps 1 to 4 for “n” number times to create “n�
 """Takes the test features and use the rules of each randomly created decision tree to predict the oucome and stores the predicted outcome (target)
 Calculate the votes for each predicted target.
 Consider the high voted predicted target as the final prediction from the random forest algorithm."""
-
-
+g(x)=f0(x)+f1(x)+f2(x)+..
+import graphlab as gl
+#                                           Load the data
+data =  gl.SFrame.read_csv('https://static.turi.com/datasets/xgboost/mushroom.csv')
+#                                         Label 'p' is edible
+data['label'] = data['label'] == 'p'
+#                                 Make a train-test split
+train_data, test_data = data.random_split(0.8)
+#                                             Create a model.
+model = gl.random_forest_regression.create(train_data, target='label',
+                                           max_iterations=2,
+                                           max_depth =  3)
+#                                             Save predictions to an SArray
+predictions = model.predict(test_data)
+#                                         Evaluate the model and save the results into a dictionary
+results = model.evaluate(test_data)
+#                                     visualize the models using
+model.show(view="Tree", tree_id=0)
+model.show(view="Tree", tree_id=1)
+#                                          Tuning hyperparameters
+# num_trees, max_depth, step_size, min_child_weight, min_loss_reduction, row_subsample, column_subsample
 
 #                                                                                            $       Ridge Regression
 # The amount of bias added to the model is known as Ridge Regression penalty
