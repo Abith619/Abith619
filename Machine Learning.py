@@ -1,5 +1,4 @@
 #                                                                 Machine Learning ;
-
 #  Clustering
 # Libraries = SciKit Learn
 # Training the imputer (impute) object with strategy
@@ -10,9 +9,17 @@
 # create an array, filter-dataframe.dropna , isNan(x)
 # Shuffle Values , Null Values
 # Generate dataset to print a matrix : 
+from typing import no_type_check
 from pandas.core.frame import DataFrame
+import numpy as np
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+import matplotlib_inline
+from scipy import stats
 
-print(matrix(runif(6*3), n row=6, n col=3))
+print(matrix(runif(6*3), nrow=6, ncol=3))
 # create imputer object: 
 impute = SimpleImpute(missing_values=np.nan, Strategy=‘most_frequent’)
 impute.fit_transform(x)
@@ -67,9 +74,70 @@ thresholder = VarianceThreshold(threshold=.5)
 X_threshold = threshold.fit_transform(X)
 print("Reduced number of features", X_threshold.shape[1])
 
+#                                                        Creating Raw  Data with 4 Fields
+#                            Aplying Filters in DataFrames
+houses[houses['Bedroom']<20]
+# Outlier Detection = Discard some of the data, Fitting the outlier Data
+abithHouseDf['Outlier'] = np.where(abithHouseDf['HouseCost']>=11000,0,1)
+abithHouseDf
+# Inliner = Considered,  some data
+#                                                                                      Applying logarthmic Data
+abithHouseDf['logofsqFt'] = [np.log(x) for x in abithHouseDf['HouseSizeSqFt']]
+#                                  create Dataframe
+houses = pd.DataFrame()
+houses['price'] = [534433, 392333, 293222, 4322032]
+houses['Bedroom'] = [2,3.5,2,116]
+houses['Square_feet'] = [1500, 2500, 1500, 48000]
+houses
+#                                       Drop Observation greater than some value
+houses[houses['Bedroom']<20]
+import numpy as np
+#                                       create feature based on boolean condition
+houses['Outliner']=np.where(houses['Bathrooms']<20,0,1)
+houses                                # show data
+#                                                       Log Data
+houses['Log_of_square_feet']=[np.log(x) for x in houses['square_Feet']]
+houses
+houses = pd.DataFrame(
+    {
+        'price' : [534433, 392333, 293222, 4322032],
+        'Bedroom' : [2, 3.5, 2, 116],
+        "Square_feet" : [1500, 2500, 1500, 48000]
+    }
+)
+houses
+#                                                           Appending
+abithHouseDf.append(abithHouseDf1,ignore=True)
+#                                                        remove null(NAN) values 
+import numpy as np
+import pandas as pd
+#                  Create feature matrix
+X=np.array([
+    [1,2],
+    [6,3],
+    [9,5],
+    [np.nan,4]
+])
+# Load data as a DataFrame
+df=pd.DataFrame(X, columns=['feature_1','feature_2'])
+# observations
+df
+df.dropna() # removes null value
+#                                                   Fit & Transform in replacing null values
+# import numpy, pandas, scikit-learn
+from sklearn.impute import SimpleImputer
+df=pd.DataFrame()
+df['x0']=[0.3051,0.4949,0.6974,4436,0.5]
+df['x1']=[np.nan,0.2654,0.2654,0.2615,0.6731]
+#                                             Replace nan values with mean value, with Imputer
+mean_imputer=SimpleImputer(missing_values=np.nan,strategy='mean') # creating Imputer Object
+#                                           train(fit) the Imputer
+mean_Imputer=mean_Imputer.fit(df)
+#                                            Apply Imputer to dataset
+imputed_df=mean_imputer.transform(df.values)
+imputed_df
 
-
-# #                                                                                                                        String Manipulations & Functions
+#                                                                                                                        String Manipulations & Functions
 #
 # # len(s) in string counted with quotes in middle separate with coma or exclude with \
 # #  Array = (' ', " ", " ')
@@ -526,10 +594,58 @@ print("Reduced number of features", X_Output.shape[1])
 # to analyze large dataset to find patterns 
 # Algorithms = k-means clustering, Decision tree, KNN (k-nearest neighbors), Hierarchal clustering, Anomaly detection,
 # Neural Networks, Principle Component Analysis, Independent Component Analysis, Apriori algorithm, Singular value decomposition
-# finds the hidden patterns in data.
+# finds the hidden patterns in data
 #                                                                                           Clustering
-# K-means
-# hidden Markow Model
+#                                                             Evaluating Clustering
+# clustering data points to groups, ) Clustering tendency, Number of clusters(k), Clustering quality
+#                                                              Clustering tendency
+# making sure does not contain uniformly distributed points
+# Null Hypothesis (Ho) : Data points are generated by non-random, uniform distribution (implying no meaningful clusters)
+# Alternate Hypothesis (Ha): Data points are generated by random data points (presence of clusters)
+#                                                         Number of Optimal Clusters, k
+# a) Distribution shape (b) scale in the data set (c) clustering resolution required by user
+#                                                  find optimal number of clusters:
+# Domain knowledge = finding number of clusters, driven k value gives more relevant insights.
+# Data driven approach = mathematical methods help in finding out right number of clusters.
+# Empirical Method = Square root of N/2 where N is total number of data points
+# Elbow method = Within-cluster variance is a measure of compactness of the cluster
+#                                                                    Statistical approach
+# Gap statistic, sum of within-cluster (intra-cluster) variance is calculated for different values of k
+#                                                            Clustering quality
+# minimal intra cluster distance and maximal inter cluster distance
+# 2 types to assess the clustering performance
+# Extrinsic Measures = ground truth labels, (eg) = Adjusted Rand index, Fowlkes-Mallows scores, Mutual information based scores, Homogeneity, Completeness and V-measure.
+# Intrinsic Measures = Silhouette Coefficient, Calinski-Harabasz Index, Davies-Bouldin Index etc
+#                                                                                   K-means
+# cluster =  collection of data points aggregated together because of certain similarities
+# centroid is the imaginary or real location representing the center of the cluster.
+# Step 2:                                                            Generate random data
+X= -2 * np.random.rand(100,2)
+X1 = 1 + 2 * np.random.rand(50,2)
+X[50:100, :] = X1
+plt.scatter(X[ : , 0], X[ :, 1], s = 50, c = ‘b’)
+plt.show()
+# Step 3:                                                                Use Scikit-Learn
+from sklearn.cluster import KMeans
+Kmean = KMeans(n_clusters=2) # k (n_clusters) an arbitrary value of 2)
+Kmean.fit(X)
+KMeans(algorithm=’auto’, copy_x=True, init=’k-means++’, max_iter=300
+n_clusters=2, n_init=10, n_jobs=1, precompute_distances=’auto’,
+random_state=None, tol=0.0001, verbose=0)
+# Step 4:                                                                Finding the centroid
+Kmean.cluster_centers_
+#                            display the cluster centroids (using green and red color)
+plt.scatter(X[ : , 0], X[ : , 1], s =50, c=’b’)
+plt.scatter(-0.94665068, -0.97138368, s=200, c=’g’, marker=’s’)
+plt.scatter(2.01559419, 2.02597093, s=200, c=’r’, marker=’s’)
+plt.show()
+# Step 5: Testing the algorithm
+Kmean.labels_ # labels property of the K-means clustering
+# data points are categorized into the two clusters
+sample_test=np.array([-3.0,-3.0])
+second_test=sample_test.reshape(1, -1) # predicting the cluster of a data point
+Kmean.predict(second_test) # o/p = array([0])
+# hidden Markow Model                                                       (fit & transform with standard scaler in iris Dataset)
 from sklearn import datasets
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
@@ -539,6 +655,62 @@ Y = iris.target
 scaler = StandardScaler()
 X_std = scaler.fit_transform(X)
 clt = KMeans()
+#                                                           Mini Batch K-means algorithm
+# small random batches of data of a fixed size are stored in a memory
+# Each mini batch updates the clusters using a convex combination of the values of the prototypes and the data
+# the number of clusters or its size, affect the partition quality.
+D = {d1, d2, d3, .....dn},
+                       no. of iterations t,
+                       batch size b, 
+                       no. of clusters k.
+k clusters C = {c1, c2, c3, ......ck}
+initialize k cluster centers O = {o1, o2, .......ok}
+#                                        initialize each cluster
+Ci = Φ (1=< i =< k)
+# _                                      initialize no. of data in each cluster
+Nci = 0 (1=< i =< k)
+for j=1 to t do:
+    #                                       M is the batch dataset and xm
+    #                                       the sample randomly chosen from D
+    M = {xm | 1 =< m =< b}
+    #                                           catch cluster center for each
+    #                                             sample in the batch data set
+    for m=1 to b do:
+        oi(xm) = sum(xm)/|c|i (xm ε M and xm ε ci)
+    end for
+    #                                     update the cluster center with each batch set
+     for m=1 to b do:
+        # get the cluster center for xm
+        oi = oi(xm)
+        # update number of data for each cluster center
+        Nci = Nci + 1
+        #calculate learning rate for each cluster center
+        lr=1/Nci
+        # take gradient step to update cluster center
+        oi = (1-lr)oi + lr*xm
+     end for
+end for
+
+#                                                          using scikit-learn library
+from sklearn.cluster import MiniBatchKMeans, KMeans 
+from sklearn.metrics.pairwise import pairwise_distances_argmin 
+from sklearn.datasets.samples_generator import make_blobs 
+#                                              Load data in X  
+batch_size = 45
+centers = [[1, 1], [-2, -1], [1, -2], [1, 9]] 
+n_clusters = len(centers) 
+X, labels_true = make_blobs(n_samples = 3000, 
+                            centers = centers, 
+                            cluster_std = 0.9) 
+#                                              perform the mini batch K-means 
+mbk = MiniBatchKMeans(init ='k-means++', n_clusters = 4, 
+                      batch_size = batch_size, n_init = 10, 
+                      max_no_improvement = 10, verbose = 0) 
+mbk.fit(X) 
+mbk_means_cluster_centers = np.sort(mbk.cluster_centers_, axis = 0) 
+mbk_means_labels = pairwise_distances_argmin(X, mbk_means_cluster_centers) 
+#                                           print the labels of each data 
+print(mbk_means_labels)
 
 #                                                              DBSCAN Clustering
 # Density-based spatial clustering of applications with noise
@@ -781,6 +953,43 @@ print(poly_pred)
 # fit an "S" shaped logistic function, which predicts two maximum values (0 or 1)
 # range between -[infinity] to +[infinity], then take logarithm of the equation
 # 3 Types = Binomial = 0 or 1, Pass or Fail,, Multinomial = cat", "dogs", or "sheep", Ordinal = "low", "Medium", or "High"
+# Softmax function is used for multiclassification
+# predict the target class (more than 2 target classes)
+#                                       Multinomial Logistic Regression
+"""Inputs
+Linear model
+Logits
+Softmax Function
+Cross Entropy
+One-Hot-Encoding"""
+#                          Inputs
+# sepal length, width and petal length and width parameters
+# assign an integer value to each attribute of the features like for RED we can assign 1
+#                                                                    Linear Model
+# X = [x1,x2,x3], W = [w1,w2,w3],  w1*x1,  w2*x2, w3*x3  
+#                                                                     Logits
+# scores, outputs of the linear model
+#                                                          Softmax Function
+# probabilistic function, calculates the probabilities for the given score
+import numpy as np
+def softmax(inputs):
+    """
+    Calculate the softmax for the give inputs (array)
+    :param inputs:
+    :return:
+    """
+    return np.exp(inputs) / float(sum(np.exp(inputs)))
+softmax_inputs = [2, 3, 5, 6]
+print "Softmax Function Output :: {}".format(softmax(softmax_inputs))
+# cross-entropy function to find the similarity distance between the 
+# distance calculation function, right target class, the distance value will be less
+# probabilities calculated from the softmax function and the target one-hot-encoding matrix
+# One-Hot Encoding is a method to represent the target values or categorical attributes into a binary representation  [0, 1, 0]
+# weights calculated and update the weights is know as the Parameters Optimization
+#                                                          Parameters Optimization
+# iteration process,to calculate Loss function
+#                                                             Loss function
+# input =  calculated weights and all the training observations
 #                                                                                   Implementation of Logistic Regression (Binomial)
 # Data Pre-processing step
 # importing libraries, Datasets
@@ -910,17 +1119,132 @@ mtp.xlabel('Age')
 mtp.ylabel('Estimated Salary')
 mtp.legend()
 mtp.show()
+
+#                                  SVM using Scikit-Learn load iris datasets
+# non-linear feature makes SVMs capable of linearly separating the data
+# map non-separable data to a higher dimensionality to make it separable and then map back (Kernal trick)
+from sklearn.svm import SVC
+from sklearn.datasets import load_iris
+from sklearn.cross_validation import train_test_split
+from sklearn.metrics import accuracy_score
+import seaborn as sns
+iris = load_iris()
+#                     Create data
+X = iris.data
+y = iris.target
+#                      Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
+#                                  Instantiate
+svm = SVC(kernel='linear')
+#                                  Fit
+svm.fit(X_train, y_train)
+#                                  Predict 
+y_pred = svm.predict(X_test)
+#                                  Accuracy calculation
+acc = accuracy_score(y_pred, y_test)
+acc
+#                                                                            Hyperparameters Tuning with Scikit-Learn
+# Common kernels = 'linear', 'poly', 'rbf', 'sigmoid', 'precomputed'
+# C parameter tells the SVM optimization how much you want to avoid misclassifying each training example
+# large C = optimizer will choose a smaller-margin hyperplane
+# Small C = larger-margin separating hyperplane
+# gamma =  how far the influence of a single example reaches
+# Low values = Far, Only consider close points
+# High values = Low, Even far-away points get considered, You can end up with a wiggly decision boundary (over-fitting)
+
+
 #                                                                                             $      Decision Tree Regression
 # solve problems for both categorical and numerical data
 # tree-like structure in which each internal node represents the "test" for an attribute, 
 # each branch represent the result of the test, and each leaf node represents the final decision or result
 # is constructed starting from the root node/parent node (dataset), which splits into left and right child nodes (subsets of dataset).
 # These child nodes are further divided into their children node, and themselves become the parent node of those nodes
+# A decision node (e.g., Outlook) has two or more branches
+# Leaf node (e.g., Hours Played) represents a decision on the numerical target
+#                                                             Standard Deviation
+# to calculate the homogeneity of a numerical sample
+# Step 1: The standard deviation of the target is calculated (eg)Standard deviation (Hours Played) = 9.32
+# Step 2: The resulting standard deviation is subtracted from the standard deviation before the split.
+# Step 3: The attribute with the largest standard deviation reduction is chosen for the decision node
+# Step 4a: The dataset is divided based on the values of the selected attribute
+# Step 4b: "Overcast" subset does not need any further splitting because its CV (8%) is less than the threshold (10%)
 #                                                                                           $      Random Forest Regression
 # ensemble learning method which combines multiple decision trees and predicts the final output based on the average of each tree output
 # g(x)= f0(x)+ f1(x)+ f2(x)+.,,,
 # Bagging or Bootstrap Aggregation technique of ensemble learning in which aggregated decision tree runs in parallel and do not interact with each other
 # Overfitting in the model by creating random subsets of the dataset
+#                                                                                                             Feature Selection
+"""Prepare the dataset
+Train a random forest classifier
+Identify the most important features
+Create a new ‘limited featured’ dataset containing only those features
+Train a second classifier on this new dataset
+Compare the accuracy of the ‘full featured’ classifier to the accuracy of the ‘limited featured’ classifier"""
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.feature_selection import SelectFromModel
+from sklearn.metrics import accuracy_score
+#                                 Load the iris dataset
+iris = datasets.load_iris()
+#                                Create a list of feature names
+feat_labels = ['Sepal Length','Sepal Width','Petal Length','Petal Width']
+X = iris.data #                                  Create X from the features
+y = iris.target #                                 Create y from output
+X[0:5] #                                   View the features
+y # #                                View the target data
+#                                                              Split The Data Into Training And Test Sets
+#                Split the data into 40% test and 60% training
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, random_state=0)
+#                                                              Train A Random Forest Classifier
+# #                            Create a random forest classifier
+clf = RandomForestClassifier(n_estimators=10000, random_state=0, n_jobs=-1)
+#                                         Train the classifier
+clf.fit(X_train, y_train)
+#                          Print the name and gini importance of each feature
+for feature in zip(feat_labels, clf.feature_importances_):
+#                                                      Identify And Select Most Important Features
+# Create a selector object that will use the random forest classifier to identify
+# features that have an importance of more than 0.15
+sfm = SelectFromModel(clf, threshold=0.15)
+#                                             Train the selector
+sfm.fit(X_train, y_train)
+SelectFromModel(estimator=RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=2, min_weight_fraction_leaf=0.0,
+            n_estimators=10000, n_jobs=-1, oob_score=False, random_state=0,
+            verbose=0, warm_start=False),
+        prefit=False, threshold=0.15)
+# #                                                                  Print the names of the most important features
+for feature_list_index in sfm.get_support(indices=True):
+    print(feat_labels[feature_list_index])
+#                                         Create A Data Subset With Only The Most Important Features
+# Transform the data to create a new dataset containing only the most important features
+# Note: We have to apply the transform to both the training X and test X data.
+X_important_train = sfm.transform(X_train)
+X_important_test = sfm.transform(X_test)
+# Train A New Random Forest Classifier Using Only Most Important Features
+# Create a new random forest classifier for the most important features
+clf_important = RandomForestClassifier(n_estimators=10000, random_state=0, n_jobs=-1)
+# Train the new classifier on the new dataset containing the most important features
+clf_important.fit(X_important_train, y_train)
+RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=2, min_weight_fraction_leaf=0.0,
+            n_estimators=10000, n_jobs=-1, oob_score=False, random_state=0,
+            verbose=0, warm_start=False)
+#                                             Compare The Accuracy Of Our Full Feature Classifier To Our Limited Feature Classifier
+#    Apply The Full Featured Classifier To The Test Data
+y_pred = clf.predict(X_test)
+#                             View The Accuracy Of Our Full Feature (4 Features) Model
+accuracy_score(y_test, y_pred)
+#                             Apply The Full Featured Classifier To The Test Data
+y_important_pred = clf_important.predict(X_important_test)
+#                              View The Accuracy Of Our Limited Feature (2 Features) Model
+accuracy_score(y_test, y_important_pred)
 #                                                                    Random forest creation pseudocode
 # Pseudocode to perform prediction from the created random forest classifier
 """Randomly select “k” features from total “m” features.
@@ -955,15 +1279,68 @@ model.show(view="Tree", tree_id=1)
 #                                          Tuning hyperparameters
 # num_trees, max_depth, step_size, min_child_weight, min_loss_reduction, row_subsample, column_subsample
 
+#                      Regression problem statement
+# to build regression algorithms for predicting unemployment within an economy
+"""psavert - personal savings rate.
+pce - personal consumption expenditures, in billions of dollars.
+uempmed - median duration of unemployment, in weeks.
+pop - total population, in thousands.
+unemploy- number of unemployed in thousands (dependent variable)."""
+# two metrics - R-squared value and Root Mean Squared Error (RMSE)
+# Step 1 -                                                  Loading the Required Libraries and Modules
+import pandas as pd
+import numpy as np
+from sklearn import model_selection
+from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import Ridge
+from sklearn.linear_model import Lasso
+from sklearn.linear_model import ElasticNet
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.svm import SVR
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import r2_score
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
+from math import sqrt
+# Step 2 -                                          Reading the Data and Performing Basic Data Checks
+df = pd.read_csv('regressionexample.csv') # reads in the data as pandas dataframe
+print(df.shape) #  prints the shape - 574 observations of 5 variables
+df.describe()  # summary statistics of the numerical variables
+# Step 3 -                                          Creating Arrays for the Features and the Response Variable
+# 
+target_column = ['unemploy'] # creates an object of the target variable called 'target_column
+predictors = list(set(list(df.columns))-set(target_column)) # list of all the features, excluding the target variable 'unemploy'
+df[predictors] = df[predictors]/df[predictors].max() # normalizes the predictors, 
+df.describe() # summary of the normalized data
+# Step 4 -                                           Creating the Training and Test Datasets
+#                                  holdout-validation method
+X = df[predictors].values  # create arrays of the independent (X) and dependent (y) variables
+y = df[target_column].values
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=40)  # splits the data into training and test dataset
+print(X_train.shape); print(X_test.shape)
+# Step 5 -                                  Build, Predict and Evaluate the Regression Model
+# Loss function = OLS + alpha * summation (squared coefficient values)
 #                                                                                            $       Ridge Regression
 # The amount of bias added to the model is known as Ridge Regression penalty
 # by multiplying with the lambda to the squared weight of each individual features 
 βridge=(X′X+λI)−1(X′Y)
 # high collinearity between the independent variables, regularization technique, which is used to reduce the complexity of the model
-#                                                                                               $       Lasso Regression
+#                                                                                                    Lasso Regression
 # penalty term contains only the absolute weights instead of a square of weights
 # it takes absolute values, hence, it can shrink the slope to 0
-
+#                                                                                    Elastic Net Regression
+#                                                                                    Linear Regression
+rr = Ridge(alpha=0.01)  #                                 instantiates the Ridge Regression model with an alpha value of 0.01
+rr.fit(X_train, y_train) #                                fits the model to the training data
+pred_train_rr= rr.predict(X_train) #                      predicts
+print(np.sqrt(mean_squared_error(y_train,pred_train_rr)))
+print(r2_score(y_train, pred_train_rr))  #                print the evaluation metrics
+pred_test_rr= rr.predict(X_test)
+print(np.sqrt(mean_squared_error(y_test,pred_test_rr))) 
+print(r2_score(y_test, pred_test_rr))
+#                                                         Fit the linear regression
+model = regr.fit(X_std, y)
 #                                                                                                              Data preprocessing
 # Reader, 
 # Splitter = partitioning data into training & performs Sreatification
