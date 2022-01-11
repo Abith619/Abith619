@@ -748,6 +748,156 @@ s2 = pd.Series([5,-3,np.NaN,14])
 #  notnull( ) = to identify the indexes without a value
 s2[s2.notnull( )]
 s2[s2.isnull( )]
+#                                                                       Reading Data from XML
+# structured data are available in XML format
+# eading and writing of data in XML format, lxml library,
+from lxml import objectify
+xml = objectify.parse('books.xml') # object tree
+root = xml.getroot() # define the root
+# separate tags with points, with hierarchy of nodes in the tree
+root.Book.Author
+root.Book.PublishDate
+root.getchildren() # access various nodes and elements
+# name of the tag corresponding to the child node
+ [child.tag for child in root.Book.getchildren()]
+['Author', 'Title', 'Genre', 'Price', 'PublishDate']
+[child.text for child in root.Book.getchildren()]
+['Ross, Mark', 'XML Cookbook', 'Computer', '23.56', '2014-22-01']
+# Convert lxml.etree tree structure into a data frame
+# analyzing the entire contents of a eTree to fill a DataFrame line by line
+def etree2df(root):
+    column_names = []
+    for i in range(0,len(root.getchildren()[0].getchildren())):
+       column_names.append(root.getchildren()[0].getchildren()[i].tag)
+       xml:frame = pd.DataFrame(columns=column_names)
+    for j in range(0, len(root.getchildren())):
+       obj = root.getchildren()[j].getchildren()
+       texts = []
+       for k in range(0, len(column_names)):
+          texts.append(obj[k].text)
+          row = dict(zip(column_names, texts))
+          row_s = pd.Series(row)
+          row_s.name = j
+          xml:frame = xml:frame.append(row_s)
+          return xml:frame...>>> etree2df(root)
+#                                                             Read Write on Excel
+pd.read_excel('data.xls')
+pd.read_excel('data.xls','Sheet2')
+pd.read_excel('data.xls',1)
+#                                to convert a data frame in a spreadsheet on Excel
+frame = pd.DataFrame(np.random.random((4,4)),
+index = ['exp1','exp2','exp3','exp4'],
+columns = ['Jan2015','Fab2015','Mar2015','Apr2005'])
+#                                  a new Excel file containing the data
+frame.to_excel('data2.xlsx')
+#                                                                                           Reading and Writing HTML Files
+# to convert complex data structures such as DataFrame directly in HTML tables
+# read_html(), to_html()
+#                                           Writing Data in HTML 
+#  The internal structure of the data frame is automatically converted into nested tags
+# to directly convert the DataFrame in an HTML table
+frame = pd.DataFrame(np.arange(4).reshape(2,2))
+print(frame.to_html())
+# create a data frame with labels of the indexes and column names
+frame = pd.DataFrame( np.random.random((4,4)),
+index = ['white','black','red','blue'],
+columns = ['up','down','right','left'])
+#                            writing an HTML page through the generation of a string
+s = ['
+']
+s.append('My DataFrame')
+s.append('')
+s.append(frame.to_html())>>> s.append('')
+html = ''.join(s)
+html_file = open('myFrame.html','w')
+html_file.write(html)
+html_file.close()
+#                                                                          Reading Data from an HTML File
+#                                         parsing the HTML file
+web_frames = pd.read_html('myFrame.html')
+web_frames[0]
+#                                                                         Operations between Data Structures
+frame1.add(frame2)
+# indexes and column names differ greatly from one series to another
+# Operations between DataFrame and Series
+# 
+frame = pd.DataFrame(np.arange(16).reshape((4,4)),
+index=['red','blue','yellow','white'],  #            define 2 Structure
+columns=['ball','pen','pencil','paper'])
+ser = pd.Series(np.arange(4), index=['ball','pen','pencil','paper'])
+frame - ser # minus
+ser['mug'] = 9 # new column with that index only that all its elements will be NaN
+#                                                 JSON (JavaScript Object Notation)
+# convert DataFrame into JSON File, efine a DataFrame and then call the to_json() function
+frame = pd.DataFrame(np.arange(16).reshape(4,4),
+index=['white','black','red','blue'],
+columns=['up','down','right','left'])
+frame.to_json('frame.json')
+pd.read_json('frame.json')
+# JSON files do not have a tabular structure, convert the structure dict file in tabular form
+# Load the contents of the JSON file and convert it into a string.
+from pandas.io.json import json_normalize
+file = open('books.json','r')
+text = file.read()
+text = json.loads(text)
+json_normalize(text,'books')  # extract a table that contains all the books
+# add other columns by inserting a key list as the third argument of the function
+json_normalize(text2,'books',['writer','nationality'])
+#                                                                                                Load or Write Data with SQLite3
+# Create a data frame that you will use to create a new table on the SQLite3 database
+frame = pd.DataFrame( np.arange(20).reshape(4,5),
+columns=['white','red','blue','black','green'])
+engine = create_engine('sqlite:///foo.db') # implement the connection to the SQLite3 database
+frame.to_sql('colors',engine)  # Convert the DataFrame in a table within the database
+pd.read_sql('colors',engine)
+import sqlite3
+query = """
+... CREATE TABLE test
+... (a VARCHAR(20), b VARCHAR(20),
+...  c REAL,        d INTEGER
+... );"""
+con = sqlite3.connect(':memory:')
+con.execute(query)
+con.commit()
+# enter data through the SQL INSERT statement
+data = [('white','up',1,3),
+('black','down',2,8),('green','up',4,4),
+('red','down',5,5)]
+stmt = "INSERT INTO test VALUES(?,?,?,?)"
+con.executemany(stmt, data)
+con.commit()
+# query the database to get the data you just recorded
+cursor = con.execute('select * from test')
+cursor
+rows = cursor.fetchall()
+rows #   pass the list of tuples to the constructor of the DataFrame
+[(u'white', u'up', 1.0, 3), (u'black', u'down', 2.0, 8), (u'green', u'up', 4.0, 4),  (u'red', 5.0, 5)]
+cursor.description
+pd.DataFrame(rows, columns=zip(*cursor.description)[0])
+#                                                                                            Adv - Data Preparation
+# to prepare the data and assemble them in the form of data structures
+# pandas.concat() function concatenates the objects along an axis
+# pandas.DataFrame.combine_first( )
+#                                                                          Merging
+# 
+frame1 = pd.DataFrame( {'id':['ball','pencil','pen','mug','ashtray'],
+'price': [12.33,11.44,33.21,13.23,33.62]})
+frame2 = pd.DataFrame( {'id':['pencil','pencil','ball','pen'],
+'color': ['white','red','red','black']})
+pd.merge(frame1,frame2)
+pd.merge(frame1,frame2,on='id')
+# The left_on and right_on options that specify the key column for the first and for the second DataFrame.
+pd.merge(frame1, frame2, left_on='id', right_on='sid')
+# The outer join produces the union of all keys,
+pd.merge(frame1,frame2,on='id',how='outer')
+pd.merge(frame1,frame2,on='id',how='left')
+pd.merge(frame1,frame2,on='id',how='right')
+pd.merge(frame1,frame2,on=['id','brand'],how='outer')  # merge of multiple keys
+#                                                                                 Merging on Index
+# left_index or right_index options to True to activate them
+pd.merge(frame1,frame2,right_index=True, left_index=True)
+ame2.columns = ['brand2','id2']
+frame1.join(frame2)
 
 
 #                                                                                            Measuring Central Tendency
