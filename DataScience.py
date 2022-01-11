@@ -10,6 +10,42 @@
     Visualization and interpretation of results
     Deployment of the solution"""
 
+# Dictionary = {5:1, 6:9}, Data & Array = ['1,2,3']
+
+#  Mean, Variance, propability mass Function
+from numpy.char import index
+import pandas as pd
+import numpy as np
+from scipy import stats
+import matplotlib.pyplot as plt
+values={
+    'batsman' : ['Abith','Arun', '619','Raj'],
+    'score' : [10,20,30,40]
+}
+#                                                                                         calculate the mean of data
+df = pd.DataFrame(values)
+df['score'].mean()
+#                                                    Triming the data
+stats.trim_mean(df['score'],propotiontocut=0.2)
+stats.trimboth(df['score'],proportiontocut=0.2).mean()  # trims 20% data in boh sides
+#                                     tail = trim1
+stats.trim1(df['score'],proportiontocut=0.2,tail='right')
+stats.trim1(df['score'],proportiontocut=0.2,tail='right').mean()
+
+#                                                                                          propability mass Function
+data=[3,2,1,6,5,619,4,8,9,7,4,65,1,]
+count={}
+for values in data :
+    count[values]=count.get(values,0)+1
+for observation in data:
+    count[observation]=count.get(observation,0)+1  # looping in count of values
+count  #                                                 count unique values
+n=len(data)  #                                         count the length of data
+probability_mass_function={}
+for unique_variable,count in count.items():
+    probability_mass_function[unique_variable]=count/n
+probability_mass_function
+plt.bar(list(probability_mass_function.keys()), probability_mass_function.values(),color='g')
 #                                                                   encryption(+) & Decryption(-)
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 key = 4
@@ -105,6 +141,127 @@ A[0:2, 0:2]  # array([[10, 11],
 #                                  array of indexes
 A[[0,2], 0:2] # array([[10, 11],
 #                     [16, 17]])
+
+#                                                                                               Numpy - Conditions & Boolean Arrays
+# indexes in a numerical form. An alternative way to perform the selective extraction of the elements in an array is to use the conditions and Boolean operators.
+# making selections of parts of arrays
+A = np.random.random((4, 4))
+A < 0.5 # all the positions in which the values are less than 0.5.
+A[A < 0.5]  # obtain a new array
+
+#                                                                                        Numpy - General/Advanced concepts
+# difference between copies and views will be illustrated especially when they return values
+#                                                                       functions of NumPy
+#                                           Copies or Views of Objects 
+# 
+a = np.array([1, 2, 3, 4])
+b=a
+b #                                     return value either a copy or a view of the array
+a[2]=0
+c = a[0:2]  # the object returned is only a view of the original array
+a[0] = 0
+#             to generate a complete copy and distinct array you can use the copy() function
+c = a.copy()
+c
+a[0] = 0
+c
+
+#                                                                          Vectorization
+#  absence of explicit loop during the developing of the code
+# more concise and readable code, and you can say that it will appear more “Pythonic”
+# many operations take on a more mathematical expression
+#                                                                          Broadcasting
+# allows an operator or a function to act on two or more arrays to operate even if these arrays do not have exactly the same shape
+# classify multidimensional arrays through the shape that is a tuple representing the length of the elements for each dimension
+# #  two arrays may be subjected to broadcasting when all their dimensions are compatible
+A = np.arange(16).reshape(4, 4)
+b = np.arange(4)
+A #                                                    4*4 Array
+b # 4*0 Array
+#  add a 1 to each missing dimension, 4 x 44 x 1The rule of compatibility is met
+# the missing elements (size, length 1) are filled with replicas of the values contained in extended sizes
+# the two arrays have the same dimensions, the values inside may be added together
+A + b 
+m = np.arange(6).reshape(3, 1, 2) # two arrays have different shapes but each of them is smaller than the other only for some dimensions
+n = np.arange(6).reshape(3, 2, 1)
+m + n # addition operator between the two arrays, operating  element-wise
+#                                                                                                   Structured Arrays
+# This type of array contains structs or records instead of the individual items
+# Specify a list of comma-separated specifiers to indicate the elements that will constitute the struct, along with its data type and order
+"""bytes                 b1
+int                   i1, i2, i4, i8
+unsigned ints         u1, u2, u4, u8
+floats                f2, f4, f8
+complex               c8, c16
+fixed length strings  a"""
+#                                         three types of data in the dtype 
+structured = np.array([(1, 'First', 0.5, 1+2j),(2, 'Second', 1.3, 2-2j),
+(3, 'Third', 0.8, 1+3j)],dtype=('i2, a6, f4, c8'))>>> structuredarray([(1, 'First', 0.5, (1+2j)),
+(2, 'Second', 1.2999999523162842, (2-2j)),
+(3, 'Third', 0.800000011920929, (1+3j))],
+dtype=[('f0', '
+#                                        data type explicitly specifying int8, uint8, float16, complex64,
+structured = np.array([(1, 'First', 0.5, 1+2j),(2, 'Second', 1.3,2-2j),
+(3, 'Third', 0.8, 1+3j)],dtype=('int16, a6, float32, complex64'))
+structured
+#                 3 rd Type
+structured
+array([(1, 'First', 0.5, (1+2j)),
+(2, 'Second', 1.2999999523162842, (2-2j)),
+(3, 'Third', 0.800000011920929, (1+3j))],
+dtype=[('f0', '
+structured[1](2, 'Second', 1.2999999523162842, (2-2j)) # reference index, obtain the corresponding row which contains the struct
+# refer to all the elements of the same type, or of the same ‘column'
+structured['f1']
+array(['First', 'Second', 'Third'],dtype='|S6')
+# specify the names with something more meaningful, progressive integer that indicates the position in the sequence.
+structured = np.array([(1,'First',0.5,1+2j),(2,'Second',1.3,2-2j),(3,'Third',0.8,1+3j)],
+dtype=[('id','i2'),('position','a6'),('value','f4'),('complex','c8')])
+# Redefining the tuples of names assigned to the dtype attribute of the structured array
+structured.dtype.names = ('id','order','value','complex')
+# use meaningful names for the various types of fields
+structured['order']
+array(['First', 'Second', 'Third'],
+dtype='|S6')
+#                                                                        Array Manipulation
+#                                     Joining Arrays
+# stacking, providing a number of functions 
+A = np.ones((3, 3))
+B = np.zeros((3, 3))
+np.vstack((A, B)) # vertical stacking with the vstack() function, second array as new rows of the first array.
+np.hstack((A,B)) #  the hstack() function performs horizontal stacking, second array is added to the columns of the first array
+a = np.array([0, 1, 2])
+b = np.array([3, 4, 5])
+c = np.array([6, 7, 8])
+np.column_stack((a, b, c))
+np.row_stack((a, b, c))
+#                                  Splitting Arrays
+# horizontally with the hsplit() function and vertically with the vsplit() function.
+A = np.arange(16).reshape((4, 4))
+A
+[B,C] = np.hsplit(A, 2) # width of the array divided into two parts
+B    #                   4x4, 2x4
+C
+#  height of the array divided into two parts, 4x4, 4x2
+[B,C] = np.vsplit(A, 2)
+B
+C
+# divide the matrix into three parts
+lso includes the functionalities of the vsplit() and hsplit() functions.
+[A1,A2,A3] = np.split(A,[1,3],axis=1)  # split by column
+[A1,A2,A3] = np.split(A,[1,3],axis=0) # split by row
+
+#                                                           Read Write Array Data on Files
+#                                           Loading and Saving Data in Binary Files(Format)
+# save() function, specifying as arguments the name of the file, to which .npyextension will be automatically added
+np.save('saved_data',data)
+# recover the data stored within a .npy file, you can use the load() function
+loaded_data = np.load('saved_data.npy')
+#                                                       Reading File with Tabular Data
+# column headings have become the names of the field.
+# two loops: the first reads a line at a time, and the second separates and converts the values contained in it,
+# genfromtxt() function replaces the blanks in the file with nan values
+data = np.genfromtxt('data.csv', delimiter=',', names=True)
 #                                                                       Iterating an Array
 # apply an iteration to apply a function on the rows or on the columns or on an individual item
 # launch an aggregate function that returns a value calculated for every single column or on every single row = apply_along_axis()
@@ -336,6 +493,263 @@ plt.show()
 27-03-2018,	1155.25
 28-03-2018,	1154"""
 
+#                                                                                           Pandas - Data Structures
+# 2 Types = Series, DataFrame
+#                                             The Series
+# Object, 1-D data structures, Index & Value
+#                                             Declaring a Series
+s = pd.Series([12,-4,7,9]) # dtype: int64
+#  pandas will assign numerical values increasing from 0 as labels
+s = pd.Series([12,-4,7,9], index=['a','b','c','d'])
+s.values /n s.index # to see the array
+# specify the label 
+s['b'] # Label
+s[0:2] # index
+# specifying the list of labels within an array
+s[['b','c']]
+#                                                                  Assigning Values to the Elements
+s[1] = 0 # by selecting index
+s['b'] = 1 # Label
+#                          Defining Series from NumPy Arrays
+arr = np.array([1,2,3,4])
+s3 = pd.Series(arr)
+s4 = pd.Series(s)
+arr[2] = -2
+#                             Filtering Values
+s[s > 8]
+# DataFrame = index + Columns
+data = {
+    'color' : ['blue','green','yellow','red','white'],
+    'object' : ['ball','pen','pencil','paper','mug'],
+    'price' : [1.2,1.0,0.6,0.9,1.7]}
+frame = pd.DataFrame(data)    # specify a sequence of columns
+frame2 = pd.DataFrame(data, columns=['object','price']) # sequence regardless of how they are contained within the object dict
+#  to assign labels to the indexes of a DataFrame, you have to use the index option assigning it
+frame2 = pd.DataFrame(data, index=['one','two','three','four','five'])
+#                                                                                    define within the constructor = 3 Args
+# a data matrix, then an array containing the labels assigned to the index option, 
+# and finally an array containing the names of the columns assigned to the columns option
+frame3 = pd.DataFrame(np.arange(16).reshape((4,4)),
+index=['red','blue','yellow','white'],
+columns=['ball','pen','pencil','paper'])
+#                                                                Selecting Elements
+frame.columns
+Index([u'colors', u'object', u'price'], dtype='object')
+#                                      to get the list of indexes, specify the index attribute
+frame.index
+Int64Index([0, 1, 2, 3, 4], dtype='int64')
+# get the entire set of data using the values attribute.
+frame.values
+array([['blue', 'ball', 1.2],
+['green', 'pen', 1.0],
+['yellow', 'pencil', 3.3],
+['red', 'paper', 0.9],
+['white', 'mug', 1.7]], dtype=object)
+#                             select only the contents of a column
+frame['price']
+#                         ix attribute with the index value of the row that you want to extract
+frame.ix[2]
+frame.ix[[2,4]] # an array with the sequence of rows to insert
+frame[0:1] # Extract a portion of a DataFrame, 
+frame[1:3] # more than one line
+# to achieve is a single value within a DataFrame
+frame['object'][3]
+#                                                 Assigning Values
+# assign a label, using the name attribute,
+frame.index.name = 'id'; frame.columns.name = 'item'
+frame['new'] = 12 # add a new column, assigning a value to the instance of the DataFrame specifying a new column name
+# update of the contents of a column, you have to use an array
+frame['new'] = [3.0,1.3,2.2,0.8,1.1]
+# columns of a data frame can also be created by assigning a Series to one of them
+ser = pd.Series(np.arange(5))
+ser
+frame['new'] = ser # Creating a column
+frame['price'][2] = 3.3 # change a single value
+
+#                                             Membership of a Value
+isin( ) # 
+frame.isin([1.0,'pen']) # Boolean values
+frame[frame.isin([1.0,'pen'])] # With NAN values
+#                         Deleting a Column
+del frame['new']
+#                                                                   Filtering
+frame[frame < 12] # Other values replaced with NAN
+#                                                                                            Series as Dictionaries
+# create a series from a dict previously defined
+mydict = {'red': 2000, 'blue': 1000, 'yellow': 500, 'orange': 1000}
+myseries = pd.Series(mydict)
+#                                Operations between Series
+mydict2 = {'red':400,'yellow':1000,'black':700}
+myseries2 = pd.Series(mydict2)
+myseries + myseries2
+#                                                                                                Nested dict
+nestdict = { 'red': { 2012: 22, 2013: 33 },
+'white': { 2011: 13, 2012: 22; 2013: 16},
+'blue': {2011: 17, 2012: 27; 2013: 18}}
+frame2 = pd.DataFrame(nestdict)
+#                                                    Transposition of a DataFrame
+frame2.T # the columns become rows and rows columns
+#                                                                                              Function Application and Mapping
+#                                            Functions by Element
+frame = pd.DataFrame(np.arange(16).reshape((4,4)),
+index=['red','blue','yellow','white'],
+columns=['ball','pen','pencil','paper'])
+#  calculate the square root of each value within the data frame, np.sqrt()
+np.sqrt(frame)
+#                                 Functions by Row or Column
+# define a lambda function that calculates the range covered by the elements in an array
+f = lambda x: x.max() - x.min()
+# 
+def f(x):
+    return x.max() - x.min()
+# apply the function just defined on the DataFrame
+frame.apply(f)
+frame.apply(f, axis=1) # apply the function by row
+# Return Series
+def f(x):
+    return pd.Series([x.min(), x.max()], index=['min','max'])
+#                                                                                                  Statistics Functions
+frame.sum()
+frame.mean()
+frame.describe() # to obtain a summary statistics at once
+#                                                                                    Sorting and Ranking
+# sort_index( ) = returns a new object which is identical to the start
+ser = pd.Series([5,0,3,8,4], index=['red','blue','yellow','white','green'])
+ser.sort_index()
+# set the opposite order, using the ascending option set to False.
+ser.sort_index(ascending=False)
+# to order by columns, you will need to use the axis options set to 1.
+frame = pd.DataFrame(np.arange(16).reshape((4,4)),
+index=['red','blue','yellow','white'],
+columns=['ball','pen','pencil','paper'])
+frame.sort_index(axis=1)
+# to order the series, you will use the order( ) function.
+ser.order()
+# order the values in a DataFrame
+frame.sort_index(by='pen') # assign an array containing the names of the columns to the by option
+# 
+ser.rank(method='first') # without a sorting operation)
+ser.rank()
+ser.rank(ascending=False)
+#                                 Correlation and Covariance, corr( ) and cov( )
+seq2 = pd.Series([3,4,3,4,5,4,3,2],['2006','2007','2008','2009','2010','2011','2012','2013'])
+seq = pd.Series([1,2,3,4,4,3,2,1],['2006','2007','2008','2009','2010','2011','2012','2013'])
+seq.corr(seq2)0.77459666924148329
+seq.cov(seq2)0.8571428571428571
+#                               covariance and correlation are applied to a single DataFram
+frame2 = DataFrame([[1,4,3,6],[4,5,6,1],[3,3,1,5],[4,1,6,4]],
+index=['red','blue','yellow','white'],
+columns=['ball','pen','pencil','paper'])
+frame2.corr()
+frame2.cov()
+# corrwith( ) = pairwise correlations between the columns or rows of a data frame
+frame2.corrwith(ser)
+frame2.corrwith(frame)
+#                                                                            Hierarchical Indexing and Leveling
+# # multiple levels of indexes on a single axis
+# creating a structure with two levels. = creating a series containing two arrays of indexes
+# reshaping the data and group-based operations such as creating a pivot-table
+mser = pd.Series(np.random.rand(8),
+index=[['white','white','white','blue','blue','red','red','red'],
+['up','down','right','up','down','up','down','left']])
+mser.index
+MultiIndex(levels=[[u'blue', u'red', u'white'], [u'down', u'left', u'right', u'up']],
+labels=[[2, 2, 2, 0, 0, 1, 1, 1], [3, 0, 2, 3, 0, 3, 0, 1]])ù
+# select values for a given value of the second index
+mser[:,'up']
+# to select a specific value
+mser['white','up']
+# unstack( ) = converts the Series with hierarchical index in a simple DataFrame,
+# where the second set of indexes is converted into a new set of columns.
+mser.unstack()
+# stack() = convert a DataFrame in a Series,
+frame.stack()
+#                                                to define a hierarchical index both for the rows and for the columns
+mframe = pd.DataFrame(np.random.randn(16).reshape(4,4),
+index=[['white','white','red','red'], ['up','down','up','down']],
+columns=[['pen','pen','paper','paper'],[1,2,1,2]])
+#                                                                         Reordering and Sorting Levels
+# swaplevel( ) =  rearrange the order of the levels on an axis or do a sorting for values at a specific level
+mframe.columns.names = ['objects','id']
+# interchange, and returns a new object with the two levels interchanged between them
+mframe.index.names = ['colors','status']
+mframe.swaplevel('colors','status')
+mframe.sortlevel('colors')
+#                                                                                            Summary Statistic by Level
+mframe.sum(level='colors') # specify the level option with level name
+# to make a statistic for a given level of the column
+mframe.sum(level='id', axis=1)
+#                                               Read and Write file
+"""read_csv                to_csv
+read_excel             to_excel
+read_hdf                to_hdf
+read_sql                to_sql
+read_json              to_json
+read_html             to_html
+read_stata            to_stata
+read_clipboard      to_clipboard
+read_pickle           to_pickle
+read_msgpack     to_msgpack (experimental)
+read_gbq              to_gbq (experimental)"""
+# convert it to DataFrame
+csvframe = read_csv('myCSV_01.csv')
+read_table('ch05_01.csv',sep=',')
+# to assign default names to the columns by using the header option set to None
+read_csv('ch05_02.csv', header=None)
+read_csv('ch05_02.csv', names=['white','red','blue','green','animal'])
+# assigning all the columns to be converted into indexes
+read_csv('ch05_03.csv', index_col=['color','status'])
+#                                                                                              Using RegExp for Parsing TXT Files
+#  files on which to parse the data do not show separators well defined as a comma or a semicolon
+# TXT file, has values separated by spaces or tabs in an unpredictable order
+wildcard /s*. /s # for indicating tab /t is used
+"""Table Metacharacters
+-------------------------------------------------------------------
+.    single character, except newline
+\d    digit
+\D    non-digit character
+\s    whitespace character
+\S    non-whitespace character
+\n    new line character
+\t    tab character
+\uxxxx    unicode character specified by the hexadecimal number xxxx"""
+read_table('ch05_04.txt',sep='\s*') # in random order
+#             to extract the numeric part from a TXT file, separator characters as alphanumeric characters
+read_table('ch05_05.txt',sep='\D*',header=None)
+# With the skiprows option you can exclude all the lines you want
+# to exclude the first five lines, then you have to write skiprows = 5
+# to rule out the fifth line you have to write skiprows = [5]
+read_table('ch05_06.txt',sep=',',skiprows=[0,1,3,6])
+#                                                    Reading TXT Files into Parts or Partially
+read_csv('ch05_02.csv',skiprows=[2],nrows=3,header=None)  # to apply any iterations
+# specify the number of lines on which to parse
+#                                                                  Writing Data in CSV
+frame2.to_csv('ch05_07.csv')
+# default behavior can be changed by placing the two options index and header set to False 
+frame2.to_csv('ch05_07b.csv', index=False, header=False)
+#                                                                                          Operations and Mathematical Functions
+# mathematical functions that are applicable to NumPy array can be extended to objects Series.
+# specify the function referenced with np and the instance of the Series passed as argument
+np.log(s)
+#                                                     Evaluating Values
+# counting duplicates and whether a value is present or not in the Series, declare a series in which there are many duplicate values
+serd = pd.Series([1,0,2,1,2,3], index=['white','white','blue','green','green','yellow'])
+# To know all the values contained within the Series excluding duplicates, unique( )
+serd.unique()
+value_counts( )  # Calculates occurrences within a Series
+serd.value_counts()
+# unction that evaluates the membership
+serd.isin([0,3])
+#                                                                           NaN Values
+# calculations of logarithms of negative values, or exceptions during execution of some calculation or function
+# explicitly define and add this value in a data structure, such as Series. Within the array containing the values
+np.NaN
+s2 = pd.Series([5,-3,np.NaN,14])
+#  notnull( ) = to identify the indexes without a value
+s2[s2.notnull( )]
+s2[s2.isnull( )]
+
+
 #                                                                                            Measuring Central Tendency
 # center or distribution of location of values of a data set
 # chances of a new input fitting into the existing data set and hence probability of success
@@ -356,11 +770,11 @@ d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Smith','Jack',
    'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8,3.78,2.98,4.80,4.10,3.65])}
 #                                                                   Create a DataFrame
 df = pd.DataFrame(d)
-print "Mean Values in the Distribution"
-print df.mean()
-print "*******************************"
-print "Median Values in the Distribution"
-print df.median()
+print ("Mean Values in the Distribution")
+df.mean()
+print ("*******************************")
+print ("Median Values in the Distribution")
+df.median()
 #                                                   Calculating Mode
 #C                                           reate a Dictionary of series
 d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Smith','Jack',
