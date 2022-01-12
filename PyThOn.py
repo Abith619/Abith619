@@ -2387,6 +2387,9 @@ class User_Exception2( Exception ):
                 else:
 #   This piece will be executed when a user_exception 1 is triggeredexcept User_Exception2:   This piece will be executed when a user_exception 1 is triggered else:
 
+#                                                                    Indentation Error
+# 
+
 #                                                                                     Implement Custom Exception
 class Error(Exception):
     """Base class for other exceptions"""
