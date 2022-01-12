@@ -493,6 +493,135 @@ plt.show()
 27-03-2018,	1155.25
 28-03-2018,	1154"""
 
+#                                                                 Adding Further Elements to the Chart
+#                                    Adding Text
+ipython qtconsole
+import matplotlib.pyplot as plt
+plt.axis([0,5,0,20])
+plt.title('My first plot')
+plt.xlabel('Counting')
+plt.ylabel('Square values')
+plt.plot([1,2,3,4],[1,4,9,16],'ro')
+# changing the font and increasing the size of the characters. Also you can modify the color of the axis labels
+plt.axis([0,5,0,20])
+plt.title('My first plot',fontsize=20,fontname='Times New Roman')
+plt.xlabel('Counting',color='gray')
+plt.ylabel('Square values',color='gray')
+plt.plot([1,2,3,4],[1,4,9,16],'ro')
+# text().text(x,y,s, fontdict=None, **kwargs)
+# coordinates of the four points of the plot shifted slightly on the y axis
+plt.axis([0,5,0,20])
+plt.title('My first plot',fontsize=20,fontname='Times New Roman')
+plt.xlabel('Counting',color='gray')
+plt.ylabel('Square values',color='gray')
+plt.text(1,1.5,'First')
+plt.text(2,4.5,'Second')
+plt.text(3,9.5,'Third')
+plt.text(4,16.5,'Fourth')
+plt.plot([1,2,3,4],[1,4,9,16],'ro')
+# to integrate LaTeX expressions allowing you to insert mathematical expressions within the chart.
+plt.axis([0,5,0,20])
+plt.title('My first plot',fontsize=20,fontname='Times New Roman')
+plt.xlabel('Counting',color='gray')
+plt.ylabel('Square values',color='gray')
+plt.text(1,1.5,'First')
+plt.text(2,4.5,'Second')
+plt.text(3,9.5,'Third')
+plt.text(4,16.5,'Fourth')
+plt.text(1.1,12,r'$y = x^2$',fontsize=20,bbox={'facecolor':'yellow','alpha':0.2})
+plt.plot([1,2,3,4],[1,4,9,16],'ro')
+#                                  Adding a Grid
+plt.axis([0,5,0,20])
+plt.title('My first plot',fontsize=20,fontname='Times New Roman')
+plt.xlabel('Counting',color='gray')
+plt.ylabel('Square values',color='gray')
+plt.text(1,1.5,'First')
+plt.text(2,4.5,'Second')
+plt.text(3,9.5,'Third')
+plt.text(4,16.5,'Fourth')
+plt.text(1.1,12,r'$y = x^2$',fontsize=20,bbox={'facecolor':'yellow','alpha':0.2})...: plt.grid(True)
+plt.plot([1,2,3,4],[1,4,9,16],'ro')
+#                                         Adding a Legend
+plt.axis([0,5,0,20])
+plt.title('My first plot',fontsize=20,fontname='Times New Roman')
+plt.xlabel('Counting',color='gray')
+plt.ylabel('Square values',color='gray')
+plt.text(2,4.5,'Second')
+plt.text(3,9.5,'Third')
+plt.text(4,16.5,'Fourth')
+plt.text(1.1,12,'$y = x^2$',fontsize=20,bbox={'facecolor':'yellow','alpha':0.2})
+plt.grid(True)
+plt.plot([1,2,3,4],[1,4,9,16],'ro')
+plt.legend(['First series'])
+#                                  move the legend in the upper-left corner
+"""Location Code            Location String
+--------------------------------------------------------
+0                               best
+1                               upper-right
+2                                upper-left
+3                              lower-right
+4                               lower-left
+5                                   right    
+6                                center-left
+7                                center-right
+8                               lower-center
+9                                upper-center
+10                                   center"""
+# correspond to the order of the text labels passed as argument to the legend() function.
+import matplotlib.pyplot as plt
+plt.axis([0,5,0,20])
+plt.title('My first plot',fontsize=20,fontname='Times New Roman')
+plt.xlabel('Counting',color='gray')
+plt.ylabel('Square values',color='gray')
+plt.text(1,1.5,'First')
+plt.text(2,4.5,'Second')
+plt.text(3,9.5,'Third')
+plt.text(4,16.5,'Fourth')
+plt.text(1.1,12,'$y = x^2$',fontsize=20,bbox={'facecolor':'yellow','alpha':0.2})
+plt.grid(True)
+plt.plot([1,2,3,4],[1,4,9,16],'ro')
+plt.plot([1,2,3,4],[0.8,3.5,8,15],'g^')
+plt.plot([1,2,3,4],[0.5,2.5,4,12],'b*')
+plt.legend(['First series','Second series','Third series'],loc=2)
+#                                                                                 Saving_charts
+%save my_first_chart 171
+# 
+import matplotlib.pyplot as plt
+plt.axis([0,5,0,20])
+plt.title('My first plot',fontsize=20,fontname='Times New Roman')
+plt.xlabel('Counting',color='gray')
+plt.ylabel('Square values',color='gray')
+plt.text(1,1.5,'First')
+plt.text(2,4.5,'Second')
+plt.text(3,9.5,'Third')
+plt.text(4,16.5,'Fourth')
+plt.text(1.1,12,'$y = x^2$',fontsize=20,bbox={'facecolor':'yellow','alpha':0.2})
+plt.grid(True)
+plt.plot([1,2,3,4],[1,4,9,16],'ro')
+plt.plot([1,2,3,4],[0.8,3.5,8,15],'g^')
+plt.plot([1,2,3,4],[0.5,2.5,4,12],'b*')
+plt.legend(['First series','Second series','Third series'],loc=2)
+#                                                                 Reload Saved Chart
+ipython qtconsole --matplotlib inline -m my_first_chart.py
+%load my_first_chart.py
+%run my_first_chart.py # To run during a session
+#                                         Saving Your Chart Directly as an Image
+# This file will be named my_chart.png containing the image of your chart
+plt.axis([0,5,0,20])
+plt.title('My first plot',fontsize=20,fontname='Times New Roman')
+plt.xlabel('Counting',color='gray')
+plt.ylabel('Square values',color='gray')
+plt.text(1,1.5,'First')
+plt.text(2,4.5,'Second')
+plt.text(3,9.5,'Third')
+plt.text(4,16.5,'Fourth')
+plt.text(1.1,12,'$y = x^2$',fontsize=20,bbox={'facecolor':'yellow','alpha':0.2})
+plt.grid(True)
+plt.plot([1,2,3,4],[1,4,9,16],'ro')
+plt.plot([1,2,3,4],[0.8,3.5,8,15],'g^')
+plt.plot([1,2,3,4],[0.5,2.5,4,12],'b*')
+plt.legend(['First series','Second series','Third series'],loc=2)
+plt.savefig('my_chart.png')
 #                                                                                           Pandas - Data Structures
 # 2 Types = Series, DataFrame
 #                                             The Series
@@ -720,7 +849,7 @@ read_table('ch05_05.txt',sep='\D*',header=None)
 # to exclude the first five lines, then you have to write skiprows = 5
 # to rule out the fifth line you have to write skiprows = [5]
 read_table('ch05_06.txt',sep=',',skiprows=[0,1,3,6])
-#                                                    Reading TXT Files into Parts or Partially
+#                                                                                        Reading TXT Files into Parts or Partially
 read_csv('ch05_02.csv',skiprows=[2],nrows=3,header=None)  # to apply any iterations
 # specify the number of lines on which to parse
 #                                                                  Writing Data in CSV
@@ -748,7 +877,7 @@ s2 = pd.Series([5,-3,np.NaN,14])
 #  notnull( ) = to identify the indexes without a value
 s2[s2.notnull( )]
 s2[s2.isnull( )]
-#                                                                       Reading Data from XML
+#                                                                                               Reading Data from XML
 # structured data are available in XML format
 # eading and writing of data in XML format, lxml library,
 from lxml import objectify
@@ -780,7 +909,7 @@ def etree2df(root):
           row_s.name = j
           xml:frame = xml:frame.append(row_s)
           return xml:frame...>>> etree2df(root)
-#                                                             Read Write on Excel
+#                                                                                                          Read Write on Excel
 pd.read_excel('data.xls')
 pd.read_excel('data.xls','Sheet2')
 pd.read_excel('data.xls',1)
@@ -790,7 +919,7 @@ index = ['exp1','exp2','exp3','exp4'],
 columns = ['Jan2015','Fab2015','Mar2015','Apr2005'])
 #                                  a new Excel file containing the data
 frame.to_excel('data2.xlsx')
-#                                                                                           Reading and Writing HTML Files
+#                                                                                                 Reading and Writing HTML Files
 # to convert complex data structures such as DataFrame directly in HTML tables
 # read_html(), to_html()
 #                                           Writing Data in HTML 
@@ -812,11 +941,11 @@ html = ''.join(s)
 html_file = open('myFrame.html','w')
 html_file.write(html)
 html_file.close()
-#                                                                          Reading Data from an HTML File
+#                                                                                             Reading Data from an HTML File
 #                                         parsing the HTML file
 web_frames = pd.read_html('myFrame.html')
 web_frames[0]
-#                                                                         Operations between Data Structures
+#                                                                                            Operations between Data Structures
 frame1.add(frame2)
 # indexes and column names differ greatly from one series to another
 # Operations between DataFrame and Series
@@ -827,7 +956,7 @@ columns=['ball','pen','pencil','paper'])
 ser = pd.Series(np.arange(4), index=['ball','pen','pencil','paper'])
 frame - ser # minus
 ser['mug'] = 9 # new column with that index only that all its elements will be NaN
-#                                                 JSON (JavaScript Object Notation)
+#                                                                                                JSON (JavaScript Object Notation)
 # convert DataFrame into JSON File, efine a DataFrame and then call the to_json() function
 frame = pd.DataFrame(np.arange(16).reshape(4,4),
 index=['white','black','red','blue'],
@@ -874,11 +1003,11 @@ rows #   pass the list of tuples to the constructor of the DataFrame
 [(u'white', u'up', 1.0, 3), (u'black', u'down', 2.0, 8), (u'green', u'up', 4.0, 4),  (u'red', 5.0, 5)]
 cursor.description
 pd.DataFrame(rows, columns=zip(*cursor.description)[0])
-#                                                                                            Adv - Data Preparation
+#                                                                                                           Adv - Data Preparation
 # to prepare the data and assemble them in the form of data structures
 # pandas.concat() function concatenates the objects along an axis
 # pandas.DataFrame.combine_first( )
-#                                                                          Merging
+#                                                                                                                 Merging
 # 
 frame1 = pd.DataFrame( {'id':['ball','pencil','pen','mug','ashtray'],
 'price': [12.33,11.44,33.21,13.23,33.62]})
@@ -899,7 +1028,174 @@ pd.merge(frame1,frame2,right_index=True, left_index=True)
 ame2.columns = ['brand2','id2']
 frame1.join(frame2)
 
-
+#                                                                                                Data Transformation
+# simple DataFrame with some duplicate rows.
+dframe = pd.DataFrame({ 'color': ['white','white','red','red','white'],
+'value': [2,1,3,3,2]})
+dframe.duplicated() # find duplicate Elements
+dframe[dframe.duplicated()] # find duplicate row
+dframe[dframe.duplicated()] # # delete duplicate rows
+#                                                                             Mapping
+# to bind a value to a particular label or string.To define a mapping there is no better object than dict objects
+map = {
+   'label1' : 'value1,
+   'label2' : 'value2,
+   }
+"""replace(): replaces values
+map(): creates a new column
+rename(): replaces the index values"""
+#                                                                          Replacing Values via Mapping
+frame = pd.DataFrame({ 'item':['ball','mug','pen','pencil','ashtray'],
+'color':['white','rosso','verde','black','yellow'],
+'price':[5.56,4.20,1.30,0.56,2.75]})
+#                                       to replace the incorrect values in new values
+newcolors = {
+    'rosso': 'red',
+    'verde': 'green'
+    }
+frame.replace(newcolors)
+ser = pd.Series([1,3,np.nan,4,6,np.nan,3])
+ser.replace(np.nan,0)
+#                                                     Adding Values via Mapping
+frame = pd.DataFrame({ 'item':['ball','mug','pen','pencil','ashtray'],
+'color':['white','red','green','black','yellow']})
+price = {
+    'ball' : 5.56,
+    'mug' : 4.20,
+    'bottle' : 1.30,
+    'scissors' : 3.41,
+    'pen' : 1.30,
+    'pencil' : 0.56,
+    'ashtray' : 2.75
+    }
+frame['price'] = frame['item'].map(prices)
+#                                                       Rename the Indexes of the Axes
+reindex = {
+    0: 'first',
+    1: 'second',
+    2: 'third',
+    3: 'fourth',
+    4: 'fifth'
+    }
+frame.rename(reindex)
+recolumn = {
+    'item':'object',
+    'price': 'value'
+    }
+frame.rename(index=reindex, columns=recolumn)
+frame.rename(index={1:'first'}, columns={'item':'object'})
+frame.rename(columns={'item':'object'}, inplace=True)
+#                                                           Discretization and Binning
+results = [12,34,67,55,28,90,99,12,3,56,74,44,87,23,49,89,87]
+bins = [0,25,50,75,100]
+cat = pd.cut(results, bins)
+cat.levels
+cat.labels # occurrences for each bin,
+bin_names = ['unlikely','less likely','likely','highly likely']
+pd.cut(results, bins, labels=bin_names)
+pd.cut(results, 5)
+#                          for binning: qcut()
+quintiles = pd.qcut(results, 5)
+quintiles
+pd.value_counts(quintiles)
+#                        Detecting and Filtering Outliers
+randframe = pd.DataFrame(np.random.randn(1000,3))
+randframe.describe()
+randframe.std()
+randframe[(np.abs(randframe) > (3*randframe.std())).any(1)]
+#                                                                                   Pandas - String Manipulation
+#                      Built-in Methods
+text = '16 Bolton Avenue , Boston'
+text.split(',')
+tokens = [s.strip() for s in text.split(',')]
+address, city = [s.strip() for s in text.split(',')] # array of strings
+address + ',' + city'
+strings = ['A+','A','A-','B','BB','BBB','C+']';'.join(strings)
+text.index('Boston')
+text.find('Boston')
+text.index('New York')
+text.find('New York')
+text.count('e')2
+text.count('Avenue')
+text.replace('Avenue','Street')
+text.replace('1','')
+#                                                                                          Regular Expressions
+# pattern matching. substitution, splitting
+import re
+text = "This is      an\t odd  \n text!"
+re.split('\s+', text)
+# Output = ['This', 'is', 'an', 'odd', 'text!']
+regex = re.compile('\s+')
+regex.split(text)
+text = 'This is my address: 16 Bolton Avenue, Boston'
+re.findall('A\w+',text) # to find uppercase letter
+re.findall('[A,a]\w+',text)
+#                                           findall(): match() and search().
+re.search('[A,a]\w+',text)
+search = re.search('[A,a]\w+',text)
+search.start()11
+search.end()18
+text[search.start():search.end()]
+re.match('[A,a]\w+',text) # begining of the statement
+re.match('T\w+',text)
+match = re.match('T\w+',text)
+text[match.start():match.end()]
+#                                                                                                 Data Aggregation
+#                                           GroupBy
+#                       SPLIT-APPLY-COMBINE
+#  to calculate the average price1 column using group labels listed in the column color
+group = frame['price1'].groupby(frame['color'])
+group.groups # each group is listed explicitly
+group.mean()
+group.sum()
+#                             Hierarchical Grouping
+ggroup = frame['price1'].groupby([frame['color'],frame['object']])
+ggroup.sum()
+frame[['price1','price2']].groupby(frame['color']).mean()
+frame.groupby(frame['color']).mean()
+#                                                                                Group Iteration
+# an iteration for generating a sequence of 2-tuples containing the name of the group together with the data portion.
+for name, group in frame.groupby('color'):
+    print name
+    print group
+#                                        Chain of Transformations
+result1 = frame['price1'].groupby(frame['color']).mean()
+type(result1)
+result2 = frame.groupby(frame['color']).mean()
+type(result2)
+frame['price1'].groupby(frame['color']).mean()
+frame.groupby(frame['color'])['price1'].mean()
+(frame.groupby(frame['color']).mean())['price1']
+(frame.groupby(frame['color']).mean())['price1']
+means = frame.groupby('color').mean().add_prefix('mean_')
+#                                              Functions on Groups
+group = frame.groupby('color')
+group['price1'].quantile(0.6)
+#                                             calculate the range of the values of  each group
+def range(series):
+    return series.max() - series.min()
+group['price1'].agg(range)
+group.agg(range)
+group['price1'].agg(['mean','std',range])
+#                                     transform() and apply() functions
+frame = pd.DataFrame({ 'color':['white','red','green','red','green'],
+'price1':[5.56,4.20,1.30,0.56,2.75],
+'price2':[4.75,4.12,1.60,0.75,3.15]})
+sums = frame.groupby('color').sum().add_prefix('tot_')
+merge(frame,sums,left_on='color',right_index=True) # add the results of a calculation of aggregation in each line of the data frame to start
+frame.groupby('color').transform(np.sum).add_prefix('tot_') # calculation of aggregation
+#                             invokes the passage of function on each piece, and then tries to chain together the  various parts
+frame = DataFrame( { 'color':['white','black','white','white','black','black'],
+'status':['up','up','down','down','down','up'],
+'value1':[12.33,14.55,22.34,27.84,23.40,18.33],
+'value2':[11.23,31.80,29.99,31.18,18.25,22.44]})
+frame.groupby(['color','status']).apply( lambda x: x.max())
+frame.rename(index=reindex, columns=recolumn)
+temp = date_range('1/1/2015', periods=10, freq= 'H')
+temp
+timetable = DataFrame( {'date': temp, 'value1' : np.random.rand(10),
+'value2' : np.random.rand(10)})
+timetable['cat'] = ['up','down','left','left','up','up','down','right','right','up']
 #                                                                                            Measuring Central Tendency
 # center or distribution of location of values of a data set
 # chances of a new input fitting into the existing data set and hence probability of success
