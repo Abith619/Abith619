@@ -277,26 +277,65 @@ print(max(lis))
 #                                 using count() to count the number of occurrence       $ count()
 print("the number of occurrence of 3 after 3rd position is : ", end="")
 print(lis.count(3))
+
+#                                                             oops Concept
+# 
+
 # """
 #                                                                                                                                       class :
+# Template for Object
 # any Attribute defined within a class definition but not within a fun() = class Attribute 
 # it can share across all instances of the class, # changes are Visible to all other Instances
 # Attributes, Behaviour are defined
 # human = class, abith = object
 # data, functions are bundled as Unit
+Class Class_Name:                                 # class Declaration
+Object_Name = Class_Name()
+Object_Name.Method_Name()
+Class_Name.fun()
+def fun(self):
+    print("the student name is : "+self.name) # define function with self as a parameter
+    print("hi Class_Name")
+def __init(self,name):  #                          Constructor Declaration
+    self.name = Name
+# function declaration with setting address
+def setaddress(self,address):
+    self.address=address
+def getaddress(self):
+    return self.address
+# call setaddress with address as parameter
+Abith.setaddress("chennai")
+print(Abith.getaddress())  # call the getaddress
 
 #                                                                                                                               object
 # Identity, Properities, behaviour
 # setting values
-Class Class_Name:
-Object_Name = Class_Name()
-Object_Name.Method_Name()
-
+abith = abithclass("abith") # Object Declaration with Initializing
+abith.fun()                 # Function call
 Class pen:
 a = 10
 b = a+10
 print("b")
 penObject = pen
+#                             Create an Object and call the fun(self)
+class Abithclass:
+    def __init__(self,name):  #                          Constructor Declaration
+        self.name = name
+    def Abithfun(self):
+        print("hi"+self.name)
+Abithobj = Abithclass("Abith")
+Abithobj.Abithfun()
+#                                 multiple Arguments
+class Abithclass:
+    def __init__(self,a,b):
+        self.a=a
+        self.b=b
+    def Abithfun(self):
+        print("hi" + str(self.a + self.b))
+Abithobj=Abithclass(10,20)
+Abithobj.Abithfun()
+
+
 #                            object types
 import abc
 class FourWheelVehicle (abc.ABC):
@@ -613,8 +652,8 @@ print( isinstance(a, FourWheelVehicle))
 print( isinstance(a, TwoWheelVehicle))
 # o.p = True, False, False, True
 
-
 #                                                                                                                                 $ Inheritance
+# function to call class using objects , to call father class using child class
 # building blocks of any scalable & maintainable piece in a software
 # one class to derive or inherit properties of another class, adding new features without modifying them
 # existing classes can be modified by a new class
@@ -622,13 +661,10 @@ print( isinstance(a, TwoWheelVehicle))
 # new class = derived class
 # single-Inheritance = 1 base class, inherited by one derived class, derived class automatically invokes the base class Constructor
 # Multiple-Inheritance = multi-base classes inherited by 1 derived class, the base class Constructor are invoked in order in which classes are derived
-
 #                                                  $ derived types of Inheritance = combining two forms of Inheritance
-
 # hierarchical Inheritance = 1 base class inherited by multiple derived classes, Objects share the class variables to different classes
 # Multi-level Inheritance = A derived class serving as a base Class for another derived class, the base class Constructor are invoked recursively
 # hybrid Inheritance = A combination of hierarchical & Multi-level inheritance, any combination of classes
-
 #                                                                                                 $  Single Inheritance
 class indian_cuisine(cuisine):                 # cuisine = class
     def __init__(self,type,place):                                  # creating class
@@ -651,18 +687,15 @@ class fine_dine_cuisine(indian_cuisine,italian_cuisine):
         return
     fine_dine_cuisine = new-cuisine("cooked',India",4)
 # Diamond Inheritance
-
 #                                   Determining the type of Inheritance
 #
 # (1) is instance(myObj,int) (2) is subclass(bool,int)
-
 class Abith:
     a = 5
 class Abi:
     a = 5
 AbithInstance = Abith()
 print(isinstance(AbithInstance, Abi))
-
 #                                        Multiple Inheritance(4 Types) = Multiple Class
 # Multiplier
 #   $
@@ -670,10 +703,7 @@ def multiplier():
     Return[lambda]
     x, i = i:i * x
     for i in range(4)]
-
 #                                                                                                                          Multiple Inheritance in Python
-
-
 print([m(2) for m in multiplier()])
 print([m(3) for m in multiplier()])
 # syntax of multiple inheritances involving three base classes and a derived class
@@ -732,14 +762,11 @@ o = rect_area()
 o.l = float(input("Enter the required length for rectangle: "))
 o.b = float(input("Enter the required breadth for rectangle: "))
 o.r_area()
-
 #                                                                                                                                    $ single inheritance
 # a derived class is derived only from a single parent class & allows a class to derive behaviour & properties from single base class
 # adding new features to a class
 class Parent_class_Name:                               #  Parent_class code block
 class Child_class_Name(Parent_class_name):             #  Child_class code block
-
-
 class Parent_class(object):                           # Base class
 def __init__(self, name, id):                         # Constructor
 self.name = name
@@ -760,7 +787,6 @@ print( Employee1.Employee_Details() , Employee1.Employee_check() )
 Employee2 = Child_class( "Employee2" , 198754)                                                   # child class object
 print( Employee2.Employee_Details() , Employee2.Employee_check() )
 Employee2.End()
-
 
 class Parent_class(object):                                  # Base class
 def __init__(self, value1,value2):                          # Constructor
@@ -2368,7 +2394,28 @@ if x % 2 == 0:
 # except(ValueError, ZeroDivisionError): / print("")
 # Generic except block = Unknown exceptions: except: / print("")
 # import random / from time import clock / random-int = random.randint(1, 100) / print random-int
+#                                                                  Try-exception-else
+# pointing & controlling an error, by raising value error
+except ValueError as err
+print(err)
+#                                     Try-if-raise-else-except-valueError
+try:
+    age = int(input("Enter the fuckin Age :"))
+    if(age<18):
+        raise ValueError
+    else:
+        print("the age is valid")
+except ValueError:
+    print("it's not an valid input")
+#                                     try:if:raise:else:except:ArithmeticError
+try:
 
+    if b is 0:
+        raise ArithmeticError
+    else:
+        print("a/b = ",a/b)
+except ArithmeticError:
+    print("the value of b cannot be 0")
 #                                                                                                                              Exception-handling
 def some_function():
     try:
@@ -2386,8 +2433,25 @@ class User_Exception2( Exception ):
             except User_Exception2:
                 else:
 #   This piece will be executed when a user_exception 1 is triggeredexcept User_Exception2:   This piece will be executed when a user_exception 1 is triggered else:
-
-#                                                                    Indentation Error
+#                                                                                  Indentation Error
+#  PEP8 whitespace ethics, 4 whitespaces used between any alternative or iteration
+for i in range(1,24):
+    print(i)
+    if i == 8:
+        break
+#                             Example
+site = 'kaashivv'
+if site == 'kaashiv':
+print('Logging in to kaashiv!')
+else:
+print('Please type the URL again.')
+print('You are ready to go!')
+#                             Example
+j = 1
+while(j<= 5):
+    print(j)
+    j = j + 1
+#                                                          I/O Error
 # 
 
 #                                                                                     Implement Custom Exception
@@ -2716,4 +2780,33 @@ time.sleep((float(display_rate * t_total) / data_length) * correction)
 if _f != data_length / display_rate - 1:
     os.system("clear")
 raw_input()
-#
+#                                                   $    ML & DS   Project in csv file 
+#                          performance evaluation of an employee
+import pandas as pd
+import seaborn as sns
+import numpy as np
+import matplotlib.pyplot as plot
+employeevalue = pd.read_csv("studentsperformance.csv",",")
+employeevalue.head()
+employeevalue.info()              # fetch columns of a table
+employeevalue.shape
+employeevalue['level of education'].value_counts()
+#                                                                        Analysis & plotting
+plot.figure(figsize(8,5))
+sns.barplot(employeevalue['Category of job'].value_counts().index,employeevalue['Category of job'].value_counts().values)
+plot.xlabel('categoryofjob_index')
+plot.ylabel('count of categoryofjob_values')
+plot.title('bar plot for category of jobs')
+employeevalue['category of job'].value_counts(dropna = False).plot.bar(figsize(8,5)) # remove null values
+employeevalue['category of job'].value_counts(normalize=True) #                        data is normalized 
+plot.xlabel("all math scores")
+plot.ylabel("maths score value")
+plot.bar(figsize(8,5),color='red') #                                                  plotting color and size
+# to show the gender bar plot
+sns.set(style='whitegrid')
+x=sns.barplot(x=stu['gender'].value_counts().index,y=stu['gender'].value_counts().values,hue=['female','male'])
+plot.legend(loc=2)  # Indication
+plot.xlabel('gender')
+plot.ylabel('frequency')
+plot.title('show gender barplot')
+plot.show()
