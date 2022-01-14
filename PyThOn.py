@@ -151,6 +151,55 @@ seed(619)
 for _ in range(5):
 value = random()
 print(value)
+#                                                                                                  $   StopIteration
+# object that holds a value (generally a countable number) which is iterated upon, iterator’ and ‘iterable’
+# __next__(),                     Syntax for (StopIteration in if and else of next())
+class classname:
+    def __iter__(self):
+        #set of statements
+        return self;
+def __next__(self):
+    if # condition till the loop needs to be executed
+    # set of statements that needs to be performed till the traversing needs to be done
+    return
+else:
+    raise StopIteration               #  it will get raised when all the values of iterator are traversed
+# Stop the printing of numbers after 20 or printing numbers incrementing by 2 till 20 in case of Iterators
+class printNum:
+    def __iter__(self):
+        self.z = 2
+        return self
+def __next__(self):
+    if self.z<= 20:   #performing the action like printing the value on console till the value reaches 20
+        y = self.z
+        self.z += 2
+        return y
+    else:
+        raise StopIteration   #raising the StopIteration exception once the value gets increased from 20
+obj = printNum()
+value_passed = iter(obj)
+for u in value_passed:
+    print(u)
+# Finding the cubes of number and stop executing once the value becomes equal to the value passed using StopIteration
+def values():
+    #list of integer values with no limits
+    x = 1             #initializing the value of integer to 1
+while True:
+    yield x
+    x+=  1
+def findingcubes():
+    for x in values():
+        yield x * x *x     #finding the cubes of value ‘x’
+def func(y, sequence):
+    sequence = iter(sequence)
+    output = [ ] #          creating an output blank array
+try:
+    for x in range(y):   #using the range function of python to use for loop
+        output.append(next(sequence))   #appending the output in the array
+except StopIteration:    #catching the exception
+    pass
+return output
+print(func(5, findingcubes()))  #passing the value in the method ‘func’
 """
 #                                                                                                                                 $  Templates
 
@@ -2451,9 +2500,212 @@ j = 1
 while(j<= 5):
     print(j)
     j = j + 1
-#                                                          I/O Error
-# 
+#                                                                             I/O Error
+#  to write program in a way that it can catch the expected errors
+import sys
+file = open('myfile.txt')
+lines = file.readline()
+slines = int(lines.strip())
+# FileNotFoundError: [Errno 2] No such file or directory: 'myfile.txt'
+#                                           using try except block
+import sys
+def something():
+    try:
+        file = open ( "filethatdoesnotexist.txt", 'r' )
+    except IOError:
+        print("hi")
+print (sys)
+something()
+# o/p =  module 'sys' (built-in)> hi
 
+#                                                                                                         EOF ErroR
+# input() function or read() function returns a string that is empty without reading any data
+#                                                                   Implement Python EOFError
+#                                                                        EOFError program
+#                                       try and except blocks are used to catch the exception
+try:
+    while True:#                                       input is assigned to a string variable check
+        check = raw_input('The input provided by the user is being read which is:')
+        #                                       the data assigned to the string variable is read
+        print ('READ:', check)
+#                                       EOFError exception is caught and the appropriate message is displayed
+except EOFError as x:
+    print (x)
+#                                                    to Avoid EOFError in Python
+try:
+    data = raw_input ("Do you want to continue?: ")
+except EOFError:
+    print ("Error: No input or End Of File is reached!")
+    data = ""
+print (data)
+#                                                                                     NotImplementedError
+class BaseClass(object):
+    def __init__(self):
+        super(BaseClass, self).__init__()
+    def do_something(self):
+        raise NotImplementedError(self.__class__.__name__ + '.try_something')
+class SubClass(BaseClass):
+    def do_something(self):
+        print (self.__class__.__name__ + ' trying something!')
+SubClass().do_something()
+BaseClass().do_something()
+#                                                     To Avoid NotImplementedError
+try:
+    salary = int(input("Enter salary: "))
+    print("So cool you earn %d Rupees." % salary)  # %d = int(input()), % = assigned value
+except ValueError:
+    print("Hey, that wasn't a number!")
+#                                                                                                        TypeError
+# (eg) = the square root of a number but we are passing a list instead of int
+list1 = [7,8,9,10]
+list2 = 's';
+result = list2.join(list1)
+print(result)
+# o/p = TypeError: sequence item 0: expected str instance, int found
+#                o/p =              One of the number is not integer
+a = 's';
+b = 4;
+if(type(b) != int or type(a) != int):
+    print('One of the number is not integer')
+else:
+    c = a/b;
+    print(c)
+#                                                  Avoid TypeError
+a = 5;
+b = 4;
+if(type(b) != int or type(a) != int):
+    print('One of the number is not integer')
+else:
+    c = a/b;
+print(c)
+#                                              One of the values is not list
+list1 = 's';
+list2 = [3, 4, 5, 8, 9];
+if(type(list1) != list or type(list2) != list):
+    print('One of the values is not list')
+else:
+    print(list1 + list2)
+#                                                                                     ValueError
+# ValueError: too many values to unpack (expected 3)
+list = [[1,2],[3,4],[5,6],[7,8],[6,9]]
+a,b,c,d = list
+print(a)
+print(b)
+print(c)
+#                                                                                   AssertionError
+#  -O flag to disable all the assert statements present in the process
+#  set the PYTHONOPTIMIZE option and if this option is set to a non-empty string which is the same as using -O option
+# PYTHONOPTIMIZE is set to an integer, it is the same as using -O multiple times.
+# Assertion Error in a program which converts the temperature in degrees kelvin to temperature in degrees Fahrenheit
+assert condition, error_message(optional)
+def convertKelToFah(Temp):
+# This program demonstrates assertion error while converting the temperature in degrees kelvin to temperature in degrees Farhenheit
+# assert statement is used to check if the temperature is below zero and an exception is thrown if a negative parameter is passed to it
+    assert (Temp >= 0),"The temperature is below zero and it is really cold!"
+# the converted value of temperature in degrees kelvin to degrees Fahrenheit is returned
+    return ((Temp-273)*1.8)+32
+# temperature value 300 is passed to the function to convert it from degrees kelvin to degrees Fahrenheit
+    print (convertKelToFah(300))
+# temperature value 350.50 is passed to the function to convert it from degrees kelvin to degrees Fahrenheit and the integer value is returned
+    print int(convertKelToFah(350.50))
+# temperature value -10 is passed to the function to convert it from degrees kelvin to degrees Fahrenheit and the exception is thrown
+    print (convertKelToFah(-10))
+#                                   This program demonstrates the Assertion Error with error message.
+#          a variable is defined to store an integer value
+x = 1
+#          a variable is defined to store an integer value
+y = 0
+#  assert statement is used to check if the second integer value is not equal to zero else error message "The operation is invalid because the denominator cannot be zero" is printed
+assert y != 0, "The operation is invalid because the denominator cannot be zero"
+#  Otherwise the result of first integer divided by the second integer is printed
+print(x / y)
+
+#                                                                                         Unicode Error
+# Unicode = string type for representing the characters that allow the Python program to work with any type of different possible characters
+# types of string for representing different types of string
+#                      declaring Unicode characters
+# write Unicode literals with prefix either “u” or “U” followed by a string containing alphabets and numerical
+“u dfskgfkdsg”
+Or
+“U sakjhdxhj”
+Or
+“\u1232hgdsa”
+# “\u”, we can write a string containing any alphabet or numerical
+# declare any hex value then we have to “\x” escape sequence which takes two hex digits and for octal, it will take digit 777
+#                    -*- coding: latin-1 -*-
+a= u'dfsf\xac\u1234'
+print("The value of the above unicode literal is as follows:") # o/p = 4660
+print(ord(a[-1]))
+#                  UnicodeEncodeError (eg)
+str(u'ABITH')
+#                     o/p = b'caf\xc3\xa9'
+a = u'café'
+b = a.encode('utf8')
+r = str(b)
+print("The unicode string after fixing the UnicodeEncodeError is as follows:")
+print(r)
+# 
+a = u'ABITH'
+b = a.encode('utf8')
+print(b)
+#                                                                                             OverflowError
+print("Simple program for showing overflow error")
+print("\n")
+import math
+print("The exponential value is")
+print(math.exp(1000))
+# o/p = OverflowError: math range error
+#                                                 value exceeds in data type values
+import time
+currtime = [tm for tm in time.localtime()] print("Print the current data and time")
+print(currtime)
+print("\n")
+time2 = (2**73)
+print("The invlaid time is as follows:")
+print(time2)
+print("\n")
+currtime[3] = time2
+time3 = time.asctime(currtime)
+print(time3)
+# o/p =  Integer too long to convert to c-long
+print("Simple program for showing overflow error")
+print("\n")
+import math
+try:
+    print("The exponential value is")
+    print(math.exp(1000))
+except OverflowError as oe:
+    print("After overflow")
+#                                                                                        KeyboardInterrupt
+# ctrl – c or del = to stop the running code in console or stopping the interpreter 
+raise KeyboardInterrupt
+except KeyboardInterrupt:
+# code to perform any specific tasks to catch that exception
+try:
+# code inside the try block which can cause an exception
+# taking the input ‘name’ from the user
+name = input('Enter the name of the user ')
+# writing the different exception class to catch/ handle the exception
+except EOFError:
+print('Hello user it is EOF exception, please enter something and run me again')
+except KeyboardInterrupt:
+print('Hello user you have pressed ctrl-c button.')
+# If both the above exception class does not match, else part will get executed
+else:
+print('Hello user there is some format error')
+#                                                  ctrl – d button on asking the username by the program
+try:
+    # code inside the try block which can cause an exception
+    # taking the input ‘name’ from the user
+    name = input('Enter the name of the user ')
+    # writing the different exception class to catch/ handle the exception
+except EOFError:
+    print('Hello user it is EOF exception, please enter something and run me again')
+except KeyboardInterrupt:
+    print('Hello user you have pressed ctrl-c button.')
+    # If both the above exception class does not match, else part will get executed
+else:
+    print('Hello user there is some format error')
 #                                                                                     Implement Custom Exception
 class Error(Exception):
     """Base class for other exceptions"""
