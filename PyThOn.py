@@ -19,7 +19,6 @@ print("sum of the numbers=", num1 + num2)
 """
 from builtins import function
 from hashlib import new
-
 from attr import field
 
 """
@@ -41,8 +40,292 @@ message = input()
 print(message)
 """
 
+#                                                                                 Patterns
+# Type 1.                                                                  $ Star Pattern
+#                                    Program to print full pyramid
+num_rows = int(input("Enter the number of rows"));
+for i in range(0, num_rows):
+    for j in range(0, num_rows-i-1):
+        print(end=" ")
+    for j in  range(0, i+1):
+        print("*", end=" ")
+    print()
+#                                    Program to print Left Half Pyramid
+num_rows = int(input("Enter the number of rows"));
+k = 1
+for i in range(0, num_rows):
+    for j in range(0, k):
+        print("* ", end="")
+    k = k + 1
+    print()
+#                                     Program to print Right Half Pyramid
+num_rows = int(input("Enter the number of rows"));
+k = 8
+for i in range(0, num_rows):
+    for j in range(0, k):
+        print(end=" ")
+    k = k - 2
+    for j in range(0, i+1):
+        print("* ", end="")
+    print()
+# # Program to print One More Star Pattern Pyramid
+print("Program to print star pattern: \n");
+rows = input("Enter maximum stars you want display on a single line")
+rows = int (rows)
+for i in range (0, rows):
+    for j in range(0, i + 1):
+        print("* ", end='')
+    print("\r")
+    for i in range (rows, 0, -1):
+        for j in range(0, i -1):
+            print("* ", end='')
+        print("\r")
+#                                                     diamond star pattern
+num_rows = int(input("Enter the number of rows"))
+k = 0
+for i in range(1, num_rows + 1):
+    for j in range (1, (num_rows - i) + 1):
+        print(end = " ")
+    while k != (2 * i - 1):
+        print("*", end = "")
+        k = k + 1
+        k = 0
+print()
+k = 2
+m = 1
+for i in range(1, num_rows):
+    for j in range (1, k):
+        print(end = " ")
+        k = k + 1
+        while m <= (2 * (num_rows - i) - 1):
+            print("*", end = "")
+            m = m + 1
+            m = 1
+        print()
+#                                                                                                                   Factorial
+n! = n*(n-1)*(n-2)*(n-3)*
+# Python program to determine the value of factorial for a given number
+# modifying the value keyed in will produce a different result
+Number = int(input(" Enter the number for which factorial value to be determined : "))
+factorial = 1
+# to verify that the given number is greater than zero incase it is less than zero then the
+# message stated below will be printed
+if Number < 0:
+    print(" ! ! ! ! ! Factorial value cannot be intended for negative integers ! ! ! ! ! ")
+# The default factorial value for zero is one and this is printed here
+elif Number == 0:
+    print(" ! ! ! ! 1 is the factorial value 0 ! ! ! ! ")
+else:
+    # For loop to handle the factorial calculation
+    for i in range(1,Number + 1):
+        factorial = factorial*i
+    print("The factorial value for the " , Number , "is" , factorial)
+# Python Code for finding nth                                                                                Fibonacci Number
+def Fibonacci_num(m):
+    u = 0
+    v = 1
+    if m < 0:
+        print("Incorrect input entered")
+    elif m == 0:
+        return u
+    elif m == 1:
+        return v
+    else:
+        for i in range(2,m):
+            c = u + v
+            u = v
+            v = c
+        return v
+Fibonacci_num(9)
+#                                             print series till the position mentioned
+n_terms = int(input("how many terms ? "))
+n1 = 0
+n2 = 1
+count = 0
+if n_terms <= 0:
+    print("Invalid, Enter a positive Integer :")
+elif n_terms == 1:
+    print("Fibanocci Sequence upto",n_terms,":")
+    print(n1)
+else:
+    print("Fibanocci Series upto",n_terms,":")
+    while count < n_terms:
+        print(n1)
+        nth = n1 + n2
+        n1 = n2
+        n2 = nth
+        count += 1
+#                                       Generators
+def fibo(num):
+    a,b = 0, 1
+    for i in range(0, num):            # Generator
+        yield "{}:: {}".format(i + 1,a)
+        a, b = b, a + b
+for item in fibo(10):
+    print(item)
+# Through                                 for loop
+u, v = 0, 1
+for i in range(0, 10):
+    print(u)
+    u, v = v, u + v
+#  Through                                  Recursion
+def fibonacci_ser(m):
+    if(m <= 1):
+        return m
+    else:
+        return(fibonacci_ser(m-1) + fibonacci_ser(m-2))
+m = int(input("Enter number of terms:"))
+print("Fibonacci sequence:")
+for i in range(m):
+    print(fibonacci_ser(i))
+#                                                                                                    Reverse Number
+# 
 
 
+# two for loops; the outer for loop can be used to take care of a number of rows, while the inner for loop can be used to take care of the number of columns 
+# Program to print pyramid patterns of stars
+for i in range(0, 5):
+    for j in range(0, i+1):
+        print("* ",end="")
+    print()
+#                                # Python Program for printing pyramid pattern using stars
+a = 8
+for i in range(0, 5):
+    for j in range(0, a):
+        print(end=" ")
+    a = a - 2
+    for j in range(0, i+1):
+        print("* ", end="")
+    print()
+#                              print a triangle using stars
+# Ask the Range of the triangle
+num = int(input("Enter the range: \t ")) # input = 5
+# i loop for range(height) of the triangle
+# first j loop for printing space ' '
+# second j loop for printing stars '*'
+for i in range(num):
+    for j in range((num - i) - 1):
+        print(end=" ")
+    for j in range(i + 1):
+        print("*", end=" ")
+    print()
+#                                     single star in the first line, then 3 stars in the second line,
+# increasing the “l” count by 2 at the end of second for loop
+k = 16
+l = 1
+for i in range(0, 5):
+    for j in range(0, k):
+        print(end=" ")
+    k = k - 4
+    for j in range(0, l):
+        print("* ", end="")
+    l = l + 2
+    print()
+#                                Numeric pattern
+k = 1
+for i in range(0, 5):
+    for j in range(0, i+1):
+        print(k, end=" ")
+    k = k + 1
+    print()
+# to print number 1 in the first row, number 1 and 2 in the second row, number 1, 2 and 3 in the third row & continue
+for i in range(0, 5):
+    num = 1
+    for j in range(0, i+1):
+        print(num, end=" ")
+        num = num + 1
+    print()
+# end the row with the squares the row number, two for loops
+# incrementing the numb variable’s value by 1 in the inner for loop and incrementing the value of variable inc by 2 for the outer for loop
+numb = 1
+inc = 1
+for i in range(0, 5):
+    for j in range(0, inc):
+        print(numb, end=" ")
+        numb = numb + 1
+    print()
+    inc = inc + 2
+#                             running the outer loop in range 10
+for num in range(10):
+    for i in range(num):
+        print (num, end=" ") #              printing the number
+#            We will use new line in order to display the pattern correctly
+    print("\n")
+# print it column-wise, 
+last_num = 6
+for row in range(1, last_num):
+    for column in range(row, 0, -1):
+        print(column, end=' ')
+    print("")
+#                                         taking the squares of the numbers
+last_num = 9
+for i in range(1, last_num):
+    for j in range(-1+i, -1, -1):
+        print(format(2**j, "4d"), end=' ')
+    print("")
+# (eg-2)
+for i in range(1, last_num):
+    for i in range(0, i, 1):
+        print(format(2**i, "4d"), end=' ')
+    for i in range(-1+i, -1, -1):
+        print(format(2**i, "4d"), end=' ')
+    print("")
+#                                                                            right angle triangle pattern
+stop = 2
+start = 1
+current_num = stop
+for row in range(2, 6):
+    for col in range(start, stop):
+        current_num -= 1
+        print (current_num, end=' ')
+    print("")
+    start = stop
+    # stop It is similar to the previous programrow
+    current_num = stop
+# Type 3.                                                                              Character pattern
+# converting the numeric value 65 into the capital letter A and hence iterating over the loop to increment the “value” variable
+value = 65
+for i in range(0, 5):
+    for j in range(0, i+1):
+        ch = chr(value)
+        print(ch, end=" ")
+        value = value + 1 # remove 4 indents to repeat characters
+    print()
+#                                  incrementing it by 2 in the outer for loop
+value = 65
+inc = 1
+for i in range(0, 5):
+    for j in range(0, inc):
+        ch = chr(value)
+        print(ch, end=" ")
+        value = value + 1
+    inc = inc + 2
+    print()
+#                                  rotated the pattern by 180 degrees
+decrement = 8
+counter = 64
+value = 65
+for i in range(0, 5):
+    for k in range(0, decrement):
+        print(end=" ")
+    for j in range(0, i+1):
+        counter = counter + 1
+        value = counter
+        temp = value
+    for j in range(0, i+1):
+        ch = chr(value)
+        print(ch, end=" ")
+    value = value - 1
+    value = temp
+    decrement = decrement - 2
+    print()
+#  to print the square pattern using any value 
+square_side = int(input("Please enter the square dimension  : "))
+print("Square Pattern")
+for i in range(square_side):
+    for i in range(square_side):
+        print("$", end = '  ')
+    print()
 #                                                                                                                                 Functions
 # pandas = dataframe
 # built-in = print(), enumerate(), range(), user-fun = def, Lambda
@@ -200,6 +483,21 @@ except StopIteration:    #catching the exception
     pass
 return output
 print(func(5, findingcubes()))  #passing the value in the method ‘func’
+
+#                                                                             to swap two values                   
+#               taking values from the user
+x = input()
+y = input()
+print('The value of x is {}'.format(x))
+print('The value of y is {}'.format(y))
+#               swapping the values
+temp_var = x                        #       the value of x has been temporarily stored in the variable named temp_var
+x = y
+y = temp_var
+print('The value of x after swapping is {}'.format(x))
+print('The value of y after swapping is {}'.format(y))
+# o/p => 619 <=> 196
+
 """
 #                                                                                                                                 $  Templates
 
