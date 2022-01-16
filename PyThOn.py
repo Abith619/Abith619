@@ -179,7 +179,136 @@ print("Fibonacci sequence:")
 for i in range(m):
     print(fibonacci_ser(i))
 #                                                                                                    Reverse Number
+# 1                            Using Slicing Method
+def reverse_slicing(s):
+    return s[::-1]
+my_number = '123456'
+if __name__ == "__main__":
+    print('Reversing the given number using slicing =', reverse_slicing(my_number))
+# 2                                                      Using For loop Method
+def reverse_for_loop(s):
+    s1 = ''
+    for c in s:
+        s1 = c + s1
+        return s1
+my_number = '123456'
+if __name__ == "__main__":
+    print('Reversing the given number using for loop =', reverse_for_loop(my_number))
+# 3.                                                        While Loop Method
 # 
+def reverse_while_loop(s):
+    s1 = ''
+    length = len(s) - 1
+    while length >= 0:
+        s1 = s1 + s[length]
+        length = length - 1
+        return s1
+my_number = '123456'
+if __name__ == "__main__":
+    print('Reversing the given number using while loop =', reverse_while_loop(my_number))
+# 4.                                                       Using Reversed Method
+def reverse(string):
+    string = "".join(reversed(string))
+    return string
+my_number = "123456"
+print ("The given number is : ",end="")
+print (my_number)
+print ("Reversing the given number using reversed is : ",end="")
+print (reverse(my_number))
+# 5.                                                      Using user-entered number and then reversing it
+My_Number = int(input("Please provide the number to be reversed: "))
+Reverse_Number = 0
+while(My_Number > 0):
+    Reminder = My_Number %10
+    Reverse_Number = (Reverse_Number *10) + Reminder
+My_Number = My_Number //10
+print("Reverse of the provided number is = %d" %Reverse_Number)
+# 6.                                                      Two-Digit Reverse Method
+My_Number = int(input("Please provide the number to be reversed: "))
+Reverse_Number = 0
+temp = Reverse_Number
+Reminder = 1
+for i in range (Reminder+1):
+    Reminder = My_Number %10
+    Reverse_Number = (Reverse_Number *10) + Reminder
+    My_Number = My_Number //10
+    print("Reverse of the provided number is = %d" %Reverse_Number)
+# 7.                                                      Three-Digit Reverse Method
+My_Number = int(input("Please provide the number to be reversed: "))
+Reverse_Number = 0
+temp = Reverse_Number
+Reminder = 1
+for i in range (Reminder+2):
+    Reminder = My_Number %10
+    Reverse_Number = (Reverse_Number *10) + Reminder
+    My_Number = My_Number //10
+    print("Reverse of the provided number is = %d" %Reverse_Number)
+# 8.                                                      Without the Recursion Method
+my_num=str(input("Enter the number to be reversed: "))
+print("Reverse of the given number is: ")
+print(my_num[::-1])
+# 9.                                                      With Recursion Method
+def reverse(s):
+    if len(s) == 0:
+        return s
+    else:
+        return reverse(s[1:]) + s[0]
+my_number = "123456789"
+print ("The given number is : ",end="")
+print (my_number)
+print ("Reversing the given number using recursion is : ",end="")
+print (reverse(my_number))
+# 10.                                                  Using Function Method
+def rev_number(My_Number):
+    reverse_num = 0
+    while(My_Number):
+        Reminder = My_Number % 10
+        reverse_num = reverse_num * 10 + Reminder
+        My_Number //= 10
+    return reverse_num
+if __name__ == "__main__" :
+    My_Number = int(input('Please provide the number to be reversed:: '))
+    print('Reverse of the provided number is: ', rev_number(My_Number))
+# 11                                                                     Using List Method
+number = "123456789"
+print ("The given number is : " + number)
+#                                           converting number into list
+list1 = list(number)
+#                                            applying reverse method of list
+list1.reverse()
+#                                          converting list into number
+number = ''.join(list1)
+print ("Reverse of the provided number is : " + number)
+# 12.                                                                  Using the Stack Method
+def create_stack():
+    #                              creating a list as stack and return it
+    stack = []
+    return stack
+def push(stack,element):
+    #                         adding new element to list
+    stack.append(element)
+def pop(stack):
+    #                      deleting the last element from the list
+    if len(stack) == 0:
+        return
+    return stack.pop()
+def reverse(number):
+    #                       reversing the number by using stack's functions
+    num = len(number)
+    #                               creating empty list (stack)
+    stack = create_stack()
+    #                             inserting number into list
+for i in range(0,num):
+    push(stack,number[i])
+    number = ""
+# getting last element of the stack list
+for i in range(0,num):
+    number = number + pop(stack)
+    return number
+number1 = "123456789"
+number2 = reverse(number1)
+print ("The given number is : " + number1)
+print ("Reverse of the given number is : " + number2)
 
 
 # two for loops; the outer for loop can be used to take care of a number of rows, while the inner for loop can be used to take care of the number of columns 
@@ -1280,6 +1409,57 @@ sentence = "This is a one line sentence."
 para = """This is a paragraph 
 which has multiple lines"""
 
+#                                                                                                                        palindrome
+Number = input('Enter the number to be verified : ')
+# Try  block
+try:
+    #Casting of the entered input is also achieved here by implying         #variable casting process into place
+    val = int(Number)
+    # checking for a palindrome in the given string
+    if Number == str(Number)[::-1]:
+        print('The given number is PALINDROME')
+    else:
+        print('The given number is NOT a PALINDROME')
+except ValueError:
+    print("! ! ! A valid numeric input is not entered ! ! !")
+
+# # This program performs                               palindrome check for a string #
+# function which                                           return reverse of a string
+def isPalindrome(s):
+    # Calling reverse function
+    if len(s) <= 1 :
+        return True
+    if s[0] == s[len(s) - 1] :
+        return isPalindrome(s[1:len(s) - 1])
+    else :
+        return False
+        #                                       Driver code
+Palindrome_input_Variable = [ ' AnnA ' , ' SoloS ' , ' RotatoR ' , ' RadaR ' , ' SagaS ' , ' RotoR ' , ' TenT ' , ' RepapeR ' , ' CiviC ' , ' KayaK ' , ' Lever ' , ' MadaM ' , ' RacecaR ' , ' StatS ' , ' Redder ' , ' Wow ' , ' MoM ' , ' RefeR ' , ' NooN ']
+print( " PALINDROME CHECK PROGRAM " )
+for i in Palindrome_input_Variable:
+    ans = isPalindrome(i)
+    if ans == 1:
+        print( " The given string  ", "'" , i , "' ","is a palindrome")
+    else:
+        print( " The given string  " , "'" , i , "' ","is not a palindrome")
+
+#                               Casting of the entered input is also achieved here by implying
+#variable casting process into place.
+num = int( input ( " ENTER THE NUMBER: " ) )
+temporary = num
+rev = 0
+# looping the given input and reversing the value
+while temporary != 0:
+    rev = ( rev * 10 ) + ( temporary % 10 )
+    temporary = temporary // 10
+if num == rev:
+    print( " number is palindrome " )
+else:
+    print( " number is not palindrome " )
+
+#                                    reversing the given number using a mathematical formula
+rev = (rev * 10) + (temporary % 10)
+temporary = temporary // 10
 
 # convert data structures to strings with the use of the pickle library using file I/O :                                 $ Convert string using pickle lib
 my-file.write("This is a sample string")
@@ -1294,8 +1474,6 @@ loaded-list = pickle.load(my-file)
 my file.close()
 print(loaded-list)
 ['This', 'is', 4, 13327]
-
-
 # 
  #                                                                                                                         (With) File Handling
 # dir(object) = object.__doc__ to find its document string
@@ -1349,9 +1527,6 @@ if choice == 'DEL':
     else:
         Print( "Invalid Option" )
         exit
-
-# 
-
 #                                                                                                                          $    dictionary
 #                                                                                                                                Dictionary
 # Un Ordered collection of key & value pairs as hashes
