@@ -18,8 +18,11 @@ num2 = 20;
 print("sum of the numbers=", num1 + num2)
 """
 from builtins import function
+from copy import copy
 from hashlib import new
+from typing import FrozenSet
 from attr import field
+from sympy import SymmetricDifference, intersection, print_python
 
 """
 multiple
@@ -39,6 +42,13 @@ print(' Oi "Abi" ')
 message = input()
 print(message)
 """
+
+#                                                                                  Loops
+bigList = [[1, 3, 6], [8, 2,], [0, 4, 7, 10], [1, 5, 2], [6]]
+for i in bigList:
+	for j in i:
+		print("Element of list within a list - ", j)
+
 
 #                                                                                 Patterns
 # Type 1.                                                                  $ Star Pattern
@@ -627,6 +637,32 @@ print('The value of x after swapping is {}'.format(x))
 print('The value of y after swapping is {}'.format(y))
 # o/p => 619 <=> 196
 
+#                                                                                                                    len()
+len(str)
+str2 = "Abith"
+print("Length of str2 is:")
+print(len(str2))
+#                                                                                               in DataFrame
+#                                                         reading csv file from url
+DF = pd.read_csv("C:/Users/name/Desktop/Projects/abc.csv")
+#                dropping null value columns to avoid errors as nulls can not be passed on to len() function
+DF = DF.dropna()
+#                                        converting to string dtype
+DF["Salary"]= DF["Salary"].astype(str)
+#                                             passing values
+DF["Salary Length"]= DF["Salary"].str.len()
+#                                           converting back to float dtype
+DF["Salary"]= DF["Salary"].astype(float)
+#  display
+DF
+# Python Program                                                               to find the length of a tuple
+Tupl = ('Jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec')
+print("The value returned by len() function for this tuple is \n", len(Tupl))
+#                                                 get the number of elements present in the python dictionary
+Dic = {'kaashiv': 18,'kaashiv':12,'kaashiv':22,'kaashiv':25}
+print("The value returned by len() function for this dictionary is \n", len(Dic))
+#                                                                               len() function in arrays 
+arr = ['Kaashiv'] print("The value returned by len() function for this array is ", len(arr))
 """
 #                                                                                                                                 $  Templates
 
@@ -700,14 +736,21 @@ print(operator.mod(a,b))
 #                                                        Identity Operators
 # is    	x is True	True if both the operands refer to the same object.
 # is not	x is not True	Evaluates to false if the variables on either side of the operator point to the same object and true otherwise.
-
 #                                                          Logical Operators
 """
 and	x and y	True if both sides of the operator is True
 or	x or y	True if either of the operand is True
 not	not x	Complements the operand"""
-
-#
+#                                                           Relational
+"""Less than → used with <
+Greater than → used with >
+Equal to → used with ==
+Not equal to → used with !=
+Less than or equal to → used with <=
+Greater than or equal to → used with >="""
+x = int(input())
+(x > 0)
+(x < 100)
 #                                                                                                                             basic operations
 year=2008                                # if-else
 if year%4==0:
@@ -753,12 +796,8 @@ print(max(lis))
 #                                 using count() to count the number of occurrence       $ count()
 print("the number of occurrence of 3 after 3rd position is : ", end="")
 print(lis.count(3))
-
 #                                                             oops Concept
-# 
-
-# """
-#                                                                                                                                       class :
+#                                                                                            class :
 # Template for Object
 # any Attribute defined within a class definition but not within a fun() = class Attribute 
 # it can share across all instances of the class, # changes are Visible to all other Instances
@@ -782,7 +821,6 @@ def getaddress(self):
 # call setaddress with address as parameter
 Abith.setaddress("chennai")
 print(Abith.getaddress())  # call the getaddress
-
 #                                                                                                                               object
 # Identity, Properities, behaviour
 # setting values
@@ -1603,20 +1641,86 @@ len(), clear(), values(), keys(), items(), has_key(), cmp()
 cmp(x, y)
 #                                                                                    Using Dictionary Mapping Function
 def get_week_day(argument):
-def zero():
-return "Sunday"
-def one():
-return "Monday"
+    def zero():
+        return "Sunday"
+    def one():
+        return "Monday"
 switcher = {
-0: zero(),
-1: one(),
-}
-# return switcher.get(argument, "Invalid Day")
+    0: zero(),
+    1: one(),
+    }
+#        return switcher.get(argument, "Invalid Day")
 if __name__ == "__main__":
-print (get_week_day(0))
-print (get_week_day(1))
-
-#                                                                                                                        String Manipulations & Functions
+    print (get_week_day(0))
+    print (get_week_day(1))
+#                                                                                                Tuples(ImMutable, in)
+tup = (6,1,9) or 6,1,9
+tup[0] # = 6  # Indexing
+tup[1:] # = 1,9  Slicing
+tup[-1] # = 9
+tup[:-1] # = 6,1
+tup1 = 2,3,4
+tup > tup1 #    Compare   = True or False
+len(tup)
+max(tup)
+min(tup)
+tup2 = tuple(list) #          generate list values
+tup = (6,1,9) + 1,3 + (4,)
+Abi = 6,1,9
+type(Abi)
+tup = Abi + (7,) #            add elements to tuple
+print(tup*3)     #            all elements repeating 3 times
+tup = (6,1,9) + (1,3) + (4,)
+print(tup)
+2 in tup
+6 in tup
+#                                                                                                SETS
+# collection of Unordered or Ordered Data, mutable and Im-Mutable
+# each Element must be Unique, Immutable, Duplicate Items are removed
+# Object in SETS are Mutable
+set.add(619)
+set.clear()
+set.copy()
+set.discard(719)
+set.remove(519)
+set.update(916)
+set.pop() # Deletes the First element in a SET
+#                                   Creating, Declaring a Set
+Days = {"Monday",
+"Sunday"
+}
+print(Days)
+print(type(Days))
+print('Looping through the SetS Elements,,....')
+for i in Days:
+    print(i)
+#                                   Un-Orderd Data 
+set = {12,23,14,619,916}
+type(set)
+set #      O/P = {12, 14, 23, 619, 916}
+#                                              MUTABLE                   Set Operations, Union()
+# Union() = |, Intersection() = &, Difference() = -, Symmentric_difference() = ^
+Days1 = {"Monday","Tuesday",}
+Days2 = {"Saturday","Sunday"}
+print(Days1|Days2)
+print(Days1.union(Days2))
+#                           Adding two sets without Duplicate value
+set1 = {13,34,619,67,34,85}
+print(set|set1)
+print(set.intersection(set1))
+print(set.intersection_update(set,set1)) # Update only common values
+print(set1-set2)
+print(set1.difference(set2))
+print(set1^set2)
+print(Days1.SymmetricDifference(Days2))
+#                                         Frozen Set = Immutable
+FrozenSet = frozenset([6,1,9])
+print(type(FrozenSet))
+for i in Frozenset:
+    print(i)
+Frozenset.add(6) # unable to add or change
+set = frozenset(set1)
+#                                                                                              String Manipulations & Functions
 
 # len(s) in string counted with quotes in middle separate with coma or exclude with \
 #  Array = (' ', " ", " ')
@@ -1647,7 +1751,7 @@ print (get_week_day(1))
 # Explicit = users convert the data type of objects to required data type, use predefined functions like float() to int()
 ## int(), float(),  (Only Used)
 num = int( input())
-num = num + 10
+num = num + 1002
 print (num)
 #                                                       $    Converting int to float
 x = 10
@@ -2499,13 +2603,49 @@ x=fruits.deepcopy()
 # Built-in Types : Mutable = Numbers,string,tuples : UnMutable = List,Dictionaries,Sets
 # characteristics of a Class= template or blueprint
 # Object = For accessing all class print(X.X) (i.e) X is the class and declared Object ID (eg) (X=Child class())
-
 # Overload Constructor __init__
-
-
-
-
-
+#                                                                                           Conditional Statements
+#                              if condition True or False
+savingAmt = 1000
+withdrawAmt = int(input("Amount to Withdraw: "))
+if withdrawAmt > savingAmt:
+    print ("Insufficient balance")
+else:
+    savingAmt = savingAmt - withdrawAmt
+    print("Account Balance:" + str(savingAmt))
+#                               if, elif and else
+time = 619
+if (time >= 600) and (time < 1200):
+    print("Morning")
+elif (time == 1200):
+    print("Noon")
+elif (time > 1200) and (time <= 1700):
+    print("Afternoon")
+elif (time > 1700) and (time <= 2000):
+    print("Evening")
+elif ((time > 2000) and (time < 2400)) or ((time >= 0) and (time < 600)):
+	print("Night")
+else:
+	print("Invalid time!")
+#                                                              Nesting if-else statements
+# writing if-else statements inside another if-else statements
+if (time >= 600) and (time < 1200):
+	print ("Morning")
+else:
+	if (time == 1200):
+		print ("Noon")
+	else:
+		if (time > 1200) and (time <= 1700):
+			print ("Afternoon")
+		else:
+			if (time > 1700) and (time <= 2000):
+				print ("Evening")
+			else:
+				if ((time > 2000) and (time < 2400)) or ((time >= 0) and (time < 600)):
+					print ("Night")
+				else:
+					print ("Invalid time!")
+savingAmt = savingAmt - withdrawAmt if (savingAmt > withdrawAmt) else savingAmt
 #                                              Syntax                                                                             if Statement
 # if-statement : if, if-else, elif, Switch Statement, Nested-if. ==, =, !=, <, <=, >, >= if = Yes or No
 # if p > r or q > r: / print
@@ -2514,11 +2654,9 @@ x=fruits.deepcopy()
 a = 619
 if [a > 618]:
     print("initial if")
-    
 #                                                                                                             ELIF
 #                                                                                                             => in end of statement:, ... / ... else-if code block
 # Nested if = target of previous if statement. use :, []
-
 check_variable = 619
 if (check_variable == 219):
     print("Wrong Checking next val in elif")
@@ -2526,7 +2664,6 @@ elif (check_variable == 419):
     print("The Value is Incorrect")
 elif (check_variable == 619):
     print("Hi Abith")
-
 #                                                                                                           if-else
 a = 10
 b = 20
@@ -2552,9 +2689,7 @@ if (n % i) == 0:
     break
 else:
     print(n)
-
 #                                                                                                                              While Loop
-
 # While Loop = increment operator i=i+1 / print("Loop Completed") : import math to get float value to a number
 #            executes group of statements until it is fulfilled
 # """ import math  /     remainder=i%10
@@ -2669,7 +2804,6 @@ time.sleep(0.1)
 #                                                                          Driver Code
 print("Target match found after " +
 str(iterator) + " iterators")
-
 #                                                                                                                                 ForLoop
 # traverse or iterate over a sequence (list, tuple, string) or other iterable objects.
 #  for Accessing index / $ a=[10,20,30,40,50] / for i in range(0,len(a),1): / print(i)
@@ -2746,7 +2880,6 @@ print ( myDictionary["peter"])
 myDictionary = dict{ "peter":38, "":51 )
 print ( mydictionary, ["peter"])
 # range(start, end, step) = values from start value to end values  $                                                                 Range
-
 #                                                                Sorting the string using for loop in python which is also a implementation of bubble sort.
 #                                                          creating string
 string = "This is a sample string"

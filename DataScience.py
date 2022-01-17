@@ -11,8 +11,19 @@
     Deployment of the solution"""
 
 # Dictionary = {5:1, 6:9}, Data & Array = ['1,2,3']
-
-#  Mean, Variance, propability mass Function
+#                                                         reading csv file from url
+DF = pd.read_csv("C:/Users/name/Desktop/Projects/abc.csv")
+#                dropping null value columns to avoid errors as nulls can not be passed on to len() function
+DF = DF.dropna()
+#                                        converting to string dtype
+DF["Salary"]= DF["Salary"].astype(str)
+#                                             passing values
+DF["Salary Length"]= DF["Salary"].str.len()
+#                                           converting back to float dtype
+DF["Salary"]= DF["Salary"].astype(float)
+#  display
+DF
+#                                                                                        Mean, Variance, propability mass Function
 from numpy.char import index
 import pandas as pd
 import numpy as np
@@ -31,7 +42,6 @@ stats.trimboth(df['score'],proportiontocut=0.2).mean()  # trims 20% data in boh 
 #                                     tail = trim1
 stats.trim1(df['score'],proportiontocut=0.2,tail='right')
 stats.trim1(df['score'],proportiontocut=0.2,tail='right').mean()
-
 #                                                                                          propability mass Function
 data=[3,2,1,6,5,619,4,8,9,7,4,65,1,]
 count={}
@@ -80,7 +90,6 @@ import pandas as pd
 import quandl
 df = quandl.get("WIKIPEDIA/GOOGL")
 print(df.head())
-
 #                                                                                                                       Numpy - Basic Opeartions
 #                                                  Arithmetic Operators
 a = np.arange(4)      # O/p = array([0, 1, 2, 3])
@@ -141,19 +150,16 @@ A[0:2, 0:2]  # array([[10, 11],
 #                                  array of indexes
 A[[0,2], 0:2] # array([[10, 11],
 #                     [16, 17]])
-
 #                                                                                               Numpy - Conditions & Boolean Arrays
 # indexes in a numerical form. An alternative way to perform the selective extraction of the elements in an array is to use the conditions and Boolean operators.
 # making selections of parts of arrays
 A = np.random.random((4, 4))
 A < 0.5 # all the positions in which the values are less than 0.5.
 A[A < 0.5]  # obtain a new array
-
 #                                                                                        Numpy - General/Advanced concepts
 # difference between copies and views will be illustrated especially when they return values
 #                                                                       functions of NumPy
 #                                           Copies or Views of Objects 
-# 
 a = np.array([1, 2, 3, 4])
 b=a
 b #                                     return value either a copy or a view of the array
@@ -165,7 +171,6 @@ c = a.copy()
 c
 a[0] = 0
 c
-
 #                                                                          Vectorization
 #  absence of explicit loop during the developing of the code
 # more concise and readable code, and you can say that it will appear more “Pythonic”
@@ -250,7 +255,6 @@ C
 lso includes the functionalities of the vsplit() and hsplit() functions.
 [A1,A2,A3] = np.split(A,[1,3],axis=1)  # split by column
 [A1,A2,A3] = np.split(A,[1,3],axis=0) # split by row
-
 #                                                           Read Write Array Data on Files
 #                                           Loading and Saving Data in Binary Files(Format)
 # save() function, specifying as arguments the name of the file, to which .npyextension will be automatically added
@@ -333,25 +337,19 @@ np.add(matrix_a,matrix_b)
 np.subtract(matrix_a,matrix_b)
 #                                                              find the variance of the matrix
 np.var(matrix)
-
-
-
 #                                                                                                                        Extract features from Dictionary
 import Numpy as np
 import pandas as pd
 from sklearn.feature_extraction import DictVectorizer  # Import Library
-
 staff = [{'Name': 'Abith Raj', 'age': 33}]          # create Dictionary
 vec = DictVectorizer()                              # convert Dict to feature Object
 vec.fit_transform(staff).toarray()                  # Fit then transform the Dict with vec,then
 vec.get_feature_names()                             # View Feature names
-
 #                                                      Creating a Chart
 x = np.arange(0,10) 
 y = x ^ 2 
 #                                                          Simple Plot
 plt.plot(x,y)
-
 #                                                   Labling the Axes
 x = np.arange(0,10) 
 y = x ^ 2 
@@ -373,7 +371,6 @@ plt.ylabel("Distance")
 plt.plot(x,y,'r')
 #                                  Formatting the line type  
 plt.plot(x,y,'>')
-
 #                                                                                        Saving the Chart File
 x = np.arange(0,10) 
 y = x ^ 2 
@@ -381,16 +378,12 @@ y = x ^ 2
 plt.title("Graph Drawing") 
 plt.xlabel("Time") 
 plt.ylabel("Distance") 
-
 #                           Formatting the line colors
 plt.plot(x,y,'r')
-
 #                             Formatting the line type  
 plt.plot(x,y,'>') 
-
 #                                  save in pdf formats
 plt.savefig('timevsdist.pdf', format='pdf')
-
 #                                                                                           Chart Styling
 #                                                                         Annotations 
 x = np.arange(0,10) 
@@ -402,11 +395,9 @@ plt.title("Graph Drawing")
 plt.xlabel("Time") 
 plt.ylabel("Distance") 
 plt.plot(x,y)
-
 #                            Annotate
 plt.annotate(xy=[2,1], s='Second Entry') 
 plt.annotate(xy=[4,6], s='Third Entry')
-
 #                                                    Adding Legends
 # Whenever you create a chart in Excel, a legend for the chart is automatically generated at the same time. 
 x = np.arange(0,10) 
@@ -425,13 +416,11 @@ plt.annotate(xy=[4,6], s='Third Entry')
 plt.plot(x,z)
 plt.plot(x,t)
 plt.legend(['Race1', 'Race2','Race3'], loc=4)
-
 #                                                                        Chart presentation Style
 # Pedigree Chart Templates = PPT
 #                                                      Style the background
 plt.style.use('fast')
 plt.plot(x,z)
-
 #                                                            Heatmap
 # heatmap contains values representing various shades of the same colour for each value to be plotted as a matrix of values
 #                                                 two-dimensional plot of values which are mapped to the indices and columns
@@ -441,7 +430,6 @@ Cols = ['C1', 'C2', 'C3','C4']
 df = DataFrame(data, index=Index, columns=Cols)
 plt.pcolor(df)
 plt.show()
-
 #                                                                                               Bubble Charts - 3D 
 # display three variables without using 3D graphs;
 #                                                            Drawing a Bubble Chart
@@ -454,17 +442,14 @@ colors = np.random.rand(40)
 #                                        use the scatter function
 plt.scatter(x, y, s=z*1000,c=colors)
 plt.show()
-
 #                                                              scatter plot, scatter graph, and correlation
 #           x = Independent, y = Dependent
 df = pd.DataFrame(np.random.rand(50, 4), columns=['a', 'b', 'c', 'd'])
 df.plot.scatter(x='a', y='b') 
-
 #                                                                                                              3D Charts
 # 3dPlot is drawn by mpl_toolkits.mplot3d to add a subplot to an existing 2d plot.
 from mpl_toolkits.mplot3d import axes3d
 import matplotlib.pyplot as plt
-
 chart = plt.figure()
 chart3d = chart.add_subplot(111, projection='3d')
 #                                                                   Create some test data.
@@ -472,7 +457,6 @@ X, Y, Z = axes3d.get_test_data(0.08)
 #                                                                      Plot a wireframe.
 chart3d.plot_wireframe(X, Y, Z, color='r',rstride=15, cstride=10)
 plt.show()
-
 #                                                                      Time Series
 # take the value of stock prices every day for a quarter for a particular stock symbol.
 # We capture these values as a csv file and then organize them to a dataframe 
@@ -492,7 +476,6 @@ plt.show()
 26-03-2018,	1167.6
 27-03-2018,	1155.25
 28-03-2018,	1154"""
-
 #                                                                 Adding Further Elements to the Chart
 #                                    Adding Text
 ipython qtconsole
@@ -567,7 +550,7 @@ plt.legend(['First series'])
 8                               lower-center
 9                                upper-center
 10                                   center"""
-# correspond to the order of the text labels passed as argument to the legend() function.
+#                               correspond to the order of the text labels passed as argument to the legend() function.
 import matplotlib.pyplot as plt
 plt.axis([0,5,0,20])
 plt.title('My first plot',fontsize=20,fontname='Times New Roman')
@@ -694,7 +677,6 @@ ser = pd.Series(np.arange(5))
 ser
 frame['new'] = ser # Creating a column
 frame['price'][2] = 3.3 # change a single value
-
 #                                             Membership of a Value
 isin( ) # 
 frame.isin([1.0,'pen']) # Boolean values
@@ -1027,7 +1009,6 @@ pd.merge(frame1,frame2,on=['id','brand'],how='outer')  # merge of multiple keys
 pd.merge(frame1,frame2,right_index=True, left_index=True)
 ame2.columns = ['brand2','id2']
 frame1.join(frame2)
-
 #                                                                                                Data Transformation
 # simple DataFrame with some duplicate rows.
 dframe = pd.DataFrame({ 'color': ['white','white','red','red','white'],
@@ -1264,7 +1245,6 @@ print df.skew()
 #   scale : [optional]scale parameter. Default = 1
 #    size : [tuple of ints, optional] shape or random variates.
 # moments : [optional] composed of letters [‘mvsk’]; ‘m’ = mean, ‘v’ = variance, ‘s’ = Fisher’s skew and ‘k’ = Fisher’s kurtosis. (default = ‘mv’).
-
 # the Central limit theorem : if you have many independent variables that may be generated by all kinds of distributions,
 import matplotlib.pyplot as plt
 import numpy as np
@@ -1276,7 +1256,6 @@ count, bins, ignored = plt.hist(s, 20, normed=True)
 plt.plot(bins, 1/(sigma * np.sqrt(2 * np.pi)) *
     np.exp( - (bins - mu)**2 / (2 * sigma**2) ),       linewidth=3, color='y')
 plt.show()
-
 #                                                                                 Binomial Distribution
 # finding the probability of success of an event which has only two possible outcomes in a series of experiments
 # Discrete Distribution, It describes the outcome of binary scenarios
@@ -1286,16 +1265,13 @@ plt.show()
 # Discrete Distribution:The distribution is defined at separate set of events
 from scipy.stats import binom
 import seaborn as sb
-
 binom.rvs(size=10,n=20,p=0.8)
-
 data_binom = binom.rvs(n=20,p=0.8,loc=0,size=1000)
 ax = sb.distplot(data_binom,
                   kde=True,
                   color='blue',
                   hist_kws={"linewidth": 25,'alpha':1})
 ax.set(xlabel='Binomial', ylabel='Frequency')
-
 #                                                                              Poisson Distribution
 # the event can only be measured as occurring or not as occurring,
 # meaning the variable can only be measured in whole numbers.Fractional occurrences of the event are not a part of the model
@@ -1303,14 +1279,12 @@ ax.set(xlabel='Binomial', ylabel='Frequency')
 # It estimates how many times an event can happen in a specified time
 from scipy.stats import poisson
 import seaborn as sb
-
 data_binom = poisson.rvs(mu=4, size=10000)
 ax = sb.distplot(data_binom,
                   kde=True,
                   color='green',
                   hist_kws={"linewidth": 25,'alpha':1})
 ax.set(xlabel='Poisson', ylabel='Frequency')
-
 #                                                                                                Bernoulli's Distribution
 # only two possible outcomes, namely 11 (success) and 00 (failure), and a single trial
 # a coin toss. So the random variable XX which has a Bernoulli distribution can take value 11 
@@ -1325,14 +1299,12 @@ ax.set(xlabel='Poisson', ylabel='Frequency')
 # single experiment is conducted so that the number of observation is 1
 from scipy.stats import bernoulli
 import seaborn as sb
-
 data_bern = bernoulli.rvs(size=1000,p=0.6)
 ax = sb.distplot(data_bern,
                   kde=True,
                   color='crimson',
                   hist_kws={"linewidth": 25,'alpha':1})
 ax.set(xlabel='Bernouli', ylabel='Frequency')
-
 #                                                                                                         P Value
 # the strength of a hypothesis. We build hypothesis based on some statistical model and compare the model's validity using p-value.
 # One way to get the p-value is by using T-test. p-value for a statistical model is the probability that when the null hypothesis is true
@@ -1346,10 +1318,8 @@ Note that p-values can range from 0% to 100% and we write them in decimals. A p-
 from scipy import stats
 rvs = stats.norm.rvs(loc = 5, scale = 10, size = (50,2))
 print stats.ttest_1samp(rvs,5.0)
-
 Ttest_1sampResult(statistic = array([-1.40184894, 2.70158009]),
 pvalue = array([ 0.16726344, 0.00945234]))
-
 # ttest_ind − Calculates the T-test for the means of two independent samples of scores.
 # test assumes that the populations have identical variances by default.
 #                                                                         $  Two-Sample T-Test vs. a Paired T-Test (Hypothesis)
@@ -1360,7 +1330,6 @@ rvs1 = stats.norm.rvs(loc = 5,scale = 10,size = 500)
 rvs2 = stats.norm.rvs(loc = 5,scale = 10,size = 500)
 print stats.ttest_ind(rvs1,rvs2)
 # You can test the same with a new array of the same length, but with a varied mean. Use a different value in loc and test the same
-
 #                                                                                                     Correlation
 # statistical relationships involving dependence between two data sets
 # correlation between the price for a product and its supplied quantity.
@@ -1388,11 +1357,8 @@ df = pd.DataFrame(data, columns = ['ValueDate', 'Price'])
 df['ValueDate'] = pd.to_datetime(df['ValueDate'])
 df.index = df['ValueDate']
 del df['ValueDate']
-
-
 df.plot(figsize=(15, 6))
 plt.show()
-
 #                                                              Geographical Data & visualization
 # mpl_toolkits, cartopy
 # Cartopy is a Python package for cartography. It will let you process geospatial data, analyze it, and produce maps
@@ -1402,7 +1368,6 @@ plt.show()
 #                     $                                         show a portion of the world map showing parts of Asia and Australia
 import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
-
 fig = plt.figure(figsize=(15, 10))
 ax = fig.add_subplot(1, 1, 1, projection=ccrs.PlateCarree())
 ax.set_extent((60, 150, 55, -25))   # make the map global rather than have it zoom in to
@@ -1411,7 +1376,6 @@ ax.stock_img()
 ax.coastlines()
 ax.tissot(facecolor='purple', alpha=0.8)
 plt.show()
-
 #                                                                                                                 $   sparse Graph
 # CSGraph = Compressed Sparse Graph
 # sparse graph  = collection of nodes, which have links between them
@@ -1430,7 +1394,6 @@ G_masked = np.ma.masked_values(G_dense, 0)
 from scipy.sparse import csr_matrix
 G_sparse = csr_matrix(G_dense)
 print G_sparse.data 
-
 # nodes 0 and 2 are connected by an edge of zero weight
 from scipy.sparse.csgraph import csgraph_from_dense
 G2_data = np.array
@@ -1453,27 +1416,19 @@ print G2_sparse.data
 from scipy import stats
 import numpy as np
 import matplotlib.pyplot as plt
-
 x = np.linspace(0, 10, 100)
 fig,ax = plt.subplots(1,1)
-
 linestyles = [':', '--', '-.', '-']
 deg_of_freedom = [1, 4, 7, 6]
 for df, ls in zip(deg_of_freedom, linestyles):
   ax.plot(x, stats.chi2.pdf(x, df), linestyle=ls)
-
 plt.xlim(0, 10)
 plt.ylim(0, 0.4)
-
 plt.xlabel('Value')
 plt.ylabel('Frequency')
 plt.title('Chi-Square Distribution')
-
 plt.legend()
 plt.show()
-
-
-
 #                                                                             Processing csv Data
 data = pd.read_csv('filepath')
 print(data)
@@ -1483,7 +1438,6 @@ print(data[0:5]['salary'])                                    # slice the result
 print(data.loc[:,['salary','name']])                        # multi axes indexing function
 # reading specific columns for range of rows
 print(data.loc[:,['salary','name']])
-
 # JSON (JavaScript Object Notation)
 # create a sample json file .json
 """
@@ -1507,7 +1461,6 @@ print (data.loc[[1,3,5],['salary','name']])
 #                                                                          Reading JSON file as Records
 data = pd.read_json('path/input.xlsx')
 print(data.to_json(orient='records', lines=True))
-
 data = pd.read_excel('path/input.xlsx')                                     # Reading an Excel File
 print (data)
 # Reading Specific Columns and Rows
@@ -1522,7 +1475,6 @@ print (df1[0:5]['salary'])
 print("")
 print("***Result Sheet 2****")
 print (df2[0:5]['zipcode'])
-
 #                                                                  Word Tokenization
 # Tokenization is the process of replacing sensitive data with 
 # unique identification symbols that retain all the essential information about the data.
@@ -1536,43 +1488,34 @@ import nltk
 word_data = "It originated from the idea that there are readers who prefer learning new skills from the comforts of their drawing rooms"
 nltk_tokens = nltk.word_tokenize(word_data)
 print (nltk_tokens)
-
 #                                                          Tokenizing Sentences
 import nltk
 sentence_data = "Sun rises in the east. Sun sets in the west."
 nltk_tokens = nltk.sent_tokenize(sentence_data)
 print (nltk_tokens)
-
 #                                                       Box Plot
 # median, upper quartile, lower quartile, minimum and maximum data values.
 import pandas as pd
 import numpy as np
 df = pd.DataFrame(np.random.rand(10, 5), columns=['A', 'B', 'C', 'D', 'E'])
 df.plot.box(grid='True')
-
 #                                                                       Processing Unstructued Data
 #                 Reading Data
 filename = 'path\input.txt'  
-
-with open(filename) as fn:  
-
+with open(filename) as fn:
 #                                                          Read each line
    ln = fn.readline()
-
 #                                                       Keep count of lines
    lncnt = 1
    while ln:
        print("Line {}: {}".format(lncnt, ln.strip()))
        ln = fn.readline()
        lncnt += 1
-
 #                                            Counting Word Frequency
 from collections import Counter
-
 with open(r'pathinput2.txt') as f:
    p = Counter(f.read().split())
    print(p)
-
 #                                                                                           Natural Language Processing
 # agreed, agreeing and agreeable have the same root word agree
 #                                                 Stemming 
@@ -1581,7 +1524,6 @@ with open(r'pathinput2.txt') as f:
 # finding the lemma of a word depending on their meaning
 # Text preprocessing includes both stemming as well as lemmatization
 """Stemming algorithm works by cutting the suffix from the word. In a broader sense cuts either the beginning or end of the word.
-
 On the contrary, Lemmatization is a more powerful operation, and it takes into consideration morphological analysis of the words.
  It returns the lemma which is the base form of all its inflectional forms."""
 # linguistic knowledge is required to create dictionaries and look for the proper form of the word. Stemming is a general operation
@@ -1594,12 +1536,10 @@ On the contrary, Lemmatization is a more powerful operation, and it takes into c
 # Sentiment Analysis is the analysis of people's reviews and comments about something.
 # It is widely used for analysis of product on online retail shops.
 # Stemming and Lemmatization is used as part of the text-preparation process before it is analyzed.
-
 #                                                                      Document clustering
 # Automatic document organization, topic extraction, and fast information retrieval or filtering
 # document is prepared through tokenization, removal of stop words
 # and then Stemming and Lemmatization to reduce the number of tokens that carry out the same information and hence speed up the whole process
-
 #                                                        Porter Stemming Algorithm for stemming
 import nltk
 from nltk.stem.porter import PorterStemmer
@@ -1610,25 +1550,19 @@ nltk_tokens = nltk.word_tokenize(word_data)
 #                                                          Next find the roots of the word
 for w in nltk_tokens:
        print "Actual: %s  Stem: %s"  % (w,porter_stemmer.stem(w))
-
 #                                   Lemmatization = brings context to the words by Linking words with similar meaning to one word.
 import nltk
 from nltk.stem import WordNetLemmatizer
 wordnet_lemmatizer = WordNetLemmatizer()
-
 word_data = "It originated from the idea that there are readers who prefer learning new skills from the comforts of their drawing rooms"
 nltk_tokens = nltk.word_tokenize(word_data)
 for w in nltk_tokens:
        print "Actual: %s  Lemma: %s"  % (w,wordnet_lemmatizer.lemmatize(w))
-
-
-
 #                                                                                          Relational Databases - SqlAlchemy
 # raw sql, SQL Expression Language,
 # Orm - Object-relational mapping, translates data between different system types
 #                                                                           Reading Relational Tables
-"""
-1. data replication between a master database and one or more read-only slave instances
+"""1. data replication between a master database and one or more read-only slave instances
 2. advanced column types that can efficiently store semi-structured data such as JavaScript Object Notation (JSON)
 3. sharding, which allows horizontal scaling of multiple databases that each serve as read-write instances at the cost of latency in data consistency
 4. monitoring, statistics and other useful runtime information for database schemas and tables"""
@@ -1661,23 +1595,16 @@ print(res)
 data = pd.read_csv('C:/Users/Rasmi/Documents/pydatasci/input.csv')
 engine = create_engine('sqlite:///:memory:')
 data.to_sql('data_table', engine)
-
 sql.execute('Delete from data_table where name = (?) ', engine,  params=[('Gary')])
-
 res = pd.read_sql_query('SELECT ID,Dept,Name,Salary,start_date FROM data_table', engine)
 print(res)
-
 #                                                                                                  NoSql Database
 #                                                                                        Inserting Data
 #                                   Import the python libraries
 from pymongo import MongoClient
 from pprint import pprint
-
 client = MongoClient()                             # Choose the appropriate client
-
-
 db=client.test                                     # Connect to the test db 
-
 #                                              Use the employee collection
 employee = db.employee
 employee_details = {
@@ -1685,14 +1612,11 @@ employee_details = {
     'Address': 'Sears Streer, NZ',
     'Age': '42'
 }
-
 #                                                Use the insert method
 result = employee.insert_one(employee_details)
-
 #                                                Query for the inserted document.
 Queryresult = employee.find_one({'Age': '42'})
 pprint(Queryresult)
-
 #                                                                                  Updating Data
 # update mode (lock type), cursor type, and cursor location.
 # save any changes you have made to the current record of a Recordset object since calling the AddNew method
@@ -1708,26 +1632,18 @@ db.employee.update_one(
         }
         }
     )
-
 Queryresult = employee.find_one({'Age':'35'})
-
 pprint(Queryresult)
-
 #                                                                              Deleting Data
 #                                             Use the delete method
 db.employee.delete_one({"Age":'35'})
-
 Queryresult = employee.find_one({'Age':'35'})
-
 pprint(Queryresult)
-
 #                                                                                        date, time, calendar
 #                               Date Time Representation
 # Two simple examples of this format = (2007-03-04 20:32:17, 20070304T203217)
 import datetime
-
 print 'The Date Today is  :', datetime.datetime.today()
-
 date_today = datetime.date.today()
 print date_today
 print 'This Year   :', date_today.year
@@ -1735,35 +1651,23 @@ print 'This Month    :', date_today.month
 print 'Month Name:',date_today.strftime('%B')
 print 'This Week Day    :', date_today.day
 print 'Week Day Name:',date_today.strftime('%A')
-
 #                                                             Date Time Arithmetic
-
 day1 = datetime.date(2018, 2, 12)              # Capture the First Date
 print 'day1:', day1.ctime()
-
 day2 = datetime.date(2017, 8, 18)             # Capture the Second Date
 print 'day2:', day2.ctime()
-
 print 'Number of Days:', day1-day2            # Find the difference between the dates
-
-
 date_today  = datetime.date.today() 
- 
 no_of_days = datetime.timedelta(days=4)       # Create a delta of Four Days 
-
 before_four_days = date_today - no_of_days    # Use Delta for Past Date
 print 'Before Four Days:', before_four_days 
- 
 after_four_days = date_today + no_of_days     # Use Delta for future Date
 print 'After Four Days:', after_four_days
-
 #                                                                          Date Time Comparison
 import datetime
 date_today  = datetime.date.today() 
 print 'Today is: ', date_today
-
 no_of_days = datetime.timedelta(days=4)  # Create a delta of Four Days 
-
 before_four_days = date_today - no_of_days                                   # Use Delta for Past Date
 print 'Before Four Days:', before_four_days 
 after_four_days =  date_today + no_of_days
@@ -1775,7 +1679,6 @@ if date_today > date1:
     print 'Past Date'
 if date1 < after_four_days:
     print 'Future Date'
-
 #                                                                                                     Data Wrangling
 #                          merging, grouping, concatenating
 left = pd.DataFrame({
@@ -1792,7 +1695,6 @@ print right
 #                                                                syntax
 pd.merge(left, right, how='inner', on=None, left_on=None, right_on=None,
 left_index=False, right_index=False, sort=True)
-
 #                                                                          Grouping Data
 #                                                              group the data by year and then get the result for a specific year
 ipl_data = {'Team': ['Riders', 'Riders', 'Devils', 'Devils', 'Kings',
@@ -1801,10 +1703,8 @@ ipl_data = {'Team': ['Riders', 'Riders', 'Devils', 'Devils', 'Kings',
          'Year': [2014,2015,2014,2015,2014,2015,2016,2017,2016,2014,2015,2017],
          'Points':[876,789,863,673,741,812,756,788,694,701,804,690]}
 df = pd.DataFrame(ipl_data)
-
 grouped = df.groupby('Year')
 print grouped.get_group(2014)
-
 #                                                                                Concatenating Data
 one = pd.DataFrame({
          'Name': ['Alex', 'Amy', 'Allen', 'Alice', 'Ayoung'],
@@ -1817,30 +1717,23 @@ two = pd.DataFrame({
          'Marks_scored':[89,80,79,97,88]},
          index=[1,2,3,4,5])
 print pd.concat([one,two])
-
 #                                                                                  Data Aggregation
 # sum(), mean(), median(), min(), and max() = Computing Aggreations
 #                                                                              Applying Aggregations on DataFrame
 import numpy as np
-
 df = pd.DataFrame(np.random.randn(10, 4),
       index = pd.date_range('1/1/2000', periods=10),
       columns = ['A', 'B', 'C', 'D'])
-
 print df
-
 r = df.rolling(window=3,min_periods=1)
 print r
-
 #                                       Apply Aggregation on a Whole Dataframe
 df = pd.DataFrame(np.random.randn(10, 4),
       index = pd.date_range('1/1/2000', periods=10),
       columns = ['A', 'B', 'C', 'D'])
 print df
-
 r = df.rolling(window=3,min_periods=1)
 print r.aggregate(np.sum)
-
 #                                                     Apply Aggregation on a Single Column of a Dataframe
 #                          Spark data frames provide an agg() 
 # where you can pass a Map [String,String] (of column name and respective aggregate operation ) as input
@@ -1850,7 +1743,6 @@ df = pd.DataFrame(np.random.randn(10, 4),
 print df
 r = df.rolling(window=3,min_periods=1)
 print r['A'].aggregate(np.sum)
-
 #                                                 Apply Aggregation on Multiple Columns of a DataFrame
 df = pd.DataFrame(np.random.randn(10, 4),
       index = pd.date_range('1/1/2000', periods=10),
@@ -1858,7 +1750,6 @@ df = pd.DataFrame(np.random.randn(10, 4),
 print df
 r = df.rolling(window=3,min_periods=1)
 print r[['A','B']].aggregate(np.sum)
-
 #                                                         Reading HTML Pages
 #  Beautiful Soup is a library that makes it easy to scrape information from web pages
 #                         Reading the HTML file
@@ -1873,34 +1764,23 @@ soup = BeautifulSoup(html_doc, 'html.parser')
 strhtm = soup.prettify()
 #                                                                             Print the first few characters
 print (strhtm[:225])
-
 #                                                             Extracting Tag Value
 import urllib2
 from bs4 import BeautifulSoup
-
 response = urllib2.urlopen('http://kaashiv.com/python/python_overview.htm')
 html_doc = response.read()
-
 soup = BeautifulSoup(html_doc, 'html.parser')
-
 print (soup.title)
 print(soup.title.string)
 print(soup.a.string)
 print(soup.b.string)
-
 #                                                                 Extracting All Tags
 import urllib2
 from bs4 import BeautifulSoup
-
 response = urllib2.urlopen('http://kaashiv.com/python/python_overview.htm')
 html_doc = response.read()
 soup = BeautifulSoup(html_doc, 'html.parser')
-
 for x in soup.find_all('b'): print(x.string)
-
-
-
-
 #                                                                                                        DocStrings
 # Doc strings are carried with executing code
 # We can use triple-quoting to create doc strings that span multiple lines
@@ -1920,10 +1800,8 @@ myfile.write(“Hello!”)
 
 With open(‘myfile.txt’, ‘r’) as myfile:
 data = myfile.read()
-
 #                                                                                                                              # Load Iris Datasets
 from sklearn.datasets import load_iris
-
 iris = load_iris()
 iris
 x = iris.data
@@ -1939,26 +1817,21 @@ pd.DataFrame(features).head()
 #                                                                                                                            simulated Data for Clustering
 from sklearn.datasets import make_blobs
 import matplotlib.pyplot as plt
-
 X, y = make_blobs(n_samples=200, n_features=2, centers=3, cluster_std=0.5, shuffle=True)
 plt.scatter(X[:, 0], X[:, 1])
 #                                                                                                                         simulated Data for Regression
 from sklearn.datasets import make_regression
 from matplotlib import pyplot
-
 X, y = make_regression(n_samples=100, n_features=1, noise=0.1)                       # generate regression datasets
 pyplot.scatter(X, y)                                                                 # plot regression datasets
 pyplot.show()
 #                                                                                                                                 dot product of Matrix
 import numpy as np
-
 vector_a = np.array([1, 2, 3])                       # create vector
 vector_b = np.array([4, 5, 6])
 np.dot[vector_a, vector_b]
 vector_a @ vector_b                                  # calculate dot product
-
 # list of values are added & divided by the total no of columns                                                                   mean-Manipulation
-
 import pandas as pd
 from scipy import stats
 data = {
@@ -1972,7 +1845,6 @@ df                                                                # create mean 
 df['ID'].nean()                                                       # calc_non-trimmed mean value
 stats.trim_mean(df['score'], proportiontocut=0.2)                                            # trim off the 20 % scores
 stats.trimboth(df['score'], proportiontocut=0.2)             # trim off the 20 % scores & view non-trimmed mean values
-
 stats.trim1(df['score'], proportiontocut=0.2, tail="right").mean()                   # trim specific data
 stats.trim1(df['name'], proportiontocut=0.2, tail="right")
 trim(DataFrameColumn, RemovePercentage, remove(data).mean()                                           # calculate mean
@@ -1988,10 +1860,8 @@ for unique_value, count in count.items():                                       
    probability_mass_function[unique_value] = count /n  # loop through unique values of array & calculate probability_mass_function
 plt.bar(list(columns), prob.values(), color='g')                       # plot probability_mass_function
 plt.show():
-
 #                                                                $ Data Operations using numpy
 numpy.array()
-
 a = np.array([[1, 2], [3, 4]])
 print (a)
 # minimum dimensions
@@ -2023,7 +1893,6 @@ data = {'Item1' : pd.DataFrame(np.random.randn(4, 3)),
        'Item2' : pd.DataFrame(np.random.randn(4, 2))}
 p = pd.Panel(data)
 print p
-
 #                                                                                              Python Data Cleansing & Missing datas
 # using re indexing create dataframe With missing values
 # NAN = not an number
@@ -2096,7 +1965,6 @@ names.head()
 plt.figure(figsize=(15, 8))_ = sns.barplot(y-names.groupby("year").sum().values[-10:].rave1(), x=list(years)[-10:])
 plt.ylabel("number of births")
 plt.xlabel("year")_ - plt.title("number of births- (2009-2018)")
-
 #                                                                                                                          Projects
 #                                                       GUI Based Encryption & Decryption
 from tkinter import *
@@ -2111,7 +1979,6 @@ key = 4
 newmsg= ''
 E2=Entry(top,bd=5)                                # border = 5
 E2.grid(column=2,row=0)
-
 def submit():
     messagebox.showinfo( "CONFIRMATION",E1.get()+"- Your Data")     # def messagebox
     global newmsg
@@ -2148,9 +2015,6 @@ img = image.resize((int(width/4), int(height/4)))                # Resizing the 
 #           Saved in same Relative Location
 img.save("cropped_picture.jpg")
 img.show();
-
-# 
-
 #                                                                                                                   R programing...
 print(sample=(1:3)) # Generate series of sample values in a given rage
 print(sample=(1:3, size=3, prob=c(1,3), replace=False))                    # With duplicate values = True
@@ -2161,7 +2025,6 @@ print(head(mtcars))
 print(matrix(runif(6*3), nrow=6, ncol=3))
 input <-mtcars[,c("mpg","disp","hp","wt")]
 print(head(input))
-
 input <-mtcars[,c("mpg","disp","hp","wt")]
 model <-lm(mpg~disp+hp+wt,data=input) # intercept(mpg)
 print(model)
