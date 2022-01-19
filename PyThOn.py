@@ -66,6 +66,128 @@ for i in name:
 		break
 print (i)
 """
+#                                                                                                                Built-in Functions
+# abs(x) for fetching the absolute value of x, bin() for getting the binary value,  reversed() for reversing the order
+# bool() for retrieving the boolean value of an object, list() for lists, len() to get the length of the value, 
+# open() to open the files, pow() for returning the power of a number, # sum() for fetching the sum of the elements
+#                                                                        abs(x) = Returns absolute value of a number
+a = 12
+b = -4
+c = 3+4j
+d = 7.90
+print(abs(a))
+print(abs(b))
+print(abs(c))
+print(abs(d))
+#                                                                          all(x)
+# it will return true if all variables in the iterator are true, iterable objects = tuple, lists, dictionary.
+tuple = (0, True, False)
+x = all(tuple)
+print(x)
+#                                                                          bin()
+# returns the binary value for the number passed in the argument
+a=5
+print(bin(a))
+print(bin(4))
+print(bin(9))
+#                                                                         round()
+print(round(4.5))
+print(round(-7.7))
+#                                                                         bool()
+print(bool(0))
+print(bool(-4.5))
+print(bool(None))
+print(bool("False"))
+#                                                                        bytearray()
+bytearray(source,encoding,errors)
+# This function returns a new array of bytes, i.e. a mutable sequence of integers from range 0 to 256
+print(bytearray())
+print(bytearray('Python','utf-8'))
+#                                                                        compile()
+Compile(source,filename,mode,flags=0,dont_inherit=False,optimize=-1)
+#  to generate a Python code object from a string or an AST object.
+myCode = 'a = 7\nb=9\nresult=a*b\nprint("result =",result)'
+codeObject = compile(myCode, 'resultstring', 'exec')
+exec(codeObject)
+#                                                                        list()
+print(list()) #returns empty list
+stringobj = 'PALINDROME'
+print(list(stringobj))
+tupleobj = ('a', 'e', 'i', 'o', 'u')
+print(list(tupleobj))
+listobj = ['1', '2', '3', 'o', '10u']
+print(list(listobj))
+#                                                                        len()
+stringobj = 'PALINDROME'
+print(len(stringobj))
+tupleobj = ('a', 'e', 'i', 'o', 'u')
+print(len(tupleobj))
+listobj = ['1', '2', '3', 'o', '10u']
+print(len(listobj))
+#                                                                        max()
+num = [11, 13, 12, 15, 14]
+print('Maximum is:', max(num))
+#                                                                        min()
+print(min(2,5,3,1,0,99))
+sampleObj = ['B','a','t','A']
+print(min(sampleObj))
+#                                                                        map()
+numList = (11, 21, 13, 41)
+res = map(lambda x: x + x, numList)
+print(list(res))
+#                                                                       open()
+f = open("myFile.txt", "r") #  read mode
+print(f.read())
+#                                                                        pow()
+print(pow(2,-3))
+print(pow(2,4.5))
+print(pow(3,0))
+#                                                                        oct()
+# to generate the octal representation of a number
+print("The octal representation of 32 is " + oct(32))
+print("The octal representation of the ascii value of 'A' is " + oct(ord('A')))
+print("The octal representation of the binary of 32 is " + oct(100000))
+print("The octal representation of the binaryof 23 is " + oct(0x17))
+#                                                                       sorted()
+sampleObj = (3,6,8,2,5,8,10)
+print(sorted(sampleObj,reverse=True))
+sampledict = {'a':'sss','g':'wq','t':2}
+print(sorted(sampledict,key= len))
+#                                                                       sum()
+num = [2.5, 3, 4, -5]
+numSum = sum(num)
+print(numSum)
+numSum = sum(num, 20)
+print(numSum)
+#                                                                       str()
+print(str('A1323'))
+b = bytes('pythön', encoding='utf-8')
+print(str(b, encoding='ascii', errors='ignore'))
+# errors = 'ignore', helps interpreter to ignore when it found a non Ascii character
+#                                                                       type()
+# used for debugging purposes.
+tupleObj=(3,4,6,7,9)
+print(type(tupleObj))
+new1 = type('New', (object, ),
+dict(var1 ='LetsLearn', b = 2029))
+print(type(new1))
+#                                                                      callable()
+def myFun():
+    return 5
+res = myFun
+print(callable(res)) #            function is called to get this value
+num1 = 15 * 5
+print(callable(num1))#no function is called
+#                                                                     input()
+#                                                                     range()
+res = 1
+for i in range(1, 10,2):
+    res = res * i
+    print("multiplication of first 10 natural number :", res)
+#                                                                    reversed()
+tupleObj=(3,4,6,7,9)
+for i in reversed(tupleObj):
+    print(i,end=' ')
 #                                                                                             user-defined functions
 import math
 a = 2.3
@@ -138,8 +260,50 @@ def __init__(self):
     self.myVariable1 = input()
     self.myVariable2 = input()
 #                                                                                 Destructors
-
-
+# destroy the object and perform the final clean up, garbage collector
+# closing open files, closing database connections, cleaning up the buffer or cache
+# The destructor method will only be called when the reference count becomes zero
+class Example:
+	def __init__(self):
+		print ("Object created")
+	#                                     destructor
+	def __del__(self):
+	    print ("Object destroyed")
+#                                        creating an object
+myObj = Example()
+#                           to delete the object explicitly
+del myObj
+#                                                                                   Circular Referencing
+# two objects refers to each other, both of these objects goes out of reference
+class Foo():
+    def __init__(self, id, bar):
+        self.id = id
+        # saving reference of Bar object
+        self.friend = bar
+        print ('Foo', self.id, 'born')
+    def __del__(self):
+        print ('Foo', self.id, 'died')
+class Bar():
+    def __init__(self, id):
+        self.id = id
+        # saving Foo class object in variable
+        # 'friend' of Bar class, and sending
+        # reference of Bar object for Foo object
+        # initialisation
+        self.friend = Foo(id, self)
+        print ('Bar', self.id, 'born')
+    def __del__(self):
+        print ('Bar', self.id, 'died')
+b = Bar(12)
+#                                                     Exception in __init__ method
+class Example():
+	def __init__(self, x):
+	    # for x = 0, raise exception
+		if x == 0:
+			raise Exception()
+		self.x = x
+	def __del__(self):
+		print (self.x)
 #                                                                                 Patterns
 # Type 1.                                                                  $ Star Pattern
 #                                    Program to print full pyramid
@@ -558,6 +722,196 @@ for i in range(square_side):
         print("$", end = '  ')
     print()
 #                                                                                                                                 Functions
+# (pi for return value 3.141592, E for return value 0.718282 , nan for representing non numbers, inf for representing infinite), 
+# logarithmic functions (exp(x) returns e**x), expm1(x) returns e**x-1, log2(x) returns logarithmic value for x with base2, 
+# sqrt(x) returns square root value for x), numeric functions ( factorial(x), isinf(x), 
+# remainder(x, y) returns value of remainder for dividing x by y) and trigonometric functions (sin(x), cos(x), tanx(x))
+#                                                                                 Constants
+"""
+Constants	Description
+pi	         Returns 3.141592
+E	         Returns 0.718282
+nan	         Not a number
+inf	         Infinite"""
+import math
+print( "CONSTANTS IN PYTHON")
+print(" PI value : " , math.pi)
+print(" E value : " , math.e)
+print(" nan value : " , math.nan)
+print(" E value : " , math.inf)
+#                                                                               Logarithmic Functions
+"""
+Function	Description
+exp(x)	Returns e**x
+expm1(x)	Returns e**x - 1
+log(x[, base])	x to the base logarithm is returned
+log1p(x)	Base1 logarithm of x value is returned
+log2(x)	Base2 logarithm of x value is returned
+log10(x)	Base10 logarithm of x value is returned
+pow(x, y)	Returns x raised to the power y
+sqrt(x)	Square root value for x is returned"""
+import math
+#              variable declaration and assignation
+Number_1 = 1
+Number_2 = 2
+Number_3 = 3
+Number_4 = 4
+#             Applying exp() function
+print("            EXPONENT VALUE                     ")
+print(" Exponent value: " , math.exp(Number_1))
+print(" \n ")
+#            Applying Base1 logarithm function
+print("            BASE1 LOGARITHM  " )
+print(" BASE1 LOGARITHM VALUE of 2 : ", math.log1p(Number_2))
+print(" \n " )
+#             Applying Base2 logarithm function
+print("           BASE2 LOGARITHM  " )
+print(" BASE2 LOGARITHM VALUE of 2 : ", math.log2(Number_2))
+print(" \n " )
+#              Applying                                         Base10 logarithm function
+print("           BASE10 LOGARITHM  " )
+print(" BASE10 LOGARITHM VALUE of 2 : ", math.log10(Number_2))
+print(" \n " )
+#                                                               Applying x to power of Y
+print("           X^Y" )
+print(" X^Y Value : ", math.pow(Number_3,Number_4))
+print(" \n " )
+#                                                           Applying square root determination
+print("     SQUARE ROOT " )
+print(" SQUARE ROOT of 4 : ", math.sqrt(Number_4))
+print(" \n " )
+#                                                           Numeric Functions
+"""Constants	Description
+ceil(x)	The smallest integer which is very much greater than or equal to the x value is returned
+copysign(x, y)	Using the sign of y, the value for x is returned
+fabs(x)	absolute value for the x is returned
+factorial(x)	factorial value of x is returned
+floor(x)	the largest integer, which is very much less than or equal to the x value, is returned
+fmod(x, y)	the remainder of dividing x by y value is returned
+frexp(x)	Returns the mantissa and exponent of x as the pair (m, e)
+fsum(iterable)	Returns an accurate floating-point sum of values in the iterable
+isfinite(x)	if x is not an infinity or a Nan, then boolean value true is returned
+isinf(x)	if x holds a positive or negative infinity, then true is returned
+isnan(x)	Returns True if x is a NaN
+gcd(x, y)	for x and y value, the most greates common divisor value is returned
+the remainder(x, y)	Find the remainder after dividing x by y."""
+import math
+#                    variable declaration and assignation
+Number_1 = 10.5
+Number_2 = 20
+Number_3 = -30
+Number_4 = -40.24566
+Number_5 = 50
+Number_6 = 60.94556
+Number_7 = 70
+Number_8 = 80
+#                   Applying Ceil() function
+print( " CEIL : Smallest integer which is very much greater than or equal to the x value is returned  ")
+print( " CEIL value : " , math.ceil(Number_1))
+print( " \n " )
+#                  Applying Copysign() function
+print( " COPYSIGN : Smallest integer which is very much greater than or equal to the x value is returned  ")
+Temp_var1 = math.copysign(Number_2,Number_3)
+print(" VALUE AFTER COPY SIGN : ", Temp_var1)
+print(" \n ")
+#                Applying fabs() function
+print( " FABS : absolute value for the x is returned  ")
+print(" ABSOLUTE VALUE FOR 40.24566 : ", math.fabs(Number_4))
+print(" \n ")
+#               Applying Factorial() function
+print(" FACTORIAL : factorial value of  x is returned  ")
+print(" Factorial value for 50 : ", math.factorial(Number_5))
+print(" \n ")
+#              Applying Floor() function
+print(" FLOOR : largest integer which is very much less than or equal to the x value is returned " )
+print(" Floor : ", math.floor(Number_6))
+print(" \n ")
+#             Applying Fmod() function
+print(" FMOD : remainder of divinding x by y value is returned ")
+print(" Remainder : ", math.fmod(Number_6,Number_5))
+print(" \n ")
+#               Applying Frexp() function
+print( " FREXP : Returns the mantissa and exponent of x as the pair (m, e) " )
+print(" MANTISSA EXPONENT : ", math.frexp(Number_7))
+print( " \n " )
+#              Applying isfinite() function
+print(" isfinite : if x is not an infinity or a Nan then boolean value true is returned ")
+print(" Infinite or Nan (produces boolean output): ", math.isfinite(Number_8))
+print(" \n ")
+#                                                                                               Trigonometric Functions
+"""
+function	Description
+sin(x)	sine value of x in radians is determined
+cos(x)	cosine value of x in radians need to be determined
+tan(x)	tangent value of x in radians need to be determined
+degrees(x)	radian to degree conversion
+radian(x)	the degree to radian conversion"""
+import math
+print(" \n ")
+print("   TRIGNOMETRIC FUNCTION USAGE                        " )
+print(" \n ")
+print(' The value of Sin(90 degree) : ' + str(math.sin(math.radians(90))))
+print(' The value of cos(90 degree) : ' + str(math.cos(math.radians(90))))
+print(' The value of tan(pi) : ' + str(math.tan(math.pi)))
+print(" \n ")
+#                                                                                               String Functions
+# center(), count(),  find(), format(), index(), isalnum(), lower(), maketrans(), replace()
+#                                                                                           capitalize(uppercase)
+# First Letter Only "A"
+str1 = "hello from Abith"
+str2 = str1.capitalize()
+print(str2)
+#                                                                      casefold(lowercase)
+str2 = str1.casefold()
+print(str2)
+#                                                                      center()
+# aligns the string at the center
+str1 = "Abith"
+str2 = str1.center(10)
+print(str2)
+#                                                                      count()
+# number of times a substring occurs
+str1 = "Hello from kaashiv. Welcomw to kaashiv "
+num = str1.count("kaashiv")
+print(str2)
+#                                                                     encode()
+str1 = "Abith"
+str2 = str1.encode()
+print("Hello from", str2)
+#                                                                    endswith()
+# Return True or False
+str1 = "Hello from kaashiv"
+str2 = str1.endswith("CBA")
+print(str2) 
+#                                                                    expandtabs()
+str1 = "Hello\tfrom\t kaashiv"
+str2 = str1.expandtabs(2)
+print(str2)
+#                                                                    find()
+#                                                                    format()
+str1 = "kaashiv"
+print("Hello from {}.".format(str1)) # {} = placeholders
+#                                                                    index()
+str1 = "Hello from kaashiv"
+str2 = str1.index("kaashiv")
+print(str2)
+# is = True or False
+#                                                                    isalnum()
+#                                                                    isalpha()
+#                                                                    isdecimal()
+#                                                                    isidentifier() = Spaces = False
+#                                                                    islower()
+#                                                                    isnumeric()
+#                                                                    isprintable()
+#                                                                    isspace()
+#                                                                    istitle()
+#                                                                    isupper()
+#                                                                    join()
+# to concatenate two strings in an iterated manner
+#                                                                    lower()
+#                                                                    upper()
+#                                                                    replace()
+
 # pandas = dataframe
 # built-in = print(), enumerate(), range(), user-fun = def, Lambda
 # sum_values_lambda = lambda                                                      $ Lambda
@@ -624,8 +978,6 @@ def fun(a, b, i):
 d = {'a':6, 'b':1, "i":9}
 fun(*d)                                          # to get the variables 
 fun(**d)                                         # to get the value of variables
-
-
 #                                                                                                                                  $ Range()
 # # Generates List of Numbers in syntax with endValue = -1
 # # range(start, end, step) => startValues, endValues, step = increment Value
@@ -714,7 +1066,6 @@ except StopIteration:    #catching the exception
     pass
 return output
 print(func(5, findingcubes()))  #passing the value in the method ‘func’
-
 #                                                                             to swap two values                   
 #               taking values from the user
 x = input()
@@ -728,7 +1079,6 @@ y = temp_var
 print('The value of x after swapping is {}'.format(x))
 print('The value of y after swapping is {}'.format(y))
 # o/p => 619 <=> 196
-
 #                                                                                                                    len()
 len(str)
 str2 = "Abith"
