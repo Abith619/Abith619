@@ -1,4 +1,3 @@
-"""
 print("Hi \
        Oi \
        Hello \
@@ -16,7 +15,7 @@ import this
 num1 = 10;
 num2 = 20;
 print("sum of the numbers=", num1 + num2)
-"""
+
 from builtins import function
 from copy import copy
 from hashlib import new
@@ -24,30 +23,121 @@ from typing import FrozenSet
 from attr import field
 from sympy import SymmetricDifference, intersection, print_python
 
-"""
-multiple
-line
-Comment
-"""
-"""
 message1 = "Abith"
 message2 = 'Abi'
 print(message1)
-print(message 2)
-"""
-"""
+print(message2)
+
 print(" Oi 'Abi' ")
 print(' Oi "Abi" ')
 # User_input
 message = input()
 print(message)
-"""
+
 
 #                                                                                  Loops
+"""myList = [8, 9, 2, 6, 1, 9]
+for i in myList:
+    print (i)   
+
 bigList = [[1, 3, 6], [8, 2,], [0, 4, 7, 10], [1, 5, 2], [6]]
 for i in bigList:
 	for j in i:
 		print("Element of list within a list - ", j)
+#                                                           if True execute continously
+while True:
+	print ("I am printing because the condition is True")
+#                                                                          infinite loop
+myList = [8, 9, 2, 3, 4, 6]
+i = 0
+while i < len(myList):
+    print (myList[i])
+    i = i+1
+#                                                                               continue
+#                       Print LowerCase Letter
+name = "Abith"
+for i in name:
+    if not i.islower():
+        continue # Altering the Loop
+    print(i)
+#                                                                                  Break
+for i in name:
+	if i == "A":
+		break
+print (i)
+"""
+#                                                                                             user-defined functions
+import math
+a = 2.3
+print ("The floor of 2.3 is : "+ math.floor(a))
+# 
+def add(a, b):
+    c = (a+b)
+    return c
+def add(a, b):
+    return (a+b)
+print (add(5, add(7, 6))) #                     add Multiple tags in Print
+#                                                                                 Return Type
+# print all the even numbers and double of all the odd numbers, starting from 1
+n = int(input())
+for i in range(1, n+1):
+	if i%2 == 0:
+		print (i)
+	else:
+		print (2*i)
+#                     2nd Method
+def check(k):
+	if (k%2==0):
+		print (k)
+	else:
+		print (2*k)
+n = int(input())
+for i in range(1, i+1):
+	check(i)
+#                               Default Arguments
+def add(a=0, b=0):
+    return (a+b)
+#                               Aliasing function names
+a = add()
+n = int(input())
+
+#                                                                              Constructors
+myObject.myVariable = "some other value"
+
+class Example:
+	def anotherFunction(self, parameter1):
+		self.myVariable = parameter1
+		# or                             by calling for a user input
+        self.myVariable = input()
+
+myObject = Example()
+myObject.anotherFunction("Amazing Spiderman")
+print(myObject.myVariable)
+#                                                                            Object Creation
+class Example:
+    def __new__(self):
+        return 'kaashiv'
+# creating object of the class Example
+mutantObj = Example()
+# but this will return that our object 
+# is of                                       type str
+print (type(mutantObj))
+# The object created is of the type Example
+class Example:
+    myVariable = "some value"
+    simpleObj = Example()
+print (type(simpleObj))
+#                                                                       Object Initialisation
+class Example:
+	def __init__(self, value1, value2):
+	    self.myVariable1 = value1
+	    self.myVariable2 = value2
+		print ("All variable initialized")
+myObj = Example("first variable", "second variable")
+def __init__(self):
+    self.myVariable1 = input()
+    self.myVariable2 = input()
+#                                                                                 Destructors
 
 
 #                                                                                 Patterns
@@ -302,6 +392,8 @@ def pop(stack):
     if len(stack) == 0:
         return
     return stack.pop()
+num = 619
+stack = []
 def reverse(number):
     #                       reversing the number by using stack's functions
     num = len(number)
@@ -776,6 +868,26 @@ for i in range(1,6):               #                        $ to display stars i
         print("*",end="")
         print("*")
         print()
+#                                                                                                                         $ List
+myList1 = ['first', 'second', 'third', 'fourth', 'fifth']
+myList2 = myList1 # complete copying
+myList2 = myList1[0:3] # Slicing
+#                                                                                   Adding Serial Numbers in a List
+#                  For storing 0 to (n-1) numbers in a list use range(n) function
+myList1 = range(9)
+#                                     to create a list with squares of all whole numbers
+myQuickList = [x**2 for x in range(5)]
+#                                       Appending to a List (Adding to a Existing List)
+emptyList = []
+emptyList.append('Python Online Internship')
+emptyList.append('F.R.I.E.N.D.S')
+emptyList.append('Online Internship')
+emptyList.append('Kaashiv')
+print (emptyList)
+#                                  Accessing using Indexing of elements
+fruitsList = ["Orange", "Mango", "Banana", "Cherry", "Blackberry", "Avocado", "Apple"]
+len(fruitsList)
+
 #                                                                                                                         $ Listing with operator
 lis = [1, 2, 3]
 lis1 = [4, 5, 6]
@@ -797,11 +909,11 @@ print(max(lis))
 print("the number of occurrence of 3 after 3rd position is : ", end="")
 print(lis.count(3))
 #                                                             oops Concept
-#                                                                                            class :
+#                                                                                                             class :
 # Template for Object
 # any Attribute defined within a class definition but not within a fun() = class Attribute 
 # it can share across all instances of the class, # changes are Visible to all other Instances
-# Attributes, Behaviour are defined
+# Data & Functions are defined
 # human = class, abith = object
 # data, functions are bundled as Unit
 Class Class_Name:                                 # class Declaration
@@ -821,7 +933,7 @@ def getaddress(self):
 # call setaddress with address as parameter
 Abith.setaddress("chennai")
 print(Abith.getaddress())  # call the getaddress
-#                                                                                                                               object
+#                                                                                                                   object
 # Identity, Properities, behaviour
 # setting values
 abith = abithclass("abith") # Object Declaration with Initializing
@@ -848,9 +960,7 @@ class Abithclass:
         print("hi" + str(self.a + self.b))
 Abithobj=Abithclass(10,20)
 Abithobj.Abithfun()
-
-
-#                            object types
+#                                                                   object types
 import abc
 class FourWheelVehicle (abc.ABC):
     @abc.abstractmethod
@@ -876,8 +986,7 @@ class pen:
     int a;
     int(b)=a+10;
     print(b)
-
-class Employee: #                                                                                                            declaring class & function
+class Employee: #                                                                             declaring class & function
     def display(self):
         print("ID: %d nName: %s"%)
 
@@ -929,7 +1038,6 @@ class Student:
         print("hello", name)
 student = student()
 student.show(name="Abith")
-
 #                                                        determination of performance percentage of the employee
 # multiple inheritance subject where the child class is responsible for calling the methods implied in its corresponding parent class.
 #Define a class as 'Individual'#
@@ -988,9 +1096,7 @@ Employee2 = Employee()
 Employee2.result()               # object using the methods of the declared class
 print("                                                                           ")
 print( "Note: The instances get initialized with the given values Successfully " )
-
-
-#                                                                                                  Constructor = Default Child => Class name + Function Name
+#                                                               Constructor = Default Child => Class name + Function Name
 # constructor functions automatically call functions when objects are created
 # normal functions = object.display(); we have to call function manually
 # Constructor = def __init__(): , def display():, with(self,parameter)
@@ -1017,13 +1123,13 @@ class pen:
     }
 penObject:  # access the class method using Object
     __init__()
-#                                                                                                                             self
+#                                                                                                                            self
 # used to specify the current instance, Multiple objects cannot be created using (self)
 # used in functions declared in a class
 # this =(or) self => i'd or name in a box of rows and columns
 # dec = E("Abith",101)
 
-#                                                                                                                         declaring private methods (def)
+#                                                                                                 declaring private methods (def)
 
 # Private methods and variables can be declared with the addition of two or more underscores and at most one trailing one. You can also bind names to class instances
 class MyClass(object):
@@ -1067,7 +1173,7 @@ class instance.test
 # 10
 #
 
-#                                                                                                                             $ define derived-class
+#                                                                                                $ define derived-class
 class    derivedClassName([list, ...]):
 class cuisine():                                                                    # class cuisine
     def __init__(self, type, cooked=None):
@@ -1092,9 +1198,24 @@ int sum(int a)
 a = a+10;                                                        # function with  parameter &  return type
 return a;
 }
-"""
-"""
-#                                                                                                                          $   Encapsulation
+#                                                                                               $   Polymorphism
+#  Polymorphism = Poly + Morph => "many forms"
+#                                                   Function Overloading
+def add(a, b):
+	return a + b
+add(4,5)
+#                   to add 3 numbers
+def add(a, b, c):
+	return a + b + c
+#                   to add 4 numbers
+def add(a, b, c, d):
+	return a + b + c + d
+#                                                   Operator Overloading
+2 + 5
+("Abith" + "Raj")
+"Abith"*3
+
+#                                                                                               $   Encapsulation (Object)
 # storing or placing the data to make it readable & compact
 # Enclosing Variables & methods inside class to safeguard it
 # methods + Variables = Encapsulation
@@ -1108,8 +1229,7 @@ class pen:
     program to create a pen
 }
 }
-
-#                                                                                                                          $   Abstraction
+#                                                                                               $   Abstraction(Class)
 # hide internal functions & show only essential (class attributes)
 # without creating an Object in Encapsulated
 package sklearn
@@ -1166,7 +1286,7 @@ print( isinstance(a, FourWheelVehicle))
 print( isinstance(a, TwoWheelVehicle))
 # o.p = True, False, False, True
 
-#                                                                                                                                 $ Inheritance
+#                                                                                                               $ Inheritance
 # function to call class using objects , to call father class using child class
 # building blocks of any scalable & maintainable piece in a software
 # one class to derive or inherit properties of another class, adding new features without modifying them
