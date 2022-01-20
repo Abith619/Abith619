@@ -3,7 +3,11 @@ print("Hi \
        Hello \
        ")
 #single line to multiple line \
+g = input("Enter your name : ")
+g1=int(input())
+print(g, g1)
 
+from django import db
 import key as key
 import operator
 import numpy as np
@@ -11,7 +15,8 @@ from tensorflow.python.types.distribute import Iterable
 import re
 import this
 
-
+num = int(input(" Please enter your marks : "))
+type(num)
 num1 = 10;
 num2 = 20;
 print("sum of the numbers=", num1 + num2)
@@ -442,6 +447,228 @@ m = int(input("Enter number of terms:"))
 print("Fibonacci sequence:")
 for i in range(m):
     print(fibonacci_ser(i))
+#                                                                                                      Trigonometric
+# to convert the values in radians to degrees and degrees to radians = degrees(value), radians(value)
+#                                                            sin(x) Function
+import math
+x = 1
+print(math.sin(x))
+print(math.cos(x))
+print(math.tan(x))
+print(math.asin(x))
+print(math.acos(1))
+print(math.atan(1))
+# The hyperbolic sine of the angle of the value passed as an argument is returned
+a = 1.0
+b = 1.0
+c = complex(a,b)
+print("The value of hyperbolic sine is",math.sinh(c))
+print("The value of hyperbolic sine is",math.cosh(c))
+print("The value of hyperbolic sine is",math.tanh(c))
+print("The value of inverse hyperbolic sine is",math.asinh(c))
+print("The value of inverse hyperbolic sine is",math.acosh(c))
+print("The value of inverse hyperbolic sine is",math.atanh(c))
+#                                                                           ordinal(ord) Function
+# integer representing the character passed to it. It means every character has some integer value, ASCII code
+# works only for single character
+x = 'a'
+print(ord(x))
+#                                                                       Strip Function
+# rstrip, lstrip
+string_before_strip  = '00000000abcdefghijklmnopqrstuvwxyz00000000'
+print( " String before striping : " , string_before_strip)
+string_after_strip = string_before_strip.strip( '00000000' ) # ("00000000") is Removed
+print( " String after striping  : " , string_after_strip)
+#                                                                        Split Function
+# While reading data from CSV
+# split() is used to break the data into various chunks of data
+# split () taking different delimiters
+# 1 -->                                                 no delimiter specified
+inp1 = 'A E I O U'
+print("String will split at whitespace :",inp1.split())
+print("list of vowels :")
+for i in inp1.split():
+    print(i)
+# 2 -->                                                 delimiter is comma and a space (, )
+inp2 = 'J&K, Puducherry, Delhi, Andamana and Nicobar, Chandigarh, Dadra and Nagar Haveli, Daman and Diu, Lakshadweep, Ladakh'
+ut = inp2.split(', ')
+print("Number of Union Territories :", len(ut))
+print("UT is listed as below :")
+for u in range(len(ut)):
+    print((u+1),'-->', ut[u])
+# 3 -->                                                  delimiter is |
+inp3 = 'java|python|c++|scala|julia'
+print("String will split at '|' :", inp3.split('|'))
+print("Different programming languages are :")
+for lang in inp3.split('|'):
+    print(lang) 
+# 4 -->                                                 splitting string at every 4 character
+inp4 = 'fourfivenine'
+print([inp4[i: i+4] for i in range(0, len(inp4), 4)])
+#                                                                               max splits
+# split() function with different values for max splits
+print("Split() with default max split values i/e -1 :")
+inp1 = 'Java@Python@C++@Scala@Julia'
+print("Input string will split at @ :", inp1.split('@'))
+print('\n')
+print("number of splits (0):", inp1.split('@', 0))
+print("number of splits (1):", inp1.split('@', 1))
+print("number of splits (2):", inp1.split('@', 2))
+print("number of splits (3):", inp1.split('@', 3))
+print("number of splits (4):", inp1.split('@', 4))
+print("number of splits (5):", inp1.split('@', 5))
+print('\n')
+print("Split using for loop")
+for i in range(6):
+    print("number of splits", i, inp1.split('@', i))
+# calculating sum of marks of a student
+# input string containing marks scored by a student in five different subjects
+marks = '95, 92, 82, 92, 98'
+sum = 0
+#                                      input string will split at ', '
+list_marks = marks.split(', ')
+print("Marks scored by student :", list_marks)
+print("Student marks:")
+for marks in list_marks:
+    print(marks)
+print('\n')
+#                                         calculating total marks
+for i in range(len(list_marks)):
+    sum += int(list_marks[i])
+print("total marks scored by student :", sum)
+#                                                                       Round Function
+#                                              Integers:
+a = 12
+round (a)
+print (a)
+#                                              Floating Point
+b = 21.7
+c = 21.4
+print(round(b))
+print(round(c))
+# 
+#          when the (n+1)th digit is equal to 5
+a = 5.465
+print(round(a, 2))
+#           when the (ndigit+1)th digit is >=5
+b = 5.476
+print(round(b, 2))
+#                  when the (ndigit+1)th digit is <5
+c = 5.473
+print(round(c, 2))
+
+Tup = (-40.95, 50.85, 10.98, 20.26, 30.05) #                                              Declaration of a Tuple
+Lis = [-39.29, -42.15 , -39.97, -10.98, 32.65] #                     Declaration of a List
+print('Round Function on Negative Decimal = %.2f' %round(-19.48476))
+print('Round Function on Positive Decimal = %.2f' %round(15.98763))
+print('Round Function with 2nd parameter on positive = %.3f' %round(11.98763, 3))
+print('Round Function with 2nd parameter on negative = %.3f' %round(-18.48476, 3))
+print('Round Function for Items in a List = %d' %round(Lis[2]))
+print('Round Function for Items in a List = %d' %round(Lis[4]))
+print('Round Function for Items in a Tuple = %d' %round(Tup[2]))
+print('Round Function for Items in a Tuple = %d' %round(Tup[4]))
+print('Round Function for Multiple Number = %.2f' %round(20 + 40 - 20.6578, 2))
+#                                                                                 Truncate() 
+# truncate the digits on the left side of the decimal point
+# truncate(565.5556, -2)
+def truncate():
+    truncate = Tup(565.5556, -1);
+    return
+print (truncate)
+#                                                                                                                Regex
+# specify a set of rules that can fetch a particular group and validate a string against that rule
+# contain e-mail addresses, phone numbers or any particular pattern to match
+import re
+word = "He is very smart"
+x =re.search("^He.*smart$",word)
+print(x)
+"""
+[] = It represents a set of characters.
+. = It represents any character except a newline.
+* = It represents zero or more occurrences.
++ = It represents one or more occurrences.
+^ = It represents the starting character.
+$ = It represents the ending character.
+| = It represents either-or.
+() = It represents capture and group.
+\ = It is generally used to escape special characters
+
+\w = It shows a match if the string has any set of word characters from [0-9], A-Z or a-z and underscore.
+\W = It returns a match if the string has no word characters present.
+\d = These returns match when there are digits in the string.
+\D = It is the opposite of the previous one as it returns a match if no digits are present in the string.
+\s = It is used to check for white space characters in a string. It returns a match if white space characters are present.
+\S = It returns a match when there are no white spaces in the string."""
+#                                                                               findall() function
+import re
+word = "Abith is 22 years old and his mobile number last three-digit is 703"
+rgex ='\d+'
+x =re.findall(rgex,word) # find numbers
+print(x)
+#                                                                               search() function
+import re
+word = "Abith is 22 years old"
+rgex ='^Abith'
+x =re.search(rgex,word)
+print(x)
+regex1= '^Raj'
+x1 = re.search(regex1,word)
+print(x1)
+#                                                                              Split() function
+import re
+word = "Raju is 22 years old"
+rgex ='\s'
+x =re.split(rgex,word) # 
+print(x)
+#                                                                               sub() function
+# replaces the matches with the string or character, replace the white space with ‘&’ in our string
+import re
+word = "Raju is 22 years old"
+rgex ='\s'
+x =re.sub(rgex,'&',word)
+print(x)
+#                                                                                                regex replace 
+""" + = matching one or more occurrences of preceding expressions
+? =  matching zero or one occurrence of preceding expressions
+. =  to match any single character except a newline
+* =  to match zero or more occurrences of preceding expressions
+^ =  to match the starting of the line
+$ = to match the end of the line"""
+import re
+print("The simple program for sub() method for replacing:")
+str = "kaashiv#!!Training#!!Institute"
+print("The given string that needs to be replaced with given pattern is as follows:")
+print(str)
+res_str = re.sub("#!!"," ",str)
+print("The string obtained after replacing special character with space is as follows:")
+print (res_str)
+"""pattern: In this, we write the pattern to be searched in the given string.
+replc: This parameter is for replacing the part of the string that is specified.
+string: This provides a string that needs to be replaced with a given pattern
+max: This is used to replace all the occurrences until the max number is provided"""
+import re
+print("The below program is used to demonstrate sub() method:")
+phonenum = "2004-959-559 # This is Phone Number"
+print("The given string is as follows:")
+print(phonenum)
+correct_num1 = re.sub(r'#.*$', "", phonenum)
+print("The correct phone number by removing special characters in the given string which means replacing them by space is as follows:")
+print(correct_num1)
+correct_num2 = re.sub(r'\D', "", phonenum)
+print("Now we have replaced all the spaces and have only digits in the given string is as follows:")
+print(correct_num2)
+#                                                                                                            String Join
+# concatenate iterable objects (list, dict, tuple, string, set)
+list = ['Sugar', 'Salt', 'Pepper', 'Pots', 'loves', 'the', 'Iron-Man'] # This seperator is used to seperate each object of the iterable element when concatenated by the join() function
+seperator = "-"
+# Using join() function to concatenate the elements of list and store the returned string in the variable "Str"
+Str = seperator.join(list)
+#                          Prints the string "Str" using the Python Print function
+print(Str)
+#                                 Using a blank string as a seperator in join function
+list = ['S', 'u', 'g', 'a', 'r']
+Str = "".join(list)
+print(Str)
 #                                                                                                    Reverse Number
 # 1                            Using Slicing Method
 def reverse_slicing(s):
