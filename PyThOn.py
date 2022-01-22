@@ -1,12 +1,3 @@
-print("Hi \
-       Oi \
-       Hello \
-       ")
-#single line to multiple line \
-g = input("Enter your name : ")
-g1=int(input())
-print(g, g1)
-
 from django import db
 import key as key
 import operator
@@ -14,32 +5,133 @@ import numpy as np
 from tensorflow.python.types.distribute import Iterable
 import re
 import this
-
-num = int(input(" Please enter your marks : "))
-type(num)
-num1 = 10;
-num2 = 20;
-print("sum of the numbers=", num1 + num2)
-
 from builtins import function
 from copy import copy
 from hashlib import new
 from typing import FrozenSet
 from attr import field
 from sympy import SymmetricDifference, intersection, print_python
+#                                                                                                         If Main
+# Execution Modes = Directly executing the Python file.
+# Importing an external Python file as a package and then using the function from that file
+# assign “__main__” to __name__
+import numpy as np
+def get_square(number):
+    print("The square of {} is :".format(number))
+    square = np.square(number)
+    return square
+print("Using function :")
+square=get_square(5)
+print(square)
+# “__name__” to control the execution of our code
+def main():
+    print("Programming in Python is fun!!!")
+if __name__== "__main__" :
+    main()
+# 
+def get_square(number):
+    print("Inside the first function")
+    print("The square of {} is :".format(number))
+    square = np.square(number)
+    return square
+def main(number):
+    print("Inside the main function")
+    square_root = np.sqrt(number)
+    print("The square root of {} is {}".format(number,square_root))
+    square = get_square(number)
+    print(square)
+if __name__ == "__main__":
+    main(5)
+"""Inside the main function
+The square root of 5 is 2.23606797749979
+Inside the first function
+The square of 5 is :
+25"""
+def get_square(number):
+    print("Inside the square function")
+    print("The square of {} is :".format(number))
+    square = np.square(number)
+    return square
+def get_square_root(number):
+    print("Inside the square root function")
+    print("The square root of {} is :".format(number))
+    square_root = np.sqrt(number)
+    return square_root
+def main(number):
+    print("Inside the main function")
+    square_root = get_square_root(number)
+    print(square_root)
+    square = get_square(number)
+    print(square)
+if __name__ == "__main__":
+    main(5)
+#                                         declare the Python Main Function
+print('Introduction to main() function')
+def main():
+    print("This is main function")
+print('Outside main function')
+def function():
+    return 19, 'Abith', 619
+roll, name, score = function()
+name
+def sum(a,b):
+    return (a+b)
+print(sum(3,6))
+print("__name__ variable set to ",name)
+"""__name__=='__main__':
+name = Abith"""
+print("Main function illustration")
+def sum(a,b):
+    return (a+b)
+def main():
+    print("Inside main() function")
+x=int(input("enter value x"))
+y=int((input("enter value y")))
+print("sum of values entered is",end=' ')
+print(sum(x,y))
+if __name__ == "__main__":
+    main()
+#                                                                                                         stream
+asyncio=asyncio
+asyncio.open_connection()
+asyncio.create_connection()
+asyncio.open_connection( host, port, *, loop, limit, **kwds)
+asyncio.start_server() #                                       start socket server
+asyncio.start_server(client_connected_cb, host, port, loop, limit)
+asyncio.client_connected_cb
+asyncio.loop.create_server()
+# path parameter for using path-like objects
+"""open_unix_connection()
+start_unix_connection()
+class asyncio.StreamReader( limit, loop)
+whitelines()  # used to write a list of lines
+writing ()
+get_extra_info()
+write_eof() # = close the write of the transport at the end of the file after flushing all the buffer data from the transport
+can_write_eof() # Trur or False
+close()"""
 
-message1 = "Abith"
-message2 = 'Abi'
-print(message1)
-print(message2)
-
-print(" Oi 'Abi' ")
-print(' Oi "Abi" ')
-# User_input
-message = input()
-print(message)
-
-
+#                                                                                                         Map Function
+def function():
+    return 19, 'Abith', 619
+roll, name, score = function()
+name
+# 
+def SquareOf_Num(a):
+    return a*a
+list_numbers = (5, 10, 15, 20)
+result = map(SquareOf_Num, list_numbers)
+print(result)
+#                                        map object to a set conversion
+Square_numbers = set(result)
+print(Square_numbers)
+#                                       Lambda expressions in the map()
+list_ = (1, 2, 3, 4)
+ans = map(lambda a: a*a, list)
+print(ans)
+#map object to  set conversion
+squarenum = set(ans)
+print(squarenum)
 #                                                                                  Loops
 """myList = [8, 9, 2, 6, 1, 9]
 for i in myList:
@@ -71,6 +163,34 @@ for i in name:
 		break
 print (i)
 """
+#                                                                                                                  File Methods
+"""r: This mode opens a file in read-only form
+w: This mode opens a file in the write-only form
+r+: This mode opens a file in both reads and writes form
+w+: This mode opens a file in both write and read
+a: This mode opens a file for appending purpose
+a+: This mode opens a file for both appending as well as for reading"""
+# open(), read(), readline(), next(), write(), writelines(), truncate(), seek() and close()
+# read() = reading the full file in the form of a string
+# Readline() = reading only the first line of the file or reading line until it meets an EOF character in the file
+# Next() = while iterating a file through a loop, akes the next line.
+ff = open("/run/media/abith/Abith/py/Hello.txt", "r")
+print(ff.next())
+print(ff.next())
+#                      file.write() = 
+"""“x”: This is for creating a file. If the file exists with that name, an error will be thrown
+“a”: This is for appending. If a file doesn't exist, it will create that file
+“w”: This will create that file if the file doesn't exist and then write to it"""
+# truncate() = 
+ff = open("C:/Users/Test/desktop/sample_Kaashiv.txt", "r+")
+print(ff.read())
+ff = open("C:/Users/Test/desktop/sample_Kaashiv.txt", "w+")
+ff.truncate()
+ff = open("C:/Users/Test/desktop/sample_Kaashiv.txt", "r+")
+print(ff.read())
+#                                                                                      Seek()
+# to set the offset position, of the reading and writing pointer
+ff.seek(0)
 #                                                                                                                Built-in Functions
 # abs(x) for fetching the absolute value of x, bin() for getting the binary value,  reversed() for reversing the order
 # bool() for retrieving the boolean value of an object, list() for lists, len() to get the length of the value, 
@@ -193,6 +313,88 @@ for i in range(1, 10,2):
 tupleObj=(3,4,6,7,9)
 for i in reversed(tupleObj):
     print(i,end=' ')
+#                                                                                                                   CSV File
+csv.writer()
+import csv
+print("Program to demonstrate csv.writer() function")
+print("\n")
+p_details =[('course','fees','place'),('Python',22000,'Pune'),('Android',11000,'Assam'),('Java',30000,'Delhi')]
+c = open('programs.csv','w')
+print("File is opened for writing:")
+o = csv.writer(c)
+for p in p_details:
+    o.writerow(p)
+    c.close()
+# DictReader = dictionary object is created for mapping the data to read it to the dictionary
+import csv
+print("Program to demonstrate DictReader() class")
+print("\n")
+with open('company.csv') as c:
+    r = csv.DictReader(c)
+for row in r:
+    print(row['Name'], row['Age'])
+#                                                        DictWriter
+import csv
+print("Program to demonstarteDictWriter() class")
+print("\n")
+with open('Game.csv', 'w') as file:
+    columnnames = ['Game_name', 'No_of_players']
+    writer = csv.DictWriter(file, fieldnames=columnnames)
+writer.writeheader()
+writer.writerow({'Game_name': 'Cricket', 'No_of_players': 12})
+writer.writerow({'Game_name': 'Football', 'No_of_players': 11})
+writer.writerow({'Game_name': 'Hockey', 'No_of_players': 11})
+#                                                                 to set the directory
+import csv
+with open('Emp_Info.csv', 'r') as file:
+    reader = csv.reader(file)
+for each_row in reader:
+    print(each_row)
+#                                                   for semi-colon separated file
+reader = csv.reader(file, delimiter  = '';'')
+finally:
+file.close()
+reader = csv.reader(file,quotechar="'")
+reader = csv.reader(file,skipinitialspace=True)
+reader = csv.reader(file,quoting=csv.QUOTE_NONE)
+#                                                                                        dialect
+csv.register_dialect(
+'mydialect',
+delimiter = ';',
+skipinitialspace = True,
+quotechar = '"',
+doublequote = True,)
+reader = csv.reader(csv_file, dialect='mydialect')
+#                                                                                         Writer
+csv.writer(csvfile, dialect='excel', **fmtparams)
+import csv
+with open('start.csv', 'w') as csvfile:
+    startwriter = csv.writer(csvfile, delimiter=' ',
+quotechar='|', quoting=csv.QUOTE_MINIMAL)
+startwriter.writerow(['Start'] * 2 + ['working example of csv write'])
+startwriter.writerow(['starting', 'this is an example', 'just a simple working example'])
+#                                     open an empty csv file, then write the data
+import csv
+row_list = [
+["SN", "Name", "Quotes"],
+[1, "Linus Torvalds", "Talk is cheap. Show me the code."],
+[2, "Martin Fowler", "Any fool can write code that a computer can understand. Good programmers write code that humans can understand."],
+[3, "Anonymous", "The most important property of a program is whether it accomplishes the intention of its user."] ]
+with open('quotes.csv', 'w') as file:
+    writer = csv.writer(file, quoting=csv.QUOTE_NONNUMERIC, delimiter=';')
+writer.writerows(row_list)
+# 
+import csv
+newdict=[{'branch': 'ME', 'cgpa': '9.4', 'student_name': 'Sulaksh', 'year': '2'},
+{'branch': 'COE', 'cgpa': '8.9', 'student_name': 'Amit', 'year': '2'},
+{'branch': 'IF', 'cgpa': '8.3', 'student_name': 'Rutuja', 'year': '2'},
+{'branch': 'IM', 'cgpa': '7.1', 'student_name': 'Madhu', 'year': '2'}]
+fields = ['student_name', 'branch', 'year', 'cgpa']
+filename = "uni_records.csv"
+with open(filename, 'w') as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames = fields)
+writer.writeheader()
+writer.writerows(newdict)
 #                                                                                             user-defined functions
 import math
 a = 2.3
@@ -309,6 +511,20 @@ class Example():
 		self.x = x
 	def __del__(self):
 		print (self.x)
+#                                                                                                              Deleting a file
+import os
+if os.path.exists("pythonfile2.txt"):
+    os.remove("pythonfile2.txt")
+else:
+    print("File not found to delete !!!")
+if os.path.exists("pavan kumar sake.txt"):
+    os.remove("pavan kumar sake.txt")
+else:
+    print("pavan kumar sake.txt is not found in the directory !!!")
+#                                                                                              File readline
+file = open("sample.txt", "r")
+print(file.readline(11))
+print(file.readlines())
 #                                                                                 Patterns
 # Type 1.                                                                  $ Star Pattern
 #                                    Program to print full pyramid
@@ -468,18 +684,18 @@ print("The value of hyperbolic sine is",math.tanh(c))
 print("The value of inverse hyperbolic sine is",math.asinh(c))
 print("The value of inverse hyperbolic sine is",math.acosh(c))
 print("The value of inverse hyperbolic sine is",math.atanh(c))
-#                                                                           ordinal(ord) Function
+#                                                                                                             ordinal(ord) Function
 # integer representing the character passed to it. It means every character has some integer value, ASCII code
 # works only for single character
 x = 'a'
 print(ord(x))
-#                                                                       Strip Function
+#                                                                                            Strip Function
 # rstrip, lstrip
 string_before_strip  = '00000000abcdefghijklmnopqrstuvwxyz00000000'
 print( " String before striping : " , string_before_strip)
 string_after_strip = string_before_strip.strip( '00000000' ) # ("00000000") is Removed
 print( " String after striping  : " , string_after_strip)
-#                                                                        Split Function
+#                                                                                                 Split Function
 # While reading data from CSV
 # split() is used to break the data into various chunks of data
 # split () taking different delimiters
@@ -657,6 +873,14 @@ print(correct_num1)
 correct_num2 = re.sub(r'\D', "", phonenum)
 print("Now we have replaced all the spaces and have only digits in the given string is as follows:")
 print(correct_num2)
+#                                                                                                           Regex Tester
+#                                                                                              Pythex
+(Ed[a-z]cba) | (Tra[a-z]ning) = input()
+# we input the logic pattern in regular expression using special characters or metacharacters
+#                                                                                                       Debuggex
+# tool to test for regular expression with a given logic pattern to test or match with the given string
+#                                                                                                           FREEFORMATTER
+# it displays the match found in the given string, freeformatter.com
 #                                                                                                            String Join
 # concatenate iterable objects (list, dict, tuple, string, set)
 list = ['Sugar', 'Salt', 'Pepper', 'Pots', 'loves', 'the', 'Iron-Man'] # This seperator is used to seperate each object of the iterable element when concatenated by the join() function
@@ -803,14 +1027,116 @@ number2 = reverse(number1)
 print ("The given number is : " + number1)
 print ("Reverse of the given number is : " + number2)
 
+#                                                                                                              eval()
+# run the python programming code (which is actually passed as the argument)
+# evaluates the “String” like the Python Code expression & returns as an integer
+# parsing the string value, and that string value also be evaluated as the python expression
+x = 10
+print ('value of x ==>')
+print(eval('x'))
+print ('value of x+10 ==>')
+print(eval('x+10'))
+print ('value of x^2 ==>')
+print(eval('x*x'))
+print('value of x^3==>')
+print(eval('x*x*x'))
+# IF and ELSE conditions are prepared to make the prime number logic program by using the value of x
+if(x%2==0):
+    print('X is even number')
+if(x%2!=0):
+    if(x%3!=0):
+        if(x%5!=0):
+            if(x%7!=0):
+                print(eval('x'))
+                print('is a prime number')
+            else:
+                print ('x is not prime number')
+        else:
+            print('x is not prime number')
+    else:
+        print('x is not prime number')
+else:
+    print('x is not prime number')
+#                                          Using For Loop
+from math import *
+for lm in range(1, 3):
+    func1 = input("Enter the Math Function which are mentioned below to Evaluate.\nFunctions Allowed are: 1. square_root(x) and 2. power(x,y):\n")
+    try:
+        print(eval(func1, {'square_root': sqrt, 'power': pow}))
+    except Exception as ex1:
+        print(ex1)
+    break
+print('Now it is Done')
+#                                                                                                              Counter
+# count of how mant times repeated
+# dictionary subclass used for counting the objects that are hashable, includes zero and negatives values
+from collections import Counter
+c = Counter()
+print(c)
+c = Counter('sample string')
+print(c)
+c = Counter(['word', 'word1','word1']) # Word Count
+print(c)
+c = Counter(a=4, b=2, c=0, d=-2)
+sorted(c.elements())
+#                                       Character count
+from collections import Counter
+lst = ['a', 'b', 'c', 'b', 'a', 'b']
+c = Counter(lst)
+print(c)
 
+from collections import Counter
+counter = Counter(a=3, b=2, c=4)
+print(counter)
+print(list(counter.elements()))     # o/p = 
+"""Counter({'c': 4, 'a': 3, 'b': 2})
+['a', 'a', 'a', 'b', 'b', 'c', 'c', 'c', 'c']"""
+c = Counter('sssssshhhhhcccdddd')
+c.most_common(3)
+
+a.subtract(b)
+a
+a-b
+
+#                                                                                                     string _contains_()
+print("Python program to demonstrate _contains_() function")
+print("\n")
+str1 = "Kaashiv Training"
+sub_str = "Kaashiv"
+if (str1.__contains__(sub_str)):
+    print("The given String contains the given substring")
+    print(sub_str)
+    print("\n")
+else:
+    print("The given String does not contain substring")
+#                                                          The given substring is present in the string or Not
+print(str.__contains__("Kaashiv Training Institute", "Abith Raj"))
+
+import operator
+print("Python program to demonstrate contains() function of operator module ")
+print("\n")
+str1 = "Kaashiv is best in programming courses."
+if operator.contains(str1, "best"):
+    print ("The given substring is present in the string.")
+else :
+    print ("The given substring is not present in the string.")
+# created a series using pandas object pd,
+import pandas as pd
+print("Program to demonstrate contains() function provided by pandas")
+print("\n")
+sr = pd.Series(['Kaashiv', 'Training', 'Institue', 'Chennai', 'India'])
+print("The given series along with its index and type is as follows:")
+print(sr)
+print("\n")
+r = sr.str.contains('Kaashiv')
+print(r)
+#                                 Python Program for                                         printing pyramid pattern using stars
 # two for loops; the outer for loop can be used to take care of a number of rows, while the inner for loop can be used to take care of the number of columns 
 # Program to print pyramid patterns of stars
 for i in range(0, 5):
     for j in range(0, i+1):
         print("* ",end="")
     print()
-#                                # Python Program for printing pyramid pattern using stars
 a = 8
 for i in range(0, 5):
     for j in range(0, a):
@@ -3036,7 +3362,7 @@ for i in range(len(array)):
 # (1 2 4 6)  -> (1 2 4 6)  : No swap in1st two elements.
 # (1 2 4 6) -> (1 2 4 6): No swap in next two elements.
 # (1 2  4  6) -> (1 2 4 6) : No swap in last two elements.
-#                                                                                                                               $  Bubble sort
+#                                                                                                                $  Bubble sort
 # def bubble_Sort(arr):
 # m = len(arr)
 #                                                                 # Traverse through all the array elements
@@ -3053,7 +3379,7 @@ print("%d" %arr[i]),
 #                                                                                                      $ Code Format
 for i in range(len(arr)):
 print ("%d" %arr[i]),
-#                                                                                                                                Selection Sort
+#                                                                                                                   Selection Sort
 # Finding min or least value & positioning from unsorted sets, unsorted sublist is the complete key list
 import sys
 Array = [63, 75, 13, 2, 441] # loop through each and every element in the array
@@ -3069,7 +3395,7 @@ print ("Array after getting sorted by selection sort")
 for i in range(len(Array)):
 print("%d" %Array[i])
 
-#                                                                                                                               Insertion Sorting
+#                                                                                                        Insertion Sorting
 # Compared in a sequential order and then rearranged in one specific order, similar to arranging cards
 # $ def insertion_Sort(array):
 # # pass through 1 to len(array)

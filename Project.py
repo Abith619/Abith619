@@ -1,7 +1,8 @@
 #                                                                                                Add Medicine
-from tkinter import * #import tkinter library
+import tkinter
+from tkinter import *
 import tkinter.messagebox as msg # to display message box
-import sqlite3 #to store data
+import sqlite3 #                to store data
 root = Tk()
 root.geometry(700*450+300+100)
 regimage = PhotoImage(file = "AddMedicine.png");
@@ -47,7 +48,6 @@ import home
 
 def back():
     root.destroy()
-import home
 ##################Top Frame ###########
 TopHeadingFrame = Frame(root,width=600,bd=1)
 TopHeadingFrame.pack(side=TOP)
