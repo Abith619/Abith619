@@ -191,6 +191,42 @@ print(ff.read())
 #                                                                                      Seek()
 # to set the offset position, of the reading and writing pointer
 ff.seek(0)
+#                                                                                                   Sub-String
+statement = "Coding in Python is fun."
+start_index = 0
+end_index = 7
+print("Original Text :",statement)
+length_statement = len(statement)
+print("Length of the string",statement,"is",length_statement)
+print("Character at",start_index,"th position :",statement[start_index])
+print("Character at",end_index,"th position :",statement[end_index])
+substring = statement[start_index:end_index]
+print("Substring :",substring)
+#                                     naïve approach  of  Sub-String
+statement = "Coding in Python is fun."
+length_statement = len(statement)
+for i in range(length_statement-1):
+    if(i<7):
+        print(statement[i], end="")
+#                                        End string as blank
+start_index = 4
+print("The substring of the statement starting from the \n", start_index,"th index position till the end :",
+statement[start_index:])
+#                                       Start index as blank
+statement = "Coding in Python is fun."
+end_index = 16
+print("The substring of the statement ending at from the \n",end_index-1,"th index position from the start :",
+statement[:end_index])
+#                                           Start and End index with step
+start_index = 0
+end_index = 16
+step = 2
+print("The substring of the statement starting from \n",start_index,"th index position and ending at the",end_index-1,
+"th index position with step",step," :",statement[start_index:end_index:step])
+#                                                                             Reversing a string using substring
+statement = "Coding in Python is fun."
+string_length = len(statement)
+print("The reverse of the string",statement,"\n using substring :",statement[string_length::-1])
 #                                                                                                                Built-in Functions
 # abs(x) for fetching the absolute value of x, bin() for getting the binary value,  reversed() for reversing the order
 # bool() for retrieving the boolean value of an object, list() for lists, len() to get the length of the value, 
@@ -1787,10 +1823,43 @@ emptyList.append('F.R.I.E.N.D.S')
 emptyList.append('Online Internship')
 emptyList.append('Kaashiv')
 print (emptyList)
-#                                  Accessing using Indexing of elements
+
+#                                                                                                   Naive method
+print("Program to demonstrate length of list using naive method:")
+print("\n")
+lst = [ 1, 5, 7, 5, 2 ]
+print ("The given list is as follows:")
+print(lst)
+print("\n")
+counter = 0
+for i in lst:
+    counter = counter + 1
+    print ("The Length of given list using naive method is as follows:")
+print(counter)
+#                                                     Implement Python                               List Length
+from operator import length_hint
+length_hint(iterable)
+length_lst = length_hint(lst)
+print(length_lst)
+
+import time
+start_time_naive = time.time()
+counter = 0
+for i in lst:
+    counter = counter + 1
+    end_time_naive = str(time.time() - start_time_naive)
+    start_time_len = time.time()
+    list_len = len(lst)
+    end_time_len = str(time.time() - start_time_len)
+    start_time_hint = time.time()
+    list_len_hint = length_hint(lst)
+    end_time_hint = str(time.time() - start_time_hint)
+    print ("Time taken by using naive method is : " + end_time_naive)
+    print ("Time taken by using len() method is : " + end_time_len)
+print ("Time taken by using length_hint() method is : " + end_time_hint)
+#                                                                                       Accessing using Indexing of elements
 fruitsList = ["Orange", "Mango", "Banana", "Cherry", "Blackberry", "Avocado", "Apple"]
 len(fruitsList)
-
 #                                                                                                                         $ Listing with operator
 lis = [1, 2, 3]
 lis1 = [4, 5, 6]
@@ -1811,6 +1880,100 @@ print(max(lis))
 #                                 using count() to count the number of occurrence       $ count()
 print("the number of occurrence of 3 after 3rd position is : ", end="")
 print(lis.count(3))
+#                                                                           Copy List
+a = [2,5,4,3,6,1] print(a)
+b = list(a)
+print(b)
+a[0] = 10
+print(a)
+#                                Shallow copy
+import copy
+a = [[1,2,3],[4,5,6],[7,8,9]]
+print(a)
+b = copy.copy(a)
+print(b)
+a.append(['a','b','c'])
+print(a)
+b = copy.copy(a)
+print(b)
+a[1][2] = 10
+print(a)
+b = copy.copy(a)
+print(b)
+#                                Deep Copy
+import copy
+a = [[1,2,3],[4,5,6],[7,8,9]]
+print(a)
+b = copy.deepcopy(a)
+print(b)
+a.append(['a','b','c'])
+print(a)
+b = copy.deepcopy(a)
+print(b)
+a[1][2] = 10
+print(a)
+b = copy.deepcopy(a)
+print(b)
+# #                                                                                                      Recursive Function
+# repetitively calling the same function until the loop reaches the desired value during the program execution by using the divide and conquer logic
+get_factorial(5) 5 * get_factorial(4)
+function get_factorial( n ):
+if n < 2:
+    return 1
+else:
+    return get_factorial(n -1)
+#                               Recursion Code for Factorial
+def get_recursive_factorial(n):
+    if n < 0:
+        return -1
+    elif n < 2: #base condition
+        return 1
+    else:
+        return n * get_recursive_factorial(n -1)
+#                                                Factorial problem using iteration (looping)
+def get_iterative_factorial(n):
+    if n < 0:
+        return -1
+    else:
+        fact = 1
+    for i in range( 1, n+1 ):
+        fact *= i
+        return fact
+print(get_recursive_factorial(6))
+print(get_iterative_factorial(6))
+#                                                                                                 $ with time calculation
+import time
+def get_recursive_factorial(n):
+    if n < 0:
+        return -1
+    elif n < 2:
+        return 1
+    else:
+        return n * get_recursive_factorial(n-1)
+def get_iterative_factorial(n):
+    if n < 0 :
+        return -1
+    else:
+        fact = 1
+    for i in range(1, n+1):
+        fact *= i
+        return fact
+start_time = time.time()
+get_recursive_factorial(100)
+print("Recursion--- %s seconds ---" % (time.time() - start_time))
+start_time = time.time()
+get_iterative_factorial(100)
+print("Iteration--- %s seconds ---" % (time.time() - start_time))
+
+sys.getrecursionlimit() # tells the limit for recursion
+#                                                                Copy Using Constructor
+a = [2,5,4,3,6,1] print(a)
+b = list(a)
+print(b)
+a[0] = 10
+print(a)
+b = list(a)
+print(b)
 #                                                             oops Concept
 #                                                                                                             class :
 # Template for Object
@@ -2848,15 +3011,25 @@ print(" The Roll No. (rollNo) studies (subject) subject".format(rollNo=10, subje
 #                                                                                                         with Spaces
 # $ message3 = '{:10.2f} and {:d}'.format(1.234234234, 12)
 # :10. => 10 Spaces before the decimal, 2f => 2 Spaces after the decimal
-# 
-
-#                                                                                                                              Range() function
+#                                                                                                              Range() function
 # Generates List of Numbers in syntax with endValue = -1
-# range(start, end, step) => startValues, endValues, step = increment Value
-# range(3, 10) => [3, 4, 5, 6, 7, 8, 9]
-# range(4, 10, 2) => [4, 6, 8]
-# range(end) => range(5) => [0, 1, 2, 3, 4]
-#
+range(start, end, step) #=> startValues, endValues, step = increment Value
+range(3, 10) #=> [3, 4, 5, 6, 7, 8, 9]
+range(4, 10, 2) #=> [4, 6, 8]
+range(end)# => range(5) => [0, 1, 2, 3, 4]
+for x in range(0,5):
+    for i in range(0,x):
+        print(i+1,end=' ')
+    print("")
+#                                     Finding Sum and Average of n Numbers
+a = int(input('Enter Number: ')) # i/p = 619
+sum = 0
+avg = 0
+for i in range(a):
+    sum+=i
+    avg = sum/a
+    print(sum)
+    print(avg) # o/p = 1238 Lines
 #                                                                                         Check File Types & Existence
 
 # os.path.exists(), os.path.isfile(), os.path.isdir(), os.path.getsize(), os.path.getmtime() = Returns TimeStamp
