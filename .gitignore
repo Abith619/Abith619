@@ -2,3 +2,5 @@
 books.xml
 *.lck
 foo.txt
+list.pkl
+dictionary.pkl

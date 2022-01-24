@@ -1,17 +1,18 @@
-from django import db
-import key as key
 import operator
-import numpy as np
-from tensorflow.python.types.distribute import Iterable
+import scipy
 import re
-import this
 from builtins import function
-from copy import copy
+import copy
 from hashlib import new
 from typing import FrozenSet
+import key as key
+import numpy as np
+import this
 from attr import field
+from django import db
 from sympy import SymmetricDifference, intersection, print_python
-#                                                                          kwargs(**)
+from tensorflow.python.types.distribute import Iterable
+#                                                                                        kwargs(**)
 print("Program to demonstrate **kwargs for variable number of keywords:")
 print("\n")
 def concatenate(**kwargs):
@@ -40,8 +41,77 @@ def func(a, b, c):
     print(a, b, c)
 a = {'a': "one", 'b': "two", 'c': "three" }
 func(**a)
+#                                                                                                             BeautifulSoup
+# navigation, modifying, and searching of necessary files                    HTML and XML 
+# used in tree parsing using your favorite parser,                                           web scraping
+# Accessing the HTML Through a Webpage
+import requests
+URL = "www.kaashivinfotech.com/internship-in-chennai/"
+r = requests.get(URL)
+print(r.content)
+#                                 Parsing of the Content HTML
+import requests
+from bs4 import BeautifulSoup
+URL = "https://www.kaashivinfotech.com/internship-in-chennai/"
+r = requests.get(URL)
+soup = BeautifulSoup(r.content, 'html5lib' )
+print = (soup.prettify())
+# A Simple Quick Scrape:
+import requests
+from bs4 import BeautifulSoup
+vgm_url = 'https://www.vgmusic.com/music/console/nintendo/nes/'
+html_text = requests.get(vgm_url).text
+soup = BeautifulSoup(html_text,'html.parser')
+soup.findall() # is used in adventures of web scraping
+# filter out all the MIDI files and understand how to download them
+import re
+import requests
+from bs4 import BeautifulSoup
+vgm_url = 'https://www.vgmusic.com/music/console/nintendo/nes/'
+html_text = requests.get(vgm_url).text
+soup = BeautifulSoup(html_text,'html.parser')
+if __name__ == '__main__':
+    attrs = {
+        'href' : re.compile(r'\.mid$')
+        }
+tracks = soup.find_all('a', attrs=attrs, string=re.compile(r'^((?!\().)*$'))
+count = 0
+for track in tracks:
+    print(track)
+count += 1
+print(len(tracks))
+# donwload_track and calling the function to the above helps us to download the files through iterating all the MIDI files
+import re
+import requests
+from bs4 import BeautifulSoup
+vgm_url = 'https://www.vgmusic.com/music/console/nintendo/nes/'
+html_text = requests.get(vgm_url).text
+soup = BeautifulSoup(html_text,'html.parser')
+def download_track(count, track_element):
+    #                            Get the title of the track from the HTML element
+    track_title = track_element.text.strip().replace('/','-')
+    download_url = '{}{}'.format(vgm_url, track_element['href'])
+    file_name = '{}_{}.mid'.format(count,track_title)
+    #                                                    Download the track
+    r = requests.get(download_url,allow_redirects=True)
+    with open(file_name, 'wb') as f:
+        f.write(r.content)
+# Print to the console to keep track of how the scraping is coming along.
+    print('Downloaded: {}'.format(track_title, download_url))
+if __name__ == '__main__':
+    attrs = {
+        'href' : re.compile(r'\.mid$')
+        }
+tracks = soup.find_all('a', attrs=attrs, string=re.compile(r'^((?!\().)*$'))
+count = 0
+for track in tracks:
+    print(track)
+count += 1
+print(len(tracks))
 #                                                                                                  Contextlib Module
 from contextlib import contextmanager
+
+
 @contextmanager
 def open_file(path, mode):
     the_file = open(path, mode)
@@ -59,6 +129,8 @@ contents = files.read()
 print(contents)
 #                                        Nested Implementation
 import contextlib
+
+
 @contextlib.contextmanager
 def multicontext(ctxt):
     print ('entering contents:', ctxt)
@@ -68,19 +140,23 @@ def multicontext(ctxt):
         print('inside with statement:', X, Y, Z)
 #                                                   Class-based approach
 from contextlib import ContextDecorator
+
+
 class htmlparagraph(ContextDecorator):
-def __enter__(self):
-    print('')
-    return self
-def __exit__(self, *exc):
-    print('')
-    return False
+    def __enter__(self):
+        print('')
+        return self
+    def __exit__(self, *exc):
+        print('')
+        return False
 @htmlparagraph()
 def emit_html():
     print('Here is some non-HTML ')
     emit_html()
 #                                                   Closing open handles
 import contextlib
+
+
 class contxt(object):
     def __init__(self):
         print ('inside the init() method')
@@ -96,11 +172,100 @@ try:
         raise RuntimeError('There is a runtime error')
 except Exception, err:
     print ('  Had an error:', err)
+#                                                                 # creating username from user's first and last name
+# list containing users name
+names = ['john garner',  'karen bag', 'neil amster', 'jason smith', 'richard king', 'david klok'] # empty list which will contain usernames
+username = [] # defining function for creating username
+def uname(names):
+    for i in names:
+        full_name=i.split()  # split the name on occurrence of whitespace chars
+        fname = full_name[0]
+        lname = full_name[1] # concatenating first 3 chars of first name with first 3 chars of last name to create username
+    uname = fname[:3]+lname[:3]     # extracting substrings from fname and lname
+    username.append(uname)
+# calling function uname() taking list “names” as input argument
+    uname(names)
+# printing name of the user along with username
+print("Name                Username")
+for name,uname in zip(names, username):
+    print(name, '------->', uname)
+#                                                                                      Program to check eligibility to vote
+valid_voters = [] # defining function to test if entered age is above 18 or not
+def eligible_vote(i):
+    for age in i:
+        if age >= 18 :
+            valid_voters.append(age)            # Calling function
+            eligible_vote((12, 21, 18, 23, 9, 55, 82, 69, 14, 32, 10, 55)) # Printing results
+print("these are the eligible voters")
+for voter in valid_voters:
+    print("person with age",voter,"is a valid one")
+# Function to test a person age > 18 or not --> first argument for                                           filter()
+def eligibility(age):
+    if age >= 18:
+        return True
+    else:
+        return False
+    # List of all voters --> second argument for filter()
+all_voters = [12, 21, 18, 23, 9, 55, 82, 69, 14, 32, 10, 55]
+eligible_voters =filter(eligibility , all_voters)
+print("these are the eligible voters")
+for voter in eligible_voters:
+    print("age",voter,"is a valid one")
+#                                        List of all voters --> second argument for filter()
+all_voters = [12, 21, 18, 23, 9, 55, 82, 69, 14, 32, 10, 55]
+eligible_voters =filter(lambda age : age >=18 , all_voters)
+print("these are the eligible voters")
+for voter in eligible_voters:
+    print("age",voter,"is a valid one")
+#                                             filter out vowels from the input list of alphabets.
+count_vowel = 0  # to track no. of vowels
+count_consonant = 0 # no. of consonants
+alphabets = ['a', 'b', 'U', 'd', 'e', 'i', 'j', 'o', 'x', 'A', 'Z', 't'] # Function to filter out vowels
+def filterVowels(alpha):
+    vowels = ['a', 'e', 'i', 'o', 'u']
+    if(alpha.lower() in vowels): # lower() is used to lowercase elements
+        return True
+    else:
+        return False
+filter_vowel = filter(filterVowels, alphabets)
+print('The filtered vowels are:')
+for vowel in filter_vowel:
+    count_vowel += 1
+print(vowel)
+print("total number of alphabets in the list :",len(alphabets))
+print("total number of vowels in the list :",count_vowel)
+print("total number of consonants in the list :",len(alphabets) - count_vowel)
+#                                                            function to check divisibility by 6
+def div_six(x):
+    if x % 6 == 0:
+        return True
+    else :
+        return False
+num_list = [10, 120, 30, 50, 90, 180, 72, 24, 88, 112]
+result1 = filter(div_six, num_list)
+print("numbers divisbile by 6:")
+for num in result1:
+    print(num)
+#                     without the filter function
+# a random list
+input_list = [(), 100, 7, 'a', 0, False, True, {}, '0', []]
+filtered_list = filter(None, input_list)
+print('The filtered elements are:')
+for item in filtered_list:
+    print(item)
+#                                                    using lambda function
+result2 = filter(lambda x : x % 6 == 0, num_list)
+print("using lambda : numbers divible by 6 :")
+for num in result2:
+    print(num)
+
 #                                                                                                         If Main
 # Execution Modes = Directly executing the Python file.
 # Importing an external Python file as a package and then using the function from that file
 # assign “__main__” to __name__
 import numpy as np
+
+
 def get_square(number):
     print("The square of {} is :".format(number))
     square = np.square(number)
@@ -277,6 +442,40 @@ for i in name:
 		break
 print (i)
 """
+#                                                                                               argparse
+import argparse
+parser = argparse.ArgumentParser(description='Understand functioning')
+parser.add_argument('-x', action="store_true", default=False)
+parser.add_argument('-y', action="store", dest="y")
+parser.add_argument('-z', action="store", dest="z", type=int)
+print (parser.parse_args(['-x', '-yval', '-z', '3']))
+
+parser = argparse.ArgumentParser(description='How argparse() deals with Long option names')
+parser.add_argument('--noargument', action="store_true", default=False)
+parser.add_argument('--withargument', action="store", dest="witharg")
+parser.add_argument('--withargument2', action="store", dest="witharg2", type=int)
+print (parser.parse_args([ '--noargument', '--withargument', 'val', '--withargument2=3' ]))
+#                                                                                                Lambda()
+# Anonymous functions are tagged as lambda functions
+a = (lambda z: z+5)(2)
+print(a)
+Anonymous_add_function = lambda x, y : x + y
+print(Anonymous_add_function(2, 3))
+#                                   Lambda with python map() function
+map(lambda x : x*2, [1, 2, 3, 4])
+dict_a = [{'name': 'python3', 'points': 9}, {'name': 'java', 'points': 7}]
+list_a = [1, 2, 3]
+list_b = [11, 21, 31]
+a=map(lambda x : x['name'], dict_a) 
+# Output: ['python3', 'java'] b=map(lambda x : x['points']*10,  dict_a) # Output: [90, 70] c=map(lambda x : x['name'] == "python3", dict_a) # Output: [True, False] d=map(lambda x, y: x + y, list_a, list_b) # Output: [12, 23, 34] print(a,b,c,d)
+listing_a = [1, 3, 2, 4, 1]
+dictionary_a = [{'name': 'python3', 'points': 11}, {'name': 'java', 'points': 9}]
+a = filter(lambda x : x['name'] == 'python', dictionary_a)
+print(a)
+b = filter_obj = filter(lambda x: x % 2 == 0, listing_a) # filter object
+print(b)
+even_num = list(filter_obj) # Converts the filer obj to a list
+print(even_num)
 #                                                                                              format() Function
 x = format(255, 'b') # ‘b’ represents binary form
 print(x)
@@ -313,6 +512,348 @@ print("{p.name}'s company ID is: {p.id}".format(p=Employee())) # format name and
 #                                                                Truncate String using the format()
 print("{:.5}".format("Singapore"))
 print("{:^7.3}".format("Singapore"))# truncating strings to 3 letters, and then padding & center-aligned
+#                                                                                                            Extend()
+import array as arr
+arr1 = arr.array('i', [1,2,3,4])
+arr2 = arr.array('i', [5,6,7])
+arr1.extend(arr2)
+print(arr1)
+a = [1,2,3,4,5]
+b = [6,7]
+a.extend(b)
+print(a)
+a = [2010,2011,2012]
+b = ['john','doe',2013]
+a.extend(b)
+print(a)
+a = [2010,2011,2012]
+a.extend("John")
+print(a)
+#                                                                                                             super()
+class ParentClass(object):
+    def __init__(self):
+        print("This is Base class")
+        pass
+class ChildClass(ParentClass):
+    def __init__(self):
+        ParentClass.__init__(self)
+c1 = ChildClass()
+# super() in                           multiple inheritances
+class ParentClass1(object):
+    def __init__(self):
+        print("This is Base class 1")
+pass
+class ParentClass2(object):
+    def __init__(self):
+        print("This is Base class 2")
+pass
+class ChildClass(ParentClass1,ParentClass2):
+    def __init__(self):
+        super(ChildClass, self).__init__()
+c1 = ChildClass()
+# parent and child class to attributes and methods
+class ParentClass:
+    def __init__(self):
+        self.parent_attribute = 'I am a parent'
+    def parent_method(self):
+        print('Good old days')
+class ChildClass(ParentClass):
+    def __init__(self):
+        super().__init__()
+        self.child_attribute = 'I am a child'
+    def child_method(self):
+        print('New is awesom')
+# Create instance of child class i.e. "ChildClass"
+child = ChildClass()
+# Print attributes and methods of child class
+print(child.child_attribute)
+print(child.parent_attribute)
+child.parent_method()
+child.child_method()
+#                                                        Multiple resolution orders
+class BB:
+    def check(self):
+        print('This is b')
+class CC:
+    def check(self):
+        print('This is c')
+class DD(BB, CC):
+    def check(self):
+        print('This is d')
+d_inst = DD()
+d_inst.check()
+#                                                                                                  PEP8-Naming Conventions
+class ClassName: #Class naming rule
+    C = 1 #Constat naming rule
+    the_variable = 2020; # variable naming rule
+    print("The constant value is:", C)
+    def the_method(self): # method naming rule
+        print("I'm inside class ")
+    def insideclass(self):
+        print("The Variable: ",ClassName.the_variable)
+        self.the_method()
+n = ClassName()
+n.insideclass()
+#                                                                                                           Return Value
+#                                 Function to convert the temperature from Celcius to Fahrenheit
+def temp_converter (Temp_Celsius):
+    return(Temp_Celsius* 9 / 5) + 32
+#                                   Main from where the function "temp_converter" is called
+for temp_Celsius in (20, 25, 30, 40):
+    print(temp_Celsius, ": ", temp_converter (temp_Celsius))
+def square(x,y):
+    return x*x, y*y
+t = square(2,3)
+print(t)
+def min_val(x,y):
+    if x < y :
+        return x
+    else :
+        return y
+print( min_val(5,8) )
+print( min_val(52,8) )
+#                                                                                       yield Statement
+def yield_function():
+    yield 10
+    yield 20
+    yield 30
+for y in yield_function():
+    print(y)
+# 
+def yield_func():
+    n = range(3)
+    for i in n:
+        yield i*i
+gen = yield_func()
+print(gen)
+for i in gen:
+    print(i)
+# generating generator objects and printing the return values using a loop
+def gen_func():
+    x = 0
+    while x < 5:
+        yield x
+    x += 1
+print("Simple function call without using loop:\n")
+print(gen_func())
+print("Below is with using a loop:")
+for y in gen_func():
+    print(y)
+
+def yield_func(l):
+    total = 0
+    for n in l:
+        yield total
+    total += n
+new_lst = yield_func([10,20,30])
+print(next(new_lst))
+print(next(new_lst))
+print(next(new_lst))
+#                                                                                                                Pickle
+import pickle
+pickle.dump()
+pickle.load()
+#                                           number of input data to take
+n = int(input("Enter the number of items "))
+data = []  # input list
+#                           adding items to the list
+for d in range(n):
+    item = input("Enter data :" + str(d+1)+': ')
+data.append((item))
+#                             open a file where data need to be stored
+file = open('list.pkl', 'wb')
+#                           dump information to the file
+pickle.dump(data, file)
+#                       close the file
+file.close()
+print('\n')
+print('<-------------------Un-Pickling----------------------->')
+#                                 open the file where data is dumped
+fileo = open('list.pkl', 'rb')
+#                              loading data
+datao = pickle.load(fileo)
+#                         close the file
+fileo.close()
+#             showing pickled data
+print("showing data pickled")
+for i in datao:
+    print(i)
+#                                    creating python object --> dictionary
+dictionary = {1: 'monday', 2: 'tuesday', 3: 'wednesday', 4: 'thursday', 5: 'friday', 6: 'saturday', 7: 'sunday'}
+print('<--------------Pickling----------------->')
+#                                  open a file where to store dictionary
+print("dictionary to be stored:")
+print(dictionary)
+file = open('dictionary.pkl', 'wb')
+pickle.dump(dictionary, file) # storing dictionary into file
+#               closing file
+file.close()
+print('\n')
+print('<---------------Un-pickling-------------->')
+fileo = open('dictionary.pkl', 'rb')
+dicto = pickle.load(fileo)
+fileo.close()
+print("displaying dictionary data")
+for key, item in dicto.items():
+    print(key, '-->', item)
+#                                    pickling of python functions
+# creating python object --> function()
+def add(a, b):
+    return (a+b)
+#                opening file to store the add()
+file = open('function.pkl', 'wb')
+pickle.dump(add, file)
+#                      closing file
+file.close()
+#                                   unpickling
+fileo = open('function.pkl', 'rb')
+addition = pickle.load(fileo)
+fileo.close()
+#                                    calling function
+x = int(input("Enter first number: "))
+y = int(input("Enter second number: "))
+print("Sum of numbers entered is :", addition(x, y))
+#                                                                                                   Filter() Function
+#                                     Filtering values above average
+import statistics
+data = [1,3,5,7,11,17] #The short list of data is collected from a nearby fuel sensor.
+avg= statistics.mean (data)
+new =filter(lambda x : x > avg, data)
+print(new)
+new =list(filter(lambda x: x>avg, data))
+print(new)
+#                                      filters out odd and even numbers.
+Fibnocci = [0,1,1,2,3,5,8,12,21,34,55]
+odd_numbers = list (filter (lambda x : x %2, Fibnocci))
+print (odd_numbers)
+even_numbers = list (filter(lambda x : x%2 == 0, Fibnocci))
+print(even_numbers)
+# when the                                           None value is passing the parameter
+# filters out data based on whether the element is True or False and returns accordingly
+New_list = [0, 1, 'a', 'B', False, True, '0', '4']
+filtered_list = filter (None, New_list)
+print('Filtered elements')
+for element in filtered_list:
+    print(element)
+#                                                                                                                max()
+#Program to illustrate max() functionality, when key is set to some function
+# Input --> list of strings
+inp = ['John', 'Rob', 'Karen', 'Diana', 'Emanual', 'Alexnder', 'Tina']
+print("input -->", inp)
+def length(item):
+    return len(item)
+# Key function -->                       len()
+print("Using user defined function")
+print("max: ", max(inp, key = length))
+# This can be implemented using built-in function                len()
+print("Using built-in function")
+print("max: ", max(inp, key = len))
+#                               Using lambda function
+print("Using lambda function")
+print("max: ", max(inp, key = lambda item : len(item)))
+# Input -->                                          multiple iterables
+x = [10, 20, 30] y = [5, 10, 15, 20, 25]
+print("max among x and y :", max(x, y, key = len))
+print("max among x and y :", max(x, y))
+
+def sum_digits(num):
+    sum = 0
+    while(num > 0):
+        rem = num % 10
+        sum = sum + rem
+        num = num
+        return sum
+# Input --> list of                                         positive integers
+inp = [120, 20, 42, 212, 802, 139, 175, 802, 468]
+print("Input List = ", inp)
+print("Maximum Value in the List = ", max(inp, key = sum_digits))
+inp = []
+print("input:", inp)
+print(max(inp, default=0))
+#                                                                                                   sleep()
+import time
+print("Simple program to demonstrate sleep function:")
+print("The Start time is as follows : ")
+print(time.ctime())
+time.sleep( 5 )
+print("The End time is as follows:" )
+print(time.ctime())
+# A dramatic way of printing the given message or String
+import time
+print("Program to demonstrate sleep() function used for printing words letter by letter:")
+strn = "kaashiv"
+print("The given word is as follows:")
+print(strn)
+for i in range(0, len(strn)):
+    print(strn[i], end ="")
+time.sleep(0.3)
+# for multithreading as the sleep() function is used to stop the current thread’s execution
+import time
+from threading import Thread
+class Worker(Thread):
+    def run(self):
+        for x in range(0, 12):
+            print(x)
+time.sleep(1)
+class Waiter(Thread):
+    def run(self):
+        for x in range(100, 103):
+            print(x)
+time.sleep(5)
+print("Starting Worker Thread will start from :")
+Worker().start()
+print("Starting Waiter Thread will stop at:")
+Waiter().start()
+print("Done")
+#                                                                                               Power Function
+base = int(input("Enter base:"))
+power = int(input("Enter power:"))
+n = 1
+for i in range(1,power+1):
+    n=base*n
+print ("The value of",base,"**",power," is",n)
+result = pow(base,power)
+print(math.pow(base,power))
+print(np.power(base,power))
+print(scipy.power(base,power))
+#                                                                                                                  Zip Function
+name = [ "Hemanth", "Anjum", "Ramya", "Saira" ]
+id_no = [ 111, 92, 137, 103 ]
+score = [ 40, 50, 60, 70 ] # Mapping values using zip()
+mapping = zip(name, id_no, score)
+#                      A set of values print after conversion
+mapping = set(mapping)
+#                     resultant values are printed
+print ("The zipped values are : ",end="")
+print (mapping)
+
+coordinate_plane = ['x', 'y', 'z']
+val = [13, 14, 15]
+res = zip(coordinate_plane, val)
+res_list = list(res)
+print(res_list)
+c, v =  zip(*res_list)
+print('c =', c)
+print('v =', v)
+
+texts   = ("Baker Street", "Golden Ratio", "Room")
+numbers = (221.5,           1.61803,        237)
+result  = zip(texts, numbers)
+print(result)
+result_tuple = tuple(result)
+print("Zipped Tuples: ",result_tuple)
+print("Äddress 1: ",result_tuple[0][0], result_tuple[0][1])
+t, n = zip(*result_tuple)
+print("Texts: ",t)
+print("Numbers: ",n)
+#                                                                  Unzipping Values
+numList = [1558, 1884, 1111]
+strList = ['one', 'two', 'three']
+A_output = zip(numList, strList)
+print(A_output)
+a, b = zip(*A_output )
+print('numList = ', a)
+print('strlist = ', b)
 #                                                                                                                  File Methods
 """r: This mode opens a file in read-only form
 w: This mode opens a file in the write-only form
@@ -525,9 +1066,45 @@ for i in range(1, 10,2):
 tupleObj=(3,4,6,7,9)
 for i in reversed(tupleObj):
     print(i,end=' ')
+#                                                                  Absolute Value
+def absolute_value(number):
+    if(number<0):
+        abs_num = -number
+    else:
+        abs_num = number
+        return abs_num
+print("The absolute value of 1 is {}".format(absolute_value(1)))
+#                                                                Passing zero value
+print("The absolute value of 0 is {}".format(absolute_value(0)))
+#                                                                                                        Abs()
+print("The absolute value of -1 is {}".format(abs(-1)))
+print("The absolute value of -4.2 is {}".format(abs(-4.2)))
+print("The absolute value of 3+4j is {}".format(abs(3+4j)))
+bin_num = 0b0101010011 #               to find the absolute value of a binary number
+print("The absolute value is {}".format(abs(bin_num)))
+oct_num = 0o75 #                       to find the absolute value of a octal numbe
+print("The absolute value of is {}".format(abs(oct_num)))
+hex_num = 0xFFC6F3 #                   to find the absolute value of a hexadecimal number
+print("The absolute value of is {}".format(abs(hex_num)))
+#                                                                                                           count()
+# Python program to count the number of times an object occurs in the list of integers
+list1 = [ 1 , 1 , 1 , 2 , 3 , 2 , 1 , 23 , 43 , 54 , 4 , 5 ,65 , 67 , 76 , 54 , 34 , 2 , 4 ,5 , 6 , 6 , 6, 7 , 8 , 9]
+# Count() function as an attribute to count the number of times the numeral 6 occours in the list1
+print(list1.count(6))
+# number of times an object occurs in the list of chars
+list1 = [ 'e' , 'r' , 't' , 'e' , 'r' , 't' ,  'e' , 'r' , 't' ,  'e' , 'r' , 't' , 'e' , 'r' , 't' , 'e' , 'r' , 't' , 'e' ,
+'r' , 't' , 'e' , 'r' , 't' , 'e' , 'r' , 't' , 'e' , 'r' , 't' , 'e' , 'r' , 't' , 'e' , 'r' , 't' , 'e' , 'r' , 't' ,
+'e' , 'r' , 't' ,'e' , 'r' , 't' , 'e' , 'r' , 't' , 'e' , 'r' , 't' , 'e' , 'r' , 't'  ] 
+# Count() function as an attribute to count the number of times two elements occours in the list1
+print(list1.count('e'))
+print(list1.count('z'))
+# count the number of times an object occurs in the list of string
+list1 = [ 'edu' , 'cba' ,  'learn' , 'ca' , 'na'  ] # Count() function as an attribute to count the number of times two elements occours in the list1
+print(list1.count('edu'))
 #                                                                                                                   CSV File
 csv.writer()
 import csv
+
 print("Program to demonstrate csv.writer() function")
 print("\n")
 p_details =[('course','fees','place'),('Python',22000,'Pune'),('Android',11000,'Assam'),('Java',30000,'Delhi')]
@@ -539,6 +1116,7 @@ for p in p_details:
     c.close()
 # DictReader = dictionary object is created for mapping the data to read it to the dictionary
 import csv
+
 print("Program to demonstrate DictReader() class")
 print("\n")
 with open('company.csv') as c:
@@ -547,6 +1125,7 @@ for row in r:
     print(row['Name'], row['Age'])
 #                                                        DictWriter
 import csv
+
 print("Program to demonstarteDictWriter() class")
 print("\n")
 with open('Game.csv', 'w') as file:
@@ -558,6 +1137,7 @@ writer.writerow({'Game_name': 'Football', 'No_of_players': 11})
 writer.writerow({'Game_name': 'Hockey', 'No_of_players': 11})
 #                                                                 to set the directory
 import csv
+
 with open('Emp_Info.csv', 'r') as file:
     reader = csv.reader(file)
 for each_row in reader:
@@ -579,6 +1159,7 @@ reader = csv.reader(csv_file, dialect='mydialect')
 #                                                                                         Writer
 csv.writer(csvfile, dialect='excel', **fmtparams)
 import csv
+
 with open('start.csv', 'w') as csvfile:
     startwriter = csv.writer(csvfile, delimiter=' ',
 quotechar='|', quoting=csv.QUOTE_MINIMAL)
@@ -586,6 +1167,7 @@ startwriter.writerow(['Start'] * 2 + ['working example of csv write'])
 startwriter.writerow(['starting', 'this is an example', 'just a simple working example'])
 #                                     open an empty csv file, then write the data
 import csv
+
 row_list = [
 ["SN", "Name", "Quotes"],
 [1, "Linus Torvalds", "Talk is cheap. Show me the code."],
@@ -596,6 +1178,7 @@ with open('quotes.csv', 'w') as file:
 writer.writerows(row_list)
 # 
 import csv
+
 newdict=[{'branch': 'ME', 'cgpa': '9.4', 'student_name': 'Sulaksh', 'year': '2'},
 {'branch': 'COE', 'cgpa': '8.9', 'student_name': 'Amit', 'year': '2'},
 {'branch': 'IF', 'cgpa': '8.3', 'student_name': 'Rutuja', 'year': '2'},
@@ -608,6 +1191,7 @@ writer.writeheader()
 writer.writerows(newdict)
 #                                                                                             user-defined functions
 import math
+
 a = 2.3
 print ("The floor of 2.3 is : "+ math.floor(a))
 # 
@@ -724,6 +1308,7 @@ class Example():
 		print (self.x)
 #                                                                                                              Deleting a file
 import os
+
 if os.path.exists("pythonfile2.txt"):
     os.remove("pythonfile2.txt")
 else:
@@ -878,6 +1463,7 @@ for i in range(m):
 # to convert the values in radians to degrees and degrees to radians = degrees(value), radians(value)
 #                                                            sin(x) Function
 import math
+
 x = 1
 print(math.sin(x))
 print(math.cos(x))
@@ -1006,6 +1592,7 @@ print (truncate)
 # specify a set of rules that can fetch a particular group and validate a string against that rule
 # contain e-mail addresses, phone numbers or any particular pattern to match
 import re
+
 word = "He is very smart"
 x =re.search("^He.*smart$",word)
 print(x)
@@ -1028,12 +1615,14 @@ $ = It represents the ending character.
 \S = It returns a match when there are no white spaces in the string."""
 #                                                                               findall() function
 import re
+
 word = "Abith is 22 years old and his mobile number last three-digit is 703"
 rgex ='\d+'
 x =re.findall(rgex,word) # find numbers
 print(x)
 #                                                                               search() function
 import re
+
 word = "Abith is 22 years old"
 rgex ='^Abith'
 x =re.search(rgex,word)
@@ -1043,6 +1632,7 @@ x1 = re.search(regex1,word)
 print(x1)
 #                                                                              Split() function
 import re
+
 word = "Raju is 22 years old"
 rgex ='\s'
 x =re.split(rgex,word) # 
@@ -1050,6 +1640,7 @@ print(x)
 #                                                                               sub() function
 # replaces the matches with the string or character, replace the white space with ‘&’ in our string
 import re
+
 word = "Raju is 22 years old"
 rgex ='\s'
 x =re.sub(rgex,'&',word)
@@ -1062,6 +1653,7 @@ print(x)
 ^ =  to match the starting of the line
 $ = to match the end of the line"""
 import re
+
 print("The simple program for sub() method for replacing:")
 str = "kaashiv#!!Training#!!Institute"
 print("The given string that needs to be replaced with given pattern is as follows:")
@@ -1074,6 +1666,7 @@ replc: This parameter is for replacing the part of the string that is specified.
 string: This provides a string that needs to be replaced with a given pattern
 max: This is used to replace all the occurrences until the max number is provided"""
 import re
+
 print("The below program is used to demonstrate sub() method:")
 phonenum = "2004-959-559 # This is Phone Number"
 print("The given string is as follows:")
@@ -1237,6 +1830,70 @@ number1 = "123456789"
 number2 = reverse(number1)
 print ("The given number is : " + number1)
 print ("Reverse of the given number is : " + number2)
+#                                                                                                         Slice String
+string = "PYTHON TUTORIAL"
+print("Input string :",string)
+#                                   Positive indexing
+print("First six characters :")
+print(string[slice(6)])
+print("8th char to end of string :")
+print(string[slice(7, len(string))])
+#                                      Extracting alternate odd chars using step parameter
+print("First char to end of string skipping one character")
+print(string[slice(0,len(string),2)])
+#                                       Extracting alternate even chars using step parameter
+print("Second char to end of string skipping one character")
+print(string[slice(1, len(string), 2)])
+#                                          Negative indexing
+print(string[slice(-4,-1)])
+print(string[slice(-8)])
+#                           Stop parameter should be greater than start parameter
+print("Nothing will be printed :",string[slice(-4,0)])
+print("Nothing will be printed :",string[slice(-1,-1)])
+print("Nothing will be printed :",string[slice(-2,-4)])
+
+string[slice(7, len(string))] 
+string[slice(0,len(string),2)]
+string[slice(1,len(string),2)]
+string[slice(-4,-1)]
+# Python                 slicing          using indexing
+string = "PYTHON TUTORIAL"
+print("Input string :",string)
+print("default start/stop/step parameters")
+print(string[::])
+#                        Positive indexing
+print("First six characters :")
+print(string[:6])
+print("8th char to end of string :")
+print(string[7:])
+#                                         Extracting alternate odd chars using step parameter
+print("First char to end of string skipping one character")
+print(string[::2])
+#                                         Extracting alternate even chars using step parameter
+print("Second char to end of string skipping one character")
+print(string[1::2])
+#                      Negative indexing
+print("last 8 characters")
+print(string[-8:])
+print("string reversal")
+print(string[::-1])
+#                                        Stop parameter should be greater than start parameter
+print("Nothing will be printed :",string[3:1])
+print("Nothing will be printed :",string[-1:-8:1])
+#                                                                                             String Replace
+str = "Let's go to a place, from where we can go to another. But where exactly do we want to go"
+# Prints the string by replacing go by GO
+print(str.replace("go", "#GO"))
+# Prints the string by replacing only 2 occurrence of go
+print(str.replace("go", "#GO", 2))
+# Removing junk charachters from DF using string replace function
+DF = [['Last name, first name 1'],['Last name, first name 2'],['Last name, first name 3'],['Last name, first name 4'],['Last name, first name 5'],['Last name, first name 6']]
+for i in DF:
+    for j in i:
+        print (j.replace(',' , ''))
+junkch = [['/'],['$'],['&']]
+str = 'abcdef $ gh@#'
+str.replace(junkch,'')
 #                                                                                                              eval()
 # run the python programming code (which is actually passed as the argument)
 # evaluates the “String” like the Python Code expression & returns as an integer
@@ -1269,6 +1926,7 @@ else:
     print('x is not prime number')
 #                                          Using For Loop
 from math import *
+
 for lm in range(1, 3):
     func1 = input("Enter the Math Function which are mentioned below to Evaluate.\nFunctions Allowed are: 1. square_root(x) and 2. power(x,y):\n")
     try:
@@ -1281,6 +1939,7 @@ print('Now it is Done')
 # count of how mant times repeated
 # dictionary subclass used for counting the objects that are hashable, includes zero and negatives values
 from collections import Counter
+
 c = Counter()
 print(c)
 c = Counter('sample string')
@@ -1291,11 +1950,13 @@ c = Counter(a=4, b=2, c=0, d=-2)
 sorted(c.elements())
 #                                       Character count
 from collections import Counter
+
 lst = ['a', 'b', 'c', 'b', 'a', 'b']
 c = Counter(lst)
 print(c)
 
 from collections import Counter
+
 counter = Counter(a=3, b=2, c=4)
 print(counter)
 print(list(counter.elements()))     # o/p = 
@@ -1321,6 +1982,7 @@ else:
 print(str.__contains__("Kaashiv Training Institute", "Abith Raj"))
 
 import operator
+
 print("Python program to demonstrate contains() function of operator module ")
 print("\n")
 str1 = "Kaashiv is best in programming courses."
@@ -1330,6 +1992,7 @@ else :
     print ("The given substring is not present in the string.")
 # created a series using pandas object pd,
 import pandas as pd
+
 print("Program to demonstrate contains() function provided by pandas")
 print("\n")
 sr = pd.Series(['Kaashiv', 'Training', 'Institue', 'Chennai', 'India'])
@@ -1495,6 +2158,7 @@ E	         Returns 0.718282
 nan	         Not a number
 inf	         Infinite"""
 import math
+
 print( "CONSTANTS IN PYTHON")
 print(" PI value : " , math.pi)
 print(" E value : " , math.e)
@@ -1512,6 +2176,7 @@ log10(x)	Base10 logarithm of x value is returned
 pow(x, y)	Returns x raised to the power y
 sqrt(x)	Square root value for x is returned"""
 import math
+
 #              variable declaration and assignation
 Number_1 = 1
 Number_2 = 2
@@ -1557,6 +2222,7 @@ isnan(x)	Returns True if x is a NaN
 gcd(x, y)	for x and y value, the most greates common divisor value is returned
 the remainder(x, y)	Find the remainder after dividing x by y."""
 import math
+
 #                    variable declaration and assignation
 Number_1 = 10.5
 Number_2 = 20
@@ -1608,6 +2274,7 @@ tan(x)	tangent value of x in radians need to be determined
 degrees(x)	radian to degree conversion
 radian(x)	the degree to radian conversion"""
 import math
+
 print(" \n ")
 print("   TRIGNOMETRIC FUNCTION USAGE                        " )
 print(" \n ")
@@ -1724,7 +2391,9 @@ def f():                  # Global scope
     print("s")
 f()
 # data can be customized to passing into a function
-from functools import partial                                 # partial parameters are added dynamically
+from functools import partial  # partial parameters are added dynamically
+
+
 def fun(f,a, b, c):
     return f*1000 + a *100 + b*10 + c
 g = partial(fun,a=6,b=1,c=9)
@@ -1749,6 +2418,7 @@ fun(**d)                                         # to get the value of variables
 #                                                                  $ Random number generator
 # choice()
 import random
+
 sequence=[1,4,6,10]
 random.choice(sequence)
 random.random()
@@ -1758,6 +2428,7 @@ random.randrange(10,20,2)
 #                                                                                                            shuffle()
 # random.shuffle(x,random)
 import random
+
 num_list =  [7,8,10,12]
 print(“List before using shuffle: “,num_list)
 random.shuffle(num_list)
@@ -1766,8 +2437,8 @@ print(“List after using shuffle method: “, num_list)
 random.uniform(3,5)
 #                                                                                                $     generate integers
 import random
-from random import randint()
-from random import seed
+from random import randint, seed
+
 seed(619)
 within 0 to 5
 for _ in range(5):
@@ -1893,6 +2564,7 @@ print(pattern.findall("this is abith"))
 # """
 #                                                                                                                                Operator
 import operator
+
 # print(any([False,False,False,False])) o/p => False
 # print(any([False,True,False,False])) o/p => True
 # print(5.0/2) o/p => 2.5
@@ -2010,11 +2682,13 @@ for i in lst:
 print(counter)
 #                                                     Implement Python                               List Length
 from operator import length_hint
+
 length_hint(iterable)
 length_lst = length_hint(lst)
 print(length_lst)
 
 import time
+
 start_time_naive = time.time()
 counter = 0
 for i in lst:
@@ -2060,6 +2734,7 @@ a[0] = 10
 print(a)
 #                                Shallow copy
 import copy
+
 a = [[1,2,3],[4,5,6],[7,8,9]]
 print(a)
 b = copy.copy(a)
@@ -2074,6 +2749,7 @@ b = copy.copy(a)
 print(b)
 #                                Deep Copy
 import copy
+
 a = [[1,2,3],[4,5,6],[7,8,9]]
 print(a)
 b = copy.deepcopy(a)
@@ -2159,6 +2835,8 @@ print(get_recursive_factorial(6))
 print(get_iterative_factorial(6))
 #                                                                                                 $ with time calculation
 import time
+
+
 def get_recursive_factorial(n):
     if n < 0:
         return -1
@@ -2244,6 +2922,8 @@ Abithobj=Abithclass(10,20)
 Abithobj.Abithfun()
 #                                                                   object types
 import abc
+
+
 class FourWheelVehicle (abc.ABC):
     @abc.abstractmethod
     def SpeedUp( self ):
@@ -2324,6 +3004,8 @@ student.show(name="Abith")
 # multiple inheritance subject where the child class is responsible for calling the methods implied in its corresponding parent class.
 #Define a class as 'Individual'#
 import sys
+
+
 class Individual:  #                               individual class defenition
     def __init__(self):  #    Constructor
         Valid_genders = ['Male','Female','transgender']
@@ -2550,6 +3232,8 @@ class Abith:
 }
 #                                                                                                                  abstract method
 import abc
+
+
 class Myinterface( abc.ABC ):
     @abc.abstractclassmethod
     def disp( ):
@@ -2562,6 +3246,8 @@ o1=Myclass()
 o1.disp()
 #                                                        abstract class implement by multiple derive classes
 import abc
+
+
 class FourWheelVehicle (abc.ABC):
     @abc.abstractmethod
     def SpeedUp( self ):
@@ -2791,6 +3477,8 @@ print("Orange" not in Fruits_list)
 # interface or base classes define as an abstract class in nature and the abstract class contains some methods as abstrac
 # Abstract Base Classes
 import abc
+
+
 class Myinterface( abc.ABC ):
     @abc.abstractclassmethod
     def disp():
@@ -2799,6 +3487,8 @@ class Myclass( Myinterface ) :
     pass
 #                                                    derived class defines an abstract method
 import abc
+
+
 class Myinterface( abc.ABC ):
     @abc.abstractclassmethod
     def disp( ):
@@ -2812,6 +3502,8 @@ o1=Myclass()
 
 #                             derived class which defines an abstract method with the proper definition
 import abc
+
+
 class Myinterface( abc.ABC ):
     @abc.abstractclassmethod
     def disp( ):
@@ -2825,6 +3517,8 @@ o1.disp()
 #                                                           Example of object types
 
 import abc
+
+
 class FourWheelVehicle (abc.ABC):
     @abc.abstractmethod
     def SpeedUp( self ):
@@ -2837,6 +3531,8 @@ class Car(FourWheelVehicle) :
 
 #                                                        abstract class implement by multiple derive classes
 import abc
+
+
 class FourWheelVehicle (abc.ABC):
     @abc.abstractmethod
     def SpeedUp( self ):
@@ -2957,6 +3653,8 @@ print(loaded-list)
 # 'a+" = read/append, "ab+" = append/read modes on binary Files
 #                                                                  Program for File Handling
 import os
+
+
 def listfile(types):
     current_path,filename = os.path.split(os.path.abspath(__file__))
 #                                                                 Nested Looping Section in The Program
@@ -3165,18 +3863,64 @@ set = frozenset(set1)
 # a = "Abith" / b = ''Raj / sum = a + b / print(sum)
 # Finding letters or values in string = print(s1.find(s2))
 # Finding in Reverse = print(s1.rfind(s2))
+rfind()
+print('Illustration of find() with no start and end parameters')
+string = "what comes easy won't last \nwhat lasts won't come easy"
+print("Input String :")
+print(string)
+print("index of newline :", string.find('\n'))
+print("index of (won't) :", string.find("won't"))
+print("index of (come) :", string.find('come'))
+print("index of (easier) :", string.find('easier'))
+print('\n')
+print('Illustration of find() with start and end parameters')
+print("index of (won't) :", string.find("won't", 18)) # start : 18
+print("index of (come) :", string.find('come', 5, 15)) # start : 5 and stop = 15
+print("index of (come) :", string.find('come', 10)) # start : 10
 # if s1.startswith(s2) : if s1.endswith(s2)
 
 # if s1.islower(): , if s1.upper():
 
 # print(s1.title()) , print(s1.swaps())
 # print(s1.swaps().title().upper().lower())
-#                                                Advanced Functions in string
+#                                                                                                     Advanced Functions in string
 # print(s1,centre(15)), print(s1.l just(15)), print(s1.r-just(15)), l-just = left justification
 # to Check = if s1.isalpha():, if s1.isalnum():, if s1.isspace():, alpha = alphabet
-# 
-"""
-"""
+# Extracting sub domain name from a given list of URls using                                                   strip() function
+urls = ['www.facebook.com', 'www.yatra.com', 'www.youtube.com']
+print("sub domains:")
+for url in urls:
+    print(url.strip('w.com'))
+# strip([chars]), lstrip([char]) and rstrip([char]) when optiona parameter [char] is specified
+string = '********Python Trim String**********'
+print('Input String', string)
+print('length :', len(string), 'chars')
+print('\n')
+print("strip()--> * will be removed from both ends")
+str1 = string.strip('*')
+print(str1)
+print('length :', len(str1), 'chars')
+print('\n')
+print("lstrip()--> leading * from the string will be removed")
+str2 = string.lstrip('*')
+print(str2)
+print('length :', len(str2), 'chars')
+print('\n')
+print("rstrip()--> trailing * from the string will be removed")
+str3 = string.rstrip('*')
+print(str3)
+print('length :', len(str3), 'chars')
+#                                                                                                       Split String
+str = 'Python split strings article'
+print(str.split())
+
+items = 'Cheese, Curd, Butter, Milk '
+print(items.split(', ', 2))
+print(items.split(', ', 1))
+
+txt = "apple, pineapple, custardapple"
+print(txt.rsplit())
+print(txt.rsplit('t', 1))
 #                                                                                                                          Type Conversion 0r Casting
 # Implicit = Automatically converts one data type to another data type int() to float()
 # Explicit = users convert the data type of objects to required data type, use predefined functions like float() to int()
@@ -3342,6 +4086,7 @@ In[3]: print(str(a))
 
 # sample code = $
 import numpy as np
+
 arr1 = np.array([7, -6, 9])
 arr2 = np.array([3, 4, 3])
 rem_arr = np.remainder(arr1, arr2)
@@ -3522,6 +4267,7 @@ print(newList)
 
 import array as arr
 from array import *
+
 array(typecode [,initializer])
 for i in a
 print a[i]
@@ -3539,6 +4285,7 @@ print a[i]
 #  d         float      4
 #                                                   Type $ code
 import array as arr
+
 a=arr.array('i', [10 , 20 ,30] )
 print("Element at 0th index: " , a[0])
 print("Element at 1st  index: " , a[1])
@@ -3574,6 +4321,7 @@ for i in num:
 #                                                                          $   Array length
 #                                         len( given_arr_name )
 import array as arr1
+
 print("Program to demonstrate array length using array module")
 print("\n")
 a=arr1.array('i', [1, 8, 4] )
@@ -3582,10 +4330,10 @@ print(a)
 print("\n")
 print("The length of the given array is as follows:")
 print(len(a))
-
-#                                                                                                                                       $ sorting Array
+#                                                                                                           $ sorting Array
 #                                                                                      $   bubble-Sorting
 import array as arr
+
 sample_array = arr.array('i',[4,2,5,9,1,8,6])
 def bubble-sort(sample_array):
 for j in range(len(sample_array)-1,0,-1):
@@ -3596,6 +4344,7 @@ bubble-sort(sample_array)
 print(sample_array)
 #                                                                                            selection-sort
 import array as arr
+
 sample_array = arr.array('i',[4,2,5,9,1,8,6])
 def selection-sort(sample_array):
 for i in range(len(sample_array)):
@@ -3608,6 +4357,7 @@ selection-sort(sample_array)
 print(sample_array)
 #                                                                                              Insertion sorting
 import array as arr
+
 sample_array = arr.array('i',[4,2,5,9,1,8,6])
 def insertion_sort(sample_array):
 for i in range(1, len(sample_array)):
@@ -3842,6 +4592,7 @@ print ("%d" %arr[i]),
 #                                                                                                                   Selection Sort
 # Finding min or least value & positioning from unsorted sets, unsorted sublist is the complete key list
 import sys
+
 Array = [63, 75, 13, 2, 441] # loop through each and every element in the array
 for element1 in range(len(Array)):
  # To determine the least element in the remaining list
@@ -4245,6 +4996,7 @@ print( list_string )
 new_string = "".join(list_string )
 print( "The sorted string is : " )
 print(new_string)
+import random
 #                                                                                                         do-While
 # do
 # {
@@ -4257,8 +5009,8 @@ print(new_string)
 # break;
 #                                                                                                                           Matching a string
 import string
-import random
 import time
+
 #                                                                                 Variable section
 # endeavourNext = ''
 # completed = False
@@ -4321,6 +5073,8 @@ print(index, Looping-value)
 #                                                                                                                          Turtle Graphing Technique
 # Function eg
 import turtle
+
+
 def border(obj1, panel_x, panel_y):
     obj1.penup()
     obj1.home()
@@ -4612,12 +5366,15 @@ while(j<= 5):
 #                                                                             I/O Error
 #  to write program in a way that it can catch the expected errors
 import sys
+
 file = open('myfile.txt')
 lines = file.readline()
 slines = int(lines.strip())
 # FileNotFoundError: [Errno 2] No such file or directory: 'myfile.txt'
 #                                           using try except block
 import sys
+
+
 def something():
     try:
         file = open ( "filethatdoesnotexist.txt", 'r' )
@@ -4761,11 +5518,13 @@ print(b)
 print("Simple program for showing overflow error")
 print("\n")
 import math
+
 print("The exponential value is")
 print(math.exp(1000))
 # o/p = OverflowError: math range error
 #                                                 value exceeds in data type values
 import time
+
 currtime = [tm for tm in time.localtime()] print("Print the current data and time")
 print(currtime)
 print("\n")
@@ -4780,6 +5539,7 @@ print(time3)
 print("Simple program for showing overflow error")
 print("\n")
 import math
+
 try:
     print("The exponential value is")
     print(math.exp(1000))
@@ -4905,6 +5665,7 @@ while True:
 # s.listen(5) = num of clients
 # s.accept() = accept the request from client, returns two objects = socket-client object, address object (IP Address)
 import socket
+
 s= socket.socket(socket.AF_INET,socket.sock_stream)
 host=socket.gethostname()
 port=1245
@@ -4915,6 +5676,7 @@ print("connected received from the other terminal",address)
 #                                                              $ sending string from one file to another from client
 # 
 import socket
+
 s= socket.socket(socket.AF_INET,socket.sock_stream)
 host=socket.gethostname()
 port=1245
@@ -4963,9 +5725,7 @@ Result = np.subtract(x,y), add, divide, multiply, Exponentiation = exp(x), Squar
 #                                                                                                                          $      Slicing
 a = np.array( [4,6,9] )
 a[0:2], a[a<2]
-
 #                                                                                                                           Exercise Programs
-
 #                                                                                                                           Convert Tuples to List
 # Using list comprehension
 #                                                                     # Python code to convert list of tuples into list
@@ -4979,6 +5739,7 @@ print(out)
 #                                             # Python code to convert list of tuple into list
 #                                                        # Importing
 import itertools
+
 #                                        # List of tuple initialization
 tuple = [(1, 2), (3, 4), (5, 6)]
 #                                                                                                                               # Using itertools
@@ -5008,6 +5769,7 @@ print(out)
 #                                                         # Python code to convert list of tuple into list
 import operator
 from functools import reduce
+
 #                                                            # List of tuple initialization
 tup = [(1, 2), (3, 4), (5, 6)]
 #                                                               # printing output
@@ -5086,6 +5848,7 @@ pip install svn+svn://svn.zope.org/repos/main/zope.interface/trunk
 #                                                                                                                             Mix python & Shell script 
 __doc__ = """Mix python + Shell script"""
 import sys
+
 print("Hello World")
 print("This is PyThOn" , sys.version)
 print("this is my Argument print("vector:" , sys.argv)
