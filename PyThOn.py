@@ -11,6 +11,91 @@ from hashlib import new
 from typing import FrozenSet
 from attr import field
 from sympy import SymmetricDifference, intersection, print_python
+#                                                                          kwargs(**)
+print("Program to demonstrate **kwargs for variable number of keywords:")
+print("\n")
+def concatenate(**kwargs):
+    r = ""
+    for arg in kwargs.values():
+        r += arg
+        return r
+print("The concatenated value is displayed as follows:")
+print(concatenate(a="kaashiv", b="Training", c="Institue"))
+# arguments should also be the same as the number of keys in the dictionary
+print("Another use of **kwargs:")
+print("\n")
+def print_values(**kwargs):
+    for key, value in kwargs.items():
+        print("The value of {} is {}".format(key, value))
+print_values(my_name="Rahul", your_name="Ratan")
+# *args to pass the elements to the function in an iterable variable
+print("Program to demonstrate the *args is as follows:")
+def func(a, b, c):
+    print(a, b, c)
+a = [1,2,3]
+func(*a)
+# 
+print("Program to demonstrate the **kwargs used in function call is as follows:")
+def func(a, b, c):
+    print(a, b, c)
+a = {'a': "one", 'b': "two", 'c': "three" }
+func(**a)
+#                                                                                                  Contextlib Module
+from contextlib import contextmanager
+@contextmanager
+def open_file(path, mode):
+    the_file = open(path, mode)
+    yield the_file
+    the_file.close()
+files = []
+for x in range(100000):
+    with open_file('foo.txt', 'w') as infile:
+        infile.write('Hello Abith')
+    for f in files:
+        if not f.closed:
+            print('not closed')
+files =open('foo.txt', 'r+')
+contents = files.read()
+print(contents)
+#                                        Nested Implementation
+import contextlib
+@contextlib.contextmanager
+def multicontext(ctxt):
+    print ('entering contents:', ctxt)
+    yield ctxt
+    print('exiting contents:', ctxt)
+    with contextlib.nested(multicontext('kaashiv'), multicontext('Training'), multicontext('Intitute')) as (X, Y, Z):
+        print('inside with statement:', X, Y, Z)
+#                                                   Class-based approach
+from contextlib import ContextDecorator
+class htmlparagraph(ContextDecorator):
+def __enter__(self):
+    print('')
+    return self
+def __exit__(self, *exc):
+    print('')
+    return False
+@htmlparagraph()
+def emit_html():
+    print('Here is some non-HTML ')
+    emit_html()
+#                                                   Closing open handles
+import contextlib
+class contxt(object):
+    def __init__(self):
+        print ('inside the init() method')
+    def close(self):
+        print ('inside the close() method')
+with contextlib.closing(contxt()) as ctxt:
+    print ('inside the with statement')
+print()
+print ('Error handling:')
+try:
+    with contextlib.closing(contxt()) as ctxt:
+        print ('  raising from inside the with statement')
+        raise RuntimeError('There is a runtime error')
+except Exception, err:
+    print ('  Had an error:', err)
 #                                                                                                         If Main
 # Execution Modes = Directly executing the Python file.
 # Importing an external Python file as a package and then using the function from that file
@@ -23,7 +108,7 @@ def get_square(number):
 print("Using function :")
 square=get_square(5)
 print(square)
-# “__name__” to control the execution of our code
+#              “__name__” to control the execution of our code
 def main():
     print("Programming in Python is fun!!!")
 if __name__== "__main__" :
@@ -110,7 +195,36 @@ get_extra_info()
 write_eof() # = close the write of the transport at the end of the file after flushing all the buffer data from the transport
 can_write_eof() # Trur or False
 close()"""
-
+#                                                                                 Access Modifiers(_)
+# define parent class Company
+class Company:
+    # constructor
+    def __init__(self, name, proj):
+        self.name = name      # name(name of company) is public
+        self._proj = proj     # proj(current project) is protected
+    # public function to show the details
+    def show(self):
+        print("The code of the company is = ",self.ccode)
+# define child class Emp
+class Emp(Company):
+    # constructor
+    def __init__(self, eName, sal, cName, proj):
+        # calling parent class constructor
+        Company.__init__(self, cName, proj)
+        self.name = eName   # public member variable
+        self.__sal = sal    # private member variable
+    # public function to show salary details
+    def show_sal(self):
+        print("The salary of ",self.name," is ",self.__sal,)
+# creating instance of Company class
+c = Company("Stark Industries", "Mark 4")
+# creating instance of Employee class
+e = Emp("Steve", 9999999, c.name, c._proj)
+print("Welcome to ", c.name)
+print("Here ", e.name," is working on ",e._proj)
+# only the instance itself can change the __sal variable
+# and to show the value we have created a public function show_sal()
+e.show_sal()
 #                                                                                                         Map Function
 def function():
     return 19, 'Abith', 619
@@ -163,6 +277,42 @@ for i in name:
 		break
 print (i)
 """
+#                                                                                              format() Function
+x = format(255, 'b') # ‘b’ represents binary form
+print(x)
+x = format(0.08, '%') # 8.000000%
+print(x)
+x = format(255, 'o')
+print(x)
+#                        % is associated with the data type
+emp_name = 'Leo Shein'
+emp_age = 24
+print("Name: %s Age:%d"%(emp_name,emp_age))
+#                         {} is a placeholder irrespective of the data type
+emp_name = 'Leo Shein'
+emp_age = 24
+print("Name: {} Age: {}".format(emp_name,emp_age))
+# index
+emp_name = 'Leo Shein'
+emp_age = 24
+print("Name: {0} Age: {1}".format(emp_name,emp_age))
+# 
+print("Hello {0}, your balance is {abc}.".format("Fina", abc=230.2346))
+print("{:6d}".format(12))
+print("{:06d}".format(12))
+print("{:+f} {:+f}".format(21.99, -22.99)) # This will show the + sign
+print("{:-f} {:-f}".format(21.99, -22.99)) # This will show the - sign only
+print("{:6}".format("dog")) # string-padding with                  left-alignment
+print("{:>6}".format("dog")) # string-padding with                   right-alignment
+print("{:^7}".format("dog")) # string-padding with                 center-alignment
+# Format Class members
+class Employee:
+    id = 41
+    name = "Prince"
+print("{p.name}'s company ID is: {p.id}".format(p=Employee())) # format name and id
+#                                                                Truncate String using the format()
+print("{:.5}".format("Singapore"))
+print("{:^7.3}".format("Singapore"))# truncating strings to 3 letters, and then padding & center-aligned
 #                                                                                                                  File Methods
 """r: This mode opens a file in read-only form
 w: This mode opens a file in the write-only form
@@ -188,6 +338,32 @@ ff = open("C:/Users/Test/desktop/sample_Kaashiv.txt", "w+")
 ff.truncate()
 ff = open("C:/Users/Test/desktop/sample_Kaashiv.txt", "r+")
 print(ff.read())
+#                                                            File Handling Operations
+myFile = 5
+myFile.readline()
+for line in myFile:
+    # will print all the lines one by one
+    print(line)
+content = []
+for line in myFile:
+    content.append(line)
+myFile.write("Hello, World. I am learning Python")
+content = ["Python 2.x\n", "Hello, World. I am learning Python"]
+#                                                                               Tell and Seek
+myFile = open('file.txt','r+')
+myFile.seek(5)
+myFile.read()
+', World!'
+myFile.tell()
+#                                                                               Copying a File
+file1 = open("original.txt", "r")
+file2 = open("duplicate.txt", "w")
+l = file1.readline()
+while l:
+    file2.write(l)
+l = file1.readline()
+file1.close()
+file2.close()
 #                                                                                      Seek()
 # to set the offset position, of the reading and writing pointer
 ff.seek(0)
@@ -389,14 +565,13 @@ for each_row in reader:
 #                                                   for semi-colon separated file
 reader = csv.reader(file, delimiter  = '';'')
 finally:
-file.close()
-reader = csv.reader(file,quotechar="'")
-reader = csv.reader(file,skipinitialspace=True)
-reader = csv.reader(file,quoting=csv.QUOTE_NONE)
+    file.close()
+    reader = csv.reader(file,quotechar="'")
+    reader = csv.reader(file,skipinitialspace=True)
+    reader = csv.reader(file,quoting=csv.QUOTE_NONE)
 #                                                                                        dialect
 csv.register_dialect(
-'mydialect',
-delimiter = ';',
+'mydialect',+delimiter = ';',
 skipinitialspace = True,
 quotechar = '"',
 doublequote = True,)
@@ -1062,7 +1237,6 @@ number1 = "123456789"
 number2 = reverse(number1)
 print ("The given number is : " + number1)
 print ("Reverse of the given number is : " + number2)
-
 #                                                                                                              eval()
 # run the python programming code (which is actually passed as the argument)
 # evaluates the “String” like the Python Code expression & returns as an integer
@@ -1129,11 +1303,9 @@ print(list(counter.elements()))     # o/p =
 ['a', 'a', 'a', 'b', 'b', 'c', 'c', 'c', 'c']"""
 c = Counter('sssssshhhhhcccdddd')
 c.most_common(3)
-
 a.subtract(b)
 a
 a-b
-
 #                                                                                                     string _contains_()
 print("Python program to demonstrate _contains_() function")
 print("\n")
@@ -1914,6 +2086,50 @@ a[1][2] = 10
 print(a)
 b = copy.deepcopy(a)
 print(b)
+
+#                                        Using try & except
+a = ['Heena', 10, 'Rohit', 80, True]
+try:
+    a.remove(80)
+except ValueError:
+    print("Doesn't exist")
+pass
+print(a)
+#                                                         Remove using for Loop
+List_example = [1, 2, 3, 4, 5, 6,7, 8, 9, 10, 11, 12]
+print("Present List: ")
+print(List_example)
+for i in range(5, 8):
+    print(i)
+    List_example.remove(i)
+    print("\nList after Removing a range of elements: ")
+    print(List_example)
+#                                                              Remove()
+List_example = [1, 2, 3, 4, 5, 6,7, 8, 9, 10, 11, 12]
+print("Present List: ",List_example)
+List_example.remove(3)
+print("Present List: ",List_example)
+List_example.pop(3)
+print("Present List: ",List_example)
+#                                                  Indexing
+letters = ['a', 'e', 'i', 'o', 'i', 'u', 'k', 'h']
+print("Prints the index value of vowels in the above given list:")
+indexa = letters.index('a')
+print('The index of a:', indexa)
+indexe = letters.index('e')
+print('The index of e:', indexe)
+indexi = letters.index('i')
+print('The index of i:', indexi)
+print(list1.index(4, 3, 8))
+#                                                  Tuples
+myTuple = 1, 2, 3, 4
+del myTuple
+myTuple[2:4]
+t = (2, 5, 0) + (1, 3) + (4,)
+2 in t
+len(t)
+max(t)
+min(t)
 # #                                                                                                      Recursive Function
 # repetitively calling the same function until the loop reaches the desired value during the program execution by using the divide and conquer logic
 get_factorial(5) 5 * get_factorial(4)
@@ -2237,8 +2453,24 @@ class instance.myfunction(1, 2)
 class instance.test = 10
 class instance.test
 # 10
-#
-
+#                                                                                                         Method Overriding
+class Animal:  
+    #                     properties
+	multicellular = True
+	#                                           Eukaryotic means Cells with Nucleus
+	eukaryotic = True
+	#                               function breathe
+	def breathe(self):
+	    print("I breathe oxygen.")
+    #                               function feed
+	def feed(self):
+	    print("I eat food.")
+def feed(self):
+    print("I eat only plants. I am vegetarian.")
+herbi = Herbivorous()
+herbi.feed()
+#                   calling some other function
+herbi.breathe()
 #                                                                                                $ define derived-class
 class    derivedClassName([list, ...]):
 class cuisine():                                                                    # class cuisine
@@ -2387,6 +2619,19 @@ class fine_dine_cuisine(indian_cuisine,italian_cuisine):
         return
     fine_dine_cuisine = new-cuisine("cooked',India",4)
 # Diamond Inheritance
+#                                                     issubclass()
+class Parent:
+  	var1 = 1
+  	def func1(self):
+  	    # do something
+class Child(Parent):
+  	var2 = 2
+  	def func2(self):
+  	    # do something else
+
+issubclass(Child, Parent)
+Parent p = Parent()
+Child c = Child()
 #                                   Determining the type of Inheritance
 #
 # (1) is instance(myObj,int) (2) is subclass(bool,int)
@@ -3431,8 +3676,6 @@ print (sorted(Set))
 print (sorted(Dict))
 print (sorted(str))
 print (sorted(Tuple))
-
-
 #                                                                                                                          Sorting string
 # Syntax of python sort string sorted() method:
 #                                    $ sorted(iterable, key = key, reverse = reverse)
@@ -3479,7 +3722,6 @@ print( list_string )
 new_string = "".join(list_string )
 print( "The sorted string is : " )
 print(new_string)
-
 # using for loop in python which is also a implementation of bubble sort.                                                           Using for Loop
 #                       $   Code:
 #                           # creating string
@@ -3504,6 +3746,51 @@ sort_string = "".join(new_string)
 print( "The sorted string is : " )
 print(sort_string)
 
+#                                                                            Compare Strings
+str1 = 'kaashiv'
+str2 = 'kaashiv'
+if str1 == str2:
+    print("Strings are same")
+else:
+    print("Strings are different")
+
+a = 2
+b = 1
+c = 2
+if a is c:
+    print("Same")
+else:
+    print("Different")
+#                            (!=) operator
+str1 = 'kaashiv'
+str2 = 'kaashiv'
+if str1 != str2:
+    print("Strings are different")
+else:
+    print("Strings are same")
+#                                    Greater than (>) and lesser than (<)
+string_variable1 > string_variable2
+string_variable1 < string_variable2
+str1 = 'kaashiv training'
+str2 = 'kaashiv'
+if str1 > str2:
+    print("True")
+else:
+    print("False")
+#                          Greater than or equal to ( >=) operator
+str1 = 'kaashiv training'
+str2 = 'kaashiv '
+if str1 >= str2:
+    print("True")
+else:
+    print("False")
+#                    less than or equal to (<=)
+str1 = 'kaashiv '
+str2 = 'kaashiv '
+if str1 <= str2:
+    print("True")
+else:
+    print("False")
 #                                                                                                                                   Sorting Algorithms - Top 6 = Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Heap Sort, Radix Sort
 #                                                                                                                                     Bubble sorting
 # Sorting data in effortless, rational, recurring Exchange in Queue Structure, Low-Efficiency
@@ -4267,7 +4554,7 @@ try:
         print("a/b = ",a/b)
 except ArithmeticError:
     print("the value of b cannot be 0")
-#                                                                                                                              Exception-handling
+#                                                                                                              Exception-handling
 def some_function():
     try:
         10 / 0
@@ -4284,6 +4571,26 @@ class User_Exception2( Exception ):
             except User_Exception2:
                 else:
 #   This piece will be executed when a user_exception 1 is triggeredexcept User_Exception2:   This piece will be executed when a user_exception 1 is triggered else:
+#                                                                      raise
+a = 10
+b = 9
+try:
+    # condition for checking for negative values
+    if a < 0 or b < 0:
+        # raising exception using raise keyword
+        raise ZeroDivisionError
+    print(a/b)
+except ZeroDivisionError:
+    print("Please enter valid integer value")
+# raise Without Specifying Exception Class
+a = 10
+b = 0
+try:
+    print(a/b)
+except ZeroDivisionError:
+    raise
+#                                       raise With an Argument
+raise ValueError("Incorrect Value")
 #                                                                                  Indentation Error
 #  PEP8 whitespace ethics, 4 whitespaces used between any alternative or iteration
 for i in range(1,24):
