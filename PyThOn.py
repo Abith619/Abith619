@@ -12,7 +12,42 @@ from attr import field
 from django import db
 from sympy import SymmetricDifference, intersection, print_python
 from tensorflow.python.types.distribute import Iterable
-#                                                                                        kwargs(**)
+
+"""dict = object  
+list, tuple = array
+str = string
+int, float = number"""
+#                                                                                       Date And Time
+"""datetime - Allows us to manipulate times and dates together (month, day, year, hour, second, microsecond).
+date - Allows us to manipulate dates independent of time (month, day, year).
+time - Allows us to manipulate time independent of date (hour, minute, second, microsecond).
+timedelta — A duration of time used for manipulating dates and measuring.
+tzinfo — An abstract class for dealing with time zones."""
+# import datetime class from datetime module
+from datetime import datetime
+#                                            get current date
+datetime_object = datetime.now()
+print(datetime_object)
+print('Type :- ',type(datetime_object))
+#   Getting Day of the Month and Day of the Week from a Date
+import calendar
+print('Day of Month:', my_date.day)
+#                                                    to get name of day(in number) from date
+print('Day of Week (number): ', my_date.weekday())
+#                                                   to get name of day from date
+print('Day of Week (name): ', calendar.day_name[my_date.weekday()])
+#                                                                                              Getting Hours and Minutes
+from datetime import datetime
+todays_date = datetime.now()
+#                                to get hour from datetime
+print('Hour: ', todays_date.hour)
+#                                 to get minute from datetime
+print('Minute: ', todays_date.minute)
+# Getting Week of the Year from a Datetime Object
+# Return a 3-tuple,                                         (ISO year, ISO week number, ISO weekday)
+todays_date.isocalendar()
+todays_date.isocalendar()[1]
+#                                                                                                       kwargs(**)
 print("Program to demonstrate **kwargs for variable number of keywords:")
 print("\n")
 def concatenate(**kwargs):
@@ -41,6 +76,34 @@ def func(a, b, c):
     print(a, b, c)
 a = {'a': "one", 'b': "two", 'c': "three" }
 func(**a)
+#                                                                                                               JSON
+p = '{"name": "Bob", "languages": ["Python", "Java"]}'
+import json
+#                                to parse JSON strings and files containing JSON object
+person = '{"name": "Bob", "languages": ["English", "Fench"]}'
+person_dict = json.loads(person)
+#                   Output: {'name': 'Bob', 'languages': ['English', 'Fench']}
+print( person_dict)
+#                    Output: ['English', 'French']
+print(person_dict['languages'])
+with open('path_to_file/person.json') as f:
+    data = json.load(f)
+# Output: {'name': 'Bob', 'languages': ['English', 'Fench']}
+print(data)
+#                                                                   Convert to JSON string
+person_dict = {'name': 'Bob',
+'age': 12,
+'children': None
+}
+person_json = json.dumps(person_dict)
+# Output: {"name": "Bob", "age": 12, "children": null}
+print(person_json)
+{"name": "Bob", "languages": ["English", "Fench"], "married": True, "age": 32}
+person_string = '{"name": "Bob", "languages": "English", "numbers": [2, 1.6, null]}'
+#                                          Getting dictionary
+person_dict = json.loads(person_string)
+# Pretty Printing JSON string back
+print(json.dumps(person_dict, indent = 4, sort_keys=True))
 #                                                                                                             BeautifulSoup
 # navigation, modifying, and searching of necessary files                    HTML and XML 
 # used in tree parsing using your favorite parser,                                           web scraping
@@ -108,6 +171,105 @@ for track in tracks:
     print(track)
 count += 1
 print(len(tracks))
+#                                                                                                  BufferedReader
+import sys
+import io
+# a variable sourcefile is used to store the argument that is passed while running the script.
+# Sys.argv is the argument taking the file name while executing the script and 1 indicates the argument number 
+sourcefile = sys.argv[1] #the file is opened in binary mode to read using open function
+with open(sourcefile, 'rb') as file:
+#   file descriptor is obtained by making using of FileIO which is used to identify the file that is opened
+    fi  = io.FileIO(file.fileno())
+#   Buffered reader is then used to read the contents of the file
+    fb = io.BufferedReader(fi)
+#                    the contents of the file is printed
+    print (fb.read(20))
+#                                                                     buffered reader to read the contents of the file
+filename = sys.argv[1] #the file is opened in binary mode to read using open function
+with open(filename, 'rb') as file:
+#   file descriptor is obtained by making using of FileIO which is used to identify the file that is opened
+    fi  = io.FileIO(file.fileno())
+#   Buffered reader is then used to read the contents of the file
+fb = io.BufferedReader(fi)
+#                               the contents of the file is printed
+print (fb.read(20))
+#                                                                                                                    Async
+# function multiple operations without waiting time
+import queue
+def task(name, sample_queue):
+    if sample_queue.empty():
+        print(f'Task {name} has nothing to do')
+    else:
+        while not sample_queue.empty():
+            cnt = sample_queue.get()
+            total = 0
+            for x in range(cnt):
+                print(f'Task {name} is running now')
+            total += 1
+print(f'Task {name} is running with a total of: {total}')
+def sample_async():
+    sample_queue = queue.Queue()
+    for work in [2, 5, 10, 15, 20]:
+        sample_queue.put(work)
+        tasks = [
+                (task, 'Async1', sample_queue),
+                (task, 'Async2', sample_queue),
+                (task, 'Async3', sample_queue)
+                ]
+    for t, n, q in tasks:
+        t(n, q)
+    if __name__ == '__main__':
+        sample_async()
+# ‘task’ in the above example accepts string and queue
+import asyncio
+import functools
+def event_handler(loop, stop=False):
+    print('Calling event handler')
+    if stop:
+        print('Loop is being stopped')
+        loop.stop()
+    if __name__ == '__main__':
+        loop = asyncio.get_event_loop()
+        try:
+            loop.call_soon(functools.partial(event_handler, loop))
+            print('Loop is being started')
+            loop.call_soon(functools.partial(event_handler, loop, stop=True))
+            loop.run_forever()
+        finally:
+            print('Loop is being closed')
+            loop.close()
+# concurrent programming for single code to be executed independently
+import asyncio
+async def sample_task(task_seconds):
+    print('Task takes {} seconds to complete'.format(task_seconds))
+    await asyncio.sleep(task_seconds)
+    return 'task has been completed'
+if __name__ == '__main__':
+    sample_event = asyncio.get_event_loop()
+try:
+    print('Creation of tasks started')
+    task_object_loop = sample_event.create_task(sample_task(task_seconds=3))
+    sample_event.run_until_complete(task_object_loop)
+finally:
+    sample_event.close()
+    print("Task status: {}".format(task_object_loop.result()))
+# Event loop countdown() coroutine calls, executes until yield from, and asyncio.sleep() function
+import asyncio
+@asyncio.coroutine
+def countdown(number, n):
+    while n > 0:
+        print('Counter of ', n, '({})'.format(number))
+        yield from asyncio.sleep(1)
+        n -= 1
+loop = asyncio.get_event_loop()
+tasks = [
+    asyncio.ensure_future(countdown("First Count", 2)),
+    asyncio.ensure_future(countdown("Second Count", 4))]
+loop.run_until_complete(asyncio.wait(tasks))
+loop.close()
+
+
+
 #                                                                                                  Contextlib Module
 from contextlib import contextmanager
 
@@ -170,8 +332,8 @@ try:
     with contextlib.closing(contxt()) as ctxt:
         print ('  raising from inside the with statement')
         raise RuntimeError('There is a runtime error')
-except Exception, err:
-    print ('  Had an error:', err)
+except Exception as err:
+    print('  Had an error:' , err)
 #                                                                 # creating username from user's first and last name
 # list containing users name
 names = ['john garner',  'karen bag', 'neil amster', 'jason smith', 'richard king', 'david klok'] # empty list which will contain usernames
@@ -345,7 +507,7 @@ if __name__ == "__main__":
 asyncio=asyncio
 asyncio.open_connection()
 asyncio.create_connection()
-asyncio.open_connection( host, port, *, loop, limit, **kwds)
+asyncio.open_connection(host, port, *, loop, limit, **kwds)
 asyncio.start_server() #                                       start socket server
 asyncio.start_server(client_connected_cb, host, port, loop, limit)
 asyncio.client_connected_cb
@@ -411,7 +573,7 @@ print(ans)
 #map object to  set conversion
 squarenum = set(ans)
 print(squarenum)
-#                                                                                  Loops
+#                                                                                                                Loops
 """myList = [8, 9, 2, 6, 1, 9]
 for i in myList:
     print (i)   
@@ -816,6 +978,117 @@ result = pow(base,power)
 print(math.pow(base,power))
 print(np.power(base,power))
 print(scipy.power(base,power))
+#                                                                                                           Function Generator
+class power_two:
+    def _init_(self, max = 0 ):
+        self. max = max
+    def _iter_(self):
+        self.n = 0
+        return self
+    def _next_(self):
+        if self.n > self. max:
+            raise StopIteration
+        result = 2 ** self.n
+        self.n+=1
+        return result
+# generator function instead of a normal function in a few lines.
+def power_two(max = 0 ):
+        n = 0
+        while n < max:
+            yield 2 ** n
+        n+=1
+#                                Implement Python Function Generator
+def generator_funciton():
+    a = 1
+    print("First value")
+    yield a
+    a += 1
+    print("Second value")
+    yield a
+    a += 1
+    print("Third value")
+    yield a
+for x in generator_funciton():
+    print(x)
+# throw() method is used to throw exceptions with the generator
+def infinite_palindromes():
+    num = 0
+    while True:
+        if is_palindrome(num):
+            i = (yield num)
+        if i is not None:
+            num = i
+            num += 1
+def is_palindrome(num):
+#                           Skip single-digit inputs
+    if num // 10 == 0:
+        return False
+    temp = num
+    reversed_num = 0
+    while temp != 0:
+        reversed_num = (reversed_num * 10) + (temp % 10)
+        temp = temp // 10
+    if num == reversed_num:
+        return True
+    else:
+        return False
+""" pal_gen = infinite_palindromes()
+    for i in pal_gen:
+        print(i)
+        digits = len(str(i))
+        if digits == 5:
+            pal_gen.throw(ValueError("We don't like large palindromes"))
+        pal_gen.send(10 ** (digits))"""
+#                                          yield a series of values from huge data sets like a number of rows
+"""def csv_reader(“article.txt”):
+    for row in open(“article.txt”,”r”):
+        yield row
+generator_csv = csv_reader(“article.txt”)
+count_rows = 0
+for rows in generator_csv:
+    count_rows+= 1
+    print(“Count of number of rows”, count_rows)"""
+#                                                                                                                   Parser
+#                                        parsing the given expressions
+import parser
+print("Program to demonstrate parser module in Python")
+print("\n")
+exp = "5 + 8"
+print("The given expression for parsing is as follows:")
+print(exp)
+print("\n")
+print("Parsing of given expression results as: ")
+st = parser.expr(exp)
+print(st)
+print("\n")
+print("The parsed object is converted to the code object")
+code = st.compile()
+print(code)
+print("\n")
+print("The evaluated result of the given expression is as follows:")
+res = eval(code)
+print(res)
+#                                                               argparse
+#  command-line options and arguments using an argparse module
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("ls")
+args = parser.parse_args()
+print(args.ls)
+#                                                                                                                  SystemExit
+print("Program that uses SystemExit as Exception instead of BaseException.")
+try:
+    raise SystemExit
+except SystemExit:
+    print("Specifying SystemError exception in this block works.")
+#                                                  os._exit(), sys.stdin
+import sys
+print("Program to demonstrate sys.exit() function")
+limit = 15
+if limit < 18:
+    sys.exit("Numerical limit less than 18")
+else:
+    print("Numerical limit is not less than 18")
 #                                                                                                                  Zip Function
 name = [ "Hemanth", "Anjum", "Ramya", "Saira" ]
 id_no = [ 111, 92, 137, 103 ]
@@ -2762,7 +3035,23 @@ a[1][2] = 10
 print(a)
 b = copy.deepcopy(a)
 print(b)
-
+# to                                                                      iterate over 3 lists         using zip function 
+import itertools 
+num = [1, 2, 3]
+color = ['red', 'while', 'black'] 
+value = [255, 256]
+# iterates over 3 lists and excutes  
+# 2 times as len(value)= 2 which is the 
+#                                       minimum among all the three  
+for (a, b, c) in zip(num, color, value): 
+     print (a, b, c)
+#               over 3 lists using itertools.zip_longest
+num = [1, 2, 3] 
+color = ['red', 'while', 'black'] 
+value = [255, 256] 
+#                   Specifying default value as -1 
+for (a, b, c) in itertools.zip_longest(num, color, value, fillvalue=-1): 
+    print (a, b, c) 
 #                                        Using try & except
 a = ['Heena', 10, 'Rohit', 80, True]
 try:
@@ -2771,6 +3060,35 @@ except ValueError:
     print("Doesn't exist")
 pass
 print(a)
+#                                                                                                       random.choice()
+import random
+numberList = [111,222,333,444,555]
+print("random item from list is: ", random.choice(numberList))
+movie_list = ['The Godfather', 'The Wizard of Oz', 'Citizen Kane', 'The Shawshank Redemption', 'Pulp Fiction']
+moview_item = random.choice(movie_list)
+print ("Randomly selected item from list is - ", moview_item)
+moview_item = random.choice(movie_list)
+print ("Randomly selected item from list is - ", moview_item)
+#                                                                 sampling with replacement
+list = [20, 30, 40, 50 ,60, 70, 80]
+sampling = random.choices(list, k=4)
+print("Randomly selected multiple choices using random.choices() ", sampling)
+#                                                                              Applying Functions To List Items
+regimentNames = ['Night Riflemen', 'Jungle Scouts', 'The Dragoons', 'Midnight Revengence', 'Wily Warriors']
+# create a variable for the for loop results
+regimentNamesCapitalized_f = []
+# for every item in regimentNames
+for i in regimentNames:
+    # capitalize the item and add it to regimentNamesCapitalized_f
+    regimentNamesCapitalized_f.append(i.upper())
+# View the outcome
+regimentNamesCapitalized_f
+#                                    Create a                                     lambda function that capitalizes x
+capitalizer = lambda x: x.upper()
+# Map the capitalizer function to regimentNames, convert the map into a list, and view the variable
+regimentNamesCapitalized_m = list(map(capitalizer, regimentNames)); regimentNamesCapitalized_m
+#                                                                                              List Comprehension
+regimentNamesCapitalized_l = [x.upper() for x in regimentNames]; regimentNamesCapitalized_l
 #                                                         Remove using for Loop
 List_example = [1, 2, 3, 4, 5, 6,7, 8, 9, 10, 11, 12]
 print("Present List: ")
@@ -2868,6 +3186,70 @@ a[0] = 10
 print(a)
 b = list(a)
 print(b)
+#                                        @classmethod decorator
+class MyDecorator:
+    def __init__(self, function):
+        self.function = function
+    def __call__(self):
+        self.function()
+@MyDecorator
+def function():
+    print("Beautiful Day")
+function()
+# class method with args and kwargs that are used as arguments
+class cubeDecorator:
+    def __init__(self, function):
+        self.function = function
+    def __call__(self, *args, **kwargs):
+        result = self.function(*args, **kwargs)
+        return result
+# implementing class decorator to the function
+@cubeDecorator
+def get_cube(n):
+    print("Number:", n)
+    return n **3
+print("Cube value is:", get_cube(10))
+#   
+def area_rectangle(l, b):
+    try:
+        print(l * b)
+    except TypeError:
+        print("area_rectangle Input should be integers")
+area_rectangle(2,4)
+area_rectangle('four','eight')
+# error handling using the class decorator method
+def exception_handle(func):
+    def function(*args, **kwargs):
+        try:
+            func(*args, **kwargs)
+        except TypeError:
+            print(f"{func.__name__} Input should be integers")
+            return function
+@exception_handle
+def area_rectangle(l, b):
+    print(l * b)
+area_rectangle(4, 8)
+area_rectangle('four','eight')
+@exception_handle
+def area_triangle(b, h):
+    print(b * h / 2)
+area_triangle(3,4)
+area_triangle('four','eight')
+#                               ErrorCheck
+class ErrorCheck:
+    def __init__(self, function):
+        self.function = function
+    def __call__(self, *params):
+        if any([isinstance(i, str) for i in params]):
+            raise TypeError("Input cannot be a string")
+        else:
+            return self.function(*params)
+@ErrorCheck
+def area_rectangle(l, b):
+    print(l * b)
+    print(area_rectangle(12, 3))
+    print(area_rectangle('12', '3'))
+
 #                                                             oops Concept
 #                                                                                                             class :
 # Template for Object
