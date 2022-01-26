@@ -209,7 +209,7 @@ ViewFrame = Frame(root,width=400)
 ViewFrame.pack(side=TOP)
 #################create a treeview in ViewFrame #######
 treeview = ttk.Treeview(ViewFrame,
-columns=("MedicineID", "MedicineName" ,"Company", "ChemicalComp","ManuDate" ,"ExpDate", "Costfor10″),height=200,selectmode="extended"))
+columns=("MedicineID", "MedicineName" ,"Company", "ChemicalComp","ManuDate" ,"ExpDate", "Costfor″),height=200,selectmode="extend"))
 treeview.heading(“MedicineID" , text="MedicineID" , anchor ="w")
 treeview.heading(“MedicineName" , text="MedicineName" , anchor ="w")
 treeview.heading(“Company" , text="Company" , anchor ="w")
@@ -227,7 +227,7 @@ treeview.column(“#6" ,stretch=NO,width=70,minwidth=0)
 treeview.column(“#7" ,stretch=NO,width=70,minwidth=0)
 treeview.pack()
 
-home
+
 from tkinter import * #import tkinter library
 import tkinter.messagebox as msg # to display message box
 import sqlite3 #to store data
