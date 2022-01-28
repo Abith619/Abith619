@@ -21,6 +21,14 @@ from . import views
 from django.urls import path
 from django.db import models
 
+# settings.py file stores all the custom configurations such as database connection parameters, server details, global variables
+# urls.py file has a list of all the custom URLs, 
+# models = Database Tables, put into models.py, 
+# SECURITY = csrf (Cross-Site Request Forgery). csrf is a random token that is generated every time we submit form data. This token is validated by the Django server on every Http POST Request it receives. 
+#            If some hacker tries to attack, then this token becomes invalid and our application remains secure.
+# Template extensions and Tags, 
+
+
 #                                          mapping the views.py in urls.py file
 #                                          Django Template Language
 # {{variable_name}}, {% if condition %}
@@ -31,44 +39,44 @@ Parameters that contain all variables and can create as many as possible"""
 #                                         set Cookie Using Django
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-# Create your views here.
-
-
+#                                         Create your views here.
 def home(request):
     return HttpResponse("Welcome")  # output to the screen
-
-
 def setting_cookie(request):
     response = HttpResponse("We are setting a cookie")
     response.set_cookie('Learning', 'Django', 5)
     return response
-
-
 def getting_cookie(request):
     first_test = request.COOKIES['Learning']
     return HttpResponse("Practice: " + first_test)
-
-
-#                                                           urls.py
+#                                                                                                          urls.py
+from django.contrib import admin
+from django.urls import path
 urlpatterns = [
+    path('admin',admin.site.urls ),
+    path('', include('blog.urls')),
     path('', views.home, name='home'),
     path('setc', views.setting_cookie, name='setc'),
-    path('getc', views.getting_cookie, name='getc')
-]
+    path('getc', views.getting_cookie, name='getc')]
+#                                                              URLconf:
+from django.urls import path
+from . import views
+urlpatterns = [
+    path('articles/2003/', views.special_case_2003),
+    path('articles/<int:year>/', views.year_archive),
+    path('articles/<int:year>/<int:month>/', views.month_archive),
+    path('articles/<int:year>/<int:month>/<slug:slug>/', views.article_detail),
+    ]
 #                                                                Modify Cookie
 #                                     view.py
 # Create your views here.
-
-
 def home(request):
     return HttpResponse("Welcome")
-
 
 def setting_cookie(request):
     response = HttpResponse("We are setting cookie")
     response.set_cookie('Learning', 'Django')
     return response
-
 
 def updating_cookie(request):
     response = HttpResponse("We are updating  the cookie which is set before")
@@ -116,20 +124,19 @@ urlpatterns = [
     path('delc', views.deleting_cookie, name='delc')
 ]
 #                                                                                                  Views
-
-
+# Every view is callable and holds the capability to take a request and response
+# For Declaring the view in Django we need to have an HTTP request and a response
+# python manage.py runserver
 def view1(request):
     return HttpResponse("Hello World")
-
-
 #                                                        Tag the view in urls.py File
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'admin/', admin.site.urls), ]
 # Reload the server using python manage.py runserver command and verify the webpage
-# Create a Template Folder
-#
+#                                                                                    Create a Template Folder
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 Template_DIR = os.path.join(BASE_DIR, 'Templates')
 TEMPLATES = [
@@ -149,14 +156,11 @@ TEMPLATES = [
 ]
 Template_DIR = os.path.join(BASE_DIR, 'Templates')
 # Place an HTML file inside the Templates Folder = Django App1
-#                                                                   Render
+#                                                                                                    Rendering
 # Render the HTML File in views.py using() Method
-
-
+# newly created HTML content to The render method combines a template with the context dictionary to return a HttpResponse object
 def index(request_iter):
     return render(request_iter, 'design.html')
-
-
 """arguments	Description
 Request      	This is used to generate a response. This is a mandatory argument.
 Template Name	Name of the template used for this view. This is a mandatory argument.
@@ -166,22 +170,15 @@ Status	        The response code to be used. The default response code is 200.
 Using	        This argument is used to represent the name of the template engine used for loading the template. This is an optional argument."""
 # view Rendered from Template TAG {{ Key1 }}
 # Add a context template dictionary in the view and tag the dictionary to the context
-
-
 def index(request_iter):
     dict_Var = {
         "Key1": "The Template tag value is rendered with reference to key1"}
     return render(request_iter, 'design.html', context=dict_Var)
-
 #                                                                                             Create a Django Form
-
-
 class Valueform(forms.Form):
     user = forms.CharField(max_length=100)
 
 #                                                Create a View for The Form
-
-
 def form_view(request_iter):
     form = Valueform()
     return render(request_iter, 'Form_Handeling.html', {"form": form})
@@ -337,7 +334,8 @@ def formView(response_iter):
     if response_iter.method == "POST":
         value = Valueform(response_iter.POST)
     if value.is_valid():
-        first_name = value.cleaned_data['first_name'] response = HttpResponse(first_name)
+        first_name = value.cleaned_data['first_name']
+        response = HttpResponse(first_name)
         print("Content of the resposne: ", response.content)
         print("Charecterset of the response: ", response.charset)
         print("Status code of the response: ", response.status_code)
