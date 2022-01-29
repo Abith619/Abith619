@@ -27,8 +27,6 @@ from django.db import models
 # SECURITY = csrf (Cross-Site Request Forgery). csrf is a random token that is generated every time we submit form data. This token is validated by the Django server on every Http POST Request it receives. 
 #            If some hacker tries to attack, then this token becomes invalid and our application remains secure.
 # Template extensions and Tags, 
-
-
 #                                          mapping the views.py in urls.py file
 #                                          Django Template Language
 # {{variable_name}}, {% if condition %}
@@ -106,23 +104,18 @@ def updating_cookie1(request):
     return response
 #                                                          Delete Cookie
 #                                view.py
-
-
 def deleting_cookie(request):
     response = HttpResponse(
         "We are now finally deleting the cookie which is set")
     response.delete_cookie('Learning')
     return response
-
-
 #                                urls.py
 urlpatterns = [
     path('', views.home, name='home'),
     path('setc', views.setting_cookie, name='setc'),
     path('updc', views.updating_cookie, name='updc'),
     path('getc', views.getting_cookie, name='getc'),
-    path('delc', views.deleting_cookie, name='delc')
-]
+    path('delc', views.deleting_cookie, name='delc')]
 #                                                                                                  Views
 # Every view is callable and holds the capability to take a request and response
 # For Declaring the view in Django we need to have an HTTP request and a response
@@ -157,6 +150,7 @@ TEMPLATES = [
 Template_DIR = os.path.join(BASE_DIR, 'Templates')
 # Place an HTML file inside the Templates Folder = Django App1
 #                                                                                                    Rendering
+# combines a template with the context dictionary to return a HttpResponse object
 # Render the HTML File in views.py using() Method
 # newly created HTML content to The render method combines a template with the context dictionary to return a HttpResponse object
 def index(request_iter):
@@ -175,6 +169,7 @@ def index(request_iter):
         "Key1": "The Template tag value is rendered with reference to key1"}
     return render(request_iter, 'design.html', context=dict_Var)
 #                                                                                             Create a Django Form
+# key source through which the user keyed in input 
 class Valueform(forms.Form):
     user = forms.CharField(max_length=100)
 
@@ -256,7 +251,7 @@ HttpResponse.closed
 #                                                                         Response Framework Methods
 # Httpresponse attribute	                        Description
 # The content page and content type is associated to the response object
-HttpResponse.__init__(content=”, content_type=None, status=200, reason=None, charset=None)
+HttpResponse.__init__(content='', content_type=None, status=200, reason=None, charset=None)
 # The value is associated with the header name
 HttpResponse.__setitem__(header, value)
 HttpResponse.__delitem__(header)  # Deletes a specific header
@@ -275,8 +270,6 @@ HttpResponse.readable()  # A stream-like object will be created in the response
 HttpResponse.seekable()  # Makes the response object reachable
 
 #                               choiceField() in the forms.py
-
-
 def email_sending(response):
     email = emailform()
     if response.method == 'POST':
@@ -294,15 +287,14 @@ def email_sending(response):
         return response
         return render(response, 'emailpage.html', {"email": email})
 
-
 # response values from a file upload page is been verified
-
 
 def file_upload(response):
     file = fileform()
     print(" File Values in File Dictionary:", response.FILES)
     if response.method == 'POST' and response.FILES['Uploaded_File']:
-        uploaded_file = response.FILES['Uploaded_File'] fs = FileSystemStorage()
+        uploaded_file = response.FILES['Uploaded_File']
+        fs = FileSystemStorage()
         filename = fs.save(uploaded_file.name, uploaded_file)
         uploaded_File_Size = 'Size of Uploaded file: ' + \
             str(uploaded_file.size)
@@ -348,7 +340,8 @@ def formView(response_iter):
         response_iter.session[first_name] = first_name
         return render(response_iter, 'Form_Handeling.html', {"form": form})
 
-
+#                                                                                                                 Session
+# server side cookies
 #                                                                            Methods to Catch Session Data
 # Store Sessions onto the connected middleware database
 INSTALLED_APPS = [
@@ -427,7 +420,7 @@ class Valueform(forms.Form):
 #                                              Create a view for the form
 from django.shortcuts import render
 from django.http import  HttpResponse
-from Django_app1.forms import Valueform
+from django.forms import Valueform
 def formView(request_iter):
     form = Valueform()
     if request_iter.method == "POST":
@@ -446,13 +439,16 @@ def formView(request_iter):
 #                                                        Tag the view in urls.py file
 from django.contrib import admin
 from django.conf.urls import url
-from Django_app1 import views
+from django_app1 import views
 urlpatterns = [
     url(r'^$',views.index,name='index'),
     url(r'formpage/',views.form_view,name='form'),
     url(r'admin/', admin.site.urls),
     ]
+#                                                                                                 Static Files
+# images, CSS scripts
 #                                                                                        Ensure django.contrib.staticfiles
+# for maintaining the static files
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -463,11 +459,12 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'Django_app1'
     ]
-STATIC_URL = '/static/'  # Ensure static url
+STATIC_URL = '/static/'  #                              Ensure static url
 #                                                       Ensure STATICFILES_DIRS or STATIC_ROOT
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static') # SETTINGS.py
 #                                                                                                     EMAIL HANDELING 
+# email configurations To connect the email setup to Django in SETTINGS.PY file
 """EMAIL_HOST − SMTP server.
 EMAIL_HOST_USER − SMTP server login credentials.
 EMAIL_HOST_PASSWORD − SMTP server password credentials
@@ -479,14 +476,11 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'testmysmtpconnection@gmail.com'
 EMAIL_HOST_PASSWORD =  '*********'
 EMAIL_USE_TLS = True
-"""send_mail()
-send_mass_mail()
-mail_admins()
-mail_managers()"""
-send_mail(subject, message, from_email, recipient_list, fail_silently=False, auth_user=None, auth_password=None,connection=None, html_message=None)
-send_mass_mail(datatuple, fail_silently=False, auth_user=None, auth_password=None, connection=None)
-mail_admins(subject, message, fail_silently=False, connection=None, html_message=None)
-mail_managers(subject, message, fail_silently=False, connection=None, html_message=None)
+"""send_mail() = send_mass_mail(datatuple, fail_silently=False, auth_user=None, auth_password=None, connection=None)
+send_mass_mail() = send_mass_mail(datatuple, fail_silently=False, auth_user=None, auth_password=None, connection=None)
+mail_admins() = mail_admins(subject, message, fail_silently=False, connection=None, html_message=None)
+mail_managers() = mail_managers(subject, message, fail_silently=False, connection=None, html_message=None)
+"""
 send_mail(
     'Subject',
     'Message.',
@@ -529,19 +523,18 @@ class MyForm(forms.Form):
     email=forms.EmailField(label='Email')
     Gender=forms.ChoiceField(choices=[(' ','Choose'),('M','Male'),('F','Female')])
     Description=forms.CharField(widget=forms.Textarea,required=False)
-def __init__(self, *args, **kwargs):
-    super().__init__(*args, **kwargs)
-    self.helper=FormHelper
-    self.helper.form_method = 'post'
-    self.helper.layout = Layout(
-        'Name','email','Gender','Description',
-        Submit('submit','Submit',css_class='btn-success')
-        )
+    def __init__(self, *args, **kwargs):
+        super().__init__(self, *args, **kwargs)
+        self.helper = forms.Helper
+        self.helper.forms_method = 'post'
+        self.helper.layout = layout('Name','email','Gender','Description',
+        self.helper.submit('submit','Submit',css_class='btn-success'))
+    
 #                                                                              views.py
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.forms import MyForm
-# Create your views here.
+#                                                  Create your views here
 def first_form(request):
     if request.method=='POST':
         form=MyForm(request.POST)
