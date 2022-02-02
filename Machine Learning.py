@@ -15,16 +15,69 @@ import numpy as np
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn import model_selection
 from sklearn.cluster import KMeans
+from sklearn.model_selection import train_test_split
 import matplotlib_inline
 from scipy import stats
+from sklearn.preprocessing import StandardScaler
 
-print(matrix(runif(6*3), nrow=6, ncol=3))
-# create imputer object: 
-impute = SimpleImpute(missing_values=np.nan, Strategy=‘most_frequent’)
+X = list(range(0,15))
+y = [x * x for x in X]
+print(y)
+
+#                                                                    Linear Discriminant Analysis
+# pre-processing, Cleansing the Data
+from sklearn import datasets
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.preprocessing import StandardScaler
+iris = datasets.load_iris()
+x = iris.data
+y = iris.target
+x = StandardScaler().fit_transform(iris.data)
+#                                                                             train_test_split
+import numpy as np
+train_test_split(x, y, train=0.*, test_size=*)
+X = list(range(15))
+print(x)
+y = [x*x for x in X]
+X_train, X_test, y_train, y_test = model_selection.train_test_split(X, y, train_size=0.65,
+test_size=0.35, random_state=101)
+print("X_train:", X_train)
+
+lda = LinearDiscriminantAnalysis(n_components=2)
+x_lda = lda.fit(x, y).transform(x)
+y_lda = lda.fit_transform(x, y)
+lda
+x.shape[1]
+x_lda.shape[1]
+
+print('original number of features:', x.shape[1])
+print("Reduced number of Features", y_lda.shape[1])
+#                                                  import Dataset and convert into DataFrame
+pd_frame = pd.DataFrame(x, columns = iris.feature_names)
+pd_frame
+iris.target
+iris.feature_names
+iris.target_names
+#                                                       StandardScaler
+Standardizer = StandardScaler()
+Standardizer.fit(X_train)
+X_train_std = Standardizer.fit_transform(X_train)
+X_test_std = Standardizer.fit_transform(X_test)
+#                                                          Variance Threshold
+from sklearn import datasets
+from sklearn.feature_selection import VarianceThreshold
+
+thresholder = VarianceThreshold(threshold=0.3)
+x_threshold_value = thresholder.fit_transform(iris.data)
+iris.data
+x_threshold_value
+#                                                            create imputer object: 
+impute = SimpleImpute(missing_values=np.nan, Strategy='most_frequent')
 impute.fit_transform(x)
-# Declare an object 
-df = pd.dataframe() # to create pandas dataframe
+#                        Declare an object 
+df = pd.dataframe() #    to create pandas dataframe
 df = pd.dataframe()
 
 new_observation = [[0.8, 0.8, 0.8, 0.8]]   # create new Observation
@@ -623,21 +676,21 @@ print("Reduced number of features", X_Output.shape[1])
 X= -2 * np.random.rand(100,2)
 X1 = 1 + 2 * np.random.rand(50,2)
 X[50:100, :] = X1
-plt.scatter(X[ : , 0], X[ :, 1], s = 50, c = ‘b’)
+plt.scatter(X[ : , 0], X[ :, 1], s = 50, c = 'b')
 plt.show()
 # Step 3:                                                                Use Scikit-Learn
 from sklearn.cluster import KMeans
 Kmean = KMeans(n_clusters=2) # k (n_clusters) an arbitrary value of 2)
 Kmean.fit(X)
-KMeans(algorithm=’auto’, copy_x=True, init=’k-means++’, max_iter=300
-n_clusters=2, n_init=10, n_jobs=1, precompute_distances=’auto’,
+KMeans(algorithm='auto', copy_x=True, init='k-means++', max_iter=300
+n_clusters=2, n_init=10, n_jobs=1, precompute_distances='auto',
 random_state=None, tol=0.0001, verbose=0)
 # Step 4:                                                                Finding the centroid
 Kmean.cluster_centers_
 #                            display the cluster centroids (using green and red color)
-plt.scatter(X[ : , 0], X[ : , 1], s =50, c=’b’)
-plt.scatter(-0.94665068, -0.97138368, s=200, c=’g’, marker=’s’)
-plt.scatter(2.01559419, 2.02597093, s=200, c=’r’, marker=’s’)
+plt.scatter(X[ : , 0], X[ : , 1], s =50, c='b')
+plt.scatter(-0.94665068, -0.97138368, s=200, c='g', marker='s')
+plt.scatter(2.01559419, 2.02597093, s=200, c='r', marker='s')
 plt.show()
 # Step 5: Testing the algorithm
 Kmean.labels_ # labels property of the K-means clustering
