@@ -1,23 +1,31 @@
-﻿import sys
+﻿from crypt import methods
+import sys
 import os
 import json
 import pyodbc
 import socket
 from flask import Flask
-from flask_restful import reqparse, abort, Api, Resource
+from flask import reqparse, abort, Api, Resource
 from threading import Lock
 from tenacity import *
 from opencensus.ext.azure.trace_exporter import AzureExporter
 from opencensus.ext.flask.flask_middleware import FlaskMiddleware
 from opencensus.trace.samplers import ProbabilitySampler
 import logging
+from flask import jsonify
 
-
-# Initialize Flask
+#                                 Initialize Flask
 app = Flask(__name__)
+app.run(debug=True)
 
+@ app.route("/courses", methods=['GET'])
+def get():
+    return jsonify({'courses':courses})
+@app.route("/courses/<int:course_id>", methods=['GET'])
+def get_course(course_id):
+    return jsonify({'course': courses[course_id]})
 
-# Setup Azure Monitor
+#                                     Setup Azure Monitor
 if 'APPINSIGHTS_KEY' in os.environ:
     middleware = FlaskMiddleware(
         app,
@@ -26,7 +34,7 @@ if 'APPINSIGHTS_KEY' in os.environ:
     )
 
 
-# Setup Flask Restful framework
+#                                               Setup Flask Restful framework
 api = Api(app)
 parser = reqparse.RequestParser()
 parser.add_argument('customer')
@@ -104,7 +112,7 @@ class Queryable(Resource):
         return result
 
 
-# Customer Class
+#                                                Customer Class
 class Customer(Queryable):
     def get(self, customer_id):     
         customer = {}
@@ -134,7 +142,7 @@ class Customer(Queryable):
         return result, 202
 
 
-# Customers Class
+#                                          Customers Class
 class Customers(Queryable):
     def get(self):     
         result = self.executeQueryJson("get")   
