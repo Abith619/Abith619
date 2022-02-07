@@ -17,7 +17,7 @@ from flask import jsonify
 #                                 Initialize Flask
 app = Flask(__name__)
 app.run(debug=True)
-
+#                                                  Rest-ApI
 @ app.route("/courses", methods=['GET'])
 def get():
     return jsonify({'courses':courses})
