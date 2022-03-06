@@ -1,9 +1,8 @@
 for i in range(5):
-    for j in range(5-i):
-        print(i+1, end=" ")
-    print()
-for i in range(0, i, -1):
-    for j in range(1, i):
+    for j in range(i+1):
+        print(j+1, end=" ")
+    for j in range(5, -i, -1):
         print(" ", end=" ")
-    for j in range(0, j):
-        print(i-j, end=" ")
+    for j in range(i, -1, -1):
+        print(j+1, end=" ")
+    print()
