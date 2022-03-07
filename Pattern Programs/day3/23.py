@@ -1,6 +1,14 @@
-for i in range(5):
-    for j in range(i):
+"""n=5
+for i in range(n):
+    for j in range(i+1):
         if i==j:
-            print(" ")
+            print(" ", end=" ")
         else:
-            print(j)
+            print(j+i)"""
+n=5
+for i in range(n):
+    for j in range(i, -1, -1):
+        print(j+1, end=" ")
+    for j in range(i+1):
+        print(j+1, end=" ")
+    print()

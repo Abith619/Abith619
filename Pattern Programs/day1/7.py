@@ -1,4 +1,7 @@
-for i in range(11, 0, -1):
-    print(11-i, " ", +(11-i)*"*")
-for j in range(11, 0, -1):
-    print((11-j)*" "+j*"*")
+n=5
+for i in range(n, 0, -1):
+    print(" "+(n-i)*"* ")
+    print()
+for i in range(n, 0, -1):
+    print((n-i)*""+i*"* ")
+    print()

@@ -1,6 +1,7 @@
-for i in range(5):
-    for j in range(5, 0, -1):
+n=5
+for i in range(n):
+    for j in range(n, 1, -1):
         if i==j:
             print("*")
         else:
-            print(j)
+            print(j, end=" ")
