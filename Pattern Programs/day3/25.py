@@ -1,9 +1,13 @@
-n = 5
-for i in range(n):
-    for j in range(n-i-1):
-        print(" ", end=" ")
-    for j in range (i+1):
-        print(j+1, end=" ")
-    for j in range(i, -1, -1):
-        print(j, end=" ")
-    print()
+k=1
+i=1
+b=1
+while b<5-i:
+    print(" ", end=" ")
+    b=b+1
+j=1
+while j<=k:
+        print(i, end=" ")
+        i=i+1
+k=k+2
+print()
+i=i+1
