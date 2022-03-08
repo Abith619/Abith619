@@ -1,12 +1,12 @@
 """ """
-number = 0
+n = None    
+num = []    
 while True:
-    i = input()
-    if i == "":
-        number += 1
-        if number == 1:
-            break
+    n = input("Enter number: ")
+    if n == "":
+        for i in num:
+            print(i)
+        break
     else:
-        number = 0
-        pass
-    print(sorted(i))
+        num.append(n)
+print(list(sorted(num)))

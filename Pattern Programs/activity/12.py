@@ -4,14 +4,15 @@ your program should display them (except for the 0) in reverse order, with one v
 appearing on each line."""
 
 
-number = 0
+n = None    
+num = []    
 while True:
-    i = input()
-    if i == "":
-        number += 1
-        if number == 1:
-            break
+    n = input("Enter number: ")
+    if n == "0":
+        for i in num:
+            print(i)
+        break
     else:
-        number = 0
-        pass
-    sorted(i)
+        num.append(n)
+num.reverse()
+print(num)

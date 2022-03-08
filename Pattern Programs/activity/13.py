@@ -2,14 +2,14 @@
 After the user enters a blank line your program should dis-play each word entered by the user 
 exactly once. The words should be displayed in the same order that they were entered"""
 
-number = 0
+n = None    
+num = []    
 while True:
-    i = input()
-    if i == "":
-        number += 1
-        if number == 1:
-            break
+    n = input("Enter number: ")
+    if n == "":
+        for i in num:
+            print(i)
+        break
     else:
-        number = 0
-        pass
-    print(i)
+        num.append(n)
+print(list(set(num)))
