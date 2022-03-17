@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../Act-2"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"svn.ignoreMissingSvnWarning": true
+	}
+}

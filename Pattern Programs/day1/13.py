@@ -1,6 +1,3 @@
-from ctypes.wintypes import CHAR
-from email import charset
-
 
 k=65
 for i in range(0, k+1):

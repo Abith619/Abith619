@@ -1,13 +1,14 @@
-k=1
-i=1
-b=1
-while b<5-i:
-    print(" ", end=" ")
-    b=b+1
-j=1
-while j<=k:
-        print(i, end=" ")
-        i=i+1
-k=k+2
-print()
-i=i+1
+i=0
+while i<5:
+    print(" " * (4 - i), end=" ")
+    j=0
+    k=0
+    while j-1 < i*2:
+        if j>i:
+            print(i-k, end=" ")
+            k+=1
+        else:
+            print(j+i+1, end=" ")
+        j+=1
+    print()
+    i+=1
