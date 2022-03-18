@@ -4,3 +4,31 @@ line parameters. The files are displayed in the same order that they appear on t
 Create a Python program that performs this task. It should generate an appropriate error message
 for any file that cannot be displayed, and then proceed to the next file. Display an appropriate
 error message if your program is started without any command line parameters
+
+“Alice's Adventures in Wonderland”:
+
+Alice was
+beginning to get very tired of sitting by her
+sister
+on the bank, and of having nothing to do: once
+or twice she had peeped into the book her sister
+was reading, but it had
+no
+pictures or conversations in it,"and what is
+the use of a book," thought Alice, "without
+pictures or conversations?"
+
+When formatted for a line length of 50 characters, it should be displayed as:
+
+Alice was beginning to get very tired of sitting
+by her sister on the bank, and of having nothing
+to do: once or twice she had peeped into the book
+her sister was reading, but it had no pictures or
+conversations in it, "and what is the use of a
+book," thought Alice, "without pictures or
+conversations?"
+
+Ensure that your program works correctly for files containing multiple paragraphs
+of text. You can detect the end of one paragraph and the beginning of the next by
+looking for lines that are empty once the end of line marker has been removed. You
+may perform error checking if you want to, but it is not required for this exercise.

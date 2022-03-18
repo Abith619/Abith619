@@ -36,8 +36,7 @@ def convert_to_words(num):
 	while (x < len(num)):
 		if (l >= 3):
 			if (ord(num[x]) - 48 != 0):
-				print(single_digits[ord(num[x]) - 48],
-					end=" ")
+				print(single_digits[ord(num[x]) - 48], end=" ")
 				print(tens_power[l - 3], end=" ")
 			l -= 1
 		else:
@@ -55,10 +54,10 @@ def convert_to_words(num):
 				if(i > 0):
 					print(tens_multiple[i], end=" ")
 				else:
-					print("", end="")
+					print(" ", end="")
 				x += 1
 				if(ord(num[x]) - 48 != 0):
 					print(single_digits[ord(num[x]) - 48])
 		x += 1
 a=convert_to_words(input())
-print(a)
+(a)
