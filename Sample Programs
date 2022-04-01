@@ -1,0 +1,341 @@
+# Sample Programs
+
+"""
+An example of face detection using OpenCV.
+"""
+
+import cv2
+import sys
+
+casc_path = cv2.data.haarcascades+"haarcascade_frontalface_default.xml"
+face_cascade = cv2.CascadeClassifier(casc_path)
+
+device = 1 # Front camera
+try:
+    device = int(sys.argv[1]) # 0 for back camera
+except IndexError:
+    pass
+
+cap = cv2.VideoCapture(device)
+
+while cap.isOpened():
+
+    # Capture frame-by-frame
+    ret, frame = cap.read()
+
+    # Check if frame is not empty
+    if not ret:
+        continue
+
+    # Auto rotate camera
+    frame = cv2.autorotate(frame, device)
+
+    # Convert from BGR to RGB
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+    faces = face_cascade.detectMultiScale(
+        frame,
+        scaleFactor=1.1,
+        minNeighbors=5,
+        minSize=(30, 30),
+        flags=cv2.CASCADE_SCALE_IMAGE
+    )
+
+    # Draw a rectangle around the faces
+    for (x, y, w, h) in faces:
+        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+
+    # Display the resulting frame
+    cv2.imshow('frame', frame)
+
+# Draw Spiral Star 
+
+from turtle import *
+
+for i in range(20):
+    fd(i * 10)
+    rt(144)
+    
+done()
+
+
+"""
+Shows the 10 artist with more songs in the music library and then plays a random song from the selected artist.
+"""
+
+import music
+from random import shuffle
+from collections import Counter
+from os import environ
+from colorama import Style
+from shutil import get_terminal_size
+
+##################
+# Top 10 artists #
+##################
+
+artist_counter = Counter()
+songs = []
+
+query = music.MediaQuery.songs()
+for item in query.items:
+    artist_counter[item.artist] += 1
+    songs.append(item)
+
+most_common = artist_counter.most_common(10)
+
+if len(artist_counter) == 0:
+	raise RuntimeError("You don't seem to have any music in your library.")
+else:
+	print("Most common artists in your music library:")
+	print("=" * get_terminal_size().columns)
+	for i, (artist, count) in enumerate(most_common):
+		print(f"{Style.BRIGHT}%i{Style.RESET_ALL}. %s (%i songs)" % (i+1, artist, count))
+
+########################
+# Play songs by artist #
+########################
+
+print()
+i = int(input("Type the index of an artist to play a random song by it: "))-1
+
+artist = most_common[i][0]
+songs_by_artist = []
+for song in songs:
+    if song.artist == artist:
+        songs_by_artist.append(song)
+
+shuffle(songs_by_artist)
+
+music.set_queue_with_items(songs_by_artist)
+music.play()
+
+# Draw Polygon 
+
+from turtle import *
+
+num_sides = 6
+side_length = 70
+angle = 360.0 / num_sides
+
+for i in range(num_sides):
+    fd(side_length)
+    rt(angle)
+    
+done()
+
+# Draw Fast Circle
+
+from turtle import *
+
+speed(0)
+
+for i in range(180):
+    fd(90)
+    rt(30)
+    fd(10)
+    lt(60)
+    fd(40)
+    rt(30)
+    
+    up()
+    setpos(0, 0)
+    down()
+    
+    rt(2)
+    
+done()
+
+# Draw Circle With Colors
+
+from turtle import *
+
+color("blue")
+speed(10)
+
+for i in range(50):
+    fd(50)
+    lt(123)
+    
+color("red")
+for i in range(50):
+    fd(100)
+    lt(123)
+    
+done()
+
+"""
+A draggable circle.
+"""
+
+import pyto_ui as ui
+
+view = ui.View()
+view.background_color = ui.COLOR_SYSTEM_BACKGROUND
+
+circle = ui.View()
+circle.size = (50, 50)
+circle.center = (view.width/2, view.height/2)
+circle.flex = [
+    ui.FLEXIBLE_BOTTOM_MARGIN,
+    ui.FLEXIBLE_TOP_MARGIN,
+    ui.FLEXIBLE_LEFT_MARGIN,
+    ui.FLEXIBLE_RIGHT_MARGIN
+]
+circle.corner_radius = 25
+circle.background_color = ui.COLOR_LABEL
+view.add_subview(circle)
+
+def move(sender: ui.GestureRecognizer):
+    if sender.state == ui.GESTURE_STATE_CHANGED:
+        circle.center = sender.location
+  
+gesture = ui.GestureRecognizer(ui.GESTURE_TYPE_PAN)
+gesture.action = move
+view.add_gesture_recognizer(gesture)
+
+ui.show_view(view, ui.PRESENTATION_MODE_SHEET)
+
+"""
+Encrpypts a password with PyNaCl.
+"""
+
+import nacl.secret
+import nacl.utils
+import sys
+import base64
+import getpass
+
+key = nacl.utils.random(nacl.secret.SecretBox.KEY_SIZE)
+box = nacl.secret.SecretBox(key)
+
+if len(sys.argv) > 1:
+    password = " ".join(sys.argv[1:]).encode()
+else:
+    password = getpass.getpass("Password: ")
+
+password = password.encode()
+
+encrypted = box.encrypt(password)
+encrypted = base64.b64encode(encrypted).decode("ascii")
+print(encrypted)
+
+decrypted = box.decrypt(base64.b64decode(encrypted)).decode()
+
+"""
+An example for In App widgets. When the widget is pressed, it opens the app, asks for a note and displays the note on the widget.
+After running the script once, you can set it in an "In App" widget.
+The content of the widget is set by a script executed in app and is not updated automatically.
+"""
+
+import widgets as wd
+import sf_symbols as sf
+from UIKit import UIApplication
+from mainthread import mainthread
+
+BACKGROUND = wd.Color.rgb(255/255, 250/255, 227/255)
+FOREGROUND = wd.Color.rgb(75/255, 72/255, 55/255)
+
+@mainthread
+def suspend():
+    UIApplication.sharedApplication.suspend()
+
+note = input("Note: ")
+
+widget = wd.Widget()
+text = wd.Text(
+    note,
+    font=wd.Font("AmericanTypewriter", 18),
+    color=FOREGROUND,
+    padding=wd.PADDING_HORIZONTAL)
+
+symbol = wd.SystemSymbol(
+    sf.PENCIL,
+    padding=wd.Padding(10, 0, 10, 0),
+    font_size=20)
+
+layouts = [widget.small_layout, widget.medium_layout, widget.large_layout]
+
+for layout in layouts:
+    layout.add_row([symbol, wd.Spacer()])
+    layout.add_vertical_spacer()
+    layout.add_row([text])
+    layout.add_vertical_spacer()
+    layout.set_background_color(BACKGROUND)
+
+wd.save_widget(widget, "Note")
+
+suspend()
+
+"""
+Presenting a subclass of UIViewController.
+"""
+
+from UIKit import *
+from LinkPresentation import *
+from Foundation import *
+from rubicon.objc import *
+from mainthread import mainthread
+import pyto_ui as ui
+
+# We subclass UIViewController
+class MyViewController(UIViewController):
+    
+    # Overriding viewDidLoad
+    @objc_method
+    def viewDidLoad(self):
+        send_super(__class__, self, "viewDidLoad")
+
+        self.title = "Link"
+
+        self.view.backgroundColor = UIColor.systemBackgroundColor()
+
+        done_button = UIBarButtonItem.alloc().initWithBarButtonSystemItem(0, target=self, action=SEL("close"))
+        self.navigationItem.rightBarButtonItems = [done_button]
+        
+        self.url = NSURL.alloc().initWithString("https://apple.com")
+        self.link_view = LPLinkView.alloc().initWithURL(self.url)
+        self.link_view.frame = CGRectMake(0, 0, 200, 000)
+        self.view.addSubview(self.link_view)
+        self.fetchMetadata()
+    
+    @objc_method
+    def fetchMetadata(self):
+        
+        @mainthread
+        def set_metadata(metadata):
+            self.link_view.setMetadata(metadata)
+            self.layout()
+
+        def fetch_handler(metadata: ObjCInstance, error: ObjCInstance) -> None:
+             set_metadata(metadata)
+        
+        provider = LPMetadataProvider.alloc().init().autorelease()
+        provider.startFetchingMetadataForURL(self.url, completionHandler=fetch_handler)
+    
+    @objc_method
+    def layout(self):
+        self.link_view.sizeToFit()
+        self.link_view.setCenter(self.view.center)
+    
+    @objc_method
+    def close(self):
+        self.dismissViewControllerAnimated(True, completion=None)
+    
+    @objc_method
+    def viewDidLayoutSubviews(self):
+        self.layout()
+    
+    @objc_method
+    def dealloc(self):
+        self.link_view.release()
+
+@mainthread
+def show():
+    # We initialize our view controller and a navigation controller
+    # This must be called from the main thread
+    vc = MyViewController.alloc().init().autorelease()
+    nav_vc = UINavigationController.alloc().initWithRootViewController(vc).autorelease()
+    ui.show_view_controller(nav_vc)
+
+show()
