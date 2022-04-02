@@ -1,9 +1,9 @@
 # XML-RPC
 #                               Configuration
-"""url = insert server URL
-db = insert database name
+url = server_URL
+db = database_name
 username = 'admin'
-password = insert password for your admin user (default: admin)"""
+password = (default: admin)
 
 # Test database
 import xmlrpc.client
