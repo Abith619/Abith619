@@ -1,9 +1,9 @@
 # XML-RPC
 #                               Configuration
-"""url = insert server URL
-db = insert database name
+url = server_URL
+db = database_name
 username = 'admin'
-password = insert password for your admin user (default: admin)"""
+password = (default: admin)
 
 # Test database
 import xmlrpc.client
@@ -29,6 +29,7 @@ models.execute_kw(db, uid, password, 'res.partner', 'search_count', [[['is_compa
 # Read records
 ids = models.execute_kw(db, uid, password, 'res.partner', 'search', [[['is_company', '=', True]]], {'limit': 1})
 [record] = models.execute_kw(db, uid, password, 'res.partner', 'read', [ids])
+# count the number of fields fetched by default
 len(record)
 
 # List record fields
@@ -88,37 +89,3 @@ models.execute_kw(db, uid, password, 'x_custom', 'read', [[record_id]])
     }
 ]
 """
-#                                   Attributes 
-"""<field name="last_name" attrs="{'invisible': [('include_last_name','=',False)] }"/>"""
-"""<field name="last_name" attrs="{'invisible': ['|','|',('include_last_name','=',False),('name','=',False), ('dob', '=',False)] }"/>"""
-"""<field name="last_name" attrs="{'required': [('include_last_name','=',True)] }"/>"""
-"""<field name="total" attrs="{'column_invisible' : [('parent.is_total','=',False)]}"/>"""
-"""<button name="cancel_action" type="object" string="Cancel"  attrs="{'invisible': ['|', ('require', '=', False), ('state','in', ['draft','approved','approved_finally','refused'])]}"/>"""
-
-# 
-"""
-        PRINT INVOICE
-        IDS is the invoice ID, as returned by:
-        ids = sock.execute(dbname, uid, pwd, 'account.invoice', 'search', [('number', 'ilike', invoicenumber), ('type', '=', 'out_invoice')])"""
-import time
-import base64
-printsock = xmlrpclib.ServerProxy('http://server:8069/xmlrpc/report')
-model = 'account.invoice'
-id_report = printsock.report(dbname, uid, pwd, model, ids, {'model': model, 'id': ids[0], 'report_type':'pdf'})
-time.sleep(5)
-state = False
-attempt = 0
-while not state:
-    report = printsock.report_get(dbname, uid, pwd, id_report)
-    state = report['state']
-    if not state:
-        time.sleep(1)
-    attempt += 1
-    if attempt>200:
-        print('Printing aborted, too long delay !')
-
-    string_pdf = base64.decodestring(report['result'])
-    file_pdf = open('/tmp/file.pdf','w')
-    file_pdf.write(string_pdf)
-    file_pdf.close()
-
