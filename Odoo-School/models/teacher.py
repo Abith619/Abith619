@@ -1,4 +1,5 @@
-from odoo import models, fields
+from odoo.exceptions import ValidationError
+from odoo import models, fields, api
 
 class TeacherRecord(models.Model):
     _name = "teacher.teacher"   
@@ -10,6 +11,11 @@ class TeacherRecord(models.Model):
     gender = fields.Selection([('m', 'Male'), ('f', 'Female'), ('o', 'Other')], string='Gender')    
     teacher_blood_group = fields.Selection([('A+', 'A+ve'), ('B+', 'B+ve'), ('O+', 'O+ve'), ('AB+', 'AB+ve'), ('A-', 'A-ve'), ('B-', 'B-ve'), ('O-', 'O-ve'), ('AB-', 'AB-ve')], string='Blood Group')
     nationality = fields.Many2one('res.country', string='Nationality')
+
+    @api.constrains('teacher_age')
+    def age(self):
+        if self.teacher_age <= 18:
+            raise ValidationError("Please provide valid age  ?")
 
     def action_confirm(self):
         for rec in self:
@@ -31,6 +37,11 @@ class TeacherRecord(models.Model):
     }
 
     techer_line=fields.One2many('teacher.teacher.line','teach')
+    
+    @api.constrains('techer_line')
+    def val(self):
+        if not self.techer_line:
+            raise ValidationError('Please Select Your Product')
 
     state=fields.Selection([
         ('draft','Draft'),
