@@ -113,5 +113,6 @@
         action="action_view_students"/> -->
         <!-- <menuitem id="menuss_school" name="School data" parent='menus_school'     
         action="action_view_teachers"/>  -->
+        
     </data>
 </odoo>

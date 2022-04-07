@@ -12,17 +12,21 @@
             </field>        
         </record>
         <record id="view_teacher_form" model="ir.ui.view">
-            
             <field name="name">teacher.teacher.form</field>
-            
             <field name="model">teacher.teacher</field>
             <field name="priority" eval="8" />
             <field name="arch" type="xml">
-        
                 <form string="Teacher">
                     <header>
+                        <field name= "state" widget='statusbar' nolabel="1" clickable="True"/>
+                        <button name="action_paid"  type="object" string="Paid"  class="oe_highlight"/>
+                        <button name="action_confirm"  type="object" string="Confirm"  class="oe_highlight"/>   
                     </header>
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="invoices_button" type="object" class="oe_stat_button" 
+                            icon="fa-pencil-square-o" widget="statinfo"/>
+                        </div>
                        <group>
                         <field name="name" />
                         <field name="teacher_dob" />
@@ -32,31 +36,29 @@
                         <field name="nationality" />
                     </group>
                            <notebook> 
-                            
                 <page string="Student List" >
                     
                     <field name="techer_line">
-                       
                         <tree string="Students List" editable="bottom" >
                             <field name="student_field_1" />
                         </tree>
-
                     </field>
                 </page> 
             </notebook>
                     </sheet>
-                    
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
                 </form>
-                
-            </field>
-            
+            </field>            
         </record>
 
         <record model="ir.actions.act_window" id="action_view_teacher">            
             <field name="name">Teachers</field>         
                 <field name="res_model">teacher.teacher</field>           
                 <field name="view_type">form</field>            
-                <field name="view_mode">tree,form</field>
+                <field name="view_mode">tree,form,kanban</field>
                 <field name="domain">[]</field>            
                 <field name="help" type="html">                
                     <p class="oe_view_nocontent_create">Create new teacher details

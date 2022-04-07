@@ -7,7 +7,7 @@
 'company': 'Xmedia Solutions',
 'website': 'https://www.xmedia.in',
 'category': 'Tools',
-'depends': ['base','web'],
+'depends': ['base','web','mail'],
 'license': 'AGPL-3',
 
 'data': [     'security/ir.model.access.csv',
