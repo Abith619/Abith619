@@ -7,12 +7,14 @@
 'company': 'Xmedia Solutions',
 'website': 'https://www.xmedia.in',
 'category': 'Tools',
-'depends': ['base','web','mail'],
+'depends': ['base','web','mail','contacts'],
 'license': 'AGPL-3',
 
 'data': [     'security/ir.model.access.csv',
     'views/view.xml', 
     'views/teacher.xml',
+    'reports/reports.xml',
+    'reports/pdf.xml'
   ],
 'demo': [],
 'installable': True,

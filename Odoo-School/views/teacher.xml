@@ -20,7 +20,8 @@
                     <header>
                         <field name= "state" widget='statusbar' nolabel="1" clickable="True"/>
                         <button name="action_paid"  type="object" string="Paid"  class="oe_highlight"/>
-                        <button name="action_confirm"  type="object" string="Confirm"  class="oe_highlight"/>   
+                        <button name="action_confirm"  type="object" string="Confirm"  class="oe_highlight"/> 
+                        <button name="action_send_email" type="object" string="Send E-mail" class="oe_highlight"/>
                     </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">

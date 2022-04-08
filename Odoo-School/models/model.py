@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields
 
 class StudentRecord(models.Model):
     _name = "student.student"    
