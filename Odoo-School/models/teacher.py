@@ -6,30 +6,12 @@ class TeacherRecord(models.Model):
     _name = "teacher.teacher"   
     _inherit=('mail.thread')
     _description= "School teacher"
-    name = fields.Many2one('res.partner',string='Name', required=True) 
+    name = fields.Char(string='Name', required=True) 
     teacher_age = fields.Integer(string='Age')    
     teacher_dob = fields.Date(string="Date of Birth")    
     gender = fields.Selection([('m', 'Male'), ('f', 'Female'), ('o', 'Other')], string='Gender')    
     teacher_blood_group = fields.Selection([('A+', 'A+ve'), ('B+', 'B+ve'), ('O+', 'O+ve'), ('AB+', 'AB+ve'), ('A-', 'A-ve'), ('B-', 'B-ve'), ('O-', 'O-ve'), ('AB-', 'AB-ve')], string='Blood Group')
     nationality = fields.Many2one('res.country', string='Nationality')
-    bill_no=fields.Float(string="Bill No : ")
-
-#      Value(Required)-Condition
-    @api.constrains('bill_no')
-    def check_bill_no(self):
-        if self.bill_no == 0.00:
-            raise ValidationError("Bill No. must be greater than 0")
-
-#               sum(total)
-    total=fields.Integer(string='TotalAmount', compute='sum')
-    @api.onchange('techer_line')
-    @api.depends("total")
-    def sum(self):
-        b = []
-        for i in self:
-            for j in i.techer_line:
-                b.append(j.total1)
-        i.total = sum(b)
 
 #           E-Mail 
     def action_send_email(self):
@@ -44,7 +26,11 @@ class TeacherRecord(models.Model):
         'view_id': compose_form_id,
         'target': 'new',
     }
-
+#       Set Age Condition
+    @api.constrains('teacher_age')
+    def age(self):
+        if self.teacher_age <= 18:
+            raise ValidationError("Please provide valid age  ?")
 #   Print Report & PDF
     @api.multi
     def print_report(self):
@@ -54,43 +40,35 @@ class TeacherRecord(models.Model):
         }
         return self.env.ref('teacher.action_student_id_card').report_action(None, data=data)
 
-#       Set Age Condition
-    @api.constrains('teacher_age')
-    def age(self):
-        if self.teacher_age <= 18:
-            raise ValidationError("Please provide valid age  ?")
-
 #       State-Confirm
     def action_confirm(self):
         for rec in self:
             rec.state='confirm'
 
-#                        State-Paid
+#       State-Paid
     def action_paid(self):
         for i in self:
             i.state='paid'
 
-#                               Invoice
     def invoices_button(self):
-            return{
+        return{
         'name': "Paid ",
         'type': 'ir.actions.act_window',
         'view_type': 'form',
         'view_mode': 'form',
-        'res_model': 'account.invoice',
-        'view_id': self.env.ref('account.invoice_form').id,
-        'context': {
-            'default_partner_id': self.name.id,
-        },
+        'res_model': 'teacher.teacher',
+        'view_id': self.env.ref('school.view_teacher_form').id,
         'target': 'new'
     }
+
+#           One2many 
+    techer_line=fields.One2many('teacher.teacher.line','teach')
 
 #       Condition_for add_line
     @api.constrains('techer_line')
     def val(self):
-        for i in self.techer_line:
-            if not i.gender:
-                raise ValidationError('Please Enter Required Fields')
+        if not self.techer_line:
+            raise ValidationError('Please Select Your Product')
 
 #       States
     state=fields.Selection([
@@ -99,23 +77,7 @@ class TeacherRecord(models.Model):
         ('paid','Paid'),('cancelled','Cancelled')
         ],string='Status',track_visibility='always', default='draft')
 
-#           One2many 
-    techer_line=fields.One2many('teacher.teacher.line','teach')
-
 class TeacherLine(models.Model):
     _name="teacher.teacher.line"
     student_field_1 = fields.Many2one('res.users',string="Users")
-    nationality = fields.Many2one('res.country', string='Nationality')
-    gender = fields.Selection([('m', 'Male'), ('f', 'Female'), ('o', 'Other')], string='Gender', required=True)
     teach = fields.Many2one('teacher.teacher',string="Teacher")
-    amount=fields.Float(string="Salary")
-    tax=fields.Many2many("account.tax",string="Tax")
-    total1 = fields.Float(string='Total', store=True, compute='_get_sum', tracking=4)
-
-#            Sum of Product
-    @api.depends('amount','tax')
-    def _get_sum(self):
-        for rec in self:
-            rec.update({
-                'total1': rec.amount + sum(tax.amount for tax in rec.tax)
-            })
