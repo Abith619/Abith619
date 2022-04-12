@@ -16,18 +16,27 @@
             <field name="model">teacher.teacher</field>
             <field name="priority" eval="8" />
             <field name="arch" type="xml">
+                <div class="">
+                </div>
+
                 <form string="Teacher">
                     <header>
                         <field name= "state" widget='statusbar' nolabel="1" clickable="True"/>
                         <button name="action_paid"  type="object" string="Paid"  class="oe_highlight"/>
                         <button name="action_confirm"  type="object" string="Confirm"  class="oe_highlight"/> 
                         <button name="action_send_email" type="object" string="Send E-mail" class="oe_highlight"/>
+                        <button name="invoices_button" type="object" string="Invoice" class="oe_highlight"/>
                     </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">
                             <button name="invoices_button" type="object" class="oe_stat_button" 
                             icon="fa-pencil-square-o" widget="statinfo"/>
                         </div>
+                        <group>
+                                <field name="bill_no" attrs="{'required': [('total','>',500)]}" />
+                                <div class="o_td_label" groups="base.group_no_one" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}">
+                                </div>
+                            </group>
                        <group>
                         <field name="name" />
                         <field name="teacher_dob" />
@@ -35,6 +44,8 @@
                         <field name="teacher_age" />
                         <field name="teacher_blood_group" />
                         <field name="nationality" />
+                        <field name="total"  />
+                        
                     </group>
                            <notebook> 
                 <page string="Student List" >
@@ -42,6 +53,12 @@
                     <field name="techer_line">
                         <tree string="Students List" editable="bottom" >
                             <field name="student_field_1" />
+                            <field name="nationality" />
+                            <field name="gender" />
+                            <field name="teach" />
+                            <field name="tax" widget="many2many_tags" />
+                            <field name="amount" />
+                            <field name="total1" widget="monetary" type="measure" readonly="1" decoration-bf="1" optional="show" />
                         </tree>
                     </field>
                 </page> 
@@ -54,7 +71,6 @@
                 </form>
             </field>            
         </record>
-
         <record model="ir.actions.act_window" id="action_view_teacher">            
             <field name="name">Teachers</field>         
                 <field name="res_model">teacher.teacher</field>           
