@@ -11,7 +11,7 @@
 'license': 'AGPL-3',
 
 'data': ['security/ir.model.access.csv',
-    'views/view.xml',
+    'views/model.xml',
     'views/teacher.xml',
     'views/Inherit.xml',
     'reports/reports.xml',
