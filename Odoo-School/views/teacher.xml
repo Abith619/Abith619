@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
+            <!-- Tree View -->
         <record id="view_teacher_tree" model="ir.ui.view">            
             <field name="name">teacher.teacher.tree</field>            
             <field name="model">teacher.teacher</field>            
@@ -11,28 +12,30 @@
                 </tree>            
             </field>        
         </record>
+                <!-- Form View -->
         <record id="view_teacher_form" model="ir.ui.view">
             <field name="name">teacher.teacher.form</field>
             <field name="model">teacher.teacher</field>
             <field name="priority" eval="8" />
             <field name="arch" type="xml">
-                <div class="">
-                </div>
-
                 <form string="Teacher">
                     <header>
                         <field name= "state" widget='statusbar' nolabel="1" clickable="True"/>
+                                <!-- Add Buttons in States -->
                         <button name="action_paid"  type="object" string="Paid"  class="oe_highlight"/>
                         <button name="action_confirm"  type="object" string="Confirm"  class="oe_highlight"/> 
                         <button name="action_send_email" type="object" string="Send E-mail" class="oe_highlight"/>
                         <button name="invoices_button" type="object" string="Invoice" class="oe_highlight"/>
                     </header>
                     <sheet>
+                            <!-- Wizard Buttons, Create Invoice -->
+                        <button name="rolls" string="send check" type="object"/>
                         <div class="oe_button_box" name="button_box">
                             <button name="invoices_button" type="object" class="oe_stat_button" 
                             icon="fa-pencil-square-o" widget="statinfo"/>
                         </div>
                         <group>
+                                <!-- Create Fields in Form view -->
                                 <field name="bill_no" attrs="{'required': [('total','>',500)]}" />
                                 <div class="o_td_label" groups="base.group_no_one" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}">
                                 </div>
@@ -49,7 +52,7 @@
                     </group>
                            <notebook> 
                 <page string="Student List" >
-                    
+                        <!-- Add fields in One2many_Line -->
                     <field name="techer_line">
                         <tree string="Students List" editable="bottom" >
                             <field name="student_field_1" />
@@ -64,6 +67,7 @@
                 </page> 
             </notebook>
                     </sheet>
+                            <!-- Send Message in Bottom -->
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>
                         <field name="message_ids" widget="mail_thread"/>
@@ -82,7 +86,7 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="menu_teacher" name="teacher" parent='menu_school'      
-                action="action_view_teacher"/>  
+                    <!-- Menu Buttons -->
+            <menuitem id="menu_teacher" name="teacher" action="action_view_teacher"/>  
             </data>
 </odoo>

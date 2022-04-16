@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
+            <!-- Kanban View -->
         <record id="student_student_view" model="ir.ui.view">
             <field name="name">student.view.kanban</field>
             <field name="model">student.student</field>
             <field name="arch" type="xml">
-                <kanban>
+            <kanban  default_group_by="stage_ids" statusbar="not reviewed,review in progress,completed " class="o_kanban_small_column" disable_sort_completed='True'>
+            <field name="stage_ids"  widget="statusbar" />
                     <field name="student_gender" />
                     <field name="name" />
                     <templates>
@@ -37,6 +39,7 @@
                 </kanban>
             </field>
         </record>
+                <!-- Tree View -->
         <record id="view_student_tree" model="ir.ui.view">            
             <field name="name">student.student.tree</field>            
             <field name="model">student.student</field>            
@@ -52,14 +55,18 @@
                     <field name="student_blood_group" />                
                 </tree>            
             </field>        
-        </record>        
+        </record>      
+                <!-- Form View   -->
         <record id="view_student_form" model="ir.ui.view">            
             <field name="name">student.student.form</field>            
             <field name="model">student.student</field>            
             <field name="priority" eval="8" />
             <field name="arch" type="xml">
                 <form string="Student">                    
-                    <sheet>                        
+                    <sheet>     
+                    <header>
+                    <field name= "stage_ids" widget='statusbar' nolabel="1" clickable="True"/>
+                    </header>
                         <field name="photo" widget="image" class="oe_left oe_avatar" />                        
                         <div class="oe_title">                            
                             <h1>                                
