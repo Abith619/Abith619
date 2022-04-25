@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_student_student,access.student.student,model_student_student,base.group_user,1,1,1,1
-access_teacher_teacher,access.teacher.teacher,model_teacher_teacher,base.group_user,1,1,1,1
-access_teacher_teacher_line,teacher.teacher.line,model_teacher_teacher_line,base.group_user,1,1,1,1
-access_service_stages,service.stages,model_service_stages,base.group_user,1,1,1,1
