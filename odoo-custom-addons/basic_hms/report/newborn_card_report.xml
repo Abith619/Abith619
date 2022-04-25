@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="report_newborn_card_document">
+		  <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+						<br></br>
+						<br></br>
+						<br></br>
+						<br></br>
+                        <style>
+                            .po_header_1{
+                                border-color:#ddd;
+                                border-style: solid;
+			                    border-width: 1px 1px 1px 1px;
+			                    margin: 0 auto;
+			                }
+			                .top_table_left, .top_table_right, .smalltd_left{
+			                    margin: 0 auto;
+			                    margin-left:5px !important;
+			                    border-color:#ddd;
+			                    border-style: solid;
+			                }
+			                .top_table_left{
+			                   width:25% !important;
+			                   padding:0px;
+			                }
+			                .top_table_right{
+			                      width: 75% !important;
+			                      padding-left:5px;
+			                      padding-top:5px;
+			                      border-width: 0px 1px 0px 0px;
+			                      vertical-align: top;
+			                      text-align: left;
+			                   }
+			                   .supplier_rightcolumn{
+			                       width: 50%;
+			                       vertical-align: top;
+			                       text-align: left;
+			                       margin: 0 auto;
+			                       padding-left:5px;
+			                   }
+			                   .supplier_rightcolumn2, .supplier_rightcolumn3{
+			                       height:100px;
+			                       padding-left:5px;
+			                       padding-top:5px;
+			                       vertical-align: top;
+			                       text-align: left;
+			                       margin-left
+			                   }
+			                   .supplier_rightcolumn2{
+			                       width: 50%;
+			                       border-style: solid;
+			                       border-color:#ddd;
+			                       border-width: 1px 1px 0px 0px;
+			                   }
+			                   .supplier_rightcolumn3{
+			                       width: 100%;
+			                   }
+			                   .smalltd_left, .smalltd_left_1{
+			                       border-style: solid;
+			                       border-color:#ddd;
+			                   }
+			                   .smalltd_left{
+			                       border-width: 1px 0px 1px 0px;
+			                   }
+			                   .smalltd_left_1{
+			                       border-width: 1px 0px 1px 1px;
+			                   }
+			                   .td_style, td_style2{
+			                       vertical-align:middle !important;
+			                       padding-top:5px !important;
+			                       text-align:center !important;
+			                   }
+			                   .td_style{
+			                       border-top:1px solid #ddd !important;
+			                       border-right:1px solid #ddd !important;
+			                       border-bottom:1px solid #ddd !important;
+			                   }
+			                   .td_style2{
+			                       border-top:1px solid #ddd !important;
+			                       border-bottom:1px solid #ddd !important;
+			                   }
+			                   .bottom_td_style{
+			                       padding-top:5px !important;
+			                       padding-right:5px !important;
+			                       text-align:right !important;
+			                       border-top:1px solid #ddd !important;
+			                       border-right:1px solid #ddd !important;
+			                   }
+			                   .middel_td_style{
+			                       border-right:1px solid #ddd !important;
+			                   }
+			                   .middel_tr_style{
+			                       height: auto;
+                                   min-height:200px !important;
+			                   }
+			                   .bottom_main_div{
+			                        position:relative;
+                                    border-left: 1px solid #ddd !important;
+                                    border-right: 1px solid #ddd !important;
+                                    border-bottom: 1px solid #ddd !important;
+                                    min-height: 250px !important;
+			                   }
+			                   .bottom_tax_style{
+			                       position:absolute !important;
+                                   bottom:0 !important;
+                                   left:0 !important;
+                                   padding-bottom:30px !important;
+			                   }
+			                   .bottom_top_right{
+                                   position:absolute !important;
+                                   top:0 !important;
+                                   right:0 !important;
+                               }
+                               .bottom_bottom_right{
+                                    position:absolute !important;
+                                    bottom:0 !important;
+                                    right:0 !important;
+                                    border-left: 1px solid #ddd !important;
+                                    border-top: 1px solid #ddd !important;
+                                    width:50% !important;
+                                    text-align : right !important;
+                               }
+                               .bottom_bottom_right1{
+                                    padding-bottom:20px !important;
+                                    font-weight: bold !important;
+                               }
+                               .font_right{
+                                    text-align : right !important;
+                               }
+								.image-right{
+									align : right !important;
+								}
+			            </style>
+		                <div class="row">
+		                        <table width="100%;" style="border: 1px solid #ddd;">
+		                            <tr>
+		                                <td class="supplier_rightcolumn2">
+											<b>ID:</b>   <b><span t-esc="o.name"/></b>
+										</td>
+										<td>
+											<table class="supplier_rightcolumn3">
+		                                       <tr>
+												   <td class="smalltd_left_1">Name: <b><span t-esc="o.baby_name"/></b></td>
+											   	</tr>
+												<tr>
+												   <td class="smalltd_left_1">Mother: <b><span t-esc="o.mother_patient_id.patient_id.name"/></b></td>
+		                                       </tr>
+												<tr>
+												   <td class="smalltd_left_1">Mother's ID.:   <b><span t-esc="o.mother_patient_id.name"/></b></td>
+		                                       </tr>
+												<tr>
+												   <td class="smalltd_left_1">DOB: <b><span t-esc="o.birth_date"/></b></td>
+		                                       </tr>
+
+		                                   </table>
+										</td>
+									</tr>
+								  	<tr>
+		                                <td class="supplier_rightcolumn2">
+                                            <span>Gender: </span>
+											<b><span t-field='o.sex' /></b>
+										</td>
+										 <td class="supplier_rightcolumn2">
+                                         <span>Weight(gram): </span>
+											<b><span t-field='o.weight' /></b>
+												<br/>
+                                            <span>Height(cm): </span>
+												<b><span t-field='o.length' /></b>
+										</td>
+		                            </tr>
+		                        </table>
+							</div>
+						</div>
+				</t>
+			</t>
+		</template>
+
+		<template id="report_newborn_card">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="basic_hms.report_newborn_card_document"
+						t-lang="o.mother_patient_id.patient_id.lang" />
+				</t>
+			</t>
+		</template>
+	</data>
+</openerp>

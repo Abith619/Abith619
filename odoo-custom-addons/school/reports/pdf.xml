@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<template id="report_workers">
+     <t t-call="web.external_layout">
+     <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t >
+            <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
+            <td style="border: 0px;width: 50%;">
+                <p><strong>Age :</strong><span t-field="o.teacher_age"/></p>
+            </td>
+            <td style="border: 0px;width: 50%;">
+                <p><b>DOB :</b> <span t-field="o.teacher_dob"/></p>
+            </td>
+            </table>
+            <table border="4" class="table table-bordered" style="border: 1px solid black;">
+            <td>
+                <p><b>Customer Name :</b> <span t-field="o.name"/></p>
+                <p><b>Gender Type:</b> <span t-field="o.gender"/></p>
+            </td>
+            <td>
+                <p><b> Teacher Blood Group :</b> <span t-field="o.teacher_blood_group"/></p>
+            </td>
+            </table>          
+            </t>
+            </t>
+        </t>
+    </t>
+</template>
+</odoo>

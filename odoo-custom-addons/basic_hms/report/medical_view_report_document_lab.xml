@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="basic_hms.medical_view_report_document_lab">
+    		<t t-call="web.external_layout">
+    			<t t-set="doc" t-value="doc.with_context({'lang':doc.patient_id.lang})"/>
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                            <div>
+                                <h4 class="text-center"><strong>LABORATORY TESTS</strong></h4>
+                            </div>
+                        <br/> <br/><br/>
+                    <table class="table table-condensed"> 
+                    <tr> 
+                        <th style="border: 0px ;" class="text-left">Patient Name: 
+                            <span style="font-weight:normal;" t-field="doc.patient_id.name"/>
+                        </th> 
+                        
+                        <th style="border: 0px ;" class="text-left">Patient ID : 
+                            <span style="font-weight:normal;" t-field="doc.name"/>
+                        </th>
+
+                        <th style="border: 0px ;" class="text-left">Sex : 
+                            <span style="font-weight:normal;" t-field="doc.sex"/>
+                        </th>
+                        
+                        <th style="border: 0px ;" class="text-left">Age : 
+                            <span style="font-weight:normal;" t-field="doc.age"/>
+                        </th>
+                    
+                    </tr> 
+                    </table>
+                        <br/><br/>
+
+              <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Test Type</th>
+                        <th>Doctor Name</th>
+                        <th>Date</th>
+                        <th>State</th>
+                    </tr>
+               </thead>
+               <tbody class="sale_tbody">
+                    <t t-foreach="doc.lab_test_ids" t-as="l">
+                        <tr>
+                            <td>
+                               <span t-field="l.medical_test_type_id.name"/>
+                            </td>
+                             <td>
+                               <span t-field="l.doctor_id"/>
+                            </td>
+                             <td>
+                               <span t-field="l.date"/>
+                            </td>
+                             <td>
+                               <span t-field="l.state"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+           </div>
+        </t>
+      </t>
+    </template>
+
+    <template id="lab_test_demo">
+    	<t t-call="web.html_container">
+    		<t t-foreach="docs" t-as="doc">
+    			<t t-call="basic_hms.medical_view_report_document_lab" t-lang="doc.patient_id.lang"/>
+    		</t>
+    	</t>
+    </template>
+
+    </data>
+</openerp>

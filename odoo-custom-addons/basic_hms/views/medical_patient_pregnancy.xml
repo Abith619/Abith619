@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="medical_patient_pregnancy_form_view" model="ir.ui.view">
+            <field name="name">medical.patients.pregnancy.form.view</field>
+            <field name="model">medical.patient.pregnency</field>
+            <field name="arch" type="xml">
+                <form string="Pregnancies">
+                    <group id="group_pregnancy_header" colspan="4"
+                        col="8">
+                        <field name="gravida" />
+                        <field name="lmp" />
+                        <field name="pdd" />
+                        <field name="current_pregnency" />
+                    </group>
+                    <group colspan="3" string="Prenatal Evaluations">
+                        <field name="medical_patient_evolution_prental_ids" />
+                    </group>
+                    <group colspan="3" string="Prenatal Info">
+                        <field name="medical_perinatal_ids" />
+                    </group>
+                    <group colspan="3" string="Puerperium Monitor">
+                        <field name="puerperium_perental_ids" />
+                    </group>
+                    <group id="group_pregnancy_footer1" colspan="4"
+                        col="8">
+                        <field name="fetuses" />
+                        <field name="monozygotic" />
+                        <field name="igur" />
+                        <field name="warn" />
+                    </group>
+
+                    <group id="group_pregnancy_footer2" colspan="4"
+                        col="4">
+                        <field name="pregnancy_end_date"
+                            attrs="{'invisible': [('current_pregnency', '=', 1)], 'required' : [('current_pregnency', '!=', 1)]}" />
+                        <field name="pregnancy_end_result"
+                            attrs="{'invisible': [('current_pregnency', '=', 1)], 'required' : [('current_pregnency', '!=', 1)]}" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

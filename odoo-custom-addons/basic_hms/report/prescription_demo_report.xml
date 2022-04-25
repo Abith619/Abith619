@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="basic_hms.prescription_demo_report_template">
+			<t t-call="web.external_layout">
+				<div class="page">
+					<div class="oe_structure"/>
+					  <br/><br/><br/><br/>
+						<h3 class="text-center mb32">
+							<strong>PRESCRIPTION REPORT</strong>
+						</h3>
+					<br/>
+					<table class="table table-condensed"> 
+                        <tr> 
+                            <th style="border: 0px ;" class="text-left">Prescription ID : 
+                                <span style="font-weight:normal;" t-field="doc.name"/>
+                            </th> 
+
+                            <th style="border: 0px ;" class="text-left">Prescription Date : 
+                                <span style="font-weight:normal;" t-field="doc.prescription_date"/>
+                            </th>
+
+                            <th style="border: 0px ;" class="text-left">Prescribing Doctor : 
+                                <span style="font-weight:normal;" t-field="doc.doctor_id.partner_id.name"/>
+                            </th>
+ 
+
+                            <th style="border: 0px ;" class="text-left">Patient Contact Information: 
+                                <br/>
+                                <span style="font-weight:normal;" t-field="doc.patient_id"/><br/>
+                                <span style="font-weight:normal;" t-field="doc.patient_id.id"/><br/>
+                                <span style="font-weight:normal;" t-field="doc.patient_id.patient_id.email"/>
+                            </th>
+
+                        </tr> 
+                        </table>
+					<br>
+						<br/>
+					</br>
+					<div>
+						<table class="table table-condensed">
+							<thead>
+								<div>
+									<strong>Prescription Details</strong>
+								</div>
+							</thead>
+							<tbody class="sale_tbody">
+								<t t-foreach="doc.prescription_line_ids" t-as="test">
+									<tr t-if="test.quantity">
+										<td>
+											<strong>Quantity</strong>
+										</td>
+										<td>
+											<span t-field="test.quantity"/>
+										</td>
+									</tr>
+									<tr t-if="test.medicament_id">
+										<td>
+											<strong>Medicament</strong>
+										</td>
+										<td>
+											<span t-field="test.medicament_id"/>
+										</td>
+									</tr>
+									<tr t-if="test.allow_substitution">
+										<td>
+											<strong>Substitution</strong>
+										</td>
+										<td>
+											<span>Allow Substitution</span>
+										</td>
+									</tr>
+									<tr t-if="test.start_treatment">
+										<td>
+											<strong>Start</strong>
+										</td>
+										<td>
+											<span t-field="test.start_treatment"/>
+										</td>
+									</tr>
+									<tr t-if="test.end_treatment">
+										<td>
+											<strong>Stop</strong>
+										</td>
+										<td>
+											<span t-field="test.end_treatment"/>
+										</td>
+									</tr>
+									<tr t-if="test.form">
+										<td>
+											<strong>Form</strong>
+										</td>
+										<td>
+											<span t-field="test.qty"/>
+											<span t-field="test.form"/>
+										</td>
+									</tr>
+									<tr t-if="test.indication">
+										<td>
+											<strong>Indication</strong>
+										</td>
+										<td>
+											<span t-field="test.indication"/>
+										</td>
+									</tr>
+									<tr t-if="test.route">
+										<td>
+											<strong>Route</strong>
+										</td>
+										<td>
+											<span t-field="test.route"/>
+										</td>
+									</tr>
+									<tr t-if="test.medication_dosage_id">
+										<td>
+											<strong>Common Dosage</strong>
+										</td>
+										<td>
+											<span t-field="test.medication_dosage_id"/>
+										</td>
+									</tr>
+									<tr t-if="test.frequency">
+										<td>
+											<strong>Frequency</strong>
+										</td>
+										<td>
+											Every
+											<span t-field="test.frequency"/>
+											<span t-field="test.frequency_unit"/>
+										</td>
+									</tr>
+									<tr t-if="test.duration">
+										<td>
+											<strong>Treatment</strong>
+										</td>
+										<td>
+											Take during
+											<span t-field="test.duration"/>
+											<span t-field="test.duration_period"/>
+										</td>
+									</tr>
+									<tr t-if="test.review">
+										<td>
+											<strong>Review</strong>
+										</td>
+										<td>
+											<span t-field="test.review"/>
+										</td>
+									</tr>
+									<tr t-if="test.refills">
+										<td>
+											<strong>Refills</strong>
+										</td>
+										<td>
+											<span t-field="test.refills"/>
+										</td>
+									</tr>
+									<tr t-if="test.short_comment">
+										<td>
+											<strong>Remarks</strong>
+										</td>
+										<td>
+											<span t-field="test.short_comment"/>
+										</td>
+									</tr>
+								</t>
+							</tbody>
+						</table>
+					</div>
+					<br>
+						<br>
+							<br>
+								<br/>
+							</br>
+						</br>
+					</br>
+					<div class="row mt32 mb32" id="informations">
+						<div class="col-xs-3">
+							<strong>Notes:</strong>
+							<span t-field="doc.notes"/>
+						</div>
+						<div class="text-right mb32">
+							<strong>Doctor Signature:</strong>
+						</div>
+					</div>
+				</div>
+			</t>
+        </template>
+        <template id="prescription_demo_report">
+                <t t-call="web.html_container">
+                    <t t-foreach="docs" t-as="doc">
+                    <t t-call="basic_hms.prescription_demo_report_template" t-lang="doc.doctor_id.partner_id.lang"/>
+                    </t>
+                </t>
+        </template>
+    </data>
+</openerp>

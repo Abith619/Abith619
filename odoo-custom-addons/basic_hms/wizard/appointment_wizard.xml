@@ -1,0 +1,39 @@
+<!-- <?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="appointment_wizard_view" model="ir.ui.view">
+            <field name="name">Appointment</field>
+            <field name="model">appointment.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Invoice Sales Order">
+                    <group>
+                        <field name="phy_id" />
+                        <field name="a_date" />
+                    </group>
+                    <footer>
+                        <button name="show_record" class="oe_highlight"
+                            string="Show" type="object" />
+                        or
+                        <button special="cancel" class="oe_highlight"
+                            string="Cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_appointment_wizard" model="ir.actions.act_window">
+            <field name="name">Appointment Wizard</field>
+            <field name="res_model">appointment.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+        <menuitem id="menu_appointment_wizard" action="action_appointment_wizard"
+            string="Appointment Wizard" parent="basic_hms.menu_appointment"
+            sequence="1" />
+
+    </data>
+</odoo>
+ -->

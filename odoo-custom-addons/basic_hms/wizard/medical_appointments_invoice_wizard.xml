@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <act_window id="action_create_invoice_val1" name="Create Invoice"
+            res_model="medical.appointments.invoice.wizard" src_model="medical.appointment"
+            view_mode="form" target="new" key2="client_action_multi" />
+
+        <record id="medical_appointments_invoice_wizard_view" model="ir.ui.view">
+            <field name="name">medical.appointments.invoice.wizard.view</field>
+            <field name="model">medical.appointments.invoice.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Create Invoice">
+                    <h2>
+                        Do you want to create the invoice(s) ?
+                    </h2>
+                    <footer>
+                        <button name="create_invoice" string="Create Invoice"
+                            type="object" class="oe_highlight" />
+                        or
+                        <button string="Cancel" type="object"
+                            special="cancel" class="oe_highlight" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_medical_appointments_invoice_wizard" model="ir.actions.act_window">
+            <field name="name">Create Invoice</field>
+            <field name="res_model">medical.appointments.invoice.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

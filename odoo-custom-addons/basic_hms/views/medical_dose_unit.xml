@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="medical_dose_form_view" model="ir.ui.view">
+            <field name="name">medical.dose.unit.form.view</field>
+            <field name="model">medical.dose.unit</field>
+            <field name="arch" type="xml">
+                <form string="Medicament Units">
+                    <group colspan="4" col="4">
+                        <field name="name" required="1" />
+                        <field name="description" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="medical_dose_tree_view" model="ir.ui.view">
+            <field name="name">medical.dose.unit.tree.view</field>
+            <field name="model">medical.dose.unit</field>
+            <field name="arch" type="xml">
+                <tree string="Medicament Units">
+                    <field name="name" />
+                    <field name="description" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_medical_dose_unit" model="ir.actions.act_window">
+            <field name="name">Medicament Units</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">medical.dose.unit</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+
+    </data>
+</odoo>

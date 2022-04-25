@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Tree view -->
+        <record id="medical_prescription_line_tree_view" model="ir.ui.view">
+            <field name="name">medical.prescription.line.tree.view</field>
+            <field name="model">medical.prescription.line</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="Prescription lines">
+                    <field name="prnt" />
+                    <field name="medicament_id" />
+                    <field name="indication" />
+                    <field name="dose" />
+                    <field name="dose_unit_id" />
+                    <field name="form" />
+                    <field name="medication_dosage_id" />
+                    <field name="quantity" />
+                    <field name="duration" />
+                    <field name="duration_period" />
+                    <field name="allow_substitution" />
+                    <field name="short_comment" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="medical_prescription_line_form_view" model="ir.ui.view">
+            <field name="name">medical.prescription.line.form.view</field>
+            <field name="model">medical.prescription.line</field>
+            <field name="arch" type="xml">
+                <form string="Prescription">
+                    <group colspan="4" col="4">
+                        <field name="medicament_id" required="1" />
+                        <field name="indication" />
+                        <field name="allow_substitution" />
+                        <field name="prnt" />
+                        <field name="form" />
+                        <field name="route" />
+                        <field name="start_treatment" />
+                        <field name="end_treatment" />
+                    </group>
+                    <group colspan="4" string="Dosage">
+                        <group colspan="6" col="6">
+                            <field name="dose" />
+                            <field name="dose_unit_id" />
+
+                            <field name="qty" />
+                        </group>
+                        <separator string="Common Dosage" />
+                        <group colspan="4" col="4">
+                            <field name="medication_dosage_id" />
+                            <field name="admin_times" />
+                        </group>
+                        <separator string="Specific Dosage" />
+                        <group colspan="4" col="4">
+                            <field name="frequency" />
+                            <field name="frequency_unit" />
+                        </group>
+                    </group>
+                    <group colspan="4" col="4">
+                        <field name="duration" />
+                        <field name="duration_period" />
+                        <field name="review" />
+                        <field name="quantity" />
+                        <field name="refills" />
+                        <field name="short_comment" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

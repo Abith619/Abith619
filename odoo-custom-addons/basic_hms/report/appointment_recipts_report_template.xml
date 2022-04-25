@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="basic_hms.appointment_recipts_report_template">
+            <t t-call="web.external_layout">
+                <t t-set="doc" t-value="doc.with_context({'lang':doc.doctor_id.partner_id.lang})"/>
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <br/>
+<br/>
+<br/>
+                                <div>
+                                    <h3 class="text-center"><strong>APPOINTMENT INFORMATION</strong></h3>
+                                </div>
+                            <br/><br/><br/><br/><br/>
+                            <div class="row mt32 mb32" id="informations">
+                              <div>
+                                    <table>
+                                    <tbody class="sale_tbody">
+                                        <tr>
+                                                <td width="10%">
+                                                    <strong>Patient:</strong>
+                                                </td>
+
+                                                <td width="5%" class="text-left">
+                                                    <span t-field="doc.patient_id.patient_id.name"/>
+                                                </td>
+
+                                                <td width="10%">
+                                                </td>
+
+                                                <td width="10%">
+                                                   <strong>Appointment:</strong>
+                                                </td>
+
+                                                <td width="10%" class="text-left">
+                                                    <span t-field="doc.name"/>
+                                                </td>
+                                          </tr>
+
+                                          <tr>
+                                                <td width="10%">
+                                                    <strong>SSN:</strong>
+                                                </td>
+
+                                                 <td width="5%">
+                                                    <span t-field=" doc.patient_id.patient_id.reference"/>
+                                                </td>
+
+                                                <td width="10%">
+                                                </td>
+
+                                                <td width="10%">
+                                                 <strong> Date:</strong>
+                                                </td>
+
+                                               <td width="5%">
+                                                 <span t-field="doc.appointment_date"/>
+                                                </td>
+                                          </tr>
+
+                                          <tr>
+                                                <td width="10%">
+                                                   <strong>Instructions / Notes :</strong>
+                                                </td>
+                                                 <td width="5%">
+                                                    <span t-field="doc.comments"/>
+                                                </td>
+
+                                                <td width="10%">
+                                                </td>
+                                                <td width="10%">
+                                                 <strong> Institution :   </strong>
+                                                </td>
+                                                <td width="5%">
+                                                    <span t-field="doc.institution_partner_id.name"/>
+                                                </td>
+
+                                          </tr>
+
+                                          <tr>
+                                                <td width="10%">
+
+                                                </td>
+                                                <td width="5%">
+
+                                                </td>
+
+                                                <td width="10%">
+
+                                                </td>
+                                                 <td width="10%">
+
+                                                </td>
+
+
+                                          </tr>
+
+                                          <tr>
+                                                <td width="10%">
+
+                                                </td>
+                                                <td width="5%">
+
+                                                </td>
+
+                                                <td width="10%">
+
+                                                </td>
+                                                <td width="10%">
+                                                <strong>Health Professional :   </strong>
+                                                </td>
+                                                <td width="5%">
+                                                   <span t-field="doc.doctor_id.partner_id.name"/>
+                                                </td>
+                                          </tr>
+
+                                    </tbody>
+
+                                </table>
+                              </div>
+                            </div>
+                        </div>
+                </t>
+        </template>
+        <template id="appointment_recipts_report">
+                <t t-call="web.html_container">
+                    <t t-foreach="docs" t-as="doc">
+                    <t t-call="basic_hms.appointment_recipts_report_template" t-lang="doc.doctor_id.partner_id.lang"/>
+                    </t>
+                </t>
+        </template>
+    </data>
+</openerp>

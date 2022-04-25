@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="medical_patient_rounding_form_view" model="ir.ui.view">
+            <field name="name">medical.patient.rounding.form.view</field>
+            <field name="model">medical.patient.rounding</field>
+            <field name="arch" type="xml">
+                <form string="Roundings">
+                    <sheet>
+                        <header>
+                            <button name="done_button" states="draft"
+                                string="Done" icon="gtk-execute" type="object"
+                                modifiers="{'invisible': [['state', 'not in', ['draft']]]}" />
+                            <field name="state" readonly="1"
+                                widget="statusbar" statusbar_visible="draft"
+                                modifiers="{'readonly': true}" />
+                        </header>
+                        <notebook>
+                            <page string="Main" id="rounding_main">
+                                <group colspan="4" id="group_admin_data">
+                                    <field name="medical_inpatient_registration" />
+                                    <field name="health_physician_id" />
+                                    <field name="evaluation_start" />
+                                    <field name="evaluation_end" />
+                                    <field name="environmental_assessment" />
+                                    <field name="icu_patient" />
+                                    <field name="warning" />
+                                </group>
+                                <group colspan="6" col="6" string="Six P's">
+                                    <field name="pain" />
+                                    <field name="potty" />
+                                    <field name="position" />
+                                    <field name="proximity" />
+                                    <field name="pump" />
+                                    <field name="personal_needs" />
+                                </group>
+                                <group colspan="6" col="6"
+                                    string="Vital Signs">
+                                    <field name="temperature" />
+                                    <field name="systolic" />
+                                    <field name="diastolic" />
+                                    <field name="bpm" />
+                                    <field name="respiratory_rate" />
+                                    <field name="osat" />
+                                </group>
+                                <group colspan="6" col="6" string="Other">
+                                    <field name="diuresis" />
+                                    <field name="urinary_catheter" />
+                                    <field name="glycemia" />
+                                    <field name="depression" />
+                                    <field name="evolution" />
+                                </group>
+                                <group colspan="4" string="Round Summary">
+                                    <field name="round_summary"
+                                        nolabel="1" colspan="4" />
+                                </group>
+                            </page>
+                            <page string="ICU">
+                                <group colspan="4" col="6"
+                                    string="Neurologic">
+                                    <field name="gcs" can_create="true"
+                                        can_write="true" modifiers="{}" />
+                                    <field name="pupil_dilation"
+                                        modifiers="{}" />
+                                    <newline />
+                                    <field name="right_pupil"
+                                        modifiers="{}" />
+                                    <field name="left_pupil"
+                                        modifiers="{}" />
+                                    <field name="anisocoria" />
+                                    <newline />
+                                    <field name="pupillary_reactivity"
+                                        modifiers="{}" />
+                                    <field name="pupil_consensual_resp"
+                                        modifiers="{}" />
+                                </group>
+                                <group colspan="4" col="4"
+                                    string="Respiratory">
+                                    <group colspan="4" col="4">
+                                        <field name="oxygen_mask"
+                                            modifiers="{}" />
+                                        <field name="fio2"
+                                            modifiers="{}" />
+                                        <field name="respiration_type"
+                                            modifiers="{}" />
+                                        <field name="trachea_alignment"
+                                            modifiers="{}" />
+                                        <field name="peep"
+                                            modifiers="{}" />
+
+                                        <field name="sce"
+                                            modifiers="{}" />
+                                        <field name="oral_mucosa_lesion"
+                                            modifiers="{}" />
+                                        <field name="lips_lesion"
+                                            modifiers="{}" />
+                                    </group>
+                                    <newline />
+                                    <group string="Chest Expansion"
+                                        colspan="6" col="6">
+                                        <field name="chest_expansion"
+                                            modifiers="{}" />
+                                        <field name="paradoxical_expansion"
+                                            modifiers="{}" />
+                                        <field name="tracheal_tug"
+                                            modifiers="{}" />
+                                    </group>
+
+                                    <group string="Xray">
+                                        <field name="xray"
+                                            img_width="120" img_height="120"
+                                            height="120" width="120"
+                                            widget="image" modifiers="{}" />
+                                    </group>
+                                </group>
+                                <field name="chest_drainages"
+                                    colspan="4" modifiers="{}" />
+                                <field name="chest_drainages"
+                                    nolabel="1" widget="one2many_list">
+                                    <tree editable="bottom">
+                                        <field name="location" />
+                                        <field name="suction" />
+                                        <field name="suction_pressure" />
+                                        <field name="fluid_volumme" />
+                                        <field name="fluid_aspect" />
+                                        <field name="oscillation" />
+                                        <field name="air_leak" />
+                                        <field name="remarks" />
+                                    </tree>
+                                </field>
+                                <newline />
+                                <group colspan="4" string="Cardiovascular">
+                                    <group colspan="4" col="4">
+                                        <field name="ecg"
+                                            can_create="true" can_write="true"
+                                            modifiers="{}" />
+                                    </group>
+                                    <newline />
+                                    <group colspan="6" col="6">
+                                        <field name="venous_access"
+                                            modifiers="{}" />
+                                        <field name="swan_ganz"
+                                            modifiers="{}" />
+                                        <field name="arterial_access"
+                                            modifiers="{}" />
+                                        <field name="dialysis"
+                                            modifiers="{}" />
+                                        <field name="edema"
+                                            modifiers="{}" />
+                                    </group>
+                                </group>
+                                <group string="Blood and Skin"
+                                    colspan="6" col="6">
+                                    <field name="bacteremia"
+                                        modifiers="{}" />
+                                    <field name="ssi" modifiers="{}" />
+                                    <field name="wound_dehiscence"
+                                        modifiers="{}" />
+                                    <field name="cellulitis"
+                                        modifiers="{}" />
+                                    <field name="necrotizing_fasciitis"
+                                        modifiers="{}" />
+                                </group>
+                                <group string="Digestive and Abdomen"
+                                    colspan="8" col="8">
+                                    <field name="vomiting"
+                                        modifiers="{}" />
+                                    <field name="bowel_sounds"
+                                        modifiers="{}" />
+                                    <field name="stools"
+                                        modifiers="{}" />
+                                    <field name="peritonitis"
+                                        modifiers="{}" />
+                                </group>
+                            </page>
+                            <page string="Procedures">
+                                <form string=" Procedures">
+                                    <field name="procedures_ids"
+                                        nolabel="1" widget="one2many_list">
+                                        <tree string="Procedures">
+                                            <field name="procedure" />
+                                            <field name="notes" />
+                                        </tree>
+                                    </field>
+                                </form>
+                            </page>
+
+                            <page string="Medication">
+                                <group colspan="2" col="2">
+                                    <field name="hospital_location_id" />
+                                </group>
+                                <form string=" Medicaments">
+                                    <field name="medicaments_ids"
+                                        nolabel="1" widget="one2many_list">
+                                        <tree string="Medicaments"
+                                            editable="bottom">
+                                            <field name="medicament_id" />
+                                            <field name="quantity" />
+                                            <field name="lot_id" />
+                                            <field name="short_comment" />
+                                            <field name="product_id" />
+                                        </tree>
+                                    </field>
+
+                                    <field name="medical_supplies_ids"
+                                        nolabel="1" widget="one2many_list"
+                                        mode="tree">
+                                        <tree string="Medical Supplies"
+                                            editable="bottom">
+                                            <field name="product_id" />
+                                            <field name="short_comment" />
+                                            <field name="lot_id" />
+                                            <field name="short_comment" />
+                                            <field name="quantity" />
+                                        </tree>
+                                    </field>
+
+                                    <field name="vaccines_ids"
+                                        nolabel="1" widget="one2many_list">
+                                        <tree string="Vaccines"
+                                            editable="bottom">
+                                            <field name="vaccine_id" />
+                                            <field name="quantity" />
+                                            <field name="lot_id" />
+                                            <field name="dose" />
+                                            <field name="next_dose_date" />
+                                            <field name="short_comment" />
+                                        </tree>
+                                    </field>
+                                </form>
+                            </page>
+
+                            <page string="Stock Moves">
+                                <field name="move_ids" string="Stock Moves" />
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+
+        <record id="medical_patient_rounding_tree_view" model="ir.ui.view">
+            <field name="name">medical.patient.rounding.tree.view</field>
+            <field name="model">medical.patient.rounding</field>
+            <field name="arch" type="xml">
+                <tree string="Roundings">
+                    <field name="warning" />
+                    <field name="medical_inpatient_registration" />
+                    <field name="evaluation_start" />
+                    <field name="health_physician_id" />
+                    <field name="evolution" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_medical_patient_rounding" model="ir.actions.act_window">
+            <field name="name">Roundings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">medical.patient.rounding</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_patient_rounding" parent="menu_nursing"
+            action="action_medical_patient_rounding" sequence="0" />
+
+    </data>
+</odoo>

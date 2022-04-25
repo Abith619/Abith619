@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         
+                <record id="view_booking_tree" model="ir.ui.view">            
+                    <field name="name">booking.tree</field>            
+                    <field name="model">booking.booking</field>            
+                    <field name="priority" eval="8" />
+                    <field name="arch" type="xml">
+                        <tree string="Booking" >                    
+                            <field name="bill_no" />     
+                            <field name="name" string='Billed By'/>         
+                            <field name="booked_by" string='Customers'/>                    
+                        </tree>            
+                    </field>        
+                </record>
+        
+                <record id="booking_view_kanban" model="ir.ui.view">
+                    <field name="name">booking.view.kanban</field>
+                    <field name="model">booking.booking</field>
+                    <field name="arch" type="xml">
+                        <kanban class="o_kanban_mobile">
+                            <templates>
+                                <t t-name="kanban-box">
+                                    <div t-attf-class="oe_kanban_global_click">
+                                        <div class="o_kanban_image">
+                                        </div>
+                            <div class="oe_kanban_content">
+                                <div>
+                                    <strong><field name="name"/></strong>
+                                </div>
+                                <div >
+                                        <a>Booked By :</a>
+                                        <strong><field name="booked_by"/></strong>
+                                </div>
+                                <div >
+                                    <a>Booking ID :</a>
+                                <strong><field name="bill_no"/></strong>
+                            </div>
+                                <div >
+                                    <a>Total Amt :</a>
+                                <strong><field name="total1" widget='monetary'/></strong>
+                                </div>
+                            </div>
+                            <div class="oe_clear"></div>
+               </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                    </field>
+                </record>
+        
+        
+                <record id="booking_view_pivot" model="ir.ui.view">
+                    <field name="name">booking.line.view.pivot</field>
+                    <field name="model">booking.booking</field>
+                    <field name="arch" type="xml">
+                        <pivot string="Money">
+                            <field name='booked_by'/>
+                            <field name='name'/>
+        
+                        </pivot>
+                    </field>
+                </record>
+
+
+                <!-- <record id="view_booking_calendar" model="ir.ui.view">
+                    <field name="name">booking.line.calendar</field>
+                    <field name="model">booking.line</field>
+                    <field name="arch" type="xml">
+                        <calendar string="Sale Orders">
+                            <field name="check_in"/>
+                            <field name="check_out" widget="monetary"/>
+                        </calendar>
+                    </field>
+                </record> -->
+
+                <!-- <record model="ir.ui.view" id="view_booking_graph">
+                    <field name="name">booking.graph</field>
+                    <field name="model">booking.booking</field>
+                    <field name="arch" type="xml">
+                        <graph string="Sale Orders">
+                            <field name="total1" type="measure"/>
+                            <field name="name" />
+                        </graph>
+                    </field>
+                </record> -->
+        
+                <record id="view_booking_form" model="ir.ui.view">
+                    <field name="name">booking.form</field>
+                    <field name="model">booking.booking</field>
+                    <field name="priority" eval="8" />
+                    <field name="arch" type="xml">
+                        <form string="Hotel">    
+                            <header>
+                                        <!-- Add States -->
+                                <field name= "state" widget='statusbar' nolabel="1"/>
+                                        <!-- Add Buttons in States -->
+                                <button name="create_invoice"  type="object" string="Create Invoice"  class="oe_highlight" attrs="{'invisible': [('state', '!=', 'confirm')]}"/>
+                                <button name="confirm"  type="object" string="Confirm"  class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                                <button name="cancel"  type="object" string="Cancel"  class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>  
+                                <button name="close"  type="object" string="Close"  class="oe_highlight" attrs="{'invisible': [('state', '!=', 'confirm')]}"/>   
+                            </header>
+                            <sheet>
+                                    <!-- Wizard Buttons, Create Invoice -->
+                                <div class="oe_button_box" name="button_box">
+                                    <button name="print_invoice" type="object" string = "Invoice" class="oe_stat_button" 
+                                    icon="fa-pencil-square-o" widget="statinfo"/>
+                                </div>
+                                <h1>
+                                    <field name="bill_no" string='Booking Number '/>
+                                </h1>
+                                <group>
+                                    <group col="4" colspan="4"                                    
+                                            name="booking_detail">
+                                        <!-- Create Fields in Form view -->
+                                            <field name="name"/>
+                                            <field name="booked_by"/>
+                                    </group>
+                                </group>
+                                    <group >
+                                        
+                                    </group>
+                                    <notebook> 
+                                        <page string="Booking List" >
+                                                <!-- Add fields in One2many_Line -->
+                                            <field name="select_room">
+                                                <tree string="Booking List" editable="bottom" >
+                                                    <field name="floors" />
+                                                    <field name ="room"/>
+                                                    <field name="room_type" />
+                                                    <field name="check_in" />
+                                                    <field name="check_out" />
+                                                    <field name="amount" />
+                                                    <field name="tax" widget="many2many_tags" />
+                                                    <field name="total" widget="monetary" type="measure" decoration-bf="1" optional="show" /> 
+                                                </tree>
+                                            </field>
+
+                                            <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                                    <label for="total1" />
+                                                </div>
+                                                <field name="total1" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                            </group>
+                                        </page> 
+                                    </notebook>
+                                </sheet>
+                                <div class="oe_chatter">
+                                    <field name="message_follower_ids" widget="mail_followers"/>
+                                    <field name="activity_ids" widget="mail_activity"/>
+                                    <field name="message_ids" widget="mail_thread"/>
+                                </div>
+        
+                                </form>                                
+                                </field>        
+                                </record>       
+                         
+                            <record model="ir.actions.act_window" id="action_view_booking">            
+                                <field name="name">Booking</field>         
+                                    <field name="res_model">booking.booking</field>           
+                                    <field name="view_type">form</field>            
+                                    <field name="view_mode">tree,form,kanban,pivot,activity</field>
+                                    <field name="domain">[]</field>            
+                                    <field name="help" type="html">                
+                                        <p class="oe_view_nocontent_create">Create booking details
+                                        </p>             
+                                    </field>        
+                                </record>
+                                <menuitem id = 'menu_hotel' name = 'Hotel'/>
+                                <menuitem id="menu_booking"  sequence="1" parent= "menu_hotel" name="Boooking"      
+                                    action="action_view_booking"/>
+                        </data>
+</odoo>

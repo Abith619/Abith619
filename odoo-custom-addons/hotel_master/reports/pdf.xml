@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_workers">
+        <t t-call="web.external_layout">
+        <t t-call="web.html_container">
+           <t t-foreach="docs" t-as="o">
+               <t >
+               <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
+               <td style="border: 0px;width: 50%;">
+                   <p><strong>Bill No :</strong><span t-field="o.bill_no"/></p>
+               </td>
+               
+               </table>
+               <table border="4" class="table table-bordered" style="border: 1px solid black;">
+               <td>
+                   <p><b>Customer Name :</b> <span t-field="o.name"/></p>
+                   <p><b>Booked By:</b> <span t-field="o.booked_by"/></p>
+                    
+               </td>
+               </table>
+               <p><b>Products :</b></p>
+               <thead>
+                <p class="text-center" style="font-size:15px"></p>
+
+                <table class="table table-sm table-bordered">
+                <tr style="height:40px">
+                    <td><strong>Customare </strong></td>
+                    <td><strong>Floor</strong></td>
+                    <td><strong>GST</strong></td>
+                    <td><strong>Room Type</strong></td>
+                    <td><strong>Amount</strong></td>
+            </tr>
+            </table>
+            </thead>
+                
+                   <tbody class="sale_tbody"></tbody>
+                   <p class="text-center" style="font-size:15px"></p>
+
+                    <table class="table table-sm table-bordered">
+
+                   <tr t-foreach='o.select_room' t-as='line'>
+                    
+                    <td><span t-field="line.y_name"/></td>
+
+                    <td>
+                        <span t-field="line.floors"/></td>
+                    <td><span t-field="line.tax"/></td>
+                    <td><span t-field="line.room_type"/></td>
+                    <td><span t-field="line.total"/></td>
+               </tr>
+            </table>
+               
+                <td>
+                    <p class="text-right" ><strong> Total Amount :</strong> <span t-field="o.total1"/></p>
+               </td>
+               
+               </t>
+               </t>
+           </t>
+       </t>
+   </template>
+</odoo>

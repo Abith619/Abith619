@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="medical_directions_tree_view" model="ir.ui.view">
+            <field name="name">medical.directions.tree.view</field>
+            <field name="model">medical.directions</field>
+            <field name="arch" type="xml">
+                <tree colors="red:bmi&lt;=18 or bmi&gt;=25" string="Evaluations">
+                    <field name="medical_directions_pathology_id" />
+                    <field name="comments" />
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

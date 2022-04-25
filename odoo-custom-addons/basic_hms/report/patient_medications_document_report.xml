@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="basic_hms.patient_medications_document_report">
+			<t t-call="web.external_layout">
+				<t t-set="doc" t-value="doc.with_context({'lang':doc.patient_id.lang})"/>
+				<t t-foreach="docs" t-as="doc">
+					<div class="page">
+						<div class="oe_structure"/>
+						
+							<div>
+								<h3 class="text-center">
+									<strong>PATIENT MEDICATION HISTORY</strong>
+								</h3>
+							</div>
+						
+						<br/><br/><br/>
+						
+					<table class="table table-condensed"> 
+					<tr> 
+						<th style="border: 0px ;" class="text-left">Patient : 
+							<span style="font-weight:normal;" t-field="doc.patient_id.name"/>
+						</th> 
+						
+						<th style="border: 0px ;" class="text-left">Patient ID : 
+							<span style="font-weight:normal;" t-field="doc.name"/>
+						</th>
+
+						<th style="border: 0px ;" class="text-left">Age : 
+							<span style="font-weight:normal;" t-field="doc.age"/>
+						</th>
+					
+					</tr> 
+
+					<tr> 
+						<th style="border: 0px ;" class="text-left">Date: 
+							<span style="font-weight:normal;" t-field="doc.report_date"/>
+						</th> 
+						
+						<th style="border: 0px ;" class="text-left">sex : 
+							<span style="font-weight:normal;" t-field="doc.sex"/>
+						</th>
+					
+					</tr> 
+					</table>
+
+						<br/>
+					
+						<table class="table table-condensed">
+							<thead>
+								<tr>
+									<th>Medicament</th>
+									<th>Indication</th>
+									<th>Start</th>
+									<th>End</th>
+									<th>Act</th>
+									<th>Doctor</th>
+								</tr>
+							</thead>
+							<tbody class="sale_tbody">
+								<t t-foreach="doc.medication_ids" t-as="l">
+									<tr>
+										<td>
+											<span t-field="l.medical_medicament_id.product_id.name"/>
+										</td>
+										<td>
+											<span t-field="l.indication_pathology_id.name"/>
+										</td>
+										<td>
+											<span t-field="l.start_treatment"/>
+										</td>
+										<td>
+											<span t-field="l.end_treatment"/>
+										</td>
+										<td>
+											<span t-field="l.is_active"/>
+										</td>
+										<td>
+											<span t-field="l.doctor_physician_id.partner_id.name"/>
+										</td>
+
+									</tr>
+								</t>
+							</tbody>
+						</table>
+
+					</div>
+				</t>
+
+			</t>
+
+        </template>
+        <template id="patient_medications_document">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="doc">
+					<t t-call="basic_hms.patient_medications_document_report" t-lang="doc.patient_id.lang"/>
+				</t>
+			</t>
+        </template>
+    </data>
+</openerp>

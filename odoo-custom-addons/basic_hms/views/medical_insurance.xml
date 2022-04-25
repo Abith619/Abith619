@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<!-- Tree view -->
+		<record id="medical_insurance_tree_view" model="ir.ui.view">
+			<field name="name">medical.insurance.tree.view</field>
+			<field name="model">medical.insurance</field>
+			<field name="priority">2</field>
+			<field name="arch" type="xml">
+				<tree string="Insurance List">
+				     <field name="number"/>
+                    <field name="medical_insurance_partner_id"/>
+                    <field name="type"/>
+                    <field name="insurance_compnay_id"/>
+                    <field name="category"/>
+                    <field name="member_since"/>
+                    <field name="member_exp"/></tree>
+			</field>
+		</record>
+
+		<!-- Form view -->
+		<record id="medical_insurance_form_view" model="ir.ui.view">
+			<field name="name">medical.insurance.form.view</field>
+			<field name="model">medical.insurance</field>
+			<field name="arch" type="xml">
+			<form string="Insurances">
+                        <sheet>
+                            <group>
+                                <group>
+                                    <field name="number" required="1"/>
+                                    <field name="type"/>
+                                    <field name="member_since"/>
+                                    <field name="category"/>
+
+                                </group>
+                                <group>
+                                    <field name="medical_insurance_partner_id"/>
+                                    <field name="insurance_compnay_id" required="1"/>
+                                    <field name="member_exp"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="notes"/>
+                            </group>
+                        </sheet>
+                    </form>
+
+			</field>
+		</record>
+
+		<!-- Search View -->
+		<record id="medical_insurance_search_view" model="ir.ui.view">
+			<field name="name">Insurances</field>
+			<field name="model">medical.insurance</field>
+			<field name="type">search</field>
+			<field name="priority" eval="8" />
+			<field name="arch" type="xml">
+				<search string="Search Insurances">
+					<separator orientation="vertical" />
+					<field name="number" />
+					<field name="insurance_compnay_id" />
+					<newline />
+				</search>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_medical_insurance">
+			<field name="name">Insurances</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">medical.insurance</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="medical_insurance_search_view" />
+			<field name="domain">[]</field>
+			<field name="context">{}</field>
+		</record>
+
+		<menuitem id="menu_sub_insurance" 
+			action="action_medical_insurance" 
+			sequence="1" parent="menu_insurance"/>
+
+	</data>
+</openerp>

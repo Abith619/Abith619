@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <data>
+            <record id="view_room_type_form" model="ir.ui.view">
+                <field name="name">roomtype</field>
+                <field name="model">room.type</field>
+                <field name="priority" eval="8" />
+                <field name="arch" type="xml">
+                    <form string="roomtype"> 
+                        <sheet>
+
+                            <div class="oe_title" name="title">
+                                <label for="type_name" class="oe_edit_only"/>
+                                <h1>
+                                    <field name="type_name" placeholder="type name"/>
+                                </h1>
+                            </div>
+
+                        </sheet>
+
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers" string="mail"/>
+                            <field name="message_ids" widget="mail_thread" string= "Mail"/>
+                        </div>
+               
+                        </form>                               
+                    </field>        
+                    </record>
+
+
+                    
+                    <record model="ir.actions.act_window" id="action_view_type">            
+                        <field name="name">Type</field>         
+                            <field name="res_model">room.type</field>           
+                            <field name="view_type">form</field>            
+                            <field name="view_mode">tree,form</field>
+                            <field name="domain">[]</field>            
+                            <field name="help" type="html">                
+                                <p class="oe_view_nocontent_create">Create Type
+                                </p>            
+                            </field>        
+                        </record>        
+                        <menuitem id="menu_type" name="Room Type" parent= "menu_hotel"  sequence="4" action="action_view_type"/>
+                </data>
+</odoo>

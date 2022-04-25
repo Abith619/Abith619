@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <act_window id="action_view_priscription_id2" name="Prescription Orders"
+            res_model="medical.prescription.order" src_model="medical.patient"
+            view_mode="tree" domain="[('patient_id', '=', active_id)]" />
+
+        <act_window id="action_view_priscription_id2" name="Prescription Orders"
+            res_model="medical.prescription.order" src_model="medical.patient"
+            view_mode="tree,form" domain="[('patient_id', '=', active_id)]" />
+
+        <!-- Tree view -->
+        <record id="medical_prescription_order_tree_view" model="ir.ui.view">
+            <field name="name">medical.prescription.order.tree.view</field>
+            <field name="model">medical.prescription.order</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="Prescription">
+                    <field name="name" />
+                    <field name="patient_id" />
+                    <field name="user_id" />
+                    <field name="prescription_date" />
+                    <field name="doctor_id" />
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="medical_prescription_order_form_view" model="ir.ui.view">
+            <field name="name">medical.prescription.order.form.view</field>
+            <field name="model">medical.prescription.order</field>
+            <field name="arch" type="xml">
+                <form string="Prescription">
+                    <header>
+                        <button name="prescription_report" type="object"
+                            string="Print Prescription" class="oe_highlight" />
+                        <button
+                            name="%(action_create_prescription_invoice1)d"
+                            type="action" string="Create Invoice" class="oe_highlight" />
+
+                    </header>
+                    <sheet>
+                        <group string="Patient and Doctor Information">
+                            <group>
+                                <field name="patient_id" required="1"
+                                    options="{&quot;always_reload&quot;: 1}" />
+                                <field name="prescription_date"
+                                    required="1" />
+                                <field name="pharmacy_partner_id" />
+                            </group>
+                            <group>
+                                <field name="name" readonly="1" />
+                                <field name="user_id" />
+                                <field name="doctor_id" required="1" />
+                                <field name="invoice_to_insurer" />
+                                <field name="insurer_id"
+                                    attrs="{'invisible': [('invoice_to_insurer','=', False)]}" />
+                            </group>
+                        </group>
+                        <group string="Prescription Detail">
+                            <field name="prescription_line_ids"
+                                nolabel="1" widget="one2many_list" />
+                        </group>
+                        <group string="Notes">
+                            <field name="notes" nolabel="1" />
+                        </group>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="medical_prescription_order_search_view" model="ir.ui.view">
+            <field name="name">medical.prescription.order.search.view</field>
+            <field name="model">medical.prescription.order</field>
+            <field name="type">search</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <search string="Search Patient Prescriptions">
+                    <separator orientation="vertical" />
+                    <field name="name" />
+                    <field name="patient_id" />
+                    <field name="prescription_date" />
+                    <field name="pharmacy_partner_id" />
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_medical_prescription_order">
+            <field name="name">Prescription Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">medical.prescription.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="medical_prescription_order_search_view" />
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+
+
+        <menuitem id="dental_prescription_child" action="action_medical_prescription_order"
+            name="Prescriptions" parent="menu_patients" sequence="2" />
+
+    </data>
+</odoo>

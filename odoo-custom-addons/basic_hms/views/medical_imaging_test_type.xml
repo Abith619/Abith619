@@ -1,0 +1,41 @@
+<!-- <?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="medical_imaging_test_type_form_view" model="ir.ui.view">
+            <field name="name">medical.imaging.test.type.form.view</field>
+            <field name="model">medical.imaging.test.type</field>
+            <field name="arch" type="xml">
+                <form string="Imaging Test Type">
+                    <group colspan="4" col="4">
+                        <field name="name" />
+                        <field name="code" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="medical_imaging_test_type_tree_view" model="ir.ui.view">
+            <field name="name">medical.imaging.test.type.tree.view</field>
+            <field name="model">medical.imaging.test.type</field>
+            <field name="arch" type="xml">
+                <tree string="Imaging Test Type">
+                    <field name="name" />
+                    <field name="code" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_medical_imaging_test_type" model="ir.actions.act_window">
+            <field name="name">Imaging Test Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">medical.imaging.test.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_medical_imaging_test_type" action="action_medical_imaging_test_type"
+            parent="menu_imaging_configaration" sequence="0" />
+
+    </data>
+</odoo>
+ -->

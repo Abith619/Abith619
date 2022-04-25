@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="medical_test_type_tree_view" model="ir.ui.view">
+            <field name="name">medical.test.type.tree.view</field>
+            <field name="model">medical.test_type</field>
+            <field name="arch" type="xml">
+                <tree string="Lab test type">
+                    <field name="name" />
+                    <field name="code" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="medical_test_type_form_view" model="ir.ui.view">
+            <field name="name">medical.test.type.form.view</field>
+            <field name="model">medical.test_type</field>
+            <field name="arch" type="xml">
+                <form string="Lab Test">
+                    <sheet>
+                        <notebook>
+                            <page string="Main Info">
+                                <group colspan="4" col="4">
+                                    <field name="name" required="1" />
+                                    <field name="code" />
+                                    <field name="critearea_ids"
+                                        colspan="4" nolabel="1">
+                                        <tree editable="top"
+                                            string="Test Cases">
+                                            <field name="seq" />
+                                            <field name="name" />
+
+                                            <field name="normal_range" />
+                                            <field name="lab_test_unit_id" />
+                                        </tree>
+                                        <form string="Test Cases">
+                                            <field name="name" />
+                                            <field name="seq" />
+                                            <field name="lab_test_unit_id" />
+                                            <field name="normal_range" />
+                                        </form>
+
+                                    </field>
+                                    <field name="service_product_id" />
+                                </group>
+                            </page>
+                            <page string="Extra Info">
+                                <field name="info" />
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+
+        <record id="action_medical_test_type" model="ir.actions.act_window">
+            <field name="name">Lab Test Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">medical.test_type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Lab Test Type" id="menu_lab_new_type_lab_test"
+            parent="main_menu_conf_laboratory" action="action_medical_test_type" />
+
+    </data>
+</odoo>
+

@@ -1,0 +1,43 @@
+<!-- <?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="pet_type_form_view" model="ir.ui.view">
+            <field name="name">pet.type.form.view</field>
+            <field name="model">pet.type</field>
+            <field name="arch" type="xml">
+                <form string="Pet Type">
+                    <sheet>
+                        <group col="4">
+                            <field name="name" />
+                            <field name="code" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pet_type_tree_view" model="ir.ui.view">
+            <field name="name">pet.type.tree.view</field>
+            <field name="model">pet.type</field>
+            <field name="arch" type="xml">
+                <tree string="Breed">
+                    <field name="name" />
+                    <field name="code" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_pet_type" model="ir.actions.act_window">
+            <field name="name">Pet Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pet.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_pet_type" action="action_pet_type"
+            sequence="2" parent="menu_general_information" />
+
+    </data>
+</odoo>
+ -->

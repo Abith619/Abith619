@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<template id="report_patient_card_document">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="web.internal_layout">
+					<div class="page">
+						<br></br>
+						<br></br>
+						<br></br>
+						<br></br>
+						<div class="center-block"
+							style="height: 260px; width: 430px; border: 1px solid black;">
+							<table>
+								<tbody>
+									<tr>
+										<td>
+										</td>
+										<td style="vertical-align: top;">
+											<div
+												style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; font-size:16px">
+												<b>
+													Patient ID:
+													<span t-field='o.name' />
+												</b>
+												<br></br>
+												<b>Title:</b>
+												<span t-field='o.patient_id.title' />
+												<br></br>
+												<b>Name:</b>
+												<span t-field='o.patient_id.name' />
+												<br></br>
+												<b>Gender :</b>
+												<span t-field='o.sex' />
+												<br></br>
+												<b>Date of Birth :</b>
+												<span t-field='o.date_of_birth' />
+												<br></br>
+												<b>Age:</b>
+												<span t-field='o.age' />
+												<br></br>
+												<b>Blood Group:</b>
+												<span t-field='o.blood_type' />
+												<br></br>
+												<b>Address:</b>
+												<span
+													t-raw="'%s' % o.patient_id.street if  o.patient_id.street  else ''" />
+												<span
+													t-raw="'%s' %  o.patient_id.street2 if  o.patient_id.street2  else ''" />
+												<span
+													t-raw="'%s' %  o.patient_id.country_id.name if o.patient_id.country_id.name  else ''" />
+												<span
+													t-raw="'%s' %  o.patient_id.state_id.name if  o.patient_id.state_id.name  else ''" />
+												<br></br>
+												<b>Phone No:</b>
+												<span t-field='o.patient_id.mobile' />
+												<br></br>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</t>
+				</t>
+			</t>
+		</template>
+
+		<template id="report_patient_card">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="basic_hms.report_patient_card_document"
+						t-lang="o.patient_id.lang" />
+				</t>
+			</t>
+		</template>
+	</data>
+</openerp>

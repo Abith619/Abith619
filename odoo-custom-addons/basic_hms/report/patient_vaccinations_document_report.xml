@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="basic_hms.patient_vaccinations_document">
+    		<t t-call="web.external_layout">
+    			<t t-set="doc" t-value="doc.with_context({'lang':doc.patient_id.lang})"/>
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                            <div>
+                                <h4 class="text-center"><strong>PATIENT VACCINATIONS HISTORY</strong></h4>
+                            </div>
+                        <br/> <br/><br/>
+                     <table class="table table-condensed"> 
+                    <tr> 
+                        <th style="border: 0px ;" class="text-left">Patient : 
+                            <span style="font-weight:normal;" t-field="doc.patient_id.name"/>
+                        </th> 
+                        
+                        <th style="border: 0px ;" class="text-left">Patient ID : 
+                            <span style="font-weight:normal;" t-field="doc.name"/>
+                        </th>
+
+                        <th style="border: 0px ;" class="text-left">Age : 
+                            <span style="font-weight:normal;" t-field="doc.age"/>
+                        </th>
+                    
+                    </tr> 
+
+                    <tr> 
+                        <th style="border: 0px ;" class="text-left">Date: 
+                            <span style="font-weight:normal;" t-field="doc.report_date"/>
+                        </th> 
+                        
+                        <th style="border: 0px ;" class="text-left">sex : 
+                            <span style="font-weight:normal;" t-field="doc.sex"/>
+                        </th>
+                    
+                    </tr> 
+                    </table>
+                    <br/>
+
+              <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Vaccine</th>
+                        <th>Dose</th>
+                        <th>Date</th>
+                        <th>Observations</th>
+                    </tr>
+               </thead>
+               <tbody class="sale_tbody">
+                    <t t-foreach="doc.medical_vaccination_ids" t-as="l">
+                        <tr>
+                            <td>
+                               <span t-field="l.vaccine_product_id.name"/>
+                            </td>
+                             <td>
+                               <span t-field="l.dose"/>
+                            </td>
+                             <td>
+                               <span t-field="l.date"/>
+                            </td>
+                             <td>
+                               <span t-field="l.observations"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+
+                 </div>
+                </t>
+
+			</t>
+
+
+        </template>
+        <template id="patient_vaccinations">
+    	<t t-call="web.html_container">
+        	<t t-foreach="docs" t-as="doc">
+            <t t-call="basic_hms.patient_vaccinations_document" t-lang="doc.patient_id.lang"/>
+        	</t>
+    	</t>
+        </template>
+    </data>
+</openerp>

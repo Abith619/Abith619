@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <data>
+            <record id="view_doctor_form" model="ir.ui.view">
+                <field name="name">medicalform</field>
+                <field name="model">medical.doctor</field>
+                <field name="priority" eval="8" />
+                <field name="arch" type="xml">
+                    <form string="doctor">    
+                        <header>
+                    <button name="action_send_email"  type="object" string="Send Reports"  class="oe_highlight"/> 
+                        </header>
+                        <sheet>
+                            <group>
+                                <group>
+                                    <field name="doctor" placeholder="eg:Doctor"/>
+                                     <field name ="diagnosis"/>
+                                    <field name ="sign_symptoms"/>
+                                    <field name ="family_history"/>
+                                    <field name ="videos"/>
+                                </group>
+                                <group>
+                                    <field name="patient" placeholder="eg:patient"/>
+                                    <field name ="since"/>
+                                    <field name ="history"/>
+                                    <field name ="surgery_history"/>
+                                    <field name ="lab_reports"/>
+                                    <field name ="scan_reports"/>
+                                    <field name ="diet"/>
+                                        <field name="image" widget="image"/> 
+                                </group>
+                            </group>
+                            <notebook> 
+                                <page string="Previous Medication" >
+                                        <!-- Add fields in One2many_Line -->
+                                    <field name="pervious_medication">
+                                        <tree string="medication List" editable="bottom" >
+                                            <field name="diseases" />
+                                            <field name ="signs"/>
+                                            <field name="medicine" />
+                                            <field name="diets" />
+                                            <field name="medication_from" />
+                                            <field name="medication_to" />
+                                        </tree>
+                                        <field name ="notes"/> 
+                                    </field>
+                                </page>
+                                <page string="Surgery History">
+                                    <field name = 'history_surgery'>
+                                        <tree string="Surgery List" editable="bottom" >
+                                            <field name="pat" />
+                                            <field name ="doc"/>
+                                            <field name="surgery_date" />
+                                            <field name="surgery_type" />
+                                            <field name="surgery_reason" />
+                                            <field name ="surgery_status"/>
+                                            <field name ="surgery_notes"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                <page string="Family History">
+                                    <field name = 'history_family'>
+                                        <tree string="Medical History" editable="bottom" >
+                                            <field name="pati" />
+                                            <field name ="doct"/>
+                                            <field name="family_date" />
+                                            <field name="family_type" />
+                                            <field name="family_reason" />
+                                            <field name ="family_status"/>
+                                            <field name ="family_notes"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                                </notebook>
+                            </sheet>
+                            <div class="oe_chatter">
+                                <field name="message_follower_ids" widget="mail_followers" string="mail"/>
+                                <field name="message_ids" widget="mail_thread" string= "Mail"/>
+                                <field name="activity_ids" widget="mail_activity"/>
+                            </div>
+                            </form>                                
+                            </field>        
+                            </record>
+                                <record model="ir.actions.act_window" id="action_view_doctor">            
+                                    <field name="name">Doctor</field>         
+                                        <field name="res_model">medical.doctor</field>           
+                                        <field name="view_type">form</field>            
+                                        <field name="view_mode">tree,form</field>
+                                        <field name="domain">[]</field>            
+                                        <field name="help" type="html">                
+                                            <p class="oe_view_nocontent_create">Doctor
+                                            </p>            
+                                        </field>        
+                                    </record>        
+                                    <menuitem id="menu_doctor" name="Doctor" parent= "main_menu_hospital_management"  sequence="2" action="action_view_doctor"/>
+                            </data>
+    </odoo>

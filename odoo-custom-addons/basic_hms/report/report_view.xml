@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- QWeb Reports -->
+
+        <report
+            id="report_print_prescription"
+            model="medical.prescription.order"
+            report_type="qweb-pdf"
+            string="Prescription"
+            name="basic_hms.prescription_demo_report"
+            file="basic_hms.prescription_demo_report"
+            />
+
+        <report
+            id="report_print_appointment"
+            model="medical.appointment"
+            report_type="qweb-pdf"
+            string="Appointment Recipts New"
+            name="basic_hms.appointment_recipts_report"
+            file="basic_hms.appointment_recipts_report"
+            />
+
+
+        <report
+            id="report_print_patient_card"
+            model="medical.patient"
+            report_type="qweb-pdf"
+            string="Patient Card"
+            name="basic_hms.report_patient_card"
+            file="basic_hms.report_patient_card"
+            />
+
+
+
+        <report
+            id="report_print_patient_medications_document"
+            model="medical.patient"
+            report_type="qweb-pdf"
+            string="Medication History New"
+            name="basic_hms.patient_medications_document"
+            file="basic_hms.patient_medications_document"
+            />
+        <report
+            id="report_print_patient_vaccinations_document"
+            model="medical.patient"
+            report_type="qweb-pdf"
+            string="Vaccinations History New"
+            name="basic_hms.patient_vaccinations"
+            file="basic_hms.patient_vaccinations"
+            />
+        <report
+            id="report_print_patient_diseases_document"
+            model="medical.patient"
+            report_type="qweb-pdf"
+            string="Diseases Report New"
+            name="basic_hms.patient_diseases_document"
+            file="basic_hms.patient_diseases_document"
+            />
+        <report
+            id="report_print_lab_result_demo"
+            model="medical.lab"
+            report_type="qweb-pdf"
+            string="Lab Record"
+            name="basic_hms.lab_result_demo"
+            file="basic_hms.lab_result_demo"
+            />
+
+    </data>
+</openerp>

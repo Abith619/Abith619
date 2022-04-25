@@ -1,0 +1,83 @@
+<!-- <?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+
+        <record id="medical_domiciliary_unit_view_form" model="ir.ui.view">
+            <field name="name">medical.domiciliary.unit.view.form</field>
+            <field name="model">medical.domiciliary.unit</field>
+            <field name="arch" type="xml">
+                <form string="Domiciliary Unit">
+                    <sheet>
+                        <group colspan="6" col="6">
+                            <field name="name" required="1" />
+                            <field name="desc" colspan="4" />
+                            <field name="address_street" />
+                            <field name="address_street_number" />
+                            <field name="address_street_bis" />
+                            <field name="address_district" />
+                            <field name="address_municipality" />
+                            <field name="address_city" />
+                            <field name="address_zip" />
+                            <field name="state_id" />
+                            <field name="address_country" />
+                            <newline />
+                            <field name="latitude" />
+                            <field name="longitude" />
+                            <field name="urladdr" />
+                        </group>
+                        <group colspan="4" col="4">
+                            <field name="housing" />
+                            <field name="dwelling" />
+                            <separator colspan="4"
+                                string="Infrastructure" />
+                            <field name="materials" />
+                            <field name="roof_type" />
+                            <field name="total_surface" />
+                            <field name="bedrooms" />
+                            <field name="bathrooms" />
+                            <field name="water" />
+                            <field name="sewers" />
+                            <field name="trash" />
+                            <field name="electricity" />
+                            <field name="gas" />
+                            <field name="telephone" />
+                            <field name="television" />
+                            <field name="internet" />
+                            <separator colspan="4" />
+                            <field name="operational_sector" />
+                        </group>
+                        <newline />
+                        <field name="members_ids" colspan="4"
+                            nolabel="1" />
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+
+        <record id="medical_domiciliary_unit_view_tree" model="ir.ui.view">
+            <field name="name">medical.domiciliary.unit.view.tree</field>
+            <field name="model">medical.domiciliary.unit</field>
+            <field name="arch" type="xml">
+                <tree string="Domiciliary Unit">
+                    <field name="name" />
+                    <field name="desc" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_medical_domiciliary_unit" model="ir.actions.act_window">
+            <field name="name">Domiciliary Unit</field>
+            <field name="res_model">medical.domiciliary.unit</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_medical_domiciliary_unit_code"
+            action="action_medical_domiciliary_unit" string="Domiciliary Unit"
+            parent="menu_patients" sequence="3" />
+    </data>
+</odoo>
+
+ -->

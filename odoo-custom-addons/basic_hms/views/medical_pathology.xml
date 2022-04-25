@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="medical_pathology_form_view" model="ir.ui.view">
+            <field name="name">medical.pathology.form.view</field>
+            <field name="model">medical.pathology</field>
+            <field name="arch" type="xml">
+                <form string="Pathology Info">
+                    <notebook>
+                        <page string="Main">
+                            <group colspan="4" col="4">
+                                <field name="name" />
+                                <field name="code" />
+                                <field name="category_id" />
+                                <newline />
+                            </group>
+                        </page>
+                        <page string="Genetics">
+                            <group colspan="4" col="4">
+                                <field name="chromosome" />
+                                <field name="protein" />
+                                <field name="gene" />
+                            </group>
+                        </page>
+                        <page string="Extra Info">
+                            <field name="info" />
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record id="medical_pathology_tree_view" model="ir.ui.view">
+            <field name="name">medical.pathology.tree.view</field>
+            <field name="model">medical.pathology</field>
+            <field name="arch" type="xml">
+                <tree string="Pathology">
+                    <field name="name" />
+                    <field name="code" />
+                    <field name="category_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_medical_pathology" model="ir.actions.act_window">
+            <field name="name">Diseases</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">medical.pathology</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_diseases" name="Diseases"
+            parent="main_menu_configartion" sequence='1' />
+        <menuitem id="menu_sub_diseases" action="action_medical_pathology"
+            sequence="3" parent="menu_diseases" />
+
+    </data>
+</odoo>

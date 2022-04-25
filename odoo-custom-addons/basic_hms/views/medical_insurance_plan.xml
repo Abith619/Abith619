@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+        <record id="medical_insurance_plan_tree_view" model="ir.ui.view">
+            <field name="name">medical.insurance.plan.tree.view</field>
+            <field name="model">medical.insurance.plan</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <tree string="Insurance Plans">
+                    <field name="insurance_product_id" />
+                    <field name="is_default" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="medical_insurance_plan_form_view" model="ir.ui.view">
+            <field name="name">medical.insurance.plan.form.view</field>
+            <field name="model">medical.insurance.plan</field>
+            <field name="arch" type="xml">
+                <form string="Insurance Plans">
+                    <group colspan="4" col="4">
+                        <field name="insurance_product_id" required = "1"
+                            context="{'search_default_type': 'service','default_type': 'service'}" />
+                        <newline />
+                        <field name="company_partner_id"  required = "1"
+                            context="{'default_is_insurance_company': 1, 'search_default_is_insurance_company': 1}" />
+                        <field name="is_default" />
+                        <newline />
+                        <field name="notes" colspan="4" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+	</data>
+</openerp>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="medical_lab_tree_view" model="ir.ui.view">
+            <field name="name">medical.lab.tree.view</field>
+            <field name="model">medical.lab</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="test_id" />
+                    <field name="patient_id" />
+                    <field name="date_analysis" />
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="medical_lab_form_view" model="ir.ui.view">
+            <field name="name">medical.lab.form.view</field>
+            <field name="model">medical.lab</field>
+            <field name="arch" type="xml">
+                <form string="Laboratory Test">
+                    <header>
+                        <button name="%(action_create_lab_invoice2)d"
+                            string="Create Lab Invoice" type="action"
+                            class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group string="Main Info">
+                            <group>
+                                <field name="name" readonly="1" />
+                                <field name="date_analysis" />
+                                <field name="medical_lab_physician_id" />
+                                <field name="requestor_physician_id"
+                                    required="1" />
+                            </group>
+                            <group>
+                                <field name="test_id" required="1" />
+                                <field name="patient_id" required="1" />
+                                <field name="date_requested" />
+                            </group>
+                        </group>
+                        <group string="Total Cases">
+                            <field name="critearea_ids" colspan="4"
+                                nolabel="1">
+                                <tree editable="top" string="Test Cases">
+                                    <field name="seq" />
+                                    <field name="name" />
+                                    <field name="result_text" />
+                                    <field name="normal_range" />
+                                    <field name="lab_test_unit_id" />
+                                </tree>
+                                <form string="Test Cases">
+
+                                    <field name="name" />
+                                    <field name="seq" />
+                                    <field name="result_text" />
+                                    <field name="lab_test_unit_id" />
+                                    <field name="normal_range" />
+                                </form>
+                            </field>
+                        </group>
+                        <group string="Extra Info">
+                            <field name="results" />
+                            <field name="diagnosis" />
+                        </group>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+
+        <record id="action_medical_lab_form" model="ir.actions.act_window">
+            <field name="name">Lab Tests Results</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">medical.lab</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_medical_lab_tree" model="ir.actions.act_window">
+            <field name="name">Lab Tests Results</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">medical.lab</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <act_window id="action_view_lab_id" name="Lab Reports"
+            res_model="medical.lab" src_model="medical.patient"
+            view_mode="tree,form" domain="[('patient_id', '=', active_id)]" />
+
+        <menuitem name="Lab Tests Results" id="menu_lab_test_result"
+            parent="basic_hms.main_menu_laboratory" action="action_medical_lab_form"
+            sequence="0" />
+
+    </data>
+</odoo>

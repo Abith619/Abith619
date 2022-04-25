@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="medical_preinatal_tree_view" model="ir.ui.view">
+            <field name="name">medical.preinatal.tree.view</field>
+            <field name="model">medical.preinatal</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="gestational_weeks" />
+                    <field name="admission_date" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="medical_medical_preinatal_form_view" model="ir.ui.view">
+            <field name="name">medical.preinatal.form.view</field>
+            <field name="model">medical.preinatal</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="gestational_weeks" />
+                    <field name="admission_date" />
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

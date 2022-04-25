@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="medical_lab_test_create_wizard_view" model="ir.ui.view">
+            <field name="name">medical.lab.test.create.wizard.view</field>
+            <field name="model">medical.lab.test.create</field>
+            <field name="arch" type="xml">
+                <form string="Create Lab Test">
+                    <separator colspan="4"
+                        string="Do you want to generate the test(s) ?" />
+                    <newline />
+                    <separator string="Create Tests" colspan="6" />
+                    <footer>
+                        <button name="create_lab_test" string="Create Lab Test"
+                            type="object" class="oe_highlight" />
+                        or
+                        <button special="cancel" string="Cancel"
+                            class="oe_highlight" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_create_lab_result2" name="Create Lab Result"
+            res_model="medical.lab.test.create" src_model="medical.patient.lab.test"
+            view_mode="form" view_type="form" target="new"
+            key2="client_action_multi" />
+
+        <menuitem name="Laboratory"
+            id="main_menu_conf_laboratory"
+            parent = "basic_hms.main_menu_configartion"
+            sequence='0'
+           />
+
+    </data>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="medical_puerperium_monitor_tree_view" model="ir.ui.view">
+            <field name="name">medical.puerperium.monitor.tree.view</field>
+            <field name="model">medical.puerperium.monitor</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="date" />
+                    <field name="systolic_pressure" />
+                    <field name="diastolic_pressure" />
+                    <field name="heart_freq" />
+                    <field name="temprature" />
+                    <field name="fundal_height" />
+                    <field name="lochia_amount" />
+                    <field name="lochia_color" />
+                    <field name="loicha_order" />
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

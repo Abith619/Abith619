@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="medical_physician_form_view" model="ir.ui.view">
+            <field name="name">medical.physician.form.view</field>
+            <field name="model">medical.physician</field>
+            <field name="arch" type="xml">
+                <form string="Physician">
+                    <notebook>
+                        <page string="Main Info">
+                            <group colspan="4" col="4">
+                                <field name="partner_id" required="1"
+                                    context="{'default_is_doctor': 1, 'search_default_is_doctor': 1}" />
+                                <field name="institution_partner_id"
+                                    context="{'default_is_institution': 1, 'search_default_is_institution': 1}" />
+                                <field name="code" />
+                            </group>
+                        </page>
+                        <page string="Extra Info">
+                            <field name="info" />
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record id="medical_physician_search_view" model="ir.ui.view">
+            <field name="name">medical.physician.search.view</field>
+            <field name="model">medical.physician</field>
+            <field name="arch" type="xml">
+                <search string="Search Physician">
+                    <separator orientation="vertical" />
+                    <field name="partner_id" select="1" />
+                    <field name="code" select="1" />
+                    <field name="institution_partner_id" select="1" />
+                    <newline />                    
+                    <group expand="1" string="Group By">
+                        <filter string="Doctor" name='by_user' context="{'group_by':'partner_id'}"/>
+                        <filter string="Institution" name='by_institution' context="{'group_by':'institution_partner_id'}"/>
+                    </group> 
+                </search>
+            </field>
+        </record>
+
+        <record id="medical_physician_tree_view" model="ir.ui.view">
+            <field name="name">medical.physician.tree.view</field>
+            <field name="model">medical.physician</field>
+            <field name="arch" type="xml">
+                <tree string="Physician Information">
+                    <field name="partner_id" />
+                    <field name="code" />
+                    <field name="institution_partner_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_medical_physician" model="ir.actions.act_window">
+            <field name="name">Physicians</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">medical.physician</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_physician" string="Physicians" name='Physicians'
+            parent="main_menu_configartion" sequence="7" />
+
+        <menuitem id="menu_medical_physician" parent="menu_physician"
+            action="action_medical_physician" sequence="6" />
+
+    </data>
+</odoo>

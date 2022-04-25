@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="medical_patient_lab_test_tree_view" model="ir.ui.view">
+            <field name="name">medical.patient.lab.test.tree.view</field>
+            <field name="model">medical.patient.lab.test</field>
+            <field name="arch" type="xml">
+                <tree string="Test Requests">
+                    <field name="request" readonly="1" />
+                    <field name="medical_test_type_id" required="1" />
+                    <field name="date" />
+                    <field name="patient_id" required="1" />
+                    <field name="doctor_id" />
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="medical_patient_lab_test_form_view" model="ir.ui.view">
+            <field name="name">medical.patient.lab.test.form.view</field>
+            <field name="model">medical.patient.lab.test</field>
+            <field name="arch" type="xml">
+                <form string="Test Requests">
+                    <header>
+                        <button name="%(action_create_lab_result2)d"
+                            string="Create Lab Test" type="action"
+                            class="oe_highlight" attrs="{'invisible':[('state','=','cancel')]}"/>
+                        <button name="%(action_create_lab_invoice2)d"
+                            string="Create Lab Invoice" type="action"
+                            class="oe_highlight" attrs="{'invisible':[('state','=','cancel')]}"/>    
+                        <button name="cancel_lab_test"
+                            string="Cancel lab request" type="object"
+                            class="oe_highlight" attrs="{'invisible':[('state','=','cancel')]}" />
+
+                        <field name="state" widget="statusbar"
+                            statusbar_visible="draft,tested,cancel"
+                            statusbar_colors="{&quot;confirmed&quot;:&quot;red&quot;,&quot;hospitalized&quot;:&quot;red&quot;,&quot;free&quot;:&quot;blue&quot;}"
+                            readonly="1" />
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="medical_test_type_id" required="1" />
+                                <field name="date" />
+                                <field name="invoice_to_insurer" />
+                            </group>
+                            <group>
+                                <field name="patient_id" required="1"
+                                    options="{&quot;always_reload&quot;: 1}" />
+                                <field name="doctor_id" />
+                                <field name="insurer_id"
+                                    attrs="{'invisible': [('invoice_to_insurer','=', False)]}" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+
+
+
+        <record id="action_medical_patient_lab_test" model="ir.actions.act_window">
+            <field name="name">Lab Requests</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">medical.patient.lab.test</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <record id="action_medical_patient_lab_test_draft" model="ir.actions.act_window">
+            <field name="name">Draft Lab Requests</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">medical.patient.lab.test</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','draft')]</field>
+        </record>
+
+        <record id="action_medical_patient_lab_test_todays_draft" model="ir.actions.act_window">
+            <field name="name">Today's Draft Lab Requests</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">medical.patient.lab.test</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','draft'),('date','>=',time.strftime('%Y-%m-%d'))]</field>
+        </record>
+
+        <menuitem name="Laboratory" id="main_menu_laboratory"
+            parent="main_menu_hospital_management" sequence='7' />
+
+        <menuitem name="Lab Requests" id="menu_lab_requests"
+            parent="basic_hms.main_menu_laboratory"
+            sequence="1" action="action_medical_patient_lab_test_draft"/>
+
+        <menuitem name="Draft Lab Requests" id="sub_menu_draft_req"
+            parent="menu_lab_requests" action="action_medical_patient_lab_test_draft" />
+
+        <menuitem name="Today's Draft Lab Requests" id="sub_menu_today_draft_req"
+            parent="menu_lab_requests" action="action_medical_patient_lab_test_todays_draft" />
+
+
+
+    </data>
+</odoo>

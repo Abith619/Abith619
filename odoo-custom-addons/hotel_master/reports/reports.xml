@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+    id="report_work_details"
+    string="PDF"
+    model="booking.booking"
+    report_type="qweb-pdf"
+    name="hotel_master.report_workers"
+    file="hotel_master.report_workers"/>
+</odoo>

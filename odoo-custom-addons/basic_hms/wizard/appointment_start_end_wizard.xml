@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--         <record id="appointment_start_end_wizard_view" -->
+<!--             model="ir.ui.view"> -->
+<!--             <field name="name">appointment.start.end.wizard.view</field> -->
+<!--             <field name="model">appointment.start.end.wizard</field> -->
+<!--             <field name="arch" type="xml"> -->
+<!--                 <form -->
+<!--                     string="Appointment Evaluation Per Medical Health Services"> -->
+<!--                     <group> -->
+<!--                         <field name="appointment_start_end_physician_ids" widget="many2many_tags" /> -->
+<!-- <!--                         <field name="speciality_ids" widget="many2many_tags" /> --> -->
+<!--                     </group> -->
+<!--                     <group colspan="4" col="4"> -->
+<!--                         <field name="start_date" /> -->
+<!--                         <field name="end_date" /> -->
+<!--                     </group> -->
+<!--                     <footer> -->
+<!--                         <button name="show_record" class="oe_highlight" -->
+<!--                             string="Show" type="object" /> -->
+<!--                         or -->
+<!--                         <button special="cancel" class="oe_highlight" -->
+<!--                             string="Cancel" /> -->
+<!--                     </footer> -->
+<!--                 </form> -->
+<!--             </field> -->
+<!--         </record> -->
+
+<!--         <record id="action_appointment_start_end_wizard" -->
+<!--             model="ir.actions.act_window"> -->
+<!--             <field name="name">Appointment Evaluation Per Doctor</field> -->
+<!--             <field name="res_model">appointment.start.end.wizard</field> -->
+<!--             <field name="view_type">form</field> -->
+<!--             <field name="view_mode">form</field> -->
+<!--             <field name="target">new</field> -->
+<!--         </record> -->
+
+<!--         <menuitem id="menu_reporting" string="Reporting" name='Reporting' -->
+<!--             parent="basic_hms.main_menu_hospital_management" -->
+<!--             sequence="12" /> -->
+<!--         <menuitem id="menu_appointment_evaluation_per_doctor_wizard" -->
+<!--             action="action_appointment_start_end_wizard" -->
+<!--             parent="menu_reporting" sequence="3" /> -->
+
+    </data>
+</odoo>

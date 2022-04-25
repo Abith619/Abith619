@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <data>
+            <record id="view_room_form" model="ir.ui.view">
+                <field name="name">room.form</field>
+                <field name="model">floor.room</field>
+                <field name="priority" eval="8" />
+                <field name="arch" type="xml">
+                    <form string="room">  
+                        <header>
+                            <field name="status" widget="statusbar" statusbar_visible="available,booked" />
+                        </header>  
+                        <sheet>
+                            <!-- <field name="room_state" widget="state_selection" groups="base.group_user"/> -->
+                            <div class="oe_title" name="title">
+                                <label for="room_name" class="oe_edit_only"/>
+                                <h3>
+                                    <field name="room_name" string ="Floor name" placeholder="type name"/>
+                                </h3>
+                            </div>
+                                <group>
+                                    <group>
+                                        <field name ="floor"/>
+                                        <field name="room_type"/>
+                                        <field name="seat"/>
+                                        <field name="booked_seats"/>
+                                        <field name="available_seats"/>
+                                    </group>
+                                    <group>
+                                    </group>
+
+                                </group> 
+                            </sheet>
+                            <div class="oe_chatter">
+                                <field name="message_follower_ids" widget="mail_followers" string="mail"/>
+                                <field name="message_ids" widget="mail_thread" string= "Mail"/>
+                            </div>
+                            </form>                                
+                            </field>        
+                            </record>
+
+
+                            
+        <record id="room_tree_view" model="ir.ui.view">
+            <field name="name">room_tree</field>
+            <field name="model">floor.room</field>
+            <field name="arch" type="xml">
+                 <tree string="room" decoration-success="status=='available'" decoration-danger="status=='booked'">
+                    
+                    <field name="room_name"/>
+                    <field name="floor"/>
+                    <field name="room_type"/>
+                    <field name="status"/>
+                    
+                    <!-- <field name="room_state" widget="state_selection" groups="base.group_user"/> -->
+            
+                </tree>
+            </field>
+        </record>
+
+                                <record model="ir.actions.act_window" id="action_view_room">            
+                                    <field name="name">Room</field>         
+                                        <field name="res_model">floor.room</field>           
+                                        <field name="view_type">form</field>            
+                                        <field name="view_mode">tree,form</field>
+                                        <field name="domain">[]</field>            
+                                        <field name="help" type="html">                
+                                            <p class="oe_view_nocontent_create">Create Room
+                                            </p>            
+                                        </field>        
+                                    </record>        
+                                    <menuitem id="menu_room" name="Room" parent= "menu_hotel"  sequence="3" action="action_view_room"/>
+                            </data>
+    </odoo>
+        
+    
