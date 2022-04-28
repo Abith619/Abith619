@@ -53,7 +53,7 @@ from . import medical_pediatrics_growth_charts_who
 from . import medical_perinatal_monitor
 from . import medical_physician
 from . import medical_preinatal
-from . import medical_prescription_line
+# from . import medical_prescription_line
 from . import medical_puerperium_monitor
 from . import medical_rcri
 from . import medical_rounding_procedure

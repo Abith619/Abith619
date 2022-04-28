@@ -3,7 +3,7 @@
 
 {
 
-    "name" : "Hospital Management System",
+    "name" : "Basic Hospital Management System in Odoo",
     "version" : "12.0.0.4",
     "currency": 'EUR',
     "summary": "help to manage basic Hospital Management system in odoo",
@@ -35,7 +35,7 @@
     
 """ ,
 
-    "depends" : ["base", "sale_management", "stock", "account", "mail", "utm"],
+    "depends" : ["base", "sale_management", "stock", "account"],
     "data": [
             'security/hospital_groups.xml',
             'data/ir_sequence_data.xml',
@@ -74,7 +74,7 @@
             'views/medical_patient.xml',
             'views/medical_physician.xml',
             'views/medical_preinatal.xml',
-            'views/medical_prescription_line.xml',
+            # 'views/medical_prescription_line.xml',
             'views/medical_puerperium_monitor.xml',
             'views/medical_rcri.xml',
             'views/medical_rounding_procedure.xml',
@@ -94,6 +94,7 @@
             'report/patient_vaccinations_document_report.xml',
             'report/prescription_demo_report.xml',
             'security/ir.model.access.csv',
+            # 'security/security.xml',
 	     ],
     "author": "BrowseInfo",
     "website": "https://www.browseinfo.in",

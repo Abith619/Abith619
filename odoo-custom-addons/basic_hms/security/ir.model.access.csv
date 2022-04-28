@@ -6,11 +6,11 @@ access_medical_group_insurance_chem_r,medical.group.medical_insurance.r.chem,mod
 access_medical_group_insurance_chem_rm,medical.group.medical_insurance.rm.chem,model_res_partner,group_medical_group,1,0,0,0
 access_diseases_category,medical.group.diseases.category,model_medical_pathology_category,group_medical_group,1,0,0,0
 access_diseases,medical.group.diseases,model_medical_pathology,group_medical_group,1,0,0,0
-access_medical_doctor,medical.medical.doctor,model_medical_doctor,group_medical_group,1,1,1,1
-access_pervious_medication,medical.pervious.medication,model_pervious_medication,group_medical_group,1,1,1,1
-access_patient_surgery,medical.patient.surgery,model_patient_surgery,group_medical_group,1,1,1,1
-access_patient_family,medical.patient.family,model_patient_family,group_medical_group,1,1,1,1
-
+access_medical_doctor,medical.group.medical.doctor,model_medical_doctor,group_medical_group,1,1,1,1
+access_pervious_medication,medical.group.pervious.medication,model_pervious_medication,group_medical_group,1,1,1,1
+access_patient_surgery,medical.group.patient.surgery,model_patient_surgery,group_medical_group,1,1,1,1
+access_patient_family,medical.group.patient.family,model_patient_family,group_medical_group,1,1,1,1
+access_medical_prescription_line,medical.group.medical.prescription.line,model_medical_prescription_line,group_medical_group,1,1,1,1
 
 
 

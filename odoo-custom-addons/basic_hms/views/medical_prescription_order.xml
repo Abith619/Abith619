@@ -47,6 +47,8 @@
                                     options="{&quot;always_reload&quot;: 1}" />
                                 <field name="prescription_date"
                                     required="1" />
+                                <field name='age'/>
+                                <field name='sex'/>
                                 <field name="pharmacy_partner_id" />
                             </group>
                             <group>
@@ -58,10 +60,28 @@
                                     attrs="{'invisible': [('invoice_to_insurer','=', False)]}" />
                             </group>
                         </group>
-                        <group string="Prescription Detail">
+                        <!-- <group string="Prescription Detail">
                             <field name="prescription_line_ids"
                                 nolabel="1" widget="one2many_list" />
-                        </group>
+                        </group> -->
+                        <notebook>
+                            <page string="Family History">
+                                <field name = 'prescription_line_ids'>
+                                    <tree string="Medical History" editable="bottom" >
+                                        <field name="name" />
+                                        <field name ="medicine_name"/>
+                                        <field name="morning" />
+                                        <field name="noon" />
+                                        <field name="evening" />
+                                        <field name ="night"/>
+                                        <field name ="before_food"/>
+                                        <field name ="after_food"/>
+                                        <field name ="days1"/>
+                                        <field name ="comment"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
                         <group string="Notes">
                             <field name="notes" nolabel="1" />
                         </group>

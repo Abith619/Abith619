@@ -46,20 +46,20 @@
 							</thead>
 							<tbody class="sale_tbody">
 								<t t-foreach="doc.prescription_line_ids" t-as="test">
-									<tr t-if="test.quantity">
+									<tr t-if="test.medicine_name">
 										<td>
 											<strong>Quantity</strong>
 										</td>
 										<td>
-											<span t-field="test.quantity"/>
+											<span t-field="test.morning"/>
 										</td>
 									</tr>
-									<tr t-if="test.medicament_id">
+									<tr t-if="test.medicine_name">
 										<td>
 											<strong>Medicament</strong>
 										</td>
 										<td>
-											<span t-field="test.medicament_id"/>
+											<span t-field="test.medicine_name"/>
 										</td>
 									</tr>
 									<tr t-if="test.allow_substitution">
@@ -70,29 +70,29 @@
 											<span>Allow Substitution</span>
 										</td>
 									</tr>
-									<tr t-if="test.start_treatment">
+									<tr t-if="test.days1">
 										<td>
 											<strong>Start</strong>
 										</td>
 										<td>
-											<span t-field="test.start_treatment"/>
+											<span t-field="test.days1"/>
 										</td>
 									</tr>
-									<tr t-if="test.end_treatment">
+									<tr t-if="test.evening">
 										<td>
 											<strong>Stop</strong>
 										</td>
 										<td>
-											<span t-field="test.end_treatment"/>
+											<span t-field="test.noon"/>
 										</td>
 									</tr>
-									<tr t-if="test.form">
+									<tr t-if="test.night">
 										<td>
 											<strong>Form</strong>
 										</td>
 										<td>
-											<span t-field="test.qty"/>
-											<span t-field="test.form"/>
+											<span t-field="test.comment"/>
+											<span t-field="test.night"/>
 										</td>
 									</tr>
 									<tr t-if="test.indication">
@@ -193,5 +193,6 @@
                     </t>
                 </t>
         </template>
+		<!-- <strong>Any Doubt in Medicine/Diet Contact : 9566990033</strong> -->
     </data>
 </openerp>

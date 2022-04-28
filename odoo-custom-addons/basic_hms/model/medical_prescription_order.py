@@ -6,8 +6,12 @@ from datetime import date,datetime
 
 class medical_prescription_order(models.Model):
     _name = "medical.prescription.order"
+    
 
     name = fields.Char('Prescription ID')
+    age = fields.Integer('Age')
+    sex = fields.Selection([('male','Male'),('female',"Female")])
+
     patient_id = fields.Many2one('medical.patient','Patient ID')
     prescription_date = fields.Datetime('Prescription Date', default=fields.Datetime.now)
     user_id = fields.Many2one('res.users','Login User',readonly=True, default=lambda self: self.env.user)
@@ -25,6 +29,7 @@ class medical_prescription_order(models.Model):
     is_invoiced = fields.Boolean(copy=False,default = False)
     insurer_id = fields.Many2one('medical.insurance', 'Insurer')
     is_shipped = fields.Boolean(default  =  False,copy=False)
+
 
 
     @api.model
@@ -49,3 +54,16 @@ class medical_prescription_order(models.Model):
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+class medical_prescriptionline(models.Model):
+    _name = "medical.prescription.line"
+
+    name = fields.Many2one('medical.prescription.order','Prescription ID')
+    medicine_name = fields.Many2one('product.template',string='Medicine Name')
+    morning= fields.Char('Morning')
+    noon= fields.Char('After Noon')
+    evening= fields.Char('Evening')
+    night= fields.Char('Night')
+    before_food= fields.Boolean('Before Food')
+    after_food= fields.Boolean('After Food')
+    comment= fields.Char('Comment')
+    days1= fields.Integer('Days')

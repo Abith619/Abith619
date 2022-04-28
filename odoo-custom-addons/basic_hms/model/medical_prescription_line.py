@@ -8,11 +8,22 @@ class medical_prescription_line(models.Model):
     _name = "medical.prescription.line"
 
     name = fields.Many2one('medical.prescription.order','Prescription ID')
+    medicine_name = fields.Many2one('product.template',string='Medicine Name')
+    morning= fields.Char('Morning')
+    noon= fields.Char('After Noon')
+    evening= fields.Char('Evening')
+    night= fields.Char('Night')
+    before_food= fields.Boolean('Before Food')
+    after_food= fields.Boolean('After Food')
+    comment= fields.Char('Comment')
+    days1= fields.Integer('Days')
+
+
     medicament_id = fields.Many2one('medical.medicament','Medicament')
     indication = fields.Char('Indication')
     allow_substitution = fields.Boolean('Allow Substitution')
     form = fields.Char('Form')
-    prnt = fields.Boolean('Print')
+    
     route = fields.Char('Administration Route')
     end_treatement  = fields.Datetime('Administration Route')
     dose = fields.Float('Dose')

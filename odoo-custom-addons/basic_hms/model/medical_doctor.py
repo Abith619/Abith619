@@ -5,12 +5,18 @@ class medical_directions(models.Model):
     _rec_name = 'doctor'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
+    patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient", required= True)
+
     doctor = fields.Many2one('medical.physician',string="Doctor" ,required=True)
+    age=fields.Integer(string='Age')
     patient = fields.Many2one('medical.patient',string="Patient",required=True)
     diagnosis = fields.Many2one('medical.test_type',string='Diagnosis')
     since = fields.Integer(string='Since')
     sign_symptoms = fields.Char(string="Signs/Symptoms")
-    history = fields.Char(string ="History")
+    history = fields.Text(string ="History")
+    sex = fields.Selection([('male','Male'),('female',"Female")])
+    prescription_date= fields.Datetime(string='Date')
+    name = fields.Char('Prescription ID')
 
     def action_send_email(self):
         self.ensure_one()
@@ -24,8 +30,44 @@ class medical_directions(models.Model):
             'view_id': compose_form_id,
             'target': 'new',
             }
+#       Invoice Button
+    def invoices_button(self):
+            return{
+        'name': "Paid ",
+        'type': 'ir.actions.act_window',
+        'view_type': 'form',
+        'view_mode': 'form',
+        'res_model': 'medical.prescription.order',
+        'view_id': self.env.ref('basic_hms.medical_prescription_order_form_view').id,
+        'context': {
+            # 'default_name_id': self.patient.id,
+            'default_doctor_id': self.doctor.id,
+            'default_prescription_date': self.prescription_date,
+            'default_patient_id': self.patient.id,
+            'default_age': self.age,
+            'default_sex': self.sex,
+        },
+        'target': 'new'
+    }
+#       Smart Button
+    @api.multi
+    def patient_prescription(self, cr,  context=None):
+        return {
+    'name': "Patient Prescription",
+    'domain':[('patient_id', '=', self.patient.id)],
+    'view_mode': 'tree,form',
+    'res_model': 'medical.prescription.order',
+    'view_type': 'form',
+    'type': 'ir.actions.act_window',
+    }
+#      Count in Smart Button
+    def patient_count(self):
+        count2 = self.env['medical.prescription.order'].search_count([('patient_id', '=', self.patient.id)])
+        self.patients= count2
 
-#one2many
+    patients = fields.Integer(compute='patient_count',string="Prescriptions")
+
+#       one2many
     pervious_medication = fields.One2many('pervious.medication','signs',string="Pervious Medication")
     surgery_history = fields.Char(string ="Surgery History")
     family_history = fields.Char(string ="Family History")
@@ -34,8 +76,8 @@ class medical_directions(models.Model):
 
     history_family = fields.One2many('patient.family','pati',string="History of Family")
 
-    lab_reports = fields.Char(string ="Lab Reports")
-    scan_reports = fields.Char(string ="Scan Reports")
+    lab_reports = fields.Many2one('medical.lab',string ="Lab Reports")
+    scan_reports = fields.Many2one('medical.lab',string ="Scan Reports")
     diet= fields.Char(string="Diet")
     image = fields.Binary()
     videos = fields.Char(string ="Videos")

@@ -8,31 +8,37 @@
                 <field name="arch" type="xml">
                     <form string="doctor">    
                         <header>
+                            <button name="invoices_button" type="object" string="Invoice" class="oe_highlight"/>
                     <button name="action_send_email"  type="object" string="Send Reports"  class="oe_highlight"/> 
                         </header>
                         <sheet>
+                            <div class="oe_button_box">
+                                <button class="oe_stat_button" name="patient_prescription" type="object" icon="fa-clipboard">
+                           <field name ="patients" widget="statinfo"/>
+                        </button>
+                            </div>
                             <group>
                                 <group>
                                     <field name="doctor" placeholder="eg:Doctor"/>
                                      <field name ="diagnosis"/>
+                                     <field name ="name"/>
+                                     <field name ="age"/>
+                                     <field name ="sex"/>
+                                    <field name='prescription_date'/>
                                     <field name ="sign_symptoms"/>
-                                    <field name ="family_history"/>
+                                    <field name ="scan_reports"/>
                                     <field name ="videos"/>
                                 </group>
                                 <group>
                                     <field name="patient" placeholder="eg:patient"/>
                                     <field name ="since"/>
-                                    <field name ="history"/>
-                                    <field name ="surgery_history"/>
                                     <field name ="lab_reports"/>
-                                    <field name ="scan_reports"/>
+                                    
                                     <field name ="diet"/>
-                                        <field name="image" widget="image"/> 
-                                </group>
+                            </group>
                             </group>
                             <notebook> 
                                 <page string="Previous Medication" >
-                                        <!-- Add fields in One2many_Line -->
                                     <field name="pervious_medication">
                                         <tree string="medication List" editable="bottom" >
                                             <field name="diseases" />
@@ -70,6 +76,9 @@
                                             <field name ="family_notes"/>
                                         </tree>
                                     </field>
+                                </page>
+                                <page string= "History">
+                                    <field name="history"/>
                                 </page>
                                 </notebook>
                             </sheet>
