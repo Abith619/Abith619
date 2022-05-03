@@ -11,6 +11,8 @@ access_pervious_medication,medical.group.pervious.medication,model_pervious_medi
 access_patient_surgery,medical.group.patient.surgery,model_patient_surgery,group_medical_group,1,1,1,1
 access_patient_family,medical.group.patient.family,model_patient_family,group_medical_group,1,1,1,1
 access_medical_prescription_line,medical.group.medical.prescription.line,model_medical_prescription_line,group_medical_group,1,1,1,1
+access_medical_inventory,medical.group.medical.inventory,model_medical_inventory,group_medical_group,1,1,1,1
+access_medical_feedback,medical.group.medical.feedback,model_medical_feedback,group_medical_group,1,1,1,1
 
 
 

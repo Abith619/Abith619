@@ -30,10 +30,6 @@
                                 <a>Treatment For :</a>
                                 <strong><field name="treatment"/></strong>
                         </div>
-                        <div >
-                            <a>Contact No :</a>
-                        <strong><field name="contact_no"/></strong>
-                    </div>
                     </div>
                     <div class="oe_clear"></div>
                 </div>
@@ -48,83 +44,73 @@
             <field name="arch" type="xml">
                 <form string="Patient">
                     <header>
-                        <button name="print_report" type="object"
-                            string="Print Patient Card" class="oe_highlight" />
                         <button name="invoices_button" type="object" string="Invoice" class="oe_highlight"/>
-                        <button name="action_send_email"  type="object" string="Send Reports"  class="oe_highlight"/>
+                        
                     </header>
                     <sheet>
-                        <field name="photo" nolabel="1"
-                            class="oe_left oe_avatar" img_width="120"
-                            img_height="120" width="120" height="120"
-                            widget="image" />
-                        <div class="oe_title">
-                            <div class="oe_edit_only">
-                                <label for="patient_id" />
-                            </div>
-                            <h1>
-                                <field style="width: 30%%" name="patient_id"
-                                    default_focus="1" placeholder="Patient Name"
-                                    context="{'default_is_patient': 1,'default_is_person': 1}"/>
-                            </h1>
-                        </div>
+                        
+                        <h2 style="text-align: center"> 
+                            Registration Information
+                        </h2>
                         <group>
-                            <group string='Patient Details'>
+                            <group>
                                 <field name="name" />
-                                <field name="contact_no" />
-                                <field name="address"/>
+                                <field name="patient_id" />
+                            </group>
+                            <group>
+                                <field name="date1"/>
+                            </group>
+                            <group>
                                 <field name="date_of_birth" />
                                 <field name="age"/>
-                                <field name="marital_status" />
                                 <field name="sex"/>
-                                <field name="occupation"/>
-                                <field name="designation"/>
                             </group>
-                            <group string='Treatment Details'>
+                            <group>
+                                <field name="contact_no"/>
+                                <field name="address"/>
+                                 
+                            </group>
+                            <group>
+                                <field name="marital_status" />
                                 <field name="height"/>
                                 <field name="weight"/>
-                                <field name="bp"/>
-                                <field name="treatment"/>
-                                <field name="duration_ailmenmts"/>
-                                <field name="early_treatment" />
-                                <field name="duration_treatment" />
-                                <field name="operations_details" />
+                                
                             </group>
-                            <group string=''>
+                            <group>
+                                
                                 <field name="father_name"/>
                                 <field name="father_occupation"/>
+                            </group>
+                            <group>
+                                <field name="designation"/>
+                                <field name="occupation"/>
+                                
+                            </group>
+                            <group>
+                                <field name="treatment"/>
+                            </group>
+                            <group>
+                                
                                 <field name="office_address"/>
+                            </group>
+                            <group>
+                                <field name="early_treatment" />
+                            </group>
+                            <group>
+                                <field name="duration_ailmenmts"/>
+                            </group>
+                            <group>
+                                <field name="operations_details" />
+                            </group>
+                            <group>
+                                <field name="duration_treatment" />
                             </group>
                             <group>
                                 <field name='fees'/>
                             </group>
+                            
                         </group>
-                        <notebook>
-                            <page>
-                                <group colspan="4">
-                                        <group 
-                                        string="How you came to know about Daisy Health Care (p) Ltd.,?">
-                                        <field name='radio1'/> 
-                                        <field name='radio2'/>
-                                        <field name='radio3'/>
-                                        <field name='radio4'/>
-                                        <field name="radio5"/>
-                                        <field name="radio6"/>
-                                        <field name="radio7"/>
-                                        <field name="radio8"/>
-                                    </group>
-                                    <group>
-                                        <field name='radio9'/>
-                                        <field name='radio10'/>
-                                        <field name='radio11'/>
-                                        <field name="radio12"/>
-                                        <field name="radio13"/>
-                                        <field name="radio14"/>
-                                        <field name="radio15"/>
-                                        </group>
-                                </group>
-                            </page>
-                        </notebook>
+                        <group><field name = 'data_value' widget="many2many_tags"/></group>
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>
@@ -167,13 +153,13 @@
             </field>
         </record>
         <record id="action_medical_patient" model="ir.actions.act_window">
-            <field name="name">Patients</field>
+            <field name="name">Patient Details</field>
             <field name="res_model">medical.patient</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,kanban,graph,pivot,calendar,activity</field>
         </record>
         <menuitem id="menu_medical_patient_code" action="action_medical_patient"
-            string="Patients" parent="menu_patients" sequence="0" />
+            string="Reception" parent="menu_patients" sequence="0" />
             
         <act_window id="action_view_priscription_id2" name="Prescription Orders"
             res_model="medical.prescription.order" src_model="medical.patient"

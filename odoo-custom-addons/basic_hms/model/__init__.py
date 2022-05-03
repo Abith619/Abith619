@@ -66,5 +66,9 @@ from . import pet_type
 from . import psc_code
 from . import res_partner
 from . import medical_doctor
+from . import medical_inventory
+from . import medical_feedback
+from . import invoices
+from . import fees
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:s

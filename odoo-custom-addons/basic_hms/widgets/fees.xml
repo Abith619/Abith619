@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="select_wizard_form" model="ir.ui.view">
+        <field name="name">select_plan.wizard.name</field>
+        <field name="model">select.plan</field>
+        <field name="arch" type="xml">
+            <form string="Fees">
+                <sheet>
+                    <group>
+                        <!-- <field name="fees"/> -->
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="added" type="object" string="Add" class="oe_highlight"/> 
+                    <button string="Cancel" type="object" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="select_plan_wizard"  model="ir.actions.act_window">
+        <field name="name">Consultation Fees</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">select.plan</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="select_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+    </odoo>

@@ -10,170 +10,92 @@
 							<strong>PRESCRIPTION REPORT</strong>
 						</h3>
 					<br/>
-					<table class="table table-condensed"> 
+					<table border="4" class="table table-bordered" style="border: 1px solid black;"> 
                         <tr> 
-                            <th style="border: 0px ;" class="text-left">Prescription ID : 
-                                <span style="font-weight:normal;" t-field="doc.name"/>
-                            </th> 
+                            <td style="border: 1px solid black;" class="text-left"><strong>Name :</strong>
+                                <span style="border: 0px ;" t-field="doc.patient_id"/>
+							</td> 
+						
+							<td style="border: 1px solid black;" class="text-left"><strong>Age </strong>
+                                <span style="border: 0px ;" t-field="doc.age"/>
+                            </td>
+							<td style="border: 1px solid black;" class="text-left"><strong>Weight </strong>
+                                <span style="border: 0px ;" t-field="doc.weight"/>
+                            </td>
+                            <td style="border: 1px solid black;" class="text-left"><strong>Patient Code </strong>
+                                <span style="border: 0px ;" t-field="doc.name"/>
+                            </td>
+							<td style="border: 1px solid black;" class="text-left"><strong> sex </strong>
+                                <span style="border: 0px ;" t-field="doc.sex"/>
+                            </td>
 
-                            <th style="border: 0px ;" class="text-left">Prescription Date : 
-                                <span style="font-weight:normal;" t-field="doc.prescription_date"/>
-                            </th>
-
-                            <th style="border: 0px ;" class="text-left">Prescribing Doctor : 
-                                <span style="font-weight:normal;" t-field="doc.doctor_id.partner_id.name"/>
-                            </th>
- 
-
-                            <th style="border: 0px ;" class="text-left">Patient Contact Information: 
-                                <br/>
-                                <span style="font-weight:normal;" t-field="doc.patient_id"/><br/>
-                                <span style="font-weight:normal;" t-field="doc.patient_id.id"/><br/>
-                                <span style="font-weight:normal;" t-field="doc.patient_id.patient_id.email"/>
-                            </th>
-
+                            <td style="border: 1px solid black;" class="text-left"><strong> BP </strong>
+                                <span style="border: 0px ;" t-field="doc.bp"/>
+                            </td>
+							<td style="border: 1px solid black;" class="text-left"><strong>Prescription Date : </strong>
+                                <span style="border: 0px ;" t-field="doc.prescription_date"/>
+                            </td>
                         </tr> 
                         </table>
 					<br>
 						<br/>
 					</br>
 					<div>
-						<table class="table table-condensed">
-							<thead>
+							
 								<div>
 									<strong>Prescription Details</strong>
 								</div>
+								<p class="text-center" style="font-size:15px"></p>
+							
+                <table border="4" class="table table-bordered" style="border: 1px solid black;">
+					<thead>
+                <tr style="height:40px">
+					<!-- <td style="border: 1px solid black;" class="text-center"><strong>S.no</strong></td> -->
+                    <td style="border: 1px solid black;" class="text-center"><strong>Patient ID</strong></td>
+                    <td style="border: 1px solid black;" class="text-center"><strong>Medicine</strong></td>
+                    <td style="border: 1px solid black;" class="text-center"><strong>Morning</strong></td>
+                    <td style="border: 1px solid black;" class="text-center"><strong>After Noon</strong></td>
+                    <td style="border: 1px solid black;" class="text-center"><strong>Evening</strong></td>
+					<td style="border: 1px solid black;" class="text-center"><strong>Night</strong></td>
+					<td style="border: 1px solid black;" class="text-center"><strong>Before Food</strong></td>
+					<td style="border: 1px solid black;" class="text-center"><strong>After Food</strong></td>
+					<td style="border: 1px solid black;" class="text-center"><strong>Days</strong></td>
+					<td style="border: 1px solid black;" class="text-center"><strong>Comment</strong></td>
+            </tr>
+            <!-- </table> -->
 							</thead>
-							<tbody class="sale_tbody">
-								<t t-foreach="doc.prescription_line_ids" t-as="test">
-									<tr t-if="test.medicine_name">
-										<td>
-											<strong>Quantity</strong>
-										</td>
-										<td>
-											<span t-field="test.morning"/>
-										</td>
+							<tbody>
+								<tr t-foreach='doc.prescription_line_ids' t-as='line'>
+							<!-- <table border="4" class="table table-sm table-bordered" style="border: 1px solid black;"> -->
+								
+										<td><span t-field="line.name" /></td>
+										<td><span t-field="line.medicine_name"/></td>
+										<td><span t-field="line.morning"/></td>
+										<td><span t-field="line.noon"/></td>
+										<td><span t-field="line.evening"/></td>
+										<td><span t-field="line.night"/></td>
+										<td><span t-field="line.before_food"/></td>
+										<td><span t-field="line.after_food"/></td>
+										<td><span t-field="line.days1"/></td>
+										<td><span t-field="line.comment"/></td>
 									</tr>
-									<tr t-if="test.medicine_name">
-										<td>
-											<strong>Medicament</strong>
-										</td>
-										<td>
-											<span t-field="test.medicine_name"/>
-										</td>
-									</tr>
-									<tr t-if="test.allow_substitution">
-										<td>
-											<strong>Substitution</strong>
-										</td>
-										<td>
-											<span>Allow Substitution</span>
-										</td>
-									</tr>
-									<tr t-if="test.days1">
-										<td>
-											<strong>Start</strong>
-										</td>
-										<td>
-											<span t-field="test.days1"/>
-										</td>
-									</tr>
-									<tr t-if="test.evening">
-										<td>
-											<strong>Stop</strong>
-										</td>
-										<td>
-											<span t-field="test.noon"/>
-										</td>
-									</tr>
-									<tr t-if="test.night">
-										<td>
-											<strong>Form</strong>
-										</td>
-										<td>
-											<span t-field="test.comment"/>
-											<span t-field="test.night"/>
-										</td>
-									</tr>
-									<tr t-if="test.indication">
-										<td>
-											<strong>Indication</strong>
-										</td>
-										<td>
-											<span t-field="test.indication"/>
-										</td>
-									</tr>
-									<tr t-if="test.route">
-										<td>
-											<strong>Route</strong>
-										</td>
-										<td>
-											<span t-field="test.route"/>
-										</td>
-									</tr>
-									<tr t-if="test.medication_dosage_id">
-										<td>
-											<strong>Common Dosage</strong>
-										</td>
-										<td>
-											<span t-field="test.medication_dosage_id"/>
-										</td>
-									</tr>
-									<tr t-if="test.frequency">
-										<td>
-											<strong>Frequency</strong>
-										</td>
-										<td>
-											Every
-											<span t-field="test.frequency"/>
-											<span t-field="test.frequency_unit"/>
-										</td>
-									</tr>
-									<tr t-if="test.duration">
-										<td>
-											<strong>Treatment</strong>
-										</td>
-										<td>
-											Take during
-											<span t-field="test.duration"/>
-											<span t-field="test.duration_period"/>
-										</td>
-									</tr>
-									<tr t-if="test.review">
-										<td>
-											<strong>Review</strong>
-										</td>
-										<td>
-											<span t-field="test.review"/>
-										</td>
-									</tr>
-									<tr t-if="test.refills">
-										<td>
-											<strong>Refills</strong>
-										</td>
-										<td>
-											<span t-field="test.refills"/>
-										</td>
-									</tr>
-									<tr t-if="test.short_comment">
-										<td>
-											<strong>Remarks</strong>
-										</td>
-										<td>
-											<span t-field="test.short_comment"/>
-										</td>
-									</tr>
-								</t>
-							</tbody>
-						</table>
+									</tbody>
+								
+								</table>
+									
+									
+								
+									
+								
 					</div>
-					<br>
+					<!-- <br>
 						<br>
 							<br>
 								<br/>
 							</br>
-						</br>
-					</br>
+						</br> 
+					</br> -->
+					
 					<div class="row mt32 mb32" id="informations">
 						<div class="col-xs-3">
 							<strong>Notes:</strong>

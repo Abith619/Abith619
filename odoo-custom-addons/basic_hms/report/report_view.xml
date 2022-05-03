@@ -31,8 +31,6 @@
             file="basic_hms.report_patient_card"
             />
 
-
-
         <report
             id="report_print_patient_medications_document"
             model="medical.patient"

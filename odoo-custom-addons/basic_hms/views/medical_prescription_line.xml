@@ -37,6 +37,7 @@
                         <field name="after_food" />
                         <field name="comment" />
                         <field name="days1" />
+                        <!-- <field name="allow_substitution" /> -->
                     </group>
                     <!-- <group colspan="4" string="Dosage">
                         <group colspan="6" col="6">

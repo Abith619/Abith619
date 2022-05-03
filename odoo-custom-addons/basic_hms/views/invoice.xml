@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data >
+        
+        
+        <record model="ir.ui.view" id="account_invoice_fo">
+            <field name="name">product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <!-- <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="datas" />
+                  </xpath> -->
+                <!-- <field name="datas"/> -->
+                <xpath expr="//field[@name='line_ids']//tree/field[@name='partner_id']" position="after">
+                    <field name="datas"/>
+                </xpath>
+            <notebook position="inside">
+                <page string= 'Pharmacy'>
+                    <group> 
+                        <!-- <field name="datas"/> -->
+                       </group>
+                     
+                     </page>
+                     </notebook>
+                     </field> 
+                     </record>
+                     
+            
+
+
+    </data>
+    
+
+</odoo>

@@ -33,8 +33,6 @@
             <field name="arch" type="xml">
                 <form string="Prescription">
                     <header>
-                        <button name="prescription_report" type="object"
-                            string="Print Prescription" class="oe_highlight" />
                         <button
                             name="%(action_create_prescription_invoice1)d"
                             type="action" string="Create Invoice" class="oe_highlight" />
@@ -43,8 +41,7 @@
                     <sheet>
                         <group string="Patient and Doctor Information">
                             <group>
-                                <field name="patient_id" required="1"
-                                    options="{&quot;always_reload&quot;: 1}" />
+                                <field name="patient_id"/>
                                 <field name="prescription_date"
                                     required="1" />
                                 <field name='age'/>
@@ -53,19 +50,17 @@
                             </group>
                             <group>
                                 <field name="name" readonly="1" />
-                                <field name="user_id" />
                                 <field name="doctor_id" required="1" />
-                                <field name="invoice_to_insurer" />
-                                <field name="insurer_id"
-                                    attrs="{'invisible': [('invoice_to_insurer','=', False)]}" />
+                                <field name="weight" />
+                                
+                                <field name="bp" />
+                                <!-- <field name="insurer_id"
+                                    attrs="{'invisible': [('invoice_to_insurer','=', False)]}" /> -->
                             </group>
                         </group>
-                        <!-- <group string="Prescription Detail">
-                            <field name="prescription_line_ids"
-                                nolabel="1" widget="one2many_list" />
-                        </group> -->
+                        
                         <notebook>
-                            <page string="Family History">
+                            <page string="Details">
                                 <field name = 'prescription_line_ids'>
                                     <tree string="Medical History" editable="bottom" >
                                         <field name="name" />
@@ -82,12 +77,8 @@
                                 </field>
                             </page>
                         </notebook>
-                        <group string="Notes">
-                            <field name="notes" nolabel="1" />
-                        </group>
                     </sheet>
                 </form>
-
             </field>
         </record>
 
