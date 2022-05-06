@@ -23,6 +23,13 @@
             <field name="padding">0</field>
         </record>
 
+        <record id="medical_doctor_code_sequence" model="ir.sequence">
+            <field name="name">Ebook</field>
+            <field name="code">medical.doctor</field>
+            <field name="prefix">EB</field>
+            <field name="padding">4</field>
+        </record>
+
         <record id="medical_health_service_code_sequence" model="ir.sequence">
             <field name="name">Service</field>
             <field name="code">medical.health_service</field>

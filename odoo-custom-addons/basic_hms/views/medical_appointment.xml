@@ -11,9 +11,11 @@
                        
                         <!-- <button name="button_registrations" string="Create Registration" class="oe_highlight" type="object"/> -->
                         <field name="stage" widget="statusbar" statusbar="draft,reg,cancel"/>
+                        
                     </header>
 
                     <sheet>
+                    <field name='date'/>
                         <!-- <div class="oe_left" style="width: 500px;">
                             <div class="oe_title" style="width: 390px;">
                                 <label class="oe_edit_only" for="name"
@@ -29,16 +31,15 @@
                         <!-- </div> -->
                         <group>
                             <group>
+                            <field name= "name"/>
                                 <field name= "patient_id"/>
                                 <field name= "gender"/>
                                 <field name= "age"/>
                                 <field name= "phone_number"/>
-                                <field name= "father_name"/>
+                                <!-- <field name= "father_name"/> -->
                                 <field name= "region"/>
+                                <field name= "treatment_for"/>
 
-                                
-
-                                
                                     <field name="no_invoice" invisible="1"/>
                                     <field name="validity_status"
                                         readonly="1" invisible="1"/>
@@ -46,9 +47,9 @@
                                 </group>
                             <group>
 
-                                <field name="doctor_id" />
+                                <field name="doctor_id" invisible='1'/>
                                 <field name="appointment_date" />
-                                <field name="doctor_availability" />
+                                <!-- <field name="doctor_availability" />
                                 <field name="duration" />
                                 <field name="appointment_end" />
                                 <field name="patient_status" />
@@ -60,17 +61,28 @@
                                 <field name="invoice_to_insurer" invisible="1"/>
                                 <field name="insurer_id"
                                     attrs="{'invisible': [('invoice_to_insurer','=', False)]}" invisible="1" />
-                                <field name="consultations_id" invisible="1"/>
+                                <field name="consultations_id" invisible="1"/> -->
                             </group>
-                            <group>
+                            <!-- <group>
                                 <field name="came_through" />
                             </group>
                                 <group>
                                     <field name="fixed_by" />
-                                </group>
+                                </group> -->
                             
                         </group>
                         <notebook>
+                            <page  string="Doctor Availability">
+                                <field name="timing_doctor">
+                                <tree string="Availability" editable="bottom" >
+                                    <field name="name" />
+                                    <field name='appointment_name'/>
+                                    <field name='dow'/>
+                                    <field name='appointment_from' widget='float_time'/>
+                                    <field name='appointment_to' widget='float_time'/>
+                                </tree>
+                            </field>
+                            </page>
                             <page string="Special Notes">
                                 <group>
                                     <field name="comments"

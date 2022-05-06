@@ -9,7 +9,7 @@ class medical_test_type(models.Model):
     _name  = 'medical.test_type'
 
     name = fields.Char('Name', required = True)
-    code  =  fields.Char('Code' , required = True)
+    code  =  fields.Char('Code')
     critearea_ids = fields.One2many('medical_test.critearea', 'test_id','Critearea')
-    service_product_id = fields.Many2one('product.product','Service' , required = True)
+    service_product_id = fields.Many2one('product.product','Service')
     info  = fields.Text('Extra Information')

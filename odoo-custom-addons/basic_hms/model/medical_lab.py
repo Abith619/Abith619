@@ -12,7 +12,7 @@ class medical_lab(models.Model):
     name = fields.Char('ID')
     test_id = fields.Many2one('medical.test_type', 'Test Type', required = True)
     date_analysis =  fields.Datetime('Date of the Analysis' , default = datetime.now())
-    patient_id = fields.Many2one('medical.patient','Patient', required = True) 
+    patient_id = fields.Many2one('medical.patient','Patient', required = True)
     date_requested = fields.Datetime('Date requested',  default = datetime.now())
     medical_lab_physician_id = fields.Many2one('medical.physician','Pathologist')
     requestor_physician_id = fields.Many2one('medical.physician','Physician', required = True)

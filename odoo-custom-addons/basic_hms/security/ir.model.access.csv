@@ -13,6 +13,9 @@ access_patient_family,medical.group.patient.family,model_patient_family,group_me
 access_medical_prescription_line,medical.group.medical.prescription.line,model_medical_prescription_line,group_medical_group,1,1,1,1
 access_medical_inventory,medical.group.medical.inventory,model_medical_inventory,group_medical_group,1,1,1,1
 access_medical_feedback,medical.group.medical.feedback,model_medical_feedback,group_medical_group,1,1,1,1
+access_patient_treatment,medical.group.patient.treatment,model_patient_treatment,group_medical_group,1,1,1,1
+access_medical_treatments,medical.group.medical.treatments,model_medical_treatments,group_medical_group,1,1,1,1
+access_doctor_timing,medical.group.doctor.timing,model_doctor_timing,group_medical_group,1,1,1,1
 
 
 

@@ -85,6 +85,7 @@
             'views/medical_doctor.xml',
             # 'views/medical_inventory.xml',
             'views/medical_feedback.xml',
+            'views/medical_treatment_many.xml',
             'report/report_view.xml',
             'report/appointment_recipts_report_template.xml',
             'report/medical_view_report_document_lab.xml',

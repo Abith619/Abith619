@@ -2,7 +2,7 @@
 <odoo>
         <data>
             <record id="view_doctor_form" model="ir.ui.view">
-                <field name="name">medicalform</field>
+                <field name="name">medical.form</field>
                 <field name="model">medical.doctor</field>
                 <field name="priority" eval="8" />
                 <field name="arch" type="xml">
@@ -10,46 +10,73 @@
                         <header>
                             <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight"/>
                             <button name="scan_button" type="object" string="Assign Scans/Tests" class="oe_highlight"/>
-                    <!-- <button name="action_send_email"  type="object" string="Send Reports"  class="oe_highlight"/>  -->
                         </header>
                         <sheet>
-                            <field name="patient" placeholder="Patient Name" text-align='left' string='Patient'/>
+                            <field name="serial_number" text-align='left' string='Patient'/>
                             <div class="oe_button_box">
-                                
                                 <button class="oe_stat_button" name="patient_prescription" type="object" icon="fa-clipboard">
                                 <field name ="patients" widget="statinfo"/>
                         </button>
                     <button class="oe_stat_button" name="scans_prescription" type="object" icon="fa-clipboard">
                             <field name ="scans_tests" widget="statinfo"/>
                     </button>
-                        
                             </div>
-                            <!-- <field name ="name"/> -->
                             <group>
                                 <group>
-                                    <!-- <field name="patient" placeholder="eg:patient"/> -->
-                                    
+                                <field name ="patient" placeholder="Patient Name"/>
+                                <field name ="sex"/>
+                                <field name ="marital_status"/>
                                     <field name ="age"/>
-                                    <field name ="sex"/>
-                                    <field name ="address"/>
-                                    <field name ="marital_status"/>
                                     <field name ="height"/>
                                     <field name ="weight"/>
                                     <field name ="bp"/>
-                                    <field name ="treatment"/>
-                                    <field name ="image"/>
+                                    <field name ="address"/>
                                 </group>
                                 <group>
                                     <field name="doctor" placeholder="eg:Doctor" invisible="1"/>
                                     <field name='prescription_date'/>
-                                    <field name ="diagnosis"/>
-                                    <field name ="lab_reports"/>
-                                    <field name ="scan_reports"/>
-                                    <field name ="diet"/>
-                                    <field name ="sign_symptoms"/>
-                                    <field name ="ailments"/>
-                                    <field name ="videos"/>
+                                    <field name ="phone_number"/>
+                                    <field name ="father_name"/>
+                                    <field name ="occupation"/>
+                                    <field name ="office_address"/>
                             </group>
+                            <group>
+                            <field name ="ailments"/>
+                            </group>
+                            <group>
+                            </group>
+                            <group>
+                            <field name='sign_symptoms'/>
+                            </group>
+                            <group>
+                            <field name='habits'/>
+                            </group>
+                            <group>
+                            <field name='diagnosis'/>
+                            </group>
+                            <group>
+                            <field name='final_diagnosis'/>
+                            </group>
+                                    <group col="4" string='Treatment Advised'>
+                                    <field name='cure'/>
+                                    <field name='test_dose'/>
+                                    <field name='control'/>
+                                    <field name='paliation'/>
+                                    <field name='chronic'/>
+                                    <field name='ng'/>
+                                    <field name='maintance'/>
+                                    <field name='nt'/>
+                                </group>
+                            <group  col="4" string='Diet For'>
+                            <field name='hosteler'/>
+                            <field name='out_side_food'/>
+                            <field name='control'/>
+                            <field name='veg'/>
+                            <field name='non_veg'/>
+                            <field name='not_possible'/>
+                            <field name='moderate'/>
+                            <field name='ok_for_all'/>
+                        </group>
                             </group>
                             <notebook> 
                                 <page string="Previous Treatments" >
@@ -83,15 +110,9 @@
                                             <field name="name_f" />
                                             <field name ="doct"/>
                                             <field name="family_date" />
-                                            <!-- <field name="family_type" />
-                                            <field name="family_reason" />
-                                            <field name ="family_status"/> -->
-                                            <field name ="family_notes"/>
+                                             <field name="family_type" />                                            <field name ="family_notes"/>
                                         </tree>
                                     </field>
-                                </page>
-                                <page string= "Habit">
-                                    <field name="history"/>
                                 </page>
                                 </notebook>
                             </sheet>
@@ -103,13 +124,12 @@
                             </form>                                
                             </field>        
                             </record>
-
                             <record id="medical_doctor_tree_view" model="ir.ui.view">
                                 <field name="name">medical.doctor.tree.view</field>
                                 <field name="model">medical.doctor</field>
                                 <field name="arch" type="xml">
                                     <tree colors="red:bmi&lt;=18 or bmi&gt;=25" string="Assign Doctor">
-                                        <!-- <field name="doctor" /> -->
+                                        <field name="serial_number" />
                                         <field name="patient" />
                                         <field name="prescription_date"/>
                                     </tree>
@@ -125,7 +145,7 @@
                                             <p class="oe_view_nocontent_create">E Book
                                             </p>            
                                         </field>
-                                    </record>        
+                                    </record>
                                     <menuitem id="menu_doctor" name="E Book" parent= "main_menu_hospital_management"  sequence="2" action="action_view_doctor"/>
                             </data>
     </odoo>

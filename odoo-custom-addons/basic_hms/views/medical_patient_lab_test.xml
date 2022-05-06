@@ -44,15 +44,9 @@
                             <group>
                                 <field name="medical_test_type_id" required="1" />
                                 <field name="date" />
-                                <field name="invoice_to_insurer" />
+                                <!-- <field name="invoice_to_insurer" /> -->
                             </group>
-                            <group>
-                                <!-- <field name="patient_id" required="1"
-                                    options="{&quot;always_reload&quot;: 1}" />
-                                <field name="doctor_id" /> -->
-                                <field name="insurer_id"
-                                    attrs="{'invisible': [('invoice_to_insurer','=', False)]}" />
-                            </group>
+                            
                         </group>
                     </sheet>
                 </form>

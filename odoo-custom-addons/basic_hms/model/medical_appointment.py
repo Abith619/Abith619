@@ -2,7 +2,6 @@
 # Part of BrowseInfo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
-#from datetime import datetime, date
 from datetime import datetime, timedelta
 from odoo.exceptions import UserError
 import datetime
@@ -12,11 +11,12 @@ class medical_appointment(models.Model):
     _name = "medical.appointment"
     _inherit = 'mail.thread'
 
-    name = fields.Char(string="Appointment ID", readonly=True ,copy=True)
-    gender=fields.Selection([('m', 'Male'),('f', 'Female')],  string ="Sex", required= True)
+    name = fields.Char(string="Patient ID", readonly=True ,copy=True)
+    date=fields.Datetime('', default=datetime.datetime.now())
+    gender=fields.Selection([('m', 'Male'),('f', 'Female')],  string ="Gender", required= True)
     age= fields.Char(string="Age")
     phone_number=fields.Char(string="Contact Number")
-    region= fields.Char(string="Address")
+    region= fields.Char(string="Region")
     father_name=fields.Char(string="Father's Name")
     doctor_availability=fields.Selection([('available', 'Available'),('not available','Not Available')],  string ="Doctor Availability", required= True)
     fixed_by=fields.Many2one('res.partner',string="Appointment Fixed By")
@@ -28,7 +28,7 @@ class medical_appointment(models.Model):
             ('outpatient', 'Outpatient'),
             ('inpatient', 'Inpatient'),
         ], 'Patient status', sort=False,default='outpatient')
-    patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient",required=True)
+    patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name",required=True)
     urgency_level = fields.Selection([
             ('a', 'Normal'),
             ('b', 'Urgent'),
@@ -53,16 +53,10 @@ class medical_appointment(models.Model):
     duration = fields.Integer('Duration')
     stage= fields.Selection([('new',"New"),('reg',"Registred"),('cancel',"Cancelled")])
 
-    # @api.onchange('patient_id')
-    # def onchange_name(self):
-    #     ins_obj = self.env['medical.insurance']
-    #     ins_record = ins_obj.search([('medical_insurance_partner_id', '=', self.patient_id.patient_id.id)])
-    #     if len(ins_record)>=1:
-    #         self.insurer_id = ins_record[0].id
-    #     else:
-    #         self.insurer_id = False
+    treatment_for=fields.Many2one('medical.patient.disease',string='Treatment For')
 
-
+    timing_doctor=fields.One2many('doctor.timing','name',string='Timing')
+    
     @api.onchange('duration')
     def start_end(self):
         now  = self.appointment_date
@@ -117,7 +111,7 @@ class medical_appointment(models.Model):
             raise UserError(_(' Invoice is Already Exist'))
         if lab_req.no_invoice == False:
             res = account_invoice_obj.create({'partner_id': lab_req.patient_id.patient_id.id,
-                                                   'date_invoice': date.today(),
+                                                   'date_invoice': datetime.today(),
                                              'account_id':lab_req.patient_id.patient_id.property_account_receivable_id.id,
                                              })
 
@@ -151,40 +145,6 @@ class medical_appointment(models.Model):
         return result
 
 
-    # @api.multi    
-    # def button_registrations(self):
-    #     contact={
-    #     'name': "Registartion",
-    #     'type': 'ir.actions.act_window',
-    #     'view_type': 'form',
-    #     'view_mode': 'form',
-    #     'res_model': 'medical.patient',
-    #     'context': {
-    #         # 'default_name_id': self.patient.id,
-    #         'default_doctor': self.doctor_id.id,
-    #         # 'default_prescription_date': self.prescription_date,
-    #         'default_patient_id': self.patient_id.id,
-    #         'default_contact_no': self.phone_number,
-    #         'default_sex': self.gender,
-    #         'default_data-value':self.came_through,
-    #     },
-    #     'target': 'new'
-    # }
-    #     self.stage = 'reg'
-    #     return contact
-
-    @api.multi
-    # def button_registrations(self):
-    #     create_patient = self.env['medical.patient'].create({  
-    #         # 'default_name_id': self.patient.id,
-    #         'default_doctor': self.doctor_id.id,
-    #         # 'default_prescription_date': self.prescription_date,
-    #         # 'default_patient_id': self.patient_id.id,
-    #         'default_contact_no': self.phone_number,
-    #         'default_sex': self.gender,
-    #         'default_data-value':self.came_through,
-    #     })
-
     @api.multi
     def button_registrations(self):
         create_registration = self.env['medical.patient'].create({
@@ -195,10 +155,17 @@ class medical_appointment(models.Model):
             'sex':self.gender,
             'data_value':self.came_through.id,
             'father_name':self.father_name,
-            
         })
         self.state='reg'
 
+class DoctorTime(models.Model):
+    _name='doctor.timing'
 
-        
+    name=fields.Char('S.no')
+    appointment_name=fields.Datetime(string='Date', default=datetime.datetime.now())
+    dow=fields.Selection([('monday','Monday'),('tuesday','Tuesday'),('wednesday','Wednesday'),('thursday','Thursday'),('friday','Friday'),('saturday','Saturday'),('sunday','Sunday')],string='Day of Week')
+    appointment_from=fields.Float(string='Appointment From')
+    appointment_to=fields.Float(string='Appointment To')
+
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
