@@ -30,7 +30,6 @@ class medical_icu_glasgow(models.Model):
                                      string="Motor")
     glasgow = fields.Integer(string="Glasgow", compute='get_glas_score')
 
-    @api.one
     @api.depends('glasgow_motor', 'glasgow_verbal', 'glasgow_eyes' )
     def get_glas_score(self):
         """ Calculates Sub total"""

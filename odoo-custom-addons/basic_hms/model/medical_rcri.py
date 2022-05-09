@@ -25,7 +25,6 @@ class medical_rcri(models.Model):
             ('IV', 'IV'),
         ], 'RCRI Class', sort=False)
 
-    @api.one
     @api.depends('rcri_high_risk_surgery', 'rcri_ischemic_history', 'rcri_congestive_history', 'rcri_diabetes_history', 'rcri_cerebrov_history','rcri_kidney_history')
     def rcri_total_count(self):
         """ Calculates Sub total"""

@@ -17,8 +17,8 @@ class medical_patient_lab_test(models.Model):
     owner_partner_id = fields.Many2one('res.partner')
     state = fields.Selection([('draft', 'Draft'),('tested', 'Tested'), ('cancel', 'Cancel')], readonly= True, default = 'draft')
     medical_test_type_id = fields.Many2one('medical.test_type', 'Test Type',required = True)
-    patient_id = fields.Many2one('medical.patient','Patient' )
-    doctor_id = fields.Many2one('medical.physician','Doctor',required=True)
+    patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string='Patient',required=True)
+    doctor_id = fields.Many2one('res.partner',domain=[('is_doctor','=',True)],string='Doctor',required=True)
     insurer_id = fields.Many2one('medical.insurance','Insurer')
     invoice_to_insurer = fields.Boolean('Invoice to Insurance')
     lab_res_created = fields.Boolean(default  =  False) 
@@ -30,11 +30,9 @@ class medical_patient_lab_test(models.Model):
         result = super(medical_patient_lab_test, self).create(vals)
         return result 
 
-    @api.multi
     def cancel_lab_test(self):
         self.write({'state': 'cancel'})
 
-    @api.multi
     def create_lab_test(self):
         res_ids = []
         for browse_record in self:

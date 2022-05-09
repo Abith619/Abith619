@@ -6,16 +6,7 @@ access_medical_group_insurance_chem_r,medical.group.medical_insurance.r.chem,mod
 access_medical_group_insurance_chem_rm,medical.group.medical_insurance.rm.chem,model_res_partner,group_medical_group,1,0,0,0
 access_diseases_category,medical.group.diseases.category,model_medical_pathology_category,group_medical_group,1,0,0,0
 access_diseases,medical.group.diseases,model_medical_pathology,group_medical_group,1,0,0,0
-access_medical_doctor,medical.group.medical.doctor,model_medical_doctor,group_medical_group,1,1,1,1
-access_pervious_medication,medical.group.pervious.medication,model_pervious_medication,group_medical_group,1,1,1,1
-access_patient_surgery,medical.group.patient.surgery,model_patient_surgery,group_medical_group,1,1,1,1
-access_patient_family,medical.group.patient.family,model_patient_family,group_medical_group,1,1,1,1
-access_medical_prescription_line,medical.group.medical.prescription.line,model_medical_prescription_line,group_medical_group,1,1,1,1
-access_medical_inventory,medical.group.medical.inventory,model_medical_inventory,group_medical_group,1,1,1,1
-access_medical_feedback,medical.group.medical.feedback,model_medical_feedback,group_medical_group,1,1,1,1
-access_patient_treatment,medical.group.patient.treatment,model_patient_treatment,group_medical_group,1,1,1,1
-access_medical_treatments,medical.group.medical.treatments,model_medical_treatments,group_medical_group,1,1,1,1
-access_doctor_timing,medical.group.doctor.timing,model_doctor_timing,group_medical_group,1,1,1,1
+
 
 
 
@@ -26,16 +17,10 @@ access_diseases_doc,medical.group.diseases.doc,model_medical_pathology,bi_group_
 access_medical_group_insurance_chem_r,medical.group.medical_insurance.r.chem,model_medical_insurance,group_chemist,1,0,0,0
 
 
-
-
-
-
 access_vaccination,medical.group.vaccination,model_medical_vaccination,group_medical_group,1,1,1,1
 
 access_vaccination_doctor,medical.group.vaccination.doctor,model_medical_vaccination,bi_group_doctor,1,1,1,0
 access_vaccination_chemist,medical.group.vaccination.chemist,model_medical_vaccination,group_chemist,1,1,1,0
-
-
 
 
 access_medical_diet_belief,access_medical_diet_belief,model_medical_diet_belief,,1,0,0,0
@@ -109,10 +94,9 @@ access_doctor_medical_dose_unit,medical.doctor.group.medical_dose_unit,model_med
 access_sale_order,sale.order,sale.model_sale_order,bi_group_doctor,1,1,1,0
 access_sale_order_line,sale.order.line,sale.model_sale_order_line,bi_group_doctor,1,1,1,1
 access_sale_order_line_accountant,sale.order.line accountant,sale.model_sale_order_line,bi_group_doctor,1,1,0,0
-access_account_invoice_tax_salesman,account_invoice_tax salesman,account.model_account_invoice_tax,bi_group_doctor,1,1,1,0
-access_account_invoice_salesman,account_invoice salesman,account.model_account_invoice,bi_group_doctor,1,1,1,0
-access_account_invoice_manager,account_invoice manager,account.model_account_invoice,bi_group_doctor,1,1,1,1
-access_account_invoice_line_salesman,account_invoice.line salesman,account.model_account_invoice_line,bi_group_doctor,1,1,1,0
+access_account_move_salesman,account_move salesman,account.model_account_move,bi_group_doctor,1,1,1,0
+access_account_move_manager,account_move manager,account.model_account_move,bi_group_doctor,1,1,1,1
+access_account_move_line_salesman,account_move.line salesman,account.model_account_move_line,bi_group_doctor,1,1,1,0
 access_account_payment_term_salesman,account_payment_term salesman,account.model_account_payment_term,bi_group_doctor,1,0,0,0
 access_account_analytic_tag_sale_salesman,account.analytic.tag.sale.salesman,analytic.model_account_analytic_tag,bi_group_doctor,1,0,0,0
 access_account_analytic_account_salesman,account_analytic_account salesman,analytic.model_account_analytic_account,bi_group_doctor,1,1,1,0
@@ -211,8 +195,34 @@ access_medical_medicament_doctor,access_medical_medicament_doctor,model_medical_
 access_pet_type,access_pet_type,model_pet_type,,1,0,0,0
 access_medical_patient_evaluation,access_medical_patient_evaluation,model_medical_patient_evaluation,,1,0,0,0
 access_medical_appointment,access_medical_appointment,model_medical_appointment,,1,0,0,0
-access_medical_appointment1,access_medical_appointment1,model_medical_appointment,group_receptionist,1,1,1,0
+access_medical_appointment1,access_medical_appointment1,model_medical_appointment,group_receptionist,1,1,1,1
 access_medical_insurance,medical.insurance,model_medical_insurance,bi_group_doctor,1,1,1,0
 
 access_medical_patient_lab_test,medical.patient.lab.test,model_medical_patient_lab_test,bi_group_doctor,1,1,1,0
 access_medical_patient_lab_test_chem,medical.patient.lab.test.chem,model_medical_patient_lab_test,group_chemist,1,0,0,0
+
+
+access_medical_appointments_invoice_wizard,medical.appointments.invoice.wizard,model_medical_appointments_invoice_wizard,,1,1,1,1
+
+
+access_create_prescription_invoice,create.prescription.invoice,model_create_prescription_invoice,,1,1,1,1
+
+
+access_medical_lab_test_create,medical.lab.test.create,model_medical_lab_test_create,,1,1,1,1
+
+
+access_medical_lab_test_invoice,medical.lab.test.invoice,model_medical_lab_test_invoice,,1,1,1,1
+
+access_medical_doctor,medical.group.medical.doctor,model_medical_doctor,group_medical_group,1,1,1,1
+access_pervious_medication,medical.group.pervious.medication,model_pervious_medication,group_medical_group,1,1,1,1
+access_patient_surgery,medical.group.patient.surgery,model_patient_surgery,group_medical_group,1,1,1,1
+access_patient_family,medical.group.patient.family,model_patient_family,group_medical_group,1,1,1,1
+access_medical_feedback,medical.group.medical.feedback,model_medical_feedback,group_medical_group,1,1,1,1
+access_fix_appointment,medical.group.fix.appointment,model_fix_appointment,group_medical_group,1,1,1,1
+access_fix_appointment_line,medical.group.fix.appointment.line,model_fix_appointment_line,group_medical_group,1,1,1,1
+
+access_patient_document,medical.group.patient.document,model_patient_document,group_medical_group,1,1,1,1
+
+access_diet_for,medical.group.diet.for,model_diet_for,group_medical_group,1,1,1,1
+
+access_treatment_for,medical.group.treatment.for,model_treatment_for,group_medical_group,1,1,1,1

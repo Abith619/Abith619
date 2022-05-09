@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
 
         <record id="medical_patient_lab_test_tree_view" model="ir.ui.view">
             <field name="name">medical.patient.lab.test.tree.view</field>
@@ -10,8 +9,8 @@
                     <field name="request" readonly="1" />
                     <field name="medical_test_type_id" required="1" />
                     <field name="date" />
-                    <!-- <field name="patient_id" required="1" />
-                    <field name="doctor_id" /> -->
+                    <field name="patient_id" required="1" />
+                    <field name="doctor_id" />
                     <field name="state" />
                 </tree>
             </field>
@@ -27,26 +26,31 @@
                         <button name="%(action_create_lab_result2)d"
                             string="Create Lab Test" type="action"
                             class="oe_highlight" attrs="{'invisible':[('state','=','cancel')]}"/>
-                        <button name="%(action_create_lab_invoice2)d"
+                        <!-- <button name="%(action_create_lab_invoice2)d"
                             string="Create Lab Invoice" type="action"
-                            class="oe_highlight" attrs="{'invisible':[('state','=','cancel')]}"/>    
+                            class="oe_highlight" attrs="{'invisible':[('state','=','cancel')]}"/>     -->
                         <button name="cancel_lab_test"
                             string="Cancel lab request" type="object"
                             class="oe_highlight" attrs="{'invisible':[('state','=','cancel')]}" />
 
                         <field name="state" widget="statusbar"
                             statusbar_visible="draft,tested,cancel"
-                            statusbar_colors="{&quot;confirmed&quot;:&quot;red&quot;,&quot;hospitalized&quot;:&quot;red&quot;,&quot;free&quot;:&quot;blue&quot;}"
                             readonly="1" />
                     </header>
                     <sheet>
                         <group>
                             <group>
                                 <field name="medical_test_type_id" required="1" />
-                                <field name="date" />
+                                <field name="date" invisible="1"/>
                                 <!-- <field name="invoice_to_insurer" /> -->
                             </group>
-                            
+                            <group>
+                                <field name="patient_id" required="1"
+                                    options="{&quot;always_reload&quot;: 1}" />
+                                <field name="doctor_id" />
+                                <!-- <field name="insurer_id"
+                                    attrs="{'invisible': [('invoice_to_insurer','=', False)]}" /> -->
+                            </group>
                         </group>
                     </sheet>
                 </form>
@@ -60,7 +64,7 @@
             <field name="name">Lab Requests</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">medical.patient.lab.test</field>
-            <field name="view_type">tree</field>
+            <field name="binding_view_types">tree</field>
             <field name="view_mode">tree</field>
         </record>
 
@@ -68,7 +72,7 @@
             <field name="name">Draft Lab Requests</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">medical.patient.lab.test</field>
-            <field name="view_type">form</field>
+            <field name="binding_view_types">form</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('state','=','draft')]</field>
         </record>
@@ -77,7 +81,7 @@
             <field name="name">Today's Draft Lab Requests</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">medical.patient.lab.test</field>
-            <field name="view_type">form</field>
+            <field name="binding_view_types">form</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('state','=','draft'),('date','>=',time.strftime('%Y-%m-%d'))]</field>
         </record>
@@ -97,5 +101,4 @@
 
 
 
-    </data>
 </odoo>

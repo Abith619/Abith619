@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
 
         <record id="medical_lab_test_units_tree_view" model="ir.ui.view">
             <field name="name">medical.lab.test.units.tree.view</field>
@@ -33,12 +32,11 @@
             <field name="name">Lab Testing Units</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">medical.lab.test.units</field>
-            <field name="view_type">form</field>
+            <field name="binding_view_types">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 
         <menuitem name="Lab Testing Units" id="menu_lab_testing_units"
             parent="main_menu_conf_laboratory" action="action_medical_lab_test_units" />
 
-    </data>
 </odoo>

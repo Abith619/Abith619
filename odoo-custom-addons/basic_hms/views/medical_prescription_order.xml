@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
 
         <act_window id="action_view_priscription_id2" name="Prescription Orders"
-            res_model="medical.prescription.order" src_model="medical.patient"
+            res_model="medical.prescription.order" binding_model="medical.patient"
             view_mode="tree" domain="[('patient_id', '=', active_id)]" />
 
         <act_window id="action_view_priscription_id2" name="Prescription Orders"
-            res_model="medical.prescription.order" src_model="medical.patient"
+            res_model="medical.prescription.order" binding_model="medical.patient"
             view_mode="tree,form" domain="[('patient_id', '=', active_id)]" />
 
         <!-- Tree view -->
@@ -33,37 +32,36 @@
             <field name="arch" type="xml">
                 <form string="Prescription">
                     <header>
-                        <button
+                        <!-- <button name="prescription_report" type="object"
+                            string="Print Prescription" class="oe_highlight" /> -->
+                        <!-- <button
                             name="%(action_create_prescription_invoice1)d"
-                            type="action" string="Create Invoice" class="oe_highlight" />
+                            type="action" string="Create Invoice" class="oe_highlight" /> -->
 
                     </header>
                     <sheet>
                         <group string="Patient and Doctor Information">
                             <group>
-                                <field name="patient_id"/>
+                                <field name="patient_id" required="1"
+                                    options="{&quot;always_reload&quot;: 1}" />
                                 <field name="prescription_date"
                                     required="1" />
-                                <field name='age'/>
-                                <field name='sex'/>
                                 <field name="pharmacy_partner_id" />
                             </group>
                             <group>
                                 <field name="name" readonly="1" />
+                                <field name="user_id" />
                                 <field name="doctor_id" required="1" />
-                                <field name="weight" />
-                                
-                                <field name="bp" />
-                                <!-- <field name="insurer_id"
+                                <!-- <field name="invoice_to_insurer" />
+                                <field name="insurer_id"
                                     attrs="{'invisible': [('invoice_to_insurer','=', False)]}" /> -->
                             </group>
                         </group>
-                        
                         <notebook>
-                            <page string="Details">
+                            <page string="Prescription Details">
                                 <field name = 'prescription_line_ids'>
                                     <tree string="Medical History" editable="bottom" >
-                                        <field name="name" />
+                                        <!-- <field name="name" /> -->
                                         <field name ="medicine_name"/>
                                         <field name="morning" />
                                         <field name="noon" />
@@ -77,8 +75,10 @@
                                 </field>
                             </page>
                         </notebook>
+
                     </sheet>
                 </form>
+
             </field>
         </record>
 
@@ -103,7 +103,7 @@
             <field name="name">Prescription Order</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">medical.prescription.order</field>
-            <field name="view_type">form</field>
+            <field name="binding_view_types">form</field>
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="medical_prescription_order_search_view" />
             <field name="domain">[]</field>
@@ -115,5 +115,4 @@
         <menuitem id="dental_prescription_child" action="action_medical_prescription_order"
             name="Prescriptions" parent="menu_patients" sequence="2" />
 
-    </data>
 </odoo>

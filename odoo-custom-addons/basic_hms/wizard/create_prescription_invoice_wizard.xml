@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
 
         <record id="create_prescription_invoice_wizard_view" model="ir.ui.view">
             <field name="name">create.prescription.invoice.wizard.view</field>
@@ -26,8 +25,7 @@
 
         <act_window id="action_create_prescription_invoice1"
             name="Create Prescription Invoice" res_model="create.prescription.invoice"
-            src_model="medical.prescription.order" view_mode="form"
-            target="new" key2="client_action_multi" />
+            binding_model="medical.prescription.order" view_mode="form"
+            target="new" />
 
-    </data>
 </odoo>

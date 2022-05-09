@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
 
         <!-- Tree view -->
         <record id="medical_prescription_line_tree_view" model="ir.ui.view">
@@ -19,6 +18,7 @@
                     <field name="comment" />
                     <field name="days1" />
                 </tree>
+
             </field>
         </record>
 
@@ -37,7 +37,6 @@
                         <field name="after_food" />
                         <field name="comment" />
                         <field name="days1" />
-                        <!-- <field name="allow_substitution" /> -->
                     </group>
                     <!-- <group colspan="4" string="Dosage">
                         <group colspan="6" col="6">
@@ -66,8 +65,8 @@
                         <field name="short_comment" />
                     </group> -->
                 </form>
+
             </field>
         </record>
 
-    </data>
 </odoo>

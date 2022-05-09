@@ -8,7 +8,6 @@ from odoo.exceptions import Warning
 class create_prescription_shipment(models.TransientModel):
     _name = 'create.prescription.shipment'
 
-    @api.multi
     def create_prescription_shipment(self):
         active_id = self._context.get('active_id')
         prescription_obj = self.env['medical.prescription.order']
@@ -20,8 +19,6 @@ class create_prescription_shipment(models.TransientModel):
             raise Warning('All ready shipped.')
         
         res = sale_order_obj.create({'partner_id':priscription_record.patient_id.patient_id.id ,
-                                     'date_invoice': date.today(),
-                                      'account_id':priscription_record.patient_id.patient_id.property_account_receivable_id.id,
                                              })
         if priscription_record.prescription_line_ids:
             for p_line in priscription_record.prescription_line_ids:
@@ -31,7 +28,6 @@ class create_prescription_shipment(models.TransientModel):
                                                  'name': p_line.medicament_id.product_id.name,
                                                  'product_uom_qty':1,
                                                  'price_unit':p_line.medicament_id.product_id.lst_price, 
-                                                 #'account_id': priscription_record.patient_id.patient_id.property_account_receivable_id.id,
                                                  'order_id': res.id})
         else:
             raise Warning('There is no shipment line.')

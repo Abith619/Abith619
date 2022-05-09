@@ -16,21 +16,22 @@
                             <group>
                                 <field name='name'/>
                             </group>
+                            
                         </sheet>
                          </form>                                
                 </field>        
                 </record>
+
                         <record model="ir.actions.act_window" id="action_view_feedback">            
                             <field name="name">Feedback</field>         
-                                <field name="res_model">medical.feedback</field>           
-                                <field name="view_type">form</field>            
+                                <field name="res_model">medical.feedback</field>                     
                                 <field name="view_mode">tree,form</field>
                                 <field name="domain">[]</field>            
                                 <field name="help" type="html">                
                                     <p class="oe_view_nocontent_create">Feedback
                                     </p>            
                                 </field>
-                            </record>
+                            </record>        
                             <menuitem id="menu_Feedback" name="Feedback" parent= "main_menu_hospital_management"  sequence="2" action="action_view_feedback"/>
                     </data>
 </odoo>

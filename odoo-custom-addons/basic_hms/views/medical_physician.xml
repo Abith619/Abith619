@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
         <record id="medical_physician_form_view" model="ir.ui.view">
             <field name="name">medical.physician.form.view</field>
             <field name="model">medical.physician</field>
@@ -58,15 +57,14 @@
             <field name="name">Physicians</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">medical.physician</field>
-            <field name="view_type">form</field>
+            <field name="binding_view_types">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem id="menu_physician" string="Physicians" name='Physicians'
+        <menuitem id="menu_physician" name='Physicians'
             parent="main_menu_configartion" sequence="7" />
 
         <menuitem id="menu_medical_physician" parent="menu_physician"
             action="action_medical_physician" sequence="6" />
 
-    </data>
 </odoo>

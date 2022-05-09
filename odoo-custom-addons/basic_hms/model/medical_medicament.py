@@ -8,7 +8,6 @@ class medical_medicament(models.Model):
     _name = 'medical.medicament'
     _rec_name = 'product_id'
 
-    @api.multi
     @api.depends('product_id')
     def onchange_product(self):
         for each in self:

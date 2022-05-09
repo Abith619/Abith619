@@ -37,19 +37,15 @@ class medical_inpatient_registration(models.Model):
                        })
         return result
 
-    @api.multi
     def registration_confirm(self):
         self.write({'state': 'confirmed'})
 
-    @api.multi
     def registration_admission(self):
         self.write({'state': 'hospitalized'})
 
-    @api.multi
     def registration_cancel(self):
         self.write({'state': 'cancel'})
 
-    @api.multi
     def patient_discharge(self):
         self.write({'state': 'done'})
 

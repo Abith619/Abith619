@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 # Part of BrowseInfo. See LICENSE file for full copyright and licensing details.
-from . import medical_treatment
 from . import bed_transfer
 from . import medical_diagnostic_hypotesis
 from . import medical_patient_evaluation
@@ -54,7 +53,7 @@ from . import medical_pediatrics_growth_charts_who
 from . import medical_perinatal_monitor
 from . import medical_physician
 from . import medical_preinatal
-# from . import medical_prescription_line
+from . import medical_prescription_line
 from . import medical_puerperium_monitor
 from . import medical_rcri
 from . import medical_rounding_procedure
@@ -67,9 +66,8 @@ from . import pet_type
 from . import psc_code
 from . import res_partner
 from . import medical_doctor
-from . import medical_inventory
 from . import medical_feedback
-from . import invoices
-from . import fees
+from . import diet_for
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:s

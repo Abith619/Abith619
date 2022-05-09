@@ -8,7 +8,6 @@ from datetime import date,datetime
 class medical_lab_test_create(models.TransientModel):
     _name = 'medical.lab.test.create'
     
-    @api.multi
     def create_lab_test(self):
         res_ids = []
         lab_rqu_obj = self.env['medical.patient.lab.test']
@@ -27,9 +26,9 @@ class medical_lab_test_create(models.TransientModel):
                 imd = self.env['ir.model.data']
                 write_ids = lab_rqu_obj.browse(self._context.get('active_id'))
                 write_ids.write({'state': 'tested'})
-                action = imd.xmlid_to_object('basic_hms.action_medical_lab_tree')
-                list_view_id = imd.xmlid_to_res_id('basic_hms.medical_lab_tree_view')
-                form_view_id  =  imd.xmlid_to_res_id('basic_hms.medical_lab_form_view')
+                action = imd.sudo().xmlid_to_object('basic_hms.action_medical_lab_tree')
+                list_view_id = imd.sudo().xmlid_to_res_id('basic_hms.medical_lab_tree_view')
+                form_view_id  =  imd.sudo().xmlid_to_res_id('basic_hms.medical_lab_form_view')
                 result = {
                                 'name': action.name,
                                 'help': action.help,

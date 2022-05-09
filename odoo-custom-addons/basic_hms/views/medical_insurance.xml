@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-	<data>
 
 		<!-- Tree view -->
 		<record id="medical_insurance_tree_view" model="ir.ui.view">
@@ -69,16 +68,15 @@
 			<field name="name">Insurances</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">medical.insurance</field>
-			<field name="view_type">form</field>
+			<field name="binding_view_types">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="search_view_id" ref="medical_insurance_search_view" />
 			<field name="domain">[]</field>
 			<field name="context">{}</field>
 		</record>
 
-		<menuitem id="menu_sub_insurance" 
+		<!-- <menuitem id="menu_sub_insurance" 
 			action="action_medical_insurance" 
-			sequence="1" parent="menu_insurance"/>
+			sequence="1" parent="menu_insurance"/> -->
 
-	</data>
 </openerp>

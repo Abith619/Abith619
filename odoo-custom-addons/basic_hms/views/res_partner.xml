@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <data>
         <record id="res_partner_inherit_form_health_center_view" model="ir.ui.view">
             <field name="name">res.partner.inherit.form.health.center.view</field>
             <field name="model">res.partner</field>
@@ -8,9 +7,11 @@
             <field name="arch" type="xml">
                 <field name="function" position="after">
                     <field name="relationship" />
+                    <!-- <field name ="sex"/> -->
                     <field name="relative_partner_id" />
                 </field>
                 <notebook>
+                    
                     <page string="Medical">
                         <group colspan="6" col="6">
                             <field name="is_patient" />
@@ -33,7 +34,7 @@
             <field name="name">Insurances Company</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">res.partner</field>
-            <field name="view_type">form</field>
+            <field name="binding_view_types">form</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('is_insurance_company','=',1)]</field>
             <field name="context">{'default_is_insurance_company': 1,'search_default_is_insurance_company': 1}
@@ -48,6 +49,4 @@
         <menuitem id="menu_insurance_company" action="act_res_partner"
             sequence="0" parent="menu_insurance" />
 
-    </data>
 </odoo>
-

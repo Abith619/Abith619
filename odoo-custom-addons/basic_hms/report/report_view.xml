@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
         <!-- QWeb Reports -->
 
         <report
@@ -30,6 +29,8 @@
             name="basic_hms.report_patient_card"
             file="basic_hms.report_patient_card"
             />
+
+
 
         <report
             id="report_print_patient_medications_document"
@@ -64,5 +65,4 @@
             file="basic_hms.lab_result_demo"
             />
 
-    </data>
 </openerp>

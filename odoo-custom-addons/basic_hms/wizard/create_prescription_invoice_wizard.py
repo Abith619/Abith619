@@ -8,13 +8,12 @@ from odoo.exceptions import Warning
 class create_prescription_invoice(models.TransientModel):
     _name = 'create.prescription.invoice'
 
-    @api.multi
     def create_prescription_invoice(self):
         active_ids = self._context.get('active_ids')
         active_ids = active_ids or False
         lab_req_obj = self.env['medical.prescription.order']
-        account_invoice_obj  = self.env['account.invoice']
-        account_invoice_line_obj = self.env['account.invoice.line']
+        account_invoice_obj  = self.env['account.move']
+        account_invoice_line_obj = self.env['account.move.line']
         ir_property_obj = self.env['ir.property']
         inv_list =[]
         lab_reqs = lab_req_obj.browse(active_ids)
@@ -26,24 +25,22 @@ class create_prescription_invoice(models.TransientModel):
                 raise Warning('All ready Invoiced.')
             sale_journals = self.env['account.journal'].search([('type','=','sale')])
             invoice_vals = {
-            'name': "Customer Invoice",
-            'origin': lab_req.name or '',
-            'type': 'out_invoice',
-            'reference': False,
+            'name': self.env['ir.sequence'].next_by_code('pres_inv_seq'),
+            'invoice_origin': lab_req.name or '',
+            'move_type': 'out_invoice',
+            'ref': False,
             'partner_id': lab_req.patient_id.patient_id.id,
-            'date_invoice': date.today(),
-            'account_id':lab_req.patient_id.patient_id.property_account_receivable_id.id,
-            'journal_id':sale_journals and sale_journals[0].id or False,
+            'invoice_date': date.today(),
             'partner_shipping_id':lab_req.patient_id.patient_id.id,
             'currency_id':lab_req.patient_id.patient_id.currency_id.id ,
-            'payment_term_id': False,
+            'invoice_payment_term_id': False,
             'fiscal_position_id': lab_req.patient_id.patient_id.property_account_position_id.id,
             'team_id': False,
-            'comment': "Invoice Created from Medical Appointment",
             'company_id':lab_req.patient_id.patient_id.company_id.id or False ,
             }
 
             res = account_invoice_obj.create(invoice_vals)
+            list_of_vals=[]
             for p_line in lab_req.prescription_line_ids: 
             
                 invoice_line_account_id = False
@@ -62,25 +59,24 @@ class create_prescription_invoice(models.TransientModel):
                 
                 invoice_line_vals = {
                     'name': p_line.medicament_id.product_id.display_name or '',
-                    'origin': p_line.name or '',
+                    'move_name': p_line.name or '',
                     'account_id': invoice_line_account_id,
                     'price_unit':p_line.medicament_id.product_id.lst_price,
-                    'uom_id': p_line.medicament_id.product_id.uom_id.id,
+                    'product_uom_id': p_line.medicament_id.product_id.uom_id.id,
                     'quantity': 1,
                     'product_id':p_line.medicament_id.product_id.id ,
-                    'invoice_id': res.id,
-                    'invoice_line_tax_ids': [(6, 0, tax_ids)],
                 }
+                list_of_vals.append((0,0,invoice_line_vals))
 
-                res1 = account_invoice_line_obj.create(invoice_line_vals)
+            res1 = res.write({'invoice_line_ids' : list_of_vals})
 
             inv_list.append(res.id)
             if res:                     
                 imd = self.env['ir.model.data']
                 lab_reqs.write({'is_invoiced': True}) 
-                action = imd.xmlid_to_object('account.action_invoice_tree1')
-                list_view_id = imd.xmlid_to_res_id('account.invoice_tree')
-                form_view_id = imd.xmlid_to_res_id('account.invoice_form')
+                action = imd.sudo().xmlid_to_object('account.action_move_out_invoice_type')
+                list_view_id = imd.sudo().xmlid_to_res_id('account.view_invoice_tree')
+                form_view_id = imd.sudo().xmlid_to_res_id('account.view_move_form')
                 result = {      
                     
                                 'name': action.name,

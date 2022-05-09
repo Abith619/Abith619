@@ -8,19 +8,16 @@ class medical_prescription_order(models.Model):
     _name = "medical.prescription.order"
     
     name = fields.Char('Prescription ID')
-    age = fields.Integer('Age')
-    sex = fields.Selection([('male','Male'),('female',"Female")])
-    bp=fields.Float(string='BP')
-    id=fields.Char('')
+    age = fields.Char('Age')
+    sex = fields.Selection([('m', 'Male'),('f', 'Female')], string ="Sex", required= True)
 
-    patient_id = fields.Many2one('medical.patient','Patient Name')
+    patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient" ,required=True)
     prescription_date = fields.Datetime('Prescription Date', default=fields.Datetime.now)
-    weight= fields.Float(string='Weight')
     user_id = fields.Many2one('res.users','Login User',readonly=True, default=lambda self: self.env.user)
     no_invoice = fields.Boolean('Invoice exempt')
     inv_id = fields.Many2one('account.invoice','Invoice')
     invoice_to_insurer = fields.Boolean('Invoice to Insurance')
-    doctor_id = fields.Many2one('medical.physician','Prescribing Doctor')
+    doctor_id = fields.Many2one('res.partner',domain=[('is_doctor','=',True)],string="Doctor" ,required=True)
     medical_appointment_id = fields.Many2one('medical.appointment','Appointment')
     state = fields.Selection([('invoiced','To Invoiced'),('tobe','To Be Invoiced')], 'Invoice Status')
     pharmacy_partner_id = fields.Many2one('res.partner',domain=[('is_pharmacy','=',True)], string='Pharmacy')
@@ -38,31 +35,19 @@ class medical_prescription_order(models.Model):
         vals['name'] = self.env['ir.sequence'].next_by_code('medical.prescription.order') or '/'
         return super(medical_prescription_order, self).create(vals)
 
-    @api.multi
+    @api.model
     def prescription_report(self):
         return self.env.ref('basic_hms.report_print_prescription').report_action(self)
 
-    @api.onchange('name')
-    def onchange_name(self):
-        ins_obj = self.env['medical.insurance']
-        ins_record = ins_obj.search([('medical_insurance_partner_id', '=', self.patient_id.patient_id.id)])
-        self.insurer_id = ins_record.id or False
+    # @api.onchange('name')
+    # def onchange_name(self):
+    #     ins_obj = self.env['medical.insurance']
+    #     ins_record = ins_obj.search([('medical_insurance_partner_id', '=', self.patient_id.patient_id.id)])
+    #     self.insurer_id = ins_record.id or False
 
-    @api.onchange('name')
-    def onchange_p_name(self):
-        self.pricelist_id = 1 or False
+    # @api.onchange('name')
+    # def onchange_p_name(self):
+    #     self.pricelist_id = 1 or False
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-class medical_prescriptionline(models.Model):
-    _name = "medical.prescription.line"
 
-    name = fields.Many2one('medical.prescription.order','Prescription ID')
-    medicine_name = fields.Many2one('product.template',string='Medicine Name')
-    morning= fields.Char('Morning')
-    noon= fields.Char('After Noon')
-    evening= fields.Char('Evening')
-    night= fields.Char('Night')
-    before_food= fields.Boolean('Before Food')
-    after_food= fields.Boolean('After Food')
-    comment= fields.Char('Comment')
-    days1= fields.Integer('Days')

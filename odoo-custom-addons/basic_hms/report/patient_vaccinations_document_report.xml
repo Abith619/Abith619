@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
         <template id="basic_hms.patient_vaccinations_document">
     		<t t-call="web.external_layout">
     			<t t-set="doc" t-value="doc.with_context({'lang':doc.patient_id.lang})"/>
-                <t t-foreach="docs" t-as="doc">
                     <div class="page">
                         <div class="oe_structure"/>
                             <div>
@@ -40,7 +38,7 @@
                     </table>
                     <br/>
 
-              <table class="table table-condensed">
+                    <table class="table table-condensed">
                 <thead>
                     <tr>
                         <th>Vaccine</th>
@@ -68,9 +66,7 @@
                     </t>
                 </tbody>
             </table>
-
-                 </div>
-                </t>
+                    </div>
 
 			</t>
 
@@ -83,5 +79,4 @@
         	</t>
     	</t>
         </template>
-    </data>
 </openerp>

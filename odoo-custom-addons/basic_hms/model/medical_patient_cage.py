@@ -8,7 +8,6 @@ class medical_patient_cage(models.Model):
     _name = 'medical.patient.cage'
     _rec_name = 'patient_id'
 
-    @api.one 
     @api.onchange('cage_c', 'cage_a', 'cage_g', 'cage_e')
     def get_score(self):
         self.cage_score = int(self.cage_c)  + int(self.cage_a)  + int(self.cage_g) + int(self.cage_e)

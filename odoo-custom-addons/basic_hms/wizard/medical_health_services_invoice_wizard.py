@@ -8,7 +8,6 @@ from odoo.exceptions import UserError
 class medical_health_services_invoice(models.TransientModel):
     _name = 'medical.health.service.invoice'
 
-    @api.multi
     def create_medical_service_invoice(self):
         active_id = self._context.get('active_id')
         lab_req_obj = self.env['medical.health_service']
@@ -20,7 +19,7 @@ class medical_health_services_invoice(models.TransientModel):
             raise UserError(_('Already Invoiced'))        
         sale_journals = self.env['account.journal'].search([('type','=','sale')])
         invoice_vals = {
-            'name': "Customer Invoice",
+            'name': self.env['ir.sequence'].next_by_code('medical_health_service_inv_seq'),
             'origin': lab_req.name or '',
             'type': 'out_invoice',
             'reference': False,

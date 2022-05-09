@@ -7,23 +7,12 @@ from datetime import date,datetime
 class medical_prescription_line(models.Model):
     _name = "medical.prescription.line"
 
-    # name = fields.Many2one('medical.prescription.order','Prescription ID')
-    # medicine_name = fields.Many2one('product.template',string='Medicine Name')
-    # morning= fields.Char('Morning')
-    # noon= fields.Char('After Noon')
-    # evening= fields.Char('Evening')
-    # night= fields.Char('Night')
-    # before_food= fields.Boolean('Before Food')
-    # after_food= fields.Boolean('After Food')
-    # comment= fields.Char('Comment')
-    # days1= fields.Integer('Days')
-
-
+    name = fields.Many2one('medical.prescription.order','Prescription ID')
     medicament_id = fields.Many2one('medical.medicament','Medicament')
     indication = fields.Char('Indication')
     allow_substitution = fields.Boolean('Allow Substitution')
     form = fields.Char('Form')
-    
+    prnt = fields.Boolean('Print')
     route = fields.Char('Administration Route')
     end_treatement  = fields.Datetime('Administration Route')
     dose = fields.Float('Dose')
@@ -42,5 +31,15 @@ class medical_prescription_line(models.Model):
     end_treatment = fields.Datetime('End of treatment')
     start_treatment = fields.Datetime('Start of treatment')
 
+    # names = fields.Many2one('medical.prescription.order','Prescription ID')
+    medicine_name = fields.Many2one('product.product',string='Medicine Name')
+    morning= fields.Char('Morning')
+    noon= fields.Char('After Noon')
+    evening= fields.Char('Evening')
+    night= fields.Char('Night')
+    before_food= fields.Boolean('Before Food')
+    after_food= fields.Boolean('After Food')
+    comment= fields.Char('Comment')
+    days1= fields.Integer('Days')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

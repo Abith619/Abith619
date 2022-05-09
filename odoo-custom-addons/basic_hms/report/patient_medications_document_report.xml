@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
         <template id="basic_hms.patient_medications_document_report">
 			<t t-call="web.external_layout">
 				<t t-set="doc" t-value="doc.with_context({'lang':doc.patient_id.lang})"/>
-				<t t-foreach="docs" t-as="doc">
+
 					<div class="page">
 						<div class="oe_structure"/>
 						
@@ -83,10 +82,7 @@
 								</t>
 							</tbody>
 						</table>
-
 					</div>
-				</t>
-
 			</t>
 
         </template>
@@ -97,5 +93,4 @@
 				</t>
 			</t>
         </template>
-    </data>
 </openerp>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
         <template id="basic_hms.medical_view_report_lab_result_demo_report">
 			<t t-call="web.external_layout">
 				<div class="page">
@@ -101,5 +100,4 @@
 			</t>
 
         </template>
-    </data>
 </openerp>

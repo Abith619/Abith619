@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
 
         <record id="medical_test_critearea_form_view" model="ir.ui.view">
             <field name="name">medical.test.critearea.form.view</field>
@@ -47,8 +46,7 @@
             <field name="name">Test Cases</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">medical_test.critearea</field>
-            <field name="view_type">form</field>
+            <field name="binding_view_types">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-    </data>
 </odoo>

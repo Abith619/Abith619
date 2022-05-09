@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
         <template id="basic_hms.appointment_recipts_report_template">
             <t t-call="web.external_layout">
                 <t t-set="doc" t-value="doc.with_context({'lang':doc.doctor_id.partner_id.lang})"/>
@@ -130,5 +129,4 @@
                     </t>
                 </t>
         </template>
-    </data>
 </openerp>

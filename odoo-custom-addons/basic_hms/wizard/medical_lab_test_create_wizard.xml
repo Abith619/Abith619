@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
 
         <record id="medical_lab_test_create_wizard_view" model="ir.ui.view">
             <field name="name">medical.lab.test.create.wizard.view</field>
@@ -23,9 +22,8 @@
         </record>
 
         <act_window id="action_create_lab_result2" name="Create Lab Result"
-            res_model="medical.lab.test.create" src_model="medical.patient.lab.test"
-            view_mode="form" view_type="form" target="new"
-            key2="client_action_multi" />
+            res_model="medical.lab.test.create" binding_model="medical.patient.lab.test"
+            view_mode="form" target="new" />
 
         <menuitem name="Laboratory"
             id="main_menu_conf_laboratory"
@@ -33,5 +31,4 @@
             sequence='0'
            />
 
-    </data>
 </odoo>
