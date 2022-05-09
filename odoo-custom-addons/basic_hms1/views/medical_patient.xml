@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="medical_patients_form_view" model="ir.ui.view">
+            <field name="name">medical.patients.form.view</field>
+            <field name="model">medical.patient</field>
+            <field name="arch" type="xml">
+                <form string="Patient">
+                    <header>
+                        
+                        
+                        <button name="assign_button" type="object" string="To E-Book" class="oe_highlight"/>
+                        <label for="date1" string="Date" />
+                        <field name="date1"/>
+                    </header>
+
+
+                    <sheet>
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                       
+                        <group>
+                            <group>
+                                <field name="patient_id" />
+                                <field name="sex"/>
+                                <field name="marital_status" />
+                                <label for="date_of_birth" string="DOB" />
+                                <div class="o_address_format">
+                                    <field name="date_of_birth" class="o_address_city" />
+                                    <label for="age" font-family= "Franklin Gothic Medium" string="Age"/>
+                                    <field name="age" class="o_address_state"/>
+                                </div>
+
+                            <label for="height" string="Height" />
+                                <div class="o_address_format">
+                                    <field name="height" class="o_address_city" />
+                                    <label for="weight" string="Weight "/>
+                                    <field name="weight" class="o_address_state"  style="width: 40%;"/>
+                                </div>
+                        
+                                
+                               
+                            </group>
+                            
+                            <group>
+                                <field name="contact_no"/>
+                                
+                                <field name="address"/>
+                                <label for="occupation" string="Occupation" />
+                                <div class="o_address_format">
+                                    <field name="occupation" class="o_address_city" />
+                                    <label for="designation" string="Designation"/>
+                                    <field name="designation" class="o_address_state"  style="width: 40%;"/>
+                                </div>
+                                <field name="office_address"/>      
+                            </group>
+                            <group>
+                                <field name="father_name"/>
+                                <field name ="father_occupation"/>
+                            </group>
+                                <group>        
+                                <field name ="doctors"/>
+                                <field name ="fix_appoinment" attrs="{'invisible': [('doctors','=', False)]}"/>
+                                </group>
+                               
+                    </group>
+                    <group>
+                    <field name="treatment"/>
+                                <field name="duration_ailmenmts"/>
+                                <field name="early_treatment" />
+                                <field name="duration_treatment" />
+                                <field name="operations_details" />
+                                <field name='fees' string='Fees'/>
+                            </group>
+                   <group>
+                    <field name = 'data_value' widget="many2many_tags"/>
+
+                   </group> 
+                        
+                    </sheet>
+
+                </form>
+
+            </field>
+        </record>
+
+        <record id="medical_patients_tree_view" model="ir.ui.view">
+            <field name="name">medical.patients.tree.view</field>
+            <field name="model">medical.patient</field>
+            <field name="arch" type="xml">
+                <tree string="Patient Information">
+                    <field name="name" />
+                    <field name="patient_id" />
+                    <field name="sex" />
+                    <field name="doctors" />
+                    <field name="date_of_birth" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_medical_patient" model="ir.actions.act_window">
+            <field name="name">Registration Information</field>
+            <field name="res_model">medical.patient</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_medical_patient_code" action="action_medical_patient"
+            parent="menu_patients" sequence="1" />
+
+        <act_window id="action_view_priscription_id2" name="Prescription Orders"
+            res_model="medical.prescription.order" binding_model="medical.patient"
+            view_mode="tree" domain="[('patient_id', '=', active_id)]" />
+
+        <act_window id="action_view_lab_id" name="Lab Reports"
+            res_model="medical.lab" binding_model="medical.patient"
+            view_mode="tree,form" domain="[('patient_id', '=', active_id)]" />
+
+        <act_window id="action_psc_id" name="PSC"
+            res_model="medical.patient.psc" binding_model="medical.patient"
+            view_mode="tree,form" domain="[('patient_id', '=', active_id)]" />
+
+</odoo>

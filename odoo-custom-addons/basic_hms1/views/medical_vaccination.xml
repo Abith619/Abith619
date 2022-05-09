@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="medical_vaccination_tree_view" model="ir.ui.view">
+            <field name="name">medical.vaccination.tree.view</field>
+            <field name="model">medical.vaccination</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="vaccine_product_id" />
+                    <field name="dose" />
+                    <field name="institution_partner_id" />
+                    <field name="date" />
+                    <field name="next_dose_date" />
+                    <field name="vaccine_expiration_date" />
+                    <field name="vaccine_lot" />
+                    <field name="observations" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="medical_vaccination_form_view" model="ir.ui.view">
+            <field name="name">medical.vaccination.form.view</field>
+            <field name="model">medical.vaccination</field>
+            <field name="arch" type="xml">
+                <form string="Immunizations">
+                    <group colspan="4" col="4">
+                        <field name="vaccine_product_id" />
+                        <field name="dose" />
+                        <field name="institution_partner_id" />
+                        <field name="date" />
+                        <field name="next_dose_date" />
+                        <field name="vaccine_expiration_date" />
+                        <field name="vaccine_lot" />
+                        <field name="observations" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+</odoo>

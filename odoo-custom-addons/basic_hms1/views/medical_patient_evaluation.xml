@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="medical_patient_evaluation_form_view" model="ir.ui.view">
+            <field name="name">medical.patient.evaluation.form.view</field>
+            <field name="model">medical.patient.evaluation</field>
+            <field name="arch" type="xml">
+                <form string="Patient">
+                    <sheet>
+                        <notebook>
+                            <page string="Main Info">
+                                <group>
+                                    <group>
+                                        <field name="medical_patient_id"
+                                            string="Patient" />
+                                        <field name="start_evaluation"
+                                            required="1" />
+                                        <field name="chief_complaint"
+                                            required="1" />
+                                    </group>
+                                    <group>
+                                        <field name="evaluation_type" />
+                                        <field name="end_evaluation" />
+                                        <field name="physician_partner_id" />
+                                    </group>
+                                </group>
+                                <group string="Evaluation Summary">
+                                    <field name="evaluation_summary"
+                                        nolabel="1" />
+                                </group>
+                            </page>
+                            <page string="Signs">
+                                <group string="Vital Signs">
+                                    <group>
+                                        <field name="temperature" />
+                                        <field name="diastolic" />
+                                        <field name="respiratory_rate" />
+                                    </group>
+                                    <group>
+                                        <field name="systolic" />
+                                        <field name="bpm" />
+                                        <field name="osat" />
+                                    </group>
+                                </group>
+                                <group string="Nutrition">
+                                    <group>
+                                        <field name="malnutrition" />
+                                    </group>
+                                    <group>
+                                        <field name="dehydration" />
+                                    </group>
+                                </group>
+                                <group string="Anthropometry">
+                                    <group>
+                                        <field name="weight" />
+                                        <field name="abdominal_circ" />
+                                        <field name="bmi" />
+                                    </group>
+                                    <group>
+                                        <field name="height" />
+                                        <field name="head_circumference" />
+                                    </group>
+                                </group>
+                                <group>
+                                    <group>
+                                        <field name="edema" />
+                                        <field name="petechiae" />
+                                        <field name="acropachy" />
+                                        <field name="miosis" />
+                                        <field name="cough" />
+                                        <field name="arritmia" />
+                                        <field name="heart_extra_sounds" />
+                                        <field name="ascites" />
+                                        <field name="bronchophony" />
+                                    </group>
+                                    <group>
+                                        <field name="cyanosis" />
+                                        <field name="hematoma" />
+                                        <field name="nystagmus" />
+                                        <field name="mydriasis" />
+                                        <field name="palpebral_ptosis" />
+                                        <field name="heart_murmurs" />
+                                        <field name="jugular_engorgement" />
+                                        <field
+                                            name="lung_adventitious_sounds" />
+                                    </group>
+                                </group>
+                                <group>
+                                    <group>
+                                        <field name="increased_fremitus" />
+                                        <field name="jaundice" />
+                                        <field name="breast_lump" />
+                                        <field name="nipple_inversion" />
+                                        <field name="peau_dorange" />
+                                        <field name="hypotonia" />
+                                        <field name="masses" />
+                                        <field name="goiter" />
+                                        <field name="xerosis" />
+                                    </group>
+                                    <group>
+                                        <field name="decreased_fremitus" />
+                                        <field name="lynphadenitis" />
+                                        <field name="breast_asymmetry" />
+                                        <field name="nipple_discharge" />
+                                        <field name="gynecomastia" />
+                                        <field name="hypertonia" />
+                                        <field name="pressure_ulcers" />
+                                        <field name="alopecia" />
+                                        <field name="erithema" />
+                                    </group>
+                                </group>
+                                <newline />
+                                <group string="Glucose">
+                                    <group>
+                                        <field name="glycemia" />
+                                    </group>
+                                    <group>
+                                        <field name="hba1c" />
+                                    </group>
+                                </group>
+
+                                <group string="Lipids">
+                                    <group>
+                                        <field name="cholesterol_total" />
+                                        <field name="ldl" />
+                                    </group>
+                                    <group>
+                                        <field name="hdl" />
+                                        <field name="tag" />
+                                    </group>
+                                </group>
+                            </page>
+
+                            <page string="Symptoms">
+                                <group string="Pain">
+                                    <group>
+                                        <field name="symptom_pain" />
+                                    </group>
+                                    <group>
+                                        <field name="symptom_pain_intensity" />
+                                    </group>
+                                </group>
+                                <group>
+                                    <group>
+                                        <field name="symptom_arthralgia" />
+                                        <field name="symptom_abdominal_pain" />
+                                        <field name="symptom_thoracic_pain" />
+                                        <field name="symptom_pelvic_pain" />
+                                        <field name="symptom_hoarseness" />
+                                        <field name="symptom_sore_throat" />
+                                        <field name="symptom_ear_discharge" />
+                                        <field
+                                            name="symptom_chest_pain_excercise" />
+                                        <field name="symptom_astenia" />
+                                        <field name="symptom_weight_change" />
+                                        <field name="symptom_hemoptysis" />
+                                        <field name="symptom_epistaxis" />
+                                        <field name="symptom_rinorrhea" />
+                                        <field name="symptom_vomiting" />
+                                        <field name="symptom_polydipsia" />
+                                        <field name="symptom_polyuria" />
+                                        <field
+                                            name="symptom_vesical_tenesmus" />
+                                        <field name="symptom_dysuria" />
+                                    </group>
+                                    <group>
+                                        <field name="symptom_myalgia" />
+                                        <field name="symptom_cervical_pain" />
+                                        <field name="symptom_lumbar_pain" />
+                                        <field name="symptom_headache" />
+                                        <field name="symptom_odynophagia" />
+                                        <field name="symptom_otalgia" />
+                                        <field name="symptom_chest_pain" />
+                                        <field
+                                            name="symptom_orthostatic_hypotension" />
+                                        <field name="symptom_anorexia" />
+                                        <field
+                                            name="symptom_abdominal_distension" />
+                                        <field name="symptom_hematemesis" />
+                                        <field
+                                            name="symptom_gingival_bleeding" />
+                                        <field name="symptom_nausea" />
+                                        <field name="symptom_dysphagia" />
+                                        <field name="symptom_polyphagia" />
+                                        <field name="symptom_nocturia" />
+                                        <field name="symptom_pollakiuria" />
+                                    </group>
+                                </group>
+                                <group>
+                                    <group>
+                                        <field name="symptom_mood_swings" />
+                                        <field name="symptom_pruritus" />
+                                        <field name="symptom_disturb_sleep" />
+                                        <field name="symptom_orthopnea" />
+                                        <field name="symptom_paresthesia" />
+                                        <field name="symptom_dizziness" />
+                                        <field name="symptom_tinnitus" />
+                                        <field name="symptom_eye_glasses" />
+                                        <field name="symptom_diplopia" />
+                                        <field name="symptom_dysmenorrhea" />
+                                        <field name="symptom_metrorrhagia" />
+                                        <field
+                                            name="symptom_vaginal_discharge" />
+                                        <field name="symptom_diarrhea" />
+                                        <field name="symptom_rectal_tenesmus" />
+                                        <field name="symptom_proctorrhagia" />
+                                        <field
+                                            name="symptom_sexual_dysfunction" />
+                                    </group>
+                                    <group>
+                                        <field name="symptom_stress" />
+                                        <field name="symptom_insomnia" />
+                                        <field name="symptom_dyspnea" />
+                                        <field name="symptom_amnesia" />
+                                        <field name="symptom_paralysis" />
+                                        <field name="symptom_vertigo" />
+                                        <field name="symptom_syncope" />
+                                        <field name="symptom_blurry_vision" />
+                                        <field name="symptom_photophobia" />
+                                        <field name="symptom_amenorrhea" />
+                                        <field name="symptom_menorrhagia" />
+                                        <field
+                                            name="symptom_urethral_discharge" />
+                                        <field name="symptom_constipation" />
+                                        <field name="symptom_melena" />
+                                        <field name="symptom_xerostomia" />
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Mental Status">
+                                <group string="Glasgow Coma Scale">
+                                    <group>
+                                        <field name="loc" />
+                                        <field name="loc_verbal" />
+                                    </group>
+                                    <group>
+                                        <field name="loc_eyes" />
+                                        <field name="loc_motor" />
+                                    </group>
+                                </group>
+                                <group
+                                    string="Mental Assessment and Impairments">
+                                    <group>
+                                        <field name="mood" />
+                                        <field name="orientation" />
+                                        <field
+                                            name="knowledge_current_events" />
+                                        <field name="abstraction" />
+                                        <field name="calculation_ability" />
+                                        <field name="praxis" />
+                                    </group>
+                                    <group>
+                                        <field name="violent" />
+                                        <field name="memory" />
+                                        <field name="judgment" />
+                                        <field name="vocabulary" />
+                                        <field name="object_recognition" />
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Diagnosis">
+                                <group>
+                                    <field name="diagnosis_id" />
+                                </group>
+                                <group string="Information on Diagnosis">
+                                    <field name="info_diagnosis"
+                                        nolabel="1" />
+                                </group>
+                                <group string="Treatment Plan">
+                                    <field name="directions"
+                                        nolabel="1" />
+                                </group>
+                                <group string="Procedures">
+                                    <field name="procedure_ids"
+                                        nolabel="1" widget="many2many_tags" />
+                                </group>
+                                <group>
+                                    <group>
+                                        <field name="user_id"
+                                            string="Doctor user ID" />
+                                        <field name="medical_appointment_date_id" />
+                                        <field name="derived_to_physician_id" />
+                                    </group>
+                                    <group>
+                                        <field name="next_appointment_id"
+                                            domain="[('patient_id', '=', medical_patient_id)]" />
+                                        <field name="derived_from_physician_id" />
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="medical_patient_evaluation_tree_view" model="ir.ui.view">
+            <field name="name">medical.patient.evaluation.tree.view</field>
+            <field name="model">medical.patient.evaluation</field>
+            <field name="arch" type="xml">
+                <tree string="Evaluations">
+                    <field name="medical_patient_id" string="Patient" />
+                    <field name="end_evaluation" />
+                    <field name="start_evaluation" />
+                    <field name="physician_partner_id" />
+                    <field name="chief_complaint" />
+                    <field name="bmi" />
+                    <field name="systolic" />
+                    <field name="diastolic" />
+                    <field name="diagnosis_id" />
+                    <field name="next_appointment_id" />
+                </tree>
+            </field>
+        </record>
+
+</odoo>

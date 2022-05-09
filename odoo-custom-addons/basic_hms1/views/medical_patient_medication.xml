@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="medical_patient_medication_form" model="ir.ui.view">
+            <field name="name">medical.patient.medication.form</field>
+            <field name="model">medical.patient.medication</field>
+            <field name="arch" type="xml">
+                <form string="Medication History">
+                    <group>
+                        <group colspan="4" col="4">
+                            <field name="medicament" />
+                            <field name="doctor_physician_id" />
+                            <field name="is_active" />
+                            <field name="indication" />
+                            <field name="start_treatment" />
+                            <field name="end_treatment" />
+                            <field name="course_completed" />
+                            <field name="discontinued" />
+                        </group>
+                        <separator colspan="4" string="Admnistration" />
+                        <group colspan="4" col="4">
+                            <field name="route" />
+                        </group>
+                        <separator colspan="4" string="Dosage" />
+                        <group colspan="4" col="4">
+                            <field name="dose" />
+                            <field name="qty" />
+                            <field name="dose_unit" />
+                        </group>
+                        <separator colspan="4"
+                            string=" Treatment Duration " />
+                        <group colspan="4" col="4">
+                            <field name="duration" />
+                            <field name="duration_period" />
+                        </group>
+                        <separator colspan="4" string="  Common Dosage  " />
+                        <group colspan="4" col="4">
+                            <field name="common_dosage" />
+                            <field name="admin_times" />
+                        </group>
+                        <separator colspan="4"
+                            string="  Specific Dosage  " />
+                        <group colspan="4" col="4">
+                            <field name="frequency" />
+                            <field name="frequency_unit" />
+                        </group>
+                        <separator colspan="4" string=" Notes" />
+                        <group colspan="4" col="4">
+                            <field name="notes" />
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="medical_patient_medication_tree" model="ir.ui.view">
+            <field name="name">medical.patient.medication.tree</field>
+            <field name="model">medical.patient.medication</field>
+            <field name="arch" type="xml">
+                <tree string="Medication">
+                    <field name="medicament" />
+                    <field name="doctor_physician_id" />
+                    <field name="is_active" />
+                    <field name="indication" />
+                    <field name="start_treatment" />
+                    <field name="end_treatment" />
+                    <field name="course_completed" />
+                    <field name="discontinued" />
+                </tree>
+            </field>
+        </record>
+
+</odoo>

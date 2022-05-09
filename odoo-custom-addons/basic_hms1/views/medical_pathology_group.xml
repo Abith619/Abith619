@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="medical_pathology_group_form_view" model="ir.ui.view">
+            <field name="name">medical.pathology.group.form.view</field>
+            <field name="model">medical.pathology.group</field>
+            <field name="arch" type="xml">
+                <form string="Pathology Groups">
+                    <group colspan="4" col="4">
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="desc" />
+                        <newline />
+                        <field name="info" colspan="4" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="medical_pathology_group_tree_view" model="ir.ui.view">
+            <field name="name">medical.pathology.group.tree.view</field>
+            <field name="model">medical.pathology.group</field>
+            <field name="arch" type="xml">
+                <tree string="Pathology Groups">
+                    <field name="name" />
+                    <field name="code" />
+                    <field name="desc" />
+                </tree>
+            </field>
+        </record>
+
+</odoo>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="medical_appointment_form_view" model="ir.ui.view">
+        <field name="name">medical.appointment.form.view</field>
+        <field name="model">medical.appointment</field>
+        <field name="arch" type="xml">
+            <form string="Appointment">
+                <header>
+                    <button name="button_registrations" string="Create Registration" class="oe_highlight" type="object"/>
+                    <field name='date'/>
+                </header>
+                 
+                <sheet>
+                    <h1>
+                        <field name="name" class="oe_inline"/>
+                    </h1>
+                    <group>
+                        <group>
+                   
+                            <field name= "patient_id"/>
+                            <field name= "gender"/>
+                            <field name= "age"/>
+                            <field name= "phone_number"/>
+                         
+                            <field name= "region"/>
+                            <field name= "treatment_for"/>
+
+                              
+                            </group>
+                        <group>
+
+                            <field name="doctor_id"/>
+                            <!-- <field name="appointment_date" /> -->
+                            <field name="fix_appoinment_line" attrs="{'invisible': [('doctor_id','=', False)]}"/>
+                        </group>
+                        </group>
+                        <notebook>
+                            <page string="Special Notes">
+                                <group>
+                                    <field name="comments"
+                                        nolabel="1" class="oe_inline"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"
+                           groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+
+        </field>
+    </record>
+
+
+    <record id="medical_appointment_calendar_view" model="ir.ui.view">
+        <field name="name">medical.appointment.calendar.view</field>
+        <field name="model">medical.appointment</field>
+        <field name="arch" type="xml">
+            <calendar string="Appointments" color="doctor_id"
+                      quick_add="False" date_start="appointment_date">
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="medical_appointment_tree_view" model="ir.ui.view">
+        <field name="name">medical.appointment.tree.view</field>
+        <field name="model">medical.appointment</field>
+        <field name="arch" type="xml">
+            <tree string="Appointment Information">
+                <field name="name" />
+                <field name="patient_id" />
+                <field name="doctor_id" />
+                <field name="patient_status" />
+                <field name="urgency_level" invisible="1"/>
+                <field name="appointment_date" />
+                <field name="duration" />
+                <field name="appointment_end" />
+                <field name="institution_partner_id" invisible="1"/>
+            </tree>
+
+        </field>
+    </record>
+
+    <record id="action_medical_appointment" model="ir.actions.act_window">
+        <field name="name">Appointments</field>
+        <field name="res_model">medical.appointment</field>
+        <field name="binding_view_types">form</field>
+        <field name="view_mode">tree,form,calendar</field>
+    </record>
+
+  
+
+    <menuitem id="menu_medical_appointment" action="action_medical_appointment"
+              parent="basic_hms.menu_appointment"
+              sequence="1"/>
+
+</odoo>
