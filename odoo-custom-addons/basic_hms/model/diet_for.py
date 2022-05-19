@@ -3,6 +3,8 @@ from odoo import models, fields, api
 class dietFor(models.Model):
     _name='diet.for'
 
+    name= fields.Char(string='Diet Name')
+
     hosteler=fields.Boolean(string='Hosteler')
     out_side_food=fields.Boolean(string='OutSide Food')
     control=fields.Boolean(string='Control')
@@ -17,14 +19,12 @@ class dietFor(models.Model):
     # def available_rooms(self):
     #     pass
 
-class treatmentFor(models.Model):
-    _name='treatment.for'
 
-    cure=fields.Boolean(string='Cure')
-    test_dose=fields.Boolean(string='Test Dose')
-    control=fields.Boolean(string='Control')
-    paliation=fields.Boolean(string='Paliation')
-    chronic=fields.Boolean(string='Chronic')
-    ng=fields.Boolean(string='NG')
-    maintance=fields.Boolean(string='Maintance')
-    nt=fields.Boolean(string='NT')
+    # cure=fields.Boolean(string='Cure')
+    # test_dose=fields.Boolean(string='Test Dose')
+    # control=fields.Boolean(string='Control')
+    # paliation=fields.Boolean(string='Paliation')
+    # chronic=fields.Boolean(string='Chronic')
+    # ng=fields.Boolean(string='NG')
+    # maintance=fields.Boolean(string='Maintance')
+    # nt=fields.Boolean(string='NT')

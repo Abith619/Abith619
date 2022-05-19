@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <data>
+            <record id="view_scan_form" model="ir.ui.view">
+                <field name="name">medical scan</field>
+                <field name="model">medical.scan</field>
+                <field name="priority" eval="8" />
+                <field name="arch" type="xml">
+                    <form string="Scan">  
+                        <sheet>
+                            <header>
+                                <group>
+                                    <field name='name' placeholder="Scans"/>
+                                </group>
+                            </header>
+                            <group>
+                                <field name='name'/>
+                            </group>
+                            
+                        </sheet>
+                         </form>                                
+                </field>        
+                </record>
+
+                        <record model="ir.actions.act_window" id="action_view_scan">            
+                            <field name="name">Scan</field>         
+                                <field name="res_model">medical.scan</field>                     
+                                <field name="view_mode">tree,form</field>
+                                <field name="domain">[]</field>            
+                                <field name="help" type="html">                
+                                    <p class="oe_view_nocontent_create">Scan
+                                    </p>            
+                                </field>
+                            </record>        
+                            <menuitem id="menu_scan" name="Scans" parent= "main_menu_hospital_management" action="action_view_scan"/>
+                    </data>
+</odoo>

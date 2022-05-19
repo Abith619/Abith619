@@ -32,8 +32,8 @@ class res_partner(models.Model):
         return self._search(args, limit=limit, access_rights_uid=name_get_uid)
     
     
-    def name_get(self):
-        result = []
-        for rec in self:
-            result.append((rec.id, '%s - %s' % (rec.name,rec.mobile)))
-        return result
+    # def name_get(self):
+    #     result = []
+    #     for rec in self:
+    #         result.append((rec.id, '%s - %s' % (rec.name,rec.mobile)))
+    #     return result

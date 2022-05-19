@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
         <data>
+            <!-- <record model="ir.ui.view" id="product_qr_code">
+                <field name="name">product.qr.qr.code</field>
+                <field name="model">product.qr</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <field name="barcode" position="after">
+                        <field name="qr_code" widget='image' class="oe_avatar"/>
+                    </field>
+                </field>
+              </record> -->
             <record id="view_doctor_form" model="ir.ui.view">
-                <field name="name">medicalform</field>
+                <field name="name">medical form</field>
                 <field name="model">medical.doctor</field>
                 <field name="priority" eval="8" />
                 <field name="arch" type="xml">
-                    <form string="doctor">    
-
+                    <form string="doctor">
                         <header>
                             <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight"/>
                             <button name="scan_button" type="object" string="Assign Scans/Tests" class="oe_highlight"/>
-                            <button name="diet_for" type="object" string="Diet For" class="oe_highlight"/>
-                            <button name="treatment_advised" type="object" string="Treatment Advised" class="oe_highlight"/><!-- <field name='prescription_date'/> -->
+                            <button name="diet_for" type="object" string="Prescribed Diet" class="oe_highlight"/>
+                            <!-- <button name="treatment_advised" type="object" string="Treatment Advised" class="oe_highlight"/><field name='prescription_date'/> -->
                             <field name ="stages" widget="statusbar"/>
                         </header>
-
+                        <!-- <field name="barcode" position="after"> -->
+                            
+                        <!-- </field> -->
                         <sheet>
                             <div class="oe_button_box" name="button_box">                         
                                 <button class="oe_stat_button" name="patient_prescription" type="object" icon="fa-clipboard">
@@ -29,9 +40,14 @@
                         <!-- </button> -->
                     </button>
                     </div>
-
+                    
+                            <field name='image1' widget='image' style="width: 8%"/>
+                            <field name="qr_code" widget='image' class="oe_avatar" style="width: 20%"/>
+                    
                     <h1>
                         <field name="serial_number" text-align='left' string='Patient'/>
+                        
+                        <!-- <field name="qr_id" text-align='left' string='Patient'/> -->
 
                     </h1>
                     
@@ -45,78 +61,98 @@
 
                                         <label for="height" string="Height" />
                                         <div class="o_address_format">
-                                            <field name="height" class="o_address_city" attrs="{'readonly': [('stages','=', 'done')]}"  />
+                                            <field name="height" placeholder='in Cms' class="o_address_city" attrs="{'readonly': [('stages','=', 'done')]}"  />
                                             <label for="weight" string="Weight "  />
-                                            <field name="weight" class="o_address_state"  style="width: 40%;" attrs="{'readonly': [('stages','=', 'done')]}"/>
+                                            <field name="weight" placeholder='in Kgs' class="o_address_state"  style="width: 40%;" attrs="{'readonly': [('stages','=', 'done')]}"/>
                                         </div>
-                                
-                                        <field name ="bp"/>
-                                        <field name='habits'/>
-                                       
+                                        <label for="bp" string="BP in mmHg" />
+                                        <div class="o_address_format">
+                                        <field name ="bp" class="o_address_state"  style="width: 40%;"/>
+                                        <label for="bmi" string="BMI = " />
+                                        <field name ="bmi" class="o_address_city"/>
+                                        
+                                    </div>
+                                        <!-- <label for="ailments"/> -->
+                                        <field name ="ailments" style="width: 100%;"/>
+                                        
                                     </group>
                                     <group>
                                         <field name="doctor" attrs="{'readonly': [('stages','=', 'done')]}" />
                                         
                                         <field name ="phone_number" attrs="{'readonly': [('stages','=', 'done')]}" />
+                                        <field name ="contact_number" attrs="{'readonly': [('stages','=', 'done')]}" />
                                         <field name='address' attrs="{'readonly': [('stages','=', 'done')]}" />
                                         <field name ="father_name" attrs="{'readonly': [('stages','=', 'done')]}" />
                                         <field name ="occupation" attrs="{'readonly': [('stages','=', 'done')]}" />
-                                        <field name ="office_address" attrs="{'readonly': [('stages','=', 'done')]}" />
+                                        <!-- <field name ="office_address" attrs="{'readonly': [('stages','=', 'done')]}" /> -->
+                                </group>
+                                <group>
+                                    <!-- <field name='habits'/> -->
                                 </group>
                                 <group>
                                 
                                 </group>
                                 <group>
-                                
-                                </group>
-                                <group>
-                                
+                                    <!-- <field name='diagnosis'/> -->
                                
                                 </group>
                                 <group>
-                                <!-- <field name ="sign_symptoms"/>    
-                                <field name ="ailments"/>
-                                <field name='diagnosis'/> 
-                                <field name='final_diagnosis'/> -->
-                                <field name ="sign_symptoms"/>  
+                                    <field name ="sign_symptoms" widget="many2many_tags" options="{'no_create_edit':True}"/> 
+                                    
                                 </group>
                                 <group>
-                                    <!-- <field name ="sign_symptoms"/>     -->
-                                    <field name ="ailments"/>
-                                    <field name='diagnosis'/> 
-                                    <field name='final_diagnosis'/>
+                                    <!-- <field name='final_diagnosis'/> -->
+                                    
                                 </group>
-                                        <!-- <group col="4" string='Treatment Advised'>
-                                        <field name='cure'/>
-                                        <field name='test_dose'/>
-                                        <field name='control'/>
-                                        <field name='paliation'/>
-                                        <field name='chronic'/>
-                                        <field name='ng'/>
-                                        <field name='maintance'/>
-                                        <field name='nt'/>
-                                    </group>
-                                <group  col="4" string='Diet For'>
-                                <field name='hosteler'/>
-                                <field name='out_side_food'/>
-                                <field name='control'/>
-                                <field name='veg'/>
-                                <field name='non_veg'/>
-                                <field name='not_possible'/>
-                                <field name='moderate'/>
-                                <field name='ok_for_all'/>
-                            </group> -->
+                                        
                                 </group>
                                 <notebook> 
-                                    <page string="Previous Treatments" >
+                                    <page string="Habits" >
+                                        <field name="habbit">
+                                            <tree string="Habbits" editable="bottom" >
+                                                <field name="habit" />
+                                                <field name="duration" />
+                                                <field name="days" />
+
+                                                <!-- <field name="smoking" />
+                                                <field name="drinking" />
+                                                <field name="pan" /> -->
+                                            </tree>
+                                        </field>
+                                    </page>
+                                    <page string="Diet For" >
+                                        <field name="diet_fields">
+                                            <tree string="Diet" editable="bottom">
+                                                <field name="diet1" options="{'no_create':True,'no_create_edit':True}"/>
+                                                <!-- <field name ="hosteler"/>
+                                                <field name="out_side_food" />
+                                                <field name="control" />
+                                                <field name ="veg"/>
+                                                <field name="non_veg" />
+                                                <field name="not_possible" />
+                                                <field name ="moderate"/>
+                                                <field name="ok_for_all" /> -->
+                                            </tree>
+                                        </field>
+                                    </page>
+                                    <page string="Treatments" >
+                                        <field name="treatment_initial">
+                                            <tree string="Treatment List" editable="bottom" >
+                                                <field name="treatment1" />
+                                                <!-- <field name ="diagnosis1"/>
+                                                <field name="final_diagnosis1" /> -->
+                                            </tree>
+                                        </field>
+                                    </page>
+                                    <page string="Past History" >
                                         <field name="pervious_medication">
                                             <tree string="medication List" editable="bottom" >
                                                 <field name="diseases" />
                                                 <field name ="signs"/>
                                                 <field name="medicine" />
                                                 <field name="diets" />
-                                                <field name="medication_from" />
-                                                <field name="medication_to" />
+                                                <!-- <field name="medication_from" />
+                                                <field name="medication_to" /> -->
                                             </tree>
                                             <field name ="notes"/> 
                                         </field>
@@ -124,36 +160,40 @@
                                     <page string="Surgery History">
                                         <field name = 'history_surgery'>
                                             <tree string="Surgery List" editable="bottom" >
-                                                <field name ="doc"/>
-                                                <field name="surgery_date" />
-                                                <field name="surgery_type" />
+                                                <!-- <field name ="doc"/>
+                                                <field name="surgery_date" /> -->
+                                                <!-- <field name="surgery_type" /> -->
                                                 <field name="surgery_reason" />
-                                                <field name ="surgery_status"/>
-                                                <field name ="surgery_notes"/>
+                                                <!-- <field name ="surgery_status"/>
+                                                <field name ="surgery_notes"/> -->
+                                            </tree>
+                                        </field>
+                                    </page>
+                                    
+                                    <page string="Family History">
+                                        <field name = 'history_family'>
+                                            <tree string="Medical History" editable="bottom" >
+                                                <field name="name_f" />
+                                                <!-- <field name ="doct"/>
+                                                <field name="family_date" />
+                                                <field name="family_type" />                                            
+                                                <field name ="family_notes"/> -->
                                             </tree>
                                         </field>
                                     </page>
                                     <page string="Documents">
-
                                         <field name = 'documents'>
                                             <tree string="Documents" editable="bottom" >
                                                 <field name="report_name" />
                                                 <field name ="attachment"/>
                                             </tree>
                                         </field>
-
-                                                
-                                                
-                                                
-                                           
                                     </page>
-                                    <page string="Family History">
-                                        <field name = 'history_family'>
-                                            <tree string="Medical History" editable="bottom" >
-                                                <field name="name_f" />
-                                                <field name ="doct"/>
-                                                <field name="family_date" />
-                                                 <field name="family_type" />                                            <field name ="family_notes"/>
+                                    <page string="Green Agreement">
+                                        <field name = 'green_agreement'>
+                                            <tree string="Agreement" editable="bottom" >
+                                                <field name="agreement" />
+                                                <!-- <field name ="attachment"/> -->
                                             </tree>
                                         </field>
                                     </page>
@@ -176,29 +216,46 @@
                         <tree string="EBook">
                             <field name="doctor" invisible="1" />
                             <field name="patient" />
+                            <field name="opnumber" />
                             <field name="sex" />
                             <field name="age" />
-                            <field name="diagnosis" />
+                            <!-- <field name="diagnosis" /> -->
                             <field name="sign_symptoms" />
                         </tree>
                     </field>
                 </record>
 
+<!--Search View-->
 
+<record id="view_ebook_land_filter" model="ir.ui.view">
+    <field name="name">EBook</field>
+    <field name="model">medical.doctor</field>
+    <field name="type">search</field>
+    <field name="arch" type="xml">
+        <search string="EBook">
 
+            <!-- <field name="patient"/> -->
+            <field name="opnumber"/>
+            <field name="patient"/>
+            <field name="phone_number"/>
+        </search>
+    </field>
+</record>
 
-
-                                <record model="ir.actions.act_window" id="action_view_doctor">            
-                                    <field name="name">EBook</field>         
-                                        <field name="res_model">medical.doctor</field>                 
-                                        <field name="view_mode">tree,form</field>
-                                        <field name="domain">[]</field>            
-                                        <field name="help" type="html">                
-                                            <p class="oe_view_nocontent_create">Create a Doctor Appointment
-                                            </p>            
-                                        </field>        
-                                    </record>      
+                <record model="ir.actions.act_window" id="action_view_doctor">            
+                    <field name="name">EBook</field>         
+                        <field name="res_model">medical.doctor</field>                 
+                        <field name="view_mode">tree,form</field>
+                        <field name="domain">[]</field>            
+                        <field name="help" type="html">                
+                            <p class="oe_view_nocontent_create">Create a Doctor Appointment
+                            </p>            
+                        </field>        
+                    </record>      
 
     <menuitem id="menu_doctor" name="EBook" parent= "main_menu_hospital_management"  sequence="1" action="action_view_doctor"/>
-                            </data>
+    <act_window id="action_view_priscription_id2" name="Prescription Orders"
+            res_model="medical.prescription.order" binding_model="medical.doctor"
+            view_mode="tree" domain="[('patient_id', '=', active_id)]" />
+                    </data>
     </odoo>

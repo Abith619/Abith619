@@ -33,12 +33,13 @@ class medical_patient(models.Model):
                 rd = relativedelta(d2, d1)
                 rec.age = str(rd.years) + "y" +" "+ str(rd.months) + "m" +" "+ str(rd.days) + "d"
             else:
-                rec.age = "Age!!"
+                rec.age = "Age"
 
+    
 
-    stages= fields.Selection([('draft',"Draft"),('done',"Done")])
+    stages= fields.Selection([('draft',"New"),('done',"Done")])
     patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name", required= True)
-    name = fields.Char(string ="OP NUMBER",readonly=True)
+    name = fields.Char(string ="Patient ID",readonly=True)
     blood_pressure = fields. Float(string="Blood Pressure")
     last_name = fields.Char('Last Name')
     date_of_birth = fields.Date(string="Date of Birth")
@@ -253,21 +254,20 @@ class medical_patient(models.Model):
     pap_test_last = fields.Date('Last PAP Test')
     colposcopy = fields.Boolean('Colpscopy')
     gravida = fields.Integer('Pregnancies')
-    medical_vaccination_ids = fields.One2many('medical.vaccination','medical_patient_vaccines_id')
-    medical_appointments_ids = fields.One2many('medical.appointment','patient_id',string='Appointments')
+    # medical_vaccination_ids = fields.One2many('medical.vaccination','medical_patient_vaccines_id')
+    # medical_appointments_ids = fields.One2many('medical.appointment','patient_id',string='Appointments')
     lastname = fields.Char('Last Name')
     report_date = fields.Date('Date',default = datetime.today().date())
-    medication_ids = fields.One2many('medical.patient.medication1','medical_patient_medication_id')
+    # medication_ids = fields.One2many('medical.patient.medication1','medical_patient_medication_id')
     deaths_2nd_week = fields.Integer('Deceased after 2nd week')
     deaths_1st_week = fields.Integer('Deceased after 1st week')
     full_term = fields.Integer('Full Term')
     ses_notes = fields.Text('Notes')
 #inherit fields
 
-
-    
     fees = fields.Float(string="Fees", default=150)
     contact_no = fields.Char(string="Contact No", required= True)
+    contact_number=fields.Char(string="Whatsapp Number")
     date1 = fields.Datetime(string="Date", default=fields.Datetime.now())
     fess = fields.Float(string="Consultation Fee",default=150)
     doctors = fields.Many2one('res.partner',string="Doctor Allocation",required= True,domain=[('is_doctor','=',True)])
@@ -275,20 +275,31 @@ class medical_patient(models.Model):
     weight = fields.Float(string="Weight in Kgs")
     occupation = fields.Char(string="Occupation")
     designation = fields.Char(string="Designation")
-    father_name = fields.Char(string="Father / Gurdian Name")
+    father_name = fields.Char(string="Father / Husband Name")
     father_occupation = fields.Char(string="Father Occupation")
     address = fields.Char(string="Address")
+    state=fields.Many2one('res.country.state',string="State")
+    country=fields.Many2one('res.country',string="Country")
     pincode = fields.Integer(string="Pincode")
     Phone_mobile = fields.Integer(string="Phone / Mobile")
     email = fields.Char(string="Email")
     office_address = fields.Char(string="Office Address")
     offPhone_mobile = fields.Integer(string="Office Phone")
     offemail = fields.Char(string="Office Email")
-    treatment = fields.Many2one('medical.pathology',string="Treatment for")
-    duration_ailmenmts = fields.Char(string="Duration of Ailments")
+    treatment = fields.Many2many('medical.pathology',string="Treatment for")
+    duration_ailmenmts = fields.Char(string="Duration of Ailment")
     early_treatment = fields.Char(string="Early Treatments if any Furnish details")
     duration_treatment = fields.Char(string="Duration of Earlier Treatments taken")
     operations_details = fields.Char(string="Operation if any furnish details")
+
+    @api.depends('height','weight')
+    def _calculate_bmi(self):
+        for rec in self:
+            if rec.height and rec.weight:
+                rec.bmi = rec.weight/(rec.height/100)**2
+            else:
+                rec.bmi = 0.0
+    bmi=fields.Integer(string="BMI",compute="_calculate_bmi",readonly=True)
 
     aboutinfor = fields.Selection([('newspaper','News Paper'),('radio','Radio'),
     ('ouremployee','Our Employee'),('friend','Friend / Referral'),('ref','Ref.Doctor'),('Adwall','Ad.Wall'),
@@ -296,7 +307,7 @@ class medical_patient(models.Model):
     string='How you came to know about Daisy Health Care (p) Ltd.,?')
     signatures=fields.Char(string="Signature")
     data_value = fields.Many2many('medical.feedback', string="How you came to know about Daisy Health Care(P)LTD.")
-
+    
 
     fix_appoinment=fields.One2many('fix.appointment','fix',string="Appoinment Slot")
     dates= fields.Datetime(string="Date")
@@ -330,9 +341,9 @@ class medical_patient(models.Model):
         result = super(medical_patient, self).create(val)
         return result
 
-
-
 #assign doc create e book
+
+
 
     def assign_button(self):
         create_patient = self.env['medical.doctor'].create({
@@ -341,6 +352,7 @@ class medical_patient(models.Model):
             'sex':self.sex,
             'doctor':self.doctors.id,
             'phone_number':self.contact_no,
+            'contact_number':self.contact_number,
             'marital_status':self.marital_status,
             'address':self.address,
             'father_name':self.father_name,
@@ -348,10 +360,19 @@ class medical_patient(models.Model):
             'office_address':self.office_address,
             'height':self.height,
             'weight':self.weight,
+            'opnumber':self.name,
             'stages':'done',
-            'ailments':self.treatment.id,
-            
+            # 'ailments':self.treatment.id,
+            # 'medicine':self.early_treatment,
+            # 'surgery_type':self.operations_details,
         })
+        self.stages='done'
+        val = self.env['res.partner'].search([], order='id desc', limit=1)
+        val.write({
+			'mobile':self.contact_no,
+            # 'address':self.address,
+            'name':self.patient_id.id ,
+			})
 
 #one2many new 
 
@@ -366,7 +387,3 @@ class FixAppointment(models.Model):
     appointment_from=fields.Selection([('s1',"9:30 Am - 10:30 Am"),('s2',"10:30 Am - 11:30 Am"),('s3',"11:30 Am - 12:30 Pm "),
     ('s4',"1:30 Pm - 2:30 Pm "),('s5',"2:30Pm - 3:30 Pm"),('s6',"3:30 Pm - 4:30 Pm "),('s7',"4:30 Pm - 5:30 pm"),('s8',"5:30 Pm - 6:30 Pm")],
     string='Appointment Slot')
-
-
-
-

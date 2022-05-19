@@ -3,13 +3,15 @@ from inspect import signature
 from odoo import api, fields, models, _
 from datetime import date,datetime
 from dateutil.relativedelta import relativedelta 
+import qrcode
+import base64
+from io import BytesIO
 
 
 class medical_directions(models.Model):
     _name = 'medical.doctor'
-    _rec_name = 'doctor'
+    _rec_name = 'patient'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-
 
     doctor = fields.Many2one('res.partner',domain=[('is_doctor','=',True)],string="Doctor" ,track_visibility='always')
     age=fields.Char(string='Age')
@@ -20,22 +22,61 @@ class medical_directions(models.Model):
     bp = fields.Float(string='BP in mmHg')
     patient_timing=fields.Datetime(string='Patient Timing')
     treatment = fields.Char(string="Treatment Adviced")
-    ailments=fields.Many2one('medical.pathology',string="Current Ailments")
-
-    patient = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient",required=True)
-    diagnosis = fields.Text(string='Initial Diagnosis')
-    final_diagnosis =  fields.Text(string='Final Diagnosis')
+    opnumber =fields.Char(string="OP Number")
+    patient = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name",required=True)
     since = fields.Integer(string='Since')
-    sign_symptoms = fields.Text(string="Signs/Symptoms")
+    sign_symptoms = fields.Many2many('medical.family.disease',string="Signs/Symptoms")
     history = fields.Text(string ="History")
     sex = fields.Selection([('m', 'Male'),('f', 'Female')],  string ="Sex", required= True)
     prescription_date= fields.Datetime(string='Date', default=fields.Datetime.now())
     name = fields.Char('Prescription ID')
+    ailments=fields.Many2one('medical.pathology',string="Current Ailments")
+    habbit=fields.One2many('medical.habits','doz',string="Habit")
+    diet_fields=fields.One2many('diet.field','diet1',string='Diet')
 
-#new fields 
-    father_name=fields.Char(string="Father/Husband/Guardian")
+    #          one2many
+    pervious_medication = fields.One2many('pervious.medication','diseases',string="Pervious Medication")
+    surgery_history = fields.Char(string ="Surgery History")
+    family_history = fields.Char(string ="Family History")
+
+    ailments=fields.Many2one('medical.pathology',string="Current Ailments")
+
+    green_agreement=fields.One2many('green.agreement','agreement',string="Green Agreement")
+    
+    history_surgery = fields.One2many('patient.surgery', 'doc', string="History of Surgery")
+
+    history_family = fields.One2many('patient.family','doct',string="History of Family")
+
+    documents = fields.One2many('patient.document','docc',string="Documents")
+
+    treatment_initial=fields.One2many('treatment.form','treatment1',string='Treatment')
+
+    
+
+    lab_reports = fields.Many2one('medical.lab',string ="Lab Reports")
+    scan_reports = fields.Many2one('medical.lab',string ="Scan Reports")
+    diet= fields.Char(string=" For Diet")
     image = fields.Binary()
     videos = fields.Binary(string ="Videos")
+    notes = fields.Text(string="Special Notes To Self/Other Staffs")
+
+    image1=fields.Binary(string="Image")
+
+    @api.depends('height','weight')
+    def _calculate_bmi(self):
+        for rec in self:
+            if rec.height and rec.weight:
+                rec.bmi = rec.weight/(rec.height/100)**2
+            else:
+                rec.bmi = 0.0
+    bmi=fields.Integer(string="BMI",compute="_calculate_bmi")
+
+
+# new fields 
+    father_name=fields.Char(string="Father/Husband")
+    image = fields.Binary()
+    videos = fields.Binary(string ="Videos")
+    
     habits=fields.Selection([('smoking','Smoking'),('alcohol','Alcohol'),('pan','PAN')],string='Habits')
     blood = fields.Boolean(string="Blood")
     urine=fields.Boolean(string="Urine")
@@ -65,22 +106,24 @@ class medical_directions(models.Model):
     ng=fields.Boolean(string='NG')
     maintance=fields.Boolean(string='Maintance')
     nt=fields.Boolean(string='NT')
-    serial_number = fields.Char(string="Patient ID", readonly=True, required=True, copy=False, default='New')
+
+    # qr_id=fields.Char('serial_number')
+    serial_number = fields.Char(string="Patient ID", readonly=True,copy=False,required=True, default='Patient ID')
+   
     phone_number=fields.Char(string="Contact Number")
-    stages= fields.Selection([('draft',"Draft"),('done',"Done")])
+    contact_number=fields.Char(string="Whatsapp Number")
+    stages= fields.Selection([('draft',"New"),('done',"Done")])
+    diagnosis = fields.Text(string='Initial Diagnosis')
+    final_diagnosis =  fields.Text(string='Final Diagnosis')
 
-
-
-
+    # def _get_default_stage(self):
+        # self.qr_id=self.serial_number
 
 #existing appoinment 
 
     # @api.onchange('patient')
     # def _existing_contact(self):
     #     if 
-
-
-
 
     @api.model
     def create(self, vals):
@@ -89,8 +132,30 @@ class medical_directions(models.Model):
         for msgs in self:
             msgs.message_post(body=msgs_body)
         result = super(medical_directions, self).create(vals)
-        return result
 
+
+        # def generate_qr_code(self):
+        for rec in self:
+            p_details={
+                'name':rec.serial_number,
+                'patient_id':rec.patient.name,
+
+            }
+            qr = qrcode.QRCode(
+                version=1,
+                error_correction=qrcode.constants.ERROR_CORRECT_H,
+                box_size=10,
+                border=4,
+            )
+            qr.add_data(p_details)
+            qr.make(fit=True)
+            img = qr.make_image()
+            temp = BytesIO()
+            img.save(temp, format="PNG")
+            qr_image = base64.b64encode(temp.getvalue())
+            res=self.qr_code = qr_image
+        return result,res
+        
 # prescription
     def prescription_button(self):
             return{
@@ -106,9 +171,9 @@ class medical_directions(models.Model):
             'default_patient_id': self.patient.id,
             'default_age': self.age,
             'default_sex': self.sex,
-        },
-        'target': 'new'
-    }
+            },
+            'target': 'new'
+            }
 
 #scan/test:
     def scan_button(self):
@@ -119,20 +184,17 @@ class medical_directions(models.Model):
         'view_mode': 'form',
         'res_model': 'medical.patient.lab.test',
         'context': {
-
             'default_doctor_id': self.doctor.id,
-
             'default_patient_id': self.patient.id,
-
-        },
-        'target': 'new'
-    }
+            },
+            'target': 'new'
+            }
 
 
     def diet_for(self):
             select_plan = False
             return {
-                'name': 'Diet For',
+                'name': 'Assign Diet',
                 'type': 'ir.actions.act_window',
                 'view_mode': 'form',
                 'view_type': 'form',
@@ -175,7 +237,13 @@ class medical_directions(models.Model):
 
     patients = fields.Integer(compute='patient_count',string="Prescriptions")
 
-
+# @api.onchange('dates')
+# 	def rolls(self):
+# 		date_today=datetime.datetime.now()
+# 		vals=self.env['medical.appointment'].search([('dates','=',date_today)]),([('doctor_id','=',self.doctor_id.id)])
+# 		if len(vals)>=2:
+# 			raise UserError("Appointment Slots are full")
+# 		raise UserError(len(vals[0]))
 
 #sacns and tests
     # @api.model
@@ -205,37 +273,47 @@ class medical_directions(models.Model):
     'view_type': 'form',
     'type': 'ir.actions.act_window',
     }
-#      Count in Smart Button
+#      QR Code
 
 
+    qr_code = fields.Binary("QR Code", attachment=True, store=True)
+    barcode = fields.Char("Barcode")
 
+    # @api.constraints('')
+    # def generate_qr_code(self):
+    #     for rec in self:
+    #         p_details={
+    #             'name':rec.serial_number,
+    #             'patient_id':rec.patient.name,
 
-#one2many
-    pervious_medication = fields.One2many('pervious.medication','signs',string="Pervious Medication")
-    surgery_history = fields.Char(string ="Surgery History")
-    family_history = fields.Char(string ="Family History")
+    #         }
+    #         qr = qrcode.QRCode(
+    #             version=1,
+    #             error_correction=qrcode.constants.ERROR_CORRECT_H,
+    #             box_size=10,
+    #             border=4,
+    #         )
+    #         qr.add_data(p_details)
+    #         qr.make(fit=True)
+    #         img = qr.make_image()
+    #         temp = BytesIO()
+    #         img.save(temp, format="PNG")
+    #         qr_image = base64.b64encode(temp.getvalue())
+    #         self.qr_code = qr_image
 
-    history_surgery = fields.One2many('patient.surgery', 'doc', string="History of Surgery")
+class GreenAgreement(models.Model):
+    _name = "green.agreement"
+    
 
-    history_family = fields.One2many('patient.family','doct',string="History of Family")
-
-    documents = fields.One2many('patient.document','docc',string="Documents")
-
-    lab_reports = fields.Many2one('medical.lab',string ="Lab Reports")
-    scan_reports = fields.Many2one('medical.lab',string ="Scan Reports")
-    diet= fields.Char(string=" For Diet")
-    image = fields.Binary()
-    videos = fields.Binary(string ="Videos")
-    notes = fields.Text(string="Special Notes To Self/Other Staffs")
-
+    agreement=fields.Binary(string="Agreement", attachment=True, store=True)
 
 class Perviousmedication(models.Model):
     _name='pervious.medication'
 
     diseases= fields.Many2one('medical.pathology',string="Diseases")
-    signs = fields.Many2one('medical.doctor',string="Signs")
-    medication_from = fields.Date(string="Mediaction From")
-    medication_to = fields.Date(string="Mediaction to")
+    signs = fields.Char(string="Signs")
+    medication_from = fields.Date(string="Medication From")
+    medication_to = fields.Date(string="Medication to")
     medicine = fields.Char(string="Medicines")
     diets = fields.Char(string="Diets")
 
@@ -246,7 +324,7 @@ class Patientsurgery(models.Model):
     doc = fields.Many2one('medical.doctor',string="Doctor")
     surgery_date = fields.Date(string="Surgery Date")
     surgery_type = fields.Many2one('medical.pathology',string="Surgery Type")
-    surgery_reason = fields.Char(string="Surgery Reason")
+    surgery_reason = fields.Char(string="Past Surgery")
     surgery_status = fields.Selection([('done','Done'),('cancel','Cancel')],string="Surgery Status")
     surgery_notes = fields.Text(string="Surgery Notes")
     
@@ -263,7 +341,7 @@ class patient_family(models.Model):
     family_name = fields.Char(string="Family Name")
     realtionship = fields.Char(string="Realtionship")
     familyphone = fields.Integer(string="Phone")
-    name_f = fields.Char(string="Name")
+    name_f = fields.Many2one('medical.pathology',string="Family Disease")
 
 class documents(models.Model):
     _name ="patient.document"
@@ -271,3 +349,36 @@ class documents(models.Model):
     docc = fields.Many2one('medical.doctor',string="Doctor")
     report_name = fields.Char(string="Report Name")
     attachment = fields.Binary(string="Image/Video Attachment")
+
+class treatment_for(models.Model):
+    _name ="treatment.form"
+
+    treatment1=fields.Many2one('medical.pathology',string='Treatments')
+    diagnosis1 = fields.Char(string='Initial Diagnosis')
+    final_diagnosis1 =  fields.Char(string='Final Diagnosis')
+
+class treatmentFor(models.Model):
+    _name='treatment.for'
+
+    name= fields.Char(string='Treatment Name')
+
+class diet_field(models.Model):
+    _name ="diet.field"
+
+    diet1 = fields.Many2one('medical.doctor',string="Diet")
+    
+    
+class medical_path(models.Model):
+    _inherit='medical.pathology'
+
+    ailment1=fields.Char(string='Ailment')
+    
+
+class medical_habits(models.Model):
+    _name='medical.habits'
+
+    habit=fields.Many2one('habit.for',string="Habit")
+    duration=fields.Char(string="Duration")
+    days= fields.Char(string="Habit/per-Day")
+    doz=fields.Many2one('medical.doctor',string="Dose")
+

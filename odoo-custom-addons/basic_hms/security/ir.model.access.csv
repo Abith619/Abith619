@@ -6,7 +6,9 @@ access_medical_group_insurance_chem_r,medical.group.medical_insurance.r.chem,mod
 access_medical_group_insurance_chem_rm,medical.group.medical_insurance.rm.chem,model_res_partner,group_medical_group,1,0,0,0
 access_diseases_category,medical.group.diseases.category,model_medical_pathology_category,group_medical_group,1,0,0,0
 access_diseases,medical.group.diseases,model_medical_pathology,group_medical_group,1,0,0,0
-
+access_medical_scan,medical.group.medical.scan,model_medical_scan,group_medical_group,1,1,1,1
+access_treatment_form,medical.group.treatment.form,model_treatment_form,group_medical_group,1,1,1,1
+access_diet_field,medical.group.diet.field,model_diet_field,group_medical_group,1,1,1,1
 
 
 
@@ -226,3 +228,8 @@ access_patient_document,medical.group.patient.document,model_patient_document,gr
 access_diet_for,medical.group.diet.for,model_diet_for,group_medical_group,1,1,1,1
 
 access_treatment_for,medical.group.treatment.for,model_treatment_for,group_medical_group,1,1,1,1
+
+access_habit_for,medical.group.habit.for,model_habit_for,group_medical_group,1,1,1,1
+
+access_medical_habits,medical.group.medical.habits,model_medical_habits,group_medical_group,1,1,1,1
+access_green_agreement,medical.group.green.agreement,model_green_agreement,group_medical_group,1,1,1,1

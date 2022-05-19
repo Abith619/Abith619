@@ -28,7 +28,8 @@ class medical_prescription_order(models.Model):
     is_invoiced = fields.Boolean(copy=False,default = False)
     insurer_id = fields.Many2one('medical.insurance', 'Insurer')
     is_shipped = fields.Boolean(default  =  False,copy=False)
-
+    height = fields.Float(string="Height")
+    weight = fields.Float(string="Weight")
 
     @api.model
     def create(self , vals):

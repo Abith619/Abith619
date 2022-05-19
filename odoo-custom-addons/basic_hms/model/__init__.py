@@ -68,6 +68,7 @@ from . import res_partner
 from . import medical_doctor
 from . import medical_feedback
 from . import diet_for
+from . import medical_habit
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:s

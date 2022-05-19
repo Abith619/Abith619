@@ -85,6 +85,8 @@
         'views/medical_vaccination.xml',
         'views/res_partner.xml',
         'views/medical_doctor.xml',
+        'views/medical_scan.xml',
+        'views/medical_habit.xml',
         'report/report_view.xml',
         'report/appointment_recipts_report_template.xml',
         'report/medical_view_report_document_lab.xml',

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of BrowseInfo. See LICENSE file for full copyright and licensing details.
 
+from ast import Pass
 from odoo import api, fields, models, _
 #from datetime import datetime, date
 from datetime import datetime, timedelta
@@ -14,7 +15,8 @@ class medical_appointment(models.Model):
 	_name = "medical.appointment"
 	_inherit = 'mail.thread'
 
-	stages= fields.Selection([('draft',"Draft"),('done',"Done")],default="draft")
+	contact_number=fields.Char(string='Whatsapp Number')
+	stages= fields.Selection([('draft',"New"),('done',"Done")],default="draft")
 	date=fields.Datetime('', default=datetime.datetime.now())
 	treatment_for=fields.Many2one('medical.pathology',string="Treatment For")
 	name = fields.Char(string="Appointment ID", readonly=True ,copy=True)
@@ -49,7 +51,9 @@ class medical_appointment(models.Model):
 	medical_prescription_order_ids = fields.One2many('medical.prescription.order','appointment_id',string='Prescription')
 	insurer_id = fields.Many2one('medical.insurance','Insurer')
 	duration = fields.Integer('Duration')
-	#new fields
+	# new fields
+
+	patient_name=fields.Char(string="Patient Name")
 	gender=fields.Selection([('m', 'Male'),('f', 'Female')],  string ="Sex", required= True)
 	age= fields.Char(string="Age")
 	phone_number=fields.Char(string="Contact Number")
@@ -60,15 +64,13 @@ class medical_appointment(models.Model):
 	came_through=fields.Many2one('medical.feedback',string="How do you Came to known about 'Daisy Hospital' :")
 	patient_selection = fields.Selection([('new',"New Patient"),('exi',"Existing Patient")],default="new")
 	# fix_appoinment_line=fields.One2many('fix.appointment.line','fixed',string="Appoinment Slot")
-	dates= fields.Datetime(string="Date")
-	appointment_from=fields.Selection([('s1',"9:30 Am - 10:30 Am"),('s2',"10:30 Am - 11:30 Am"),('s3',"11:30 Am - 12:30 Pm "),
-    ('s4',"1:30 Pm - 2:30 Pm "),('s5',"2:30Pm - 3:30 Pm"),('s6',"3:30 Pm - 4:30 Pm "),('s7',"4:30 Pm - 5:30 pm"),('s8',"5:30 Pm - 6:30 Pm")],
-    string='Appointment Slot')
-
-
-
-
-
+	dates= fields.Date(string="Date")
+	appointment_from=fields.Selection([('s1',"09:00 Am - 09:18 Am"),('s2',"09:18 Am - 09:36 Am"),('s3',"09:36 Am - 09:54 Am "),
+    ('s4',"09:54 Am - 10:12 Am "),('s5',"10:12 Am - 10:30 Am"),('s6',"10:30 Am - 10:48 Am "),('s7',"10:48 Am - 11:06 Am"),('s8',"11:06 Am - 11:24 Am"),
+	('s9','11:24 Am - 11:42 Am'),('s10','11:42 Am - 12:00 Am'),('s11','12:00 Am - 12:18 Pm'),('s12','12:18 Pm - 12:36 Pm'),('s13','12:36 Pm - 12:54 Pm'),
+	('s14','02:00 Pm - 02:18 Pm'),('s15','02:18 Pm - 02:36 Pm'),('s16','02:36 Pm - 02:54 Pm'),('s17','02:54 Pm - 03:12 Pm'),('s18','03:12 Pm - 03:30 Pm'),
+	('s19','03:30 Pm - 03:48 Pm'),('s20','03:48 Pm - 04:00 Pm')]
+	,string='Appointment Slot')
 
 	# @api.onchange('patient_id')
 	# def onchange_name(self):
@@ -79,6 +81,16 @@ class medical_appointment(models.Model):
 	# 	else:
 	# 		self.insurer_id = False
 
+	# @api.model
+	# def create(self,rec):
+	# 	val = self.env['res.partner'].search([], order='id desc', limit=1)
+	# 	val.write({
+	# 		'mobile':self.phone_number
+
+	# 		})
+	# 	return super(medical_appointment, self).create(rec)
+
+
 	@api.model
 	def create(self, vals):
 		vals['name'] = self.env['ir.sequence'].next_by_code('medical.appointment') or 'APT'
@@ -87,6 +99,14 @@ class medical_appointment(models.Model):
 			msg.message_post(body=msg_body)
 		result = super(medical_appointment, self).create(vals)
 		return result
+
+	@api.onchange('doctor_id')
+	def rolls(self):
+		date_today=self.dates
+		vals=self.env['medical.appointment'].search_count([('dates','=',date_today),('doctor_id','=',self.doctor_id.id)])
+		if vals >= 20	:
+			raise ValidationError("Appointment Slots are full")
+		
 
 	# @api.onchange('inpatient_registration_id')
 	# def onchange_patient(self):
@@ -118,16 +138,22 @@ class medical_appointment(models.Model):
 		'patient_id':self.patient_id.id,
 		'sex':self.gender,
 		'contact_no':self.phone_number,
+		'contact_number':self.contact_number,
 		'doctors':self.doctor_id.id,
 		'dates':self.dates,
 		'appointment_from':self.appointment_from,
-		'treatment':self.treatment_for.id,
+		'treatment':self.treatment_for,
 
 
 		'data_value':self.came_through.id,
-		'stages':'done',
+		# 'stages':'New',
 		})
 		self.stages == 'done'
+		val = self.env['res.partner'].search([], order='id desc', limit=1)
+		val.write({
+			'mobile':self.phone_number
+
+			})
 		# contact = self.env['res.partner'].create({
         # 	'name': self.name,
 		# 	'mobile':self.phone_number,
@@ -136,9 +162,6 @@ class medical_appointment(models.Model):
         # 	})
 		return create_registration
 
-
-
-	
 	@api.onchange('duration')
 	def start_end(self):
 		now  = self.appointment_date
@@ -197,12 +220,21 @@ class medical_appointment(models.Model):
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 class FixAppointment(models.Model):
     _name = "fix.appointment.line"
+	
 
     fixed= fields.Many2one('medical.appointment')
     dates= fields.Datetime(string="Date")
-    doctors_id = fields. Many2one('res.partner',domain=[('is_doctor','=',True)],string="Doctor")
+    doctors_id = fields.Many2one('res.partner',domain=[('is_doctor','=',True)],string="Doctor")
     days=fields.Selection([('monday','MONDAY'),('tuesday','TUESDAY'),('wednesday','WEDNESDAY'),('thursday','THURSDAY'),('friday','FRIDAY'),('saturday','SATURDAY'),('sunday','SUNDAY')],string='Day')
     period = fields.Selection([('mor',"MORINING"),('eve',"EVENING")],string= "Session")
-    appointment_from=fields.Selection([('s1',"9:30 Am - 10:30 Am"),('s2',"10:30 Am - 11:30 Am"),('s3',"11:30 Am - 12:30 Pm "),
-    ('s4',"1:30 Pm - 2:30 Pm "),('s5',"2:30Pm - 3:30 Pm"),('s6',"3:30 Pm - 4:30 Pm "),('s7',"4:30 Pm - 5:30 pm"),('s8',"5:30 Pm - 6:30 Pm")],
-    string='Appointment Slot')
+
+	a1=fields.Char(string="09:00 Am - 09:18 Am")
+	a2=fields.Char(string=
+
+    appointment_from=fields.Selection([('s1',"09:00 Am - 09:18 Am"),('s2',"09:18 Am - 09:36 Am"),('s3',"09:36 Am - 09:54 Am "),
+    ('s4',"09:54 Am - 10:12 Am "),('s5',"10:12 Am - 10:30 Am"),('s6',"10:30 Am - 10:48 Am "),('s7',"10:48 Am - 11:06 Am"),('s8',"11:06 Am - 11:24 Am"),
+	('s9','11:24 Am - 11:42 Am'),('s10','11:42 Am - 12:00 Am'),('s11','12:00 Am - 12:18 Pm'),('s12','12:18 Pm - 12:36 Pm'),('s13','12:36 Pm - 12:54 Pm'),
+	('s14','02:00 Pm - 02:18 Pm'),('s15','02:18 Pm - 02:36 Pm'),('s16','02:36 Pm - 02:54 Pm'),('s17','02:54 Pm - 03:12 Pm'),('s18','03:12 Pm - 03:30 Pm'),
+	('s19','03:30 Pm - 03:48 Pm'),('s20','03:48 Pm - 04:00 Pm')]
+	,string='Appointment Slot')
+

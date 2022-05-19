@@ -3,11 +3,16 @@
     <record id="medical_appointment_form_view" model="ir.ui.view">
         <field name="name">medical.appointment.form.view</field>
         <field name="model">medical.appointment</field>
+        <!-- <field name="parent_id" ref="res.partner"/>
+        <xpath expr="//field[@name='sales_price']" position="after">
+		    <field name="your_new_field"/>
+		</xpath> -->
         <field name="arch" type="xml">
             <form string="Appointment">
                 <header>
-                    
+                    <!-- <button name="rolls" string="send check" type="object"/> -->
                     <button name="button_registrations" string="Create Registration" class="oe_highlight" type="object"/>
+                    <!-- <button name="button_contact" string="Create number" class="oe_highlight" type="object"/> -->
                     <field name ="stages" widget="statusbar"/>
                     <!-- <field name='date'/> -->
                 </header>
@@ -24,7 +29,7 @@
                             <field name= "gender"/>
                             <field name= "age"/>
                             <field name= "phone_number"/>
-                         
+                            <field name= "contact_number"/>
                             <field name= "region"/>
                             <field name= "treatment_for"/>
 
@@ -32,9 +37,9 @@
                             </group>
                         <group>
 
-                            <field name="doctor_id"/>
-                            <field name="dates" attrs="{'invisible': [('doctor_id','=', False)]}"/>
-                                <field name="appointment_from" attrs="{'invisible': [('dates','=', False)]}"/>
+                            <field name="dates" widget="date"/>
+                            <field name="doctor_id"  attrs="{'invisible': [('dates','=', False)]}"  options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" />
+                                <field name="appointment_from" attrs="{'invisible': [('doctor_id','=', False)]}"/>
 
                             <!-- <field name="appointment_date" /> -->
                             <!-- <field name="fix_appoinment_line" invisible="1"/> -->
@@ -47,7 +52,7 @@
                                 <field name= "gender" attrs="{'invisible': [('patient_id','=', False)]}"/>
                                 <field name= "age" attrs="{'invisible': [('patient_id','=', False)]}"/>
                                 <field name= "phone_number" attrs="{'invisible': [('patient_id','=', False)]}"/>
-                             
+                                <field name= "contact_number" attrs="{'invisible': [('patient_id','=', False)]}"/>
                                 <field name= "region" attrs="{'invisible': [('patient_id','=', False)]}"/>
                                 <field name= "treatment_for" attrs="{'invisible': [('patient_id','=', False)]}"/>
     
@@ -55,7 +60,7 @@
                                 </group>
                             <group>
     
-                                <field name="doctor_id" attrs="{'invisible': [('patient_id','=', False)]}"/>
+                                <field name="doctor_id" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" attrs="{'invisible': [('patient_id','=', False)]}"/>
                                 <field name="dates" attrs="{'invisible': [('doctor_id','=', False)]}"/>
                                 <field name="appointment_from" attrs="{'invisible': [('dates','=', False)]}"/>
                                 <!-- <field name="appointment_date" /> -->
@@ -108,13 +113,26 @@
                 <field name="doctor_id" />
                 <field name="patient_status" />
                 <field name="urgency_level" invisible="1"/>
-                <field name="appointment_date" />
+                <field name="dates" />
                 <field name="duration" />
                 <field name="appointment_end" />
                 <field name="institution_partner_id" invisible="1"/>
                 <field name="patient_selection" />
             </tree>
 
+        </field>
+    </record>
+
+    <record id="view_search_land_filter" model="ir.ui.view">
+        <field name="name">Search</field>
+        <field name="model">medical.appointment</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="phone_number"/>
+            </search>
         </field>
     </record>
 
@@ -127,8 +145,8 @@
 
   
 
-    <menuitem id="menu_medical_appointment" action="action_medical_appointment"
-              parent="basic_hms.menu_appointment"
+    <menuitem id="menu_appointment" name='Appointments' action="action_medical_appointment"
+              parent="main_menu_hospital_management"
               sequence="1"/>
 
 </odoo>
