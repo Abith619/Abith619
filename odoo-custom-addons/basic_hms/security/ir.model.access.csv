@@ -233,3 +233,4 @@ access_habit_for,medical.group.habit.for,model_habit_for,group_medical_group,1,1
 
 access_medical_habits,medical.group.medical.habits,model_medical_habits,group_medical_group,1,1,1,1
 access_green_agreement,medical.group.green.agreement,model_green_agreement,group_medical_group,1,1,1,1
+access_time_slot,medical.group.time.slot,model_time_slot,group_medical_group,1,1,1,1

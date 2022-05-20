@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <template id="basic_hms.registration_patient_report">
+            <t t-call="web.external_layout">
+     <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t >
+            <tr>
+            <td style="border: 0px;width: 50%;">
+                <p><strong>Patient ID : </strong><span t-field="o.name"/></p>
+            </td>
+            <td style="border: 0px;width: 50%;">
+                <p><strong>Registration Date : </strong><span t-field="o.dates"/></p>
+            </td>
+            </tr>
+            <table border="4" class="table table-bordered" style="border: 1px solid black;">
+            <thead>
+            <tr style="height:40px">
+            <td style="border: 1px solid black;" >
+            <p><b>Name : </b> <span t-field="o.patient_id"/></p>
+                <p><b>Gender : </b> <span t-field="o.sex"/></p>
+                <p><b>Martial Status : </b> <span t-field="o.marital_status"/></p>
+                <p><b>DOB : </b> <span t-field="o.date_of_birth"/></p>
+                <p><b>Age : </b> <span t-field="o.age"/></p>
+                <p><b>Height : </b> <span t-field="o.height"/></p>
+                <p><b>Weight : </b> <span t-field="o.weight"/></p>
+                <!-- <p><b>BP :</b> <span t-field="o.bp"/></p> -->
+                <p><b>BMI : </b> <span t-field="o.bmi"/></p>
+                <p><b>Doctor Allocation: </b> <span t-field="o.doctors"/></p>
+                <p><b> Appointment Time : </b> <span t-field="o.appointment_from"/></p>
+                <!-- <p><b> Symptoms :</b> <span t-field="o.sign_symptoms"/></p> -->
+            </td>
+            <td style="border: 1px solid black;">
+                <!-- <p><b> Doctor :</b> <span t-field="o.doctor"/></p> -->
+                <p><b> Contact Number : </b> <span t-field="o.contact_no"/></p>
+                <p><b> Whatsapp Number : </b> <span t-field="o.contact_number"/></p>
+                <p><b> Address : </b> <span t-field="o.address"/></p>
+                <p><b> Country : </b> <span t-field="o.country"/></p>
+                <p><b> State : </b> <span t-field="o.state"/></p>
+                <p><b> Occupation : </b> <span t-field="o.occupation"/></p>
+                <p><b> Designation : </b> <span t-field="o.designation"/></p>
+                <p><b> Father / Husband Name : </b> <span t-field="o.father_name"/></p>
+                <p><b> Father's Occupation : </b> <span t-field="o.father_occupation"/></p>
+                <!-- <p><b> Date :</b> <span t-field="o.dates"/></p> -->
+                
+            </td>
+            </tr>
+            </thead>
+            </table>
+            <td style="border: 0px;width: 50%;">
+                <p><strong>Duration of Ailments :</strong><span t-field="o.duration_ailmenmts"/></p>
+            </td>
+            <td style="border: 0px;width: 50%;">
+                <p><strong>Feedback :</strong><span t-field="o.data_value"/></p>
+            </td>
+            <td style="border: 0px;width: 50%;">
+                <p><strong>Fees :</strong><span t-field="o.fees"/></p>
+            </td>
+            </t>
+            </t>
+            </t>
+            </t>
+        </template>
+    
+    </data>
+    
+
+</odoo>

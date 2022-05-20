@@ -31,7 +31,6 @@ class medical_directions(models.Model):
     prescription_date= fields.Datetime(string='Date', default=fields.Datetime.now())
     name = fields.Char('Prescription ID')
     ailments=fields.Many2one('medical.pathology',string="Current Ailments")
-    habbit=fields.One2many('medical.habits','doz',string="Habit")
     diet_fields=fields.One2many('diet.field','diet1',string='Diet')
 
     #          one2many
@@ -40,6 +39,9 @@ class medical_directions(models.Model):
     family_history = fields.Char(string ="Family History")
 
     ailments=fields.Many2one('medical.pathology',string="Current Ailments")
+
+    habbit=fields.One2many('medical.habits','doz',string="Habit")
+
 
     green_agreement=fields.One2many('green.agreement','agreement',string="Green Agreement")
     
@@ -59,17 +61,26 @@ class medical_directions(models.Model):
     image = fields.Binary()
     videos = fields.Binary(string ="Videos")
     notes = fields.Text(string="Special Notes To Self/Other Staffs")
-
+    bmi_value= fields.Char(string="BMI")
     image1=fields.Binary(string="Image")
 
-    @api.depends('height','weight')
+
+    @api.onchange('height','weight')
     def _calculate_bmi(self):
+        bmi = 0
         for rec in self:
             if rec.height and rec.weight:
-                rec.bmi = rec.weight/(rec.height/100)**2
+                bmi = rec.weight/(rec.height/100)**2
             else:
-                rec.bmi = 0.0
-    bmi=fields.Integer(string="BMI",compute="_calculate_bmi")
+                rec.bmi_value = 0.0
+            if bmi <= 18.5:
+                status = "Underweight"
+            elif bmi >= 18.5 and bmi <= 25:
+                status = "Normal"
+            else:
+                status = "Obesity"
+            self.bmi_value = f"{bmi:.{2}f} {status}" 
+    
 
 
 # new fields 
@@ -132,30 +143,8 @@ class medical_directions(models.Model):
         for msgs in self:
             msgs.message_post(body=msgs_body)
         result = super(medical_directions, self).create(vals)
+        return result
 
-
-        # def generate_qr_code(self):
-        for rec in self:
-            p_details={
-                'name':rec.serial_number,
-                'patient_id':rec.patient.name,
-
-            }
-            qr = qrcode.QRCode(
-                version=1,
-                error_correction=qrcode.constants.ERROR_CORRECT_H,
-                box_size=10,
-                border=4,
-            )
-            qr.add_data(p_details)
-            qr.make(fit=True)
-            img = qr.make_image()
-            temp = BytesIO()
-            img.save(temp, format="PNG")
-            qr_image = base64.b64encode(temp.getvalue())
-            res=self.qr_code = qr_image
-        return result,res
-        
 # prescription
     def prescription_button(self):
             return{
@@ -279,27 +268,27 @@ class medical_directions(models.Model):
     qr_code = fields.Binary("QR Code", attachment=True, store=True)
     barcode = fields.Char("Barcode")
 
-    # @api.constraints('')
-    # def generate_qr_code(self):
-    #     for rec in self:
-    #         p_details={
-    #             'name':rec.serial_number,
-    #             'patient_id':rec.patient.name,
+    @api.onchange('patient')
+    def generate_qr_code(self):
+        for rec in self:
+            p_details={
+                'name':rec.serial_number,
+                'patient_id':rec.patient.name,
 
-    #         }
-    #         qr = qrcode.QRCode(
-    #             version=1,
-    #             error_correction=qrcode.constants.ERROR_CORRECT_H,
-    #             box_size=10,
-    #             border=4,
-    #         )
-    #         qr.add_data(p_details)
-    #         qr.make(fit=True)
-    #         img = qr.make_image()
-    #         temp = BytesIO()
-    #         img.save(temp, format="PNG")
-    #         qr_image = base64.b64encode(temp.getvalue())
-    #         self.qr_code = qr_image
+            }
+            qr = qrcode.QRCode(
+                version=1,
+                error_correction=qrcode.constants.ERROR_CORRECT_H,
+                box_size=10,
+                border=4,
+            )
+            qr.add_data(p_details)
+            qr.make(fit=True)
+            img = qr.make_image()
+            temp = BytesIO()
+            img.save(temp, format="PNG")
+            qr_image = base64.b64encode(temp.getvalue())
+            self.qr_code = qr_image
 
 class GreenAgreement(models.Model):
     _name = "green.agreement"
@@ -310,7 +299,7 @@ class GreenAgreement(models.Model):
 class Perviousmedication(models.Model):
     _name='pervious.medication'
 
-    diseases= fields.Many2one('medical.pathology',string="Diseases")
+    diseases= fields.Many2one('medical.doctor',string="Diseases")
     signs = fields.Char(string="Signs")
     medication_from = fields.Date(string="Medication From")
     medication_to = fields.Date(string="Medication to")
@@ -353,7 +342,7 @@ class documents(models.Model):
 class treatment_for(models.Model):
     _name ="treatment.form"
 
-    treatment1=fields.Many2one('medical.pathology',string='Treatments')
+    treatment1=fields.Many2one('medical.doctor',string='Treatments')
     diagnosis1 = fields.Char(string='Initial Diagnosis')
     final_diagnosis1 =  fields.Char(string='Final Diagnosis')
 

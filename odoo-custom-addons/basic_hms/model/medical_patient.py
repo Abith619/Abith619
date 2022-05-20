@@ -347,10 +347,10 @@ class medical_patient(models.Model):
 
     def assign_button(self):
         create_patient = self.env['medical.doctor'].create({
-            'patient':self.patient_id.id ,
+            'patient':self.patient_id.name ,
             'age':self.age, 
             'sex':self.sex,
-            'doctor':self.doctors.id,
+            'doctor':self.doctors.name,
             'phone_number':self.contact_no,
             'contact_number':self.contact_number,
             'marital_status':self.marital_status,

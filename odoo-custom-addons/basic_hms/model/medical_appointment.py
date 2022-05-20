@@ -10,7 +10,6 @@ import datetime
 from dateutil.relativedelta import relativedelta
 from odoo.exceptions import  ValidationError
 
-
 class medical_appointment(models.Model):
 	_name = "medical.appointment"
 	_inherit = 'mail.thread'
@@ -52,7 +51,7 @@ class medical_appointment(models.Model):
 	insurer_id = fields.Many2one('medical.insurance','Insurer')
 	duration = fields.Integer('Duration')
 	# new fields
-
+	appointment_slot=fields.Many2one("time.slot",string='Appointment Slot')
 	patient_name=fields.Char(string="Patient Name")
 	gender=fields.Selection([('m', 'Male'),('f', 'Female')],  string ="Sex", required= True)
 	age= fields.Char(string="Age")
@@ -65,12 +64,19 @@ class medical_appointment(models.Model):
 	patient_selection = fields.Selection([('new',"New Patient"),('exi',"Existing Patient")],default="new")
 	# fix_appoinment_line=fields.One2many('fix.appointment.line','fixed',string="Appoinment Slot")
 	dates= fields.Date(string="Date")
-	appointment_from=fields.Selection([('s1',"09:00 Am - 09:18 Am"),('s2',"09:18 Am - 09:36 Am"),('s3',"09:36 Am - 09:54 Am "),
-    ('s4',"09:54 Am - 10:12 Am "),('s5',"10:12 Am - 10:30 Am"),('s6',"10:30 Am - 10:48 Am "),('s7',"10:48 Am - 11:06 Am"),('s8',"11:06 Am - 11:24 Am"),
-	('s9','11:24 Am - 11:42 Am'),('s10','11:42 Am - 12:00 Am'),('s11','12:00 Am - 12:18 Pm'),('s12','12:18 Pm - 12:36 Pm'),('s13','12:36 Pm - 12:54 Pm'),
-	('s14','02:00 Pm - 02:18 Pm'),('s15','02:18 Pm - 02:36 Pm'),('s16','02:36 Pm - 02:54 Pm'),('s17','02:54 Pm - 03:12 Pm'),('s18','03:12 Pm - 03:30 Pm'),
-	('s19','03:30 Pm - 03:48 Pm'),('s20','03:48 Pm - 04:00 Pm')]
+	appointment_from=fields.Selection([('09:00 Am - 09:18 Am',"09:00 Am - 09:18 Am"),('09:18 Am - 09:36 Am',"09:18 Am - 09:36 Am"),('09:36 Am - 09:54 Am',"09:36 Am - 09:54 Am "),
+    ('09:54 Am - 10:12 Am',"09:54 Am - 10:12 Am "),('10:12 Am - 10:30 Am',"10:12 Am - 10:30 Am"),('10:30 Am - 10:48 Am',"10:30 Am - 10:48 Am "),('10:48 Am - 11:06 Am',"10:48 Am - 11:06 Am"),('11:06 Am - 11:24 Am',"11:06 Am - 11:24 Am"),
+	('11:24 Am - 11:42 Am','11:24 Am - 11:42 Am'),('11:42 Am - 12:00 Am','11:42 Am - 12:00 Am'),('12:00 Am - 12:18 Pm','12:00 Am - 12:18 Pm'),('12:18 Pm - 12:36 Pm','12:18 Pm - 12:36 Pm'),('12:36 Pm - 12:54 Pm','12:36 Pm - 12:54 Pm'),
+	('02:00 Pm - 02:18 Pm','02:00 Pm - 02:18 Pm'),('02:18 Pm - 02:36 Pm','02:18 Pm - 02:36 Pm'),('02:36 Pm - 02:54 Pm','02:36 Pm - 02:54 Pm'),('02:54 Pm - 03:12 Pm','02:54 Pm - 03:12 Pm'),('03:12 Pm - 03:30 Pm','03:12 Pm - 03:30 Pm'),
+	('03:30 Pm - 03:48 Pm','03:30 Pm - 03:48 Pm'),('03:48 Pm - 04:00 Pm','03:48 Pm - 04:00 Pm')]
 	,string='Appointment Slot')
+
+	# appointments_from=fields.Selection([('09:00 Am - 09:18 Am',"09:00 Am - 09:18 Am"),('09:18 Am - 09:36 Am',"09:18 Am - 09:36 Am"),('09:36 Am - 09:54 Am',"09:36 Am - 09:54 Am "),
+    # ('09:54 Am - 10:12 Am',"09:54 Am - 10:12 Am "),('10:12 Am - 10:30 Am',"10:12 Am - 10:30 Am"),('10:30 Am - 10:48 Am',"10:30 Am - 10:48 Am "),('10:48 Am - 11:06 Am',"10:48 Am - 11:06 Am"),('11:06 Am - 11:24 Am',"11:06 Am - 11:24 Am"),
+	# ('11:24 Am - 11:42 Am','11:24 Am - 11:42 Am'),('11:42 Am - 12:00 Am','11:42 Am - 12:00 Am'),('12:00 Am - 12:18 Pm','12:00 Am - 12:18 Pm'),('12:18 Pm - 12:36 Pm','12:18 Pm - 12:36 Pm'),('12:36 Pm - 12:54 Pm','12:36 Pm - 12:54 Pm'),
+	# ('02:00 Pm - 02:18 Pm','02:00 Pm - 02:18 Pm'),('02:18 Pm - 02:36 Pm','02:18 Pm - 02:36 Pm'),('02:36 Pm - 02:54 Pm','02:36 Pm - 02:54 Pm'),('02:54 Pm - 03:12 Pm','02:54 Pm - 03:12 Pm'),('03:12 Pm - 03:30 Pm','03:12 Pm - 03:30 Pm'),
+	# ('03:30 Pm - 03:48 Pm','03:30 Pm - 03:48 Pm'),('03:48 Pm - 04:00 Pm','03:48 Pm - 04:00 Pm')]
+	# ,string='Appointment Slot')
 
 	# @api.onchange('patient_id')
 	# def onchange_name(self):
@@ -106,7 +112,23 @@ class medical_appointment(models.Model):
 		vals=self.env['medical.appointment'].search_count([('dates','=',date_today),('doctor_id','=',self.doctor_id.id)])
 		if vals >= 20	:
 			raise ValidationError("Appointment Slots are full")
+		# elif self.appointment_from == False:
+    	# 		raise ValidationError("Please select Appointment Slot")
 		
+	@api.onchange('appointment_from')
+	def date_appointment(self):
+		l1 = []
+		# all_slots = 
+		all_slots = ['09:00 Am - 09:18 Am','09:18 Am - 09:36 Am','09:36 Am - 09:54 Am ','09:54 Am - 10:12 Am ','10:12 Am - 10:30 Am','10:30 Am - 10:48 Am ','10:48 Am - 11:06 Am','11:06 Am - 11:24 Am','11:24 Am - 11:42 Am','11:42 Am - 12:00 Am','12:00 Am - 12:18 Pm','12:18 Pm - 12:36 Pm','12:36 Pm - 12:54 Pm','02:00 Pm - 02:18 Pm','02:18 Pm - 02:36 Pm','02:36 Pm - 02:54 Pm','02:54 Pm - 03:12 Pm','03:12 Pm - 03:30 Pm','03:30 Pm - 03:48 Pm','03:48 Pm - 04:00 Pm']
+		value=self.env['medical.appointment'].search([('dates','=',self.dates),('doctor_id','=',self.doctor_id.id),('appointment_from','=',self.appointment_from)])
+		if len(value) >= 1:
+			empty=self.env['medical.appointment'].search([('dates','=',self.dates),('doctor_id','=',self.doctor_id.id)])
+			for i in empty:
+				slots = i.appointment_from
+				l1.append(slots)
+			booked_slots = [i for i in all_slots if i not in l1]
+			raise ValidationError(booked_slots)
+
 
 	# @api.onchange('inpatient_registration_id')
 	# def onchange_patient(self):
@@ -114,20 +136,14 @@ class medical_appointment(models.Model):
 	# 		self.patient_id = ""
 	# 	inpatient_obj = self.env['medical.inpatient.registration'].browse(self.inpatient_registration_id.id)
 	# 	self.patient_id = inpatient_obj.id
-
 	# def confirm(self):
 	# 	self.write({'state': 'confirmed'})
-
 	# def done(self):
 	# 	self.write({'state': 'done'})
-
 	# def cancel(self):
 	# 	self.write({'state': 'cancel'})
-
 	# def print_prescription(self):
 	# 	return self.env.ref('basic_hms.report_print_prescription').report_action(self)
-
-
 	# def view_patient_invoice(self):
 	# 	self.write({'state': 'cancel'})
 
@@ -143,8 +159,6 @@ class medical_appointment(models.Model):
 		'dates':self.dates,
 		'appointment_from':self.appointment_from,
 		'treatment':self.treatment_for,
-
-
 		'data_value':self.came_through.id,
 		# 'stages':'New',
 		})
@@ -168,10 +182,6 @@ class medical_appointment(models.Model):
 		a_hour = relativedelta(hours=self.duration)
 		vals = now + a_hour
 		self.appointment_end=vals
-
-
-
-
 
 	# def create_invoice(self):
 	# 	lab_req_obj = self.env['medical.appointment']
@@ -215,26 +225,47 @@ class medical_appointment(models.Model):
 	# 	else:
 	# 		 raise UserError(_(' The Appointment is invoice exempt'))
 	# 	return result
-
-		
+	
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 class FixAppointment(models.Model):
-    _name = "fix.appointment.line"
-	
+	_name = "fix.appointment.line"
 
-    fixed= fields.Many2one('medical.appointment')
-    dates= fields.Datetime(string="Date")
-    doctors_id = fields.Many2one('res.partner',domain=[('is_doctor','=',True)],string="Doctor")
-    days=fields.Selection([('monday','MONDAY'),('tuesday','TUESDAY'),('wednesday','WEDNESDAY'),('thursday','THURSDAY'),('friday','FRIDAY'),('saturday','SATURDAY'),('sunday','SUNDAY')],string='Day')
-    period = fields.Selection([('mor',"MORINING"),('eve',"EVENING")],string= "Session")
+	fixed= fields.Many2one('medical.appointment')
+	dates= fields.Datetime(string="Date")
+	doctors_id = fields.Many2one('res.partner',domain=[('is_doctor','=',True)],string="Doctor")
+	days=fields.Selection([('monday','MONDAY'),('tuesday','TUESDAY'),('wednesday','WEDNESDAY'),('thursday','THURSDAY'),('friday','FRIDAY'),('saturday','SATURDAY'),('sunday','SUNDAY')],string='Day')
+	period = fields.Selection([('mor',"MORINING"),('eve',"EVENING")],string= "Session")
 
-	a1=fields.Char(string="09:00 Am - 09:18 Am")
-	a2=fields.Char(string=
 
-    appointment_from=fields.Selection([('s1',"09:00 Am - 09:18 Am"),('s2',"09:18 Am - 09:36 Am"),('s3',"09:36 Am - 09:54 Am "),
-    ('s4',"09:54 Am - 10:12 Am "),('s5',"10:12 Am - 10:30 Am"),('s6',"10:30 Am - 10:48 Am "),('s7',"10:48 Am - 11:06 Am"),('s8',"11:06 Am - 11:24 Am"),
-	('s9','11:24 Am - 11:42 Am'),('s10','11:42 Am - 12:00 Am'),('s11','12:00 Am - 12:18 Pm'),('s12','12:18 Pm - 12:36 Pm'),('s13','12:36 Pm - 12:54 Pm'),
-	('s14','02:00 Pm - 02:18 Pm'),('s15','02:18 Pm - 02:36 Pm'),('s16','02:36 Pm - 02:54 Pm'),('s17','02:54 Pm - 03:12 Pm'),('s18','03:12 Pm - 03:30 Pm'),
-	('s19','03:30 Pm - 03:48 Pm'),('s20','03:48 Pm - 04:00 Pm')]
+	appointment_from=fields.Selection([('09:00 Am - 09:18 Am',"09:00 Am - 09:18 Am"),('09:18 Am - 09:36 Am',"09:18 Am - 09:36 Am"),('09:36 Am - 09:54 Am',"09:36 Am - 09:54 Am "),
+    ('09:54 Am - 10:12 Am',"09:54 Am - 10:12 Am "),('10:12 Am - 10:30 Am',"10:12 Am - 10:30 Am"),('10:30 Am - 10:48 Am',"10:30 Am - 10:48 Am "),('10:48 Am - 11:06 Am',"10:48 Am - 11:06 Am"),('11:06 Am - 11:24 Am',"11:06 Am - 11:24 Am"),
+	('11:24 Am - 11:42 Am','11:24 Am - 11:42 Am'),('11:42 Am - 12:00 Am','11:42 Am - 12:00 Am'),('12:00 Am - 12:18 Pm','12:00 Am - 12:18 Pm'),('12:18 Pm - 12:36 Pm','12:18 Pm - 12:36 Pm'),('12:36 Pm - 12:54 Pm','12:36 Pm - 12:54 Pm'),
+	('02:00 Pm - 02:18 Pm','02:00 Pm - 02:18 Pm'),('02:18 Pm - 02:36 Pm','02:18 Pm - 02:36 Pm'),('02:36 Pm - 02:54 Pm','02:36 Pm - 02:54 Pm'),('02:54 Pm - 03:12 Pm','02:54 Pm - 03:12 Pm'),('03:12 Pm - 03:30 Pm','03:12 Pm - 03:30 Pm'),
+	('03:30 Pm - 03:48 Pm','03:30 Pm - 03:48 Pm'),('03:48 Pm - 04:00 Pm','03:48 Pm - 04:00 Pm')]
 	,string='Appointment Slot')
 
+class time_slot(models.Model):
+	_name = "time.slot"
+
+	a1=fields.Char(string="09:00 Am - 09:18 Am")
+	a2=fields.Char(string="09:18 Am - 09:36 Am")
+	a3=fields.Char(string="09:36 Am - 09:54 Am")
+	a4=fields.Char(string="09:54 Am - 10:12 Am")
+	a5=fields.Char(string="10:12 Am - 10:30 Am")
+	a6=fields.Char(string="10:30 Am - 10:48 Am")
+	a7=fields.Char(string="10:48 Am - 11:06 Am")
+	a8=fields.Char(string="11:06 Am - 11:24 Am")
+	a9=fields.Char(string="11:24 Am - 11:42 Am")
+	a10=fields.Char(string="11:42 Am - 12:00 Am")
+	a11=fields.Char(string="12:00 Am - 12:18 Pm")
+	a12=fields.Char(string="12:18 Pm - 12:36 Pm")
+	a13=fields.Char(string="12:36 Pm - 12:54 Pm")
+	a14=fields.Char(string="02:00 Pm - 02:18 Pm")
+	a15=fields.Char(string="02:18 Pm - 02:36 Pm")
+	a16=fields.Char(string="02:36 Pm - 02:54 Pm")
+	a17=fields.Char(string="02:54 Pm - 03:12 Pm")
+	a18=fields.Char(string="03:12 Pm - 03:30 Pm")
+	a19=fields.Char(string="03:30 Pm - 03:48 Pm")
+	a20=fields.Char(string="03:48 Pm - 04:00 Pm")
+
+	

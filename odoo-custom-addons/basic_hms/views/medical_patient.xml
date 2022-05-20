@@ -50,9 +50,9 @@
                                 <field name="address"/>
                                 <label for="country" string="Country" />
                                 <div class="o_address_format">
-                                    <field name="country" class="o_address_city" />
+                                    <field name="country" class="o_address_city" options='{"no_open": True}'/>
                                     <label for="state" string="State"/>
-                                    <field name="state" class="o_address_state"  style="width: 30%;"/>
+                                    <field name="state" class="o_address_state"  style="width: 30%;" options='{"no_open": True}'/>
                                 </div>
 
                                 <label for="occupation" string="Occupation" />

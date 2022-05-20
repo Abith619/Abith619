@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<template id="basic_hms.ebook_doctor_report">
+     <t t-call="web.external_layout">
+     <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t >
+            <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
+            <td style="border: 0px;width: 50%;">
+                <p><strong>Name :</strong><span t-field="o.patient"/></p>
+            </td>
+            <td style="border: 0px;width: 50%;">
+                <p><b>ID Number :</b> <span t-field="o.serial_number"/></p>
+            </td>
+            </table>
+            <table border="4" class="table table-bordered" style="border: 1px solid black;">
+            <thead>
+            <tr style="height:40px">
+            <td style="border: 1px solid black;" >
+                <p><b>Gender :</b> <span t-field="o.sex"/></p>
+                <p><b>Martial Status :</b> <span t-field="o.marital_status"/></p>
+                <p><b>Age :</b> <span t-field="o.age"/></p>
+                <p><b>Height :</b> <span t-field="o.height"/></p>
+                <p><b>Weight :</b> <span t-field="o.weight"/></p>
+                <p><b>BP :</b> <span t-field="o.bp"/></p>
+                <p><b>BMI :</b> <span t-field="o.bmi"/></p>
+                <p><b>Current Ailments:</b> <span t-field="o.ailments"/></p>
+                <!-- <p><b> Symptoms :</b> <span t-field="o.sign_symptoms"/></p> -->
+            </td>
+            <td style="border: 1px solid black;">
+                <p><b> Doctor :</b> <span t-field="o.doctor"/></p>
+                <p><b> Contact Number :</b> <span t-field="o.phone_number"/></p>
+                <p><b> Whatsapp Number :</b> <span t-field="o.contact_number"/></p>
+                <p><b> Address :</b> <span t-field="o.address"/></p>
+                <p><b> Father / Husband Name :</b> <span t-field="o.father_name"/></p>
+                <p><b> Occupation :</b> <span t-field="o.occupation"/></p>
+                <p><b> Signs / Symptoms :</b> <span t-field="o.sign_symptoms"/></p>
+            </td>
+            </tr>
+            </thead>
+            </table>
+            <table class="table table-bordered" style="border: 1px solid black;">
+							<thead>
+                                <tr>
+                                <th style="border: 1px solid black;">Habit</th>
+                                <th style="border: 1px solid black;"> Duration </th>
+                                <th style="border: 1px solid black;"> Habit Per-Day </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                 <tr t-foreach='docs.habbit' t-as='line'>
+                               <td style="border: 1px solid black;">
+                               <span t-field="line.habit"/>
+                               </td>
+                               <td style="border: 1px solid black;">
+                               <span t-field="line.duration"/>
+                               </td>
+                               <td style="border: 1px solid black;">
+                               <span t-field="line.days"/>
+                               </td>
+                                </tr>
+                            </tbody>
+                            </table>
+
+                            <table class="table table-bordered" style="border: 1px solid black;">
+							<thead>
+                                <tr>
+                                <th style="border: 1px solid black;">Diet For</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                 <tr t-foreach='docs.diet_fields' t-as='line'>
+                               <td style="border: 1px solid black;">
+                               <span t-field="line.diet1"/>
+                               </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                               
+                               <table class="table table-bordered" style="border: 1px solid black;">
+							<thead>
+                                <tr>
+                                <th style="border: 1px solid black;">Treatments</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                 <tr t-foreach='docs.treatment_initial' t-as='line'>
+                               <td style="border: 1px solid black;">
+                               <span t-field="line.treatment1"/>
+                               </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+							<thead>
+                                <tr>
+                                <th style="border: 1px solid black;">Past History</th>
+                                <th style="border: 1px solid black;">Sign History</th>
+                                <th style="border: 1px solid black;">Medicine History</th>
+                                <th style="border: 1px solid black;">Diet History</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                 <tr t-foreach='docs.pervious_medication' t-as='line'>
+                               <td style="border: 1px solid black;">
+                               <span t-field="line.diseases"/>
+                               </td>
+                               <td style="border: 1px solid black;">
+                               <span t-field="line.signs"/>
+                               </td>
+                               <td style="border: 1px solid black;">
+                               <span t-field="line.medicine"/>
+                               </td>
+                               <td style="border: 1px solid black;">
+                               <span t-field="line.diets"/>
+                               </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+							<thead>
+                                <tr>
+                                <th style="border: 1px solid black;">Surgery History</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                 <tr t-foreach='docs.history_surgery' t-as='line'>
+                               <td style="border: 1px solid black;">
+                               <span t-field="line.surgery_reason"/>
+                               </td>
+                                </tr>
+                            </tbody>
+                            </table>     
+
+                            <table class="table table-bordered" style="border: 1px solid black;">
+							<thead>
+                                <tr>
+                                <th style="border: 1px solid black;">Family History</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                 <tr t-foreach='docs.history_family' t-as='line'>
+                               <td style="border: 1px solid black;">
+                               <span t-field="line.name_f"/>
+                               </td>
+                                </tr>
+                            </tbody>
+                            </table>                            
+            </t>
+            </t>
+        </t>
+    </t>
+</template>
+</odoo>

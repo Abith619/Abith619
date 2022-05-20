@@ -97,6 +97,8 @@
         'report/patient_medications_document_report.xml',
         'report/patient_vaccinations_document_report.xml',
         'report/prescription_demo_report.xml',
+        'report/doctor_ebook.xml',
+        'report/patient_ebook.xml',
         'views/diet_for.xml',
         'views/treatment_for.xml',
     ],

@@ -95,13 +95,13 @@
 					</br> -->
 					
 					<div class="row mt32 mb32" id="informations">
-						<div class="col-xs-3">
+						<!-- <div class="col-xs-3">
 							<strong>Notes:</strong>
 							<span t-field="doc.notes"/>
-						</div>
-						<div class="text-right mb32">
+						</div> -->
+						<td class="text-right mb32">
 							<strong>Doctor Signature:</strong>
-						</div>
+						</td>
 					</div>
 				</div>
 			</t>

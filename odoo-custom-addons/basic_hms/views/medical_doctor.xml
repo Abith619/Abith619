@@ -42,7 +42,7 @@
                     </div>
                     
                             <field name='image1' widget='image' style="width: 8%"/>
-                            <field name="qr_code" widget='image' class="oe_avatar" style="width: 20%"/>
+                            <!-- <field name="qr_code" widget='image' class="oe_avatar" style="width: 20%"/> -->
                     
                     <h1>
                         <field name="serial_number" text-align='left' string='Patient'/>
@@ -68,8 +68,8 @@
                                         <label for="bp" string="BP in mmHg" />
                                         <div class="o_address_format">
                                         <field name ="bp" class="o_address_state"  style="width: 40%;"/>
-                                        <label for="bmi" string="BMI = " />
-                                        <field name ="bmi" class="o_address_city"/>
+                                        <label for="bmi_value" string="BMI : " />
+                                        <field name ="bmi_value" class="o_address_city"/>
                                         
                                     </div>
                                         <!-- <label for="ailments"/> -->
@@ -147,7 +147,7 @@
                                     <page string="Past History" >
                                         <field name="pervious_medication">
                                             <tree string="medication List" editable="bottom" >
-                                                <field name="diseases" />
+                                                <field name="diseases"/>
                                                 <field name ="signs"/>
                                                 <field name="medicine" />
                                                 <field name="diets" />

@@ -12,6 +12,24 @@
             />
 
         <report
+            id="report_print_EBook"
+            model="medical.doctor"
+            report_type="qweb-pdf"
+            string="EBook"
+            name="basic_hms.ebook_doctor_report"
+            file="basic_hms.doctor_ebook"
+            />
+
+        <report
+            id="report_print_patient"
+            model="medical.patient"
+            report_type="qweb-pdf"
+            string="Patient Registration"
+            name="basic_hms.registration_patient_report"
+            file="basic_hms.patient_registration"
+            />
+
+        <report
             id="report_print_appointment"
             model="medical.appointment"
             report_type="qweb-pdf"
@@ -21,18 +39,18 @@
             />
 
 
-        <report
+        <!-- <report
             id="report_print_patient_card"
             model="medical.patient"
             report_type="qweb-pdf"
             string="Patient Card"
             name="basic_hms.report_patient_card"
             file="basic_hms.report_patient_card"
-            />
+            /> -->
 
 
 
-        <report
+        <!-- <report
             id="report_print_patient_medications_document"
             model="medical.patient"
             report_type="qweb-pdf"
@@ -55,7 +73,7 @@
             string="Diseases Report New"
             name="basic_hms.patient_diseases_document"
             file="basic_hms.patient_diseases_document"
-            />
+            /> -->
         <report
             id="report_print_lab_result_demo"
             model="medical.lab"
