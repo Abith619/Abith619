@@ -275,7 +275,7 @@ class medical_patient(models.Model):
     weight = fields.Float(string="Weight in Kgs")
     occupation = fields.Char(string="Occupation")
     designation = fields.Char(string="Designation")
-    father_name = fields.Char(string="Father / Husband Name")
+    father_name = fields.Selection([('1','Father'),('2','Husband'),('3','Mother'),('4','Wife'),('5','Gaurdian'),('6','Relative')])
     father_occupation = fields.Char(string="Father Occupation")
     address = fields.Char(string="Address")
     state=fields.Many2one('res.country.state',string="State")
@@ -291,15 +291,27 @@ class medical_patient(models.Model):
     early_treatment = fields.Char(string="Early Treatments if any Furnish details")
     duration_treatment = fields.Char(string="Duration of Earlier Treatments taken")
     operations_details = fields.Char(string="Operation if any furnish details")
+    name_father=fields.Char(string="Name")
 
-    @api.depends('height','weight')
+    @api.onchange('height','weight')
     def _calculate_bmi(self):
+        bmi = 0
         for rec in self:
             if rec.height and rec.weight:
-                rec.bmi = rec.weight/(rec.height/100)**2
+                bmi = rec.weight/(rec.height/100)**2
             else:
-                rec.bmi = 0.0
-    bmi=fields.Integer(string="BMI",compute="_calculate_bmi",readonly=True)
+                rec.bmi_value = 0.0
+            if bmi <= 18.5:
+                status = "Underweight"
+            elif bmi >= 18.5 and bmi <= 25:
+                status = "Normal"
+            elif bmi==0.00:
+                status=" "
+            else:
+                status = "Obesity"
+            self.bmi_value = f"{bmi:.{2}f} {status}" 
+
+    bmi_value= fields.Char(string="BMI")
 
     aboutinfor = fields.Selection([('newspaper','News Paper'),('radio','Radio'),
     ('ouremployee','Our Employee'),('friend','Friend / Referral'),('ref','Ref.Doctor'),('Adwall','Ad.Wall'),
@@ -347,10 +359,10 @@ class medical_patient(models.Model):
 
     def assign_button(self):
         create_patient = self.env['medical.doctor'].create({
-            'patient':self.patient_id.name ,
+            'patient':self.patient_id.id ,
             'age':self.age, 
             'sex':self.sex,
-            'doctor':self.doctors.name,
+            'doctor':self.doctors.id,
             'phone_number':self.contact_no,
             'contact_number':self.contact_number,
             'marital_status':self.marital_status,
@@ -360,6 +372,7 @@ class medical_patient(models.Model):
             'office_address':self.office_address,
             'height':self.height,
             'weight':self.weight,
+            'bmi_value':self.bmi_value,
             'opnumber':self.name,
             'stages':'done',
             # 'ailments':self.treatment.id,
@@ -371,7 +384,7 @@ class medical_patient(models.Model):
         val.write({
 			'mobile':self.contact_no,
             # 'address':self.address,
-            'name':self.patient_id.id ,
+            'name':self.patient_id.name ,
 			})
 
 #one2many new 

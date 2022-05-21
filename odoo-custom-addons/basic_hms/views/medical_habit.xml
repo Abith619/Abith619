@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
         <data>
+            
             <record id="view_habit_form" model="ir.ui.view">
                 <field name="name">habit form</field>
                 <field name="model">habit.for</field>
@@ -9,6 +10,7 @@
                     <form string="habit">
                         <field name="name" />
                         </form>
+                        
                         </field>
                         </record>
 

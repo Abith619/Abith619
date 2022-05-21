@@ -2,29 +2,36 @@ from odoo import models, fields, api
 
 class dietFor(models.Model):
     _name='diet.for'
+    _rec_name='diet_name'
 
-    name= fields.Char(string='Diet Name')
+    diet_name=fields.Char(string="Diet Name")
 
-    hosteler=fields.Boolean(string='Hosteler')
-    out_side_food=fields.Boolean(string='OutSide Food')
-    control=fields.Boolean(string='Control')
-    veg=fields.Boolean(string='Veg')
-    non_veg=fields.Boolean(string='Non-Veg')
-    not_possible=fields.Boolean(string='Not Possible')
-    moderate=fields.Boolean(string='Moderate')
-    ok_for_all=fields.Boolean(string='Ok for All')
+    # hosteler=fields.Boolean(string='Hosteler')
+    # out_side_food=fields.Boolean(string='OutSide Food')
+    # control=fields.Boolean(string='Control')
+    # veg=fields.Boolean(string='Veg')
+    # non_veg=fields.Boolean(string='Non-Veg')
+    # not_possible=fields.Boolean(string='Not Possible')
+    # moderate=fields.Boolean(string='Moderate')
+    # ok_for_all=fields.Boolean(string='Ok for All')
 
     # def button_rooms(self):
     #     pass
     # def available_rooms(self):
     #     pass
 
+class documentFor(models.Model):
+    _name='document.for'
+    _rec_name='document_name'
 
-    # cure=fields.Boolean(string='Cure')
-    # test_dose=fields.Boolean(string='Test Dose')
-    # control=fields.Boolean(string='Control')
-    # paliation=fields.Boolean(string='Paliation')
-    # chronic=fields.Boolean(string='Chronic')
-    # ng=fields.Boolean(string='NG')
-    # maintance=fields.Boolean(string='Maintance')
-    # nt=fields.Boolean(string='NT')
+    document_name=fields.Char(string="Document Name")
+
+
+#     cure=fields.Boolean(string='Cure')
+#     test_dose=fields.Boolean(string='Test Dose')
+#     control=fields.Boolean(string='Control')
+#     paliation=fields.Boolean(string='Paliation')
+#     chronic=fields.Boolean(string='Chronic')
+#     ng=fields.Boolean(string='NG')
+#     maintance=fields.Boolean(string='Maintance')
+#     nt=fields.Boolean(string='NT')

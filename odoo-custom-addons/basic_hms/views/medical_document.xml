@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <record id="document_tree" model="ir.ui.view">
+            <field name="name">Document</field>
+            <field name="model">document.for</field>
+            <field name="arch" type="xml">
+                <tree string="Document Name">
+                    <field name='document_name'/>
+                </tree>
+            </field>
+        </record>
+        <record id="document_form" model="ir.ui.view">
+            <field name="name">Document</field>
+            <field name="model">document.for</field>
+            <field name="priority" eval="8" />
+                <field name="arch" type="xml">
+                    <form string="Diet For">
+                       
+                                 <field name="document_name" />
+                                
+                        </form>
+                        </field>
+        </record>
+        <record model="ir.actions.act_window" id="document_action">            
+            <field name="name">Document</field>         
+                <field name="res_model">document.for</field>           
+               
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>            
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">Document For
+                    </p>            
+                </field>        
+            </record>
+            <menuitem id="menu_document" name="Document" parent= "main_menu_hospital_management" action="document_action"/>
+    
+    </data>
+    
+
+</odoo>

@@ -48,8 +48,8 @@
         <record id="prescription_order_sequence" model="ir.sequence">
             <field name="name">Prescriptions</field>
             <field name="code">medical.prescription.order</field>
-            <field name="prefix">PRES</field>
-            <field name="padding">4</field>
+            <field name="prefix">PRES%(year)s/</field>
+            <field name="padding">6</field>
             <field name="company_id" eval="False"/>
         </record>
 

@@ -41,6 +41,8 @@
                         <group>
                             <group>
                                 <field name="medical_test_type_id" required="1" />
+                                <field name= "test_types" attrs="{'invisible': [('medical_test_type_id','=', False)]}"/>
+                                <field name ="test_amount" attrs="{'invisible': [('medical_test_type_id','=', False)]}"/>
                                 <field name="date" invisible="1"/>
                                 <!-- <field name="invoice_to_insurer" /> -->
                             </group>

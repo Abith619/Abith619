@@ -141,7 +141,7 @@
                             <tbody>
                                  <tr t-foreach='docs.history_family' t-as='line'>
                                <td style="border: 1px solid black;">
-                               <span t-field="line.name_f"/>
+                               <span t-field="line.family_details"/>
                                </td>
                                 </tr>
                             </tbody>

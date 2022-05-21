@@ -10,6 +10,8 @@ class medical_prescription_order(models.Model):
     name = fields.Char('Prescription ID')
     age = fields.Char('Age')
     sex = fields.Selection([('m', 'Male'),('f', 'Female')], string ="Sex", required= True)
+    height= fields.Float(string="Height")
+    weight=fields.Float(string="Weight")
 
     patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient" ,required=True)
     prescription_date = fields.Datetime('Prescription Date', default=fields.Datetime.now)
@@ -28,8 +30,7 @@ class medical_prescription_order(models.Model):
     is_invoiced = fields.Boolean(copy=False,default = False)
     insurer_id = fields.Many2one('medical.insurance', 'Insurer')
     is_shipped = fields.Boolean(default  =  False,copy=False)
-    height = fields.Float(string="Height")
-    weight = fields.Float(string="Weight")
+
 
     @api.model
     def create(self , vals):

@@ -20,10 +20,16 @@
             <field name="arch" type="xml">
 
                 <form string="Test Unit">
-                    <group colspan="4" col="4">
-                        <field name="name" required="1" />
-                        <field name="code" />
-                    </group>
+                    <sheet>
+                        <group colspan="4" col="4">
+                            <field name="name" required="1" />
+                            <field name="test" required="1"/>
+
+                            <field name="code" />
+                        </group>
+
+                    </sheet>
+  
                 </form>
             </field>
         </record>
@@ -36,7 +42,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Lab Testing Units" id="menu_lab_testing_units"
-            parent="main_menu_conf_laboratory" action="action_medical_lab_test_units" />
+        <menuitem name="Lab Testing Types" id="menu_lab_testing_units"
+            parent="main_menu_conf_laboratory" action="action_medical_lab_test_units"  sequence ='2'/>
 
 </odoo>

@@ -63,26 +63,27 @@
 					<td style="border: 1px solid black;" class="text-center"><strong>Days</strong></td>
 					<td style="border: 1px solid black;" class="text-center"><strong>Comment</strong></td>
             </tr>
+			<tr t-foreach='doc.prescription_line_ids' t-as='line'>
+				<!-- <table border="4" class="table table-sm table-bordered" style="border: 1px solid black;"> -->
+					
+							<!-- <td style="border: solid black;" ><span t-field="line.name" /></td> -->
+							<td style="border: 1px solid black;"><span t-field="line.medicine_name"/></td>
+							<td style="border: 1px solid black;"><span t-field="line.morning"/></td>
+							<td style="border: 1px solid black;"><span t-field="line.noon"/></td>
+							<td style="border: 1px solid black;"><span t-field="line.evening"/></td>
+							<td style="border: 1px solid black;"><span t-field="line.night"/></td>
+							<td style="border: 1px solid black;"><span t-field="line.before_food"/></td>
+							<td style="border: 1px solid black;"><span t-field="line.after_food"/></td>
+							<td style="border: 1px solid black;"><span t-field="line.days1"/></td>
+							<td style="border: 1px solid black;"><span t-field="line.comment"/></td>
+						</tr>
             <!-- </table> -->
 							</thead>
-							<table border="4" class="table table-bordered" style="border: 1px solid black;">
+							<!-- <table border="4" class="table table-bordered" style="border: 1px solid black;">
 							<tbody>
-								<tr t-foreach='doc.prescription_line_ids' t-as='line'>
-							<!-- <table border="4" class="table table-sm table-bordered" style="border: 1px solid black;"> -->
 								
-										<!-- <td style="border: solid black;" ><span t-field="line.name" /></td> -->
-										<td style="border: 1px solid black;"><span t-field="line.medicine_name"/></td>
-										<td style="border: 1px solid black;"><span t-field="line.morning"/></td>
-										<td style="border: 1px solid black;"><span t-field="line.noon"/></td>
-										<td style="border: 1px solid black;"><span t-field="line.evening"/></td>
-										<td style="border: 1px solid black;"><span t-field="line.night"/></td>
-										<td style="border: 1px solid black;"><span t-field="line.before_food"/></td>
-										<td style="border: 1px solid black;"><span t-field="line.after_food"/></td>
-										<td style="border: 1px solid black;"><span t-field="line.days1"/></td>
-										<td style="border: 1px solid black;"><span t-field="line.comment"/></td>
-									</tr>
 									</tbody>
-								</table>
+								</table> -->
 								</table>
 									
 					</div>
@@ -99,9 +100,9 @@
 							<strong>Notes:</strong>
 							<span t-field="doc.notes"/>
 						</div> -->
-						<td class="text-right mb32">
+						<div class="text-right mb32">
 							<strong>Doctor Signature:</strong>
-						</td>
+						</div>
 					</div>
 				</div>
 			</t>

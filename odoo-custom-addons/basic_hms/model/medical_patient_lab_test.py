@@ -16,13 +16,24 @@ class medical_patient_lab_test(models.Model):
     urgent =  fields.Boolean('Urgent',)
     owner_partner_id = fields.Many2one('res.partner')
     state = fields.Selection([('draft', 'Draft'),('tested', 'Tested'), ('cancel', 'Cancel')], readonly= True, default = 'draft')
-    medical_test_type_id = fields.Many2one('medical.scan', 'Test Type',required = True)
+    medical_test_type_id = fields.Many2one('medical.test_type', 'Test',required = True)
+    test_types = fields. Many2one('medical.lab.test.units',string='Test Types',required = True)
+    test_amount = fields.Float(string="Test Amount", related='test_types.code')
     patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string='Patient',required=True)
     doctor_id = fields.Many2one('res.partner',domain=[('is_doctor','=',True)],string='Doctor',required=True)
     insurer_id = fields.Many2one('medical.insurance','Insurer')
     invoice_to_insurer = fields.Boolean('Invoice to Insurance')
     lab_res_created = fields.Boolean(default  =  False) 
     is_invoiced = fields.Boolean(copy=False,default = False)
+
+
+
+
+    @api.onchange('medical_test_type_id')
+    def onchange_room(self):
+        for rec in self:
+            return {'domain':{'test_types':[('test', '=', rec.medical_test_type_id.id)]}}
+
 
     @api.model
     def create(self, vals):
@@ -67,11 +78,5 @@ class medical_patient_lab_test(models.Model):
                     result['domain'] = "[('id','=',%s)]" % res_ids
 
         return result
-
-class medical_scan(models.Model):
-    _name = 'medical.scan'
-
-    name = fields.Char(string="Name",required = True)
-
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:    

@@ -31,17 +31,15 @@ class medical_directions(models.Model):
     prescription_date= fields.Datetime(string='Date', default=fields.Datetime.now())
     name = fields.Char('Prescription ID')
     ailments=fields.Many2one('medical.pathology',string="Current Ailments")
+    habbit=fields.One2many('medical.habits','doz',string="Habit")
     diet_fields=fields.One2many('diet.field','diet1',string='Diet')
 
-    #          one2many
+    #one2many
     pervious_medication = fields.One2many('pervious.medication','diseases',string="Pervious Medication")
     surgery_history = fields.Char(string ="Surgery History")
     family_history = fields.Char(string ="Family History")
 
     ailments=fields.Many2one('medical.pathology',string="Current Ailments")
-
-    habbit=fields.One2many('medical.habits','doz',string="Habit")
-
 
     green_agreement=fields.One2many('green.agreement','agreement',string="Green Agreement")
     
@@ -61,9 +59,8 @@ class medical_directions(models.Model):
     image = fields.Binary()
     videos = fields.Binary(string ="Videos")
     notes = fields.Text(string="Special Notes To Self/Other Staffs")
-    bmi_value= fields.Char(string="BMI")
-    image1=fields.Binary(string="Image")
 
+    image1=fields.Binary(string="Image")
 
     @api.onchange('height','weight')
     def _calculate_bmi(self):
@@ -80,13 +77,17 @@ class medical_directions(models.Model):
             else:
                 status = "Obesity"
             self.bmi_value = f"{bmi:.{2}f} {status}" 
-    
+
+    bmi_value= fields.Char(string="BMI")
+
+
 
 
 # new fields 
     father_name=fields.Char(string="Father/Husband")
     image = fields.Binary()
-    videos = fields.Binary(string ="Videos")
+    videos = fields.Binary(string ="Green Document")
+    treat_for = fields.Selection([('rev','Reversable'),('main','Maintenance'),('tdo','Test Dose'),('cho','Chromic ')],string ="Treatment For")
     
     habits=fields.Selection([('smoking','Smoking'),('alcohol','Alcohol'),('pan','PAN')],string='Habits')
     blood = fields.Boolean(string="Blood")
@@ -118,6 +119,7 @@ class medical_directions(models.Model):
     maintance=fields.Boolean(string='Maintance')
     nt=fields.Boolean(string='NT')
 
+
     # qr_id=fields.Char('serial_number')
     serial_number = fields.Char(string="Patient ID", readonly=True,copy=False,required=True, default='Patient ID')
    
@@ -135,6 +137,7 @@ class medical_directions(models.Model):
     # @api.onchange('patient')
     # def _existing_contact(self):
     #     if 
+
 
     @api.model
     def create(self, vals):
@@ -160,11 +163,26 @@ class medical_directions(models.Model):
             'default_patient_id': self.patient.id,
             'default_age': self.age,
             'default_sex': self.sex,
+            'default_height': self.height,
+            'default_weight': self.weight,
             },
             'target': 'new'
             }
 
-#scan/test:
+    # @api.multi
+    # def button_prescription(self):
+    #     select_plan = False
+    #     return {
+    #         'name': 'Medicine prescription',
+    #         'type': 'ir.actions.act_window',
+    #         'view_mode': 'form',
+    #         'res_model': 'medical.prescription.order',
+    #         'views': [(select_plan, 'form')],
+    #         'view_id':self.env.ref('basic_hms.prescription_form').id,
+    #         'target': 'new',
+    #     }
+
+#       scan/test:
     def scan_button(self):
             return{
         'name': "Scan/Tests",
@@ -173,8 +191,8 @@ class medical_directions(models.Model):
         'view_mode': 'form',
         'res_model': 'medical.patient.lab.test',
         'context': {
-            'default_doctor_id': self.doctor.id,
-            'default_patient_id': self.patient.id,
+             'default_doctor_id': self.doctor.id,
+             'default_patient_id': self.patient.id,
             },
             'target': 'new'
             }
@@ -250,20 +268,30 @@ class medical_directions(models.Model):
         count1 = self.env['medical.patient.lab.test'].search_count([('patient_id', '=', self.patient.id)])
         self.sacns_tests= count1
 
+    
     sacns_tests = fields.Integer(compute='scan_count',string="Scans/Tests")
 
-
+# Documents Button
     def document_button(self):
         return {
     'name': "Documents",
     # 'domain':[('patient_id', '=', self.patient.id)],
     'view_mode': 'tree,form',
-    'res_model': 'ir.attachment',
+    'res_model': 'patient.document',
     'view_type': 'form',
     'type': 'ir.actions.act_window',
     }
-#      QR Code
 
+    @api.onchange('documents')
+    def count_doc(self):
+        for rec in self:
+            count = []
+            for record in rec.documents:
+                count.append(record.report_name)
+            self.document_test= len(count)
+    document_test = fields.Integer(compute='count_doc',string="Documents")
+
+#      QR Code
 
     qr_code = fields.Binary("QR Code", attachment=True, store=True)
     barcode = fields.Char("Barcode")
@@ -293,13 +321,13 @@ class medical_directions(models.Model):
 class GreenAgreement(models.Model):
     _name = "green.agreement"
     
-
     agreement=fields.Binary(string="Agreement", attachment=True, store=True)
 
 class Perviousmedication(models.Model):
     _name='pervious.medication'
 
     diseases= fields.Many2one('medical.doctor',string="Diseases")
+    diseases_for = fields.Many2one('medical.pathology',string = "Diseases")
     signs = fields.Char(string="Signs")
     medication_from = fields.Date(string="Medication From")
     medication_to = fields.Date(string="Medication to")
@@ -320,29 +348,31 @@ class Patientsurgery(models.Model):
 class patient_family(models.Model):
     _name = 'patient.family'
 
-    pati = fields.Many2one('medical.patient',string="Patient")
+    # pati = fields.Many2one('medical.patient',string="Patient")
     doct = fields.Many2one('medical.doctor',string="Doctor")
-    family_date = fields.Date(string="Family Date")
-    family_type = fields.Many2one('medical.pathology',string="Family Type")
-    family_reason = fields.Char(string="Family Disease Reason")
-    family_status = fields.Selection([('done','Done'),('cancel','Cancel')],string="Family Status")
-    family_notes = fields.Text(string="Family Notes")
-    family_name = fields.Char(string="Family Name")
-    realtionship = fields.Char(string="Realtionship")
-    familyphone = fields.Integer(string="Phone")
-    name_f = fields.Many2one('medical.pathology',string="Family Disease")
+    family_details = fields.Char(string="Family Details")
+    # family_date = fields.Date(string="Family Date")
+    # family_type = fields.Many2one('medical.pathology',string="Family Type")
+    # family_reason = fields.Char(string="Family Disease Reason")
+    # family_status = fields.Selection([('done','Done'),('cancel','Cancel')],string="Family Status")
+    # family_notes = fields.Text(string="Family Notes")
+    # family_name = fields.Char(string="Family Name")
+    # realtionship = fields.Char(string="Realtionship")
+    # familyphone = fields.Integer(string="Phone")
+    # name_f = fields.Many2one('medical.pathology',string="Family Disease")
 
 class documents(models.Model):
     _name ="patient.document"
 
     docc = fields.Many2one('medical.doctor',string="Doctor")
-    report_name = fields.Char(string="Report Name")
+    report_name = fields.Many2one('document.for',string="Report Name")
     attachment = fields.Binary(string="Image/Video Attachment")
 
 class treatment_for(models.Model):
     _name ="treatment.form"
 
     treatment1=fields.Many2one('medical.doctor',string='Treatments')
+    treatment_for = fields.Selection([('re','Reversable'),('ma','Maintanance'),('td','Test Dose'),('ch','Chromic ')],string= "Treatment")
     diagnosis1 = fields.Char(string='Initial Diagnosis')
     final_diagnosis1 =  fields.Char(string='Final Diagnosis')
 
@@ -355,6 +385,7 @@ class diet_field(models.Model):
     _name ="diet.field"
 
     diet1 = fields.Many2one('medical.doctor',string="Diet")
+    diet_for = fields.Many2one('diet.for',string="Diets")
     
     
 class medical_path(models.Model):
@@ -368,6 +399,6 @@ class medical_habits(models.Model):
 
     habit=fields.Many2one('habit.for',string="Habit")
     duration=fields.Char(string="Duration")
-    days= fields.Char(string="Habit/per-Day")
+    days= fields.Char(string="Habit/Day")
     doz=fields.Many2one('medical.doctor',string="Dose")
 

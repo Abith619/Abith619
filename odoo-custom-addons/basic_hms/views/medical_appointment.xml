@@ -18,20 +18,24 @@
                 </header>
                  
                 <sheet>
+                    
+                    
                     <field name ="patient_selection" widget="radio"  options="{'horizontal': true}"/>
-                
+                    
+                    
                     <h1>
                         <field name="name" class="oe_inline"/>
+                        
                     </h1>
                     <group attrs="{'invisible': [('patient_selection','!=', 'new')]}">
                         <group>
-                            <field name = "patient_id" /> 
+                            <field name = "patient_id" options="{'no_create':True,'no_create_edit':True,'no_open': True}"/> 
                             <field name= "gender"/>
                             <field name= "age"/>
                             <field name= "phone_number"/>
                             <field name= "contact_number"/>
                             <field name= "region"/>
-                            <field name= "treatment_for"/>
+                            <field name= "treatment_for" options="{'no_create_edit':True,'no_open': True}"/>
 
                               
                             </group>
@@ -111,11 +115,11 @@
                
                 <field name="patient_id" />
                 <field name="doctor_id" />
-                <field name="patient_status" />
+                <!-- <field name="patient_status" /> -->
                 <field name="urgency_level" invisible="1"/>
                 <field name="dates" />
-                <field name="duration" />
-                <field name="appointment_end" />
+                <!-- <field name="duration" /> -->
+                <!-- <field name="appointment_end" /> -->
                 <field name="institution_partner_id" invisible="1"/>
                 <field name="patient_selection" />
             </tree>
