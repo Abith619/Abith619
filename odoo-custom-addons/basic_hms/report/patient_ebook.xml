@@ -28,7 +28,7 @@
                 <p><b>Height : </b> <span t-field="o.height"/></p>
                 <p><b>Weight : </b> <span t-field="o.weight"/></p>
                 <!-- <p><b>BP :</b> <span t-field="o.bp"/></p> -->
-                <p><b>BMI : </b> <span t-field="o.bmi"/></p>
+                <p><b>BMI : </b> <span t-field="o.bmi_value"/></p>
                 <p><b>Doctor Allocation: </b> <span t-field="o.doctors"/></p>
                 <p><b> Appointment Time : </b> <span t-field="o.appointment_from"/></p>
                 <!-- <p><b> Symptoms :</b> <span t-field="o.sign_symptoms"/></p> -->

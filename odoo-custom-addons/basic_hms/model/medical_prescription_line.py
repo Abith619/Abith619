@@ -33,6 +33,7 @@ class medical_prescription_line(models.Model):
 
     # names = fields.Many2one('medical.prescription.order','Prescription ID')
     medicine_name = fields.Many2one('product.product',string='Medicine Name')
+    quantity = fields.Float(related='medicine_name.qty_available', string="Quantity Available")
     morning= fields.Char('Morning')
     noon= fields.Char('After Noon')
     evening= fields.Char('Evening')

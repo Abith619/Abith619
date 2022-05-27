@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="medical_diet_form_view" model="ir.ui.view">
+        <field name="name">medical.patients.form.view</field>
+        <field name="model">prescribe.diet</field>
+        <field name="arch" type="xml">
+            <form string="Diet">
+
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="dates"/>
+                        </group>
+                        <group>
+                            <field name ="patient_id"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page>
+                            <field name ="pre_diet_line">
+                                <tree string='Assign Diet' editable="bottom">
+                                    <field name="start_time" widget="float_time"/>
+                                    <field name ="meridiem"/>
+                                    <field name ="diet"/>
+                                </tree>
+
+                            </field>
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+                </form>
+                </field>
+                </record>
+
+
+
+                
+
+                <record id="action_pre_diet_patient" model="ir.actions.act_window">
+                    <field name="name">Diet Information</field>
+                    <field name="res_model">prescribe.diet</field>
+                    <field name="binding_view_types">form</field>
+                    <field name="view_mode">tree,form</field>
+                </record>
+
+            <menuitem id="menu_medical_pre_diet"  name ="Assign Diet Chart" action="action_pre_diet_patient"
+                parent="main_menu_configartion" sequence="0" />
+                </odoo>

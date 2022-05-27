@@ -48,15 +48,14 @@
                             </group>
                             <group>
                                 <field name="patient_id" required="1"
-                                    options="{&quot;always_reload&quot;: 1}" />
-                                <field name="doctor_id" />
+                                    options="{&quot;always_reload&quot;: 1}"  attrs="{'invisible':[('state','=','tested')]}"/>
+                                <field name="doctor_id" attrs="{'invisible':[('state','=','tested')]}"/>
                                 <!-- <field name="insurer_id"
                                     attrs="{'invisible': [('invoice_to_insurer','=', False)]}" /> -->
                             </group>
                         </group>
                     </sheet>
                 </form>
-
             </field>
         </record>
 

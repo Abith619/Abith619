@@ -2,9 +2,9 @@ from odoo import models, fields, api
 
 class dietFor(models.Model):
     _name='diet.for'
-    _rec_name='diet_name'
+    _rec_name='name'
 
-    diet_name=fields.Char(string="Diet Name")
+    name=fields.Char('Diet Name')
 
     # hosteler=fields.Boolean(string='Hosteler')
     # out_side_food=fields.Boolean(string='OutSide Food')
@@ -20,12 +20,8 @@ class dietFor(models.Model):
     # def available_rooms(self):
     #     pass
 
-class documentFor(models.Model):
-    _name='document.for'
-    _rec_name='document_name'
-
-    document_name=fields.Char(string="Document Name")
-
+# class treatmentFor(models.Model):
+#     _name='treatment.for'
 
 #     cure=fields.Boolean(string='Cure')
 #     test_dose=fields.Boolean(string='Test Dose')
@@ -35,3 +31,14 @@ class documentFor(models.Model):
 #     ng=fields.Boolean(string='NG')
 #     maintance=fields.Boolean(string='Maintance')
 #     nt=fields.Boolean(string='NT')
+
+
+class documentFor(models.Model):
+    _name='document.for'
+    _rec_name='document_name'
+
+    document_name=fields.Char(string="Document Name")
+
+
+
+    # gender= fields.Selection([('m', 'Male'),('f', 'Female')],string='Gender')

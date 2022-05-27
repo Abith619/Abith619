@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <record id="unit_form" model="ir.ui.view">
+            <field name="name">Test Unit</field>
+            <field name="model">lab.test.units</field>
+            <field name="priority" eval="8" />
+                <field name="arch" type="xml">
+                    <form string="Test Unit">
+                        <sheet>
+                            <field name='name'/>
+                        </sheet>
+                </form>
+                </field>
+        </record>
+        <record model="ir.actions.act_window" id="unit_action">            
+            <field name="name">Test Unit</field>         
+                <field name="res_model">lab.test.units</field>           
+                <field name="view_mode">form</field>
+                <field name="domain">[]</field>            
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">Lab Test Unit
+                    </p>            
+                </field>        
+            </record>
+            <menuitem name="Lab Test Unit" id="menu_lab_test_units"
+            parent="main_menu_conf_laboratory" action="unit_action"  sequence ='3'/>
+    </data>
+    
+
+</odoo>

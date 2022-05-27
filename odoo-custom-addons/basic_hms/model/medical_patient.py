@@ -37,7 +37,7 @@ class medical_patient(models.Model):
 
     
 
-    stages= fields.Selection([('draft',"New"),('done',"Done")])
+    stages= fields.Selection([('draft',"New"),('on',"On Process"),('done',"Done")])
     patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name", required= True)
     name = fields.Char(string ="Patient ID",readonly=True)
     blood_pressure = fields. Float(string="Blood Pressure")
@@ -264,8 +264,10 @@ class medical_patient(models.Model):
     full_term = fields.Integer('Full Term')
     ses_notes = fields.Text('Notes')
 #inherit fields
+    area=fields.Char(string="Area")
+    city=fields.Char(string="City")
 
-    fees = fields.Float(string="Fees", default=150)
+    fees = fields.Float(string="Fees")
     contact_no = fields.Char(string="Contact No", required= True)
     contact_number=fields.Char(string="Whatsapp Number")
     date1 = fields.Datetime(string="Date", default=fields.Datetime.now())
@@ -286,13 +288,15 @@ class medical_patient(models.Model):
     office_address = fields.Char(string="Office Address")
     offPhone_mobile = fields.Integer(string="Office Phone")
     offemail = fields.Char(string="Office Email")
-    treatment = fields.Many2many('medical.pathology',string="Treatment for")
-    duration_ailmenmts = fields.Char(string="Duration of Ailment")
+    treatment = fields.Many2one('medical.pathology',string="Treatment for")
+    duration_ailmenmts = fields.Selection([('1,','1 Week'),('2','2 Week'),('3','1 Month'),('4','3 Months'),('5','6 Months'),('6','1 Year'),('7','Above 1 Year')],string="Duration of Ailment")
     early_treatment = fields.Char(string="Early Treatments if any Furnish details")
     duration_treatment = fields.Char(string="Duration of Earlier Treatments taken")
     operations_details = fields.Char(string="Operation if any furnish details")
     name_father=fields.Char(string="Name")
-
+    pin_code=fields.Text(string="Pin Code")
+    payment=fields.Selection([('1','Cash'),('2','Card'),('3','Cheque'),('4','Google-Pay'),('5','Phone-Pay')],string="Payment")
+    
     @api.onchange('height','weight')
     def _calculate_bmi(self):
         bmi = 0
@@ -323,8 +327,8 @@ class medical_patient(models.Model):
 
     fix_appoinment=fields.One2many('fix.appointment','fix',string="Appoinment Slot")
     dates= fields.Datetime(string="Date")
-    appointment_from=fields.Selection([('s1',"9:30 Am - 10:30 Am"),('s2',"10:30 Am - 11:30 Am"),('s3',"11:30 Am - 12:30 Pm "),
-    ('s4',"1:30 Pm - 2:30 Pm "),('s5',"2:30Pm - 3:30 Pm"),('s6',"3:30 Pm - 4:30 Pm "),('s7',"4:30 Pm - 5:30 pm"),('s8',"5:30 Pm - 6:30 Pm")],
+    appointment_from=fields.Selection([('09:00 Am - 10:00 Am','09:00 Am - 10:00 Am'),('10:00 Am - 11:00 Am','10:00 Am - 11:00 Am'),('11:00 Am - 12:00 Pm',"11:00 Am - 12:00 Pm"),
+    ('12:00 Pm - 01:00 Pm','12:00 Pm - 01:00 Pm'),('02:00 Pm - 03:00 Pm','02:00 Pm - 03:00 Pm'),('03:00 Pm - 04:00 Pm','03:00 Pm - 04:00 Pm')],
     string='Appointment Slot')
 
 
@@ -354,8 +358,9 @@ class medical_patient(models.Model):
         return result
 
 #assign doc create e book
-
-
+    def unpaid_button(self):
+        self.stages='done'
+        
 
     def assign_button(self):
         create_patient = self.env['medical.doctor'].create({
@@ -368,6 +373,7 @@ class medical_patient(models.Model):
             'marital_status':self.marital_status,
             'address':self.address,
             'father_name':self.father_name,
+            'name_father':self.name_father,
             'occupation':self.occupation,
             'office_address':self.office_address,
             'height':self.height,
@@ -375,7 +381,7 @@ class medical_patient(models.Model):
             'bmi_value':self.bmi_value,
             'opnumber':self.name,
             'stages':'done',
-            # 'ailments':self.treatment.id,
+            'ailments':self.treatment.id,
             # 'medicine':self.early_treatment,
             # 'surgery_type':self.operations_details,
         })

@@ -42,7 +42,7 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="menu_treatment" name="Treatment" parent= "main_menu_hospital_management" action="treatment_action"/>
+            <menuitem id="menu_treatment" name="Treatment" parent= "main_menu_configartion" action="treatment_action"/>
 
     
     </data>

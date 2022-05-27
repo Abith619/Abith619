@@ -28,7 +28,7 @@ class medical_directions(models.Model):
     sign_symptoms = fields.Many2many('medical.family.disease',string="Signs/Symptoms")
     history = fields.Text(string ="History")
     sex = fields.Selection([('m', 'Male'),('f', 'Female')],  string ="Sex", required= True)
-    prescription_date= fields.Datetime(string='Date', default=fields.Datetime.now())
+    prescription_date= fields.Date(string='Date', default=fields.Datetime.now())
     name = fields.Char('Prescription ID')
     ailments=fields.Many2one('medical.pathology',string="Current Ailments")
     habbit=fields.One2many('medical.habits','doz',string="Habit")
@@ -62,6 +62,8 @@ class medical_directions(models.Model):
 
     image1=fields.Binary(string="Image")
 
+    
+
     @api.onchange('height','weight')
     def _calculate_bmi(self):
         bmi = 0
@@ -78,16 +80,16 @@ class medical_directions(models.Model):
                 status = "Obesity"
             self.bmi_value = f"{bmi:.{2}f} {status}" 
 
-    bmi_value= fields.Char(string="BMI")
+    bmi_value= fields.Char(string="BMI", readonly=True)
 
 
 
 
 # new fields 
-    father_name=fields.Char(string="Father/Husband")
+    father_name=fields.Selection([('1','Father'),('2','Husband'),('3','Mother'),('4','Wife'),('5','Gaurdian'),('6','Relative')])
     image = fields.Binary()
     videos = fields.Binary(string ="Green Document")
-    treat_for = fields.Selection([('rev','Reversable'),('main','Maintenance'),('tdo','Test Dose'),('cho','Chromic ')],string ="Treatment For")
+    treat_for = fields.Selection([('rev','Reversable'),('main','Maintanance'),('cont','Control'),('tdo','Test Dose'),('cho','Chromic ')],string ="Treatment For")
     
     habits=fields.Selection([('smoking','Smoking'),('alcohol','Alcohol'),('pan','PAN')],string='Habits')
     blood = fields.Boolean(string="Blood")
@@ -119,7 +121,6 @@ class medical_directions(models.Model):
     maintance=fields.Boolean(string='Maintance')
     nt=fields.Boolean(string='NT')
 
-
     # qr_id=fields.Char('serial_number')
     serial_number = fields.Char(string="Patient ID", readonly=True,copy=False,required=True, default='Patient ID')
    
@@ -128,6 +129,7 @@ class medical_directions(models.Model):
     stages= fields.Selection([('draft',"New"),('done',"Done")])
     diagnosis = fields.Text(string='Initial Diagnosis')
     final_diagnosis =  fields.Text(string='Final Diagnosis')
+    name_father = fields.Char()
 
     # def _get_default_stage(self):
         # self.qr_id=self.serial_number
@@ -138,6 +140,16 @@ class medical_directions(models.Model):
     # def _existing_contact(self):
     #     if 
 
+    def document_upload(self):
+        return{
+        'name': "Upload Documents",
+        'type': 'ir.actions.act_window',
+        'view_type': 'form',
+        'view_mode': 'form',
+        'res_model': 'patient.document',
+        'context': {},
+            'target': 'new'
+            }
 
     @api.model
     def create(self, vals):
@@ -151,7 +163,7 @@ class medical_directions(models.Model):
 # prescription
     def prescription_button(self):
             return{
-        'name': "Paid ",
+        'name': "Prescription",
         'type': 'ir.actions.act_window',
         'view_type': 'form',
         'view_mode': 'form',
@@ -165,24 +177,12 @@ class medical_directions(models.Model):
             'default_sex': self.sex,
             'default_height': self.height,
             'default_weight': self.weight,
+            'default_stages':'draft'
             },
             'target': 'new'
             }
 
-    # @api.multi
-    # def button_prescription(self):
-    #     select_plan = False
-    #     return {
-    #         'name': 'Medicine prescription',
-    #         'type': 'ir.actions.act_window',
-    #         'view_mode': 'form',
-    #         'res_model': 'medical.prescription.order',
-    #         'views': [(select_plan, 'form')],
-    #         'view_id':self.env.ref('basic_hms.prescription_form').id,
-    #         'target': 'new',
-    #     }
-
-#       scan/test:
+#scan/test:
     def scan_button(self):
             return{
         'name': "Scan/Tests",
@@ -191,25 +191,28 @@ class medical_directions(models.Model):
         'view_mode': 'form',
         'res_model': 'medical.patient.lab.test',
         'context': {
-             'default_doctor_id': self.doctor.id,
-             'default_patient_id': self.patient.id,
+            'default_doctor_id': self.doctor.id,
+            'default_patient_id': self.patient.id,
+            'default_state':'tested'
             },
             'target': 'new'
             }
 
 
     def diet_for(self):
-            select_plan = False
-            return {
-                'name': 'Assign Diet',
-                'type': 'ir.actions.act_window',
-                'view_mode': 'form',
-                'view_type': 'form',
-                'res_model': 'diet.for',
-                'views': [(select_plan, 'form')],
-                'view_id':self.env.ref('basic_hms.diet_form').id,
-                'target': 'new',
-            }
+        return{
+        'name': "prescribe diet",
+        'type': 'ir.actions.act_window',
+        'view_type': 'form',
+        'view_mode': 'form',
+        'res_model': 'prescribe.diet',
+        'context': {
+            'default_patient_id': self.patient.id
+            },
+            'target': 'new'
+
+        }
+       
 
     def treatment_advised(self):
             select_plan = False
@@ -226,7 +229,7 @@ class medical_directions(models.Model):
 
 
 #Smart Button
-    # @api.model
+
     def patient_prescription(self):
         return {
     'name': "Patient Prescription",
@@ -244,16 +247,25 @@ class medical_directions(models.Model):
 
     patients = fields.Integer(compute='patient_count',string="Prescriptions")
 
-# @api.onchange('dates')
-# 	def rolls(self):
-# 		date_today=datetime.datetime.now()
-# 		vals=self.env['medical.appointment'].search([('dates','=',date_today)]),([('doctor_id','=',self.doctor_id.id)])
-# 		if len(vals)>=2:
-# 			raise UserError("Appointment Slots are full")
-# 		raise UserError(len(vals[0]))
 
-#sacns and tests
-    # @api.model
+
+    def prescribe_button(self):
+            return {
+    'name': "Prescribe Diet",
+    'domain':[('patient_id', '=', self.patient.id)],
+    'view_mode': 'tree,form',
+    'res_model': 'prescribe.diet',
+    'view_type': 'form',
+    'type': 'ir.actions.act_window',
+    }
+#      Count in Smart Button
+    def diet_count(self):
+        for res in self :
+            count_d = self.env['prescribe.diet'].search_count([('patient_id', '=', res.patient.id)])
+            self.pre_diet= count_d
+
+    pre_diet = fields.Integer(compute='diet_count',string="Prescribed Diet")
+
     def scans_prescription(self):
         return {
     'name': "Scans tests",
@@ -268,10 +280,9 @@ class medical_directions(models.Model):
         count1 = self.env['medical.patient.lab.test'].search_count([('patient_id', '=', self.patient.id)])
         self.sacns_tests= count1
 
-    
     sacns_tests = fields.Integer(compute='scan_count',string="Scans/Tests")
 
-# Documents Button
+
     def document_button(self):
         return {
     'name': "Documents",
@@ -293,16 +304,16 @@ class medical_directions(models.Model):
 
 #      QR Code
 
+
     qr_code = fields.Binary("QR Code", attachment=True, store=True)
     barcode = fields.Char("Barcode")
 
-    @api.onchange('patient')
+    @api.onchange('bp')
     def generate_qr_code(self):
         for rec in self:
             p_details={
-                'name':rec.serial_number,
-                'patient_id':rec.patient.name,
-
+                'Patient Id':rec.serial_number,
+                'Patient Name':rec.patient.name,
             }
             qr = qrcode.QRCode(
                 version=1,
@@ -321,6 +332,7 @@ class medical_directions(models.Model):
 class GreenAgreement(models.Model):
     _name = "green.agreement"
     
+
     agreement=fields.Binary(string="Agreement", attachment=True, store=True)
 
 class Perviousmedication(models.Model):
@@ -361,11 +373,14 @@ class patient_family(models.Model):
     # familyphone = fields.Integer(string="Phone")
     # name_f = fields.Many2one('medical.pathology',string="Family Disease")
 
+
+    
+
 class documents(models.Model):
     _name ="patient.document"
 
     docc = fields.Many2one('medical.doctor',string="Doctor")
-    report_name = fields.Many2one('document.for',string="Report Name")
+    report_name = fields.Selection([('green',"Green Document"),('o',"Other Documents")],string="Report Name")
     attachment = fields.Binary(string="Image/Video Attachment")
 
 class treatment_for(models.Model):
@@ -386,6 +401,9 @@ class diet_field(models.Model):
 
     diet1 = fields.Many2one('medical.doctor',string="Diet")
     diet_for = fields.Many2one('diet.for',string="Diets")
+    followed_duration= fields.Integer(string="Duration Followed/Days")
+
+
     
     
 class medical_path(models.Model):

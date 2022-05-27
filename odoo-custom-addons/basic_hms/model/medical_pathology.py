@@ -14,3 +14,9 @@ class medical_pathology(models.Model):
     gene = fields.Char(string="Gene")
     protein = fields.Char(string="Protein")
     info = fields.Text(string="Extra Info")
+
+class medical_pathology_symptoms(models.Model):
+    _name='medical.pathology.symptoms'
+
+    name = fields.Char(string="Symptom Name",required=True)
+    diseases=fields.Many2one('medical.pathology',string="Diseases")

@@ -38,42 +38,15 @@
             file="basic_hms.appointment_recipts_report"
             />
 
-
-        <!-- <report
-            id="report_print_patient_card"
-            model="medical.patient"
-            report_type="qweb-pdf"
-            string="Patient Card"
-            name="basic_hms.report_patient_card"
-            file="basic_hms.report_patient_card"
-            /> -->
-
-
-
-        <!-- <report
-            id="report_print_patient_medications_document"
-            model="medical.patient"
-            report_type="qweb-pdf"
-            string="Medication History New"
-            name="basic_hms.patient_medications_document"
-            file="basic_hms.patient_medications_document"
-            />
         <report
-            id="report_print_patient_vaccinations_document"
-            model="medical.patient"
+            id="report_print_diet"
+            model="prescribe.diet"
             report_type="qweb-pdf"
-            string="Vaccinations History New"
-            name="basic_hms.patient_vaccinations"
-            file="basic_hms.patient_vaccinations"
+            string="Diet"
+            name="basic_hms.ebook_diet_report"
+            file="basic_hms.diet_report"
             />
-        <report
-            id="report_print_patient_diseases_document"
-            model="medical.patient"
-            report_type="qweb-pdf"
-            string="Diseases Report New"
-            name="basic_hms.patient_diseases_document"
-            file="basic_hms.patient_diseases_document"
-            /> -->
+        
         <report
             id="report_print_lab_result_demo"
             model="medical.lab"

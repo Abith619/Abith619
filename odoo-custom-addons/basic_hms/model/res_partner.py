@@ -6,6 +6,10 @@ from odoo import api, fields, models, _
 class res_partner(models.Model):
     _inherit = 'res.partner'
 
+
+    # gender= fields.Char()
+
+    # gender = fields.Slection(string='gender')
     relationship = fields.Char(string='Relationship')
     relative_partner_id = fields.Many2one('res.partner',string="Relative_id")
     is_patient = fields.Boolean(string='Patient')
@@ -17,9 +21,10 @@ class res_partner(models.Model):
     is_institution = fields.Boolean('Institution')
     company_insurance_ids = fields.One2many('medical.insurance','insurance_compnay_id','Insurance')
     reference = fields.Char('ID Number')
-    # sex = fields.Selection([('m', 'Male'),('f', 'Female')], string ="Sex")
-    
 
+    # age= fields.Char(string='Age')
+    # whatsapp_number = fields.Char(string='Whatsapp Number')
+    # area= fields.Char(string='Area')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

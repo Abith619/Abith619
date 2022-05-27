@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <template id="basic_hms.ebook_diet_report" name="Diet Report">
+            <t t-call="web.external_layout">
+                <t t-call="web.html_container">
+                   <t t-foreach="docs" t-as="o">
+                       <t >
+                       <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
+                       <td style="border: 0px;width: 50%;">
+                           <p><strong>Diet Name :</strong><span t-field="o.name"/></p>
+                       </td>
+                       <td style="border: 0px;width: 50%;">
+                           <p><b>Patient Name :</b> <span t-field="o.patient_id"/></p>
+                       </td>
+                       </table>
+                       <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr>
+                            <th style="border: 1px solid black;">Time</th>
+                            <th style="border: 1px solid black;"> Period (AM/PM) </th>
+                            <th style="border: 1px solid black;"> Diet Advised </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach='docs.pre_diet_line' t-as='line'>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.start_time"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.meridiem"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.diet"/>
+                           </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                       </t></t></t></t>
+        </template>
+    
+    </data>
+    
+
+</odoo>

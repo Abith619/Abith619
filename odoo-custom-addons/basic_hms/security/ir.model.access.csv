@@ -238,7 +238,18 @@ access_green_agreement,medical.group.green.agreement,model_green_agreement,group
 
 access_treatment_form,medical.group.treatment.form,model_treatment_form,group_medical_group,1,1,1,1
 access_diet_field,medical.group.diet.field,model_diet_field,group_medical_group,1,1,1,1
-access_document_for,medical.group.document.for,model_document_for,group_medical_group,1,1,1,1
+
+access_set_diets,medical.group.set.diets,model_set_diets,group_medical_group,1,1,1,1
+access_set_diet_line,medical.group.set.diet.line,model_set_diet_line,group_medical_group,1,1,1,1
+
+
+access_whatsapp_wizard,medical.group.whatsapp.wizard,model_whatsapp_wizard,group_medical_group,1,1,1,1
 
 
 
+access_prescribe_diet,medical.group.prescribe.diet,model_prescribe_diet,group_medical_group,1,1,1,1
+access_prescribe_diet_line,medical.group.prescribe.diet.line,model_prescribe_diet_line,group_medical_group,1,1,1,1
+
+access_lab_test_units,medical.group.lab.test.units,model_lab_test_units,group_medical_group,1,1,1,1
+access_set_diet_lines,medical.group.set.diet.lines,model_set_diet_lines,group_medical_group,1,1,1,1
+access_medical_pathology_symptoms,medical.group.medical.pathology.symptoms,model_medical_pathology_symptoms,group_medical_group,1,1,1,1

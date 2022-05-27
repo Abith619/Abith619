@@ -12,6 +12,10 @@ class medical_prescription_order(models.Model):
     sex = fields.Selection([('m', 'Male'),('f', 'Female')], string ="Sex", required= True)
     height= fields.Float(string="Height")
     weight=fields.Float(string="Weight")
+    stages= fields.Selection([('new',"New"),('draft','Draft'),('done',"Done")])
+    treat_for = fields.Selection([('rev','Reversable'),('main','Maintanance'),('cont','Control'),('tdo','Test Dose'),('cho','Chromic ')],string ="Treatment For")
+
+    
 
     patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient" ,required=True)
     prescription_date = fields.Datetime('Prescription Date', default=fields.Datetime.now)

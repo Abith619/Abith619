@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="medicals_diet_form_view" model="ir.ui.view">
+        <field name="name">medical.patients.form.view</field>
+        <field name="model">set.diets</field>
+        <field name="arch" type="xml">
+            <form string="Diet">
+                <sheet> 
+                    <h1>
+                        <field name="name" style="width: 30%"  placeholder="Diet name"/>
+                        <field name="dates"/>
+                    </h1>
+
+                    <notebook>
+                        <page>
+                            <field name ="diet_line">
+                                <tree string='Create Diet' editable="bottom">
+                                    <field name="start_time" widget="float_time"/>
+                                    <field name ="meridiem"/>
+                                    <field name ="diet"/>
+                                </tree>
+
+                            </field>
+                        </page>
+
+                    </notebook>
+
+
+                    
+                      
+              
+
+                </sheet>
+                </form>
+                </field>
+                </record>
+                
+
+                <record id="action_diet_patients" model="ir.actions.act_window">
+                    <field name="name">Diet Information</field>
+                    <field name="res_model">set.diets</field>
+                    <field name="binding_view_types">form</field>
+                    <field name="view_mode">tree,form</field>
+                </record>
+
+            <menuitem id="menus_medical_diet"  name ="Create Diet Chart" action="action_diet_patients"
+                parent="main_menu_configartion" sequence="0" />
+                </odoo>
+
+                
