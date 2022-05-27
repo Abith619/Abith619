@@ -16,8 +16,7 @@
                             <field name ="patient_id"/>
                         </group>
                     </group>
-                    
-                    <notebook>
+                <notebook>
                         <page>
                             <field name ="pre_diet_line">
                                 <tree string='Assign Diet' editable="bottom">

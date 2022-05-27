@@ -29,8 +29,9 @@ class medical_patient_lab_test(models.Model):
 
 
 
+
     @api.onchange('medical_test_type_id')
-    def onchange_room(self):
+    def onchange_test(self):
         for rec in self:
             return {'domain':{'test_types':[('test', '=', rec.medical_test_type_id.id)]}}
 

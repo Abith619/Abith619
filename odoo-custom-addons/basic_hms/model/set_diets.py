@@ -1,11 +1,9 @@
 from odoo import api, fields, models, _
-import datetime
 
 class SetDiets(models.Model):
     _name = 'set.diets'
 
     name = fields.Char('Name', required = True)
-    dates=fields.Date(string='Date',default=fields.Datetime.now())
     # code = fields.Char('Code')
     diet_line = fields.One2many('set.diet.line','name',string="Diet Advisied")
 

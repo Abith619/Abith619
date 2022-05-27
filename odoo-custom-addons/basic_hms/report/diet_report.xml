@@ -25,7 +25,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr t-foreach='docs.pre_diet_line' t-as='line'>
+                             <tr t-foreach='docs.pre_diet_line' t-as='line'>
                            <td style="border: 1px solid black;">
                            <span t-field="line.start_time"/>
                            </td>

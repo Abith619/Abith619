@@ -4,27 +4,36 @@
             <field name="name">medical.pathology.form.view</field>
             <field name="model">medical.pathology</field>
             <field name="arch" type="xml">
-                <form string="Pathology Info">
-                    <notebook>
-                        <page string="Main">
+                <form string="Lab Test">
+                    
+                    <header>
+                        <button name="symptoms_button" type="object" string="Create Symptoms" class="oe_highlight"/>
+                   
+                    </header>
+                   
+                    
+                <sheet>
+                    <div class="oe_button_box" name="button_box">                         
+                        <button class="oe_stat_button" name="symptom_types" type="object" icon="fa-clipboard">
+                        <field name ="diseases_symptoms" widget="statinfo"/>
+                </button>
+                </div>
                             <group colspan="4" col="4">
-                                <field name="name" />
+                                <field name="name" required="1" />
                                 <field name="code" />
-                                <newline />
+
                             </group>
-                        </page>
-                        <page string="Genetics">
-                            <group colspan="4" col="4">
-                                <field name="chromosome" />
-                                <field name="protein" />
-                                <field name="gene" />
-                            </group>
-                        </page>
-                        <page string="Extra Info">
-                            <field name="info" />
-                        </page>
-                    </notebook>
-                </form>
+               
+                        <notebook>
+                            <page string="Extra Info">
+                                <field name="info" />
+                            </page>
+
+                        </notebook>
+                      
+                    <!-- </notebook> -->
+                </sheet>
+            </form>
             </field>
         </record>
 

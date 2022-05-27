@@ -8,7 +8,7 @@
                 <sheet> 
                     <h1>
                         <field name="name" style="width: 30%"  placeholder="Diet name"/>
-                        <field name="dates"/>
+            
                     </h1>
 
                     <notebook>

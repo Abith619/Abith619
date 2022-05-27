@@ -4,8 +4,10 @@
 from email.policy import default
 from inspect import signature
 from odoo import api, fields, models, _
-from datetime import date,datetime
+from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta 
+from odoo.exceptions import  ValidationError
+
 
 class medical_patient(models.Model):
     
@@ -265,7 +267,7 @@ class medical_patient(models.Model):
     ses_notes = fields.Text('Notes')
 #inherit fields
     area=fields.Char(string="Area")
-    city=fields.Char(string="City")
+    city=fields.Many2one('res.city',string="City")
 
     fees = fields.Float(string="Fees")
     contact_no = fields.Char(string="Contact No", required= True)
@@ -289,13 +291,53 @@ class medical_patient(models.Model):
     offPhone_mobile = fields.Integer(string="Office Phone")
     offemail = fields.Char(string="Office Email")
     treatment = fields.Many2one('medical.pathology',string="Treatment for")
-    duration_ailmenmts = fields.Selection([('1,','1 Week'),('2','2 Week'),('3','1 Month'),('4','3 Months'),('5','6 Months'),('6','1 Year'),('7','Above 1 Year')],string="Duration of Ailment")
+    duration_ailmenmts = fields.Char(string="Duration of Ailment")
     early_treatment = fields.Char(string="Early Treatments if any Furnish details")
     duration_treatment = fields.Char(string="Duration of Earlier Treatments taken")
     operations_details = fields.Char(string="Operation if any furnish details")
     name_father=fields.Char(string="Name")
-    pin_code=fields.Text(string="Pin Code")
-    payment=fields.Selection([('1','Cash'),('2','Card'),('3','Cheque'),('4','Google-Pay'),('5','Phone-Pay')],string="Payment")
+    pin_code=fields.Char(string="Pin Code")
+
+
+
+    @api.onchange('dates','doctors')
+    def roll(self):
+        date_today=self.dates
+        today=datetime.now().date()
+        if date_today != False:
+            if date_today < today:
+                raise ValidationError("Date should be greater than today's date")
+        vals=self.env['medical.patient'].search_count([('dates','=',date_today),('doctors','=',self.doctors.id)])
+        if vals >= 20:
+            raise ValidationError("Appointment Slots are full")
+
+    @api.onchange('appointment_from')
+    def date_appointment(self):
+        l1 = []
+
+        all_slots = ['09:00 Am - 10:00 Am','10:00 Am - 11:00 Am','11:00 Am - 12:00 Pm',"12:00 Pm - 01:00 Pm","02:00 Pm - 03:00 Pm","03:00 Pm - 04:00 Pm"]
+        value=self.env['medical.patient'].search([('dates','=',self.dates),('doctors','=',self.doctors.id),('appointment_from','=',self.appointment_from)])
+        if len(value) >= 3:
+            empty=self.env['medical.patient'].search([('dates','=',self.dates),('doctors','=',self.doctors.id)])
+            for i in empty:
+                slots = i.appointment_from
+                l1.append(slots)
+                booked_slots = [i for i in all_slots if i not in l1]
+                raise ValidationError("Please Select from Available Slots: {}".format(booked_slots))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     @api.onchange('height','weight')
     def _calculate_bmi(self):
@@ -326,7 +368,7 @@ class medical_patient(models.Model):
     
 
     fix_appoinment=fields.One2many('fix.appointment','fix',string="Appoinment Slot")
-    dates= fields.Datetime(string="Date")
+    dates= fields.Date(string="Date")
     appointment_from=fields.Selection([('09:00 Am - 10:00 Am','09:00 Am - 10:00 Am'),('10:00 Am - 11:00 Am','10:00 Am - 11:00 Am'),('11:00 Am - 12:00 Pm',"11:00 Am - 12:00 Pm"),
     ('12:00 Pm - 01:00 Pm','12:00 Pm - 01:00 Pm'),('02:00 Pm - 03:00 Pm','02:00 Pm - 03:00 Pm'),('03:00 Pm - 04:00 Pm','03:00 Pm - 04:00 Pm')],
     string='Appointment Slot')
@@ -358,9 +400,8 @@ class medical_patient(models.Model):
         return result
 
 #assign doc create e book
-    def unpaid_button(self):
-        self.stages='done'
-        
+
+
 
     def assign_button(self):
         create_patient = self.env['medical.doctor'].create({
@@ -374,6 +415,7 @@ class medical_patient(models.Model):
             'address':self.address,
             'father_name':self.father_name,
             'name_father':self.name_father,
+
             'occupation':self.occupation,
             'office_address':self.office_address,
             'height':self.height,

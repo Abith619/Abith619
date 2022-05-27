@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="medicals_unit_view" model="ir.ui.view">
+        <field name="name">testunits.view</field>
+        <field name="model">test.units</field>
+        <field name="arch" type="xml">
+            <form string="Units">
+                <sheet> 
+                    <h1>
+                        <field name="unit" style="width: 30%"  placeholder="Unit Name"/>
+            
+                    </h1>            
+
+                </sheet>
+                </form>
+                </field>
+                </record>
+                
+
+                <record id="action_test_units" model="ir.actions.act_window">
+                    <field name="name">Unit Information</field>
+                    <field name="res_model">test.units</field>
+                    <field name="binding_view_types">form</field>
+                    <field name="view_mode">tree,form</field>
+                </record>
+
+            <menuitem id="menu_test_units"  name ="Create Units" action="action_test_units"
+                parent="main_menu_configartion" sequence="0" />
+                </odoo>

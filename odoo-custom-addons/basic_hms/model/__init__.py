@@ -71,5 +71,8 @@ from . import diet_for
 from. import medical_habit
 from. import set_diets
 from. import prescribe
+from. import unit_master
+from. import symptoms
+from. import city_master
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:s

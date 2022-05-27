@@ -7,11 +7,9 @@
             <field name="arch" type="xml">
                 <field name="function" position="after">
                     <field name="relationship" />
-                    <!-- <field name ="gender"/> -->
+                    <field name ="patient_gender"/>
                     <field name="relative_partner_id" />
-                    <!-- <field name="age" />
-                    <field name="area" /> -->
-                    <!-- <field name="whatsapp_number" /> -->
+
                 </field>
                 <notebook>
                     

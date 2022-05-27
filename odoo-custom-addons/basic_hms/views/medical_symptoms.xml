@@ -5,20 +5,34 @@
     
         <record id="symptoms_form" model="ir.ui.view">
             <field name="name">Disease Symptoms</field>
-            <field name="model">medical.pathology.symptoms</field>
+            <field name="model">medical.symptoms</field>
             <field name="priority" eval="8" />
                 <field name="arch" type="xml">
-                    <form string="Symptoms">
+                    <!-- <form string="Symptoms">
                         <sheet>
                                 <field name="name" />
                                 <field name="diseases" />
                         </sheet>
+                        </form> -->
+
+
+                        <form string="Symptoms">
+                            <sheet>
+                                <group colspan="4" col="4">
+                                    <field name="name" required="1" />
+                                    <field name="diseases" required="1"/>
+                                    <!-- <field name="code" />
+                                    <field name ="units"/> -->
+                                </group>
+        
+                            </sheet>
+          
                         </form>
                         </field>
         </record>
         <record model="ir.actions.act_window" id="symptoms_action">            
             <field name="name">Disease Symptoms</field>         
-                <field name="res_model">medical.pathology.symptoms</field>           
+                <field name="res_model">medical.symptoms</field>           
                 <field name="view_mode">tree,form</field>
                 <field name="domain">[]</field>            
                 <field name="help" type="html">                

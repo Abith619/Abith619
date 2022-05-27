@@ -25,10 +25,10 @@ class medical_directions(models.Model):
     opnumber =fields.Char(string="OP Number")
     patient = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name",required=True)
     since = fields.Integer(string='Since')
-    sign_symptoms = fields.Many2many('medical.family.disease',string="Signs/Symptoms")
+    sign_symptoms = fields.Many2many('medical.symptoms',string="Signs/Symptoms")
     history = fields.Text(string ="History")
     sex = fields.Selection([('m', 'Male'),('f', 'Female')],  string ="Sex", required= True)
-    prescription_date= fields.Date(string='Date', default=fields.Datetime.now())
+    prescription_date= fields.Datetime(string='Date', default=fields.Datetime.now())
     name = fields.Char('Prescription ID')
     ailments=fields.Many2one('medical.pathology',string="Current Ailments")
     habbit=fields.One2many('medical.habits','doz',string="Habit")
@@ -39,7 +39,7 @@ class medical_directions(models.Model):
     surgery_history = fields.Char(string ="Surgery History")
     family_history = fields.Char(string ="Family History")
 
-    ailments=fields.Many2one('medical.pathology',string="Current Ailments")
+    # ailments=fields.Many2one('medical.pathology',string="Current Ailments")
 
     green_agreement=fields.One2many('green.agreement','agreement',string="Green Agreement")
     
@@ -80,7 +80,7 @@ class medical_directions(models.Model):
                 status = "Obesity"
             self.bmi_value = f"{bmi:.{2}f} {status}" 
 
-    bmi_value= fields.Char(string="BMI", readonly=True)
+    bmi_value= fields.Char(string="BMI",readonly=True)
 
 
 
@@ -89,7 +89,7 @@ class medical_directions(models.Model):
     father_name=fields.Selection([('1','Father'),('2','Husband'),('3','Mother'),('4','Wife'),('5','Gaurdian'),('6','Relative')])
     image = fields.Binary()
     videos = fields.Binary(string ="Green Document")
-    treat_for = fields.Selection([('rev','Reversable'),('main','Maintanance'),('cont','Control'),('tdo','Test Dose'),('cho','Chromic ')],string ="Treatment For")
+    treat_for = fields.Selection([('rev','Reversable'),('main','Maintanance'),('tdo','Test Dose'),('cho','Chromic '),('con','Control')],string ="Treatment For")
     
     habits=fields.Selection([('smoking','Smoking'),('alcohol','Alcohol'),('pan','PAN')],string='Habits')
     blood = fields.Boolean(string="Blood")
@@ -140,16 +140,12 @@ class medical_directions(models.Model):
     # def _existing_contact(self):
     #     if 
 
-    def document_upload(self):
-        return{
-        'name': "Upload Documents",
-        'type': 'ir.actions.act_window',
-        'view_type': 'form',
-        'view_mode': 'form',
-        'res_model': 'patient.document',
-        'context': {},
-            'target': 'new'
-            }
+
+    @api.onchange('ailments')
+    def onchange_test(self):
+        for rec in self:
+            return {'domain':{'sign_symptoms':[('diseases', '=', rec.ailments.id)]}}
+
 
     @api.model
     def create(self, vals):
@@ -202,7 +198,7 @@ class medical_directions(models.Model):
     def diet_for(self):
         return{
         'name': "prescribe diet",
-        'type': 'ir.actions.act_window',
+        'type': 'ir.actions.act_window', 
         'view_type': 'form',
         'view_mode': 'form',
         'res_model': 'prescribe.diet',
@@ -266,6 +262,12 @@ class medical_directions(models.Model):
 
     pre_diet = fields.Integer(compute='diet_count',string="Prescribed Diet")
 
+
+
+
+
+
+
     def scans_prescription(self):
         return {
     'name': "Scans tests",
@@ -305,15 +307,17 @@ class medical_directions(models.Model):
 #      QR Code
 
 
-    qr_code = fields.Binary("QR Code", attachment=True, store=True)
+    qr_code = fields.Binary("QR Code", attachment=True, )
     barcode = fields.Char("Barcode")
 
-    @api.onchange('bp')
+    @api.onchange('patient')
     def generate_qr_code(self):
         for rec in self:
             p_details={
                 'Patient Id':rec.serial_number,
                 'Patient Name':rec.patient.name,
+
+
             }
             qr = qrcode.QRCode(
                 version=1,
@@ -328,6 +332,20 @@ class medical_directions(models.Model):
             img.save(temp, format="PNG")
             qr_image = base64.b64encode(temp.getvalue())
             self.qr_code = qr_image
+
+
+
+
+    # def document_upload(self):
+    #         return{
+    #         'name': "Upload Documents",
+    #         'type': 'ir.actions.act_window',
+    #         'view_type': 'form',
+    #         'view_mode': 'form',
+    #         'res_model': 'patient.document',
+    #         'context': {},
+    #         'target': 'new'
+    #             }
 
 class GreenAgreement(models.Model):
     _name = "green.agreement"
@@ -373,15 +391,12 @@ class patient_family(models.Model):
     # familyphone = fields.Integer(string="Phone")
     # name_f = fields.Many2one('medical.pathology',string="Family Disease")
 
-
-    
-
 class documents(models.Model):
     _name ="patient.document"
 
     docc = fields.Many2one('medical.doctor',string="Doctor")
     report_name = fields.Selection([('green',"Green Document"),('o',"Other Documents")],string="Report Name")
-    attachment = fields.Binary(string="Image/Video Attachment")
+    attachment = fields.Many2many('ir.attachment',string="Attachment")
 
 class treatment_for(models.Model):
     _name ="treatment.form"

@@ -21,9 +21,9 @@
                             <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight"/>
                             <button name="scan_button" type="object" string="Assign Scans/Tests" class="oe_highlight"/>
                             <button name="diet_for" type="object" string="Prescribed Diet" class="oe_highlight"/>
-                            <button name="document_upload" type="object" string="Upload Document" class="oe_highlight"/>
                             <!-- <button name ="stage_done" type ="object" string ="Generate E-Book" class="oe_highlight"/> -->
                             <!-- <button name="treatment_advised" type="object" string="Generate E-Book" class="oe_highlight"/> -->
+                            
                             <field name ="stages" widget="statusbar"/>
                         </header>
                         <!-- <field name="barcode" position="after"> -->
@@ -55,9 +55,21 @@
                         </button>
                     
                     </div>
-                    
-                            <field name='image1' widget='image' style="width: 8%"/>
-                            <field name="qr_code" widget='image' class="oe_avatar" style="width: 20%" />
+                 <div class="row">
+                    <div class="col-4">
+                        <div><label for="image1" string="Patient Image" /></div>
+                        <field name='image1' widget='image' style="width: 30%;"/>
+                    </div>
+                    <div class="col-6">
+                    </div>
+                    <div class="col-2">
+                        <div><label style="float:center;" for="qr_code" string="Qr Code" /></div>
+                        <field name="qr_code" widget='image' class="oe_avatar" style="float:left;" force_save='1' readonly="1"/>
+                    </div>
+                </div>
+
+             
+
                     
                     <h1>
                         <field name="serial_number" text-align='left' string='Patient'/>
@@ -77,13 +89,13 @@
                                         <label for="height" string="Height" />
                                         <div class="o_address_format">
                                             <field name="height" placeholder='in Cms' class="o_address_city" attrs="{'readonly': [('stages','=', 'done')]}"  />
-                                            <label for="weight" string="Weight "  />
+                                            <label for="weight" style="font-weight: bold !important;color: #333;" string="Weight "  />
                                             <field name="weight" placeholder='in Kgs' class="o_address_state"  style="width: 40%;" attrs="{'readonly': [('stages','=', 'done')]}"/>
                                         </div>
                                         <label for="bp" string="BP in mmHg" />
                                         <div class="o_address_format">
                                         <field name ="bp" class="o_address_state"  style="width: 40%;"/>
-                                        <label for="bmi_value" string="BMI : " />
+                                        <label for="bmi_value" style="font-weight: bold !important;color: #333;" string="BMI : " />
                                         <field name ="bmi_value" class="o_address_city"/>
                                         
                                     </div>
@@ -96,14 +108,14 @@
                                         
                                         <field name ="phone_number" attrs="{'readonly': [('stages','=', 'done')]}" />
                                         <field name ="contact_number" attrs="{'readonly': [('stages','=', 'done')]}" />
-                                        <field name='address' attrs="{'readonly': [('stages','=', 'done')]}" />
-                                        <label for="father_name" string="Relation" attrs="{'readonly': [('stages','=', 'done')]}" />
-                                        <div class="o_address_format">
-                                            <field name="father_name" class="o_address_city" attrs="{'readonly': [('stages','=', 'done')]}" />
-                                            <label for="name_father" string=" / "/>
-                                            <field name="name_father" class="o_address_state"  style="width: 40%;" attrs="{'readonly': [('stages','=', 'done')]}"/>
-                                        </div>
                                         <field name ="occupation" attrs="{'readonly': [('stages','=', 'done')]}" />
+                                        <field name='address' attrs="{'readonly': [('stages','=', 'done')]}" />
+                                        <label for="father_name" string="Relation" />
+                                        <div class="o_address_format">
+                                            <field name="father_name" class="o_address_city" />
+                                            <label for="name_father" style="font-weight: bold !important;color: #333;" string="Name"/>
+                                            <field name="name_father" class="o_address_state"  style="width: 40%;"/>     
+                                        </div>
                                         <!-- <field name ="office_address" attrs="{'readonly': [('stages','=', 'done')]}" /> -->
                                 </group>
                                 <group>
@@ -147,32 +159,19 @@
                                                     <field name ="diet_for"/>
                                                     <field name ="followed_duration"/>
                                              
-                                                <!-- <field name ="hosteler"/>
-                                                <field name="out_side_food" />
-                                                <field name="control" />
-                                                <field name ="veg"/>
-                                                <field name="non_veg" />
-                                                <field name="not_possible" />
-                                                <field name ="moderate"/>
-                                                <field name="ok_for_all" /> -->
+                                   
                                             </tree>
                                         </field>
                                     </page>
                                     <page string="Treatments" >
-                                        <!-- <field name="treatment_initial">
-                                            <tree string="Treatment List" editable="bottom" > -->
-                                                <!-- <field name="treatment1" /> -->
+                                
                                                 <group>
                                                     <group>
                                                         <field name = "treat_for" widget ="radio"/>
 
                                                     </group>
                                                 </group>
-                                               
-                                                <!-- <field name ="diagnosis1"/>
-                                                <field name="final_diagnosis1" /> -->
-                                            <!-- </tree>
-                                        </field> -->
+                            
                                     </page>
                                     <page string="Past History" >
                                         <field name="pervious_medication">
@@ -181,8 +180,7 @@
                                                 <field name ="signs"/>
                                                 <field name="medicine" />
                                                 <field name="diets" />
-                                                <!-- <field name="medication_from" />
-                                                <field name="medication_to" /> -->
+  
                                             </tree>
                                             <field name ="notes"/> 
                                         </field>
@@ -190,12 +188,9 @@
                                     <page string="Surgery History">
                                         <field name = 'history_surgery'>
                                             <tree string="Surgery List" editable="bottom" >
-                                                <!-- <field name ="doc"/>
-                                                <field name="surgery_date" /> -->
-                                                <!-- <field name="surgery_type" /> -->
+    
                                                 <field name="surgery_reason" />
-                                                <!-- <field name ="surgery_status"/>
-                                                <field name ="surgery_notes"/> -->
+     
                                             </tree>
                                         </field>
                                     </page>
@@ -212,14 +207,15 @@
                                             </tree>
                                         </field>
                                     </page>
-                                    <!-- <page string="Documents">
+
+                                    <page string="Documents">
                                         <field name = 'documents'>
                                             <tree string="Documents" editable="bottom" >
                                                 <field name="report_name" />
-                                                <field name ="attachment"/>
+                                                <field name ="attachment" widget="many2many_binary"/>
                                             </tree>
                                         </field>
-                                    </page> -->
+                                    </page>
                                     <!-- <page string="Green Agreement">
 
                                         <group>
@@ -262,58 +258,27 @@
                     </field>
                 </record>
 
-                            <!--Search View-->
+<!--Search View-->
 
-            <record id="view_ebook_land_filter" model="ir.ui.view">
-                <field name="name">EBook</field>
-                <field name="model">medical.doctor</field>
-                <field name="type">search</field>
-                <field name="arch" type="xml">
-                    <search string="EBook">
+<record id="view_ebook_land_filter" model="ir.ui.view">
+    <field name="name">EBook</field>
+    <field name="model">medical.doctor</field>
+    <field name="type">search</field>
+    <field name="arch" type="xml">
+        <search string="EBook">
 
-                        <!-- <field name="patient"/> -->
-                        <field name="opnumber"/>
-                        <field name="patient"/>
-                        <field name="phone_number"/>
-                    </search>
-                </field>
-            </record>
-
-
-            <record id="medical_doctor_pivot_view" model="ir.ui.view">
-                <field name="name">medical.doctor.view.pivot</field>
-                <field name="model">medical.doctor</field>
-                <field name="arch" type="xml">
-                    <pivot string="EBook">
-                        <field name='patient'/>
-                        <field name='prescription_date'/>
-                    </pivot>
-                </field>
-            </record>
-
-            <record model="ir.ui.view" id="view_doctor_graph">
-                <field name="name">medical.doctor.view.graph</field>
-                <field name="model">medical.doctor</field>
-                <field name="arch" type="xml">
-                    <graph string="EBook">
-                        <field name="patient" />
-                        <field name="prescription_date" />
-                    </graph>
-                </field>
-            </record>
-
-             <!-- <record model="ir.actions.act_window" id="medical_doctor_filter_view">
-                <field name="name">medical.doctor.filter.view</field>
-                <field name="model">medical.doctor</field>
-                <field name="view_type">form</field>
-                <field name="view_mode">tree,form</field>
-                <field name="context">{'':[()]}</field>
-            </record> -->
+            <!-- <field name="patient"/> -->
+            <field name="opnumber"/>
+            <field name="patient"/>
+            <field name="phone_number"/>
+        </search>
+    </field>
+</record>
 
                 <record model="ir.actions.act_window" id="action_view_doctor">            
                     <field name="name">EBook</field>         
                         <field name="res_model">medical.doctor</field>                 
-                        <field name="view_mode">tree,form,graph,pivot</field>
+                        <field name="view_mode">tree,form</field>
                         <field name="domain">[]</field>            
                         <field name="help" type="html">                
                             <p class="oe_view_nocontent_create">Create a Doctor Appointment

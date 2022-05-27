@@ -5,8 +5,9 @@ class res_partner(models.Model):
 
     name = fields.Many2one('set.diets', string="diets",required = True)
     pre_diet_line = fields.One2many('prescribe.diet.line','name',string="Diet Advisied")
-    patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name",required=True)
-    dates=fields.Date(string='Date',default=fields.Datetime.now())
+    patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name",required=True,readonly=True)
+    dates=fields.Date(string='Date',default=fields.Datetime.now(),readonly=True)
+
 
 
     @api.onchange('name')
