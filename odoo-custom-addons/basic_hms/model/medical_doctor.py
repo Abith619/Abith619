@@ -152,30 +152,9 @@ class medical_directions(models.Model):
     # def _existing_contact(self):
     #     if
     def send_msg(self):
-        # report_template_id = self.env.ref(
-        #     'basic_hms.report_print_prescription').report_action(self.patient.id)
-        # raise ValidationError((report_template_id.values()))
-        for rec in self:
-            report_template_id = self.env.ref('basic_hms.report_print_prescription').sudo()._render_qweb_pdf([self.ids])
-            user_encode_data = json.dumps(report_template_id).encode('utf-8')
-            data_record = base64.b64decode(user_encode_data )
-        ir_values = {
-            'name': "Customer Report",
-            'type': 'binary',
-            'datas': data_record,
-            'store_fname': data_record,
-            'res_model':'whatsapp.wizard',
-            'res_id': self.id,
-            'mimetype': 'application/x-pdf',
-        }
-        attachment_ids = fields.Many2many(
-            'ir.attachment',string='Attachment')
-        attachment_ids.create(ir_values)
-        data_id = self.env['ir.attachment'].create(ir_values)
-        template = self.template_id
-        template.attachment_ids = [(6, 0, [data_id.id])]
-        return self.env['ir.attachment'].create({
-                'type': 'ir.actions.act_window',
+        
+
+        return {'type': 'ir.actions.act_window',
                 'name': 'Whatsapp Message',
                 'res_model': 'whatsapp.wizard',
                 'target': 'new',
@@ -184,26 +163,98 @@ class medical_directions(models.Model):
                 'context': {'default_user_id': self.patient.id,
                 'default_mobile':self.contact_number,
                 'default_message':"Hi "+self.patient.name+",\n\nYour Appointment is fixed with "+self.doctor.name+" on "+"\nFeedback : https://www.google.co.in/webhp?hl=en&sa=X&ved=0ahUKEwji0JG87J_4AhVVv2MGHcWkCuwQPAgI"+"\n\nThank You,\nDaisy Hospital",
-                'target': 'self',
-                'res_id': self.id,
-                'datas': data_record,
-                'store_fname': data_record,
-                'attachment_ids': self.attachment_ids and [(6, 0, self.attachment_ids.ids)],
-                'mimetype': 'application/x-pdf',
+                
+                },
                 }
-                })
-        # return {'type': 'ir.actions.act_window',
+        # self.ensure_one()
+        # ir_model_data = self.env['ir.model.data']
+        # try:
+        #     template_id = ir_model_data.get_object_reference('report_print_prescription', 'prescription_demo_report_template')[1]
+        # except ValueError:
+        #     template_id = False
+        # # try:
+        # #     compose_form_id = ir_model_data.get_object_reference('mail', 'email_compose_message_wizard_form')[1]
+        # # except ValueError:
+        # #     compose_form_id = False
+        # ctx = {
+        # 'default_model': 'medical.prescription.order',
+        # 'default_res_id': self.ids[0],
+        # 'default_use_template': template_id,
+        # 'default_template_id': template_id,
+        # 'default_body': 'Inspection Report',
+        # 'default_attachment_ids': template_id,
+        # 'default_composition_mode': 'comment',
+        # }
+        # return {
+        # 'name': _('Send Email'),
+        # 'type': 'ir.actions.act_window',
+        # 'view_mode': 'form',
+        # 'res_model': 'mail.compose.message',
+        # 'views': [(template_id, 'form')],
+        # 'view_id': template_id,
+        # 'target': 'new',
+        # 'context': ctx,
+        # }
+        # report_template_id = self.env.ref(
+        #     'basic_hms.report_print_prescription').report_action(self.patient.id)
+        # raise ValidationError((report_template_id.values()))
+        # active_model = self.env.context.get('active_model')
+        # res_id = self.env.context.get('active_id')
+        # rec = self.env[active_model].browse(res_id)
+        # Attachment = self.env['ir.attachment']
+        # for rec in self:
+        # result = super(medical_directions, self).get_action(fields)
+        # active_model = self.env.context.get('active_model')
+        # res_id = self.env.context.get('active_id')
+        # rec = self.env[active_model].browse(res_id)
+        # Attachment = self.env['ir.attachment']
+        # res_name = 'Invoice_' + rec.number.replace('/', '_') if active_model == 'account.move' else rec.name.replace('/', '_')
+        # msg = result.get('message', '')
+        # result['message'] = msg
+        
+        # report_template_id = self.env.ref('basic_hms.prescription_demo_report').report_action('self.ids')
+        # report = json.loads(report_template_id) 
+        # user_encode_data = json.dumps(report).encode('utf-8')
+        
+        # data_record = base64.b64decode(user_encode_data)
+        
+        # attachment_ids = fields.Many2many(
+        #     'ir.attachment',string='Attachment')
+        # attachment_ids.create(data_record)
+        # data_id = self.env['ir.attachment'].create(data_record)
+        # template = self.template_id
+        # template.attachment_ids = [(6, 0, [data_id.id])]
+        # return {
+        #         'type': 'ir.actions.act_window',
         #         'name': 'Whatsapp Message',
         #         'res_model': 'whatsapp.wizard',
         #         'target': 'new',
         #         'view_mode': 'form',
         #         'view_type': 'form',
-        #         'context': {'default_user_id': self.patient.id,
-        #         'default_mobile':self.contact_number,
-        #         'default_message':"Hi "+self.patient.name+",\n\nYour Appointment is fixed with "+self.doctor.name+" on "+"\nFeedback : https://www.google.co.in/webhp?hl=en&sa=X&ved=0ahUKEwji0JG87J_4AhVVv2MGHcWkCuwQPAgI"+"\n\nThank You,\nDaisy Hospital",
-        #         'default_attachment_ids':[(6,0,[base64.encodestring(pdf[0])])]
-        #         },
-        #         }
+        #         'mimetype': 'application/x-pdf',
+        #         'res_id': self.id,
+        #         'datas': data_record,
+        #         'store_fname': data_record,
+        #         'attachment_ids': self.attachment_ids and [(6, 0, self.attachment_ids.ids)],
+        #         'context': {
+        #             'default_user_id': self.patient.id,
+        #             'default_mobile':self.contact_number,
+        #             'default_message':"Hi "+self.patient.name+",\n\nYour Appointment is fixed with "+self.doctor.name+" on "+"\nFeedback : https://www.google.co.in/webhp?hl=en&sa=X&ved=0ahUKEwji0JG87J_4AhVVv2MGHcWkCuwQPAgI"+"\n\nThank You,\nDaisy Hospital",
+        #             'target': 'self',
+        #             }
+        #             }
+
+    # @api.multi    
+    # def print_report1(self):
+    #     context = self._context        
+    #     obj = self.env['stock.pack.operation'].search([('id', '=', context.get('patient'))])                
+    #     self.product_name = obj.patient.name       
+    #     self.product_barcode = obj.patient.barcode           
+    #     if obj.patient.barcode:
+    #         return self.env['report'].get_action(self, 'print_barcode.report_barcode')         
+        # else:
+        #     raise Warning((_("Please set barcode for the product %s") % obj.patient.name))
+        
 
     # def action_get_attachment(self):
     #     pdf = self.env.ref('basic_hms.prescription_order_sequence')._render_qweb_pdf(self.ids)

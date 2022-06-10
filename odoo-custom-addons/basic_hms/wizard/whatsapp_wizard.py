@@ -25,7 +25,10 @@ class WhatsappSendMessage(models.TransientModel):
             for msg in message:
                 message_string = message_string + msg + '%20'
             message_string = message_string[:(len(message_string) - 3)]
-            
+        self.ensure_one()
+        ir_model_data = self.env['ir.model.data']
+        template_id = ir_model_data.get_object_reference('report_print_prescription', 'prescription_demo_report_template')[1]
+
         report_template_id = self.env.ref(
             'basic_hms.prescription_whatsapp_report').render_qweb_pdf(self.patient_id.id)
         data_record = base64.b64encode(report_template_id[0])
@@ -42,10 +45,28 @@ class WhatsappSendMessage(models.TransientModel):
         data_id = self.env['ir.attachment'].create(ir_values)
         template = self.template_id
         template.attachment_ids = [(6, 0, [data_id.id])]
+        ir_model_data = self.env['ir.model.data']
+        template_id = ir_model_data.get_object_reference('report_print_prescription', 'prescription_demo_report_template')[1]
+        ctx = {
+        'default_model': 'medical.prescription.order',
+        'default_res_id': self.ids[0],
+        'default_use_template': template_id,
+        'default_template_id': template_id,
+        'default_body': 'Inspection Report',
+        'default_attachment_ids': template_id,
+        'default_composition_mode': 'comment',
+        }
         return self.env['ir.attachment'].create({
                 'type': 'ir.actions.act_url',
                 'url': "https://api.whatsapp.com/send?phone="+self.mobile+"&text=" + message_string,
                 'target': 'self',
+                'default_model': 'medical.prescription.order',
+                'default_res_id': self.ids[0],
+                'default_use_template': template_id,
+                'default_template_id': template_id,
+                'default_body': 'Inspection Report',
+                'default_attachment_ids': template_id,
+                'default_composition_mode': 'comment',
                 'res_id': self.id,
                 'datas': data_record,
                 'store_fname': data_record,
@@ -54,6 +75,7 @@ class WhatsappSendMessage(models.TransientModel):
                 'res_model': self.whatsapp.wizard,
                 # 'res_id': self.id,
                 'mimetype': 'application/x-pdf',
+                'context': ctx,
                 })
 
     # @api.model
