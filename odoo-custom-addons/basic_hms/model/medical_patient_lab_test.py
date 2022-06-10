@@ -1,21 +1,17 @@
-# -*- coding: utf-8 -*-
-# Part of BrowseInfo. See LICENSE file for full copyright and licensing details.
-
 from odoo import api, fields, models, _
 from datetime import date,datetime
 from odoo.exceptions import Warning
-# classes under  menu of laboratry 
 
 class medical_patient_lab_test(models.Model):
     _name = 'medical.patient.lab.test'
-    _rec_name = 'medical_test_type_id'
+    _rec_name = 'request'
 
     request = fields.Char('Request', readonly = True)
     date =  fields.Datetime('Date', default = fields.Datetime.now)
     lab_test_owner_partner_id = fields.Many2one('res.partner', 'Owner Name')
     urgent =  fields.Boolean('Urgent',)
     owner_partner_id = fields.Many2one('res.partner')
-    state = fields.Selection([('draft', 'Draft'),('tested', 'Tested'), ('cancel', 'Cancel')], readonly= True, default = 'draft')
+    state = fields.Selection([('draft', 'New'),('tested', 'On Tested'), ('cancel', 'Cancel')], readonly= True, default = 'draft')
     medical_test_type_id = fields.Many2one('medical.test_type', 'Test',required = True)
     test_types = fields. Many2one('medical.lab.test.units',string='Test Types',required = True)
     test_amount = fields.Float(string="Test Amount", related='test_types.code')
@@ -25,8 +21,35 @@ class medical_patient_lab_test(models.Model):
     invoice_to_insurer = fields.Boolean('Invoice to Insurance')
     lab_res_created = fields.Boolean(default  =  False) 
     is_invoiced = fields.Boolean(copy=False,default = False)
+    units= fields.Many2one('test.units', string="Units",related='test_types.units')
+    normal_range = fields.Float(related='test_types.normal_range')
+    reports= fields.One2many('scan.test.document','scan_t',string="Documents")
 
 
+    @api.onchange('units','normal_range')
+    def _range(self):
+        lines=[(5,0,0)]
+        val={
+            'test_unit':self.units,
+            'normal_range':self.normal_range
+        }
+        lines.append((0,0,val))
+        self.reports = lines
+
+    # @api.onchange('test_types')
+    # def _range_change(self):
+    #     for rec in self:
+    #         lines = [(5, 0, 0)]
+    #         for line in self.test_types.test_line:
+
+    #             val={
+    #                 'normal_range': line.product.id,
+    #                 'quantity':line.quantity,
+    #                 'uom':line.uom,
+    #             }
+    #             lines.append((0,0,val))
+    #         rec.requisitionline=lines
+        
 
 
 
@@ -34,13 +57,47 @@ class medical_patient_lab_test(models.Model):
     def onchange_test(self):
         for rec in self:
             return {'domain':{'test_types':[('test', '=', rec.medical_test_type_id.id)]}}
-
-
+            
     @api.model
     def create(self, vals):
         vals['request'] = self.env['ir.sequence'].next_by_code('test_seq')
         result = super(medical_patient_lab_test, self).create(vals)
+        orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
+        lines=[]
+        value={
+            'name':'Lab Payment',
+            'date':datetime.now(),
+            'bill_amount':result.test_amount,
+        }
+        lines.append((0,0,value))
+        orm.write({'bills_lines':lines})
+
+
+        labscan = self.env['medical.doctor'].search([('patient','=',result.patient_id.id)])
+        lab_lines=[]
+        values={
+            'lab_scan_alot':result.id,
+            'date':datetime.now()
+            }
+        lab_lines.append((0,0,values))
+        labscan.write({'history_surgery':lab_lines})
+
         return result 
+
+        # lines=[]
+        # bill={
+        #     'name':'Lab Payment',
+        #     'date':datetime.now(),
+        #     'bill_amount':self.test_amount,
+        # }
+        # lines.append((0,0,bill))
+        # bills = self.env['patient.bills'].search([('patient_name','=',self.patient_id.id)])
+        # bills.update({
+        #     'bills_lines':lines
+        #     })
+
+
+
 
     def cancel_lab_test(self):
         self.write({'state': 'cancel'})
@@ -80,4 +137,19 @@ class medical_patient_lab_test(models.Model):
 
         return result
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:    
+
+
+
+class Testdocuments(models.Model):
+    _name ="scan.test.document"
+
+    scan_t = fields.Many2one('medical.patient.lab.test',string="Doctor")
+    report_name = fields.Char(string="Report Name")
+    normal_range = fields. Float( string="Normal Range")
+    tested_range = fields.Float(string="Tested Range")
+    test_unit = fields.Many2one('test.units',string="Unit")
+    attachments = fields.Many2many('ir.attachment',string="Attachment")
+
+
+
+

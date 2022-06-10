@@ -33,7 +33,7 @@
             sequence="11" />
 
          <menuitem id="menu_inpatient_administration" name="Inpatient Administration"
-            parent="main_menu_hospital_management" sequence='12' />
+            parent="main_menu_configartion" sequence='12' />
 
         <menuitem id="menu_patients" name='Registration'
             parent="main_menu_hospital_management" sequence="0" />
@@ -63,7 +63,4 @@
                 name="Insurances" 
                 parent="main_menu_configartion"
                 sequence='9'/> -->
-
-
-
 </openerp>

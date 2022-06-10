@@ -16,23 +16,22 @@
             </field>
         </record>
 
-
+  
         <record id="medical_patient_lab_test_form_view" model="ir.ui.view">
             <field name="name">medical.patient.lab.test.form.view</field>
             <field name="model">medical.patient.lab.test</field>
             <field name="arch" type="xml">
                 <form string="Test Requests">
                     <header>
-                        <button name="%(action_create_lab_result2)d"
+                        <!-- <button name="%(action_create_lab_result2)d"
                             string="Create Lab Test" type="action"
-                            class="oe_highlight" attrs="{'invisible':[('state','=','cancel')]}"/>
+                            class="oe_highlight" attrs="{'invisible':[('state','=','cancel')]}"/> -->
                         <!-- <button name="%(action_create_lab_invoice2)d"
                             string="Create Lab Invoice" type="action"
                             class="oe_highlight" attrs="{'invisible':[('state','=','cancel')]}"/>     -->
-                        <button name="cancel_lab_test"
+                        <!-- <button name="cancel_lab_test"
                             string="Cancel lab request" type="object"
-                            class="oe_highlight" attrs="{'invisible':[('state','=','cancel')]}" />
-
+                            class="oe_highlight" attrs="{'invisible':[('state','=','cancel')]}" /> -->
                         <field name="state" widget="statusbar"
                             statusbar_visible="draft,tested,cancel"
                             readonly="1" />
@@ -42,6 +41,8 @@
                             <group>
                                 <field name="medical_test_type_id" required="1" />
                                 <field name= "test_types" attrs="{'invisible': [('medical_test_type_id','=', False)]}"/>
+                                <field name ="units"  invisible='1'/>
+                                <field name ="normal_range"  invisible='1'/>
                                 <field name ="test_amount" attrs="{'invisible': [('medical_test_type_id','=', False)]}"/>
                                 <field name="date" invisible="1"/>
                                 <!-- <field name="invoice_to_insurer" /> -->
@@ -54,6 +55,19 @@
                                     attrs="{'invisible': [('invoice_to_insurer','=', False)]}" /> -->
                             </group>
                         </group>
+                        <notebook attrs="{'invisible':[('state','=','tested')]}">
+                            <page string="Reports">
+                                        <field name = 'reports'>
+                                            <tree string="Reports" editable="bottom" >
+                                                <!-- <field name="report_name" /> -->
+                                               <field name = "normal_range"/>
+                                               <field name="tested_range"/>
+                                               <field name="test_unit"/>
+                                                <field name ="attachments" widget="many2many_binary"/>
+                                            </tree>
+                                        </field>
+                                </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
@@ -75,7 +89,7 @@
             <field name="res_model">medical.patient.lab.test</field>
             <field name="binding_view_types">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('state','=','draft')]</field>
+            <field name="domain">[('state','=','tested')]</field>
         </record>
 
         <record id="action_medical_patient_lab_test_todays_draft" model="ir.actions.act_window">
@@ -84,7 +98,7 @@
             <field name="res_model">medical.patient.lab.test</field>
             <field name="binding_view_types">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('state','=','draft'),('date','>=',time.strftime('%Y-%m-%d'))]</field>
+            <!-- <field name="domain">[('state','=','draft'),('date','>=',time.strftime('%Y-%m-%d'))]</field> -->
         </record>
 
         <menuitem name="Laboratory" id="main_menu_laboratory"
@@ -94,12 +108,9 @@
             parent="basic_hms.main_menu_laboratory"
             sequence="1" action="action_medical_patient_lab_test_draft"/>
 
-        <menuitem name="Draft Lab Requests" id="sub_menu_draft_req"
+        <menuitem name="OnTest Lab Requests" id="sub_menu_draft_req"
             parent="menu_lab_requests" action="action_medical_patient_lab_test_draft" />
 
-        <menuitem name="Today's Draft Lab Requests" id="sub_menu_today_draft_req"
-            parent="menu_lab_requests" action="action_medical_patient_lab_test_todays_draft" />
-
-
-
+        <!-- <menuitem name="Today's Draft Lab Requests" id="sub_menu_today_draft_req"
+            parent="menu_lab_requests" action="action_medical_patient_lab_test_todays_draft" /> -->
 </odoo>

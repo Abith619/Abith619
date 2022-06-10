@@ -4,40 +4,114 @@
         <field name="name">medical.patients.form.view</field>
         <field name="model">prescribe.diet</field>
         <field name="arch" type="xml">
-            <form string="Diet">
-
-                <sheet>
-                    <group>
-                        <group>
-                            <field name="name"/>
-                            <field name="dates"/>
-                        </group>
-                        <group>
-                            <field name ="patient_id"/>
-                        </group>
-                    </group>
-                <notebook>
-                        <page>
-                            <field name ="pre_diet_line">
-                                <tree string='Assign Diet' editable="bottom">
-                                    <field name="start_time" widget="float_time"/>
-                                    <field name ="meridiem"/>
-                                    <field name ="diet"/>
+                <form string="Diet">
+                <sheet> 
+                    <h1>
+                        <field name="name" style="width: 30%"  placeholder="Diet name"/>
+                    </h1>
+                    <notebook>
+                        <page string="06:00 AM">
+                            <field name ="diet_line">
+                                <tree string='06:00 AM' editable="bottom">
+                                    <field name ="wakeup1"/>
+                                    <field name ="note"/>
                                 </tree>
-
+                            </field>
+                            </page>
+                        <page string="06:30 AM">
+                            <field name ="diet_line1">
+                                <tree string='06:30 AM' editable="bottom">
+                                    <field name ="juice1"/>
+                                    <field name ="quantity"/>
+                                    <field name ="exercise1"/>
+                                    <field name ="note"/>
+                                </tree>
                             </field>
                         </page>
-
+                        <page string="07:30 AM">
+                            <field name ="diet_line2">
+                                <tree string='07:30 AM' editable="bottom">
+                                    <field name ="fruits1"/>
+                                    <!-- <field name ="fruits" widget='many2many_tags'/> -->
+                                    <field name ="grams"/>
+                                    <field name ="note"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="08:30 AM">
+                            <field name ="diet_line3">
+                                <tree string='08:30 AM' editable="bottom">
+                                    <field name ="medicine"/>
+                                    <field name ="milk"/>
+                                    <field name ="note"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="09:30 AM">
+                            <field name ="diet_line4">
+                                <tree string='09:00 AM' editable="bottom">
+                                    <field name ="breakfast"/>
+                                    <field name ="breakfast_list"/>
+                                    <field name ="quantity"/>
+                                    <field name ="note"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="11:00 AM">
+                            <field name ="diet_line5">
+                                <tree string='11:00 AM' editable="bottom">
+                                    <field name ="drinks"/>
+                                    <field name ="drinks_list"/>
+                                    <field name ="litres"/>
+                                    <field name ="note"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="01:00 PM">
+                            <field name ="diet_line6">
+                                <tree string='01:00 PM' editable="bottom">
+                                    <field name ="fruit_diet" widget='many2many_tags'/>
+                                    <field name ="veg_diet" widget='many2many_tags'/>
+                                    <field name ="protein_diet" widget='many2many_tags'/>
+                                    <field name ="rice" widget='many2many_tags'/>
+                                    <field name ="grams"/>
+                                    <field name ="note"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="04:00 PM">
+                            <field name ="diet_line7">
+                                <tree string='04:00 PM' editable="bottom">
+                                    <field name ="snacks1"/>
+                                    <!-- <field name ="drinks_list"/> -->
+                                    <field name ="note"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="05:30 PM">
+                            <field name ="diet_line9">
+                                <tree string='05:30 PM' editable="bottom">
+                                    <field name ="exercise"/>
+                                    <!-- <field name ="drinks_list"/> -->
+                                    <field name ="note"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="07:30 PM">
+                            <field name ="diet_line8">
+                                <tree string='07:30 PM' editable="bottom">
+                                    <field name ="snacks12"/>
+                                    <field name ="snackss"/>
+                                    <field name ="snacks2"/>
+                                    <field name ="note"/>
+                                </tree>
+                            </field>
+                        </page>
                     </notebook>
-
                 </sheet>
                 </form>
                 </field>
                 </record>
-
-
-
-                
 
                 <record id="action_pre_diet_patient" model="ir.actions.act_window">
                     <field name="name">Diet Information</field>

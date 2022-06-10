@@ -13,8 +13,8 @@
                     <field name="noon" />
                     <field name="evening" />
                     <field name="night" />
-                    <field name="before_food" />
-                    <field name="after_food" />
+                    <field name="before_after" />
+                    <!-- <field name="after_food" /> -->
                     <field name="comment" />
                     <field name="days1" />
                 </tree>
@@ -34,8 +34,8 @@
                         <field name="noon" />
                         <field name="evening" />
                         <field name="night" />
-                        <field name="before_food" />
-                        <field name="after_food" />
+                        <field name="before_after" />
+                        <!-- <field name="after_food" /> -->
                         <field name="comment" />
                         <field name="days1" />
                     </group>

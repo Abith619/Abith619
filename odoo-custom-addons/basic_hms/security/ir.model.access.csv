@@ -1,26 +1,23 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_chemist_line,chemist.prescription.line,model_medical_prescription_line,group_chemist,1,1,1,1
-access_medical_group_insurance,medical.group.medical_insurance,model_res_partner,group_medical_group,1,1,1,1
-access_medical_group_insurance_chem,medical.group.medical_insurance.chem,model_res_partner,group_chemist,1,1,1,1
-access_medical_group_insurance_chem_r,medical.group.medical_insurance.r.chem,model_res_partner,group_chemist,1,1,1,1
-access_medical_group_insurance_chem_rm,medical.group.medical_insurance.rm.chem,model_res_partner,group_medical_group,1,1,1,1
-access_diseases_category,medical.group.diseases.category,model_medical_pathology_category,group_medical_group,1,1,1,1
-access_diseases,medical.group.diseases,model_medical_pathology,group_medical_group,1,1,1,1
+access_chemist_line,chemist.prescription.line,model_medical_prescription_line,base.group_user,1,1,1,1
+access_medical_group_insurance,medical.group.medical_insurance,model_res_partner,base.group_user,1,1,1,1
+access_medical_group_insurance_chem,medical.group.medical_insurance.chem,model_res_partner,base.group_user,1,1,1,1
+access_medical_group_insurance_chem_r,medical.group.medical_insurance.r.chem,model_res_partner,base.group_user,1,1,1,1
+access_medical_group_insurance_chem_rm,medical.group.medical_insurance.rm.chem,model_res_partner,base.group_user,1,1,1,1
+access_diseases_category,medical.group.diseases.category,model_medical_pathology_category,base.group_user,1,1,1,1
+access_diseases,medical.group.diseases,model_medical_pathology,base.group_user,1,1,1,1
+
+access_diseases_category_doc,medical.group.diseases.category.doc,model_medical_pathology_category,base.group_user,1,1,1,1
+access_diseases_doc,medical.group.diseases.doc,model_medical_pathology,base.group_user,1,1,1,1
 
 
+access_medical_group_insurance_chem_r,medical.group.medical_insurance.r.chem,model_medical_insurance,base.group_user,1,1,1,1
 
 
-access_diseases_category_doc,medical.group.diseases.category.doc,model_medical_pathology_category,bi_group_doctor,1,1,1,1
-access_diseases_doc,medical.group.diseases.doc,model_medical_pathology,bi_group_doctor,1,1,1,1
+access_vaccination,medical.group.vaccination,model_medical_vaccination,base.group_user,1,1,1,1
 
-
-access_medical_group_insurance_chem_r,medical.group.medical_insurance.r.chem,model_medical_insurance,group_chemist,1,1,1,1
-
-
-access_vaccination,medical.group.vaccination,model_medical_vaccination,group_medical_group,1,1,1,1
-
-access_vaccination_doctor,medical.group.vaccination.doctor,model_medical_vaccination,bi_group_doctor,1,1,1,1
-access_vaccination_chemist,medical.group.vaccination.chemist,model_medical_vaccination,group_chemist,1,1,1,1
+access_vaccination_doctor,medical.group.vaccination.doctor,model_medical_vaccination,base.group_user,1,1,1,1
+access_vaccination_chemist,medical.group.vaccination.chemist,model_medical_vaccination,base.group_user,1,1,1,1
 
 
 access_medical_diet_belief,access_medical_diet_belief,model_medical_diet_belief,,1,1,1,1
@@ -28,90 +25,90 @@ access_medical_diet_belief,access_medical_diet_belief,model_medical_diet_belief,
 
 
 
-access_medical_patient_doctor,medical.group.patient.doctor,model_medical_patient,bi_group_doctor,1,1,1,1
-access_medical_patient_chemist,medical.group.patient.chemist,model_medical_patient,group_chemist,1,1,1,1
-access_medical_patient_medical_group,medical.group.patient.medical.group,model_medical_patient,group_medical_group,1,1,1,1
+access_medical_patient_doctor,medical.group.patient.doctor,model_medical_patient,base.group_user,1,1,1,1
+access_medical_patient_chemist,medical.group.patient.chemist,model_medical_patient,base.group_user,1,1,1,1
+access_medical_patient_medical_group,medical.group.patient.medical.group,model_medical_patient,base.group_user,1,1,1,1
 
 
 
-access_doctor_medical_patient_disease_chemist,medical.doctor.group.medical.patient.disease.chemist,model_medical_patient_disease,group_chemist,1,1,1,1
+access_doctor_medical_patient_disease_chemist,medical.doctor.group.medical.patient.disease.chemist,model_medical_patient_disease,base.group_user,1,1,1,1
 
 
 
 
-access_medical_lab_test_critearea_chem,medical.group.medical.lab.test.critearea.chem,model_medical_test_critearea,group_chemist,1,1,1,1
+access_medical_lab_test_critearea_chem,medical.group.medical.lab.test.critearea.chem,model_medical_test_critearea,base.group_user,1,1,1,1
 
 
 
 
 
-access_medical_physician,medical.group.physician,model_medical_physician,group_medical_group,1,1,1,
-access_medical_physician_doctor,medical.group.physician.doctor,model_medical_physician,bi_group_doctor,1,1,1,
-access_dose_unit,medical.group.dose.unit,model_medical_dose_unit,group_medical_group,1,1,1,1
-access_medical_patient_medication,medical.group.patient.medication,model_medical_patient_medication,group_medical_group,1,1,1,1
-access_medical_patient_medication,medical.group.patient,model_medical_patient,group_medical_group,1,1,1,1
-access_patient_diseases,medical.group.patient.diseases,model_medical_patient_disease,group_medical_group,1,1,1,1
-access_medical_medication_dosage,medical.group.medication.dosage,model_medical_medication_dosage,group_medical_group,1,1,1,1
-access_medical_physician,medical.group.medical.physician,model_medical_physician,group_medical_group,1,1,1,1
-access_medical_lab,medical.group.medical.lab,model_medical_lab,group_medical_group,1,1,1,1
+access_medical_physician,medical.group.physician,model_medical_physician,base.group_user,1,1,1,1
+access_medical_physician_doctor,medical.group.physician.doctor,model_medical_physician,base.group_user,1,1,1,1
+access_dose_unit,medical.group.dose.unit,model_medical_dose_unit,base.group_user,1,1,1,1
+access_medical_patient_medication,medical.group.patient.medication,model_medical_patient_medication,base.group_user,1,1,1,1
+access_medical_patient_medication,medical.group.patient,model_medical_patient,base.group_user,1,1,1,1
+access_patient_diseases,medical.group.patient.diseases,model_medical_patient_disease,base.group_user,1,1,1,1
+access_medical_medication_dosage,medical.group.medication.dosage,model_medical_medication_dosage,base.group_user,1,1,1,1
+access_medical_physician,medical.group.medical.physician,model_medical_physician,base.group_user,1,1,1,1
+access_medical_lab,medical.group.medical.lab,model_medical_lab,base.group_user,1,1,1,1
 
 
-access_medical_inpatient_registration_r,medical.group.medical.inpatient.registration.r,model_medical_inpatient_registration,group_receptionist,1,1,1,1
+access_medical_inpatient_registration_r,medical.group.medical.inpatient.registration.r,model_medical_inpatient_registration,base.group_user,1,1,1,1
 
-access_medical_lab_chemist,medical.group.medical.lab.chemist,model_medical_lab,group_chemist,1,1,1,1
+access_medical_lab_chemist,medical.group.medical.lab.chemist,model_medical_lab,base.group_user,1,1,1,1
 
 
-access_medical_physician_ch,medical.group.medical.physician.ch,model_medical_physician,group_chemist,1,1,1,1
+access_medical_physician_ch,medical.group.medical.physician.ch,model_medical_physician,base.group_user,1,1,1,1
 
 
 
 
-access_medical_lab_test_units,medical.group.medical.lab.test.units,model_medical_lab_test_units,group_medical_group,1,1,1,1
+access_medical_lab_test_units,medical.group.medical.lab.test.units,model_medical_lab_test_units,base.group_user,1,1,1,1
 
-medical_lab_test_units_chemist,medical.group.medical.lab.test.units.chemist,model_medical_lab_test_units,group_chemist,1,1,1,1
+medical_lab_test_units_chemist,medical.group.medical.lab.test.units.chemist,model_medical_lab_test_units,base.group_user,1,1,1,1
 
-access_medical_lab_test_critearea,medical.group.medical.lab.test.critearea,model_medical_test_critearea,group_medical_group,1,1,1,1
+access_medical_lab_test_critearea,medical.group.medical.lab.test.critearea,model_medical_test_critearea,base.group_user,1,1,1,1
 
-access_medical_test_type,medical.group.medical.test.type,model_medical_test_type,group_medical_group,1,1,1,1
+access_medical_test_type,medical.group.medical.test.type,model_medical_test_type,base.group_user,1,1,1,1
 
-access_medical_test_type_chemist,medical.group.medical.test.type.chem,model_medical_test_type,group_chemist,1,1,1,1
+access_medical_test_type_chemist,medical.group.medical.test.type.chem,model_medical_test_type,base.group_user,1,1,1,1
 
 
 
 
-access_receptionist_medical_physician,medical.group.physician,model_medical_physician,group_receptionist,1,1,1,1
-access_receptionist_line,receptionist.prescription.line,model_medical_prescription_line,group_receptionist,1,1,1,1
+access_receptionist_medical_physician,medical.group.physician,model_medical_physician,base.group_user,1,1,1,1
+access_receptionist_line,receptionist.prescription.line,model_medical_prescription_line,base.group_user,1,1,1,1
 
-access_receptionist_medical_patient_medication,receptionist.group.patient,model_medical_patient,group_receptionist,1,1,1,1
+access_receptionist_medical_patient_medication,receptionist.group.patient,model_medical_patient,base.group_user,1,1,1,1
 
-access_receptionist_physician,receptionist.group.physician,model_medical_physician,group_receptionist,1,1,1,1
-access_doctor_medical_inpatient_registration,medical.doctor.group.medical.inpatient.registration,model_medical_inpatient_registration,bi_group_doctor,1,1,1,1
+access_receptionist_physician,receptionist.group.physician,model_medical_physician,base.group_user,1,1,1,1
+access_doctor_medical_inpatient_registration,medical.doctor.group.medical.inpatient.registration,model_medical_inpatient_registration,base.group_user,1,1,1,1
 
-access_doctor_medical_patient_disease,medical.doctor.group.medical.patient.disease,model_medical_patient_disease,bi_group_doctor,1,1,1,1
+access_doctor_medical_patient_disease,medical.doctor.group.medical.patient.disease,model_medical_patient_disease,base.group_user,1,1,1,1
 
-access_doctor_medical_patient_disease_line,medical.doctor.group.medical.patient.disease.line,model_medical_prescription_line,bi_group_doctor,1,1,1,1
-access_doctor_medical_dose_unit,medical.doctor.group.medical_dose_unit,model_medical_dose_unit,bi_group_doctor,1,1,1,1
-access_sale_order,sale.order,sale.model_sale_order,bi_group_doctor,1,1,1,1
-access_sale_order_line,sale.order.line,sale.model_sale_order_line,bi_group_doctor,1,1,1,1
-access_sale_order_line_accountant,sale.order.line accountant,sale.model_sale_order_line,bi_group_doctor,1,1,1,1
-access_account_move_salesman,account_move salesman,account.model_account_move,bi_group_doctor,1,1,1,1
-access_account_move_manager,account_move manager,account.model_account_move,bi_group_doctor,1,1,1,1
-access_account_move_line_salesman,account_move.line salesman,account.model_account_move_line,bi_group_doctor,1,1,1,1
-access_account_payment_term_salesman,account_payment_term salesman,account.model_account_payment_term,bi_group_doctor,1,1,1,1
-access_account_analytic_tag_sale_salesman,account.analytic.tag.sale.salesman,analytic.model_account_analytic_tag,bi_group_doctor,1,1,1,1
-access_account_analytic_account_salesman,account_analytic_account salesman,analytic.model_account_analytic_account,bi_group_doctor,1,1,1,1
-access_sale_order_manager,sale.order.manager,sale.model_sale_order,bi_group_doctor,1,1,1,1
-access_sale_order_accountant,sale.order.accountant,sale.model_sale_order,bi_group_doctor,1,1,1,1
-access_sale_report_salesman,sale.report,sale.model_sale_report,bi_group_doctor,1,1,1,1
-access_sale_report_manager,sale.report,sale.model_sale_report,bi_group_doctor,1,1,1,1
-access_ir_property_sales,ir.property.sales,base.model_ir_property,bi_group_doctor,1,1,1,1
-access_sale_account_journal,account.journal sale order.user,account.model_account_journal,bi_group_doctor,1,1,1,1
+access_doctor_medical_patient_disease_line,medical.doctor.group.medical.patient.disease.line,model_medical_prescription_line,base.group_user,1,1,1,1
+access_doctor_medical_dose_unit,medical.doctor.group.medical_dose_unit,model_medical_dose_unit,base.group_user,1,1,1,1
+access_sale_order,sale.order,sale.model_sale_order,base.group_user,1,1,1,1
+access_sale_order_line,sale.order.line,sale.model_sale_order_line,base.group_user,1,1,1,1
+access_sale_order_line_accountant,sale.order.line accountant,sale.model_sale_order_line,base.group_user,1,1,1,1
+access_account_move_salesman,account_move salesman,account.model_account_move,base.group_user,1,1,1,1
+access_account_move_manager,account_move manager,account.model_account_move,base.group_user,1,1,1,1
+access_account_move_line_salesman,account_move.line salesman,account.model_account_move_line,base.group_user,1,1,1,1
+access_account_payment_term_salesman,account_payment_term salesman,account.model_account_payment_term,base.group_user,1,1,1,1
+access_account_analytic_tag_sale_salesman,account.analytic.tag.sale.salesman,analytic.model_account_analytic_tag,base.group_user,1,1,1,1
+access_account_analytic_account_salesman,account_analytic_account salesman,analytic.model_account_analytic_account,base.group_user,1,1,1,1
+access_sale_order_manager,sale.order.manager,sale.model_sale_order,base.group_user,1,1,1,1
+access_sale_order_accountant,sale.order.accountant,sale.model_sale_order,base.group_user,1,1,1,1
+access_sale_report_salesman,sale.report,sale.model_sale_report,base.group_user,1,1,1,1
+access_sale_report_manager,sale.report,sale.model_sale_report,base.group_user,1,1,1,1
+access_ir_property_sales,ir.property.sales,base.model_ir_property,base.group_user,1,1,1,1
+access_sale_account_journal,account.journal sale order.user,account.model_account_journal,base.group_user,1,1,1,1
 
-access_res_partner_sale_manager,res.partner.sale.manager,base.model_res_partner,bi_group_doctor,1,1,1,1
+access_res_partner_sale_manager,res.partner.sale.manager,base.model_res_partner,base.group_user,1,1,1,1
 
 
 
-access_res_partner_sale_manager_m,res.partner.sale.manager.m,base.model_res_partner,group_medical_group,1,1,1,1
+access_res_partner_sale_manager_m,res.partner.sale.manager.m,base.model_res_partner,base.group_user,1,1,1,1
 
 
 
@@ -119,144 +116,188 @@ access_res_partner_sale_manager_m,res.partner.sale.manager.m,base.model_res_part
 
 
 
-access_product_template_sale_user,product.template sale use,product.model_product_template,bi_group_doctor,1,1,1,1
-access_product_product_sale_user,product.product sale use,product.model_product_product,bi_group_doctor,1,1,1,1
-access_account_tax_user,account.tax.user,account.model_account_tax,bi_group_doctor,1,1,1,1
-access_ir_attachment_sales,ir.attachment.sales,base.model_ir_attachment,bi_group_doctor,1,1,1,1
-access_ir_attachment_manager,ir.attachment.manager,base.model_ir_attachment,bi_group_doctor,1,1,1,1
-access_product_uom_user,product.uom.user,uom.model_uom_uom,bi_group_doctor,1,1,1,1
-access_product_pricelist_sale_user,product.pricelist.sale.user,product.model_product_pricelist,bi_group_doctor,1,1,1,1
-access_account_account_salesman,account_account salesman,account.model_account_account,bi_group_doctor,1,1,1,1
-access_product_uom_categ_sale_manager,product.uom.categ salemanager,uom.model_uom_category,bi_group_doctor,1,1,1,1
-access_product_uom_sale_manager,product.uom salemanager,uom.model_uom_uom,bi_group_doctor,1,1,1,1
-access_product_category_sale_manager,product.category salemanager,product.model_product_category,bi_group_doctor,1,1,1,1
-access_product_supplierinfo_user,product.supplierinfo.user,product.model_product_supplierinfo,bi_group_doctor,1,1,1,1
-access_product_supplierinfo_sale_manager,product.supplierinfo salemanager,product.model_product_supplierinfo,bi_group_doctor,1,1,1,1
-access_product_pricelist_sale_manager,product.pricelist salemanager,product.model_product_pricelist,bi_group_doctor,1,1,1,1
-access_product_group_res_partner_sale_manager,res_partner group_sale_manager,base.model_res_partner,bi_group_doctor,1,1,1,1
-access_account_move_line_salesman,account.move.line invoice,account.model_account_move_line,bi_group_doctor,1,1,1,1
-access_sale_order_invoicing_payments,sale.order,sale.model_sale_order,bi_group_doctor,1,1,1,1
-access_sale_order_line_invoicing_payments,sale.order.line,sale.model_sale_order_line,bi_group_doctor,1,1,1,1
-access_medical_diagnostic_hypotesis,access_medical_diagnostic_hypotesis,model_medical_diagnostic_hypotesis,,1,1,1,1
-access_medical_diet_therapeutic,access_medical_diet_therapeutic,model_medical_diet_therapeutic,,1,1,1,1
-access_medical_directions,access_medical_directions,model_medical_directions,,1,1,1,1
-access_medical_family_disease,access_medical_family_disease,model_medical_family_disease,,1,1,1,1
-access_medical_icu_ventilation,access_medical_icu_ventilation,model_medical_icu_ventilation,,1,1,1,1
-access_medical_inpatient_diet,access_medical_inpatient_diet,model_medical_inpatient_diet,,1,1,1,1
-access_medical_inpatient_medication_admin_time,access_medical_inpatient_medication_admin_time,model_medical_inpatient_medication_admin_time,,1,1,1,1
-access_medical_inpatient_medication_log,access_medical_inpatient_medication_log,model_medical_inpatient_medication_log,,1,1,1,1
-access_medical_inpatient_medication,access_medical_inpatient_medication,model_medical_inpatient_medication,,1,1,1,1
-access_medical_insurance_plan,access_medical_insurance_plan,model_medical_insurance_plan,,1,1,1,1
+access_product_template_sale_user,product.template sale use,product.model_product_template,base.group_user,1,1,1,1
+access_product_product_sale_user,product.product sale use,product.model_product_product,base.group_user,1,1,1,1
+access_account_tax_user,account.tax.user,account.model_account_tax,base.group_user,1,1,1,1
+access_ir_attachment_sales,ir.attachment.sales,base.model_ir_attachment,base.group_user,1,1,1,1
+access_ir_attachment_manager,ir.attachment.manager,base.model_ir_attachment,base.group_user,1,1,1,1
+access_product_uom_user,product.uom.user,uom.model_uom_uom,base.group_user,1,1,1,1
+access_product_pricelist_sale_user,product.pricelist.sale.user,product.model_product_pricelist,base.group_user,1,1,1,1
+access_account_account_salesman,account_account salesman,account.model_account_account,base.group_user,1,1,1,1
+access_product_uom_categ_sale_manager,product.uom.categ salemanager,uom.model_uom_category,base.group_user,1,1,1,1
+access_product_uom_sale_manager,product.uom salemanager,uom.model_uom_uom,base.group_user,1,1,1,1
+access_product_category_sale_manager,product.category salemanager,product.model_product_category,base.group_user,1,1,1,1
+access_product_supplierinfo_user,product.supplierinfo.user,product.model_product_supplierinfo,base.group_user,1,1,1,1
+access_product_supplierinfo_sale_manager,product.supplierinfo salemanager,product.model_product_supplierinfo,base.group_user,1,1,1,1
+access_product_pricelist_sale_manager,product.pricelist salemanager,product.model_product_pricelist,base.group_user,1,1,1,1
+access_product_group_res_partner_sale_manager,res_partner group_sale_manager,base.model_res_partner,base.group_user,1,1,1,1
+access_account_move_line_salesman,account.move.line invoice,account.model_account_move_line,base.group_user,1,1,1,1
+access_sale_order_invoicing_payments,sale.order,sale.model_sale_order,base.group_user,1,1,1,1
+access_sale_order_line_invoicing_payments,sale.order.line,sale.model_sale_order_line,base.group_user,1,1,1,1
+access_medical_diagnostic_hypotesis,access_medical_diagnostic_hypotesis,model_medical_diagnostic_hypotesis,base.group_user,1,1,1,1
+access_medical_diet_therapeutic,access_medical_diet_therapeutic,model_medical_diet_therapeutic,base.group_user,1,1,1,1
+access_medical_directions,access_medical_directions,model_medical_directions,base.group_user,1,1,1,1
+access_medical_family_disease,access_medical_family_disease,model_medical_family_disease,base.group_user,1,1,1,1
+access_medical_icu_ventilation,access_medical_icu_ventilation,model_medical_icu_ventilation,base.group_user,1,1,1,1
+access_medical_inpatient_diet,access_medical_inpatient_diet,model_medical_inpatient_diet,base.group_user,1,1,1,1
+access_medical_inpatient_medication_admin_time,access_medical_inpatient_medication_admin_time,model_medical_inpatient_medication_admin_time,base.group_user,1,1,1,1
+access_medical_inpatient_medication_log,access_medical_inpatient_medication_log,model_medical_inpatient_medication_log,base.group_user,1,1,1,1
+access_medical_inpatient_medication,access_medical_inpatient_medication,model_medical_inpatient_medication,base.group_user,1,1,1,1
+access_medical_insurance_plan,access_medical_insurance_plan,model_medical_insurance_plan,base.group_user,1,1,1,1
 
 
 
-access_medical_neomatal_apgar,access_medical_neomatal_apgar,model_medical_neomatal_apgar,,1,1,1,1
-access_medical_pathology_group_member,access_medical_pathology_group_member,model_medical_pathology_group_member,,1,1,1,1
-access_medical_pathology_group,access_medical_pathology_group,model_medical_pathology_group,,1,1,1,1
-access_medical_patient_cage,access_medical_patient_cage,model_medical_patient_cage,,1,1,1,1
-access_medical_patient_colposcopy_history,access_medical_patient_colposcopy_history,model_medical_patient_colposcopy_history,,1,1,1,1
-access_medical_patient_mammography_history,access_medical_patient_mammography_history,model_medical_patient_mammography_history,,1,1,1,1
-access_medical_patient_medication1,access_medical_patient_medication1,model_medical_patient_medication1,,1,1,1,1
-access_medical_patient_menstrual_history,access_medical_patient_menstrual_history,model_medical_patient_menstrual_history,,1,1,1,1
-access_medical_patient_pap_history,access_medical_patient_pap_history,model_medical_patient_pap_history,,1,1,1,1
-access_medical_patient_pregnency,access_medical_patient_pregnency,model_medical_patient_pregnency,,1,1,1,1
-access_medical_patient_prental_evoultion,access_medical_patient_prental_evoultion,model_medical_patient_prental_evoultion,,1,1,1,1
-access_medical_patient_rounding_medical_supply,access_medical_patient_rounding_medical_supply,model_medical_patient_rounding_medical_supply,,1,1,1,1
-access_medical_patient_rounding_medicament,access_medical_patient_rounding_medicament,model_medical_patient_rounding_medicament,,1,1,1,1
-access_medical_patient_rounding_vaccine,access_medical_patient_rounding_vaccine,model_medical_patient_rounding_vaccine,,1,1,1,1
-access_medical_patient_rounding,access_medical_patient_rounding,model_medical_patient_rounding,,1,1,1,1
-access_medical_pediatrics_growth_charts_who,access_medical_pediatrics_growth_charts_who,model_medical_pediatrics_growth_charts_who,,1,1,1,1
-access_medical_perinatal_monitor,access_medical_perinatal_monitor,model_medical_perinatal_monitor,,1,1,1,1
-access_medical_preinatal,access_medical_preinatal,model_medical_preinatal,,1,1,1,1
-access_medical_puerperium_monitor,access_medical_puerperium_monitor,model_medical_puerperium_monitor,,1,1,1,1
-access_medical_rcri,access_medical_rcri,model_medical_rcri,,1,1,1,1
-access_medical_rounding_procedure,access_medical_rounding_procedure,model_medical_rounding_procedure,,1,1,1,1
-access_medical_secondary_condition,access_medical_secondary_condition,model_medical_secondary_condition,,1,1,1,1
-access_medical_signs_and_sympotoms,access_medical_signs_and_sympotoms,model_medical_signs_and_sympotoms,,1,1,1,1
-access_psc_code,access_psc_code,model_psc_code,,1,1,1,1
-access_bed_transfer,access_bed_transfer,model_bed_transfer,,1,1,1,1
-access_medical_icu_chest_drainage,access_medical_icu_chest_drainage,model_medical_icu_chest_drainage,,1,1,1,1
-access_medical_patient_medication,access_medical_patient_medication,model_medical_patient_medication,,1,1,1,1
-access_medical_icu_ecg,access_medical_icu_ecg,model_medical_icu_ecg,,1,1,1,1
-access_medical_icu_glasgow,access_medical_icu_glasgow,model_medical_icu_glasgow,,1,1,1,1
-access_medical_drug_route,access_medical_drug_route,model_medical_drug_route,,1,1,1,1
+access_medical_neomatal_apgar,access_medical_neomatal_apgar,model_medical_neomatal_apgar,base.group_user,1,1,1,1
+access_medical_pathology_group_member,access_medical_pathology_group_member,model_medical_pathology_group_member,base.group_user,1,1,1,1
+access_medical_pathology_group,access_medical_pathology_group,model_medical_pathology_group,base.group_user,1,1,1,1
+access_medical_patient_cage,access_medical_patient_cage,model_medical_patient_cage,base.group_user,1,1,1,1
+access_medical_patient_colposcopy_history,access_medical_patient_colposcopy_history,model_medical_patient_colposcopy_history,base.group_user,1,1,1,1
+access_medical_patient_mammography_history,access_medical_patient_mammography_history,model_medical_patient_mammography_history,base.group_user,1,1,1,1
+access_medical_patient_medication1,access_medical_patient_medication1,model_medical_patient_medication1,base.group_user,1,1,1,1
+access_medical_patient_menstrual_history,access_medical_patient_menstrual_history,model_medical_patient_menstrual_history,base.group_user,1,1,1,1
+access_medical_patient_pap_history,access_medical_patient_pap_history,model_medical_patient_pap_history,base.group_user,1,1,1,1
+access_medical_patient_pregnency,access_medical_patient_pregnency,model_medical_patient_pregnency,base.group_user,1,1,1,1
+access_medical_patient_prental_evoultion,access_medical_patient_prental_evoultion,model_medical_patient_prental_evoultion,base.group_user,1,1,1,1
+access_medical_patient_rounding_medical_supply,access_medical_patient_rounding_medical_supply,model_medical_patient_rounding_medical_supply,base.group_user,1,1,1,1
+access_medical_patient_rounding_medicament,access_medical_patient_rounding_medicament,model_medical_patient_rounding_medicament,base.group_user,1,1,1,1
+access_medical_patient_rounding_vaccine,access_medical_patient_rounding_vaccine,model_medical_patient_rounding_vaccine,base.group_user,1,1,1,1
+access_medical_patient_rounding,access_medical_patient_rounding,model_medical_patient_rounding,base.group_user,1,1,1,1
+access_medical_pediatrics_growth_charts_who,access_medical_pediatrics_growth_charts_who,model_medical_pediatrics_growth_charts_who,base.group_user,1,1,1,1
+access_medical_perinatal_monitor,access_medical_perinatal_monitor,model_medical_perinatal_monitor,base.group_user,1,1,1,1
+access_medical_preinatal,access_medical_preinatal,model_medical_preinatal,base.group_user,1,1,1,1
+access_medical_puerperium_monitor,access_medical_puerperium_monitor,model_medical_puerperium_monitor,base.group_user,1,1,1,1
+access_medical_rcri,access_medical_rcri,model_medical_rcri,base.group_user,1,1,1,1
+access_medical_rounding_procedure,access_medical_rounding_procedure,model_medical_rounding_procedure,base.group_user,1,1,1,1
+access_medical_secondary_condition,access_medical_secondary_condition,model_medical_secondary_condition,base.group_user,1,1,1,1
+access_medical_signs_and_sympotoms,access_medical_signs_and_sympotoms,model_medical_signs_and_sympotoms,base.group_user,1,1,1,1
+access_psc_code,access_psc_code,model_psc_code,base.group_user,1,1,1,1
+access_bed_transfer,access_bed_transfer,model_bed_transfer,base.group_user,1,1,1,1
+access_medical_icu_chest_drainage,access_medical_icu_chest_drainage,model_medical_icu_chest_drainage,base.group_user,1,1,1,1
+access_medical_patient_medication,access_medical_patient_medication,model_medical_patient_medication,base.group_user,1,1,1,1
+access_medical_icu_ecg,access_medical_icu_ecg,model_medical_icu_ecg,base.group_user,1,1,1,1
+access_medical_icu_glasgow,access_medical_icu_glasgow,model_medical_icu_glasgow,base.group_user,1,1,1,1
+access_medical_drug_route,access_medical_drug_route,model_medical_drug_route,base.group_user,1,1,1,1
 
-access_medical_medicament,access_medical_medicament,model_medical_medicament,,1,1,1,1
+access_medical_medicament,access_medical_medicament,model_medical_medicament,base.group_user,1,1,1,1
 
-access_medical_patient_lab_test,access_medical_patient_lab_test,model_medical_patient_lab_test,group_medical_group,1,1,1,1
+access_medical_patient_lab_test,access_medical_patient_lab_test,model_medical_patient_lab_test,base.group_user,1,1,1,1
 
-access_medical_prescription_order,access_medical_prescription_order,model_medical_prescription_order,,1,1,1,1
-access_medical_prescription_order_doctor,access_medical_prescription_order_doctor,model_medical_prescription_order,bi_group_doctor,1,1,1,1
+access_medical_prescription_order,access_medical_prescription_order,model_medical_prescription_order,base.group_user,1,1,1,1
+access_medical_prescription_order_doctor,access_medical_prescription_order_doctor,model_medical_prescription_order,base.group_user,1,1,1,1
 
-access_medical_patient_psc,access_medical_patient_psc,model_medical_patient_psc,,1,1,1,1
-access_medical_medicament_doctor,access_medical_medicament_doctor,model_medical_medicament,bi_group_doctor,1,1,1,
+access_medical_patient_psc,access_medical_patient_psc,model_medical_patient_psc,base.group_user,1,1,1,1
+access_medical_medicament_doctor,access_medical_medicament_doctor,model_medical_medicament,base.group_user,1,1,1,
 
 
-access_pet_type,access_pet_type,model_pet_type,,1,1,1,1
-access_medical_patient_evaluation,access_medical_patient_evaluation,model_medical_patient_evaluation,,1,1,1,1
-access_medical_appointment,access_medical_appointment,model_medical_appointment,,1,1,1,1
-access_medical_appointment1,access_medical_appointment1,model_medical_appointment,group_receptionist,1,1,1,1
-access_medical_insurance,medical.insurance,model_medical_insurance,bi_group_doctor,1,1,1,1
+access_pet_type,access_pet_type,model_pet_type,base.group_user,1,1,1,1
+access_medical_patient_evaluation,access_medical_patient_evaluation,model_medical_patient_evaluation,base.group_user,1,1,1,1
+access_medical_appointment,access_medical_appointment,model_medical_appointment,base.group_user,1,1,1,1
+access_medical_appointment1,access_medical_appointment1,model_medical_appointment,base.group_user,1,1,1,1
+access_medical_insurance,medical.insurance,model_medical_insurance,base.group_user,1,1,1,1
 
-access_medical_patient_lab_test,medical.patient.lab.test,model_medical_patient_lab_test,bi_group_doctor,1,1,1,1
-access_medical_patient_lab_test_chem,medical.patient.lab.test.chem,model_medical_patient_lab_test,group_chemist,1,1,1,1
+access_medical_patient_lab_test,medical.patient.lab.test,model_medical_patient_lab_test,base.group_user,1,1,1,1
+access_medical_patient_lab_test_chem,medical.patient.lab.test.chem,model_medical_patient_lab_test,base.group_user,1,1,1,1
 
 
-access_medical_appointments_invoice_wizard,medical.appointments.invoice.wizard,model_medical_appointments_invoice_wizard,,1,1,1,1
+access_medical_appointments_invoice_wizard,medical.appointments.invoice.wizard,model_medical_appointments_invoice_wizard,base.group_user,1,1,1,1
 
 
-access_create_prescription_invoice,create.prescription.invoice,model_create_prescription_invoice,,1,1,1,1
+access_create_prescription_invoice,create.prescription.invoice,model_create_prescription_invoice,base.group_user,1,1,1,1
 
 
-access_medical_lab_test_create,medical.lab.test.create,model_medical_lab_test_create,,1,1,1,1
+access_medical_lab_test_create,medical.lab.test.create,model_medical_lab_test_create,base.group_user,1,1,1,1
 
 
-access_medical_lab_test_invoice,medical.lab.test.invoice,model_medical_lab_test_invoice,,1,1,1,1
+access_medical_lab_test_invoice,medical.lab.test.invoice,model_medical_lab_test_invoice,base.group_user,1,1,1,1
 
-access_medical_doctor,medical.group.medical.doctor,model_medical_doctor,group_medical_group,1,1,1,1
-access_pervious_medication,medical.group.pervious.medication,model_pervious_medication,group_medical_group,1,1,1,1
-access_patient_surgery,medical.group.patient.surgery,model_patient_surgery,group_medical_group,1,1,1,1
-access_patient_family,medical.group.patient.family,model_patient_family,group_medical_group,1,1,1,1
-access_medical_feedback,medical.group.medical.feedback,model_medical_feedback,group_medical_group,1,1,1,1
-access_fix_appointment,medical.group.fix.appointment,model_fix_appointment,group_medical_group,1,1,1,1
-access_fix_appointment_line,medical.group.fix.appointment.line,model_fix_appointment_line,group_medical_group,1,1,1,1
+access_medical_doctor,medical.group.medical.doctor,model_medical_doctor,base.group_user,1,1,1,1
+access_pervious_medication,medical.group.pervious.medication,model_pervious_medication,base.group_user,1,1,1,1
+access_patient_surgery,medical.group.patient.surgery,model_patient_surgery,base.group_user,1,1,1,1
+access_patient_family,medical.group.patient.family,model_patient_family,base.group_user,1,1,1,1
+access_medical_feedback,medical.group.medical.feedback,model_medical_feedback,base.group_user,1,1,1,1
+access_fix_appointment,medical.group.fix.appointment,model_fix_appointment,base.group_user,1,1,1,1
+access_fix_appointment_line,medical.group.fix.appointment.line,model_fix_appointment_line,base.group_user,1,1,1,1
 
-access_patient_document,medical.group.patient.document,model_patient_document,group_medical_group,1,1,1,1
+access_patient_document,medical.group.patient.document,model_patient_document,base.group_user,1,1,1,1
 
-access_diet_for,medical.group.diet.for,model_diet_for,group_medical_group,1,1,1,1
+access_diet_for,medical.group.diet.for,model_diet_for,base.group_user,1,1,1,1
 
-access_treatment_for,medical.group.treatment.for,model_treatment_for,group_medical_group,1,1,1,1
+access_treatment_for,medical.group.treatment.for,model_treatment_for,base.group_user,1,1,1,1
 
-access_habit_for,medical.group.habit.for,model_habit_for,group_medical_group,1,1,1,1
+access_habit_for,medical.group.habit.for,model_habit_for,base.group_user,1,1,1,1
 
-access_medical_habits,medical.group.medical.habits,model_medical_habits,group_medical_group,1,1,1,1
+access_medical_habits,medical.group.medical.habits,model_medical_habits,base.group_user,1,1,1,1
 
 
-access_time_slot,medical.group.time.slot,model_time_slot,group_medical_group,1,1,1,1
+access_time_slot,medical.group.time.slot,model_time_slot,base.group_user,1,1,1,1
 
-access_green_agreement,medical.group.green.agreement,model_green_agreement,group_medical_group,1,1,1,1
+access_green_agreement,medical.group.green.agreement,model_green_agreement,base.group_user,1,1,1,1
 
-access_treatment_form,medical.group.treatment.form,model_treatment_form,group_medical_group,1,1,1,1
-access_diet_field,medical.group.diet.field,model_diet_field,group_medical_group,1,1,1,1
+access_treatment_form,medical.group.treatment.form,model_treatment_form,base.group_user,1,1,1,1
+access_diet_field,medical.group.diet.field,model_diet_field,base.group_user,1,1,1,1
 
-access_set_diets,medical.group.set.diets,model_set_diets,group_medical_group,1,1,1,1
-access_set_diet_line,medical.group.set.diet.line,model_set_diet_line,group_medical_group,1,1,1,1
+access_set_diets,medical.group.set.diets,model_set_diets,base.group_user,1,1,1,1
+access_set_diet_line,medical.group.set.diet.line,model_set_diet_line,base.group_user,1,1,1,1
 
 
-access_whatsapp_wizard,medical.group.whatsapp.wizard,model_whatsapp_wizard,group_medical_group,1,1,1,1
+access_whatsapp_wizard,medical.group.whatsapp.wizard,model_whatsapp_wizard,base.group_user,1,1,1,1
 
 
 
-access_prescribe_diet,medical.group.prescribe.diet,model_prescribe_diet,group_medical_group,1,1,1,1
-access_prescribe_diet_line,medical.group.prescribe.diet.line,model_prescribe_diet_line,group_medical_group,1,1,1,1
+access_prescribe_diet,medical.group.prescribe.diet,model_prescribe_diet,base.group_user,1,1,1,1
+access_prescribe_diet_line,medical.group.prescribe.diet.line,model_prescribe_diet_line,base.group_user,1,1,1,1
 
 
-access_set_diet_lines,medical.group.set.diet.lines,model_set_diet_lines,group_medical_group,1,1,1,1
 
-access_test_units,medical.group.test.units,model_test_units,group_medical_group,1,1,1,1
+access_set_diet_lines,medical.group.set.diet.lines,model_set_diet_lines,base.group_user,1,1,1,1
 
-access_medical_symptoms,medical.group.medical.symptoms,model_medical_symptoms,group_medical_group,1,1,1,1
+access_test_units,medical.group.test.units,model_test_units,base.group_user,1,1,1,1
 
-access_res_city,medical.group.res.city,model_res_city,group_medical_group,1,1,1,1
+access_medical_symptoms,medical.group.medical.symptoms,model_medical_symptoms,base.group_user,1,1,1,1
 
+access_res_city,medical.group.res.city,model_res_city,base.group_user,1,1,1,1
+
+access_patient_prescription,medical.group.patient.prescription,model_patient_prescription,base.group_user,1,1,1,1
+
+access_scan_test_document,medical.group.scan.test.document,model_scan_test_document,base.group_user,1,1,1,1
+access_current_ailments,medical.group.current.ailments,model_current_ailments,base.group_user,1,1,1,1
+access_medicine_line,medical.group.medicine.line,model_medicine_line,base.group_user,1,1,1,1
+access_register_payment,medical.group.register.payment,model_register_payment,base.group_user,1,1,1,1
+
+access_register_wizard,medical.group.register.wizard,model_register_wizard,base.group_user,1,1,1,1
+
+access_patient_bills,medical.group.patient.bills,model_patient_bills,base.group_user,1,1,1,1
+
+access_patient_bills_lines,medical.group.patient.bills.lines,model_patient_bills_lines,base.group_user,1,1,1,1
+
+access_account_bills_lines,medical.group.account.bills.lines,model_account_bills_lines,base.group_user,1,1,1,1
+
+
+access_lab_test_lines,medical.group.lab_test.lines,model_lab_test_lines,base.group_user,1,1,1,1
+
+
+access_diet_six,medical.group.diet.six,model_diet_six,base.group_user,1,1,1,1
+access_set_fruits,medical.group.set.fruits,model_set_fruits,base.group_user,1,1,1,1
+access_diet_seven,medical.group.diet.seven,model_diet_seven,base.group_user,1,1,1,1
+access_diet_eight,medical.group.diet.eight,model_diet_eight,base.group_user,1,1,1,1
+access_diet_nine,medical.group.diet.nine,model_diet_nine,base.group_user,1,1,1,1
+access_diet_eleven,medical.group.diet.eleven,model_diet_eleven,base.group_user,1,1,1,1
+access_diet_four,medical.group.diet.four,model_diet_four,base.group_user,1,1,1,1
+access_diet_seven_one,medical.group.diet.seven.one,model_diet_seven_one,base.group_user,1,1,1,1
+access_diet_one_lunch,medical.group.diet.one.lunch,model_diet_one_lunch,base.group_user,1,1,1,1
+access_set_veg,medical.group.set.veg,model_set_veg,base.group_user,1,1,1,1
+access_set_protein,medical.group.set.protein,model_set_protein,base.group_user,1,1,1,1
+access_set_rice,medical.group.set.rice,model_set_rice,base.group_user,1,1,1,1
+access_diet_five,medical.group.diet.five,model_diet_five,base.group_user,1,1,1,1
+
+access_assign_diet_lines,medical.group.assign.diet.lines,model_assign_diet_lines,base.group_user,1,1,1,1
+access_assign_diet_six,medical.group.assign.diet.six,model_assign_diet_six,base.group_user,1,1,1,1
+access_assign_diet_seven,medical.group.assign.diet.seven,model_assign_diet_seven,base.group_user,1,1,1,1
+access_assign_diet_eight,medical.group.assign.diet.eight,model_assign_diet_eight,base.group_user,1,1,1,1
+access_assign_diet_nine,medical.group.assign.diet.nine,model_assign_diet_nine,base.group_user,1,1,1,1
+access_assign_diet_eleven,medical.group.assign.diet.eleven,model_assign_diet_eleven,base.group_user,1,1,1,1
+access_assign_diet_one_lunch,medical.group.assign.diet.one.lunch,model_assign_diet_one_lunch,base.group_user,1,1,1,1
+access_assign_diet_four,medical.group.assign.diet.four,model_assign_diet_four,base.group_user,1,1,1,1
+access_assign_diet_seven_one,medical.group.assign.diet.seven.one,model_assign_diet_seven_one,base.group_user,1,1,1,1
+access_assign_diet_five,medical.group.assign.diet.five,model_assign_diet_five,base.group_user,1,1,1,1
 

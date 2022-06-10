@@ -9,10 +9,10 @@
             string="Prescription"
             name="basic_hms.prescription_demo_report"
             file="basic_hms.prescription_demo_report"
+            attachment="'ISR-' + '.pdf'"
             />
 
-
-            <report
+        <report
             id="report_print_diet"
             model="prescribe.diet"
             report_type="qweb-pdf"
@@ -39,14 +39,14 @@
             file="basic_hms.patient_registration"
             />
 
-        <report
+        <!-- <report
             id="report_print_appointment"
             model="medical.appointment"
             report_type="qweb-pdf"
             string="Appointment Recipts New"
             name="basic_hms.appointment_recipts_report"
             file="basic_hms.appointment_recipts_report"
-            />
+            /> -->
 
 
         <!-- <report
@@ -84,6 +84,25 @@
             name="basic_hms.patient_diseases_document"
             file="basic_hms.patient_diseases_document"
             /> -->
+        <report
+            id="report_print_bills"
+            model="patient.bills"
+            report_type="qweb-pdf"
+            string="Bill"
+            name="basic_hms.patient_bils_report"
+            file="basic_hms.doctor_bill"
+        />
+
+        <report
+            id="report_print_diet"
+            model="set.diets"
+            report_type="qweb-pdf"
+            string="Diet Plan"
+            name="basic_hms.diet_doctor_report"
+            file="basic_hms.doctor_diet"
+        />
+
+
         <report
             id="report_print_lab_result_demo"
             model="medical.lab"

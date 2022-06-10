@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
     <data>
     
         <record id="treatment_form" model="ir.ui.view">
@@ -8,24 +7,10 @@
             <field name="model">treatment.for</field>
             <field name="priority" eval="8" />
                 <field name="arch" type="xml">
-                    <form string="Advised">
-                        <header>
-                            <!-- <button name="button_rooms"  type="object" string="Create Room"  class="oe_highlight"/>   -->
-                        </header>
+                    <form string="Advised">  
                         <sheet>
-                            <div class="oe_button_box">
-                                <!-- <button class="oe_stat_button" name="available_rooms" type="object" icon="fa-clipboard"> -->
-                           <!-- <field name ="available_room" widget="statinfo"/></button> -->
-                            </div>
                             <group >
-                                <field name="cure" />
-                                <field name="test_dose" />
-                                <field name="control" />
-                                <field name="paliation" />
-                                <field name="chronic" />
-                                <field name="ng" />
-                                <field name="maintance" />
-                                <field name="nt" />
+                                 <field name= "name"/>
                             </group>
                         </sheet>
                         </form>
@@ -34,7 +19,6 @@
         <record model="ir.actions.act_window" id="treatment_action">            
             <field name="name">Treatment Advised</field>         
                 <field name="res_model">treatment.for</field>           
-                <!-- <field name="view_type">form</field>             -->
                 <field name="view_mode">tree,form</field>
                 <field name="domain">[]</field>            
                 <field name="help" type="html">                

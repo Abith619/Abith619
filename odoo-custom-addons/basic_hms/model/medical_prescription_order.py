@@ -3,6 +3,7 @@
 
 from odoo import api, fields, models, _
 from datetime import date,datetime
+from odoo.exceptions import  ValidationError
 
 class medical_prescription_order(models.Model):
     _name = "medical.prescription.order"
@@ -13,7 +14,7 @@ class medical_prescription_order(models.Model):
     height= fields.Float(string="Height")
     weight=fields.Float(string="Weight")
     stages= fields.Selection([('new',"New"),('draft','Draft'),('done',"Done")])
-    
+    treatments_for = fields.Many2many('treatment.for',string="Treatment For")
 
     patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient" ,required=True)
     prescription_date = fields.Datetime('Prescription Date', default=fields.Datetime.now)
@@ -32,26 +33,47 @@ class medical_prescription_order(models.Model):
     is_invoiced = fields.Boolean(copy=False,default = False)
     insurer_id = fields.Many2one('medical.insurance', 'Insurer')
     is_shipped = fields.Boolean(default  =  False,copy=False)
+    total=fields.Float(string="Total :")
+    # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.prescription.order')))
+
+    @api.onchange('prescription_line_ids')
+    def onchan_func(self):
+        sums = []
+        for i in self:
+            for k in i.prescription_line_ids:
+                sums.append(k.total_price)
+            i.total = sum(sums)
 
 
     @api.model
     def create(self , vals):
-        vals['name'] = self.env['ir.sequence'].next_by_code('medical.prescription.order') or '/'
-        return super(medical_prescription_order, self).create(vals)
+        vals['name'] = self.env['ir.sequence'].next_by_code('medical.prescription.order') or '/'   
+        res = super(medical_prescription_order, self).create(vals)
+        billing = self.env['patient.bills'].search([('patient_name','=',res.patient_id.id)], order='id desc', limit=1)
+        billing_lines=[]
+
+        billing_value={
+                'name':'Presciption Payment',
+                'date':datetime.now(),
+                'bill_amount':res.total,
+            }
+        billing_lines.append((0,0,billing_value))
+        billing.write({'bills_lines':billing_lines})
+      
+        orm = self.env['medical.doctor'].search([('patient','=',res.patient_id.id)])
+        lines=[]
+        value={
+            'prescription_alot':res.id,
+            'date':datetime.now()
+            }
+        lines.append((0,0,value))
+        orm.write({'prescription_patient':lines})
+        return res
+
 
     @api.model
     def prescription_report(self):
         return self.env.ref('basic_hms.report_print_prescription').report_action(self)
 
-    # @api.onchange('name')
-    # def onchange_name(self):
-    #     ins_obj = self.env['medical.insurance']
-    #     ins_record = ins_obj.search([('medical_insurance_partner_id', '=', self.patient_id.patient_id.id)])
-    #     self.insurer_id = ins_record.id or False
 
-    # @api.onchange('name')
-    # def onchange_p_name(self):
-    #     self.pricelist_id = 1 or False
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

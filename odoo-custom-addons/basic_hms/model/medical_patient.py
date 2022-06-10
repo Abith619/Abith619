@@ -265,6 +265,9 @@ class medical_patient(models.Model):
     deaths_1st_week = fields.Integer('Deceased after 1st week')
     full_term = fields.Integer('Full Term')
     ses_notes = fields.Text('Notes')
+
+
+
 #inherit fields
     area=fields.Char(string="Area")
     city=fields.Many2one('res.city',string="City")
@@ -297,7 +300,13 @@ class medical_patient(models.Model):
     operations_details = fields.Char(string="Operation if any furnish details")
     name_father=fields.Char(string="Name")
     pin_code=fields.Char(string="Pin Code")
+    reg_type=fields.Selection([('dir',"Direct"),('on',"Online"),('app',"Appoinment"),('rev',"Review"),('stop',"Stopped")],string="Registration Type")
+    # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.prescription.order')))
 
+    # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']
+	# .browse(self.env['res.company']._company_default_get('medical.patient')))
+
+    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.patient')))
 
 
     @api.onchange('dates','doctors')
@@ -324,20 +333,6 @@ class medical_patient(models.Model):
                 l1.append(slots)
                 booked_slots = [i for i in all_slots if i not in l1]
                 raise ValidationError("Please Select from Available Slots: {}".format(booked_slots))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     
     @api.onchange('height','weight')
     def _calculate_bmi(self):
@@ -372,7 +367,7 @@ class medical_patient(models.Model):
     appointment_from=fields.Selection([('09:00 Am - 10:00 Am','09:00 Am - 10:00 Am'),('10:00 Am - 11:00 Am','10:00 Am - 11:00 Am'),('11:00 Am - 12:00 Pm',"11:00 Am - 12:00 Pm"),
     ('12:00 Pm - 01:00 Pm','12:00 Pm - 01:00 Pm'),('02:00 Pm - 03:00 Pm','02:00 Pm - 03:00 Pm'),('03:00 Pm - 04:00 Pm','03:00 Pm - 04:00 Pm')],
     string='Appointment Slot')
-
+    payment = fields.Float(string="Payments")
 
 
     @api.model
@@ -399,41 +394,93 @@ class medical_patient(models.Model):
         result = super(medical_patient, self).create(val)
         return result
 
+
+    def payment_button(self):
+        return {
+    'name': "Register Payments",
+    'domain':[('patient_id', '=', self.patient_id.id)],
+    'view_mode': 'tree,form',
+    'res_model': 'register.payment',
+    'view_type': 'form',
+    'type': 'ir.actions.act_window',
+    }
+
+
+    
+
 #assign doc create e book
 
-
-
     def assign_button(self):
-        create_patient = self.env['medical.doctor'].create({
-            'patient':self.patient_id.id ,
-            'age':self.age, 
-            'sex':self.sex,
-            'doctor':self.doctors.id,
-            'phone_number':self.contact_no,
-            'contact_number':self.contact_number,
-            'marital_status':self.marital_status,
-            'address':self.address,
-            'father_name':self.father_name,
-            'name_father':self.name_father,
+        # val = self.env['res.partner'].search([], order='id desc', limit=1)
+        # val.write({
+		# 	'mobile':self.contact_no,
+        #     'name':self.patient_id.name ,
+		# 	})
+        # self.stages='done'
+    	return {
+            'type': 'ir.actions.act_window',
+            'name': 'Register Payment',
+            'res_model': 'register.wizard',
+            'target': 'new',
+            'view_mode': 'form',
+            'view_type': 'form',
+            'context': {       
+                    'default_patient_id':self.patient_id.id ,
+                    'default_age':self.age, 
+                    'default_sex':self.sex,
+                    'default_doctors':self.doctors.id,
+                    'default_contact_no':self.contact_no,
+                    'default_contact_number':self.contact_number,
+                    'default_marital_status':self.marital_status,
+                    'default_address':self.address,
+                    'default_father_name':self.father_name,
+                    'default_name_father':self.name_father,
+                    'default_occupation':self.occupation,
+                    'default_office_address':self.office_address,
+                    'default_height':self.height,
+                    'default_weight':self.weight,
+                    'default_bmi_value':self.bmi_value,
+                    'default_name':self.name,
+                    'default_treatment':self.treatment.id,
+                    'default_fees':self.fees,
+                    'default_duration_ailments':self.duration_ailmenmts,
+                    'default_doctor_changes':True,
+                    'default_reg_type':self.reg_type
+                    
+                },}
+        # lines=[]
+        # val={
+        #     'patient_currents_ailments':self.treatment.id,
+        # }
+        # lines.append((0,0,val))
+        # create_patient = self.env['medical.doctor'].create({
+        #     'patient':self.patient_id.id ,
+        #     'age':self.age, 
+        #     'sex':self.sex,
+        #     'doctor':self.doctors.id,
+        #     'phone_number':self.contact_no,
+        #     'contact_number':self.contact_number,
+        #     'marital_status':self.marital_status,
+        #     'address':self.address,
+        #     'father_name':self.father_name,
+        #     'name_father':self.name_father,
+        #     'occupation':self.occupation,
+        #     'office_address':self.office_address,
+        #     'height':self.height,
+        #     'weight':self.weight,
+        #     'bmi_value':self.bmi_value,
+        #     'opnumber':self.name,
+        #     'stages':'done',
+        #     'currents_ailments':lines,
+        # })
+        # create_payment=self.env['register.payment'].create({
+        #     'patient_id':self.patient_id.id,
+        #     'date':datetime.now().date(),
+        #     'amount':self.fees
+        # })
 
-            'occupation':self.occupation,
-            'office_address':self.office_address,
-            'height':self.height,
-            'weight':self.weight,
-            'bmi_value':self.bmi_value,
-            'opnumber':self.name,
-            'stages':'done',
-            'ailments':self.treatment.id,
-            # 'medicine':self.early_treatment,
-            # 'surgery_type':self.operations_details,
-        })
-        self.stages='done'
-        val = self.env['res.partner'].search([], order='id desc', limit=1)
-        val.write({
-			'mobile':self.contact_no,
-            # 'address':self.address,
-            'name':self.patient_id.name ,
-			})
+
+        # self.stages='done'
 
 #one2many new 
 

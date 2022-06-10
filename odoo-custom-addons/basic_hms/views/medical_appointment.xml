@@ -12,7 +12,7 @@
                 <header>
                     <button name="send_msg" string="Whatsapp Message" class="oe_highlight" type="object"/>
                     <!-- <button name="rolls" string="send check" type="object"/> -->
-                    <button name="button_registrations" string="Convert To Registration" class="oe_highlight" type="object"/>
+                    <button name="button_registrations" string="Convert To Registration" class="oe_highlight" type="object" />
                     <!-- <button name="button_contact" string="Create number" class="oe_highlight" type="object"/> -->
                     <field name ="stages" widget="statusbar"/>
                     <!-- <field name='date'/> -->
@@ -31,7 +31,7 @@
                                     <div class ="col-2">
                                     </div>
                                     <div class="col-4">  
-                                    <label for="patient_id" style="font-size: 20px !important;" string="Search" />        
+                                    <label for="patient_id" style="font-size: 20px !important;" string="Search" attrs="{'invisible': [('patient_selection','=', 'new')]}"/>        
                                     </div>
                                     <div class="col-6">
                                     </div>
@@ -41,7 +41,7 @@
                                     </div> -->
                                     
                                 </div>
-                                <field name = "patient_id"  style="height:70%;width:50%" options="{'no_create':True,'no_create_edit':True,'no_open': True}" /> 
+                                <field name = "patient_id"  style="height:70%;width:50%" options="{'no_create':True,'no_create_edit':True,'no_open': True}" attrs="{'invisible': [('patient_selection','=', 'new')]}"/> 
                           </div>
                                 <div class="col-2">
                                 </div>
@@ -57,11 +57,13 @@
                         <group>
                             <field name = "patient_id" options="{'no_create':True,'no_create_edit':True,'no_open': True}"/> 
                             <field name= "gender"/>
-                            <!-- <field name= "age"/> -->
+                            <field name= "test"/>
                             <field name= "phone_number"/>
                             <field name= "contact_number"/>
                             <field name= "region"/>
                             <field name= "treatment_for" required='1' options="{'no_create_edit':True,'no_open': True}"/>
+                            <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+
 
                               
                             </group>
@@ -84,7 +86,7 @@
                                 <field name= "contact_number" attrs="{'invisible': [('patient_id','=', False)]}"/>
                                 <field name= "region" attrs="{'invisible': [('patient_id','=', False)]}"/>
                                 <field name= "treatment_for" attrs="{'invisible': [('patient_id','=', False)]}"/>
-    
+                                <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}" attrs="{'invisible': [('patient_id','=', False)]}"/>
                                   
                                 </group>
                             <group>
@@ -95,8 +97,7 @@
                                 <field name="appointment_from" attrs="{'invisible': [('dates','=', False)]}"/>
                                 <field name ="appoinment_through" attrs="{'invisible': [('appointment_from','=', False)]}" widget="radio"  options="{'horizontal': true}"/>
                                 <field name ="fees"/>
-                                <!-- <field name="appointment_date" /> -->
-                                <!-- <field name="fix_appoinment_line" invisible="1"/> -->
+
                             </group>
                             </group>
                         <notebook>
@@ -147,14 +148,15 @@
         <field name="model">medical.appointment</field>
         <field name="arch" type="xml">
             <calendar string="Appointments" color="doctor_id"
-                quick_add="False" date_start="appointment_date">
-        
+                quick_add="False" date_start="dates">  
                 <field name="patient_id"/>
                 <field name="doctor_id"/>
                 <field name="patient_selection" />
             </calendar>
         </field>
     </record>
+
+
 
     <record id="medical_appointment_tree_view" model="ir.ui.view">
         <field name="name">medical.appointment.tree.view</field>
@@ -165,11 +167,10 @@
                
                 <field name="patient_id" />
                 <field name="doctor_id" />
-                <!-- <field name="patient_status" /> -->
+
                 <field name="urgency_level" invisible="1"/>
                 <field name="dates" />
-                <!-- <field name="duration" /> -->
-                <!-- <field name="appointment_end" /> -->
+
                 <field name="institution_partner_id" invisible="1"/>
                 <field name="patient_selection" />
             </tree>
@@ -190,14 +191,13 @@
         </field>
     </record>
 
+
     <record id="action_medical_appointment" model="ir.actions.act_window">
         <field name="name">Appointments</field>
         <field name="res_model">medical.appointment</field>
         <field name="binding_view_types">form</field>
-        <field name="view_mode">tree,form,calendar,pivot</field>
+        <field name="view_mode">tree,form,calendar,pivot,graph</field>
     </record>
-
-  
 
     <menuitem id="menu_appointment" name='Appointments' action="action_medical_appointment"
               parent="main_menu_hospital_management"

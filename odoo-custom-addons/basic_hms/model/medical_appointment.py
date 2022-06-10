@@ -73,6 +73,10 @@ class medical_appointment(models.Model):
 
 	fees = fields.Float(string='Fees',readonly=True,compute='fee_change')
 
+
+	company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.prescription.order')))
+	doc_whatsapps=fields.Binary(string="Prescription")
+
 	# @api.onchange("patient_selection")
     # def new_change(self):
     #     if patient_selection == 'new':
@@ -86,10 +90,10 @@ class medical_appointment(models.Model):
                 'view_mode': 'form',
                 'view_type': 'form',
                 'context': {'default_user_id': self.patient_id.id,
-				'default_mobile':self.contact_number,},
+				'default_mobile':self.contact_number,
+				'default_message':"Hi "+self.patient_id.name+",\n\nYour Appointment is fixed with "+self.doctor_id.name+" on "+str(self.dates)+"\nFeedback : https://www.google.co.in/webhp?hl=en&sa=X&ved=0ahUKEwji0JG87J_4AhVVv2MGHcWkCuwQPAgI"+"\n\nThank You,\nDaisy Hospital",
+				},
                 }
-
-
 
 	@api.depends('appoinment_through')
 	def fee_change(self):
@@ -99,18 +103,9 @@ class medical_appointment(models.Model):
 			self.fees=float(150)
 		# else:
 		# 	self.fee=float(0)
-    		
+	test=fields.Boolean(string="Test")
 
-	@api.onchange('dates','doctor_id')
-	def roll(self):
-		date_today=self.dates
-		today=datetime.datetime.now().date()
-		if date_today != False:
-			if date_today < today:
-				raise ValidationError("Date should be greater than today's date")
-		vals=self.env['medical.appointment'].search_count([('dates','=',date_today),('doctor_id','=',self.doctor_id.id)])
-		if vals >= 20:
-			raise ValidationError("Appointment Slots are full")
+	
 
 	@api.onchange('appointment_from')
 	def date_appointment(self):
@@ -126,10 +121,6 @@ class medical_appointment(models.Model):
 				booked_slots = [i for i in all_slots if i not in l1]
 				raise ValidationError("Please Select from Available Slots: {}".format(booked_slots))
 
-
-
-
-
 	@api.model
 	def create(self, vals):
 		vals['name'] = self.env['ir.sequence'].next_by_code('medical.appointment') or 'APT'
@@ -142,48 +133,57 @@ class medical_appointment(models.Model):
 	
 #create new contact patient
 	def button_registrations(self):
-    		
 		self.stages = 'done'
+		self.test = True
 		# create_registration = self.env['medical.patient'].create({
+		# if self.test == True:
 		ces={
-        'name': "Scan/Tests",
-        'type': 'ir.actions.act_window',
-        'view_type': 'form',
-        'view_mode': 'form',
-        'res_model': 'medical.patient',
+		'name': "Scan/Tests",
+		'type': 'ir.actions.act_window',
+		'view_type': 'form',
+		'view_mode': 'form',
+		'res_model': 'medical.patient',
 		'context': {
 				'default_patient_id':self.patient_id.id,
 				'default_sex':self.gender,
 				'default_contact_no':self.phone_number,
 				'default_contact_number':self.contact_number,
 				'default_doctors':self.doctor_id.id,
-				'default_dates':self.dates,
+				'default_dates':datetime.datetime.now(),
 				'default_appointment_from':self.appointment_from,
 				'default_treatment':self.treatment_for.id,
 				'default_fees':self.fees,
 				'default_city':self.region.id,
 				'default_stages':'on',
-
-            },
+			},
 		}		
 		val = self.env['res.partner'].search([], order='id desc', limit=1)
 		val.write({
-
+			'name':self.patient_id.name,
 			'mobile':self.phone_number,
 			'patient_gender':self.gender,
 			'is_patient':'True',
 			})
 		return ces
 
+
+	@api.onchange('dates','doctor_id')
+	def roll(self):
+		# if self.test == True:
+		date_today=self.dates
+		today=datetime.datetime.now().date()
+		if date_today != False:
+			if date_today < today:
+				raise ValidationError("Date should be greater than today's date")
+		vals=self.env['medical.appointment'].search_count([('dates','=',date_today),('doctor_id','=',self.doctor_id.id)])
+		if vals >= 20:
+			raise ValidationError("Appointment Slots are full")
+
 	@api.onchange('patient_id')
 	def get_details(self):
 		val = self.env['res.partner'].search([('id','=',self.patient_id.id)])
 		self.phone_number = val.mobile
 		self.gender=val.patient_gender
-
-    		
-
-
 
 	@api.onchange('duration')
 	def start_end(self):

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="payment_form_view" model="ir.ui.view">
+        <field name="name">register_payment_view</field>
+        <field name="model">register.payment</field>
+        <field name="arch" type="xml">
+            <form string="Payment">
+                <sheet> 
+                    <group>
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="date"/>
+                            <field name="amount"  />
+                        </group>
+                        <group>
+
+                        </group>
+                    </group>
+                </sheet>
+                </form>
+                </field>
+                </record>
+
+
+                <record id="register_payment_tree_view" model="ir.ui.view">
+                    <field name="name">register.tree.view</field>
+                    <field name="model">register.payment</field>
+                    <field name="arch" type="xml">
+                        <tree string="Register Payment">
+
+                            <field name="patient_id" />
+                            <field name="date"/>
+                            <field name="amount"   sum="Amount" />
+
+                        </tree>
+                    </field>
+                </record>
+
+
+
+
+                <record id="payment_action_view" model="ir.actions.act_window">
+                    <field name="name">Payment Information</field>
+                    <field name="res_model">register.payment</field>
+                    <field name="binding_view_types">form</field>
+                    <field name="view_mode">tree,form</field>
+                </record>
+
+            <menuitem id="menus_payment"  name ="Create city" action="payment_action_view"
+                parent="main_menu_configartion" sequence="0" />
+                </odoo>

@@ -20,17 +20,10 @@ class dietFor(models.Model):
     # def available_rooms(self):
     #     pass
 
-# class treatmentFor(models.Model):
-#     _name='treatment.for'
+class treatmentFor(models.Model):
+    _name='treatment.for'
 
-#     cure=fields.Boolean(string='Cure')
-#     test_dose=fields.Boolean(string='Test Dose')
-#     control=fields.Boolean(string='Control')
-#     paliation=fields.Boolean(string='Paliation')
-#     chronic=fields.Boolean(string='Chronic')
-#     ng=fields.Boolean(string='NG')
-#     maintance=fields.Boolean(string='Maintance')
-#     nt=fields.Boolean(string='NT')
+    name =fields.Char("Treatment For", required=True)
 
 
 class documentFor(models.Model):

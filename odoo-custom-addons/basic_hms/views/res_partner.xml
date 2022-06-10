@@ -12,16 +12,16 @@
 
                 </field>
                 <notebook>
-                    
-                    <page string="Medical">
-                        <group colspan="6" col="6">
+
+                <page string="Medical">
+                    <group colspan="6" col="6">
                             <field name="is_patient" />
                             <field name="is_doctor" />
                             <field name="is_institution" />
                             <field name="is_person" />
                             <field name="is_insurance_company" />
                             <field name="is_pharmacy" />
-                        </group>
+                </group>
                         <field name="company_insurance_ids" colspan="4"
                             widget="one2many_list" />
                         <field name="patient_insurance_ids" colspan="4"
@@ -30,6 +30,60 @@
                 </notebook>
             </field>
         </record>
+
+
+     <record id="medicine_product_inherit_view" model="ir.ui.view">
+            <field name="name">medicine.product.inheritview</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+
+            <field name="sale_ok" position="before">
+            		<div modifiers="{}">
+					<field name="is_medicine" modifiers="{}" id="is_medicine"/>
+					<label for="is_medicine" modifiers="{}"/>
+				</div>
+                </field>
+
+          <page name="inventory" position="after">
+            <page string="Medicine Details" attrs="{'invisible': [('is_medicine','=', False)]}">
+            <field name="medicine_details">
+                <tree string="Medicine Details" editable="bottom">
+                  <field name="potency"/>
+                    <field name="morning"/>
+                    <field name="noon"/>
+                    <field name ="evening"/>
+                    <field name="night"/>
+                    <field name="units"/>                 
+                    <field name="anupana"/>
+                </tree>
+                </field>
+			</page>
+            </page>
+
+            </field>
+        </record>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
         <record model="ir.actions.act_window" id="act_res_partner">
             <field name="name">Insurances Company</field>

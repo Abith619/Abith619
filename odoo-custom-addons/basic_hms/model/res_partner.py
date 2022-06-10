@@ -40,3 +40,23 @@ class res_partner(models.Model):
     #     for rec in self:
     #         result.append((rec.id, '%s - %s' % (rec.name,rec.mobile)))
     #     return result
+
+class MedicineMaster(models.Model):
+    _inherit='product.product'
+
+    is_medicine=fields.Boolean(string="Medicine")
+    medicine_details = fields.One2many('medicine.line','med',string="Medicine Details")
+
+
+
+class medicine_dose(models.Model):
+    _name = 'medicine.line'
+
+    med = fields.Many2one('product.product')
+    morning=fields.Float(string="Morning")
+    noon = fields.Float(string="Noon")
+    evening=fields.Float(string="Evening")
+    night= fields.Float(string="Night")
+    units= fields.Many2one('uom.uom',string="units")
+    potency = fields.Char(string="Potency")
+    anupana = fields.Char(string="Anupana")

@@ -24,7 +24,7 @@
                 <p><b>Weight :</b> <span t-field="o.weight"/></p>
                 <p><b>BP :</b> <span t-field="o.bp"/></p>
                 <p><b>BMI :</b> <span t-field="o.bmi_value"/></p>
-                <p><b>Current Ailments:</b> <span t-field="o.ailments"/></p>
+                <p><b>Branch :</b> <span t-field="o.company_id"/></p>
                 <!-- <p><b> Symptoms :</b> <span t-field="o.sign_symptoms"/></p> -->
             </td>
             <td style="border: 1px solid black;">
@@ -34,7 +34,7 @@
                 <p><b> Address :</b> <span t-field="o.address"/></p>
                 <p><b> Father / Husband Name :</b> <span t-field="o.father_name"/></p>
                 <p><b> Occupation :</b> <span t-field="o.occupation"/></p>
-                <p><b> Signs / Symptoms :</b> <span t-field="o.sign_symptoms"/></p>
+                <p><b> Habbits :</b> <span t-field="o.patient_habits"/></p>
             </td>
             </tr>
             </thead>
@@ -42,21 +42,21 @@
             <table class="table table-bordered" style="border: 1px solid black;">
 							<thead>
                                 <tr>
-                                <th style="border: 1px solid black;">Habit</th>
+                                <th style="border: 1px solid black;">Complaints</th>
                                 <th style="border: 1px solid black;"> Duration </th>
-                                <th style="border: 1px solid black;"> Habit Per-Day </th>
+                                <th style="border: 1px solid black;"> Signs / Symptoms </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                 <tr t-foreach='docs.habbit' t-as='line'>
+                                 <tr t-foreach='docs.currents_ailments' t-as='line'>
                                <td style="border: 1px solid black;">
-                               <span t-field="line.habit"/>
+                               <span t-field="line.patient_currents_ailments"/>
                                </td>
                                <td style="border: 1px solid black;">
                                <span t-field="line.duration"/>
                                </td>
                                <td style="border: 1px solid black;">
-                               <span t-field="line.days"/>
+                               <span t-field="line.patient_signs_symptoms"/>
                                </td>
                                 </tr>
                             </tbody>
@@ -65,14 +65,18 @@
                             <table class="table table-bordered" style="border: 1px solid black;">
 							<thead>
                                 <tr>
-                                <th style="border: 1px solid black;">Diet For</th>
+                                <th style="border: 1px solid black;">Past Complaints</th>
+                                <th style="border: 1px solid black;">Notes</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                 <tr t-foreach='docs.diet_fields' t-as='line'>
+                                 <tr t-foreach='docs.pervious_medication' t-as='line'>
                                <td style="border: 1px solid black;">
-                               <span t-field="line.diet1"/>
+                               <span t-field="line.diseases_for"/>
                                </td>
+                               <td style="border: 1px solid black;">
+                                <span t-field="line.medicine"/>
+                                </td>
                                 </tr>
                             </tbody>
                             </table>
@@ -80,18 +84,58 @@
                                <table class="table table-bordered" style="border: 1px solid black;">
 							<thead>
                                 <tr>
-                                <th style="border: 1px solid black;">Treatments</th>
+                                <th style="border: 1px solid black;">Lab / Scan</th>
+                                <th style="border: 1px solid black;">Date of Scan</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                 <tr t-foreach='docs.treatment_initial' t-as='line'>
+                                 <tr t-foreach='docs.history_surgery' t-as='line'>
                                <td style="border: 1px solid black;">
-                               <span t-field="line.treatment1"/>
+                               <span t-field="line.lab_scan_alot"/>
                                </td>
+                               <td style="border: 1px solid black;">
+                                <span t-field="line.date"/>
+                                </td>
                                 </tr>
                             </tbody>
                             </table>
                             <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">Prescriptions</th>
+                                    <th style="border: 1px solid black;">Prescription Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                     <tr t-foreach='docs.prescription_patient' t-as='line'>
+                                   <td style="border: 1px solid black;">
+                                   <span t-field="line.prescription_alot"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                    <span t-field="line.date"/>
+                                    </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                                <table class="table table-bordered" style="border: 1px solid black;">
+                                    <thead>
+                                        <tr>
+                                        <th style="border: 1px solid black;">Diets</th>
+                                        <th style="border: 1px solid black;">Duration Followed (Days/Months)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                         <tr t-foreach='docs.diet_fields' t-as='line'>
+                                       <td style="border: 1px solid black;">
+                                       <span t-field="line.diet_for"/>
+                                       </td>
+                                       <td style="border: 1px solid black;">
+                                        <span t-field="line.followed_duration"/>
+                                        </td>
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                            <!-- <table class="table table-bordered" style="border: 1px solid black;">
 							<thead>
                                 <tr>
                                 <th style="border: 1px solid black;">Past History</th>
@@ -123,13 +167,7 @@
                                 <th style="border: 1px solid black;">Surgery History</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                 <tr t-foreach='docs.history_surgery' t-as='line'>
-                               <td style="border: 1px solid black;">
-                               <span t-field="line.surgery_reason"/>
-                               </td>
-                                </tr>
-                            </tbody>
+                            
                             </table>     
 
                             <table class="table table-bordered" style="border: 1px solid black;">
@@ -145,7 +183,7 @@
                                </td>
                                 </tr>
                             </tbody>
-                            </table>                            
+                            </table>                             -->
             </t>
             </t>
         </t>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="patient_bils_view" model="ir.ui.view">
+        <field name="name">patient_bills_view</field>
+        <field name="model">patient.bills</field>
+        <field name="arch" type="xml">
+            <form string="Patient Bills">
+                <header >
+                    <button name="invoice_button" type="object" string="Create Invoice" class="oe_highlight"/>
+                </header>             
+                <sheet> 
+                    <group>
+                        <group>
+                            <field name ="patient_name"/>
+                            <field name ="date_date"/> 
+                            <!-- <field name= "total_val"/>         -->
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+
+                    
+                    <notebook>
+                        <page string ="Bills List">
+                            <field name="bills_lines">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name ="date"/>
+                                    <field name ="bill_amount"/>
+                                    <field name ="payment_status"/>
+                                </tree>
+
+                            </field>
+
+                        </page>
+                    </notebook>
+                    <div class="row">
+                        <div class ="col-md-10">      
+                        </div>
+
+                        <div class ="col-md-2" style="display: flex; align-items: flex-start; justify-content: center;">
+                        <label for="total_amount" string="Due Amount : " />
+                            <field name='total_amount' readonly='1' force_save='1'/>
+                        </div>
+                    </div>
+                    
+
+                </sheet>
+                </form>
+                </field>
+                </record>
+
+        <record id="patient_bils_tree_view" model="ir.ui.view">
+                    <field name="name">patient_bills_tree_view</field>
+                    <field name="model">patient.bills</field>
+                    <field name="arch" type="xml">
+                        <tree string="Patient Bills">
+
+                                    <field name="patient_name"/>
+                                    <field name="date_date"/>
+                                    
+
+                            </tree>
+                            </field>
+                        </record>
+
+
+                <record id="bills_action_view" model="ir.actions.act_window">
+                    <field name="name">Bill Information</field>
+                    <field name="res_model">patient.bills</field>
+                    <field name="binding_view_types">form</field>
+                    <field name="view_mode">tree,form</field>
+                </record>
+
+            <menuitem id="patient_bills"  name ="Create Patient Bills " action="bills_action_view"
+                parent="main_menu_configartion" sequence="0" />
+                </odoo>

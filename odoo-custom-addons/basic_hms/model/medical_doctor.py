@@ -6,6 +6,8 @@ from dateutil.relativedelta import relativedelta
 import qrcode
 import base64
 from io import BytesIO
+from odoo.exceptions import ValidationError
+import json
 
 
 class medical_directions(models.Model):
@@ -13,6 +15,8 @@ class medical_directions(models.Model):
     _rec_name = 'patient'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
+
+    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.doctor')))
     doctor = fields.Many2one('res.partner',domain=[('is_doctor','=',True)],string="Doctor" ,track_visibility='always')
     age=fields.Char(string='Age')
     address = fields.Char(string="Address")
@@ -33,6 +37,7 @@ class medical_directions(models.Model):
     ailments=fields.Many2one('medical.pathology',string="Current Ailments")
     habbit=fields.One2many('medical.habits','doz',string="Habit")
     diet_fields=fields.One2many('diet.field','diet1',string='Diet')
+    patient_status = fields.Boolean(string='Patient Status')
 
     #one2many
     pervious_medication = fields.One2many('pervious.medication','diseases',string="Pervious Medication")
@@ -51,6 +56,10 @@ class medical_directions(models.Model):
 
     treatment_initial=fields.One2many('treatment.form','treatment1',string='Treatment')
 
+
+    prescription_patient = fields.One2many( 'patient.prescription','medical_doctor',string ='Prescription')
+
+    currents_ailments = fields.One2many('current.ailments','doctor_aliments',string="Current Ailments")
     
 
     lab_reports = fields.Many2one('medical.lab',string ="Lab Reports")
@@ -62,7 +71,7 @@ class medical_directions(models.Model):
 
     image1=fields.Binary(string="Image")
 
-    
+
 
     @api.onchange('height','weight')
     def _calculate_bmi(self):
@@ -121,7 +130,7 @@ class medical_directions(models.Model):
     maintance=fields.Boolean(string='Maintance')
     nt=fields.Boolean(string='NT')
 
-    # qr_id=fields.Char('serial_number')
+#   qr_id=fields.Char('serial_number')
     serial_number = fields.Char(string="Patient ID", readonly=True,copy=False,required=True, default='Patient ID')
    
     phone_number=fields.Char(string="Contact Number")
@@ -130,16 +139,86 @@ class medical_directions(models.Model):
     diagnosis = fields.Text(string='Initial Diagnosis')
     final_diagnosis =  fields.Text(string='Final Diagnosis')
     name_father = fields.Char()
-
+    # habits = fields.Many2many('habit.for',string="Habits")
+    patient_habits = fields.Many2many('habit.for',string="Habits")
     # def _get_default_stage(self):
         # self.qr_id=self.serial_number
+    # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']
+    # .browse(self.env['res.company']._company_default_get('medical.prescription.order')))
 
-#existing appoinment 
+#       existing appoinment 
 
     # @api.onchange('patient')
     # def _existing_contact(self):
-    #     if 
+    #     if
+    def send_msg(self):
+        # report_template_id = self.env.ref(
+        #     'basic_hms.report_print_prescription').report_action(self.patient.id)
+        # raise ValidationError((report_template_id.values()))
+        for rec in self:
+            report_template_id = self.env.ref('basic_hms.report_print_prescription').sudo()._render_qweb_pdf([self.ids])
+            user_encode_data = json.dumps(report_template_id).encode('utf-8')
+            data_record = base64.b64decode(user_encode_data )
+        ir_values = {
+            'name': "Customer Report",
+            'type': 'binary',
+            'datas': data_record,
+            'store_fname': data_record,
+            'res_model':'whatsapp.wizard',
+            'res_id': self.id,
+            'mimetype': 'application/x-pdf',
+        }
+        attachment_ids = fields.Many2many(
+            'ir.attachment',string='Attachment')
+        attachment_ids.create(ir_values)
+        data_id = self.env['ir.attachment'].create(ir_values)
+        template = self.template_id
+        template.attachment_ids = [(6, 0, [data_id.id])]
+        return self.env['ir.attachment'].create({
+                'type': 'ir.actions.act_window',
+                'name': 'Whatsapp Message',
+                'res_model': 'whatsapp.wizard',
+                'target': 'new',
+                'view_mode': 'form',
+                'view_type': 'form',
+                'context': {'default_user_id': self.patient.id,
+                'default_mobile':self.contact_number,
+                'default_message':"Hi "+self.patient.name+",\n\nYour Appointment is fixed with "+self.doctor.name+" on "+"\nFeedback : https://www.google.co.in/webhp?hl=en&sa=X&ved=0ahUKEwji0JG87J_4AhVVv2MGHcWkCuwQPAgI"+"\n\nThank You,\nDaisy Hospital",
+                'target': 'self',
+                'res_id': self.id,
+                'datas': data_record,
+                'store_fname': data_record,
+                'attachment_ids': self.attachment_ids and [(6, 0, self.attachment_ids.ids)],
+                'mimetype': 'application/x-pdf',
+                }
+                })
+        # return {'type': 'ir.actions.act_window',
+        #         'name': 'Whatsapp Message',
+        #         'res_model': 'whatsapp.wizard',
+        #         'target': 'new',
+        #         'view_mode': 'form',
+        #         'view_type': 'form',
+        #         'context': {'default_user_id': self.patient.id,
+        #         'default_mobile':self.contact_number,
+        #         'default_message':"Hi "+self.patient.name+",\n\nYour Appointment is fixed with "+self.doctor.name+" on "+"\nFeedback : https://www.google.co.in/webhp?hl=en&sa=X&ved=0ahUKEwji0JG87J_4AhVVv2MGHcWkCuwQPAgI"+"\n\nThank You,\nDaisy Hospital",
+        #         'default_attachment_ids':[(6,0,[base64.encodestring(pdf[0])])]
+        #         },
+        #         }
 
+    # def action_get_attachment(self):
+    #     pdf = self.env.ref('basic_hms.prescription_order_sequence')._render_qweb_pdf(self.ids)
+    #     b64_pdf = base64.b64encode(pdf[0])
+    #     name = "Prescription"
+    #     return self.env['ir.attachment'].create({
+    #         'name': name,
+    #         'type': 'binary',
+    #         'datas': b64_pdf,
+    #     # 'datas_fname': name + '.pdf',
+    #     'store_fname': name,
+    #     'res_model': self.medical.prescription.order,
+    #     'res_id': self.id,
+    #     'mimetype': 'application/x-pdf'
+    # })
 
     @api.onchange('ailments')
     def onchange_test(self):
@@ -156,9 +235,22 @@ class medical_directions(models.Model):
         result = super(medical_directions, self).create(vals)
         return result
 
+    def done_action(self):
+        self.appoinment_status=False
+
+    @api.depends('prescription_date')
+    def date_today(self):
+        count_d = self.env['medical.doctor'].search([('prescription_date', '=', datetime.datetime.now())])
+        if count_d == True:
+            self.appoinment_status=True
+        else:
+            self.appoinment_status=False
+
+
 # prescription
     def prescription_button(self):
-            return{
+        self.patient_status =False
+        return{
         'name': "Prescription",
         'type': 'ir.actions.act_window',
         'view_type': 'form',
@@ -194,6 +286,12 @@ class medical_directions(models.Model):
             'target': 'new'
             }
 
+    @api.onchange("contact_number")
+    def number_val(self):
+        if self.contact_number != False:
+            x = self.contact_number.isdigit()
+            if x == False:
+                raise ValidationError("only numbers are Allowed")
 
     def diet_for(self):
         return{
@@ -206,7 +304,6 @@ class medical_directions(models.Model):
             'default_patient_id': self.patient.id
             },
             'target': 'new'
-
         }
        
 
@@ -264,10 +361,6 @@ class medical_directions(models.Model):
 
 
 
-
-
-
-
     def scans_prescription(self):
         return {
     'name': "Scans tests",
@@ -310,7 +403,7 @@ class medical_directions(models.Model):
     qr_code = fields.Binary("QR Code", attachment=True, )
     barcode = fields.Char("Barcode")
 
-    @api.onchange('patient')
+    @api.onchange('bp')
     def generate_qr_code(self):
         for rec in self:
             p_details={
@@ -356,40 +449,35 @@ class GreenAgreement(models.Model):
 class Perviousmedication(models.Model):
     _name='pervious.medication'
 
+    # serial_number=fields.Integer(string="SL")
     diseases= fields.Many2one('medical.doctor',string="Diseases")
-    diseases_for = fields.Many2one('medical.pathology',string = "Diseases")
+    diseases_for = fields.Char(string = "Complaints")
     signs = fields.Char(string="Signs")
     medication_from = fields.Date(string="Medication From")
     medication_to = fields.Date(string="Medication to")
-    medicine = fields.Char(string="Medicines")
+    medicine = fields.Char(string="Notes")
     diets = fields.Char(string="Diets")
 
 class Patientsurgery(models.Model):
     _name = 'patient.surgery'
 
-    pat = fields.Many2one('medical.patient',string="Patient")
+    # pat = fields.Many2one('medical.patient',string="Patient")
     doc = fields.Many2one('medical.doctor',string="Doctor")
-    surgery_date = fields.Date(string="Surgery Date")
-    surgery_type = fields.Many2one('medical.pathology',string="Surgery Type")
-    surgery_reason = fields.Char(string="Past Surgery")
-    surgery_status = fields.Selection([('done','Done'),('cancel','Cancel')],string="Surgery Status")
-    surgery_notes = fields.Text(string="Surgery Notes")
+    # serial_number=fields.Integer(string="SL")
+    lab_scan_alot = fields.Many2one('medical.patient.lab.test',string="Scan/Lab Alots")
+    date= fields.Datetime(string="Date of Lab/Scan")
+    # surgery_date = fields.Date(string="Surgery Date")
+    # surgery_type = fields.Many2one('medical.pathology',string="Surgery Type")
+    # surgery_reason = fields.Char(string="Past Surgery")
+    # surgery_status = fields.Selection([('done','Done'),('cancel','Cancel')],string="Surgery Status")
+    # surgery_notes = fields.Text(string="Surgery Notes")
     
 class patient_family(models.Model):
     _name = 'patient.family'
 
-    # pati = fields.Many2one('medical.patient',string="Patient")
     doct = fields.Many2one('medical.doctor',string="Doctor")
     family_details = fields.Char(string="Family Details")
-    # family_date = fields.Date(string="Family Date")
-    # family_type = fields.Many2one('medical.pathology',string="Family Type")
-    # family_reason = fields.Char(string="Family Disease Reason")
-    # family_status = fields.Selection([('done','Done'),('cancel','Cancel')],string="Family Status")
-    # family_notes = fields.Text(string="Family Notes")
-    # family_name = fields.Char(string="Family Name")
-    # realtionship = fields.Char(string="Realtionship")
-    # familyphone = fields.Integer(string="Phone")
-    # name_f = fields.Many2one('medical.pathology',string="Family Disease")
+
 
 class documents(models.Model):
     _name ="patient.document"
@@ -397,6 +485,7 @@ class documents(models.Model):
     docc = fields.Many2one('medical.doctor',string="Doctor")
     report_name = fields.Selection([('green',"Green Document"),('o',"Other Documents")],string="Report Name")
     attachment = fields.Many2many('ir.attachment',string="Attachment")
+    # serial_number=fields.Integer(string="SL")
 
 class treatment_for(models.Model):
     _name ="treatment.form"
@@ -405,7 +494,7 @@ class treatment_for(models.Model):
     treatment_for = fields.Selection([('re','Reversable'),('ma','Maintanance'),('td','Test Dose'),('ch','Chromic ')],string= "Treatment")
     diagnosis1 = fields.Char(string='Initial Diagnosis')
     final_diagnosis1 =  fields.Char(string='Final Diagnosis')
-
+     
 class treatmentFor(models.Model):
     _name='treatment.for'
 
@@ -417,7 +506,7 @@ class diet_field(models.Model):
     diet1 = fields.Many2one('medical.doctor',string="Diet")
     diet_for = fields.Many2one('diet.for',string="Diets")
     followed_duration= fields.Integer(string="Duration Followed/Days")
-
+    # serial_number=fields.Integer(string="SL")
 
     
     
@@ -434,4 +523,43 @@ class medical_habits(models.Model):
     duration=fields.Char(string="Duration")
     days= fields.Char(string="Habit/Day")
     doz=fields.Many2one('medical.doctor',string="Dose")
+
+class Patientprescription(models.Model):
+    _name ='patient.prescription'
+
+    # serial_number=fields.Integer(string="SL")
+    medical_doctor=fields.Many2one('medical.doctor',string="Dose")
+    # medicine_name = fields.Many2one('product.product',string='Medicine Name')
+    # morning= fields.Float('Morning')
+    # noon= fields.Float('After Noon')
+    # evening= fields.Float('Evening')
+    # night= fields.Float('Night')
+    # before_after= fields.Selection([('bf',"Before Food"),('af',"After food")],'Before Food')
+    # comment= fields.Char('Comment')
+    # days1= fields.Integer('Days')
+    # units= fields.Many2one('uom.uom',string="units")
+    # potency = fields.Char(string="Potency")
+    # anupana = fields.Char(string="Anupana")
+    prescription_alot= fields.Many2one('medical.prescription.order',string="Prescriptions")
+    date= fields.Datetime(string="Date of Prescription")
+
+
+
+class Currentailgnments(models.Model):
+    _name='current.ailments'
+
+
+    # serial_number=fields.Integer(string="SL")
+    doctor_aliments =fields.Many2one('medical.doctor')
+    patient_currents_ailments=fields.Many2one('medical.pathology',string="Complaints")
+    duration = fields.Char(string="Duration")
+    patient_signs_symptoms = fields.Many2many('medical.symptoms',string="Signs/Symptoms")
+
+
+    @api.onchange('patient_currents_ailments')
+    def onchange_test(self):
+        for rec in self:
+            return {'domain':{'patient_signs_symptoms':[('diseases', '=', rec.patient_currents_ailments.id)]}}
+
+
 

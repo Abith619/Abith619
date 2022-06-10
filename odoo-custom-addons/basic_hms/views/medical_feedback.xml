@@ -32,6 +32,6 @@
                                     </p>            
                                 </field>
                             </record>        
-                            <menuitem id="menu_Feedback" name="Feedback" parent= "main_menu_hospital_management"  sequence="2" action="action_view_feedback"/>
+                            <menuitem id="menu_Feedback" name="Feedback" parent= "main_menu_configartion"  sequence="2" action="action_view_feedback"/>
                     </data>
 </odoo>

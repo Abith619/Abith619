@@ -11,6 +11,7 @@
                     </field>
                 </field>
               </record> -->
+
             <record id="view_doctor_form" model="ir.ui.view">
                 <field name="name">medical form</field>
                 <field name="model">medical.doctor</field>
@@ -21,21 +22,15 @@
                             <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight"/>
                             <button name="scan_button" type="object" string="Assign Scans/Tests" class="oe_highlight"/>
                             <button name="diet_for" type="object" string="Prescribed Diet" class="oe_highlight"/>
-                            <!-- <button name ="stage_done" type ="object" string ="Generate E-Book" class="oe_highlight"/> -->
-                            <!-- <button name="treatment_advised" type="object" string="Generate E-Book" class="oe_highlight"/> -->
-                            
+                            <button name="send_msg" string="Whatsapp Message" class="oe_highlight" type="object"/>
                             <field name ="stages" widget="statusbar"/>
                         </header>
-                        <!-- <field name="barcode" position="after"> -->
-                            
-                        <!-- </field> -->
+
                         <sheet>
-
-                                           
-
+                                          
                             <div class="oe_button_box" name="button_box">     
                                 
-                                <button class="oe_stat_button" name="prescribe_button" type="object" icon="fa-clipboard">
+                                <button class="oe_stat_button" name="prescribe_button"  type="object" icon="fa-clipboard">
                                     <field name ="pre_diet" widget="statinfo"/>
                                     </button>
 
@@ -67,18 +62,10 @@
                         <field name="qr_code" widget='image' class="oe_avatar" style="float:left;" force_save='1' readonly="1"/>
                     </div>
                 </div>
-
-             
-
-                    
                     <h1>
                         <field name="serial_number" text-align='left' string='Patient'/>
-                        
-                        <!-- <field name="qr_id" text-align='left' string='Patient'/> -->
 
                     </h1>
-                    
-                
                             <group>
                                 <group>
                                     <field name ="patient" attrs="{'readonly': [('stages','=', 'done')]}" placeholder="Patient Name" options="{'no_create_edit':True,'no_open': True}"/>
@@ -99,9 +86,9 @@
                                         <field name ="bmi_value" class="o_address_city"/>
                                         
                                     </div>
-                                        <!-- <label for="ailments"/> -->
-                                        <field name ="ailments" style="width: 100%;" options="{'no_create_edit':True,'no_open': True}"/>
-                                        
+
+                                    <field name= "patient_habits" widget="many2many_tags"/>
+                    
                                     </group>
                                     <group>
                                         <field name="doctor" attrs="{'readonly': [('stages','=', 'done')]}" options="{'no_create':True,'no_create_edit':True}"/>
@@ -112,50 +99,75 @@
                                         <field name='address' attrs="{'readonly': [('stages','=', 'done')]}" />
                                         <label for="father_name" string="Relation" />
                                         <div class="o_address_format">
-                                            <field name="father_name" class="o_address_city" />
+                                            <field name="father_name" class="o_address_city" attrs="{'readonly': [('stages','=', 'done')]}" />
                                             <label for="name_father" style="font-weight: bold !important;color: #333;" string="Name"/>
-                                            <field name="name_father" class="o_address_state"  style="width: 40%;"/>     
+                                            <field name="name_father" class="o_address_state" attrs="{'readonly': [('stages','=', 'done')]}" style="width: 40%;"/>     
                                         </div>
-                                        <!-- <field name ="office_address" attrs="{'readonly': [('stages','=', 'done')]}" /> -->
+                                      
                                 </group>
                                 <group>
-                                    <!-- <field name='habits'/> -->
+                                  
                                 </group>
                                 <group>
                                 
                                 </group>
                                 <group>
-                                    <!-- <field name='diagnosis'/> -->
+                                   
                                
                                 </group>
                                 <group>
-                                    <field name ="sign_symptoms" widget="many2many_tags" options="{'no_create_edit':True}"/> 
+                                    <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
                                     
                                 </group>
                                 <group>
-                                    <!-- <field name='final_diagnosis'/> -->
+                             
                                     
                                 </group>
                                         
                                 </group>
-                                <notebook> 
-                                    <page string="Habits" >
-                                        <field name="habbit">
-                                            <tree string="Habbits" editable="bottom" >
-                                                <field name="habit" options="{'no_create_edit':True}"/>
-                                                <field name="duration" />
-                                                <field name="days" />
+                                <notebook>
 
-                                                <!-- <field name="smoking" />
-                                                <field name="drinking" />
-                                                <field name="pan" /> -->
+                                 <page string="Present Complaints">
+                                        <field name = 'currents_ailments'>
+                                            <tree string="Current Aliments" editable="bottom" >
+                                            <field name="patient_currents_ailments" />
+                                            <field name="duration"/>
+                                            <field name ="patient_signs_symptoms" widget="many2many_tags"/>
                                             </tree>
                                         </field>
                                     </page>
-                                    <page string="Perivious Diet" >
+
+                                <page string="Past Complaints" >
+                                        <field name="pervious_medication">
+                                            <tree string="medication List" editable="bottom" >
+                                                <field name="diseases_for" options="{'no_create_edit':True}"/>
+                                                <field name="medicine"/>
+                                            </tree>
+                                        </field>
+                                    </page>
+
+                                    
+                                <page string="Lab/Scan" >
+                                    <field name="history_surgery">
+                                        <tree string="Lab sacn History" editable="bottom" >
+                                            <field name="lab_scan_alot"/>
+                                            <field name="date"/>
+                                        </tree>
+                                    </field>
+                                </page>
+
+                                    <page string="Prescriptions" >
+                                        <field name="prescription_patient">
+                                        <tree string="Prescription" editable="bottom" >
+                                        <field name="prescription_alot"/>
+                                        <field name="date"/>
+                                        
+                                            </tree>
+                                        </field>
+                                    </page>
+                                    <page string="Diet" >
                                         <field name="diet_fields">
                                             <tree string="Diet" editable="bottom">
-                                                <!-- <field name="diet1" options="{'no_create':True,'no_create_edit':True}"/> -->
                                                     <field name ="diet_for"/>
                                                     <field name ="followed_duration"/>
                                              
@@ -163,73 +175,16 @@
                                             </tree>
                                         </field>
                                     </page>
-                                    <page string="Treatments" >
                                 
-                                                <group>
-                                                    <group>
-                                                        <field name = "treat_for" widget ="radio"/>
-
-                                                    </group>
-                                                </group>
-                            
-                                    </page>
-                                    <page string="Past History" >
-                                        <field name="pervious_medication">
-                                            <tree string="medication List" editable="bottom" >
-                                                <field name="diseases_for" options="{'no_create_edit':True}"/>
-                                                <field name ="signs"/>
-                                                <field name="medicine" />
-                                                <field name="diets" />
-  
-                                            </tree>
-                                            <field name ="notes"/> 
-                                        </field>
-                                    </page>
-                                    <page string="Surgery History">
-                                        <field name = 'history_surgery'>
-                                            <tree string="Surgery List" editable="bottom" >
-    
-                                                <field name="surgery_reason" />
-     
-                                            </tree>
-                                        </field>
-                                    </page>
-                                    
-                                    <page string="Family History">
-                                        <field name = 'history_family'>
-                                            <tree string="Medical History" editable="bottom" >
-                                                <field name= "family_details"/>
-                                                <!-- <field name="name_f" /> -->
-                                                <!-- <field name ="doct"/>
-                                                <field name="family_date" />
-                                                <field name="family_type" />                                            
-                                                <field name ="family_notes"/> -->
-                                            </tree>
-                                        </field>
-                                    </page>
-
                                     <page string="Documents">
                                         <field name = 'documents'>
-                                            <tree string="Documents" editable="bottom" >
+                                            <tree string="Documents" editable="bottom">
                                                 <field name="report_name" />
                                                 <field name ="attachment" widget="many2many_binary"/>
                                             </tree>
                                         </field>
                                     </page>
-                                    <!-- <page string="Green Agreement">
 
-                                        <group>
-                                            <group>
-                                               <field name ="videos"/>
-                                            </group>
-                                        </group> -->
-                                        <!-- <field name = 'green_agreement'>
-                                            <tree string="Agreement" editable="bottom" >
-                                                <field name="agreement" /> -->
-                                                <!-- <field name ="attachment"/> -->
-                                            <!-- </tree>
-                                        </field> -->
-                                    <!-- </page> -->
                                     </notebook>
                                 </sheet>
     
@@ -252,8 +207,8 @@
                             <field name="opnumber" />
                             <field name="sex" />
                             <field name="age" />
-                            <!-- <field name="diagnosis" /> -->
-                            <field name="sign_symptoms" />
+                            <field name ="patient_status"/>
+                            <!-- <field name="sign_symptoms" /> -->
                         </tree>
                     </field>
                 </record>
@@ -267,7 +222,7 @@
     <field name="arch" type="xml">
         <search string="EBook">
 
-            <!-- <field name="patient"/> -->
+         
             <field name="opnumber"/>
             <field name="patient"/>
             <field name="phone_number"/>
@@ -275,10 +230,58 @@
     </field>
 </record>
 
+    <record id="medical_doctor_pivot_view" model="ir.ui.view">
+        <field name="name">medical.doctor.view.pivot</field>
+        <field name="model">medical.doctor</field>
+        <field name="arch" type="xml">
+            <pivot string="Ebook">
+                <field name='patient'/>
+                <!-- <field name='dates'/> -->
+            </pivot>
+        </field>
+    </record>
+    
+    <record model="ir.ui.view" id="view_ebook_graph">
+        <field name="name">medical.appointment.view.graph</field>
+        <field name="model">medical.doctor</field>
+        <field name="arch" type="xml">
+            <graph string="Ebook">
+                <field name="patient" />
+                <!-- <field name="dates" /> -->
+            </graph>
+        </field>
+    </record>
+
+
+    <!-- <record id="medical_appointment_calendar_view" model="ir.ui.view">
+        <field name="name">medical.appointment.calendar.view</field>
+        <field name="model">medical.appointment</field>
+        <field name="arch" type="xml">
+            <calendar string="Appointments" color="doctor_id"
+                quick_add="False" date_start="appointment_date">
+        
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="patient_selection" />
+            </calendar>
+        </field>
+    </record> -->
+
+
+
+
+
+
+
+
+
+
+
+
                 <record model="ir.actions.act_window" id="action_view_doctor">            
                     <field name="name">EBook</field>         
                         <field name="res_model">medical.doctor</field>                 
-                        <field name="view_mode">tree,form</field>
+                        <field name="view_mode">tree,form,graph,pivot</field>
                         <field name="domain">[]</field>            
                         <field name="help" type="html">                
                             <p class="oe_view_nocontent_create">Create a Doctor Appointment

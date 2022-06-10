@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record id="account_payment_inherit_form_health_center_view" model="ir.ui.view">
+            <field name="name">account_payment_inherit</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form" />
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name ="bill_no"/>
+                </field>
+                <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page string ="Patient bills">
+                        <field name="bill_lines">
+                            <tree editable="bottom">
+                                <field name='name'/>
+                                <field name='date'/>
+                                <field name='bill_amount'/>
+                             </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+            </field>
+        </record>
+        </odoo>

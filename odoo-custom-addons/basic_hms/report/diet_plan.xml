@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <template id="basic_hms.diet_doctor_report" name="Diet Plan">
+            <t t-call="web.external_layout">
+                <t t-call="web.html_container">
+                   <t t-foreach="docs" t-as="o">
+                       <t >
+                       <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
+                       <td style="border: 0px;width: 50%;">
+                           <p><strong>Diet Name :</strong><span t-field="o.name"/></p>
+                       </td>
+                       </table>
+                       <th style="border: 1px solid black;">6:00 AM</th>
+                       <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr>
+                            <th style="border: 1px solid black;">Morning</th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <tr t-foreach='docs.diet_line' t-as='line'>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.wakeup1"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.note"/>
+                           </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        <th style="border: 1px solid black;">6:30 AM</th>
+                       <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr>
+                            <th style="border: 1px solid black;">Juice</th>
+                            <th style="border: 1px solid black;">Quantity</th>
+                            <th style="border: 1px solid black;"> Exercise </th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <tr t-foreach='docs.diet_line1' t-as='line'>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.juice1"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.quantity"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.exercise1"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.note"/>
+                           </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        <th style="border: 1px solid black;">7:30 AM</th>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr>
+                            <th style="border: 1px solid black;">Fruits</th>
+                            <th style="border: 1px solid black;"> Quantity </th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <tr t-foreach='docs.diet_line2' t-as='line'>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.fruits1"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.grams"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.note"/>
+                           </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        <th style="border: 1px solid black;">8:30 AM</th>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr>
+                            <th style="border: 1px solid black;">Medicine</th>
+                            <th style="border: 1px solid black;"> Milk </th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <tr t-foreach='docs.diet_line3' t-as='line'>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.medicine"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.milk"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.note"/>
+                           </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        <th style="border: 1px solid black;">9:00 AM</th>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr>
+                            <th style="border: 1px solid black;">Breakfast</th>
+                            <th style="border: 1px solid black;">Foods</th>
+                            <th style="border: 1px solid black;"> Quantity </th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <tr t-foreach='docs.diet_line4' t-as='line'>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.breakfast"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.breakfast_list"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.quantity"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.note"/>
+                           </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        <th style="border: 1px solid black;">11:00 AM</th>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr>
+                            <th style="border: 1px solid black;">Drink</th>
+                            <th style="border: 1px solid black;"> Drinks Combo </th>
+                            <th style="border: 1px solid black;">Quantity</th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <tr t-foreach='docs.diet_line5' t-as='line'>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.drinks"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.drinks_list"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.litres"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.note"/>
+                           </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        <th style="border: 1px solid black;">1:00 PM</th>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr>
+                            <th style="border: 1px solid black;">Fruit Diet (150-gms)</th>
+                            <th style="border: 1px solid black;"> Veg-Diet (150-gms) </th>
+                            <th style="border: 1px solid black;">Protein Diet (150-gms)</th>
+                            <th style="border: 1px solid black;"> Rice </th>
+                            <th style="border: 1px solid black;"> Quantity </th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <tr t-foreach='docs.diet_line6' t-as='line'>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.fruit_diet"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.veg_diet"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.protein_diet"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.rice"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.grams"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.note"/>
+                           </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        <th style="border: 1px solid black;">4:00 PM</th>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr>
+                            <th style="border: 1px solid black;">Snacks</th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <tr t-foreach='docs.diet_line7' t-as='line'>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.snacks1"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.note"/>
+                           </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        <th style="border: 1px solid black;">5:30 PM</th>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr>
+                            <th style="border: 1px solid black;">Exercise</th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <tr t-foreach='docs.diet_line9' t-as='line'>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.exercise"/>
+                           </td>
+                           
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.note"/>
+                           </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        <th style="border: 1px solid black;">7:30 AM</th>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr>
+                            <th style="border: 1px solid black;">Snacks</th>
+                            <th style="border: 1px solid black;"> Egg \ Phulka </th>
+                            <th style="border: 1px solid black;">Food</th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <tr t-foreach='docs.diet_line8' t-as='line'>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.snackss"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.snacks12"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.snacks2"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.note"/>
+                           </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                       </t></t></t></t>
+        </template>
+
+    </data>
+
+
+</odoo>

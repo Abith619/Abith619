@@ -51,34 +51,40 @@
                 <table border="4" class="table table-bordered" style="border: 1px solid black;">
 					<thead>
                 <tr style="height:40px">
-					<!-- <td style="border: 1px solid black;" class="text-center"><strong>S.no</strong></td> -->
-                    <!-- <td style="border: 1px solid black;" class="text-center"><strong>Patient ID</strong></td> -->
-                    <td style="border: 1px solid black;" class="text-center"><strong>Medicine</strong></td>
+					<td style="border: 1px solid black;" class="text-center"><strong>Prescribed Quantity</strong></td>                    
+					<td style="border: 1px solid black;" class="text-center"><strong>Medicine</strong></td>
+					<td style="border: 1px solid black;" class="text-center"><strong>Quantity Available</strong></td>
+					<td style="border: 1px solid black;" class="text-center"><strong>Potency</strong></td>
                     <td style="border: 1px solid black;" class="text-center"><strong>Morning</strong></td>
                     <td style="border: 1px solid black;" class="text-center"><strong>After Noon</strong></td>
                     <td style="border: 1px solid black;" class="text-center"><strong>Evening</strong></td>
 					<td style="border: 1px solid black;" class="text-center"><strong>Night</strong></td>
-					<td style="border: 1px solid black;" class="text-center"><strong>Before Food</strong></td>
-					<td style="border: 1px solid black;" class="text-center"><strong>After Food</strong></td>
+					<td style="border: 1px solid black;" class="text-center"><strong>Units</strong></td>
+					<td style="border: 1px solid black;" class="text-center"><strong>Anupana</strong></td>
 					<td style="border: 1px solid black;" class="text-center"><strong>Days</strong></td>
-					<td style="border: 1px solid black;" class="text-center"><strong>Comment</strong></td>
+					<td style="border: 1px solid black;" class="text-center"><strong>Price/Units</strong></td>
+					<td style="border: 1px solid black;" class="text-center"><strong>Total Price</strong></td>
             </tr>
+			</thead>
 			<tr t-foreach='doc.prescription_line_ids' t-as='line'>
 				<!-- <table border="4" class="table table-sm table-bordered" style="border: 1px solid black;"> -->
 					
-							<!-- <td style="border: solid black;" ><span t-field="line.name" /></td> -->
+							<td style="border: solid black;" ><span t-field="line.prescribed_quantity" /></td>
 							<td style="border: 1px solid black;"><span t-field="line.medicine_name"/></td>
+							<td style="border: 1px solid black;"><span t-field="line.quantity"/></td>
+							<td style="border: 1px solid black;"><span t-field="line.potency"/></td>
 							<td style="border: 1px solid black;"><span t-field="line.morning"/></td>
 							<td style="border: 1px solid black;"><span t-field="line.noon"/></td>
 							<td style="border: 1px solid black;"><span t-field="line.evening"/></td>
 							<td style="border: 1px solid black;"><span t-field="line.night"/></td>
-							<td style="border: 1px solid black;"><span t-field="line.before_food"/></td>
-							<td style="border: 1px solid black;"><span t-field="line.after_food"/></td>
+							<td style="border: 1px solid black;"><span t-field="line.units"/></td>
+							<td style="border: 1px solid black;"><span t-field="line.anupana"/></td>
 							<td style="border: 1px solid black;"><span t-field="line.days1"/></td>
-							<td style="border: 1px solid black;"><span t-field="line.comment"/></td>
+							<td style="border: 1px solid black;"><span t-field="line.price"/></td>
+							<td style="border: 1px solid black;"><span t-field="line.total_price"/></td>
 						</tr>
             <!-- </table> -->
-							</thead>
+							
 							<!-- <table border="4" class="table table-bordered" style="border: 1px solid black;">
 							<tbody>
 								
@@ -96,14 +102,15 @@
 					</br> -->
 					
 					<div class="row mt32 mb32" id="informations">
-						<!-- <div class="col-xs-3">
-							<strong>Notes:</strong>
-							<span t-field="doc.notes"/>
-						</div> -->
+						
 						<div class="text-right mb32">
 							<strong>Doctor Signature:</strong>
 						</div>
+						
 					</div>
+				</div>
+				<div class="text-center mb32">
+					<strong>Medicines once purchased cannot be Taken back or Refunded</strong>
 				</div>
 			</t>
         </template>
@@ -111,9 +118,10 @@
                 <t t-call="web.html_container">
                     <t t-foreach="docs" t-as="doc">
                     <t t-call="basic_hms.prescription_demo_report_template" t-lang="doc.doctor_id.name"/>
+					<p><strong>Medicines once purchased cannot be Taken back or Refunded</strong></p>
                     </t>
                 </t>
         </template>
-		<!-- <strong>Any Doubt in Medicine/Diet Contact : 9566990033</strong> -->
+		
     </data>
 </openerp>

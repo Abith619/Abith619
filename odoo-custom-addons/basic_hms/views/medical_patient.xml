@@ -8,25 +8,26 @@
                 <form string="Patient">
                     <header>   
                         <button name="assign_button" type="object" string="Paid" class="oe_highlight"/>
+                        
                         <field name ="stages" widget="statusbar"/>
-                        <!-- <label for="date1" string="Date" />
-                        <field name="date1"/> -->
+
                     </header>
 
                     <sheet>
-                        <h1>
+                <!-- <div class="oe_button_box" name="button_box">           
+                            <button class="oe_stat_button" name="payment_button" type="object" icon="fa-clipboard">
+                                <field name ="payment" widget="statinfo"/>
+                            </button>
+                </div> -->  
+                <field name="name"  />
+                       
                             <group>
                                 <group>
-                                    <field name="name" />
-
+                                    <field name ="reg_type" widget="radio" options="{'horizontal': true}"/>
                                 </group>
-                                <group>
-
+                                <group>        
                                 </group>
-                            
                         </group>
-                        </h1>
-                      
                         <group>
                             <div class="row">
                                 <label for="patient_id" string="Patient Details" style="font-size: 25px !important; padding-bottom: 23px;margin-left: 380px !important;color: #000000;font-weight: 600;"/>
@@ -119,7 +120,7 @@
                                     <field name="dates" widget="date" attrs="{'invisible': [('doctors','=', False)]}" class="o_address_city" />
                                 
                                     <field name="appointment_from" attrs="{'invisible': [('dates','=', False)]}" class="o_address_state"/>
-                                
+                                    <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
                                    
                             </group>
                       
@@ -152,6 +153,7 @@
             <field name="patient_id"/>
         </search>
     </field>
+
 </record>
         <record id="medical_patients_tree_view" model="ir.ui.view">
             <field name="name">medical.patients.tree.view</field>
@@ -168,12 +170,49 @@
             </field>
         </record>
 
-        <record id="action_medical_patient" model="ir.actions.act_window">
-            <field name="name">Registration Information</field>
-            <field name="res_model">medical.patient</field>
-            <field name="binding_view_types">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
+
+    <record id="medical_patient_pivot_view" model="ir.ui.view">
+        <field name="name">medical.appointment.view.pivot</field>
+        <field name="model">medical.patient</field>
+        <field name="arch" type="xml">
+            <pivot string="Registration">
+                <field name='patient_id'/>
+                <field name='dates'/>
+            </pivot>
+        </field>
+    </record>
+
+    
+    <record model="ir.ui.view" id="view_patient_graph">
+        <field name="name">medical.appointment.view.graph</field>
+        <field name="model">medical.appointment</field>
+        <field name="arch" type="xml">
+            <graph string="Registration">
+                <field name="patient_id" />
+                <field name="dates" />
+            </graph>
+        </field>
+    </record>
+
+    <record id="medical_patient_calendar_view" model="ir.ui.view">
+        <field name="name">medical.patient.calendar.view</field>
+        <field name="model">medical.patient</field>
+        <field name="arch" type="xml">
+            <calendar string="Patients" quick_add="False" date_start='dates'>
+                    <field name="patient_id"/>
+                <field name="doctors"/>
+                <field name="dates"/>
+            </calendar>
+        </field>
+    </record>
+ 
+    <record id="action_medical_patient" model="ir.actions.act_window">
+        <field name="name">Registration Information</field>
+        <field name="res_model">medical.patient</field>
+        <field name="binding_view_types">form</field>
+        <field name="view_mode">tree,form,pivot,graph,calendar</field>
+    </record>
+
 
         <menuitem id="menu_medical_patient_code" action="action_medical_patient"
             parent="menu_patients" sequence="0" />
