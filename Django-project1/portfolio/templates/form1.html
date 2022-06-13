@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script><!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+    </head>
+    <body>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-6">
+                    <label>First Name</label>
+                    <input type="text" name="firstname" class="form-control">
+                </div>
+                <div class="col-6">
+                    <label>Last Name</label>
+                    <input type="text" name="lastname" class="form-control">
+                </div>
+            </div>
+          <div class = "row">
+            <div class="col-6">
+                <label>email</label>
+                <input type="text" name="email" class="form-control">
+            </div>
+            <div class="col-6">
+                <label>phone_number</label>
+                <input type="text" name="phone_number" class="form-control">
+            </div>
+          </div>  
+
+
+            <button type="submit">Submit</button>
+          </form>
+    </body>
+    
+</html>

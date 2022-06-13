@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+          <title>portfolio</title>
+    </head>
+<!-- <table class="person">  -->
+<body>
+<table>
+    <thead>
+        <tr>
+            <th>SI.No</th>
+            <th>First_name</th> 
+            <th>last_name</th> 
+            <th>email</th>
+            <th>phone_number</th>
+            <th>actions</th>
+        </tr>  
+   </thead>          
+<tbody>  
+{% for person in persons %}  
+    <tr>  
+        <td>{{forloop.counter}}</td>
+         <td>{{person.first_name}}</td>  
+         <td>{{person.last_name}}</td>  
+         <td>{{person.email}}</td>  
+         <td>{{person.phone_number}}</td>
+         <td><a href="{% url 'portfolio:edit' pk=person.id %}"><span class="glyphicon glyphicon-pencil" >Edit</span></a></td>
+         <td><a href="{% url 'portfolio:delete' pk=person.id %}"><span class="glyphicon glyphicon-pencil" >Delete</span></a></td>
+        </tr> 
+{% endfor %}
+</tbody>  
+</table>  
+<button type="button"> <a href="{% url 'portfolio:home' %}">Create</a></button> 
+         
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>portfolio</head>
+<body>
+<br> 
+<h1>REGISTRATION FORM</h1>
+</br>
+<form method="POST">
+    {% csrf_token %}
+     <div class = 'person'>
+        <!-- <br><lebal>first_name</lebal>
+        <input type="text" name="first_name" placeholder="first_name"></br>
+        <br><lebal>last_name</lebal>
+        <input type="text" name="last_name" placeholder="last_name"></br>
+        <br><lebal>email</lebal>
+        <input type="email" name="email" placeholder="email"></br>
+        <br><lebal>phone_number</lebal>
+        <input type="phone_number" name="phone_number" placeholder="phone_number"></br>
+        <br><lebal>password</lebal>
+        <input type="password" name="password" placeholder="password"></br>
+        <br> -->
+    {{ form.as_p }}
+            <button type="submit">
+                Submit
+            </button>
+
+            <button type="button">
+                <a href="{% url 'portfolio:show' %}">List</a>
+            </button>
+
+        </br>
+
+     </div>
+</form>
+</body>
+</html>

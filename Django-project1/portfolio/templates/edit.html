@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+          <title>portfolio</title>
+    </head>
+
+    <body>  
+        <form method="POST" class="post-form">  
+                {% csrf_token %}  
+            <!-- <div class="container">   -->
+        {{form.as_p}}
+        <button type="submit">Submit</button>
+        </form>  
+    </body>  
+</html>  
+
