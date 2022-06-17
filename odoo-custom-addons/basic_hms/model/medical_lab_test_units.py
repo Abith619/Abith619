@@ -15,14 +15,10 @@ class medical_lab_test_units(models.Model):
     units = fields.Many2one('test.units',string="Units")
     normal_range= fields.Float(string="Normal Range")
 
-
 class Units_range(models.Model):
     _name='lab_test.lines'
 
     test=fields.Many2one('medical.lab.test.units')
     normal_range= fields.Float(string="Normal Range")
     unit = fields.Many2one('test.units',string="Units")
-
-
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:    

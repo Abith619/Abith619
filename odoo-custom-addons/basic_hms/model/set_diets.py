@@ -1,13 +1,17 @@
 from odoo import api, fields, models, _
+import datetime
 
 class diet(models.Model):
     _name='set.diet.lines'
 
 class SetDiets(models.Model):
     _name = 'set.diets'
-    _rec_name = 'name'
 
     name = fields.Char('Name', required = True)
+    patient_id = fields.Many2one('res.partner', 'Patient Name')
+    dates = fields.Date(default=datetime.datetime.now(),string='Date')
+
+    # code = fields.Char('Code')
     diet_line = fields.One2many('set.diet.line','name',string="Diet Advisied")
     diet_line1 = fields.One2many('diet.six','name',string="Diet Advisied")
     diet_line2 = fields.One2many('diet.seven','name',string="Diet Advisied")
@@ -25,6 +29,7 @@ class DietAssign(models.Model):
     name=fields.Many2one('set.diets')
 
     wakeup1=fields.Char(string="Morning")
+    # wakeup=fields.Selection([('ghee','Ghee'),('butter','Butter'),('coconut','Coconut-Oil')],string="Morning")
     note=fields.Char('Notes')
 
 class diet_six(models.Model):
@@ -34,6 +39,8 @@ class diet_six(models.Model):
     juice1=fields.Char(string="Juice",default='Sorraka 150ml')
     quantity=fields.Char(string="Quantity")
     exercise1=fields.Char(string="Exercise")
+    # juice=fields.Selection([('sorraka','Sorraka Juice'),('nil','Nil')],string="Juice",default='Sorraka 150ml')
+    # exercise=fields.Selection([('walking','Walking'),('plank','Plank'),('namaskar','Surya Namaskar'),('strech','Streches'),('namaz','Namaz'),('exercise','Ground Exercise'),('nil','Nil')],string="Exercise")
     note=fields.Char('Notes')
 
 class diet_seven(models.Model):
@@ -41,6 +48,7 @@ class diet_seven(models.Model):
 
     name=fields.Many2one('set.diets')
     fruits1=fields.Char(string="Fruits")
+    # fruits=fields.Many2many('set.fruits',string="Fruits")
     grams=fields.Char('Quantity',default='100 Grams')
     note=fields.Char('Notes')
 
@@ -97,6 +105,8 @@ class diet_seven_one(models.Model):
     note=fields.Char('Notes')
     snackss=fields.Char(string="Snacks")
     snacks12=fields.Char(string="Afternoon")
+    # snacks=fields.Selection([('sabzi','Veg-Sabzi 200 gm'),('salad','Veg-Salad 150 gm'),('veg-salad','Veg-Salad 200 gm + Omelete')],string="Snacks")
+    # snacks1=fields.Selection([('egg','Egg'),('phulka','Phulka'),('both','Egg & Phulka'),('nil','Nil')],string="Egg / Phulka")
     snacks2=fields.Selection([('semiya','Red Semiya'),('Aval','Red Aval'),('puttu','Red Puttu')],string="Dinner")
 
 class Diet_One(models.Model):

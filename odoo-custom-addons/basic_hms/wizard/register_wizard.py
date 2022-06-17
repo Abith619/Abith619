@@ -27,7 +27,7 @@ class Registerwizard(models.TransientModel):
     treatment = fields.Many2one('medical.pathology',string="Treatment for")
     fees = fields.Float(string="Fees")
     reason=fields.Text(string="Reason")
-    currency = fields.Many2one('res.currency',string="Currency")
+    currency = fields.Many2one('res.currency',string="Currency",default=20)
     payment_status = fields.Boolean(string="Paid")
     duration_ailments = fields.Char(string="Duration of Ailments")
     doctor_changes=fields.Boolean(string="Change",readonly=True)
@@ -41,8 +41,6 @@ class Registerwizard(models.TransientModel):
             self.doctor_changes= True
         else:
             self.doctor_changes= False
-
-
 
     def save(self):
         create_payment=self.env['register.payment'].create({
@@ -67,33 +65,40 @@ class Registerwizard(models.TransientModel):
         record.update({
                 'payment':self.fees
             })
+        payment_count = self.env['medical.doctor'].search_count([('patient', '=', self.patient_id.id)])
         if self.patient_selection == 'new':
-            lines=[]
-            val={
-            'patient_currents_ailments':self.treatment.id,
-            'duration':self.duration_ailments,
-            }
-            lines.append((0,0,val))
-            create_patient = self.env['medical.doctor'].create({
-                'patient':self.patient_id.id ,
-                'age':self.age, 
-                'sex':self.sex,
-                'doctor':self.doctors.id,
-                'phone_number':self.contact_no,
-                'contact_number':self.contact_number,
-                'marital_status':self.marital_status,
-                'address':self.address,
-                'father_name':self.father_name,
-                'name_father':self.name_father,
-                'occupation':self.occupation,
-                'office_address':self.office_address,
-                'height':self.height,
-                'weight':self.weight,
-                'bmi_value':self.bmi_value,
-                'opnumber':self.name,
-                'currents_ailments':lines,
-                'stages':'done',
-                })
+            if payment_count >0:
+                raise ValidationError('Patient already exist '
+                '                                                                                                                                                                                                            '
+                ' Please select - Existing Patient')
+            else:
+
+                lines=[]
+                val={
+                'patient_currents_ailments':self.treatment.id,
+                'duration':self.duration_ailments,
+                }
+                lines.append((0,0,val))
+                create_patient = self.env['medical.doctor'].create({
+                    'patient':self.patient_id.id ,
+                    'age':self.age, 
+                    'sex':self.sex,
+                    'doctor':self.doctors.id,
+                    'phone_number':self.contact_no,
+                    'contact_number':self.contact_number,
+                    'marital_status':self.marital_status,
+                    'address':self.address,
+                    'father_name':self.father_name,
+                    'name_father':self.name_father,
+                    'occupation':self.occupation,
+                    'office_address':self.office_address,
+                    'height':self.height,
+                    'weight':self.weight,
+                    'bmi_value':self.bmi_value,
+                    'opnumber':self.name,
+                    'currents_ailments':lines,
+                    'stages':'done',
+                    })
 
         elif self.patient_selection == 'exi':
             val = self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])

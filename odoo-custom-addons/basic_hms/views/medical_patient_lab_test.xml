@@ -23,6 +23,9 @@
             <field name="arch" type="xml">
                 <form string="Test Requests">
                     <header>
+                        <button name="update_result"
+                        string="Update Result" type="object"
+                        class="oe_highlight" />
                         <!-- <button name="%(action_create_lab_result2)d"
                             string="Create Lab Test" type="action"
                             class="oe_highlight" attrs="{'invisible':[('state','=','cancel')]}"/> -->
@@ -55,7 +58,7 @@
                                     attrs="{'invisible': [('invoice_to_insurer','=', False)]}" /> -->
                             </group>
                         </group>
-                        <notebook attrs="{'invisible':[('state','=','tested')]}">
+                        <notebook attrs="{'invisible':[('state','!=','ontest')]}">
                             <page string="Reports">
                                         <field name = 'reports'>
                                             <tree string="Reports" editable="bottom" >

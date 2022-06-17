@@ -50,9 +50,9 @@
             </tr>
             </thead>
             </table>
-            <td style="border: 0px;width: 50%;">
+            <!-- <td style="border: 0px;width: 50%;">
                 <p><strong>Duration of Ailments :</strong><span t-field="o.duration_ailmenmts"/></p>
-            </td>
+            </td> -->
             <td style="border: 0px;width: 50%;">
                 <p><strong>Feedback :</strong><span t-field="o.data_value"/></p>
             </td>

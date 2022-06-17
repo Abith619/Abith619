@@ -69,3 +69,13 @@ class medical_prescription_line(models.Model):
             self.units = res.units
             self.potency = res.potency
             self.anupana = res.anupana
+    sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
+
+    @api.depends('name.prescription_line_ids', 'name.prescription_line_ids.medicine_name')
+    def _sequence_ref(self):
+        for line in self:
+            no = 0
+            line.sequence_ref = no
+            for l in line.name.prescription_line_ids:
+                no += 1
+                l.sequence_ref = no

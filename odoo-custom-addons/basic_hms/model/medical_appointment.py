@@ -16,6 +16,7 @@ class medical_appointment(models.Model):
 	_name = "medical.appointment"
 	_inherit = 'mail.thread'
 
+	appoinment_by=fields.Many2one('res.users',string='Appoinment By',default=lambda self: self.env.user,readonly='1')
 	contact_number=fields.Char(string='Whatsapp Number')
 	stages= fields.Selection([('draft',"New"),('done',"Done")],default="draft")
 	date=fields.Datetime('', default=datetime.datetime.now())
@@ -73,9 +74,7 @@ class medical_appointment(models.Model):
 
 	fees = fields.Float(string='Fees',readonly=True,compute='fee_change')
 
-
 	company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.prescription.order')))
-	doc_whatsapps=fields.Binary(string="Prescription")
 
 	# @api.onchange("patient_selection")
     # def new_change(self):
@@ -91,7 +90,7 @@ class medical_appointment(models.Model):
                 'view_type': 'form',
                 'context': {'default_user_id': self.patient_id.id,
 				'default_mobile':self.contact_number,
-				'default_message':"Hi "+self.patient_id.name+",\n\nYour Appointment is fixed with "+self.doctor_id.name+" on "+str(self.dates)+"\nFeedback : https://www.google.co.in/webhp?hl=en&sa=X&ved=0ahUKEwji0JG87J_4AhVVv2MGHcWkCuwQPAgI"+"\n\nThank You,\nDaisy Hospital",
+				'default_message':"Hi "+self.patient_id.name+",\n\nYour Appointment is fixed with "+self.doctor_id.name+"\nFeedback : https://www.mouthshut.com/product-reviews/Daisy-Hospital-Chromepet-Chennai-reviews-925999566"
 				},
                 }
 
@@ -103,9 +102,18 @@ class medical_appointment(models.Model):
 			self.fees=float(150)
 		# else:
 		# 	self.fee=float(0)
-	test=fields.Boolean(string="Test")
+    		
 
-	
+	@api.onchange('dates','doctor_id')
+	def roll(self):
+		date_today=self.dates
+		today=datetime.datetime.now().date()
+		if date_today != False:
+			if date_today < today:
+				raise ValidationError("Date should be greater than today's date")
+		vals=self.env['medical.appointment'].search_count([('dates','=',date_today),('doctor_id','=',self.doctor_id.id)])
+		if vals >= 20:
+			raise ValidationError("Appointment Slots are full")
 
 	@api.onchange('appointment_from')
 	def date_appointment(self):
@@ -133,16 +141,15 @@ class medical_appointment(models.Model):
 	
 #create new contact patient
 	def button_registrations(self):
+    		
 		self.stages = 'done'
-		self.test = True
 		# create_registration = self.env['medical.patient'].create({
-		# if self.test == True:
-		ces={
-		'name': "Scan/Tests",
-		'type': 'ir.actions.act_window',
-		'view_type': 'form',
-		'view_mode': 'form',
-		'res_model': 'medical.patient',
+		ces={	
+        'name': "Scan/Tests",
+        'type': 'ir.actions.act_window',
+        'view_type': 'form',
+        'view_mode': 'form',
+        'res_model': 'medical.patient',
 		'context': {
 				'default_patient_id':self.patient_id.id,
 				'default_sex':self.gender,
@@ -155,7 +162,8 @@ class medical_appointment(models.Model):
 				'default_fees':self.fees,
 				'default_city':self.region.id,
 				'default_stages':'on',
-			},
+				# 'default_patient_movement':datetime.now()
+            },
 		}		
 		val = self.env['res.partner'].search([], order='id desc', limit=1)
 		val.write({
@@ -165,19 +173,6 @@ class medical_appointment(models.Model):
 			'is_patient':'True',
 			})
 		return ces
-
-
-	@api.onchange('dates','doctor_id')
-	def roll(self):
-		# if self.test == True:
-		date_today=self.dates
-		today=datetime.datetime.now().date()
-		if date_today != False:
-			if date_today < today:
-				raise ValidationError("Date should be greater than today's date")
-		vals=self.env['medical.appointment'].search_count([('dates','=',date_today),('doctor_id','=',self.doctor_id.id)])
-		if vals >= 20:
-			raise ValidationError("Appointment Slots are full")
 
 	@api.onchange('patient_id')
 	def get_details(self):
@@ -191,10 +186,6 @@ class medical_appointment(models.Model):
 		a_hour = relativedelta(hours=self.duration)
 		vals = now + a_hour
 		self.appointment_end=vals
-
-
-
-
 
 	# def create_invoice(self):
 	# 	lab_req_obj = self.env['medical.appointment']
@@ -270,6 +261,7 @@ class time_slot(models.Model):
 	a7=fields.Char(string="10:48 Am - 11:06 Am")
 	a8=fields.Char(string="11:06 Am - 11:24 Am")
 	a9=fields.Char(string="11:24 Am - 11:42 Am")
+
 	a10=fields.Char(string="11:42 Am - 12:00 Am")
 	a11=fields.Char(string="12:00 Am - 12:18 Pm")
 	a12=fields.Char(string="12:18 Pm - 12:36 Pm")

@@ -9,6 +9,13 @@
                     <h1>
                         <field name="name" style="width: 30%"  placeholder="Diet name"/>
                     </h1>
+                        <group>
+                        <field name="patient_id"/>
+                    </group>
+                    <group>
+                        <field name="dates"/>
+                    </group>
+
                     <notebook>
                         <page string="06:00 AM">
                             <field name ="diet_line">
@@ -47,7 +54,7 @@
                                 </tree>
                             </field>
                         </page>
-                        <page string="09:30 AM">
+                        <page string="09:00 AM">
                             <field name ="diet_line4">
                                 <tree string='09:00 AM' editable="bottom">
                                     <field name ="breakfast"/>

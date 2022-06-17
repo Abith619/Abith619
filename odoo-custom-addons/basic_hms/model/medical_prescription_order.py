@@ -34,6 +34,7 @@ class medical_prescription_order(models.Model):
     insurer_id = fields.Many2one('medical.insurance', 'Insurer')
     is_shipped = fields.Boolean(default  =  False,copy=False)
     total=fields.Float(string="Total :")
+    delivery_option= fields.Selection([('dir','Direct'),('on',"Online")],string="Delivery Option",default='dir')
     # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.prescription.order')))
 
     @api.onchange('prescription_line_ids')
@@ -56,7 +57,9 @@ class medical_prescription_order(models.Model):
                 'name':'Presciption Payment',
                 'date':datetime.now(),
                 'bill_amount':res.total,
+                
             }
+
         billing_lines.append((0,0,billing_value))
         billing.write({'bills_lines':billing_lines})
       
@@ -64,7 +67,8 @@ class medical_prescription_order(models.Model):
         lines=[]
         value={
             'prescription_alot':res.id,
-            'date':datetime.now()
+            'date':datetime.now(),
+            'delivery_option':res.delivery_option
             }
         lines.append((0,0,value))
         orm.write({'prescription_patient':lines})

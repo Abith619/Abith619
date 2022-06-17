@@ -13,6 +13,7 @@ class medical_patient(models.Model):
     
     _name = 'medical.patient'
     _rec_name = 'patient_id'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     @api.onchange('patient_id')
     def _onchange_patient(self):
@@ -38,7 +39,7 @@ class medical_patient(models.Model):
                 rec.age = "Age"
 
     
-
+    whatsapp_check=fields.Boolean()
     stages= fields.Selection([('draft',"New"),('on',"On Process"),('done',"Done")])
     patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name", required= True)
     name = fields.Char(string ="Patient ID",readonly=True)
@@ -301,6 +302,7 @@ class medical_patient(models.Model):
     name_father=fields.Char(string="Name")
     pin_code=fields.Char(string="Pin Code")
     reg_type=fields.Selection([('dir',"Direct"),('on',"Online"),('app',"Appoinment"),('rev',"Review"),('stop',"Stopped")],string="Registration Type")
+    patient_movement = fields.Datetime()
     # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.prescription.order')))
 
     # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']
@@ -374,6 +376,9 @@ class medical_patient(models.Model):
     def create(self,val):
         appointment = self._context.get('appointment_id')
         res_partner_obj = self.env['res.partner']
+        patient_orm = self.env['res.partner'].search([('id','=',val['patient_id'])])
+        patient_orm.write({'is_patient':True,
+        'mobile':self.contact_no})
         if appointment:
             val_1 = {'name': self.env['res.partner'].browse(val['patient_id']).name}
             patient= res_partner_obj.create(val_1)
@@ -406,17 +411,29 @@ class medical_patient(models.Model):
     }
 
 
-    
+    def payment_count(self):
+        for k in self:
+
+            payment_count = self.env['register.payment'].search_count([('patient_id', '=', k.patient_id.id)])
+            k.payment= payment_count
+    payment = fields.Integer(string="Payments",compute='payment_count')
+
+    def send_msg(self):
+        return {'type': 'ir.actions.act_window',
+                'name': 'Whatsapp Message',
+                'res_model': 'whatsapp.wizard',
+                'target': 'new',
+                'view_mode': 'form',
+                'view_type': 'form',
+                'context': {'default_user_id': self.patient_id.id,
+                'default_mobile':self.contact_number,
+                'default_message':"Hi "+self.patient_id.name+",\n\nYour Have registrated With  "+self.doctors.name+" on "+str(self.dates)+"\nFeedback : https://www.google.co.in/webhp?hl=en&sa=X&ved=0ahUKEwji0JG87J_4AhVVv2MGHcWkCuwQPAgI"+"\n\nThank You,\nDaisy Hospital",
+                }}
 
 #assign doc create e book
 
     def assign_button(self):
-        # val = self.env['res.partner'].search([], order='id desc', limit=1)
-        # val.write({
-		# 	'mobile':self.contact_no,
-        #     'name':self.patient_id.name ,
-		# 	})
-        # self.stages='done'
+       
     	return {
             'type': 'ir.actions.act_window',
             'name': 'Register Payment',
@@ -448,39 +465,7 @@ class medical_patient(models.Model):
                     'default_reg_type':self.reg_type
                     
                 },}
-        # lines=[]
-        # val={
-        #     'patient_currents_ailments':self.treatment.id,
-        # }
-        # lines.append((0,0,val))
-        # create_patient = self.env['medical.doctor'].create({
-        #     'patient':self.patient_id.id ,
-        #     'age':self.age, 
-        #     'sex':self.sex,
-        #     'doctor':self.doctors.id,
-        #     'phone_number':self.contact_no,
-        #     'contact_number':self.contact_number,
-        #     'marital_status':self.marital_status,
-        #     'address':self.address,
-        #     'father_name':self.father_name,
-        #     'name_father':self.name_father,
-        #     'occupation':self.occupation,
-        #     'office_address':self.office_address,
-        #     'height':self.height,
-        #     'weight':self.weight,
-        #     'bmi_value':self.bmi_value,
-        #     'opnumber':self.name,
-        #     'stages':'done',
-        #     'currents_ailments':lines,
-        # })
-        # create_payment=self.env['register.payment'].create({
-        #     'patient_id':self.patient_id.id,
-        #     'date':datetime.now().date(),
-        #     'amount':self.fees
-        # })
-
-
-        # self.stages='done'
+ 
 
 #one2many new 
 

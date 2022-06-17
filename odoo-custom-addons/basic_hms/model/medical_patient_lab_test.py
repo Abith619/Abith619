@@ -11,7 +11,7 @@ class medical_patient_lab_test(models.Model):
     lab_test_owner_partner_id = fields.Many2one('res.partner', 'Owner Name')
     urgent =  fields.Boolean('Urgent',)
     owner_partner_id = fields.Many2one('res.partner')
-    state = fields.Selection([('draft', 'New'),('tested', 'On Tested'), ('cancel', 'Cancel')], readonly= True, default = 'draft')
+    state = fields.Selection([('draft', 'New'),('tested', 'Waiting'), ('cancel', 'Cancel'),('ontest', 'On Testing')], readonly= True, default = 'draft')
     medical_test_type_id = fields.Many2one('medical.test_type', 'Test',required = True)
     test_types = fields. Many2one('medical.lab.test.units',string='Test Types',required = True)
     test_amount = fields.Float(string="Test Amount", related='test_types.code')
@@ -24,6 +24,10 @@ class medical_patient_lab_test(models.Model):
     units= fields.Many2one('test.units', string="Units",related='test_types.units')
     normal_range = fields.Float(related='test_types.normal_range')
     reports= fields.One2many('scan.test.document','scan_t',string="Documents")
+
+    def update_result(self):
+        self.state = 'ontest'
+
 
 
     @api.onchange('units','normal_range')

@@ -8,18 +8,26 @@
             report_type="qweb-pdf"
             string="Prescription"
             name="basic_hms.prescription_demo_report"
-            file="basic_hms.prescription_demo_report"
-            attachment="'ISR-' + '.pdf'"
+            file="basic_hms.prescription_demo_report_template"
             />
 
+
         <report
-            id="report_print_diet"
+            id="report_diet_print_diet"
             model="prescribe.diet"
             report_type="qweb-pdf"
             string="Diet"
-            name="basic_hms.ebook_diet_report"
-            file="basic_hms.diet_ebook"
+            name="basic_hms.diet_doctor_report"
+            file="basic_hms.diet_doctor_report"
             />
+        <report
+            id="report_print_diet"
+            model="set.diets"
+            report_type="qweb-pdf"
+            string="Diet Plan"
+            name="basic_hms.ebook_diet_report"
+            file="basic_hms.ebook_diet_report"
+        />
             
         <report
             id="report_print_EBook"
@@ -93,14 +101,7 @@
             file="basic_hms.doctor_bill"
         />
 
-        <report
-            id="report_print_diet"
-            model="set.diets"
-            report_type="qweb-pdf"
-            string="Diet Plan"
-            name="basic_hms.diet_doctor_report"
-            file="basic_hms.doctor_diet"
-        />
+        
 
 
         <report

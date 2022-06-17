@@ -8,24 +8,27 @@
                 <form string="Patient">
                     <header>   
                         <button name="assign_button" type="object" string="Paid" class="oe_highlight"/>
-                        
+                        <button name="send_msg" type="object" string="Whatsapp" class="oe_highlight"/>
                         <field name ="stages" widget="statusbar"/>
 
                     </header>
 
                     <sheet>
-                <!-- <div class="oe_button_box" name="button_box">           
+                        <div class="oe_button_box" name="button_box">           
                             <button class="oe_stat_button" name="payment_button" type="object" icon="fa-clipboard">
                                 <field name ="payment" widget="statinfo"/>
                             </button>
-                </div> -->  
+                </div>
+
                 <field name="name"  />
                        
                             <group>
-                                <group>
+                                <group class="col-5"> 
                                     <field name ="reg_type" widget="radio" options="{'horizontal': true}"/>
                                 </group>
-                                <group>        
+                                <group  class="col-5">
+<!-- 
+                                    <field name="patient_movement"/> -->
                                 </group>
                         </group>
                         <group>
@@ -41,7 +44,7 @@
                                 <field name="marital_status" />
                                 <label for="date_of_birth" string="DOB" />
                                 <div class="o_address_format">
-                                    <field name="date_of_birth" class="o_address_city" />
+                                    <field name="date_of_birth" class="o_address_city" placeholder="mm-dd-yyyy" />
                                     <label for="age" style="font-weight: bold !important;color: #333;"  font-family= "Franklin Gothic Medium" string="Age"/>
                                     <field name="age" class="o_address_state"/>
                                 </div>
@@ -63,8 +66,16 @@
                                 
                             
                              <group>
-                                <field name="contact_no" attrs="{'readonly': [('stages','=', 'done')]}" />
-                                <field name="contact_number" attrs="{'readonly': [('stages','=', 'done')]}" />
+                                <label for="contact_no" string="Contact Number" />
+                                <div class="o_address_format">
+                                   
+                                   <field name="contact_no" style="width: 30%;margin-right: 10px;" attrs="{'readonly': [('stages','=', 'done')]}" />
+                                    <field name = "whatsapp_check" style="width: 10%;border-left-width: 10px;margin-right: 0px;"/>
+                                    <strong><label for="contact_number"  style="font-weight: bold !important;color: #333;" string="Whats App "/></strong>
+                                    <field name="contact_number"  style="width: 30%;" attrs="{'readonly': [('stages','=', 'done')],'invisible': [('whatsapp_check','=', True)]} " />
+                                    
+                                </div> 
+
                                 <field name="address"/>
 
                                 <label for="city" string=" " />  
@@ -113,8 +124,8 @@
 
                             <group>
                                                                 
-                                <field name="treatment" required="1" attrs="{'readonly': [('stages','=', 'on')]}"  options="{'no_create_edit':True}"/>
-                                <field name="duration_ailmenmts" string="Duration of Ailment"/>
+                                <field name="treatment" required="1" attrs="{'readonly': [('stages','=', 'on')]}"  options="{'no_create_edit':True}" invisible='1'/>
+                                <field name="duration_ailmenmts" string="Duration of Ailment" invisible='1'/>
                                 
                                 <field name ="doctors" attrs="{'readonly': [('stages','=', 'done')]}" options="{'no_create_edit':True}"/>
                                     <field name="dates" widget="date" attrs="{'invisible': [('doctors','=', False)]}" class="o_address_city" />
@@ -135,6 +146,11 @@
                 </group> 
                 </group>
                     </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" string="mail"/>
+                        <field name="message_ids" widget="mail_thread" string= "Mail"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                    </div>
 
                 </form>
 
@@ -215,7 +231,7 @@
 
 
         <menuitem id="menu_medical_patient_code" action="action_medical_patient"
-            parent="menu_patients" sequence="0" />
+            parent="main_menu_hospital_management" sequence="0" />
 
         
 

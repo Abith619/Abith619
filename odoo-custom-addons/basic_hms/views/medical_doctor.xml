@@ -19,10 +19,10 @@
                 <field name="arch" type="xml">
                     <form string="doctor">
                         <header>
-                            <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight"/>
                             <button name="scan_button" type="object" string="Assign Scans/Tests" class="oe_highlight"/>
+                            <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight"/>
                             <button name="diet_for" type="object" string="Prescribed Diet" class="oe_highlight"/>
-                            <button name="send_msg" string="Whatsapp Message" class="oe_highlight" type="object"/>
+                            
                             <field name ="stages" widget="statusbar"/>
                         </header>
 
@@ -76,7 +76,7 @@
                                         <label for="height" string="Height" />
                                         <div class="o_address_format">
                                             <field name="height" placeholder='in Cms' class="o_address_city" attrs="{'readonly': [('stages','=', 'done')]}"  />
-                                            <label for="weight" style="font-weight: bold !important;color: #333;" string="Weight "  />
+                                        <label for="weight" style="font-weight: bold !important;color: #333;" string="Weight "  />
                                             <field name="weight" placeholder='in Kgs' class="o_address_state"  style="width: 40%;" attrs="{'readonly': [('stages','=', 'done')]}"/>
                                         </div>
                                         <label for="bp" string="BP in mmHg" />
@@ -148,6 +148,7 @@
 
                                     
                                 <page string="Lab/Scan" >
+                                    <!-- <button name="scan_button" type="object" string="Assign Scans/Tests" class="oe_highlight"/> -->
                                     <field name="history_surgery">
                                         <tree string="Lab sacn History" editable="bottom" >
                                             <field name="lab_scan_alot"/>
@@ -157,11 +158,12 @@
                                 </page>
 
                                     <page string="Prescriptions" >
+                                        <!-- <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight"/> -->
                                         <field name="prescription_patient">
                                         <tree string="Prescription" editable="bottom" >
                                         <field name="prescription_alot"/>
                                         <field name="date"/>
-                                        
+                                        <field name="delivery_option"/>     
                                             </tree>
                                         </field>
                                     </page>
@@ -186,6 +188,9 @@
                                     </page>
 
                                     </notebook>
+                                        <label for="acknowledge" style="font-size: 20px !important;" string="Acknowledgement"/>
+                                        <div class="row">
+                                        <field name = 'acknowledge'/></div>
                                 </sheet>
     
                             <div class="oe_chatter">
@@ -266,17 +271,6 @@
             </calendar>
         </field>
     </record> -->
-
-
-
-
-
-
-
-
-
-
-
 
                 <record model="ir.actions.act_window" id="action_view_doctor">            
                     <field name="name">EBook</field>         

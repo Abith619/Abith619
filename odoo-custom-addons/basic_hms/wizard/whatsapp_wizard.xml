@@ -14,9 +14,6 @@
                     <group>
                         <field name="message"/>
                     </group>
-                    <group>
-                        <field name="attachment_ids" widget="many2many_binary"/>
-                    </group>
                     <footer>
                         <button name="send_message" string="Send" type="object"/>
                         <button name="cancel" string="Cancel" special="cancel"/>

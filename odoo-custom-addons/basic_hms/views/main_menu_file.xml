@@ -34,9 +34,9 @@
 
          <menuitem id="menu_inpatient_administration" name="Inpatient Administration"
             parent="main_menu_configartion" sequence='12' />
-
+<!-- 
         <menuitem id="menu_patients" name='Registration'
-            parent="main_menu_hospital_management" sequence="0" />
+            parent="main_menu_hospital_management" sequence="0" /> -->
 
         <menuitem name="Pediatrics" id="main_menu_pediatrics"
             parent="main_menu_hospital_management"

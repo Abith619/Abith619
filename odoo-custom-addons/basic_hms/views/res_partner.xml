@@ -1,18 +1,154 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-        <record id="res_partner_inherit_form_health_center_view" model="ir.ui.view">
-            <field name="name">res.partner.inherit.form.health.center.view</field>
+        <record id="res_partner_inherit_form_health_view" model="ir.ui.view">
+            <field name="name">res.partner.inherit.form.health.view</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form" />
             <field name="arch" type="xml">
-                <field name="function" position="after">
-                    <field name="relationship" />
-                    <field name ="patient_gender"/>
-                    <field name="relative_partner_id" />
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button class="oe_stat_button" name="app_count_button" attrs="{'invisible': ['|',('roles_selection','=', 'patient'),('roles_selection','=', 'pharmacy')]}" type="object" icon="fa-clipboard">
+                        <field name ="count_appointment" widget="statinfo" />
+                    </button>
+                    <button class="oe_stat_button" name="doctor_count_button" attrs="{'invisible': ['|',('roles_selection','=', 'doctor'),('roles_selection','=', 'reception')]}" type="object" icon="fa-clipboard">
+                        <field name ="doctor_count_appointment" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" name="prescription_count_button"  type="object" icon="fa-clipboard" attrs="{'invisible': ['|',('roles_selection','=', 'reception'),('roles_selection','=', 'billing')]}">
+                        <field name ="prescription_count_appointment" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" name="lab_count_button"  type="object" icon="fa-clipboard" attrs="{'invisible': ['|',('roles_selection','=', 'reception'),('roles_selection','=', 'pharmacy')]}">
+                        <field name ="lab_count_appointment" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" name="billing_count_button"  type="object" icon="fa-clipboard" attrs="{'invisible': [('roles_selection','=', 'reception'),('roles_selection','=', 'pharmacy')]}">
+                        <field name ="billing_count_appointment" widget="statinfo"/>
+                    </button>
+                </xpath>
 
+ 
+
+                <xpath expr="//button[@name='371']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_view_partner_invoices']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                
+                <xpath expr="//field[@name='name']" position="before">
+                    <div><field name ="roles_selection" widget="radio" options="{'horizontal': true}"/></div>
+                </xpath>
+
+                <xpath expr="//field[@name='property_account_receivable_id']" position="attributes">
+                <attribute name="required">0</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='property_account_payable_id']" position="attributes">
+                    <attribute name="required">0</attribute>
+                </xpath>
+                
+                <xpath expr="//field[@name='category_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='image_1920']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                
+
+                <xpath expr="//field[@name='title']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='vat']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='website']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='company_type']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='contact_addresses']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='sales_purchases']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='followup_tab']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='accounting']" position="replace">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='accounting_disabled']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='internal_notes']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!-- <xpath expr="//field[@name='mobile']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath> -->
+
+                <!-- <xpath expr="//field[@name='phone']" nolabel="1" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                    <attribute name="nolabel">1</attribute>
+                </xpath> -->
+
+                <field name="phone" position="attributes">
+                <attribute name="invisible">True</attribute>
                 </field>
-                <notebook>
+                <field name="mobile" position="attributes">
+                <attribute name="invisible">True</attribute>
+                </field>
 
+            <xpath expr="//field[@name='roles_selection']" position="after">
+                <group>
+                    <div class="row">
+                    <div class="col-4">
+                        <div><label for="image_1920" string="Photo" /></div>
+                        <field name='image_1920' widget='image' style="width: 50%;"/>
+                    </div>
+                    <div class="col-6">
+                    </div>
+                    <div class="col-2">
+                        <div><label style="float:center;" for="qr_code" string="Qr Code" /></div>
+                        <field name="qr_code" widget='image' class="oe_avatar" style="float:left;" force_save='1' readonly="1"/>
+                    </div>
+                </div>
+                </group>
+            </xpath>
+            
+            <field name="function" position="after">
+                <field name="doctor_idxs" attrs="{'invisible': [('roles_selection','=', 'reception')]}"/>
+                <field name="dob_contact" attrs="{'invisible': [('roles_selection','=', 'reception')]}"/>
+                <field name ="patient_gender" attrs="{'invisible': [('roles_selection','=', 'reception')]}"/>
+                <field name ="designation" attrs="{'invisible': [('roles_selection','=', 'reception')]}"/>
+                <field name ="user_name"/>
+                <field name ="password" password="True" />
+            </field>
+            
+
+            <field name="vat" position="after">
+                <field name ="whatsapp" widget="phone"/>
+                <field name ="phone" widget="phone"/>
+                <field name ="mobile" string='Recovery Number' widget="phone" attrs="{'invisible': [('roles_selection','=', 'reception')]}"/>
+                <field name ="gov_ids" />
+                <field name ="company_id" attrs="{'invisible': [('roles_selection','=', 'reception')]}"/>
+            </field>
+            <notebook >
+                
+                <page name="sales_purchases" invisible='1'>
+                </page>
                 <page string="Medical">
                     <group colspan="6" col="6">
                             <field name="is_patient" />
@@ -21,6 +157,7 @@
                             <field name="is_person" />
                             <field name="is_insurance_company" />
                             <field name="is_pharmacy" />
+                            
                 </group>
                         <field name="company_insurance_ids" colspan="4"
                             widget="one2many_list" />
