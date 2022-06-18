@@ -89,10 +89,10 @@
 
         <act_window id="action_view_lab_id" name="Lab Reports"
             res_model="medical.lab" binding_model="medical.patient"
-            view_mode="tree,form" domain="[('patient_id', '=', active_id)]" />
+            view_mode="tree,form"/>
 
-        <menuitem name="Lab Tests Results" id="menu_lab_test_result"
+        <!-- <menuitem name="Lab Tests Results" id="menu_lab_test_result"
             parent="basic_hms.main_menu_laboratory" action="action_medical_lab_form"
-            sequence="0" />
+            sequence="0" /> -->
 
 </odoo>

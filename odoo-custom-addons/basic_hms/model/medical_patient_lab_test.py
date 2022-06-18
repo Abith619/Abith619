@@ -23,6 +23,7 @@ class medical_patient_lab_test(models.Model):
     is_invoiced = fields.Boolean(copy=False,default = False)
     units= fields.Many2one('test.units', string="Units",related='test_types.units')
     normal_range = fields.Float(related='test_types.normal_range')
+    normal_ranges = fields.Char(related='test_types.normal_ranges')
     reports= fields.One2many('scan.test.document','scan_t',string="Documents")
 
     def update_result(self):
@@ -35,7 +36,7 @@ class medical_patient_lab_test(models.Model):
         lines=[(5,0,0)]
         val={
             'test_unit':self.units,
-            'normal_range':self.normal_range
+            'normal_ranges':self.normal_ranges
         }
         lines.append((0,0,val))
         self.reports = lines
@@ -149,8 +150,9 @@ class Testdocuments(models.Model):
 
     scan_t = fields.Many2one('medical.patient.lab.test',string="Doctor")
     report_name = fields.Char(string="Report Name")
-    normal_range = fields. Float( string="Normal Range")
-    tested_range = fields.Float(string="Tested Range")
+    normal_range = fields.Float( string="Normal Range")
+    normal_ranges = fields.Char( string="Normal Range",rewuired=True)
+    tested_range = fields.Char(string="Tested Range")
     test_unit = fields.Many2one('test.units',string="Unit")
     attachments = fields.Many2many('ir.attachment',string="Attachment")
 

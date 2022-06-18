@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<openerp>
     <data>
-        <template id="basic_hms.prescription_demo_report">
+        <template id="basic_hms.prescription_demo_report_template">
 			<t t-call="web.external_layout">
-			<t t-call="web.html_container">
-                   <t t-foreach="docs" t-as="o">
-                       <t >
 				<div class="page">
 					<div class="oe_structure"/>
 					  <br/><br/><br/><br/>
@@ -17,11 +14,11 @@
 					<br/>
 					
                         
-                            <!-- <td style="border: 1px solid black;" class="text-left"><strong>Name :</strong>
+                            <td style="border: 1px solid black;" class="text-left"><strong>Name :</strong>
                                 <span style="border: 0px ;" t-field="doc.patient_id"/>
 							</td> 
-						 -->
-							<!-- <td style="border: 1px solid black;" class="text-left"><strong>Age </strong>
+						
+							<td style="border: 1px solid black;" class="text-left"><strong>Age </strong>
                                 <span style="border: 0px ;" t-field="doc.age"/>
                             </td>
 							<td style="border: 1px solid black;" class="text-left"><strong>Weight </strong>
@@ -32,14 +29,14 @@
                             </td>
 							<td style="border: 1px solid black;" class="text-left"><strong> sex </strong>
                                 <span style="border: 0px ;" t-field="doc.sex"/>
-                            </td> -->
+                            </td>
 
                             <!-- <td style="border: 1px solid black;" class="text-left"><strong> BP </strong>
                                 <span style="border: 0px ;" t-field="doc.bp"/>
                             </td> -->
-							<!-- <td style="border: 1px solid black;" class="text-left"><strong>Prescription Date : </strong>
+							<td style="border: 1px solid black;" class="text-left"><strong>Prescription Date : </strong>
                                 <span style="border: 0px ;" t-field="doc.prescription_date"/>
-                            </td> -->
+                            </td>
                         </tr> 
                         </table>
 					<br>
@@ -50,46 +47,59 @@
 									<strong>Prescription Details</strong>
 								</div>
 								<p class="text-center" style="font-size:15px"></p>
-
-				<th style="border: 1px solid black;">Prescription Details</th>		
+							
                 <table border="4" class="table table-bordered" style="border: 1px solid black;">
 					<thead>
                 <tr style="height:40px">
-					<th style="border: 1px solid black;" class="text-center"><strong>Sl.No</strong></th> 
+					<td style="border: 1px solid black;" class="text-center"><strong>Sl.No</strong></td> 
 					<!-- <td style="border: 1px solid black;" class="text-center"><strong>Prescribed Quantity</strong></td>                    <td style="border: 1px solid black;" class="text-center"><strong>Medicine</strong></td> -->
-					<th style="border: 1px solid black;" class="text-center"><strong>Medicine</strong></th>
+					<td style="border: 1px solid black;" class="text-center"><strong>Medicine</strong></td>
 					<!-- <td style="border: 1px solid black;" class="text-center"><strong>Quantity Available</strong></td> -->
 					<!-- <td style="border: 1px solid black;" class="text-center"><strong>Potency</strong></td> -->
-                    <th style="border: 1px solid black;" class="text-center"><strong>Morning</strong></th>
-                    <th style="border: 1px solid black;" class="text-center"><strong>After Noon</strong></th>
-                    <th style="border: 1px solid black;" class="text-center"><strong>Evening</strong></th>
-					<th style="border: 1px solid black;" class="text-center"><strong>Night</strong></th>
-					<th style="border: 1px solid black;" class="text-center"><strong>Units</strong></th>
-					<th style="border: 1px solid black;" class="text-center"><strong>Anupana</strong></th>
-					<th style="border: 1px solid black;" class="text-center"><strong>Days</strong></th>
+                    <td style="border: 1px solid black;" class="text-center"><strong>Morning</strong></td>
+                    <td style="border: 1px solid black;" class="text-center"><strong>After Noon</strong></td>
+                    <td style="border: 1px solid black;" class="text-center"><strong>Evening</strong></td>
+					<td style="border: 1px solid black;" class="text-center"><strong>Night</strong></td>
+					<!-- <td style="border: 1px solid black;" class="text-center"><strong>Units</strong></td> -->
+					<td style="border: 1px solid black;" class="text-center"><strong>Anupana</strong></td>
+					<td style="border: 1px solid black;" class="text-center"><strong>Days</strong></td>
 					<!-- <td style="border: 1px solid black;" class="text-center"><strong>Price/Units</strong></td> -->
 					<!-- <td style="border: 1px solid black;" class="text-center"><strong>Total Price</strong></td> -->
             </tr>
-			</thead>
-			<tbody>
-			<!-- <tr t-foreach='doc.prescription_line_ids' t-as='line'>
-					 <td style="border: 1px solid black;"><span t-field="line.sequence_ref"/></td>
+			<tr t-foreach='doc.prescription_line_ids' t-as='line'>
+					<!-- <table border="4" class="table table-sm table-bordered" style="border: 1px solid black;"> -->
+					<td style="border: 1px solid black;"><span t-field="line.sequence_ref"/></td>
+							<!-- <td style="border: solid black;" ><span t-field="line.prescribed_quantity" /></td> -->
 							<td style="border: 1px solid black;"><span t-field="line.medicine_name"/></td>
-							<td style="border: 1px solid black;"><span t-field="line.morning"/></td>
-							<td style="border: 1px solid black;"><span t-field="line.noon"/></td>
-							<td style="border: 1px solid black;"><span t-field="line.evening"/></td>
-							<td style="border: 1px solid black;"><span t-field="line.night"/></td>
-							<td style="border: 1px solid black;"><span t-field="line.units"/></td>
+							<!-- <td style="border: 1px solid black;"><span t-field="line.quantity"/></td> -->
+							<!-- <td style="border: 1px solid black;"><span t-field="line.potency"/></td> -->
+							<td style="border: 1px solid black;"><span t-field="line.morning"/><span t-field="line.units"/></td>
+							<td style="border: 1px solid black;"><span t-field="line.noon"/><span t-field="line.units"/></td>
+							<td style="border: 1px solid black;"><span t-field="line.evening"/><span t-field="line.units"/></td>
+							<td style="border: 1px solid black;"><span t-field="line.night"/><span t-field="line.units"/></td>
+							<!-- <td style="border: 1px solid black;"><span t-field="line.units"/></td> -->
 							<td style="border: 1px solid black;"><span t-field="line.anupana"/></td>
-							<td style="border: 1px solid black;"><span t-field="line.days1"/></td> -->
-						<!-- </tr> -->
-							</tbody>
-									
+							<td style="border: 1px solid black;"><span t-field="line.days1"/></td>
+							<!-- <td style="border: 1px solid black;"><span t-field="line.price"/></td> -->
+							<!-- <td style="border: 1px solid black;"><span t-field="line.total_price"/></td> -->
+						</tr>
+            <!-- </table> -->
+							</thead>
+							<!-- <table border="4" class="table table-bordered" style="border: 1px solid black;">
+							<tbody>
 								
+									</tbody>
+								</table> -->
 								</table>
 									
 					</div>
-					
+					<!-- <br>
+						<br>
+							<br>
+								<br/>
+							</br>
+						</br> 
+					</br> -->
 					
 					<div class="row">
 						
@@ -97,27 +107,32 @@
 							<strong>Doctor Signature:</strong>
 						</div>	
 						
-					<!-- <div class="col-3">
+								<div class="col-3">
 
-					<strong>Delivery Option : </strong>
-					<span t-field="doc.delivery_option"/>
-					</div>	 -->
+								<strong>Delivery Option : </strong>
+								<span t-field="doc.delivery_option"/>
+								</div>	
 					
 					</div>
 
 					
 				</div>
 				<div></div>
+				<div></div>
 				<div class="text-center mb32">
 					<strong>Medicines once purchased cannot be Taken back or Refunded</strong>
 				</div>
 
 			</t>
-			</t>
-			</t>
-			</t>
         </template>
-        
+        <template id="prescription_demo_report">
+                <t t-call="web.html_container">
+                    <t t-foreach="docs" t-as="doc">
+                    <t t-call="basic_hms.prescription_demo_report_template" t-lang="doc.doctor_id.name"/>
+					<p><strong>Medicines once purchased cannot be Taken back or Refunded</strong></p>
+                    </t>
+                </t>
+        </template>
 		
     </data>
-</odoo>
+</openerp>

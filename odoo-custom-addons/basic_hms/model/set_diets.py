@@ -1,5 +1,4 @@
 from odoo import api, fields, models, _
-import datetime
 
 class diet(models.Model):
     _name='set.diet.lines'
@@ -8,9 +7,6 @@ class SetDiets(models.Model):
     _name = 'set.diets'
 
     name = fields.Char('Name', required = True)
-    patient_id = fields.Many2one('res.partner', 'Patient Name')
-    dates = fields.Date(default=datetime.datetime.now(),string='Date')
-
     # code = fields.Char('Code')
     diet_line = fields.One2many('set.diet.line','name',string="Diet Advisied")
     diet_line1 = fields.One2many('diet.six','name',string="Diet Advisied")

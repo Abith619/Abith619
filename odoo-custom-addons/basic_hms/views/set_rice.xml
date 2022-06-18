@@ -21,6 +21,6 @@
                     <field name="view_mode">tree,form</field>
             </record>
 
-            <menuitem id="menus_medical_diet_rice"  name ="Create Diet Rice" action="action_diet_rice"
-                parent="main_menu_configartion" sequence="1" />
+            <!-- <menuitem id="menus_medical_diet_rice"  name ="Create Diet Rice" action="action_diet_rice"
+                parent="main_menu_configartion" sequence="1" /> -->
 </odoo>

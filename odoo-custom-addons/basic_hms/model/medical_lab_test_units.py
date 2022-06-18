@@ -14,6 +14,7 @@ class medical_lab_test_units(models.Model):
     test_line= fields.One2many('lab_test.lines','test',string='Test Lines')
     units = fields.Many2one('test.units',string="Units")
     normal_range= fields.Float(string="Normal Range")
+    normal_ranges= fields.Char(string="Normal Range")
 
 class Units_range(models.Model):
     _name='lab_test.lines'

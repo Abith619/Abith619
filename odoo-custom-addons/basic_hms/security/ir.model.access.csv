@@ -300,4 +300,4 @@ access_assign_diet_one_lunch,medical.group.assign.diet.one.lunch,model_assign_di
 access_assign_diet_four,medical.group.assign.diet.four,model_assign_diet_four,base.group_user,1,1,1,1
 access_assign_diet_seven_one,medical.group.assign.diet.seven.one,model_assign_diet_seven_one,base.group_user,1,1,1,1
 access_assign_diet_five,medical.group.assign.diet.five,model_assign_diet_five,base.group_user,1,1,1,1
-
+access_document_type_line,medical.group.document.type.line,model_document_type_line,base.group_user,1,1,1,1

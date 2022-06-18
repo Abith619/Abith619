@@ -34,6 +34,8 @@ class Registerwizard(models.TransientModel):
     reg_type=fields.Selection([('dir',"Direct"),('on',"Online"),('app',"Appoinment"),('rev',"Review"),('stop',"Stopped")],string="Registration Type")
     # patient_id = fields.Many2one('')
 
+    insurance = fields.Boolean(string="Insurance if any")
+    type_of_insurance= fields.Text(string='Insurance Details')
 
     @api.onchange('doctors')
     def doctor_change(self):
@@ -58,7 +60,9 @@ class Registerwizard(models.TransientModel):
         bill_lines.append((0,0,bills))
         bill_create=self.env['patient.bills'].create({
             'patient_name':self.patient_id.id,
-            'bills_lines':bill_lines
+            'bills_lines':bill_lines,
+            'insurance':self.insurance,
+            'type_of_insurance':self.type_of_insurance,
         })
 
         record = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id )])

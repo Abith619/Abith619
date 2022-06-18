@@ -6,9 +6,12 @@ import qrcode
 import base64
 from io import BytesIO
 
+
 class res_partner(models.Model):
     _inherit = 'res.partner'
 
+
+    # gender= fields.Char()
     designation = fields.Char(string='Designation')
     whatsapp=fields.Char(string='Whatsapp')
     gov_ids=fields.Binary(string="Government ID's")
@@ -19,27 +22,26 @@ class res_partner(models.Model):
     company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('res.partner')))
 
 
-    
     invisible=fields.Boolean(string="Boo", default=True)
-    roles_selection=fields.Selection([('reception','Reception'),('doctor','Doctor'),('pharmacy','Pharmacy'),
+    roles_selection=fields.Selection([('manager','Manager'),('reception','Reception'),('doctor','Doctor'),('pharmacy','Pharmacy'),
     ('billing','Billing'),('lab','Lab & Scan'),('telecaller','Telecaller'),('patient','Patient')],string='Roles')
 
-    master=fields.Boolean(string="Master", default=False)
-    manager=fields.Boolean(string="Manager", default=False)
-    admin=fields.Boolean(string="Admin", default=False)
-    reception=fields.Boolean(string="Reception", default=False)
-    doctor=fields.Boolean(string="Doctor", default=False)
-    pharmacy=fields.Boolean(string="Pharmacy", default=False)
-    file_room=fields.Boolean(string="File Room", default=False)
-    billing=fields.Boolean(string="Billing", default=False)
-    lab=fields.Boolean(string="Lab", default=False)
-    scan=fields.Boolean(string="Scan", default=False)
-    telecaller=fields.Boolean(string="Telecaller", default=False)
-    patient=fields.Boolean(string="Patient", default=False)
+    new_pt=fields.Char(string='New Patient')
+    review_pt=fields.Char(string='Review Patient')
+    ip=fields.Char(string='IP')
+    br=fields.Char(string='BR')
+    consult=fields.Char(string='Consult')
+    courier=fields.Char(string='Courier')
+    online=fields.Char(string='Online')
 
     doctor_idxs = fields.Char(string='Registration ID')
+
+    document_type=fields.One2many('document.type.line','name',string='Documents')
+
+
+    # gender = fields.Slection(string='gender')
     relationship = fields.Char(string='Relationship')
-    # relative_partner_id = fields.Many2one('res.partner',string="Relative_id")
+    relative_partner_id = fields.Many2one('res.partner',string="Relative_id")
     is_patient = fields.Boolean(string='Patient')
     is_person = fields.Boolean(string="Person")
     is_doctor = fields.Boolean(string="Doctor")
@@ -52,6 +54,7 @@ class res_partner(models.Model):
     patient_gender = fields.Selection([('m', 'Male'),('f', 'Female')], string ="Gender")
     # patient_gender = fields.Selection([('m', 'Male'),('f', 'Female')], string ="Sex")
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
     @api.onchange('roles_selection')
     def onchange_is_patient(self):
         if self.roles_selection == 'patient':
@@ -95,7 +98,6 @@ class res_partner(models.Model):
             qr_image = base64.b64encode(temp.getvalue())
             self.qr_code = qr_image
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
     @api.model
     def _name_search(self, name='', args=None, operator='ilike', limit=100, name_get_uid=None):
@@ -137,6 +139,22 @@ class res_partner(models.Model):
         return {
     'name': "Doctor Visited",
     'domain':[('patient', '=', self.name)],
+    'view_mode': 'tree,form',
+    'res_model': 'medical.doctor',
+    'view_type': 'form',
+    'type': 'ir.actions.act_window',
+    }
+
+    def doctor_report(self):
+        for res in self :
+            doctor_report_appointment1 = self.env['medical.doctor'].search_count([('doctor', '=', res.name)])
+            self.doctor_report_appointment= doctor_report_appointment1
+    doctor_report_appointment=fields.Integer(compute='doctor_report',string="Doctor Report")
+
+    def doctor_report_button(self):
+        return {
+    'name': "Doctor Report",
+    'domain':[('doctor', '=', self.name)],
     'view_mode': 'tree,form',
     'res_model': 'medical.doctor',
     'view_type': 'form',
@@ -210,3 +228,10 @@ class medicine_dose(models.Model):
     units= fields.Many2one('uom.uom',string="units")
     potency = fields.Char(string="Potency")
     anupana = fields.Char(string="Anupana")
+
+class document_type_upload(models.Model):
+    _name = 'document.type.line'
+
+    name = fields.Char(string="Name")
+    document_detail=fields.Binary(string="Upload Documents")
+    doc_types=fields.Selection([('gov','Gov ID'),('original','Original')],string="Document Type")

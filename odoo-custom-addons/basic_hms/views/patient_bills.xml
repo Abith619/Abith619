@@ -16,6 +16,8 @@
                             <!-- <field name= "total_val"/>         -->
                         </group>
                         <group>
+                            <field name ="insurance"/>
+                            <field name = "type_of_insurance" attrs="{'invisible': [('insurance','=', False)]}"/>
                         </group>
                     </group>
 

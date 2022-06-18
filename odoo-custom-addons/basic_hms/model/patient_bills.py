@@ -13,6 +13,8 @@ class PatientBills(models.Model):
     # total_val = fields.Monetary(string='Total Value')
     # currency_id = fields.Many2one('res.currency', store=True, readonly=True)
     # bill_amount_monetary= fields.Monetary(string="Bill Amount")
+    insurance = fields.Boolean(string="Insurance if any")
+    type_of_insurance= fields.Text(string='Insurance Details')
 
 
     def invoice_button(self):        

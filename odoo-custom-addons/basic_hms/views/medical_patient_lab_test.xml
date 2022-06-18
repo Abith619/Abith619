@@ -63,7 +63,7 @@
                                         <field name = 'reports'>
                                             <tree string="Reports" editable="bottom" >
                                                 <!-- <field name="report_name" /> -->
-                                               <field name = "normal_range"/>
+                                               <field name = "normal_ranges"/>
                                                <field name="tested_range"/>
                                                <field name="test_unit"/>
                                                 <field name ="attachments" widget="many2many_binary"/>
@@ -92,7 +92,7 @@
             <field name="res_model">medical.patient.lab.test</field>
             <field name="binding_view_types">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('state','=','tested')]</field>
+            <field name="domain"></field>
         </record>
 
         <record id="action_medical_patient_lab_test_todays_draft" model="ir.actions.act_window">
@@ -104,15 +104,15 @@
             <!-- <field name="domain">[('state','=','draft'),('date','>=',time.strftime('%Y-%m-%d'))]</field> -->
         </record>
 
-        <menuitem name="Laboratory" id="main_menu_laboratory"
-            parent="main_menu_hospital_management" sequence='7' />
+        <!-- <menuitem name="Laboratory" id="main_menu_laboratory"
+            parent="main_menu_hospital_management" sequence='7' /> -->
 
-        <menuitem name="Lab Requests" id="menu_lab_requests"
+        <!-- <menuitem name="Lab Requests" id="menu_lab_requests"
             parent="basic_hms.main_menu_laboratory"
-            sequence="1" action="action_medical_patient_lab_test_draft"/>
+            sequence="1" action="action_medical_patient_lab_test_draft"/> -->
 
         <menuitem name="OnTest Lab Requests" id="sub_menu_draft_req"
-            parent="menu_lab_requests" action="action_medical_patient_lab_test_draft" />
+            parent="main_menu_hospital_management" action="action_medical_patient_lab_test_draft" />
 
         <!-- <menuitem name="Today's Draft Lab Requests" id="sub_menu_today_draft_req"
             parent="menu_lab_requests" action="action_medical_patient_lab_test_todays_draft" /> -->

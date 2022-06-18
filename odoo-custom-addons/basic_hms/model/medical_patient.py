@@ -267,9 +267,12 @@ class medical_patient(models.Model):
     full_term = fields.Integer('Full Term')
     ses_notes = fields.Text('Notes')
 
+    appoinment_by = fields.Many2one('res.users',string='Appointment By',readonly=True,default=lambda self: self.env.user)
 
 
 #inherit fields
+    adoption_agreement = fields.Boolean()
+    family_details = fields.Boolean() 
     area=fields.Char(string="Area")
     city=fields.Many2one('res.city',string="City")
 
@@ -376,9 +379,9 @@ class medical_patient(models.Model):
     def create(self,val):
         appointment = self._context.get('appointment_id')
         res_partner_obj = self.env['res.partner']
-        patient_orm = self.env['res.partner'].search([('id','=',val['patient_id'])])
-        patient_orm.write({'is_patient':True,
-        'mobile':self.contact_no})
+        # patient_orm = self.env['res.partner'].search([('id','=',val['patient_id'])])
+        # patient_orm.write({'is_patient':True,})
+        
         if appointment:
             val_1 = {'name': self.env['res.partner'].browse(val['patient_id']).name}
             patient= res_partner_obj.create(val_1)

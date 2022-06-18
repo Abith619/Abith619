@@ -11,8 +11,11 @@
             <form string="Appointment">
                 <header>
                     <button name="send_msg" string="Whatsapp Message" class="oe_highlight" type="object"/>
+                    <!-- <button name="rolls" string="send check" type="object"/> -->
                     <button name="button_registrations" string="Convert To Registration" class="oe_highlight" type="object" />
+                    <!-- <button name="button_contact" string="Create number" class="oe_highlight" type="object"/> -->
                     <field name ="stages" widget="statusbar"/>
+                    <!-- <field name='date'/> -->
                 </header>
                  
                 <sheet>
@@ -60,6 +63,9 @@
                             <field name= "region"/>
                             <field name= "treatment_for" required='1' options="{'no_create_edit':True,'no_open': True}"/>
                             <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+
+
+                              
                             </group>
                         <group>
 

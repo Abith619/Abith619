@@ -1,38 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-        <record id="res_partner_inherit_form_health_view" model="ir.ui.view">
-            <field name="name">res.partner.inherit.form.health.view</field>
+        <record id="res_partner_inherit_form_health_center_view" model="ir.ui.view">
+            <field name="name">res.partner.inherit.form.health.center.view</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form" />
             <field name="arch" type="xml">
-                <xpath expr="//div[@name='button_box']" position="inside">
-                    <button class="oe_stat_button" name="app_count_button" attrs="{'invisible': ['|',('roles_selection','=', 'patient'),('roles_selection','=', 'pharmacy')]}" type="object" icon="fa-clipboard">
+                <xpath expr="//div[@name='button_box']" position="replace">
+                    <div class="oe_button_box" name="button_box">
+                    <button class="oe_stat_button" name="app_count_button" attrs="{'invisible': ['|',('roles_selection','in', ['billing', 'lab']),('roles_selection','in', ['pharmacy'])]}" type="object" icon="fa-clipboard">
                         <field name ="count_appointment" widget="statinfo" />
                     </button>
-                    <button class="oe_stat_button" name="doctor_count_button" attrs="{'invisible': ['|',('roles_selection','=', 'doctor'),('roles_selection','=', 'reception')]}" type="object" icon="fa-clipboard">
+                    <button class="oe_stat_button" name="doctor_count_button" attrs="{'invisible': ['|',('roles_selection','in', ['reception', 'billing', 'lab']),('roles_selection','in', ['pharmacy', 'telecaller', 'doctor'])]}" type="object" icon="fa-clipboard">
                         <field name ="doctor_count_appointment" widget="statinfo"/>
                     </button>
-                    <button class="oe_stat_button" name="prescription_count_button"  type="object" icon="fa-clipboard" attrs="{'invisible': ['|',('roles_selection','=', 'reception'),('roles_selection','=', 'billing')]}">
+                    <button class="oe_stat_button" name="prescription_count_button"  type="object" icon="fa-clipboard" attrs="{'invisible': ['|',('roles_selection','in', ['reception']),('roles_selection','in', ['telecaller'])]}">
                         <field name ="prescription_count_appointment" widget="statinfo"/>
                     </button>
-                    <button class="oe_stat_button" name="lab_count_button"  type="object" icon="fa-clipboard" attrs="{'invisible': ['|',('roles_selection','=', 'reception'),('roles_selection','=', 'pharmacy')]}">
+                    <button class="oe_stat_button" name="lab_count_button"  type="object" icon="fa-clipboard" attrs="{'invisible': ['|',('roles_selection','in', ['reception']),('roles_selection','in', ['pharmacy', 'telecaller'])]}">
                         <field name ="lab_count_appointment" widget="statinfo"/>
                     </button>
-                    <button class="oe_stat_button" name="billing_count_button"  type="object" icon="fa-clipboard" attrs="{'invisible': [('roles_selection','=', 'reception'),('roles_selection','=', 'pharmacy')]}">
+                    <button class="oe_stat_button" name="billing_count_button"  type="object" icon="fa-clipboard" attrs="{'invisible': ['|',('roles_selection','in', ['reception']),('roles_selection','in', ['pharmacy', 'telecaller'])]}">
                         <field name ="billing_count_appointment" widget="statinfo"/>
                     </button>
+                    <button class="oe_stat_button" name="doctor_report_button" type="object" icon="fa-clipboard" attrs="{'invisible': [('roles_selection','!=','doctor')]}">
+                        <field name ="doctor_report_appointment" widget="statinfo"/>
+                    </button>
+                </div>
                 </xpath>
-
- 
-
-                <xpath expr="//button[@name='371']" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </xpath>
-
-                <xpath expr="//button[@name='action_view_partner_invoices']" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </xpath>
-                
+        <!-- attrs="{'invisible': ['|',('roles_selection','in', ['reception', 'billing', 'lab']),('roles_selection','in', ['pharmacy', 'telecaller'])]}" -->
                 <xpath expr="//field[@name='name']" position="before">
                     <div><field name ="roles_selection" widget="radio" options="{'horizontal': true}"/></div>
                 </xpath>
@@ -52,8 +47,6 @@
                 <xpath expr="//field[@name='image_1920']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
-
-                
 
                 <xpath expr="//field[@name='title']" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -80,10 +73,10 @@
                 </xpath>
 
                 <xpath expr="//page[@name='followup_tab']" position="attributes">
-                    <attribute name="invisible">True</attribute>
+                    <attribute name="invisible">1</attribute>
                 </xpath>
 
-                <xpath expr="//page[@name='accounting']" position="replace">
+                <xpath expr="//page[@name='accounting']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
 
@@ -94,22 +87,6 @@
                 <xpath expr="//page[@name='internal_notes']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
-
-                <!-- <xpath expr="//field[@name='mobile']" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </xpath> -->
-
-                <!-- <xpath expr="//field[@name='phone']" nolabel="1" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                    <attribute name="nolabel">1</attribute>
-                </xpath> -->
-
-                <field name="phone" position="attributes">
-                <attribute name="invisible">True</attribute>
-                </field>
-                <field name="mobile" position="attributes">
-                <attribute name="invisible">True</attribute>
-                </field>
 
             <xpath expr="//field[@name='roles_selection']" position="after">
                 <group>
@@ -129,45 +106,37 @@
             </xpath>
             
             <field name="function" position="after">
-                <field name="doctor_idxs" attrs="{'invisible': [('roles_selection','=', 'reception')]}"/>
-                <field name="dob_contact" attrs="{'invisible': [('roles_selection','=', 'reception')]}"/>
-                <field name ="patient_gender" attrs="{'invisible': [('roles_selection','=', 'reception')]}"/>
-                <field name ="designation" attrs="{'invisible': [('roles_selection','=', 'reception')]}"/>
+                <field name="doctor_idxs" attrs="{'invisible': ['|',('roles_selection','=', 'reception'),('roles_selection','=', 'pharmacy')]}"/>
+                <field name="dob_contact" attrs="{'invisible': ['|',('roles_selection','=', 'reception'),('roles_selection','=', 'telecaller')]}"/>
+                <field name ="patient_gender" attrs="{'invisible': ['|',('roles_selection','=', 'reception'),('roles_selection','=', 'pharmacy')]}"/>
+                <field name ="designation" attrs="{'invisible': ['|',('roles_selection','=', 'reception'),('roles_selection','=', 'pharmacy')]}"/>
                 <field name ="user_name"/>
                 <field name ="password" password="True" />
             </field>
             
-
             <field name="vat" position="after">
                 <field name ="whatsapp" widget="phone"/>
-                <field name ="phone" widget="phone"/>
                 <field name ="mobile" string='Recovery Number' widget="phone" attrs="{'invisible': [('roles_selection','=', 'reception')]}"/>
-                <field name ="gov_ids" />
                 <field name ="company_id" attrs="{'invisible': [('roles_selection','=', 'reception')]}"/>
             </field>
             <notebook >
                 
-                <page name="sales_purchases" invisible='1'>
-                </page>
                 <page string="Medical">
                     <group colspan="6" col="6">
                             <field name="is_patient" />
                             <field name="is_doctor" />
-                            <field name="is_institution" />
-                            <field name="is_person" />
-                            <field name="is_insurance_company" />
                             <field name="is_pharmacy" />
-                            
-                </group>
-                        <field name="company_insurance_ids" colspan="4"
-                            widget="one2many_list" />
-                        <field name="patient_insurance_ids" colspan="4"
-                            widget="one2many_list" />
+                        </group>
+                        <field name="document_type">
+                            <tree string="Proof Documents" editable="bottom" >
+                                <field name="document_detail" options="{'no_create_edit':True}"/>
+                                <field name="doc_types"/>
+                            </tree>
+                        </field>
                     </page>
                 </notebook>
             </field>
         </record>
-
 
      <record id="medicine_product_inherit_view" model="ir.ui.view">
             <field name="name">medicine.product.inheritview</field>
@@ -200,27 +169,6 @@
 
             </field>
         </record>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
 
         <record model="ir.actions.act_window" id="act_res_partner">
             <field name="name">Insurances Company</field>

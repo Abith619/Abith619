@@ -33,14 +33,13 @@ class medical_directions(models.Model):
     sex = fields.Selection([('m', 'Male'),('f', 'Female')],  string ="Sex", required= True)
     prescription_date= fields.Datetime(string='Date', default=fields.Datetime.now())
     name = fields.Char('Prescription ID')
-    ailments=fields.Many2one('medical.pathology',string="Current Ailments")
+    ailments=fields.Many2one('medical.pathology',string="Present Ailments")
     habbit=fields.One2many('medical.habits','doz',string="Habit")
-    diet_fields=fields.One2many('diet.field','diet1',string='Diet')
+    diet_fields=fields.One2many('diet.field','diet1',string='Previous Diet')
     patient_status = fields.Boolean(string='Patient Status')
-    acknowledge=fields.Boolean(string='Acknowledgement')
 
     #one2many
-    pervious_medication = fields.One2many('pervious.medication','diseases',string="Pervious Medication")
+    pervious_medication = fields.One2many('pervious.medication','diseases',string="Past Complaints")
     surgery_history = fields.Char(string ="Surgery History")
     family_history = fields.Char(string ="Family History")
 
@@ -382,8 +381,8 @@ class Perviousmedication(models.Model):
     _name='pervious.medication'
 
     # serial_number=fields.Integer(string="SL")
-    diseases= fields.Many2one('medical.doctor',string="Diseases")
-    diseases_for = fields.Char(string = "Complaints")
+    diseases= fields.Many2one('medical.doctor',string="Patient")
+    diseases_for = fields.Char(string = "Complaints",required=True)
     signs = fields.Char(string="Signs")
     medication_from = fields.Date(string="Medication From")
     medication_to = fields.Date(string="Medication to")
@@ -394,9 +393,9 @@ class Patientsurgery(models.Model):
     _name = 'patient.surgery'
 
     # pat = fields.Many2one('medical.patient',string="Patient")
-    doc = fields.Many2one('medical.doctor',string="Doctor")
+    doc = fields.Many2one('medical.doctor',string="Patient")
     # serial_number=fields.Integer(string="SL")
-    lab_scan_alot = fields.Many2one('medical.patient.lab.test',string="Scan/Lab Alots")
+    lab_scan_alot = fields.Many2one('medical.patient.lab.test',string="Scan/Lab S.No",required=True)
     date= fields.Datetime(string="Date of Lab/Scan")
     # surgery_date = fields.Date(string="Surgery Date")
     # surgery_type = fields.Many2one('medical.pathology',string="Surgery Type")
@@ -415,7 +414,7 @@ class documents(models.Model):
     _name ="patient.document"
 
     docc = fields.Many2one('medical.doctor',string="Doctor")
-    report_name = fields.Selection([('green',"Green Document"),('o',"Other Documents")],string="Report Name")
+    report_name = fields.Selection([('green',"Green Document"),('o',"Other Documents")],string="Report Name",required=True)
     attachment = fields.Many2many('ir.attachment',string="Attachment")
     # serial_number=fields.Integer(string="SL")
 
@@ -435,9 +434,9 @@ class treatmentFor(models.Model):
 class diet_field(models.Model):
     _name ="diet.field"
 
-    diet1 = fields.Many2one('medical.doctor',string="Diet")
-    diet_for = fields.Many2one('diet.for',string="Diets")
-    followed_duration= fields.Integer(string="Duration Followed/Days")
+    diet1 = fields.Many2one('medical.doctor',string="Patient")
+    diet_for = fields.Many2one('diet.for',string="Diets",required=True)
+    followed_duration= fields.Integer(string="Duration Followed/Months")
     # serial_number=fields.Integer(string="SL")
 
     
@@ -460,7 +459,7 @@ class Patientprescription(models.Model):
     _name ='patient.prescription'
 
     # serial_number=fields.Integer(string="SL")
-    medical_doctor=fields.Many2one('medical.doctor',string="Dose")
+    medical_doctor=fields.Many2one('medical.doctor',string="Patient")
     # medicine_name = fields.Many2one('product.product',string='Medicine Name')
     # morning= fields.Float('Morning')
     # noon= fields.Float('After Noon')
@@ -472,7 +471,7 @@ class Patientprescription(models.Model):
     # units= fields.Many2one('uom.uom',string="units")
     # potency = fields.Char(string="Potency")
     # anupana = fields.Char(string="Anupana")
-    prescription_alot= fields.Many2one('medical.prescription.order',string="Prescriptions")
+    prescription_alot= fields.Many2one('medical.prescription.order',string="Prescriptions",required=True)
     date= fields.Datetime(string="Date of Prescription")
     delivery_option= fields.Selection([('dir','Direct'),('on',"Online")],string="Delivery Option")
 
@@ -483,8 +482,8 @@ class Currentailgnments(models.Model):
 
 
     # serial_number=fields.Integer(string="SL")
-    doctor_aliments =fields.Many2one('medical.doctor')
-    patient_currents_ailments=fields.Many2one('medical.pathology',string="Complaints")
+    doctor_aliments =fields.Many2one('medical.doctor',string="Patient")
+    patient_currents_ailments=fields.Many2one('medical.pathology',string="Complaints",required=True)
     duration = fields.Char(string="Duration")
     patient_signs_symptoms = fields.Many2many('medical.symptoms',string="Signs/Symptoms")
 

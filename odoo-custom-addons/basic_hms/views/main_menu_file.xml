@@ -26,7 +26,7 @@
             sequence="8" />
 
         <menuitem id="menu_appointment"
-            name='Appointments' parent="main_menu_hospital_management" sequence="2" />
+            name='Appointments' parent="main_menu_hospital_management" sequence="0" />
 
         <menuitem id="menu_medical_health_service"
             name='Medical Service' parent="main_menu_hospital_management"
@@ -34,9 +34,9 @@
 
          <menuitem id="menu_inpatient_administration" name="Inpatient Administration"
             parent="main_menu_configartion" sequence='12' />
-<!-- 
-        <menuitem id="menu_patients" name='Registration'
-            parent="main_menu_hospital_management" sequence="0" /> -->
+
+        <!-- <menuitem id="menu_patients" name='Registration'
+            parent="main_menu_hospital_management" sequence="1" /> -->
 
         <menuitem name="Pediatrics" id="main_menu_pediatrics"
             parent="main_menu_hospital_management"

@@ -6,37 +6,35 @@
             <field name="model">medical.patient</field>
             <field name="arch" type="xml">
                 <form string="Patient">
+                    
                     <header>   
                         <button name="assign_button" type="object" string="Paid" class="oe_highlight"/>
-                        <button name="send_msg" type="object" string="Whatsapp" class="oe_highlight"/>
+                        
                         <field name ="stages" widget="statusbar"/>
 
                     </header>
-
                     <sheet>
-                        <div class="oe_button_box" name="button_box">           
+                <div class="oe_button_box" name="button_box">           
                             <button class="oe_stat_button" name="payment_button" type="object" icon="fa-clipboard">
                                 <field name ="payment" widget="statinfo"/>
                             </button>
-                </div>
+                </div>  
 
-                <field name="name"  />
-                       
+                <field name="name"/>                      
                             <group>
                                 <group class="col-5"> 
                                     <field name ="reg_type" widget="radio" options="{'horizontal': true}"/>
                                 </group>
-                                <group  class="col-5">
-<!-- 
-                                    <field name="patient_movement"/> -->
-                                </group>
+                            <group  class="col-5">
+                                <!--  <field name="patient_movement"/> -->
+                        </group>
                         </group>
                         <group>
                             <div class="row">
-                                <label for="patient_id" string="Patient Details" style="font-size: 25px !important; padding-bottom: 23px;margin-left: 380px !important;color: #000000;font-weight: 600;"/>
+                                <label for="patient_id" string="Patient Details" style="font-size: 25px !important; padding-bottom: 23px;margin-left: 300px !important;color: #000000;font-weight: 600;"/>
                             </div>
                             <div class="row">
-                                <label for="contact_no" string="Contact Details" style="font-size: 25px !important;margin-left: 380px !important;color: #000000;padding-bottom: 23px;font-weight: 600;"/>
+                                <label for="contact_no" string="Contact Details" style="font-size: 25px !important;margin-left: 300px !important;color: #000000;padding-bottom: 23px;font-weight: 600;"/>
                             </div>
                             <group>
                                 <field name="patient_id" attrs="{'readonly': [('stages','=', 'on')]}" options="{'no_create_edit':True,'no_open': True}"/>
@@ -44,7 +42,7 @@
                                 <field name="marital_status" />
                                 <label for="date_of_birth" string="DOB" />
                                 <div class="o_address_format">
-                                    <field name="date_of_birth" class="o_address_city" placeholder="mm-dd-yyyy" />
+                                    <field name="date_of_birth" class="o_address_city" placeholder="dd-mm-yyyy" />
                                     <label for="age" style="font-weight: bold !important;color: #333;"  font-family= "Franklin Gothic Medium" string="Age"/>
                                     <field name="age" class="o_address_state"/>
                                 </div>
@@ -57,14 +55,9 @@
                                     
                                 </div>
                                 
-                                
                                 <field name ="bmi_value" />
                             </group>
 
-
-                                
-                                
-                            
                              <group>
                                 <label for="contact_no" string="Contact Number" />
                                 <div class="o_address_format">
@@ -75,7 +68,6 @@
                                     <field name="contact_number"  style="width: 30%;" attrs="{'readonly': [('stages','=', 'done')],'invisible': [('whatsapp_check','=', True)]} " />
                                     
                                 </div> 
-
                                 <field name="address"/>
 
                                 <label for="city" string=" " />  
@@ -99,27 +91,19 @@
      
                             </group>
 
-
-
-
                    </group> 
+                   <div class="row">
+                        <div class="col-6">
+                            <label for="treatment" string="Doctor Allocation" style="font-size: 25px !important;margin-left: 300px !important;padding-bottom: 23px;color: #000000;font-weight: 600;" />
+                        </div>
+                        <div class="col-6">
+                            <label for="father_name" string="Family Details" style="font-size: 25px !important;margin-left: 300px !important;padding-bottom: 23px;color: #000000;font-weight: 600;" />
+                            <field name ='family_details' style ='bottom: 6px;
+                            left: 6px;'/>
+                        </div>
+                    </div>
                    <group>
-                        <div class="row">
-                            <label for="father_name" string="Family Details" style="font-size: 25px !important;margin-left: 380px !important;padding-bottom: 23px;color: #000000;font-weight: 600;" />
-                        </div>
-                        <div class="row">
-                         <label for="treatment" string="Doctor Allocation" style="font-size: 25px !important;margin-left: 380px !important;padding-bottom: 23px;color: #000000;font-weight: 600;" />
-                        </div>
-                            <group>
-                                <label for="father_name" string="Relation" />
-                                <div class="o_address_format">
-                                    <field name="father_name" class="o_address_city" />
-                                    <label for="name_father" style="font-weight: bold !important;color: #333;" string="Name"/>
-                                    <field name="name_father" class="o_address_state"  style="width: 40%;"/>
-                                    
-                                </div>
-                                <field name="father_occupation"/>
-                                </group>
+                            
 
 
                             <group>
@@ -134,23 +118,54 @@
                                     <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
                                    
                             </group>
-                      
+
+
+                            <group attrs="{'invisible': [('family_details','=', False)]}">
+                                
+                                <label for="father_name" string="Relation" />
+                                <div class="o_address_format">
+                                    <field name="father_name" class="o_address_city" />
+                                    <label for="name_father" style="font-weight: bold !important;color: #333;" string="Name"/>
+                                    <field name="name_father" class="o_address_state"  style="width: 40%;"/>
+                                    
+                                </div>
+                                <field name="father_occupation" string ="Realtion's Occupation"/>
+                                </group>
+
+                            <group attrs="{'invisible': [('family_details','=', True)]}" >
+                                
+
+                            </group>
                    </group>
-                                           <group>
+                <group>
                  <group>
+                    <field name='fees' string='Fees'/>
+                    <field name ="appoinment_by"/>
                     <field name = 'data_value' widget="many2many_tags" options="{'no_create':True,'no_create_edit':True,'no_open': True}"/>
                  </group>
                    <group>
-                    <field name='fees' string='Fees'/>
-                    
-                </group> 
+
                 </group>
-                    </sheet>
-                    <div class="oe_chatter">
-                        <field name="message_follower_ids" widget="mail_followers" string="mail"/>
-                        <field name="message_ids" widget="mail_thread" string= "Mail"/>
-                        <field name="activity_ids" widget="mail_activity"/>
+                </group>
+                <label for = 'adoption_agreement' style="font-size: 25px !important;font-weight: 600;padding-left: 550px;" string ="Adoption Agreement"/>
+                <div class ='row'>
+                    
+                    <div class='col-12' 
+                    style ='padding-left: 450px;'
+                >
+                        <field name ="adoption_agreement"/>
+                        <label for = 'adoption_agreement' string ="I accept the terms and condition of Adoption Agreement"/>
                     </div>
+                    
+  
+
+                </div>
+                    </sheet>
+                        <div class="oe_chatter">
+                                <field name="message_follower_ids" widget="mail_followers" string="mail"/>
+                                <field name="message_ids" widget="mail_thread" string= "Mail"/>
+                                <field name="activity_ids" widget="mail_activity"/>
+                            </div>
 
                 </form>
 
@@ -223,7 +238,7 @@
     </record>
  
     <record id="action_medical_patient" model="ir.actions.act_window">
-        <field name="name">Registration Information</field>
+        <field name="name">Registration</field>
         <field name="res_model">medical.patient</field>
         <field name="binding_view_types">form</field>
         <field name="view_mode">tree,form,pivot,graph,calendar</field>
@@ -231,7 +246,7 @@
 
 
         <menuitem id="menu_medical_patient_code" action="action_medical_patient"
-            parent="main_menu_hospital_management" sequence="0" />
+            parent="main_menu_hospital_management" sequence="1" />
 
         
 

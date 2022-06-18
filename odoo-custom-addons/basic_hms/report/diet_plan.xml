@@ -29,7 +29,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr t-foreach='docs.diet_line' t-as='line'>
+                             <tr t-foreach='docs.diet_line' t-as='line'>
                            <td style="border: 1px solid black;">
                            <span t-field="line.wakeup1"/>
                            </td>

@@ -74,7 +74,9 @@ class medical_appointment(models.Model):
 
 	fees = fields.Float(string='Fees',readonly=True,compute='fee_change')
 
+
 	company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.prescription.order')))
+
 
 	# @api.onchange("patient_selection")
     # def new_change(self):
@@ -92,7 +94,10 @@ class medical_appointment(models.Model):
 				'default_mobile':self.contact_number,
 				'default_message':"Hi "+self.patient_id.name+",\n\nYour Appointment is fixed with "+self.doctor_id.name+"\nFeedback : https://www.mouthshut.com/product-reviews/Daisy-Hospital-Chromepet-Chennai-reviews-925999566"
 				},
+
                 }
+
+
 
 	@api.depends('appoinment_through')
 	def fee_change(self):
@@ -144,7 +149,7 @@ class medical_appointment(models.Model):
     		
 		self.stages = 'done'
 		# create_registration = self.env['medical.patient'].create({
-		ces={	
+		ces={
         'name': "Scan/Tests",
         'type': 'ir.actions.act_window',
         'view_type': 'form',
@@ -161,6 +166,7 @@ class medical_appointment(models.Model):
 				'default_treatment':self.treatment_for.id,
 				'default_fees':self.fees,
 				'default_city':self.region.id,
+				'default_reg_type':'app',
 				'default_stages':'on',
 				# 'default_patient_movement':datetime.now()
             },
@@ -180,12 +186,20 @@ class medical_appointment(models.Model):
 		self.phone_number = val.mobile
 		self.gender=val.patient_gender
 
+    		
+
+
+
 	@api.onchange('duration')
 	def start_end(self):
 		now  = self.appointment_date
 		a_hour = relativedelta(hours=self.duration)
 		vals = now + a_hour
 		self.appointment_end=vals
+
+
+
+
 
 	# def create_invoice(self):
 	# 	lab_req_obj = self.env['medical.appointment']

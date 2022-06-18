@@ -30,6 +30,24 @@
                         </form>
                         </field>
         </record>
+        <record id="symptoms_tree_view" model="ir.ui.view">
+            <field name="name">symptoms_tree_view</field>
+            <field name="model">medical.symptoms</field>
+            <field name="arch" type="xml">
+                <tree string="Symptoms">
+
+                    <field name="name" />
+                    <field name="diseases"/>
+                            
+
+                    </tree>
+                    </field>
+                </record>
+
+
+
+
+
         <record model="ir.actions.act_window" id="symptoms_action">            
             <field name="name">Disease Symptoms</field>         
                 <field name="res_model">medical.symptoms</field>           

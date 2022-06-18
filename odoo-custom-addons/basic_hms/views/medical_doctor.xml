@@ -19,8 +19,8 @@
                 <field name="arch" type="xml">
                     <form string="doctor">
                         <header>
-                            <button name="scan_button" type="object" string="Assign Scans/Tests" class="oe_highlight"/>
-                            <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight"/>
+                            <button name="scan_button" type="object" string="Assign Scans/Tests" class="oe_highlight" invisible ='1'/>
+                            <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight" invisible ='1'/>
                             <button name="diet_for" type="object" string="Prescribed Diet" class="oe_highlight"/>
                             
                             <field name ="stages" widget="statusbar"/>
@@ -31,21 +31,21 @@
                             <div class="oe_button_box" name="button_box">     
                                 
                                 <button class="oe_stat_button" name="prescribe_button"  type="object" icon="fa-clipboard">
-                                    <field name ="pre_diet" widget="statinfo"/>
+                                    <field name ="pre_diet" widget="statinfo" />
                                     </button>
 
-                                <button class="oe_stat_button" name="patient_prescription" type="object" icon="fa-clipboard">
-                                <field name ="patients" widget="statinfo"/>
+                                <button class="oe_stat_button" name="patient_prescription" type="object" icon="fa-clipboard" invisible="1">
+                                <field name ="patients" widget="statinfo" />
                         </button>
 
 
-                    <button class="oe_stat_button" name="scans_prescription" type="object" icon="fa-clipboard">
-                            <field name ="sacns_tests" widget="statinfo"/>
+                    <button class="oe_stat_button" name="scans_prescription" type="object" icon="fa-clipboard" invisible="1">
+                            <field name ="sacns_tests" widget="statinfo"  />
                         </button>
                             
 
-                    <button class="oe_stat_button"  name="document_button" type="object" icon="fa-clipboard">
-                                <field name ="document_test" widget="statinfo"/>
+                    <button class="oe_stat_button"  name="document_button" type="object" icon="fa-clipboard" invisible="1">
+                                <field name ="document_test" widget="statinfo"  />
                                 
                         </button>
                     
@@ -76,7 +76,7 @@
                                         <label for="height" string="Height" />
                                         <div class="o_address_format">
                                             <field name="height" placeholder='in Cms' class="o_address_city" attrs="{'readonly': [('stages','=', 'done')]}"  />
-                                        <label for="weight" style="font-weight: bold !important;color: #333;" string="Weight "  />
+                                            <label for="weight" style="font-weight: bold !important;color: #333;" string="Weight "  />
                                             <field name="weight" placeholder='in Kgs' class="o_address_state"  style="width: 40%;" attrs="{'readonly': [('stages','=', 'done')]}"/>
                                         </div>
                                         <label for="bp" string="BP in mmHg" />
@@ -145,29 +145,7 @@
                                             </tree>
                                         </field>
                                     </page>
-
-                                    
-                                <page string="Lab/Scan" >
-                                    <!-- <button name="scan_button" type="object" string="Assign Scans/Tests" class="oe_highlight"/> -->
-                                    <field name="history_surgery">
-                                        <tree string="Lab sacn History" editable="bottom" >
-                                            <field name="lab_scan_alot"/>
-                                            <field name="date"/>
-                                        </tree>
-                                    </field>
-                                </page>
-
-                                    <page string="Prescriptions" >
-                                        <!-- <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight"/> -->
-                                        <field name="prescription_patient">
-                                        <tree string="Prescription" editable="bottom" >
-                                        <field name="prescription_alot"/>
-                                        <field name="date"/>
-                                        <field name="delivery_option"/>     
-                                            </tree>
-                                        </field>
-                                    </page>
-                                    <page string="Diet" >
+                                    <page string=" Previous Diet" >
                                         <field name="diet_fields">
                                             <tree string="Diet" editable="bottom">
                                                     <field name ="diet_for"/>
@@ -177,20 +155,41 @@
                                             </tree>
                                         </field>
                                     </page>
+                                    <page string="Prescriptions" >
+                                        <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight"/>
+                                        <field name="prescription_patient">
+                                        <tree string="Prescription" editable="bottom" >
+                                        <field name="prescription_alot"/>
+                                        <field name="date"/>
+                                        <field name="delivery_option"/>     
+                                            </tree>
+                                        </field>
+                                    </page>
+                                    
+                                <page string="Lab/Scan" >
+                                    <button name="scan_button" type="object" string="Assign Scans/Tests" class="oe_highlight"/>
+                                    <field name="history_surgery">
+                                        <tree string="Lab sacn History" editable="bottom" >
+                                            <field name="lab_scan_alot"/>
+                                            <field name="date"/>
+                                        </tree>
+                                    </field>
+                                </page>
+
+
+
                                 
                                     <page string="Documents">
                                         <field name = 'documents'>
                                             <tree string="Documents" editable="bottom">
                                                 <field name="report_name" />
                                                 <field name ="attachment" widget="many2many_binary"/>
+
                                             </tree>
                                         </field>
                                     </page>
 
                                     </notebook>
-                                        <label for="acknowledge" style="font-size: 20px !important;" string="Acknowledgement"/>
-                                        <div class="row">
-                                        <field name = 'acknowledge'/></div>
                                 </sheet>
     
                             <div class="oe_chatter">
@@ -209,7 +208,7 @@
                         <tree string="EBook">
                             <field name="doctor" invisible="1" />
                             <field name="patient" />
-                            <field name="opnumber" />
+                            <field name="serial_number" />
                             <field name="sex" />
                             <field name="age" />
                             <field name ="patient_status"/>
@@ -271,6 +270,17 @@
             </calendar>
         </field>
     </record> -->
+
+
+
+
+
+
+
+
+
+
+
 
                 <record model="ir.actions.act_window" id="action_view_doctor">            
                     <field name="name">EBook</field>         
