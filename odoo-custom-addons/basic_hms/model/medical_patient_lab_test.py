@@ -11,7 +11,7 @@ class medical_patient_lab_test(models.Model):
     lab_test_owner_partner_id = fields.Many2one('res.partner', 'Owner Name')
     urgent =  fields.Boolean('Urgent',)
     owner_partner_id = fields.Many2one('res.partner')
-    state = fields.Selection([('draft', 'New'),('tested', 'Waiting'), ('cancel', 'Cancel'),('ontest', 'On Testing')], readonly= True, default = 'draft')
+    state = fields.Selection([('draft', 'New'),('tested', 'Waiting'),('ontest','On Testing'),('cancel', 'Cancel')], readonly= True, default = 'draft')
     medical_test_type_id = fields.Many2one('medical.test_type', 'Test',required = True)
     test_types = fields. Many2one('medical.lab.test.units',string='Test Types',required = True)
     test_amount = fields.Float(string="Test Amount", related='test_types.code')
@@ -23,12 +23,7 @@ class medical_patient_lab_test(models.Model):
     is_invoiced = fields.Boolean(copy=False,default = False)
     units= fields.Many2one('test.units', string="Units",related='test_types.units')
     normal_range = fields.Float(related='test_types.normal_range')
-    normal_ranges = fields.Char(related='test_types.normal_ranges')
     reports= fields.One2many('scan.test.document','scan_t',string="Documents")
-
-    def update_result(self):
-        self.state = 'ontest'
-
 
 
     @api.onchange('units','normal_range')
@@ -36,10 +31,18 @@ class medical_patient_lab_test(models.Model):
         lines=[(5,0,0)]
         val={
             'test_unit':self.units,
-            'normal_ranges':self.normal_ranges
+            'normal_range':self.normal_range
         }
         lines.append((0,0,val))
         self.reports = lines
+
+
+
+    # @api.model     
+    def update_result(self):
+        self.state = 'ontest'
+
+
 
     # @api.onchange('test_types')
     # def _range_change(self):
@@ -150,9 +153,8 @@ class Testdocuments(models.Model):
 
     scan_t = fields.Many2one('medical.patient.lab.test',string="Doctor")
     report_name = fields.Char(string="Report Name")
-    normal_range = fields.Float( string="Normal Range")
-    normal_ranges = fields.Char( string="Normal Range",rewuired=True)
-    tested_range = fields.Char(string="Tested Range")
+    normal_range = fields. Float( string="Normal Range")
+    tested_range = fields.Float(string="Tested Range")
     test_unit = fields.Many2one('test.units',string="Unit")
     attachments = fields.Many2many('ir.attachment',string="Attachment")
 

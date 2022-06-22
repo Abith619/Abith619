@@ -33,9 +33,9 @@ class medical_directions(models.Model):
     sex = fields.Selection([('m', 'Male'),('f', 'Female')],  string ="Sex", required= True)
     prescription_date= fields.Datetime(string='Date', default=fields.Datetime.now())
     name = fields.Char('Prescription ID')
-    ailments=fields.Many2one('medical.pathology',string="Present Ailments")
+    ailments=fields.Many2one('medical.pathology',string="Present Complaints")
     habbit=fields.One2many('medical.habits','doz',string="Habit")
-    diet_fields=fields.One2many('diet.field','diet1',string='Previous Diet')
+    diet_fields=fields.One2many('diet.field','diet1',string='Diet')
     patient_status = fields.Boolean(string='Patient Status')
 
     #one2many
@@ -47,18 +47,18 @@ class medical_directions(models.Model):
 
     green_agreement=fields.One2many('green.agreement','agreement',string="Green Agreement")
     
-    history_surgery = fields.One2many('patient.surgery', 'doc', string="History of Surgery")
+    history_surgery = fields.One2many('patient.surgery', 'doc', string="Lab \ Scan",track_visibility='always')
 
-    history_family = fields.One2many('patient.family','doct',string="History of Family")
+    history_family = fields.One2many('patient.family','doct',string="History o  f Family")
 
     documents = fields.One2many('patient.document','docc',string="Documents")
 
     treatment_initial=fields.One2many('treatment.form','treatment1',string='Treatment')
 
 
-    prescription_patient = fields.One2many( 'patient.prescription','medical_doctor',string ='Prescription')
+    prescription_patient = fields.One2many( 'patient.prescription','medical_doctor',string ='Prescription',track_visibility='always')
 
-    currents_ailments = fields.One2many('current.ailments','doctor_aliments',string="Current Ailments")
+    currents_ailments = fields.One2many('current.ailments','doctor_aliments',string="Present Complaints",track_visibility='always')
     
 
     lab_reports = fields.Many2one('medical.lab',string ="Lab Reports")
@@ -70,6 +70,62 @@ class medical_directions(models.Model):
 
     image1=fields.Binary(string="Image")
 
+    last_update = fields.Datetime(string="Last Update")
+
+    mobile = fields.Char(required=True,readonly=True)
+    message = fields.Char(string="Message",default='Hi how are you')
+    attachment_ids = fields.Many2many(
+                'ir.attachment',string='Attachment')
+	
+    def send_msg(self):
+        message_string = ' '
+        message_string = message_string + '%20'
+        message_string = message_string[:(len(message_string) - 3)]
+        self.ensure_one()
+        ir_model_data = self.env['ir.model.data']
+        template_id = ir_model_data.get_object_reference('report_print_prescription','prescription_demo_report_template')[1]
+        data_record = base64.b64encode(template_id[0], 'utf-8')
+        ir_values = {
+        'name': "Customer Report",
+        'type': 'binary',
+        'datas': data_record,
+        'store_fname': data_record,
+        'res_model':'whatsapp.wizard',
+        'res_id': self.id,
+        'mimetype': 'application/x-pdf',
+        }
+        
+        self.attachment_ids.create(ir_values)
+        data_id = self.env['ir.attachment'].create(ir_values)
+        
+        template_id.attachment_ids = [(6, 0, [data_id.id])]
+        
+        ctx = {
+        'default_model': 'medical.prescription.order',
+        'default_res_id': self.ids[0],
+        'default_use_template': template_id,
+        'default_template_id': template_id.id,
+        'default_body': 'Inspection Report',
+        'default_attachment_ids': template_id,
+        'default_composition_mode': 'comment',
+        'default_user_id': self.patient_id.id,
+        'default_mobile':self.contact_number,
+        'default_message':"Hi "+self.patient_id.name+",\n\nYour Appointment is fixed with "+self.doctor_id.name+"\nFeedback : https://www.mouthshut.com/product-reviews/Daisy-Hospital-Chromepet-Chennai-reviews-925999566"
+        }
+        # return ctx
+        
+        return self.env['ir.attachment'].create({
+                'type': 'ir.actions.act_url',
+                'url': "https://api.whatsapp.com/send?phone="+self.mobile+"&text=" + message_string,
+                'target': 'self',
+                'res_id': self.id,
+                'datas': data_record,
+                'store_fname': data_record,
+                'res_model': 'whatsapp.wizard',
+                'mimetype': 'application/x-pdf',
+                'context': ctx,
+                
+                })
 
 
     @api.onchange('height','weight')
@@ -134,19 +190,22 @@ class medical_directions(models.Model):
    
     phone_number=fields.Char(string="Contact Number")
     contact_number=fields.Char(string="Whatsapp Number")
-    stages= fields.Selection([('draft',"New"),('done',"Done")])
+    stages= fields.Selection([('draft'," Waiting"),('done',"On Consultation"),('complete',"Done")])
     diagnosis = fields.Text(string='Initial Diagnosis')
     final_diagnosis =  fields.Text(string='Final Diagnosis')
     name_father = fields.Char()
     # habits = fields.Many2many('habit.for',string="Habits")
     patient_habits = fields.Many2many('habit.for',string="Habits")
+
+    
     # def _get_default_stage(self):
         # self.qr_id=self.serial_number
     # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']
     # .browse(self.env['res.company']._company_default_get('medical.prescription.order')))
 
-#existing appoinment 
 
+#existing appoinment 
+     
     # @api.onchange('patient')
     # def _existing_contact(self):
     #     if
@@ -381,27 +440,28 @@ class Perviousmedication(models.Model):
     _name='pervious.medication'
 
     # serial_number=fields.Integer(string="SL")
-    diseases= fields.Many2one('medical.doctor',string="Patient")
+    diseases= fields.Many2one('medical.doctor',string="Patient Name")
     diseases_for = fields.Char(string = "Complaints",required=True)
-    signs = fields.Char(string="Signs")
-    medication_from = fields.Date(string="Medication From")
-    medication_to = fields.Date(string="Medication to")
+    # signs = fields.Char(string="Signs")
+    # medication_from = fields.Date(string="Medication From")
+    # medication_to = fields.Date(string="Medication to")
     medicine = fields.Char(string="Notes")
-    diets = fields.Char(string="Diets")
+    # diets = fields.Char(string="Diets")
 
 class Patientsurgery(models.Model):
     _name = 'patient.surgery'
 
     # pat = fields.Many2one('medical.patient',string="Patient")
-    doc = fields.Many2one('medical.doctor',string="Patient")
+    doc = fields.Many2one('medical.doctor',string="Patient Name")
     # serial_number=fields.Integer(string="SL")
-    lab_scan_alot = fields.Many2one('medical.patient.lab.test',string="Scan/Lab S.No",required=True)
+    lab_scan_alot = fields.Many2one('medical.patient.lab.test',string="Scan/Lab Alots",required=True)
     date= fields.Datetime(string="Date of Lab/Scan")
     # surgery_date = fields.Date(string="Surgery Date")
     # surgery_type = fields.Many2one('medical.pathology',string="Surgery Type")
     # surgery_reason = fields.Char(string="Past Surgery")
     # surgery_status = fields.Selection([('done','Done'),('cancel','Cancel')],string="Surgery Status")
     # surgery_notes = fields.Text(string="Surgery Notes")
+
     
 class patient_family(models.Model):
     _name = 'patient.family'
@@ -413,7 +473,7 @@ class patient_family(models.Model):
 class documents(models.Model):
     _name ="patient.document"
 
-    docc = fields.Many2one('medical.doctor',string="Doctor")
+    docc = fields.Many2one('medical.doctor',string="Patient Name")
     report_name = fields.Selection([('green',"Green Document"),('o',"Other Documents")],string="Report Name",required=True)
     attachment = fields.Many2many('ir.attachment',string="Attachment")
     # serial_number=fields.Integer(string="SL")
@@ -434,8 +494,8 @@ class treatmentFor(models.Model):
 class diet_field(models.Model):
     _name ="diet.field"
 
-    diet1 = fields.Many2one('medical.doctor',string="Patient")
-    diet_for = fields.Many2one('diet.for',string="Diets",required=True)
+    diet1 = fields.Many2one('medical.doctor',string="Patient Name")
+    diet_for = fields.Many2one('diet.for',string="Diet Name",required=True)
     followed_duration= fields.Integer(string="Duration Followed/Months")
     # serial_number=fields.Integer(string="SL")
 
@@ -459,7 +519,7 @@ class Patientprescription(models.Model):
     _name ='patient.prescription'
 
     # serial_number=fields.Integer(string="SL")
-    medical_doctor=fields.Many2one('medical.doctor',string="Patient")
+    medical_doctor=fields.Many2one('medical.doctor',string="Patient Name")
     # medicine_name = fields.Many2one('product.product',string='Medicine Name')
     # morning= fields.Float('Morning')
     # noon= fields.Float('After Noon')
@@ -473,7 +533,7 @@ class Patientprescription(models.Model):
     # anupana = fields.Char(string="Anupana")
     prescription_alot= fields.Many2one('medical.prescription.order',string="Prescriptions",required=True)
     date= fields.Datetime(string="Date of Prescription")
-    delivery_option= fields.Selection([('dir','Direct'),('on',"Online")],string="Delivery Option")
+    delivery_option= fields.Selection([('dir','Direct'),('on',"Courier")],string="Delivery Option")
 
 
 
@@ -482,10 +542,19 @@ class Currentailgnments(models.Model):
 
 
     # serial_number=fields.Integer(string="SL")
-    doctor_aliments =fields.Many2one('medical.doctor',string="Patient")
+    doctor_aliments =fields.Many2one('medical.doctor',string="Patient Name")
     patient_currents_ailments=fields.Many2one('medical.pathology',string="Complaints",required=True)
     duration = fields.Char(string="Duration")
     patient_signs_symptoms = fields.Many2many('medical.symptoms',string="Signs/Symptoms")
+
+    @api.model
+    def create(self,val):
+        # appointment = self._context.get('appointment_id')
+        patient_orm = self.env['medical.symptoms'].search([('id','=',val['patient_signs_symptoms'])])
+        patient_orm.write({'diseases':val.patient_currents_ailments})
+
+
+
 
                 
 

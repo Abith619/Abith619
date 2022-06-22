@@ -119,6 +119,7 @@
         'wizard/register_wizard.xml',
         'views/patient_bills.xml',
         'views/account_payment_inherit.xml',
+        'views/patient_tracking.xml',
     ],
     "author": "BrowseInfo",
     "website": "https://www.browseinfo.in",

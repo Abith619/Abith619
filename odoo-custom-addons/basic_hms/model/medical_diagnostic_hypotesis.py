@@ -10,7 +10,4 @@ class medical_diagnostic_hypotesis(models.Model):
     diagnostic_pathology_id = fields.Many2one('medical.pathology','Procedure')
     patient_evaluation_id = fields.Many2one('medical.patient.evaluation','Patient Evaluation')
     comments = fields.Char('Comments')
-  
 
-
-  

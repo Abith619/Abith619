@@ -35,7 +35,7 @@
         <record model="ir.actions.act_window" id="diet_action">            
             <field name="name">Diet For</field>         
                 <field name="res_model">diet.for</field>           
-                <!-- <field name="view_type">form</field>             -->
+                <!-- <field name="view_type">form</field>-->
                 <field name="view_mode">tree,form</field>
                 <field name="domain">[]</field>            
                 <field name="help" type="html">                

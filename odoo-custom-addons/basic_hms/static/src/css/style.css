@@ -29,5 +29,12 @@ img#logo_img
     padding-left: 10%;
 
 }
+.nav-item a{
+    border-top-left-radius: 3px !important;
+    border-top-right-radius: 3px !important;
+    border: 1px solid #7777 !important;
+    border-bottom: 0 !important;
+    padding: 8px 16px !important;
+}
 
 

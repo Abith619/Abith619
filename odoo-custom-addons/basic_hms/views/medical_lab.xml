@@ -87,9 +87,9 @@
             <field name="view_mode">tree</field>
         </record>
 
-        <act_window id="action_view_lab_id" name="Lab Reports"
+        <!-- <act_window id="action_view_lab_id" name="Lab Reports"
             res_model="medical.lab" binding_model="medical.patient"
-            view_mode="tree,form"/>
+            view_mode="tree,form"/> -->
 
         <!-- <menuitem name="Lab Tests Results" id="menu_lab_test_result"
             parent="basic_hms.main_menu_laboratory" action="action_medical_lab_form"

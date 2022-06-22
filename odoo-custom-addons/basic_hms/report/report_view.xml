@@ -13,14 +13,13 @@
 
 
             <report
-            id="report_diet_print_diet"
+            id="report_print_diet"
             model="prescribe.diet"
             report_type="qweb-pdf"
             string="Diet"
-            name="basic_hms.diet_doctor_report"
-            file="basic_hms.diet_doctor_report"
+            name="basic_hms.ebook_diet_report"
+            file="basic_hms.diet_ebook"
             />
-
             
         <report
             id="report_print_EBook"

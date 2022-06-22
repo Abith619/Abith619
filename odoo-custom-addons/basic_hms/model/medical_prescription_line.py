@@ -43,7 +43,7 @@ class medical_prescription_line(models.Model):
     night= fields.Float('Night')
     before_after = fields.Selection([('bf',"Before Food"),('af',"After food")],'Before Food')
     comment= fields.Char('Comment')
-    days1= fields.Integer('Days')
+    days1= fields.Integer('Days')           
     units= fields.Many2one('uom.uom',string="units")
     potency = fields.Char(string="Potency")
     anupana = fields.Char(string="Anupana")
@@ -67,8 +67,11 @@ class medical_prescription_line(models.Model):
             self.night= res.night
             self.evening = res.evening
             self.units = res.units
+            
             self.potency = res.potency
             self.anupana = res.anupana
+
+            
     sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
 
     @api.depends('name.prescription_line_ids', 'name.prescription_line_ids.medicine_name')

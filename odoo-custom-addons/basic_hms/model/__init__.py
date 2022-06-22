@@ -76,6 +76,7 @@ from. import symptoms
 from. import city_master
 from. import register_payment
 from. import patient_bills
+from. import patient_tracking
 
 
 

@@ -30,7 +30,7 @@ class medical_appointment(models.Model):
 			('outpatient', 'Outpatient'),
 			('inpatient', 'Inpatient'),
 		], 'Patient status', sort=False,default='outpatient')
-	patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string='Patient',required=True)
+	patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string='Patient Name',required=True)
 	urgency_level = fields.Selection([
 			('a', 'Normal'),
 			('b', 'Urgent'),
@@ -70,7 +70,7 @@ class medical_appointment(models.Model):
 	appointment_from=fields.Selection([('09:00 Am - 10:00 Am','09:00 Am - 10:00 Am'),('10:00 Am - 11:00 Am','10:00 Am - 11:00 Am'),('11:00 Am - 12:00 Pm',"11:00 Am - 12:00 Pm"),
     ('12:00 Pm - 01:00 Pm','12:00 Pm - 01:00 Pm'),('02:00 Pm - 03:00 Pm','02:00 Pm - 03:00 Pm'),('03:00 Pm - 04:00 Pm','03:00 Pm - 04:00 Pm')],string='Appointment Slot')
 
-	appoinment_through =fields.Selection([('onl',"Online"),('of',"Offline")],required=True,default='onl',string ="Appoinment Through")
+	appoinment_through =fields.Selection([('onl',"Online"),('dir',"Direct"),('of',"Offline"),('rev',"Review"),('stop',"Stopped")],required=True,default='onl',string ="Appoinment Through")
 
 	fees = fields.Float(string='Fees',readonly=True,compute='fee_change')
 
@@ -82,9 +82,11 @@ class medical_appointment(models.Model):
     # def new_change(self):
     #     if patient_selection == 'new':
     #         return {'domain':{'patient_id':rage:('id','in',None)]}}
-	
+
+
 	def send_msg(self):
-		return {'type': 'ir.actions.act_window',
+		return {
+				'type': 'ir.actions.act_window',
                 'name': 'Whatsapp Message',
                 'res_model': 'whatsapp.wizard',
                 'target': 'new',
@@ -94,10 +96,7 @@ class medical_appointment(models.Model):
 				'default_mobile':self.contact_number,
 				'default_message':"Hi "+self.patient_id.name+",\n\nYour Appointment is fixed with "+self.doctor_id.name+"\nFeedback : https://www.mouthshut.com/product-reviews/Daisy-Hospital-Chromepet-Chennai-reviews-925999566"
 				},
-
                 }
-
-
 
 	@api.depends('appoinment_through')
 	def fee_change(self):
@@ -146,11 +145,11 @@ class medical_appointment(models.Model):
 	
 #create new contact patient
 	def button_registrations(self):
-    		
+    	# 'name':self.patient_id.id	
 		self.stages = 'done'
 		# create_registration = self.env['medical.patient'].create({
 		ces={
-        'name': "Scan/Tests",
+        'name': "Registration",
         'type': 'ir.actions.act_window',
         'view_type': 'form',
         'view_mode': 'form',
@@ -166,8 +165,9 @@ class medical_appointment(models.Model):
 				'default_treatment':self.treatment_for.id,
 				'default_fees':self.fees,
 				'default_city':self.region.id,
-				'default_reg_type':'app',
+				'default_appoinment_by':self.appoinment_by.id,
 				'default_stages':'on',
+				'default_reg_type':self.appoinment_through,
 				# 'default_patient_movement':datetime.now()
             },
 		}		
@@ -185,11 +185,8 @@ class medical_appointment(models.Model):
 		val = self.env['res.partner'].search([('id','=',self.patient_id.id)])
 		self.phone_number = val.mobile
 		self.gender=val.patient_gender
-
-    		
-
-
-
+  
+  
 	@api.onchange('duration')
 	def start_end(self):
 		now  = self.appointment_date

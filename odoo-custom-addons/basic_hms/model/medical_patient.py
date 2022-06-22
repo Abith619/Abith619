@@ -38,7 +38,7 @@ class medical_patient(models.Model):
             else:
                 rec.age = "Age"
 
-    
+    family_details = fields.Boolean()    
     whatsapp_check=fields.Boolean()
     stages= fields.Selection([('draft',"New"),('on',"On Process"),('done',"Done")])
     patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name", required= True)
@@ -267,12 +267,10 @@ class medical_patient(models.Model):
     full_term = fields.Integer('Full Term')
     ses_notes = fields.Text('Notes')
 
-    appoinment_by = fields.Many2one('res.users',string='Appointment By',readonly=True,default=lambda self: self.env.user)
 
 
 #inherit fields
-    adoption_agreement = fields.Boolean()
-    family_details = fields.Boolean() 
+    appoinment_by = fields.Many2one('res.users',string='Appointment By',readonly=True,default=lambda self: self.env.user)
     area=fields.Char(string="Area")
     city=fields.Many2one('res.city',string="City")
 
@@ -287,7 +285,7 @@ class medical_patient(models.Model):
     occupation = fields.Char(string="Occupation")
     designation = fields.Char(string="Designation")
     father_name = fields.Selection([('1','Father'),('2','Husband'),('3','Mother'),('4','Wife'),('5','Gaurdian'),('6','Relative')])
-    father_occupation = fields.Char(string="Father Occupation")
+    father_occupation = fields.Char()
     address = fields.Char(string="Address")
     state=fields.Many2one('res.country.state',string="State")
     country=fields.Many2one('res.country',string="Country")
@@ -304,7 +302,7 @@ class medical_patient(models.Model):
     operations_details = fields.Char(string="Operation if any furnish details")
     name_father=fields.Char(string="Name")
     pin_code=fields.Char(string="Pin Code")
-    reg_type=fields.Selection([('dir',"Direct"),('on',"Online"),('app',"Appoinment"),('rev',"Review"),('stop',"Stopped")],string="Registration Type")
+    reg_type=fields.Selection([('dir',"Direct"),('on',"Online"),('app',"Appoinment"),('rev',"Review"),('stop',"Stopped")],string="Registration Type",track_visibility='always')
     patient_movement = fields.Datetime()
     # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.prescription.order')))
 
@@ -372,20 +370,26 @@ class medical_patient(models.Model):
     appointment_from=fields.Selection([('09:00 Am - 10:00 Am','09:00 Am - 10:00 Am'),('10:00 Am - 11:00 Am','10:00 Am - 11:00 Am'),('11:00 Am - 12:00 Pm',"11:00 Am - 12:00 Pm"),
     ('12:00 Pm - 01:00 Pm','12:00 Pm - 01:00 Pm'),('02:00 Pm - 03:00 Pm','02:00 Pm - 03:00 Pm'),('03:00 Pm - 04:00 Pm','03:00 Pm - 04:00 Pm')],
     string='Appointment Slot')
-    payment = fields.Float(string="Payments")
+
 
 
     @api.model
     def create(self,val):
         appointment = self._context.get('appointment_id')
+
+        patient_orm = self.env['res.partner'].search([('id','=',val['patient_id'])])
+        patient_orm.write({'is_patient':True,
+        # 'mobile':val.contact_no,
+        # 'gender':val.sex
+        })
+
         res_partner_obj = self.env['res.partner']
-        # patient_orm = self.env['res.partner'].search([('id','=',val['patient_id'])])
-        # patient_orm.write({'is_patient':True,})
-        
+
         if appointment:
-            val_1 = {'name': self.env['res.partner'].browse(val['patient_id']).name}
+            val_1 = {'name': self.env['res.partner'].browse(val['name']).name}
             patient= res_partner_obj.create(val_1)
-            val.update({'patient_id': patient.id})
+            val.update({'name': patient.id,
+            'is_patient':True})
         if val.get('date_of_birth'):
             dt = val.get('date_of_birth')
             d1 = datetime.strptime(str(dt), "%Y-%m-%d").date()
@@ -398,6 +402,7 @@ class medical_patient(models.Model):
         if patient_id:
             val.update({
                         'name':patient_id,
+                        # 'Patien':True
                        })
         result = super(medical_patient, self).create(val)
         return result
@@ -415,28 +420,13 @@ class medical_patient(models.Model):
 
 
     def payment_count(self):
-        for k in self:
-
-            payment_count = self.env['register.payment'].search_count([('patient_id', '=', k.patient_id.id)])
-            k.payment= payment_count
+        payment_count = self.env['register.payment'].search_count([('patient_id', '=', self.patient_id.id)])
+        self.payment= payment_count
     payment = fields.Integer(string="Payments",compute='payment_count')
-
-    def send_msg(self):
-        return {'type': 'ir.actions.act_window',
-                'name': 'Whatsapp Message',
-                'res_model': 'whatsapp.wizard',
-                'target': 'new',
-                'view_mode': 'form',
-                'view_type': 'form',
-                'context': {'default_user_id': self.patient_id.id,
-                'default_mobile':self.contact_number,
-                'default_message':"Hi "+self.patient_id.name+",\n\nYour Have registrated With  "+self.doctors.name+" on "+str(self.dates)+"\nFeedback : https://www.google.co.in/webhp?hl=en&sa=X&ved=0ahUKEwji0JG87J_4AhVVv2MGHcWkCuwQPAgI"+"\n\nThank You,\nDaisy Hospital",
-                }}
 
 #assign doc create e book
 
     def assign_button(self):
-       
     	return {
             'type': 'ir.actions.act_window',
             'name': 'Register Payment',
@@ -461,17 +451,49 @@ class medical_patient(models.Model):
                     'default_weight':self.weight,
                     'default_bmi_value':self.bmi_value,
                     'default_name':self.name,
-                    'default_treatment':self.treatment.id,
+                    # 'default_treatment':self.treatment.id,
                     'default_fees':self.fees,
-                    'default_duration_ailments':self.duration_ailmenmts,
+                    # 'default_duration_ailments':self.duration_ailmenmts,
                     'default_doctor_changes':True,
                     'default_reg_type':self.reg_type
                     
                 },}
- 
+
+        # lines=[]
+        # val={
+        #     'patient_currents_ailments':self.treatment.id,
+        # }
+        # lines.append((0,0,val))
+        # create_patient = self.env['medical.doctor'].create({
+        #     'patient':self.patient_id.id ,
+        #     'age':self.age, 
+        #     'sex':self.sex,
+        #     'doctor':self.doctors.id,
+        #     'phone_number':self.contact_no,
+        #     'contact_number':self.contact_number,
+        #     'marital_status':self.marital_status,
+        #     'address':self.address,
+        #     'father_name':self.father_name,
+        #     'name_father':self.name_father,
+        #     'occupation':self.occupation,
+        #     'office_address':self.office_address,
+        #     'height':self.height,
+        #     'weight':self.weight,
+        #     'bmi_value':self.bmi_value,
+        #     'opnumber':self.name,
+        #     'stages':'done',
+        #     'currents_ailments':lines,
+        # })
+        # create_payment=self.env['register.payment'].create({
+        #     'patient_id':self.patient_id.id,
+        #     'date':datetime.now().date(),
+        #     'amount':self.fees
+        # })
+
+
+        # self.stages='done'
 
 #one2many new 
-
 class FixAppointment(models.Model):
     _name = "fix.appointment"
 

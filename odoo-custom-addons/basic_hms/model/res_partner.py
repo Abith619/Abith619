@@ -145,11 +145,16 @@ class res_partner(models.Model):
     'type': 'ir.actions.act_window',
     }
 
+    
+    
     def doctor_report(self):
+        
+        
         for res in self :
             doctor_report_appointment1 = self.env['medical.doctor'].search_count([('doctor', '=', res.name)])
             self.doctor_report_appointment= doctor_report_appointment1
     doctor_report_appointment=fields.Integer(compute='doctor_report',string="Doctor Report")
+
 
     def doctor_report_button(self):
         return {

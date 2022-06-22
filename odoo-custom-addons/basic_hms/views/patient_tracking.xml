@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="track_form_view" model="ir.ui.view">
+        <field name="name">res.city_view</field>
+        <field name="model">patient.tracking</field>
+        <field name="arch" type="xml">
+            <form string="Patient Tracking">
+                <sheet> 
+                <group>
+                <group>
+                 <field name="name"/>
+                </group>
+                </group>
+                <label  for ='appoinment_status' style='padding-left: 450px;font-size: 25px !important;color: #f64332 !important;font-weight: 600;'
+ string ='Patient Status'/>
+                <group>
+                <group>
+                    <field name="appoinment_status"/>
+                    <field name="lab_status"/>
+                    </group>
+                    <group>
+                    <field name="precription_status"/>           
+                    <field name="billing_status"/>
+                </group>
+                </group>
+                </sheet>
+                </form>
+                </field>
+                </record>
+                <record id="track_action_view" model="ir.actions.act_window">
+                    <field name="name">Patient Tracking</field>
+                    <field name="res_model">patient.tracking</field>
+                    <field name="binding_view_types">form</field>
+                    <field name="view_mode">tree,form</field>
+                </record>
+
+            <menuitem id="menus_track"  name ="Track Patient" action="track_action_view"
+                parent="main_menu_configartion" sequence="0" />
+                </odoo>

@@ -3,7 +3,7 @@ from odoo import api, fields, models
 class Prescribediet(models.Model):
     _name = 'prescribe.diet'
 
-    name = fields.Many2one('set.diets', string="Diet Name",required = True)
+    name = fields.Many2one('set.diets', string="diets",required = True)
     pre_diet_line = fields.One2many('prescribe.diet.line','name',string="Diet Advisied")
     patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name")
     dates=fields.Date(string='Date',default=fields.Datetime.now(),readonly=True)
@@ -228,3 +228,5 @@ class Diet_One(models.Model):
     rice=fields.Many2many('set.rice',string="Rice")
     protein_diet=fields.Many2many('set.protein',string="Protein Diet")
     note=fields.Char('Notes')
+    
+

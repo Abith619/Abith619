@@ -19,6 +19,11 @@
                                 <field name ="payment" widget="statinfo"/>
                             </button>
                 </div>  
+                <xpath expr="//div[@name='Action']" position="inside">
+                    <div class="dropdown-item">
+                        <menuitem id="PSC" invisible='1'/>
+                    </div>
+                </xpath>
 
                 <field name="name"/>                      
                             <group>
@@ -42,7 +47,7 @@
                                 <field name="marital_status" />
                                 <label for="date_of_birth" string="DOB" />
                                 <div class="o_address_format">
-                                    <field name="date_of_birth" class="o_address_city" placeholder="dd-mm-yyyy" />
+                                    <field name="date_of_birth" class="o_address_city" placeholder="mm-dd-yyyy" />
                                     <label for="age" style="font-weight: bold !important;color: #333;"  font-family= "Franklin Gothic Medium" string="Age"/>
                                     <field name="age" class="o_address_state"/>
                                 </div>
@@ -78,7 +83,7 @@
                             </div>
                             <label for="state" string=" " />    
                                 <div class="o_address_format">
-                                    <field name="state" placeholder="state" class="o_address_city" options="{'no_create':True,'no_create_edit':True,'no_open': True}" style="width: 45%;"/>
+                                    <field name="state" placeholder="State" class="o_address_city" options="{'no_create':True,'no_create_edit':True,'no_open': True}" style="width: 45%;"/>
                                     <field name="country" class="o_address_state" placeholder="Country"  style="width: 45%;" options="{'no_create':True,'no_create_edit':True,'no_open': True}"/>
                                 </div>
 
@@ -147,19 +152,6 @@
 
                 </group>
                 </group>
-                <label for = 'adoption_agreement' style="font-size: 25px !important;font-weight: 600;padding-left: 550px;" string ="Adoption Agreement"/>
-                <div class ='row'>
-                    
-                    <div class='col-12' 
-                    style ='padding-left: 450px;'
-                >
-                        <field name ="adoption_agreement"/>
-                        <label for = 'adoption_agreement' string ="I accept the terms and condition of Adoption Agreement"/>
-                    </div>
-                    
-  
-
-                </div>
                     </sheet>
                         <div class="oe_chatter">
                                 <field name="message_follower_ids" widget="mail_followers" string="mail"/>
@@ -250,12 +242,12 @@
 
         
 
-        <act_window id="action_view_lab_id" name="Lab Reports"
+        <!-- <act_window id="action_view_lab_id" name="Lab Reports"
             res_model="medical.lab" binding_model="medical.patient"
-            view_mode="tree,form" domain="[('patient_id', '=', active_id)]" />
+            view_mode="tree,form" domain="[('patient_id', '=', active_id)]" /> -->
 
-        <act_window id="action_psc_id" name="PSC"
+        <!-- <act_window id="action_psc_id" name="PSC"
             res_model="medical.patient.psc" binding_model="medical.patient"
-            view_mode="tree,form" domain="[('patient_id', '=', active_id)]" />
+            view_mode="tree,form" domain="[('patient_id', '=', active_id)]" /> -->
 
 </odoo>

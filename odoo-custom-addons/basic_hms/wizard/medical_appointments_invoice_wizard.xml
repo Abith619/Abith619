@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-        <act_window id="action_create_invoice_val1" name="Create Invoice"
+        <!-- <act_window id="action_create_invoice_val1" name="Create Invoice"
             res_model="medical.appointments.invoice.wizard" binding_model="medical.appointment"
-            view_mode="form" target="new" />
+            view_mode="form" target="new" /> -->
 
         <record id="medical_appointments_invoice_wizard_view" model="ir.ui.view">
             <field name="name">medical.appointments.invoice.wizard.view</field>

@@ -12,7 +12,7 @@
                 <header>
                     <button name="send_msg" string="Whatsapp Message" class="oe_highlight" type="object"/>
                     <!-- <button name="rolls" string="send check" type="object"/> -->
-                    <button name="button_registrations" string="Convert To Registration" class="oe_highlight" type="object" />
+                    <button name="button_registrations" string="Convert To Registration" class="oe_highlight" type="object" attrs="{'invisible': [('stages','=', 'done')]}"/>
                     <!-- <button name="button_contact" string="Create number" class="oe_highlight" type="object"/> -->
                     <field name ="stages" widget="statusbar"/>
                     <!-- <field name='date'/> -->
@@ -35,11 +35,8 @@
                                     </div>
                                     <div class="col-6">
                                     </div>
-
-                                 
                                     <!-- <div class="col-2">
                                     </div> -->
-                                    
                                 </div>
                                 <field name = "patient_id"  style="height:70%;width:50%" options="{'no_create':True,'no_create_edit':True,'no_open': True}" attrs="{'invisible': [('patient_selection','=', 'new')]}"/> 
                           </div>
@@ -82,7 +79,7 @@
                             <group>
                                 <field name = "patient_id" /> 
                                 <field name= "gender" attrs="{'invisible': [('patient_id','=', False)]}"/>
-                                <field name= "age" attrs="{'invisible': [('patient_id','=', False)]}"/>
+                                <!-- <field name= "age" attrs="{'invisible': [('patient_id','=', False)]}"/> -->
                                 <field name= "phone_number" attrs="{'invisible': [('patient_id','=', False)]}"/>
                                 <field name= "contact_number" attrs="{'invisible': [('patient_id','=', False)]}"/>
                                 <field name= "region" attrs="{'invisible': [('patient_id','=', False)]}"/>
@@ -203,6 +200,6 @@
 
     <menuitem id="menu_appointment" name='Appointments' action="action_medical_appointment"
               parent="main_menu_hospital_management"
-              sequence="2"/>
+              sequence="1"/>
 
 </odoo>

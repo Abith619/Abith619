@@ -12,9 +12,9 @@
                        <td style="border: 0px;width: 50%;">
                            <p><strong>Diet Name :</strong><span t-field="o.name"/></p>
                        </td>
-                       <!-- <td style="border: 0px;width: 50%;">
+                       <td style="border: 0px;width: 50%;">
                            <p><b>Patient Name :</b> <span t-field="o.patient_id"/></p>
-                       </td> -->
+                       </td>
                        </table>
                        <table class="table table-bordered" style="border: 1px solid black;">
                         <thead>

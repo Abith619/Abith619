@@ -72,9 +72,9 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
 
-                <xpath expr="//page[@name='followup_tab']" position="attributes">
+                <!-- <xpath expr="//page[@name='followup_tab']" position="attributes">
                     <attribute name="invisible">1</attribute>
-                </xpath>
+                </xpath> -->
 
                 <xpath expr="//page[@name='accounting']" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -121,12 +121,13 @@
             </field>
             <notebook >
                 
-                <page string="Medical">
-                    <group colspan="6" col="6">
+                <page string="Medical Documents" >
+                    <group colspan="6" col="6" invisible='1'>
                             <field name="is_patient" />
                             <field name="is_doctor" />
                             <field name="is_pharmacy" />
                         </group>
+
                         <field name="document_type">
                             <tree string="Proof Documents" editable="bottom" >
                                 <field name="document_detail" options="{'no_create_edit':True}"/>
@@ -137,6 +138,62 @@
                 </notebook>
             </field>
         </record>
+
+        <record id="res_partner_tree_views" model="ir.ui.view">
+            <field name="name">res.partner.tree.view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree" />
+            <field name="arch" type="xml">
+                <xpath expr="/tree/field[@name='email']" position="after">
+                    <field name ="is_doctor"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                    <xpath expr="//field[@name='activity_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+               
+            </field>
+        </record>
+
+<record id="view_contacts_land_filter" model="ir.ui.view">
+    <field name="name">Contacts</field>
+    <field name="model">res.partner</field>
+    <field name="type">search</field>
+    
+    <field name="inherit_id" ref="base.view_res_partner_filter"/>
+    <field name="arch" type="xml">
+    <filter name="salesperson" position="replace">
+        <filter string="Doctor" name="is_doctor" domain="[('is_doctor', '=', True)]"/>
+    </filter>
+
+    <filter name="type_company" position="replace">
+        <filter string="Patient" name="is_patient" domain="[('is_patient', '=', True)]"/>
+    </filter>
+
+    <filter name="type_person" position="replace">
+        <filter string="Receptionist" name="roles_selection" domain="[('roles_selection', '=', 'reception')]"/>
+    </filter>
+
+    <filter name="group_company" position="replace">
+        <filter string="Pharmacy" name="roles_selection" domain="[('roles_selection', '=', 'pharmacy')]"/>
+    </filter>
+
+    <filter name="group_country" position="after">
+        <filter string="Billing" name="roles_selection" domain="[('roles_selection', '=', 'billing')]"/>
+    </filter>
+
+    <filter name="inactive" position="replace">
+        <filter string="Telecaller" name="roles_selection" domain="[('roles_selection', '=', 'telecaller')]"/>
+    </filter>
+     
+    <filter name="group_country" position="replace">
+        <filter string="Lab / Scan" name="roles_selection" domain="[('roles_selection', '=', 'lab')]"/>
+    </filter>
+
+    </field>
+</record>
 
      <record id="medicine_product_inherit_view" model="ir.ui.view">
             <field name="name">medicine.product.inheritview</field>

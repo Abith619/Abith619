@@ -17,6 +17,7 @@ class PatientBills(models.Model):
     type_of_insurance= fields.Text(string='Insurance Details')
 
 
+
     def invoice_button(self):        
        return{
             'name': "Patient Invoice",

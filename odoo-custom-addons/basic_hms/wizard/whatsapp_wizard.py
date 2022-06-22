@@ -7,7 +7,7 @@ class WhatsappSendMessage(models.TransientModel):
 
     user_id = fields.Many2one('res.partner', string="Recipient")
     mobile = fields.Char(required=True,readonly=True)
-    message = fields.Text(string="message", required=True)
+    message = fields.Text(string="message", required=True,)
 
     def send_message(self):
         if self.message and self.mobile:
@@ -19,7 +19,7 @@ class WhatsappSendMessage(models.TransientModel):
             return {
                 'type': 'ir.actions.act_url',
                 'url': "https://api.whatsapp.com/send?phone="+self.mobile+"&text=" + message_string,
-                'target': 'new',
+                'target': 'self',
                 'res_id': self.id,
                 
             }
