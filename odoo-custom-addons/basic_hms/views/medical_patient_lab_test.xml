@@ -12,6 +12,7 @@
                     <field name="patient_id" required="1" />
                     <field name="doctor_id" />
                     <field name="state" />
+                    <field name="patient_waiting" />
                 </tree>
             </field>
         </record>
@@ -48,7 +49,8 @@
                                 <field name ="normal_range"  invisible='1'/>
                                 <field name ="test_amount" attrs="{'invisible': [('medical_test_type_id','=', False)]}"/>
                                 <field name="date" invisible="1"/>
-                                <!-- <field name="invoice_to_insurer" /> -->
+                                <field name="patient_waiting" />
+                                <field name="write_date" />
                             </group>
                             <group>
                                 <field name="patient_id" required="1"

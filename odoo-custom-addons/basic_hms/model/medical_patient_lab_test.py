@@ -1,6 +1,7 @@
 from odoo import api, fields, models, _
 from datetime import date,datetime
-from odoo.exceptions import Warning
+from odoo.exceptions import Warning, ValidationError
+
 
 class medical_patient_lab_test(models.Model):
     _name = 'medical.patient.lab.test'
@@ -11,7 +12,7 @@ class medical_patient_lab_test(models.Model):
     lab_test_owner_partner_id = fields.Many2one('res.partner', 'Owner Name')
     urgent =  fields.Boolean('Urgent',)
     owner_partner_id = fields.Many2one('res.partner')
-    state = fields.Selection([('draft', 'New'),('tested', 'Waiting'),('ontest','On Testing'),('cancel', 'Cancel')], readonly= True, default = 'draft')
+    state = fields.Selection([('draft', 'New'),('tested', 'Waiting'),('ontest','Tested'),('cancel', 'Cancel')], readonly= True, default = 'draft')
     medical_test_type_id = fields.Many2one('medical.test_type', 'Test',required = True)
     test_types = fields. Many2one('medical.lab.test.units',string='Test Types',required = True)
     test_amount = fields.Float(string="Test Amount", related='test_types.code')
@@ -36,13 +37,29 @@ class medical_patient_lab_test(models.Model):
         lines.append((0,0,val))
         self.reports = lines
 
+    @api.depends('write_date')
+    def update_time(self):
+        if self.state=='tested':
+                
+            for rec in self:
+                orm_time=self.env['medical.doctor'].search([('patient','=',rec.patient_id.id)])
+                consult_time = orm_time.write_date
+                if consult_time and rec.write_date:
+                    time_waited = str(rec.write_date - consult_time)
+    # raise ValidationError(f"{consult_time} {rec.write_date} {type(str(time_waited))}")
+                    time_data = time_waited.split(':')
+                    rec.patient_waiting = f"{time_data[0]}:{time_data[1]}"
+                else:
+                    rec.patient_waiting = "00:00"
+            
+    write_date=fields.Datetime(string='Registration Time')
+    patient_waiting = fields.Char(string="Waiting Time", compute=update_time)
 
 
-    # @api.model     
     def update_result(self):
         self.state = 'ontest'
-
-
+        # if self.state == 'tested':
+        
 
     # @api.onchange('test_types')
     # def _range_change(self):

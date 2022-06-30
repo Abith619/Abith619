@@ -109,16 +109,18 @@
                                   
                                 </group>
                                 <group>
-                                
+                                    
                                 </group>
                                 <group>
-                                   
+                                   <field name="prescription_date" />
                                
                                 </group>
                                 <group>
                                     <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
                                 </group>
                                 <group>
+                                <field name="patient_waiting"/>
+                                    <field name= 'write_date' />
 
                                 </group>
                                         
@@ -160,7 +162,7 @@
                                     <button name="scan_button" type="object" string="Assign Scans/Tests" class="oe_highlight"/>
                                     <field name="history_surgery">
                                         <tree string="Lab sacn History" editable="bottom" >
-                                            <field name="lab_scan_alot"/>
+                                            <!-- <field name="lab_scan_alot"/> -->
                                             <field name="date"/>
                                         </tree>
                                     </field>
@@ -209,8 +211,11 @@
                             <field name="patient" />
                             <field name="sex" />
                             <field name="age" />
+                            <field name="doctor" />
                             <field name ="patient_status"/>
-                            <!-- <field name="sign_symptoms" /> -->
+                            <!-- <field name="patient_waiting"/> -->
+                            <!-- <field name ="write_date"/> -->
+                            <field name="date1" invisible="1"/>
                         </tree>
                     </field>
                 </record>
@@ -223,11 +228,20 @@
     <field name="type">search</field>
     <field name="arch" type="xml">
         <search string="EBook">
-
-         
             <field name="opnumber"/>
             <field name="patient"/>
             <field name="phone_number"/>
+        <!-- <filter string="Doctor" name="doctor" domain="[('doctor', '!=', '')]"/> -->
+            <filter string="Doctor" name="doctor" context="{'group_by': 'doctor'}"/>
+            <filter string="Branch" name="company_id" context="{'group_by': 'company_id'}"/>
+            <filter string="Today" name="prescription_date" separator="1" domain="[('prescription_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
+            <filter string="Yesterday" name="prescription_date" separator="1" domain="[('prescription_date','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+            <filter string="Tomorrow" name="prescription_date" separator="1" domain="[('prescription_date','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+            
+            <!-- <filter string="Next Month" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%Y-%m-%d'))]"/> -->
+            <filter string="Past Month" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()-relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
+            <!-- <filter string="Past week" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()-relativedelta(week=1)).strftime('%Y-%m-%d'))]"/> -->
+            
         </search>
     </field>
 </record>
@@ -254,32 +268,6 @@
         </field>
     </record>
 
-
-    <!-- <record id="medical_appointment_calendar_view" model="ir.ui.view">
-        <field name="name">medical.appointment.calendar.view</field>
-        <field name="model">medical.appointment</field>
-        <field name="arch" type="xml">
-            <calendar string="Appointments" color="doctor_id"
-                quick_add="False" date_start="appointment_date">
-        
-                <field name="patient_id"/>
-                <field name="doctor_id"/>
-                <field name="patient_selection" />
-            </calendar>
-        </field>
-    </record> -->
-
-
-
-
-
-
-
-
-
-
-
-
                 <record model="ir.actions.act_window" id="action_view_doctor">            
                     <field name="name">EBook</field>         
                         <field name="res_model">medical.doctor</field>                 
@@ -292,8 +280,5 @@
                     </record>      
 
     <menuitem id="menu_doctor" name="EBook" parent= "main_menu_hospital_management"  sequence="2" action="action_view_doctor"/>
-    <!-- <act_window id="action_view_priscription_id2" name="Prescription Orders"
-            res_model="medical.prescription.order" binding_model="medical.doctor"
-            view_mode="tree" domain="[('patient_id', '=', active_id)]" />
-                    </data> -->
+                    </data> 
     </odoo>

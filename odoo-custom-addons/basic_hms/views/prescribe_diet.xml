@@ -9,16 +9,21 @@
                     <h1>
                         <field name="name" style="width: 30%"  placeholder="Diet name"/>
                     </h1>
+                    <field name="patient_ids" invisible='1'/>
                     <notebook>
-                        <page string="06:00 AM">
+                        <page string="Diet List">
                             <field name ="diet_line">
                                 <tree string='06:00 AM' editable="bottom">
                                     <field name ="wakeup1"/>
+                                    <field name ="food"/>
+                                    <field name ="quantity"/>
+                                    <field name ="exercise1"/>
                                     <field name ="note"/>
                                 </tree>
                             </field>
-                            </page>
-                        <page string="06:30 AM">
+                        </page>
+                        <!-- <field name ="exercise1" widget='many2many'/> -->
+                        <!-- <page string="06:30 AM">
                             <field name ="diet_line1">
                                 <tree string='06:30 AM' editable="bottom">
                                     <field name ="juice1"/>
@@ -32,7 +37,6 @@
                             <field name ="diet_line2">
                                 <tree string='07:30 AM' editable="bottom">
                                     <field name ="fruits1"/>
-                                    <!-- <field name ="fruits" widget='many2many_tags'/> -->
                                     <field name ="grams"/>
                                     <field name ="note"/>
                                 </tree>
@@ -83,7 +87,6 @@
                             <field name ="diet_line7">
                                 <tree string='04:00 PM' editable="bottom">
                                     <field name ="snacks1"/>
-                                    <!-- <field name ="drinks_list"/> -->
                                     <field name ="note"/>
                                 </tree>
                             </field>
@@ -92,7 +95,6 @@
                             <field name ="diet_line9">
                                 <tree string='05:30 PM' editable="bottom">
                                     <field name ="exercise"/>
-                                    <!-- <field name ="drinks_list"/> -->
                                     <field name ="note"/>
                                 </tree>
                             </field>
@@ -106,7 +108,7 @@
                                     <field name ="note"/>
                                 </tree>
                             </field>
-                        </page>
+                        </page> -->
                     </notebook>
                 </sheet>
                 </form>

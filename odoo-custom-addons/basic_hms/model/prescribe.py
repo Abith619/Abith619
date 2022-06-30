@@ -8,6 +8,12 @@ class Prescribediet(models.Model):
     patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name")
     dates=fields.Date(string='Date',default=fields.Datetime.now(),readonly=True)
 
+    wakeup1=fields.Char(string="Time")
+    food=fields.Text(string="Food")
+    quantity=fields.Char(string="Quantity")
+    exercise1=fields.Char(string="Exercise")
+    patient_ids=fields.Char(string="Patient",default=lambda self: self.env['medical.doctor'].browse(self.env['medical.doctor']._context.get("patient.id")))
+    
     diet_line = fields.One2many('assign.diet.lines','names',string="Diet Advisied")
     diet_line1 = fields.One2many('assign.diet.six','name',string="Diet Advisied")
     diet_line2 = fields.One2many('assign.diet.seven','name',string="Diet Advisied")
@@ -26,105 +32,108 @@ class Prescribediet(models.Model):
             for line in self.name.diet_line:
                 val={
                     'wakeup1': line.wakeup1,
+                    'food': line.food,
+                    'quantity': line.quantity,
+                    'exercise1': line.exercise1,
                     'note':line.note,
                 }
                 lines.append((0,0,val))
             rec.diet_line=lines
-        for rec in self:
-            lines = [(5, 0, 0)]
-            for line in self.name.diet_line1:
-                val={
-                    'juice1': line.juice1,
-                    'quantity':line.quantity,
-                    'exercise1':line.exercise1,
-                    'note':line.note,
-                }
-                lines.append((0,0,val))
-            rec.diet_line1=lines
-        for rec in self:
-            lines = [(5, 0, 0)]
-            for line in self.name.diet_line2:
-                val={
-                    'fruits1': line.fruits1,
-                    'grams':line.grams,
-                    'note':line.note,
-                }
-                lines.append((0,0,val))
-            rec.diet_line2=lines
-        for rec in self:
-            lines = [(5, 0, 0)]
-            for line in self.name.diet_line3:
-                val={
-                    'medicine': line.medicine,
-                    'milk':line.milk,
-                    'note':line.note,
-                }
-                lines.append((0,0,val))
-            rec.diet_line3=lines
-        for rec in self:
-            lines = [(5, 0, 0)]
-            for line in self.name.diet_line4:
-                val={
-                    'breakfast_list': line.breakfast_list,
-                    'breakfast':line.breakfast,
-                    'quantity':line.quantity,
-                    'note':line.note,
-                }
-                lines.append((0,0,val))
-            rec.diet_line4=lines
-        for rec in self:
-            lines = [(5, 0, 0)]
-            for line in self.name.diet_line5:
-                val={
-                    'drinks_list': line.drinks_list,
-                    'drinks':line.drinks,
-                    'litres':line.litres,
-                    'note':line.note,
-                }
-                lines.append((0,0,val))
-            rec.diet_line5=lines
-        for rec in self:
-            lines = [(5, 0, 0)]
-            for line in self.name.diet_line6:
-                val={
-                    'fruit_diet': line.fruit_diet,
-                    'veg_diet':line.veg_diet,
-                    'protein_diet':line.protein_diet,
-                    'grams':line.grams,
-                    'rice':line.rice,
-                    'note':line.note,
-                }
-                lines.append((0,0,val))
-            rec.diet_line6=lines
-        for rec in self:
-            lines = [(5, 0, 0)]
-            for line in self.name.diet_line7:
-                val={
-                    'snacks1': line.snacks1,
-                    'note':line.note,
-                }
-                lines.append((0,0,val))
-            rec.diet_line7=lines
-        for rec in self:
-            lines = [(5, 0, 0)]
-            for line in self.name.diet_line8:
-                val={
-                    'snacks12': line.snacks12,
-                    'snackss':line.snackss,
-                    'snacks2':line.snacks2,
-                    'note':line.note,
-                }
-                lines.append((0,0,val))
-            rec.diet_line8=lines
-        for rec in self:
-            lines = [(5, 0, 0)]
-            for line in self.name.diet_line9:
-                val={
-                    'exercise': line.exercise,
-                    'note':line.note,
-                }
-                lines.append((0,0,val))
-            rec.diet_line9=lines
+        # for rec in self:
+        #     lines = [(5, 0, 0)]
+        #     for line in self.name.diet_line1:
+        #         val={
+        #             'juice1': line.juice1,
+        #             'quantity':line.quantity,
+        #             'exercise1':line.exercise1,
+        #             'note':line.note,
+        #         }
+        #         lines.append((0,0,val))
+        #     rec.diet_line1=lines
+        # for rec in self:
+        #     lines = [(5, 0, 0)]
+        #     for line in self.name.diet_line2:
+        #         val={
+        #             'fruits1': line.fruits1,
+        #             'grams':line.grams,
+        #             'note':line.note,
+        #         }
+        #         lines.append((0,0,val))
+        #     rec.diet_line2=lines
+        # for rec in self:
+        #     lines = [(5, 0, 0)]
+        #     for line in self.name.diet_line3:
+        #         val={
+        #             'medicine': line.medicine,
+        #             'milk':line.milk,
+        #             'note':line.note,
+        #         }
+        #         lines.append((0,0,val))
+        #     rec.diet_line3=lines
+        # for rec in self:
+        #     lines = [(5, 0, 0)]
+        #     for line in self.name.diet_line4:
+        #         val={
+        #             'breakfast_list': line.breakfast_list,
+        #             'breakfast':line.breakfast,
+        #             'quantity':line.quantity,
+        #             'note':line.note,
+        #         }
+        #         lines.append((0,0,val))
+        #     rec.diet_line4=lines
+        # for rec in self:
+        #     lines = [(5, 0, 0)]
+        #     for line in self.name.diet_line5:
+        #         val={
+        #             'drinks_list': line.drinks_list,
+        #             'drinks':line.drinks,
+        #             'litres':line.litres,
+        #             'note':line.note,
+        #         }
+        #         lines.append((0,0,val))
+        #     rec.diet_line5=lines
+        # for rec in self:
+        #     lines = [(5, 0, 0)]
+        #     for line in self.name.diet_line6:
+        #         val={
+        #             'fruit_diet': line.fruit_diet,
+        #             'veg_diet':line.veg_diet,
+        #             'protein_diet':line.protein_diet,
+        #             'grams':line.grams,
+        #             'rice':line.rice,
+        #             'note':line.note,
+        #         }
+        #         lines.append((0,0,val))
+        #     rec.diet_line6=lines
+        # for rec in self:
+        #     lines = [(5, 0, 0)]
+        #     for line in self.name.diet_line7:
+        #         val={
+        #             'snacks1': line.snacks1,
+        #             'note':line.note,
+        #         }
+        #         lines.append((0,0,val))
+        #     rec.diet_line7=lines
+        # for rec in self:
+        #     lines = [(5, 0, 0)]
+        #     for line in self.name.diet_line8:
+        #         val={
+        #             'snacks12': line.snacks12,
+        #             'snackss':line.snackss,
+        #             'snacks2':line.snacks2,
+        #             'note':line.note,
+        #         }
+        #         lines.append((0,0,val))
+        #     rec.diet_line8=lines
+        # for rec in self:
+        #     lines = [(5, 0, 0)]
+        #     for line in self.name.diet_line9:
+        #         val={
+        #             'exercise': line.exercise,
+        #             'note':line.note,
+        #         }
+        #         lines.append((0,0,val))
+        #     rec.diet_line9=lines
 
 
 class PrescribeDietAssign(models.Model):
@@ -141,7 +150,10 @@ class DietAssign(models.Model):
 
     names=fields.Many2one('prescribe.diet')
 
-    wakeup1=fields.Char(string="Morning")
+    wakeup1=fields.Char(string="Time")
+    food=fields.Text(string="Food")
+    quantity=fields.Char(string="Quantity")
+    exercise1=fields.Char(string="Exercise")
     # wakeup=fields.Selection([('ghee','Ghee'),('butter','Butter'),('coconut','Coconut-Oil')],string="Morning")
     note=fields.Char('Notes')
 

@@ -47,6 +47,6 @@
                     <field name="view_mode">tree,form</field>
                 </record>
 
-            <menuitem id="menus_payment"  name ="Create city" action="payment_action_view"
+            <menuitem id="menus_payment"  name ="payment" action="payment_action_view"
                 parent="main_menu_configartion" sequence="0" />
                 </odoo>

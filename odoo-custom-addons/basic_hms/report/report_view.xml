@@ -12,7 +12,7 @@
             />
 
 
-            <report
+        <report
             id="report_print_diet"
             model="prescribe.diet"
             report_type="qweb-pdf"

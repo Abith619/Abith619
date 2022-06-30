@@ -70,7 +70,6 @@ class Registerwizard(models.TransientModel):
         })
         payment_count = self.env['medical.doctor'].search_count([('patient', '=', self.patient_id.id)])
         if self.patient_selection == 'new':
-            
             if payment_count >0:
                 raise ValidationError('Patient already exist '
                 '                                                                                                                                                                                                            '

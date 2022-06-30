@@ -1,7 +1,9 @@
 
+from email.policy import default
 from inspect import signature
 from odoo import api, fields, models, _
-from datetime import date,datetime
+from datetime import date,datetime,timedelta
+from calendar import monthrange
 from dateutil.relativedelta import relativedelta 
 import qrcode
 import base64
@@ -31,12 +33,14 @@ class medical_directions(models.Model):
     sign_symptoms = fields.Many2many('medical.symptoms',string="Signs/Symptoms")
     history = fields.Text(string ="History")
     sex = fields.Selection([('m', 'Male'),('f', 'Female')],  string ="Sex", required= True)
-    prescription_date= fields.Datetime(string='Date', default=fields.Datetime.now())
+    prescription_date= fields.Date(string='Date', default=fields.Datetime.now())
     name = fields.Char('Prescription ID')
     ailments=fields.Many2one('medical.pathology',string="Present Complaints")
     habbit=fields.One2many('medical.habits','doz',string="Habit")
     diet_fields=fields.One2many('diet.field','diet1',string='Diet')
     patient_status = fields.Boolean(string='Patient Status')
+    time_of_consultation = fields.Datetime('End Time of Consultation')
+
 
     #one2many
     pervious_medication = fields.One2many('pervious.medication','diseases',string="Past Complaints")
@@ -71,12 +75,29 @@ class medical_directions(models.Model):
     image1=fields.Binary(string="Image")
 
     last_update = fields.Datetime(string="Last Update")
+    date1=fields.Date(default=datetime.today())
+    # last_month=fields.Date(default=datetime.today() - timedelta(month=1))
+    def last_month(self):
+        date_last=datetime.today() - timedelta(days=31)
+        
+        num_days = monthrange(2019, 2)[1]
+        return date_last
 
-    mobile = fields.Char(required=True,readonly=True)
+    mobile = fields.Char(readonly=True)
     message = fields.Char(string="Message",default='Hi how are you')
     attachment_ids = fields.Many2many(
-                'ir.attachment',string='Attachment')
+        'ir.attachment',string='Attachment')
+
+    write_date=fields.Datetime(string='Time')
+
+    patient_waiting = fields.Char(string="Waiting Time")
+
 	
+    @api.constrains
+    def save(self):   
+        self.time_of_consultation = datetime.now()
+        raise ValidationError(datetime.now())
+
     def send_msg(self):
         message_string = ' '
         message_string = message_string + '%20'
@@ -454,7 +475,7 @@ class Patientsurgery(models.Model):
     # pat = fields.Many2one('medical.patient',string="Patient")
     doc = fields.Many2one('medical.doctor',string="Patient Name")
     # serial_number=fields.Integer(string="SL")
-    lab_scan_alot = fields.Many2one('medical.patient.lab.test',string="Scan/Lab Alots",required=True)
+    lab_scan_alot = fields.Many2one('medical.patient.lab.test',string="Scan/Lab Alots")
     date= fields.Datetime(string="Date of Lab/Scan")
     # surgery_date = fields.Date(string="Surgery Date")
     # surgery_type = fields.Many2one('medical.pathology',string="Surgery Type")
