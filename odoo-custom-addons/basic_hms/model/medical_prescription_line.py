@@ -31,14 +31,15 @@ class medical_prescription_line(models.Model):
     short_comment = fields.Char('Comment', size=128 )
     end_treatment = fields.Datetime('End of treatment')
     start_treatment = fields.Datetime('Start of treatment')
+    prescription_id = fields.Char('Prescription ID')
 
 
     # names = fields.Many2one('medical.prescription.order','Prescription ID')
     prescribed_quantity = fields.Float(string="Prescribed Quantity")
     medicine_name = fields.Many2one('product.product',string='Medicine Name')
     quantity = fields.Float(related='medicine_name.qty_available', string="Quantity Available")
-    morning= fields.Float('Morning')
-    noon= fields.Float('After Noon')
+    morning= fields.Integer('Morning')
+    noon= fields.Integer('After Noon')
     evening= fields.Integer('Evening')
     night= fields.Float('Night')
     before_after = fields.Selection([('bf',"Before Food"),('af',"After food")],'Before Food')
@@ -67,7 +68,7 @@ class medical_prescription_line(models.Model):
             self.night= res.night
             self.evening = res.evening
             self.units = res.units
-            
+            self.medicine_name = res.medicine_name
             self.potency = res.potency
             self.anupana = res.anupana
 

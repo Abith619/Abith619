@@ -28,9 +28,9 @@
             <field name="arch" type="xml">
                 <form string="Prescription">
                     <group colspan="4" col="4">
-                        <field name="medicine_name" required="1" />
+                        <field name="medicine_name" required="1"/>
                         <field name="quantity"/>
-                        <field name="morning" />
+                        <field name="morning" invisible='1'/>
                         <field name="noon" />
                         <field name="evening" />
                         <field name="night" />

@@ -41,6 +41,7 @@ class medical_directions(models.Model):
     patient_status = fields.Boolean(string='Patient Status')
     time_of_consultation = fields.Datetime('End Time of Consultation')
 
+    experince = fields.Char(string="Experience")
 
     #one2many
     pervious_medication = fields.One2many('pervious.medication','diseases',string="Past Complaints")
@@ -76,12 +77,15 @@ class medical_directions(models.Model):
 
     last_update = fields.Datetime(string="Last Update")
     date1=fields.Date(default=datetime.today())
+
+    
+
     # last_month=fields.Date(default=datetime.today() - timedelta(month=1))
     def last_month(self):
         date_last=datetime.today() - timedelta(days=31)
         
         num_days = monthrange(2019, 2)[1]
-        return date_last
+        return num_days
 
     mobile = fields.Char(readonly=True)
     message = fields.Char(string="Message",default='Hi how are you')
@@ -261,6 +265,7 @@ class medical_directions(models.Model):
 # prescription
     def prescription_button(self):
         self.patient_status =False
+        self.stages='complete'
         return{
         'name': "Prescription",
         'type': 'ir.actions.act_window',
@@ -278,7 +283,9 @@ class medical_directions(models.Model):
             'default_weight': self.weight,
             'default_stages':'draft'
             },
-            'target': 'new'
+            
+            'target': 'new',
+            
             }
 
 #scan/test:
@@ -469,6 +476,17 @@ class Perviousmedication(models.Model):
     medicine = fields.Char(string="Notes")
     # diets = fields.Char(string="Diets")
 
+    sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
+
+    @api.depends('diseases.pervious_medication', 'diseases.pervious_medication.diseases_for')
+    def _sequence_ref(self):
+        for line in self:
+            no = 0
+            line.sequence_ref = no
+            for l in line.diseases.pervious_medication:
+                no += 1
+                l.sequence_ref = no
+
 class Patientsurgery(models.Model):
     _name = 'patient.surgery'
 
@@ -482,6 +500,16 @@ class Patientsurgery(models.Model):
     # surgery_reason = fields.Char(string="Past Surgery")
     # surgery_status = fields.Selection([('done','Done'),('cancel','Cancel')],string="Surgery Status")
     # surgery_notes = fields.Text(string="Surgery Notes")
+    sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
+
+    @api.depends('doc.history_surgery', 'doc.history_surgery.lab_scan_alot')
+    def _sequence_ref(self):
+        for line in self:
+            no = 0
+            line.sequence_ref = no
+            for l in line.doc.history_surgery:
+                no += 1
+                l.sequence_ref = no
 
     
 class patient_family(models.Model):
@@ -498,6 +526,17 @@ class documents(models.Model):
     report_name = fields.Selection([('green',"Green Document"),('o',"Other Documents")],string="Report Name",required=True)
     attachment = fields.Many2many('ir.attachment',string="Attachment")
     # serial_number=fields.Integer(string="SL")
+
+    sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
+
+    @api.depends('docc.documents', 'docc.documents.attachment')
+    def _sequence_ref(self):
+        for line in self:
+            no = 0
+            line.sequence_ref = no
+            for l in line.docc.documents:
+                no += 1
+                l.sequence_ref = no
 
 class treatment_for(models.Model):
     _name ="treatment.form"
@@ -516,12 +555,22 @@ class diet_field(models.Model):
     _name ="diet.field"
 
     diet1 = fields.Many2one('medical.doctor',string="Patient Name")
-    diet_for = fields.Many2one('diet.for',string="Diet Name",required=True)
+    diet_for = fields.Many2one('set.diets',string="Diet Name")
     followed_duration= fields.Integer(string="Duration Followed/Months")
-    # serial_number=fields.Integer(string="SL")
+    dates=fields.Datetime(string='Date')
 
-    
-    
+    sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
+
+    @api.depends('diet1.diet_fields', 'diet1.diet_fields.diet_for')
+    def _sequence_ref(self):
+        for line in self:
+            no = 0
+            line.sequence_ref = no
+            for l in line.diet1.diet_fields:
+                no += 1
+                l.sequence_ref = no
+
+        
 class medical_path(models.Model):
     _inherit='medical.pathology'
 
@@ -541,7 +590,7 @@ class Patientprescription(models.Model):
 
     # serial_number=fields.Integer(string="SL")
     medical_doctor=fields.Many2one('medical.doctor',string="Patient Name")
-    # medicine_name = fields.Many2one('product.product',string='Medicine Name')
+    medicine_name = fields.Many2one('product.product',string='Medicine Name')
     # morning= fields.Float('Morning')
     # noon= fields.Float('After Noon')
     # evening= fields.Float('Evening')
@@ -556,6 +605,16 @@ class Patientprescription(models.Model):
     date= fields.Datetime(string="Date of Prescription")
     delivery_option= fields.Selection([('dir','Direct'),('on',"Courier")],string="Delivery Option")
 
+    sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
+
+    @api.depends('medical_doctor.prescription_patient', 'medical_doctor.prescription_patient.prescription_alot')
+    def _sequence_ref(self):
+        for line in self:
+            no = 0
+            line.sequence_ref = no
+            for l in line.medical_doctor.prescription_patient:
+                no += 1
+                l.sequence_ref = no
 
 
 class Currentailgnments(models.Model):
@@ -568,11 +627,21 @@ class Currentailgnments(models.Model):
     duration = fields.Char(string="Duration")
     patient_signs_symptoms = fields.Many2many('medical.symptoms',string="Signs/Symptoms")
 
-    @api.model
-    def create(self,val):
-        # appointment = self._context.get('appointment_id')
-        patient_orm = self.env['medical.symptoms'].search([('id','=',val['patient_signs_symptoms'])])
-        patient_orm.write({'diseases':val.patient_currents_ailments})
+    sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
+
+    @api.depends('doctor_aliments.currents_ailments', 'doctor_aliments.currents_ailments.patient_currents_ailments')
+    def _sequence_ref(self):
+        for line in self:
+            no = 0
+            line.sequence_ref = no
+            for l in line.doctor_aliments.currents_ailments:
+                no += 1
+                l.sequence_ref = no
+    # @api.model
+    # def create(self,val):
+    #     # appointment = self._context.get('appointment_id')
+    #     patient_orm = self.env['medical.symptoms'].search([('id','=',self.patient_signs_symptoms)])
+    #     patient_orm.write({'diseases':self.patient_currents_ailments})
 
 
 

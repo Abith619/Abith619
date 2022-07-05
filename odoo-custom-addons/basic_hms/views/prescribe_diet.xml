@@ -16,6 +16,9 @@
                                 <tree string='06:00 AM' editable="bottom">
                                     <field name ="wakeup1"/>
                                     <field name ="food"/>
+                                    <field name ="fruit_diet" widget='many2many_tags'/>
+                                    <field name ="veg_diet" widget='many2many_tags'/>
+                                    <field name ="protein_diet" widget='many2many_tags'/>
                                     <field name ="quantity"/>
                                     <field name ="exercise1"/>
                                     <field name ="note"/>

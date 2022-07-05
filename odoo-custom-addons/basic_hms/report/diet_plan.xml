@@ -22,6 +22,9 @@
                             <tr>
                             <th style="border: 1px solid black;">Time</th>
                             <th style="border: 1px solid black;">Food</th>
+                            <th style="border: 1px solid black;">Fruits</th>
+                            <th style="border: 1px solid black;">Protein</th>
+                            <th style="border: 1px solid black;">Veg</th>
                             <th style="border: 1px solid black;">quantity</th>
                             <th style="border: 1px solid black;">Exercise</th>
                             <th style="border: 1px solid black;"> Notes </th>
@@ -34,6 +37,15 @@
                            </td>
                            <td style="border: 1px solid black;">
                            <span t-field="line.food"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.fruit_diet"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.protein_diet"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.veg_diet"/>
                            </td>
                            <td style="border: 1px solid black;">
                            <span t-field="line.quantity"/>

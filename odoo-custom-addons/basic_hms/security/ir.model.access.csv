@@ -303,3 +303,8 @@ access_assign_diet_five,medical.group.assign.diet.five,model_assign_diet_five,ba
 access_document_type_line,medical.group.document.type.line,model_document_type_line,base.group_user,1,1,1,1
 
 access_patient_tracking,medical.group.patient.tracking,model_patient_tracking,base.group_user,1,1,1,1
+access_reception_bills,medical.group.reception.bills,model_reception_bills,base.group_user,1,1,1,1
+access_doctor_bills,medical.group.doctor.bills,model_doctor_bills,base.group_user,1,1,1,1
+access_lab_bills,medical.group.lab.bills,model_lab_bills,base.group_user,1,1,1,1
+access_prescription_bills,medical.group.prescription.bills,model_prescription_bills,base.group_user,1,1,1,1
+

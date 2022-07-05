@@ -315,7 +315,7 @@ class medical_patient(models.Model):
     company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.patient')))
 
     patient_waiting = fields.Char(string="Waiting Time",compute='waiting')
-    
+
     @api.depends('write_date')
     def waiting(self):
         for rec in self:
@@ -329,7 +329,7 @@ class medical_patient(models.Model):
             else:
                 rec.patient_waiting = "00:00"
     
-    write_date=fields.Datetime(string='Registration Time')
+    write_date=fields.Datetime(string='Registration Time',default=datetime.now())
 
     @api.onchange('dates','doctors')
     def roll(self):

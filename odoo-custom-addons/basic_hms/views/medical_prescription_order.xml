@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-        <!-- <act_window id="action_view_priscription_id2" name="Prescription Orders"
-            res_model="medical.prescription.order" binding_model="medical.patient"
-            view_mode="tree" domain="[('patient_id', '=', active_id)]" /> -->
-
-        <!-- <act_window id="action_view_priscription_id2" name="Prescription Orders"
-            res_model="medical.prescription.order" binding_model="medical.patient"
-            view_mode="tree,form" domain="[('patient_id', '=', active_id)]" /> -->
+        
 
         <!-- Tree view -->
         <record id="medical_prescription_order_tree_view" model="ir.ui.view">
@@ -84,16 +78,20 @@
                                         <field name ="medicine_name" options="{'no_create_edit':True}"/>
                                         <!-- <field name ="quantity"/> -->
                                         <!-- <field name ="potency"/> -->
-                                        <field name="morning" />
-                                        <field name="noon"/>
-                                        <field name="evening" />
-                                        <field name ="night"/>
+                                        
+                                        <field name="morning" string='' invisible='1'/>
+                                        
+                                         <field name="noon" string='Dose'/>
+                                        <field name="evening" string='' invisible='1'/>
+                                        <!--<field name ="night"/> -->
                                         <field name ="units"/>
+                                        <field name ="prescription_id" invisible='1'/>
                                         <!-- <field name ="after_food"/> -->
-                                        <field name ="anupana"/>
                                         <field name ="days1"/>
-                                        <field name ="price"/>
-                                        <field name ="total_price"/>
+                                        <field name ="anupana" string='Notes'/>
+                                        
+                                        <field name ="price" invisible='1'/>
+                                        <field name ="total_price" invisible='1'/>
                                     </tree>
                                 </field>
                             </page>
@@ -102,8 +100,8 @@
                             <div class ="col-md-10">      
                             </div>
                             <div class ="col-md-2" style="display: flex; align-items: flex-start; justify-content: center;">
-                            <label for="total" string="Total : " />
-                                <field name='total' readonly='1' force_save='1'/>
+                            <label for="total" string="Total : " invisible='1'/>
+                                <field name='total' readonly='1' force_save='1' invisible='1'/>
                             </div>
                         </div>
 

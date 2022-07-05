@@ -92,10 +92,12 @@ class medical_patient_lab_test(models.Model):
         value={
             'name':'Lab Payment',
             'date':datetime.now(),
+            'test_name':result.medical_test_type_id.name,
+            'test_types':result.test_types.name,
             'bill_amount':result.test_amount,
         }
         lines.append((0,0,value))
-        orm.write({'bills_lines':lines})
+        orm.write({'lab_bill':lines})
 
 
         labscan = self.env['medical.doctor'].search([('patient','=',result.patient_id.id)])
@@ -140,7 +142,7 @@ class medical_patient_lab_test(models.Model):
                                        'requestor_physician_id': browse_record.doctor_id.id or False,
                                        })
             res_ids.append(res.id)
-            if res_ids:                     
+            if res_ids:                        
                 imd = self.env['ir.model.data']
                 action = imd.xmlid_to_object('basic_hms.action_medical_lab_form')
                 list_view_id = imd.xmlid_to_res_id('basic_hms.medical_lab_tree_view')

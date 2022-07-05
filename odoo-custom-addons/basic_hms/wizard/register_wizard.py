@@ -31,7 +31,7 @@ class Registerwizard(models.TransientModel):
     payment_status = fields.Boolean(string="Paid")
     duration_ailments = fields.Char(string="Duration of Ailments")
     doctor_changes=fields.Boolean(string="Change",readonly=True)
-    reg_type=fields.Selection([('dir',"Direct"),('on',"Online"),('app',"Appoinment"),('rev',"Review"),('stop',"Stopped")],string="Registration Type")
+    reg_type=fields.Selection([('dir',"Direct"),('on',"Online"),('app',"Appoinment"),('rev',"Review"),('stop',"Stopped"),('cam','Camp')],string="Registration Type")
     # patient_id = fields.Many2one('')
     
 
@@ -59,12 +59,11 @@ class Registerwizard(models.TransientModel):
             'date':datetime.now(),
             'bill_amount':self.fees,
             'payment_status':self.payment_status,
-
         }
         bill_lines.append((0,0,bills))
         bill_create=self.env['patient.bills'].create({
             'patient_name':self.patient_id.id,
-            'bills_lines':bill_lines,
+            'reception_bills':bill_lines,
             'insurance':self.insurance,
             'type_of_insurance':self.type_of_insurance,
         })

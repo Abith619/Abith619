@@ -36,6 +36,7 @@ class medical_prescription_order(models.Model):
     total=fields.Float(string="Total :")
     delivery_option= fields.Selection([('dir','Direct'),('on',"Courier")],string="Delivery Option",default='dir')
     # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.prescription.order')))
+    medicine_name = fields.Many2one('product.product',string='Medicine Name')
 
     @api.onchange('prescription_line_ids')
     def onchan_func(self):
@@ -57,18 +58,20 @@ class medical_prescription_order(models.Model):
         billing_value={
                 'name':'Presciption Payment',
                 'date':datetime.now(),
+                'medicine_name':res.prescription_line_ids.medicine_name.id,
+                'prescription_id':res.name,
                 'bill_amount':res.total,                
             }
-
         billing_lines.append((0,0,billing_value))
-        billing.write({'bills_lines':billing_lines})
+        billing.write({'pres_bill':billing_lines})
       
         orm = self.env['medical.doctor'].search([('patient','=',res.patient_id.id)])
         lines=[]
         value={
             'prescription_alot':res.id,
             'date':datetime.now(),
-            'delivery_option':res.delivery_option
+            # 'medicine_name':res.medicine_name.id,
+            'delivery_option':res.delivery_option,
             }
         lines.append((0,0,value))
         orm.write({'prescription_patient':lines})
