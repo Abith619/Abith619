@@ -23,8 +23,6 @@ class res_partner(models.Model):
 
 
     invisible=fields.Boolean(string="Boo", default=True)
-    roles_selection=fields.Selection([('manager','Manager'),('reception','Reception'),('doctor','Doctor'),('pharmacy','Pharmacy'),
-    ('billing','Billing'),('lab','Lab & Scan'),('telecaller','Telecaller'),('patient','Patient')],string='Roles')
 
     new_pt=fields.Char(string='New Patient')
     review_pt=fields.Char(string='Review Patient')
@@ -53,6 +51,13 @@ class res_partner(models.Model):
     reference = fields.Char('ID Number')
     patient_gender = fields.Selection([('m', 'Male'),('f', 'Female')], string ="Gender")
     # patient_gender = fields.Selection([('m', 'Male'),('f', 'Female')], string ="Sex")
+    is_reception = fields.Boolean(string='Reception')
+    lab_scan = fields.Boolean(string='Lab & Scan')
+    is_billing = fields.Boolean(string='Billing')
+    is_telecaller = fields.Boolean(string='Telecaller')
+    roles_selection=fields.Selection([('manager','Manager'),('reception','Reception'),('doctor','Doctor'),('pharmacy','Pharmacy'),
+    ('billing','Billing'),('lab','Lab & Scan'),('telecaller','Telecaller'),('patient','Patient')],string='Roles')
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
     @api.onchange('roles_selection')
@@ -69,6 +74,22 @@ class res_partner(models.Model):
             self.is_pharmacy = True
         else:
             self.is_pharmacy = False
+        if self.roles_selection == 'reception':
+            self.is_reception = True
+        else:
+            self.is_reception = False
+        if self.roles_selection == 'lab':
+            self.lab_scan = True
+        else:
+            self.lab_scan = False
+        if self.roles_selection == 'telecaller':
+            self.is_telecaller = True
+        else:
+            self.is_telecaller = False
+        if self.roles_selection == 'billing':
+            self.is_billing = True
+        else:
+            self.is_billing = False
 
 #      QR Code
 

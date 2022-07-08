@@ -7,6 +7,8 @@ from odoo.exceptions import  ValidationError
 
 class medical_prescription_order(models.Model):
     _name = "medical.prescription.order"
+    # _description = "Prescription Order"
+    _rec_name = "name"
     
     name = fields.Char('Prescription ID')
     age = fields.Char('Age')
@@ -49,22 +51,22 @@ class medical_prescription_order(models.Model):
 
     @api.model
     def create(self , vals):
-        vals['name'] = self.env['ir.sequence'].next_by_code('medical.prescription.order') or '/'   
+        
+        vals['name'] = self.env['ir.sequence'].next_by_code('medical_prescription_order')   
         res = super(medical_prescription_order, self).create(vals)
-
         billing = self.env['patient.bills'].search([('patient_name','=',res.patient_id.id)], order='id desc', limit=1)
-        billing_lines=[]
-
-        billing_value={
-                'name':'Presciption Payment',
-                'date':datetime.now(),
-                'medicine_name':res.prescription_line_ids.medicine_name.id,
-                'prescription_id':res.name,
-                'bill_amount':res.total,                
-            }
-        billing_lines.append((0,0,billing_value))
-        billing.write({'pres_bill':billing_lines})
-      
+        for rec in billing:
+            billing_lines=[]
+            for rez in res.prescription_line_ids:
+                billing_value={
+                    'date':datetime.now(),
+                    'medicine_name':rez.medicine_name.id,
+                    'prescription_id':res.name,
+                    'pre_amount':res.total,                
+                }
+                billing_lines.append((0,0,billing_value))
+            rec.write({'pres_bill':billing_lines})
+        
         orm = self.env['medical.doctor'].search([('patient','=',res.patient_id.id)])
         lines=[]
         value={

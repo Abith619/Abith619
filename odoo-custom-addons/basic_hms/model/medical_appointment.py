@@ -85,18 +85,33 @@ class medical_appointment(models.Model):
 
 
 	def send_msg(self):
-		return {
+		if self.whatsapp_check == True:
+			return {
+					'type': 'ir.actions.act_window',
+					'name': 'Whatsapp Message',
+					'res_model': 'whatsapp.wizard',
+					'target': 'new',
+					'view_mode': 'form',
+					'view_type': 'form',
+					'context': {'default_user_id': self.patient_id.id,
+					'default_mobile':self.phone_number,
+					'default_message':"Hi "+self.patient_id.name+",\n\nYour Appointment is fixed with "+self.doctor_id.name+"\nFeedback : https://www.mouthshut.com/product-reviews/Daisy-Hospital-Chromepet-Chennai-reviews-925999566"
+					},
+					}
+		else:
+			return {
 				'type': 'ir.actions.act_window',
-                'name': 'Whatsapp Message',
-                'res_model': 'whatsapp.wizard',
-                'target': 'new',
-                'view_mode': 'form',
-                'view_type': 'form',
-                'context': {'default_user_id': self.patient_id.id,
+				'name': 'Whatsapp Message',
+				'res_model': 'whatsapp.wizard',
+				'target': 'new',
+				'view_mode': 'form',
+				'view_type': 'form',
+				'context': {'default_user_id': self.patient_id.id,
 				'default_mobile':self.contact_number,
 				'default_message':"Hi "+self.patient_id.name+",\n\nYour Appointment is fixed with "+self.doctor_id.name+"\nFeedback : https://www.mouthshut.com/product-reviews/Daisy-Hospital-Chromepet-Chennai-reviews-925999566"
 				},
-                }
+				}
+
 
 	@api.depends('appoinment_through')
 	def fee_change(self):

@@ -10,23 +10,13 @@
                 <field name="arch" type="xml">
                     <form string="Diet For">
                         <header>
-                            <!-- <button name="button_rooms"  type="object" string="Create Room"  class="oe_highlight"/>   -->
                         </header>
                         <sheet>
                             <div class="oe_button_box">
-                                <!-- <button class="oe_stat_button" name="available_rooms" type="object" icon="fa-clipboard"> -->
-                           <!-- <field name ="available_room" widget="statinfo"/></button> -->
                             </div>
                             <group >
                                 <field name ="name"/>
-                                <!-- <field name="hosteler" />
-                                <field name="out_side_food" />
-                                <field name="control" />
-                                <field name="veg" />
-                                <field name="non_veg" />
-                                <field name="not_possible" />
-                                <field name="moderate" />
-                                <field name="ok_for_all" /> -->
+                                
                             </group>
                         </sheet>
                         </form>

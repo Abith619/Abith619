@@ -77,7 +77,8 @@ from. import city_master
 from. import register_payment
 from. import patient_bills
 from. import patient_tracking
-
+from. import labscan_form
+from. import scan_test
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:s

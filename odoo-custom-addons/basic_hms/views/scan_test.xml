@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+        <record id="mri_study" model="ir.ui.view">
+            <field name="name">MRI STUDY</field>
+            <field name="model">mri.test.study</field>
+            <field name="priority" eval="8" />
+                <field name="arch" type="xml">
+                    <form string="MRI STUDY">
+                        <header>
+                        </header>
+                        <sheet>
+                            <div class="oe_button_box">
+                            </div>
+                            <group >
+                                <field name ="name"/>
+                                
+                            </group>
+                        </sheet>
+                        </form>
+                        </field>
+        </record>
+        <record model="ir.actions.act_window" id="mri_action">            
+            <field name="name">MRI STUDY</field>         
+                <field name="res_model">mri.test.study</field>           
+                <!-- <field name="view_type">form</field>-->
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>            
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">MRI STUDY
+                    </p>            
+                </field>        
+            </record>
+
+            <menuitem id="menu_mri" name="MRI STUDY" parent= "main_menu_hospital_management" action="mri_action"/>
+
+        <record id="mri_study" model="ir.ui.view">
+            <field name="name">DROPPLER STUDY</field>
+            <field name="model">doppler.studies</field>
+            <field name="priority" eval="8" />
+                <field name="arch" type="xml">
+                    <form string="DROPPLER STUDY">
+                        <header>
+                        </header>
+                        <sheet>
+                            <div class="oe_button_box">
+                            </div>
+                            <group >
+                                <field name ="name"/>
+                                
+                            </group>
+                        </sheet>
+                        </form>
+                        </field>
+        </record>
+        <record model="ir.actions.act_window" id="droppler_action">            
+            <field name="name">DROPPLER STUDY</field>         
+                <field name="res_model">doppler.studies</field>           
+                <!-- <field name="view_type">form</field>-->
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>            
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">DROPPLER STUDY
+                    </p>            
+                </field>        
+            </record>
+            
+            <menuitem id="menu_droppler" name="DROPPLER STUDY" parent= "main_menu_hospital_management" action="droppler_action"/>
+
+        <record id="mri_study" model="ir.ui.view">
+            <field name="name">ROBOTIC CLINICAL STUDY</field>
+            <field name="model">robotic.clinical.studies</field>
+            <field name="priority" eval="8" />
+                <field name="arch" type="xml">
+                    <form string="DROPPLER STUDY">
+                        <header>
+                        </header>
+                        <sheet>
+                            <div class="oe_button_box">
+                            </div>
+                            <group >
+                                <field name ="name"/>
+                                
+                            </group>
+                        </sheet>
+                        </form>
+                        </field>
+        </record>
+        <record model="ir.actions.act_window" id="robotic_action">            
+            <field name="name">ROBOTIC CLINICAL STUDY</field>         
+                <field name="res_model">robotic.clinical.studies</field>           
+                <!-- <field name="view_type">form</field>-->
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>            
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">ROBOTIC CLINICAL STUDY
+                    </p>            
+                </field>        
+            </record>
+            
+            <menuitem id="menu_robotic" name="ROBOTIC CLINICAL STUDY" parent= "main_menu_hospital_management" action="robotic_action"/>
+
+        <record id="ct_study" model="ir.ui.view">
+            <field name="name">CT Studies</field>
+            <field name="model">ct.studies</field>
+            <field name="priority" eval="8" />
+                <field name="arch" type="xml">
+                    <form string="CT Studies">
+                        <header>
+                        </header>
+                        <sheet>
+                            <div class="oe_button_box">
+                            </div>
+                            <group >
+                                <field name ="name"/>
+                                
+                            </group>
+                        </sheet>
+                        </form>
+                        </field>
+        </record>
+        <record model="ir.actions.act_window" id="ct_action">            
+            <field name="name">CT Studies</field>         
+                <field name="res_model">ct.studies</field>           
+                <!-- <field name="view_type">form</field>-->
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>            
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">CT Studies
+                    </p>            
+                </field>        
+            </record>
+            
+            <menuitem id="menu_ct" name="CT Studies" parent= "main_menu_hospital_management" action="ct_action"/>
+
+        <record id="other_study" model="ir.ui.view">
+            <field name="name">Other Studies</field>
+            <field name="model">other.studies</field>
+            <field name="priority" eval="8" />
+                <field name="arch" type="xml">
+                    <form string="Other Studies">
+                        <header>
+                        </header>
+                        <sheet>
+                            <div class="oe_button_box">
+                            </div>
+                            <group >
+                                <field name ="name"/>
+                                
+                            </group>
+                        </sheet>
+                        </form>
+                        </field>
+        </record>
+        <record model="ir.actions.act_window" id="other_action">            
+            <field name="name">Other Studies</field>         
+                <field name="res_model">other.studies</field>           
+                <!-- <field name="view_type">form</field>-->
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>            
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">Other Studies
+                    </p>            
+                </field>        
+            </record>
+            
+            <menuitem id="menu_other" name="Other Studies" parent= "main_menu_hospital_management" action="other_action"/>
+
+        <record id="ct_angiogram" model="ir.ui.view">
+            <field name="name">CT Angiogram</field>
+            <field name="model">ct.angiogram</field>
+            <field name="priority" eval="8" />
+                <field name="arch" type="xml">
+                    <form string="CT Angiogram">
+                        <header>
+                        </header>
+                        <sheet>
+                            <div class="oe_button_box">
+                            </div>
+                            <group >
+                                <field name ="name"/>
+                                
+                            </group>
+                        </sheet>
+                        </form>
+                        </field>
+        </record>
+        <record model="ir.actions.act_window" id="ct_angiogram_action">            
+            <field name="name">CT Angiogram</field>         
+                <field name="res_model">ct.angiogram</field>           
+                <!-- <field name="view_type">form</field>-->
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>            
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">CT Angiogram
+                    </p>            
+                </field>        
+            </record>
+            
+            <menuitem id="menu_ct_angiogram" name="CT Angiogram" parent= "main_menu_hospital_management" action="ct_angiogram_action"/>
+
+        <record id="ultra_sound" model="ir.ui.view">
+            <field name="name">Ultrasound Study</field>
+            <field name="model">ultra.sound.studies</field>
+            <field name="priority" eval="8" />
+                <field name="arch" type="xml">
+                    <form string="Ultrasound Study">
+                        <header>
+                        </header>
+                        <sheet>
+                            <div class="oe_button_box">
+                            </div>
+                            <group >
+                                <field name ="name"/>
+                                
+                            </group>
+                        </sheet>
+                        </form>
+                        </field>
+        </record>
+        <record model="ir.actions.act_window" id="ultra_sound_action">            
+            <field name="name">Ultrasound Study</field>         
+                <field name="res_model">ultra.sound.studies</field>           
+                <!-- <field name="view_type">form</field>-->
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>            
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">Ultrasound Study
+                    </p>            
+                </field>        
+            </record>
+            
+            <menuitem id="menu_ultra_sound" name="Ultrasound Study" parent= "main_menu_hospital_management" action="ultra_sound_action"/>
+
+        <record id="ct_guided_intervention" model="ir.ui.view">
+            <field name="name">CT Guided Intervention</field>
+            <field name="model">ct.guided.intervention</field>
+            <field name="priority" eval="8" />
+                <field name="arch" type="xml">
+                    <form string="CT Guided Intervention">
+                        <header>
+                        </header>
+                        <sheet>
+                            <div class="oe_button_box">
+                            </div>
+                            <group >
+                                <field name ="name"/>
+                                
+                            </group>
+                        </sheet>
+                        </form>
+                        </field>
+        </record>
+        <record model="ir.actions.act_window" id="ct_guided_intervention_action">            
+            <field name="name">CT Guided Intervention</field>         
+                <field name="res_model">ct.guided.intervention</field>           
+                <!-- <field name="view_type">form</field>-->
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>            
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">CT Guided Intervention
+                    </p>            
+                </field>        
+            </record>
+            
+            <menuitem id="menu_ct_guided_intervention" name="CT Guided Intervention" parent= "main_menu_hospital_management" action="ct_guided_intervention_action"/>
+
+        <record id="scan_test_main" model="ir.ui.view">
+            <field name="name">Scan Test</field>
+            <field name="model">scan.test</field>
+            <field name="priority" eval="8" />
+                <field name="arch" type="xml">
+                    <form string="Scan Test">
+                        <header>
+                        </header>
+                        <sheet>
+                <div class="row">
+            <div class='col-3'>
+        <label for="mri_test" />
+            <div class=''>
+                <field name = 'mri_test' widget='many2many_checkboxes' />
+            </div>
+        <label for="doppler_test" />
+            <div class=''>
+                <field name = 'doppler_test' widget='many2many_checkboxes'/>
+            </div>
+        
+        <label for="ct_test" />
+            <div class=''>
+                <field name = 'ct_test' widget='many2many_checkboxes'/>
+            </div>
+        </div>
+
+            <div class="col-3">
+        <label for="other_test" />
+            <div class=''>
+                <field name = 'other_test' widget='many2many_checkboxes' />
+            </div>
+        <label for="ct_angiogram" />
+            <div class=''>
+                <field name = 'ct_angiogram' widget='many2many_checkboxes'/>
+            </div>
+        <label for="ultra_sound_test" />
+            <div class=''>
+                <field name = 'ultra_sound_test' widget='many2many_checkboxes' />
+            </div>
+        </div>
+
+        <div class="col-3">
+        <label for="robotic_clinical_test" />
+            <div class=''>
+                <field name = 'robotic_clinical_test' widget='many2many_checkboxes' />
+            </div>
+        <label for="ct_guided_intervention" />
+            <div class=''>
+                <field name = 'ct_guided_intervention' widget='many2many_checkboxes'/>
+            </div>
+        </div>
+        </div>
+            </sheet>
+            </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="scan_test_action">            
+            <field name="name">Scan Test</field>         
+                <field name="res_model">scan.test</field>           
+                <!-- <field name="view_type">form</field>-->
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>            
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">Scan Test
+                    </p>            
+                </field>        
+            </record>
+            
+            <menuitem id="menu_scan_test_main" name="Scan Test" parent= "main_menu_hospital_management" action="scan_test_action"/>
+
+    </data>
+</odoo>

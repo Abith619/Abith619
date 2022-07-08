@@ -126,6 +126,10 @@
                             <field name="is_patient" />
                             <field name="is_doctor" />
                             <field name="is_pharmacy" />
+                            <field name="is_reception" />
+                            <field name="lab_scan" />
+                            <field name="is_telecaller" />
+                            <field name="is_billing" />
                         </group>
 
                         <field name="document_type">
@@ -238,12 +242,106 @@
             </field>
         </record>
 
+        <record model="ir.actions.act_window" id="act_res_partner_telecaller">
+            <field name="name">Telecaller</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('is_telecaller','=',1)]</field>
+            <field name="context">{'default_is_telecaller': 1,'search_default_is_telecaller': 1} 
+            </field>
+        </record>
+        <menuitem id="menu_contact_telecaller" name="Telecaller" 
+        parent="contacts.menu_contacts"  action="act_res_partner_telecaller" sequence='3' />
+
+        <record model="ir.actions.act_window" id="act_res_partner_billing">
+            <field name="name">Billing</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('is_billing','=',1)]</field>
+            <field name="context">{'default_is_billing': 1,'search_default_is_billing': 1} 
+            </field>
+        </record>
+        <menuitem id="menu_contact_billing" name="Billing" 
+        parent="contacts.menu_contacts"  action="act_res_partner_billing" sequence='3' />
+
+        <record model="ir.actions.act_window" id="act_res_partner_lab">
+            <field name="name">Lab / Scan</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('lab_scan','=',1)]</field>
+            <field name="context">{'default_lab_scan': 1,'search_default_lab_scan': 1} 
+            </field>
+        </record>
+        <menuitem id="menu_contact_lab" name="Lab / Scan" 
+        parent="contacts.menu_contacts"  action="act_res_partner_lab" sequence='3' />
+
+        <record model="ir.actions.act_window" id="act_res_partner_reception">
+            <field name="name">Reception</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('is_reception','=',1)]</field>
+            <field name="context">{'default_is_reception': 1,'search_default_is_reception': 1} 
+            </field>
+        </record>
+        <menuitem id="menu_contact_reception" name="Reception" 
+        parent="contacts.menu_contacts"  action="act_res_partner_reception" sequence='3' />
+
+        <record model="ir.actions.act_window" id="act_res_partner_pharmacy">
+            <field name="name">Pharmacy</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('is_pharmacy','=',1)]</field>
+            <field name="context">{'default_is_pharmacy': 1,'search_default_is_pharmacy': 1} 
+            </field>
+        </record>
+        <menuitem id="menu_contact_pharmacy" name="Pharmacy" 
+        parent="contacts.menu_contacts"  action="act_res_partner_pharmacy" sequence='3' />
+
+        <record model="ir.actions.act_window" id="act_res_partner_patients">
+            <field name="name">Patients</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('is_patient','=',1)]</field>
+            <field name="context">{'default_is_patient': 1,'search_default_is_patient': 1} 
+            </field>
+        </record>
+        <menuitem id="menu_contact_patient" name="Patients" 
+        parent="contacts.menu_contacts"  action="act_res_partner_patients" sequence='3' />
+
+        <record model="ir.actions.act_window" id="act_res_partner_doctors">
+            <field name="name">Doctors</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('is_doctor','=',1)]</field>
+            <field name="context">{'default_is_doctor': 1,'search_default_is_doctor': 1} 
+            </field>
+        </record>
+        <menuitem id="menu_contact_doctor" name="Doctors" 
+            parent="contacts.menu_contacts"  action="act_res_partner_doctors" sequence='2' />
+
         <menuitem id="menu_health_centers1" name="Health Centers"
             parent="main_menu_configartion" />
 
         <menuitem id="menu_insurance" name="Insurances"
             parent="main_menu_configartion" sequence='9' />
+
         <menuitem id="menu_insurance_company" action="act_res_partner"
             sequence="0" parent="menu_insurance" />
+
+        
 
 </odoo>

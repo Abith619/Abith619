@@ -37,7 +37,7 @@ class medical_directions(models.Model):
     name = fields.Char('Prescription ID')
     ailments=fields.Many2one('medical.pathology',string="Present Complaints")
     habbit=fields.One2many('medical.habits','doz',string="Habit")
-    diet_fields=fields.One2many('diet.field','diet1',string='Diet')
+    diet_fields=fields.One2many('diet.field.for','diet1',string='Diet')
     patient_status = fields.Boolean(string='Patient Status')
     time_of_consultation = fields.Datetime('End Time of Consultation')
 
@@ -427,8 +427,6 @@ class medical_directions(models.Model):
             p_details={
                 'Patient Id':rec.serial_number,
                 'Patient Name':rec.patient.name,
-
-
             }
             qr = qrcode.QRCode(
                 version=1,
@@ -550,6 +548,27 @@ class treatmentFor(models.Model):
     _name='treatment.for'
 
     name= fields.Char(string='Treatment Name')
+
+class diet_field_for(models.Model):
+    _name='diet.field.for'
+
+    name= fields.Char(string='Diet Name')
+
+    diet1 = fields.Many2one('medical.doctor',string="Patient Name")
+    diet_for = fields.Many2one('set.diets',string="Diet Name")
+    followed_duration= fields.Integer(string="Duration Followed/Months")
+    dates=fields.Datetime(string='Date')
+
+    sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
+
+    @api.depends('diet1.diet_fields', 'diet1.diet_fields.diet_for')
+    def _sequence_ref(self):
+        for line in self:
+            no = 0
+            line.sequence_ref = no
+            for l in line.diet1.diet_fields:
+                no += 1
+                l.sequence_ref = no
 
 class diet_field(models.Model):
     _name ="diet.field"

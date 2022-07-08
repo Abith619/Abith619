@@ -141,12 +141,13 @@ class PrescriptionBills(models.Model):
 
     # patient_name = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name",required=True)
     name= fields.Char(string="Type of  Bill")
+    
     date= fields.Datetime(string="Bill Date")
     bill = fields.Many2one('patient.bills')
     pre_amount =fields.Float(string='Bill Amount',related='medicine_name.lst_price')
     payment_status = fields.Boolean(string="Paid",readonly=True)
     medicine_name = fields.Many2one('product.product',string='Medicine Name')
-    prescription_id = fields.Char(string="Prescription ID")
+    prescription_id = fields.Many2one('medical.prescription.order',string="Prescription ID")
     total=fields.Float(string="Total")
 
 
