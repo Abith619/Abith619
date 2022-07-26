@@ -16,7 +16,9 @@
                             </div>
                             <group >
                                 <field name ="name"/>
-                                
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -25,7 +27,6 @@
         <record model="ir.actions.act_window" id="mri_action">            
             <field name="name">MRI STUDY</field>         
                 <field name="res_model">mri.test.study</field>           
-                <!-- <field name="view_type">form</field>-->
                 <field name="view_mode">tree,form</field>
                 <field name="domain">[]</field>            
                 <field name="help" type="html">                
@@ -34,7 +35,7 @@
                 </field>        
             </record>
 
-            <menuitem id="menu_mri" name="MRI STUDY" parent= "main_menu_hospital_management" action="mri_action"/>
+            <menuitem id="menu_mri" name="MRI STUDY" parent= "main_menu_configartion" action="mri_action"/>
 
         <record id="mri_study" model="ir.ui.view">
             <field name="name">DROPPLER STUDY</field>
@@ -49,7 +50,9 @@
                             </div>
                             <group >
                                 <field name ="name"/>
-                                
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -67,7 +70,7 @@
                 </field>        
             </record>
             
-            <menuitem id="menu_droppler" name="DROPPLER STUDY" parent= "main_menu_hospital_management" action="droppler_action"/>
+            <menuitem id="menu_droppler" name="DROPPLER STUDY" parent= "main_menu_configartion" action="droppler_action"/>
 
         <record id="mri_study" model="ir.ui.view">
             <field name="name">ROBOTIC CLINICAL STUDY</field>
@@ -82,7 +85,9 @@
                             </div>
                             <group >
                                 <field name ="name"/>
-                                
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -100,7 +105,7 @@
                 </field>        
             </record>
             
-            <menuitem id="menu_robotic" name="ROBOTIC CLINICAL STUDY" parent= "main_menu_hospital_management" action="robotic_action"/>
+            <menuitem id="menu_robotic" name="ROBOTIC CLINICAL STUDY" parent= "main_menu_configartion" action="robotic_action"/>
 
         <record id="ct_study" model="ir.ui.view">
             <field name="name">CT Studies</field>
@@ -115,7 +120,9 @@
                             </div>
                             <group >
                                 <field name ="name"/>
-                                
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -133,7 +140,7 @@
                 </field>        
             </record>
             
-            <menuitem id="menu_ct" name="CT Studies" parent= "main_menu_hospital_management" action="ct_action"/>
+            <menuitem id="menu_ct" name="CT Studies" parent= "main_menu_configartion" action="ct_action"/>
 
         <record id="other_study" model="ir.ui.view">
             <field name="name">Other Studies</field>
@@ -148,7 +155,9 @@
                             </div>
                             <group >
                                 <field name ="name"/>
-                                
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -166,7 +175,7 @@
                 </field>        
             </record>
             
-            <menuitem id="menu_other" name="Other Studies" parent= "main_menu_hospital_management" action="other_action"/>
+            <menuitem id="menu_other" name="Other Studies" parent= "main_menu_configartion" action="other_action"/>
 
         <record id="ct_angiogram" model="ir.ui.view">
             <field name="name">CT Angiogram</field>
@@ -181,7 +190,9 @@
                             </div>
                             <group >
                                 <field name ="name"/>
-                                
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -199,7 +210,7 @@
                 </field>        
             </record>
             
-            <menuitem id="menu_ct_angiogram" name="CT Angiogram" parent= "main_menu_hospital_management" action="ct_angiogram_action"/>
+            <menuitem id="menu_ct_angiogram" name="CT Angiogram" parent= "main_menu_configartion" action="ct_angiogram_action"/>
 
         <record id="ultra_sound" model="ir.ui.view">
             <field name="name">Ultrasound Study</field>
@@ -214,7 +225,9 @@
                             </div>
                             <group >
                                 <field name ="name"/>
-                                
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -232,7 +245,7 @@
                 </field>        
             </record>
             
-            <menuitem id="menu_ultra_sound" name="Ultrasound Study" parent= "main_menu_hospital_management" action="ultra_sound_action"/>
+            <menuitem id="menu_ultra_sound" name="Ultrasound Study" parent= "main_menu_configartion" action="ultra_sound_action"/>
 
         <record id="ct_guided_intervention" model="ir.ui.view">
             <field name="name">CT Guided Intervention</field>
@@ -247,7 +260,9 @@
                             </div>
                             <group >
                                 <field name ="name"/>
-                                
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -265,7 +280,7 @@
                 </field>        
             </record>
             
-            <menuitem id="menu_ct_guided_intervention" name="CT Guided Intervention" parent= "main_menu_hospital_management" action="ct_guided_intervention_action"/>
+            <menuitem id="menu_ct_guided_intervention" name="CT Guided Intervention" parent= "main_menu_configartion" action="ct_guided_intervention_action"/>
 
         <record id="scan_test_main" model="ir.ui.view">
             <field name="name">Scan Test</field>
@@ -276,48 +291,64 @@
                         <header>
                         </header>
                         <sheet>
+                <div class="oe_button_box" name="button_box">     
+                                
+            <button class="oe_stat_button" name="scan_button"  type="object" icon="fa-clipboard">
+                <field name ="scan_recs" widget="statinfo" />
+            </button>
+                </div>
+                            <field name ="request" invisible='1'/>
+        <field name ="name" invisible='1'/>
+                                <field name ="patient_id" invisible='1'/>
+                                <field name ="price" invisible='1'/>
+                                <field name ="range" invisible='1'/>
+                                <field name ="company_id" invisible='1'/>
                 <div class="row">
             <div class='col-3'>
-        <label for="mri_test" />
+        <label for="mri_test" class='labtestcls' string='1.5 M.R.I STUDY'/>
             <div class=''>
                 <field name = 'mri_test' widget='many2many_checkboxes' />
             </div>
-        <label for="doppler_test" />
+        <label for="doppler_test" class='labtestcls' string='DOPPLER STUDIES'/>
             <div class=''>
                 <field name = 'doppler_test' widget='many2many_checkboxes'/>
             </div>
         
-        <label for="ct_test" />
-            <div class=''>
-                <field name = 'ct_test' widget='many2many_checkboxes'/>
-            </div>
+        
         </div>
 
             <div class="col-3">
-        <label for="other_test" />
+        <label for="other_test" class='labtestcls' string='OTHER STUDIES'/>
             <div class=''>
                 <field name = 'other_test' widget='many2many_checkboxes' />
             </div>
-        <label for="ct_angiogram" />
+        <label for="ct_angiogram" class='labtestcls' string='C.T ANGIOGRAM'/>
             <div class=''>
                 <field name = 'ct_angiogram' widget='many2many_checkboxes'/>
             </div>
-        <label for="ultra_sound_test" />
+        <label for="ultra_sound_test" class='labtestcls' string='ULTRASOUND STUDY'/>
             <div class=''>
                 <field name = 'ultra_sound_test' widget='many2many_checkboxes' />
             </div>
         </div>
 
         <div class="col-3">
-        <label for="robotic_clinical_test" />
+        <label for="robotic_clinical_test" class='labtestcls' string='FULLY ROBITIC CLINICAL LAB'/>
             <div class=''>
                 <field name = 'robotic_clinical_test' widget='many2many_checkboxes' />
             </div>
-        <label for="ct_guided_intervention" />
-            <div class=''>
-                <field name = 'ct_guided_intervention' widget='many2many_checkboxes'/>
-            </div>
+        
         </div>
+        <div class="col-3">
+        <label for="ct_test" class='labtestcls' string='C.T STUDY'/>
+            <div class=''>
+                <field name = 'ct_test' widget='many2many_checkboxes'/>
+            </div>
+        <label for="ct_guided_intervention" class='labtestcls' string='C.T GUIDED INTERVENTION'/>
+        <div class=''>
+            <field name = 'ct_guided_intervention' widget='many2many_checkboxes'/>
+        </div>
+            </div>
         </div>
             </sheet>
             </form>
@@ -335,7 +366,46 @@
                 </field>        
             </record>
             
-            <menuitem id="menu_scan_test_main" name="Scan Test" parent= "main_menu_hospital_management" action="scan_test_action"/>
+            <menuitem id="menu_scan_test_main" name="Scans" parent="main_menu_hospital_management" sequence= "4" action="scan_test_action"/>
+            <record id="scan_test_tree_view" model="ir.ui.view">
+                <field name="name">scan.test.tree.view</field>
+                <field name="model">scan.test</field>
+                <field name="arch" type="xml">
+                    <tree string="Lab Tests">
+                        <field name ="request" />
+                        <field name ="ebook_id" />
+                        <field name ="patient_id" />
+                        <field name="write_date"/>
+                        <!-- <field name ="range" /> -->
+                        <!-- <field name ="company_id" invisible='1'/> -->
+                    </tree>
+                </field>
+            </record>
 
+            <record id="view_scan_land_filter" model="ir.ui.view">
+                <field name="name">Scan Test</field>
+                <field name="model">scan.test</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Lab Test">
+                        <!-- <field name="request"/> -->
+                        <field name="ebook_id"/>
+                        <field name="patient_id"/>
+                        <field name="write_date"/>
+                    <!-- <filter string="Doctor" name="doctor" domain="[('doctor', '!=', '')]"/> -->
+                        <!-- <filter string="Doctor" name="doctor" context="{'group_by': 'doctor'}"/> -->
+                        <filter string="Branch" name="company_id" context="{'group_by': 'company_id'}"/>
+                        <filter string="Today" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
+                        <filter string="Yesterday" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+                        <filter string="Tomorrow" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+                        
+                        <filter string="Past 6 Month" name="write_date" separator="1" domain="[('write_date','&lt;=',(datetime.date.today()-relativedelta(months=6)).strftime('%Y-%m-%d'))]"/>
+                        <!-- <filter string="Next Month" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%Y-%m-%d'))]"/> -->
+                        <filter string="Past Month" name="write_date" separator="1" domain="[('write_date','&lt;=',(datetime.date.today()-relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
+                        <!-- <filter string="Past week" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()-relativedelta(week=1)).strftime('%Y-%m-%d'))]"/> -->
+                        <!-- <filter string="This Month" name="prescription_date" separator="1" domain="[('prescription_date','&lt;=',(datetime.date.today()+relativedelta(months=1)).strftime('%Y-%m-%d'))]"/> -->
+                    </search>
+                </field>
+            </record>
     </data>
 </odoo>

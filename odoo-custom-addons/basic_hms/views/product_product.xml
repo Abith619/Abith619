@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <menuitem id="menus_pharmacy"  name ="Pharmacy" action="stock.stock_product_normal_action"
+        parent="main_menu_hospital_management" sequence="5" />
+
+
+</odoo>

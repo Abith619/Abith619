@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- <record model="ir.module.category" id="module_category_hospital">
+        <field name="name">Set User Access</field>
+        <field name="description">Access</field>
+    </record> -->
+
+    <record model="ir.module.category" id="module_category_ebooks">
+        <field name="name">Ebook Management</field>
+        <field name="description"> Category For Ebook </field>
+    </record>
+    
+     <record id="group_ebooks_admin" model="res.groups">
+        <field name="name">ebooks Admin</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        <field name="category_id" ref="module_category_ebooks"/>
+    </record>
+
+
+<!-- <record  model="ir.rule" id="ebooks_record_rule">
+    <field name="name">See only his ebooks</field>
+    <field name="model_id" ref="model_medical_doctor"/> -->
+    <!-- <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field> -->
+    <!-- <field name="groups" eval="[(4, ref('group_ebooks__user'))]"/> 
+</record> -->
+     
+     <record id="group_ebooks__user" model="res.groups">
+        <field name="name">ebooks User</field>
+      <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    <field name="category_id" ref="module_category_ebooks"/>
+    </record>
+    
+    <record  model="ir.rule" id="ebooksdoc_record_rule">
+        <field name="name">See only his ebooks</field>
+            <field name="model_id" ref="model_medical_doctor"/>
+        <field name="domain_force">[('user_doctor.user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_ebooks__user'))]"/> 
+    </record>
+    
+    <!-- <record  model="ir.rule" id="appointment_record_rule">
+        <field name="name">See only his Telecaller Records</field>
+        <field name="model_id" ref="model_medical_appointment"/>
+        <field name="domain_force">[('user_appoinment_by.user_id','=',user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_ebooks__user'))]"/> 
+    </record> -->
+
+
+<!-- <record  model="ir.rule" id="reception_record_rule">
+    <field name="name">See only his Reception Records</field>
+    <field name="model_id" ref="model_medical_patient"/>
+    <field name="domain_force">[('user_appoinment_by.user_id','=',user.id)]</field>
+    <field name="groups" eval="[(4, ref('group_ebooks__user'))]"/> 
+</record> -->
+
+<!-- <record  model="ir.rule" id="billing_record_rule">
+    <field name="name">See only his Billing Records</field>
+    <field name="model_id" ref="model_patient_bills"/>
+    <field name="domain_force">[('user_billed_by.user_id','=',user.id)]</field>
+    <field name="groups" eval="[(4, ref('group_ebooks__user'))]"/> 
+</record> -->
+    
+<!-- <record  model="ir.rule" id="prescription_record_rule">
+    <field name="name">See only his Prescription Records</field>
+    <field name="model_id" ref="model_medical_prescription_order"/>
+    <field name="domain_force">[('user_prescribed_by.user_id','=',user.id)]</field>
+    <field name="groups" eval="[(4, ref('group_ebooks__user'))]"/> 
+</record> -->
+
+
+
+    <record id="group_ebooks_company_user" model="res.groups">
+        <field name="name">ebooks User company</field>
+      <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="module_category_ebooks"/>
+        </record>
+    
+    
+    <record  model="ir.rule" id="ebookscomp_record_rule">
+        <field name="name">ebooks User company</field>
+        <field name="model_id" ref="model_medical_doctor"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('group_ebooks_company_user'))]"/> 
+    </record>
+    
+    
+    <record  model="ir.rule" id="receptiondoc_record_rule">
+        <field name="name">Reception User company</field>
+        <field name="model_id" ref="model_medical_patient"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('group_ebooks_company_user'))]"/> 
+    </record>
+    
+    
+    <record  model="ir.rule" id="appointmentdoc_record_rule">
+        <field name="name">Appointment User company</field>
+        <field name="model_id" ref="model_medical_appointment"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('group_ebooks_company_user'))]"/> 
+    </record>
+    
+    
+    
+    <record  model="ir.rule" id="prescriptiondoc_record_rule">
+        <field name="name">Prescription User company</field>
+        <field name="model_id" ref="model_medical_prescription_order"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('group_ebooks_company_user'))]"/> 
+    </record>
+    
+    
+    <record  model="ir.rule" id="labdoc_record_rule">
+        <field name="name">Laboratory User company</field>
+        <field name="model_id" ref="model_lab_scan_form"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('group_ebooks_company_user'))]"/> 
+    </record>
+    <record  model="ir.rule" id="scandoc_record_rule">
+        <field name="name">Scan User company</field>
+        <field name="model_id" ref="model_scan_test"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('group_ebooks_company_user'))]"/> 
+    </record>
+    <record  model="ir.rule" id="product_record_rule">
+        <field name="name">Prescription Product company</field>
+        <field name="model_id" ref="model_product_product"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('group_ebooks_company_user'))]"/> 
+    </record>
+    
+    <record  model="ir.rule" id="billing_record_rule">
+        <field name="name">Billing User company</field>
+        <field name="model_id" ref="model_patient_bills"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('group_ebooks_company_user'))]"/> 
+    </record>
+    
+    <record  model="ir.rule" id="contacts_record_rule">
+        <field name="name">Contacts User company</field>
+        <field name="model_id" ref="model_res_partner"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('group_ebooks_company_user'))]"/> 
+    </record>
+
+</odoo> 

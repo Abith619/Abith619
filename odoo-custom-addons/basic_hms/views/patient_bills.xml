@@ -13,27 +13,20 @@
                         <group>
                             <field name ="patient_name"/>
                             <field name ="date_date"/> 
-                            <!-- <field name= "total_val"/> -->
+                            <field name= "doctor_id" invisible='1'/>
+                            <field name= "billed_by"/>
                         </group>
                         <group>
                             <field name ="insurance"/>
                             <field name = "type_of_insurance" attrs="{'invisible': [('insurance','=', False)]}"/>
+                        <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                        <field name='total_amount' string='Due Amount' force_save='1'/>
+                        <field name="paid_status"/>
                         </group>
                     </group>
 
                     
                     <notebook>
-                        <!-- <page string ="Bills List">
-                            <field name="bills_lines">
-                                <tree editable="bottom">
-                                    <field name="name"/>
-                                    <field name ="date"/>
-                                    <field name ="bill_amount"/>
-                                    <field name ="payment_status"/>
-                                </tree>
-
-                            </field>
-                            </page> -->
                         <page string ="Reception">
                             <field name="reception_bills">
                                 <tree editable="bottom">
@@ -48,32 +41,43 @@
                                 <field name ="total2"/>
                             </div>
                             </page>
-                        <!-- <page string ="Doctor Consultation">
-                            <field name="doctor_bill">
-                                <tree editable="bottom">
-                                    <field name="name"/>
-                                    <field name ="date"/>
-                                    <field name ="bill_amount"/>
-                                    <field name ="payment_status"/>
-                                </tree>
-                            </field>
-                        </page> -->
-                        <page string ="Lab / Scan">
-                            <field name="lab_bill">
-                                <tree editable="bottom">
-                                    <field name="name"/>
-                                    <field name ="test_name"/>
-                                    <field name ="test_types"/>
-                                    <field name ="bill_amount"/>
-                                    <field name ="payment_status"/>
-                                    
-                                </tree>
-                            </field>
-                            <div class ="col-md-2" style="display: flex; align-items: flex-start; justify-content: center;">
-                                <label for="total" string="Lab Amount : " />
-                                <field name ="total"/>
-                            </div>
-                        </page>
+                            <page string ="Lab / Scan">
+                                <notebook>
+                                <page string ="Lab Bill">
+                                    <field name="lab_bill">
+                                        <tree editable="bottom">
+                                            <field name="name" string='Test Name'/>
+                                            <field name ="test_name" invisible='1'/>
+                                            <field name ="test_types" invisible='1'/>
+                                            <field name ="bill_amount"/>
+                                            <field name ="date"/>
+                                            <field name ="payment_status"/>
+                                        </tree>
+                                    </field>
+                                    <div class ="col-md-2" style="display: flex; align-items: flex-start; justify-content: center;">
+                                        <label for="total" string="Lab Amount : " />
+                                        <field name ="total"/>
+                                    </div>
+                                    </page>
+                                    <page string ="Scan Bill">
+                                    <field name="scan_bill">
+                                        <tree editable="bottom">
+                                            <field name="name" string='Test Name'/>
+                                            <field name ="test_name" invisible='1'/>
+                                            <field name ="test_types" invisible='1'/>
+                                            <field name ="bill_amount"/>
+                                            <field name ="date"/>
+                                            <field name ="payment_status"/>
+                                        </tree>
+                                    </field>
+                                    <div class ="col-md-2" style="display: flex; align-items: flex-start; justify-content: center;">
+                                        <label for="total_scan" string="Scan Amount : " />
+                                        <field name ="total_scan"/>
+                                    </div>
+                                    </page>
+                                    </notebook>
+                                </page>
+        
                         <page string ="Pharmacy">
                             <field name="pres_bill">
                                 <tree editable="bottom">
@@ -81,7 +85,7 @@
                                     <field name="medicine_name" />
                                     <field name ="date"/>
                                     <field name ="pre_amount"/>
-                                    
+                                    <field name ="delivery_mode"/>
                                 </tree>
                             </field>
                             <div class ="col-md-2" style="display: flex; align-items: flex-start; justify-content: center;">
@@ -95,8 +99,8 @@
                         </div>
 
                         <div class ="col-md-2" style="display: flex; align-items: flex-start; justify-content: center;">
-                        <label for="total_amount" string="Due Amount : " />
-                            <field name='total_amount' readonly='1' force_save='1'/>
+                        <label for="billed_amount" string="Total Amount : " />
+                            <field name='billed_amount' readonly='1' force_save='1'/>
                             
                         </div>
                     </div>
@@ -114,19 +118,19 @@
         <search string="Search">
             <!-- <field name="opnumber"/> -->
             <field name="patient_name"/>
-            <!-- <field name="phone_number"/> -->
+            <field name="ebook_id"/>
         <!-- <filter string="Doctor" name="doctor" domain="[('doctor', '!=', '')]"/> -->
             <filter string="Doctor" name="doctor_id" context="{'group_by': 'doctor_id'}"/>
             <!-- <filter string="Branch" name="company_id" context="{'group_by': 'company_id'}"/> -->
-            <filter string="Today" name="date_date" separator="1" domain="[('date_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
-            <filter string="Yesterday" name="date_date" separator="1" domain="[('date_date','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
-            <filter string="Tomorrow" name="date_date" separator="1" domain="[('date_date','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+            <filter string="Today" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
+            <filter string="Yesterday" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+            <!-- <filter string="Tomorrow" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/> -->
             
-            <filter string="Past 6 Month" name="date_date" separator="1" domain="[('date_date','&lt;=',(datetime.date.today()-relativedelta(months=6)).strftime('%Y-%m-%d'))]"/>
+            <filter string="Past 6 Month" name="write_date" separator="1" domain="[('write_date','&lt;=',(datetime.date.today()-relativedelta(months=6)).strftime('%Y-%m-%d'))]"/>
             <!-- <filter string="Next Month" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%Y-%m-%d'))]"/> -->
-            <filter string="Past Month" name="date_date" separator="1" domain="[('date_date','&lt;=',(datetime.date.today()-relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
+            <filter string="Past Month" name="write_date" separator="1" domain="[('write_date','&lt;=',(datetime.date.today()-relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
             <!-- <filter string="Past week" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()-relativedelta(week=1)).strftime('%Y-%m-%d'))]"/> -->
-            <filter string="This Month" name="date_date" separator="1" domain="[('date_date','=',(datetime.date.today()+relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
+            <!-- <filter string="This Month" name="date_date" separator="1" domain="[('date_date','=',(datetime.date.today()+relativedelta(months=1)).strftime('%Y-%m-%d'))]"/> -->
         </search>
     </field>
 </record>
@@ -136,22 +140,72 @@
                     <field name="model">patient.bills</field>
                     <field name="arch" type="xml">
                         <tree string="Patient Bills">
+                            <field name='ebook_id'/>
+                            
                             <field name="patient_name"/>
-                            <!-- <field name="company_id"/> -->
                             <field name="doctor_id"/>
-                            <field name="date_date"/>
+                            <field name="billed_amount"/>
+                            <field name='total_amount' string='Due Amount'/>
+                            <field name="write_date"/>
+                            <field name="paid_status"/>
                         </tree>
                     </field>
                 </record>
 
 
-                <record id="bills_action_view" model="ir.actions.act_window">
+                <record id="bills_action_views" model="ir.actions.act_window">
                     <field name="name">Bill Information</field>
                     <field name="res_model">patient.bills</field>
                     <field name="binding_view_types">form</field>
                     <field name="view_mode">tree,form</field>
                 </record>
 
-            <menuitem id="patient_bills"  name ="Create Patient Bills " action="bills_action_view"
-                parent="main_menu_configartion" sequence="0" />
-                </odoo>
+                <!-- <menuitem id= "bill_menus_hospital" name ="Billing" parent="main_menu_hospital_management"
+                sequence="6"/> -->
+
+
+                <menuitem id="hospital_menu_bill" name="Billing"  parent="main_menu_hospital_management"
+                sequence="6"/>
+
+
+            <menuitem id="patient_bills"  name ="Bills" action="bills_action_views"
+                parent="hospital_menu_bill"/>
+
+            <!-- <record id="Cashier_form" model="ir.ui.view">
+                <field name="name">Cashier</field>
+                <field name="model">account.payment</field>
+                <field name="inherit_id" ref="account.view_account_payment_form"/>
+                <field name="priority" eval="8" />
+                    <field name="arch" type="xml">
+                        <form string="Cashier">
+                            <header>
+                            </header>
+                            <sheet>
+                                <div class="oe_button_box">
+                                </div>
+                                <group >
+                                    <field name ="partner_id"/>
+                                    <field name ="name"/>
+                                    <field name ="date"/>
+                                    
+                                    <field name ="company_id"/>
+                                    <field name ="amount"/>
+                                </group>
+                            </sheet>
+                            </form>
+                            </field>
+            </record>
+            <record model="ir.actions.act_window" id="cashier_action">            
+                <field name="name">Cashier</field>         
+                    <field name="res_model">account.payment</field>           
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>            
+                    <field name="help" type="html">                
+                        <p class="oe_view_nocontent_create">Cashier
+                        </p>            
+                    </field>        
+                </record>-->
+            <menuitem id="menu_Cashier" name="Cashier" parent= "hospital_menu_bill" 
+            action="account.action_account_payments"/> 
+
+    </odoo>

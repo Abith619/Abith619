@@ -16,7 +16,7 @@ class medical_appointment(models.Model):
 	_name = "medical.appointment"
 	_inherit = 'mail.thread'
 
-	appoinment_by=fields.Many2one('res.users',string='Appoinment By',default=lambda self: self.env.user,readonly='1')
+	appoinment_by=fields.Many2one('res.users',string='Appointment By',default=lambda self: self.env.user,readonly='1')
 	contact_number=fields.Char(string='Whatsapp Number')
 	stages= fields.Selection([('draft',"New"),('done',"Done")],default="draft")
 	date=fields.Datetime('', default=datetime.datetime.now())
@@ -70,20 +70,20 @@ class medical_appointment(models.Model):
 	appointment_from=fields.Selection([('09:00 Am - 10:00 Am','09:00 Am - 10:00 Am'),('10:00 Am - 11:00 Am','10:00 Am - 11:00 Am'),('11:00 Am - 12:00 Pm',"11:00 Am - 12:00 Pm"),
     ('12:00 Pm - 01:00 Pm','12:00 Pm - 01:00 Pm'),('02:00 Pm - 03:00 Pm','02:00 Pm - 03:00 Pm'),('03:00 Pm - 04:00 Pm','03:00 Pm - 04:00 Pm')],string='Appointment Slot')
 
-	appoinment_through =fields.Selection([('onl',"Online"),('dir',"Direct"),('of',"Offline"),('rev',"Review"),('stop',"Stopped")],required=True,default='onl',string ="Appoinment Through")
+	appoinment_through =fields.Selection([('onl',"Online"),('of',"Offline")],required=True,default='onl',string ="Appointment Through")
 
 	fees = fields.Float(string='Fees',readonly=True,compute='fee_change')
+	whatsapp_check=fields.Boolean()
+	patient_signs_symptoms = fields.Many2many('medical.symptoms',string="Signs/Symptoms")
 
-
-	company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.prescription.order')))
+	company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.prescription.order'))
 
 
 	# @api.onchange("patient_selection")
     # def new_change(self):
     #     if patient_selection == 'new':
     #         return {'domain':{'patient_id':rage:('id','in',None)]}}
-
-
+	
 	def send_msg(self):
 		if self.whatsapp_check == True:
 			return {
@@ -111,6 +111,7 @@ class medical_appointment(models.Model):
 				'default_message':"Hi "+self.patient_id.name+",\n\nYour Appointment is fixed with "+self.doctor_id.name+"\nFeedback : https://www.mouthshut.com/product-reviews/Daisy-Hospital-Chromepet-Chennai-reviews-925999566"
 				},
 				}
+
 
 
 	@api.depends('appoinment_through')
@@ -160,11 +161,9 @@ class medical_appointment(models.Model):
 	
 #create new contact patient
 	def button_registrations(self):
-    	# 'name':self.patient_id.id	
 		self.stages = 'done'
-		# create_registration = self.env['medical.patient'].create({
 		ces={
-        'name': "Registration",
+        'name': "Scan/Tests",
         'type': 'ir.actions.act_window',
         'view_type': 'form',
         'view_mode': 'form',
@@ -173,16 +172,19 @@ class medical_appointment(models.Model):
 				'default_patient_id':self.patient_id.id,
 				'default_sex':self.gender,
 				'default_contact_no':self.phone_number,
+				# 'default_patient_signs_symptoms':self.patient_signs_symptoms.id,
 				'default_contact_number':self.contact_number,
 				'default_doctors':self.doctor_id.id,
+				# 'default_related_field':self.name,
 				'default_dates':datetime.datetime.now(),
 				'default_appointment_from':self.appointment_from,
 				'default_treatment':self.treatment_for.id,
+				'default_whatsapp_check':self.whatsapp_check,
 				'default_fees':self.fees,
 				'default_city':self.region.id,
-				'default_appoinment_by':self.appoinment_by.id,
+				'default_reg_type':'app',
 				'default_stages':'on',
-				'default_reg_type':self.appoinment_through,
+				'default_treatment_for':self.treatment_for.id,
 				# 'default_patient_movement':datetime.now()
             },
 		}		
@@ -193,6 +195,10 @@ class medical_appointment(models.Model):
 			'patient_gender':self.gender,
 			'is_patient':'True',
 			})
+		
+		# res=self.env['medical.patient'].search([('related_field','=',self.name)])
+		# for symptom in res.patient_signs_symptoms:
+		# 	res.update({'patient_signs_symptoms':symptom.id})
 		return ces
 
 	@api.onchange('patient_id')
@@ -200,8 +206,15 @@ class medical_appointment(models.Model):
 		val = self.env['res.partner'].search([('id','=',self.patient_id.id)])
 		self.phone_number = val.mobile
 		self.gender=val.patient_gender
-  
-  
+
+    		
+	@api.onchange('whatsapp_check')
+	def number_swap(self):
+		if self.whatsapp_check == True:
+			self.contact_number= self.phone_number
+
+
+
 	@api.onchange('duration')
 	def start_end(self):
 		now  = self.appointment_date

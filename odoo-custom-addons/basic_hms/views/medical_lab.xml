@@ -86,8 +86,8 @@
             <field name="binding_view_types">tree</field>
             <field name="view_mode">tree</field>
         </record>
-
-        <!-- <act_window id="action_view_lab_id" name="Lab Reports"
+<!-- 
+        <act_window id="action_view_lab_id" name="Lab Reports"
             res_model="medical.lab" binding_model="medical.patient"
             view_mode="tree,form"/> -->
 

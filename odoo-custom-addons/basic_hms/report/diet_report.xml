@@ -3,38 +3,60 @@
 
     <data>
     
-        <template id="basic_hms.ebook_diet_report" name="Diet Report">
+        <template id="basic_hms.diet_doctor_report" name="Diet Report">
             <t t-call="web.external_layout">
                 <t t-call="web.html_container">
                    <t t-foreach="docs" t-as="o">
                        <t >
                        <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
                        <td style="border: 0px;width: 50%;">
+                        <p><strong>Patient Name :</strong><span t-field="o.patient_id"/></p>
                            <p><strong>Diet Name :</strong><span t-field="o.name"/></p>
+                           
                        </td>
-                       <td style="border: 0px;width: 50%;">
+                       <!-- <td style="border: 0px;width: 50%;">
                            <p><b>Patient Name :</b> <span t-field="o.patient_id"/></p>
-                       </td>
+                       </td> -->
                        </table>
                        <table class="table table-bordered" style="border: 1px solid black;">
                         <thead>
                             <tr>
                             <th style="border: 1px solid black;">Time</th>
-                            <th style="border: 1px solid black;"> Period (AM/PM) </th>
-                            <th style="border: 1px solid black;"> Diet Advised </th>
+                            <th style="border: 1px solid black;"> Food </th>
+                            <th style="border: 1px solid black;"> Fruit Diet </th>
+                            <th style="border: 1px solid black;"> Veg Diet </th>
+                            <th style="border: 1px solid black;"> Protein Diet </th>
+                            <th style="border: 1px solid black;"> Quantity </th>
+                            <th style="border: 1px solid black;"> Exercise </th>
+                            <th style="border: 1px solid black;"> Notes </th>
                             </tr>
                         </thead>
                         <tbody>
-                             <tr t-foreach='docs.pre_diet_line' t-as='line'>
+                             <tr t-foreach='docs.diet_line' t-as='line'>
                            <td style="border: 1px solid black;">
-                           <span t-field="line.start_time"/>
+                           <span t-field="line.wakeup1"/>
                            </td>
                            <td style="border: 1px solid black;">
-                           <span t-field="line.meridiem"/>
+                           <span t-field="line.food"/>
                            </td>
                            <td style="border: 1px solid black;">
-                           <span t-field="line.diet"/>
+                           <span t-field="line.fruit_diet"/>
                            </td>
+                           <td style="border: 1px solid black;">
+                            <span t-field="line.veg_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.protein_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.quantity"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.exercise1"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-field="line.note"/>
+                                </td>
                             </tr>
                         </tbody>
                         </table>

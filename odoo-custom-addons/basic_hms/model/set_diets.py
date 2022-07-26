@@ -10,9 +10,9 @@ class SetDiets(models.Model):
     exercise1=fields.Char(string="Exercise")
     fruit_diet=fields.Many2many('set.fruits',string="Fruit Diet")
 
+    
     patient_id=fields.Char(string="Patient",default=lambda self: self.env['medical.doctor'].browse(self.env['medical.doctor']._context.get('patient.id')))
-    # code = fields.Char('Code')
-    diet_line = fields.One2many('set.diet.line','name',string="Diet Advisied")
+    diet_line = fields.One2many('set.diet.line','name',string="Diet Advisied",ondelete='cascade')
     diet_line1 = fields.One2many('diet.six','name',string="Diet Advisied")
     diet_line2 = fields.One2many('diet.seven','name',string="Diet Advisied")
     diet_line3 = fields.One2many('diet.eight','name',string="Diet Advisied")
@@ -35,11 +35,8 @@ class DietAssign(models.Model):
     exercise1=fields.Char(string="Exercise")
     wakeup1=fields.Char(string="Time")
     fruits1=fields.Char(string="Fruits")
-    # fruits=fields.Many2many('set.fruits',string="Fruits")
-    # grams=fields.Char('Quantity',default='100 Grams')
     medicine=fields.Text(string='Medicine')
     milk=fields.Selection([('milk','Milk'),('nil','Nil')],string="Milk")
-    # quantity=fields.Char('Quantity')
     litres=fields.Char(string='Quantity', default='100 ml')
     drinks=fields.Selection([('butter','Butter-Milk'),('coconut','Coconut-Water'),('Anemia','Anemia Juice')],string="Drinks")
     drinks_list=fields.Selection([('Apple','Apple + Carrot'),('beet','Beetroot + Orange'),('grapes','Black Grapes + PineApple'),('pomogranate','Pomogranate + Milk')],string="Drinks List")
@@ -51,8 +48,6 @@ class DietAssign(models.Model):
     grams=fields.Char('Quantity',default='100 Grams')
     rice=fields.Many2many('set.rice',string="Rice")
     protein_diet=fields.Many2many('set.protein',string="Protein Diet")
-    # wakeup=fields.Selection([('ghee','Ghee'),('butter','Butter'),('coconut','Coconut-Oil')],string="Morning")
-    # note=fields.Char('Notes')
 
 class diet_six(models.Model):
     _name='diet.six'
@@ -61,8 +56,6 @@ class diet_six(models.Model):
     juice1=fields.Char(string="Juice",default='Sorraka 150ml')
     quantity=fields.Char(string="Quantity")
     exercise1=fields.Char(string="Exercise")
-    # juice=fields.Selection([('sorraka','Sorraka Juice'),('nil','Nil')],string="Juice",default='Sorraka 150ml')
-    # exercise=fields.Selection([('walking','Walking'),('plank','Plank'),('namaskar','Surya Namaskar'),('strech','Streches'),('namaz','Namaz'),('exercise','Ground Exercise'),('nil','Nil')],string="Exercise")
     note=fields.Char('Notes')
 
 class diet_seven(models.Model):
@@ -111,7 +104,6 @@ class diet_four(models.Model):
     name=fields.Many2one('set.diets')
     note=fields.Char('Notes')
     snacks1=fields.Char(string="Snacks")
-    # snacks=fields.Selection([('coconut','Coconut-Milk 200 ml'),('sp-coconut','SP-Coconut'),('nil','Nil')],string="Snacks")
 
 class diet_seven_one(models.Model):
     _name='diet.five'
@@ -127,8 +119,6 @@ class diet_seven_one(models.Model):
     note=fields.Char('Notes')
     snackss=fields.Char(string="Snacks")
     snacks12=fields.Char(string="Afternoon")
-    # snacks=fields.Selection([('sabzi','Veg-Sabzi 200 gm'),('salad','Veg-Salad 150 gm'),('veg-salad','Veg-Salad 200 gm + Omelete')],string="Snacks")
-    # snacks1=fields.Selection([('egg','Egg'),('phulka','Phulka'),('both','Egg & Phulka'),('nil','Nil')],string="Egg / Phulka")
     snacks2=fields.Selection([('semiya','Red Semiya'),('Aval','Red Aval'),('puttu','Red Puttu')],string="Dinner")
 
 class Diet_One(models.Model):

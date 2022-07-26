@@ -7,9 +7,8 @@ from odoo.exceptions import  ValidationError
 
 class medical_prescription_order(models.Model):
     _name = "medical.prescription.order"
-    # _description = "Prescription Order"
-    _rec_name = "name"
     
+    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.patient.lab.test'))
     name = fields.Char('Prescription ID')
     age = fields.Char('Age')
     sex = fields.Selection([('m', 'Male'),('f', 'Female')], string ="Sex", required= True)
@@ -17,6 +16,9 @@ class medical_prescription_order(models.Model):
     weight=fields.Float(string="Weight")
     stages= fields.Selection([('new',"New"),('draft','Draft'),('done',"Done")])
     treatments_for = fields.Many2many('treatment.for',string="Treatment For")
+    write_date=fields.Date(string='Date')
+    ebook_id = fields.Char(string='Patient ID')
+    prescribed_by=fields.Many2one('res.users',string='Appointment By',default=lambda self: self.env.user,readonly='1')
 
     patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient" ,required=True)
     prescription_date = fields.Datetime('Prescription Date', default=fields.Datetime.now)
@@ -36,9 +38,11 @@ class medical_prescription_order(models.Model):
     insurer_id = fields.Many2one('medical.insurance', 'Insurer')
     is_shipped = fields.Boolean(default  =  False,copy=False)
     total=fields.Float(string="Total :")
-    delivery_option= fields.Selection([('dir','Direct'),('on',"Courier")],string="Delivery Option",default='dir')
-    # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.prescription.order')))
     medicine_name = fields.Many2one('product.product',string='Medicine Name')
+    bf_af=fields.Selection([('before','Before Food'),('after','After Food')],string='BF - AF')
+    delivery_option= fields.Selection([('dir','Direct'),('on',"Online")],string="Delivery Option",default='dir')
+    courier_option = fields.Selection([('domestic','Domestic'),('international',"International")],string='Courier')
+    # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.prescription.order')))
 
     @api.onchange('prescription_line_ids')
     def onchan_func(self):
@@ -51,8 +55,7 @@ class medical_prescription_order(models.Model):
 
     @api.model
     def create(self , vals):
-        
-        vals['name'] = self.env['ir.sequence'].next_by_code('medical_prescription_order')   
+        vals['name'] = self.env['ir.sequence'].next_by_code('medical.prescription.order') or '/'   
         res = super(medical_prescription_order, self).create(vals)
         billing = self.env['patient.bills'].search([('patient_name','=',res.patient_id.id)], order='id desc', limit=1)
         for rec in billing:
@@ -62,18 +65,20 @@ class medical_prescription_order(models.Model):
                     'date':datetime.now(),
                     'medicine_name':rez.medicine_name.id,
                     'prescription_id':res.name,
-                    'pre_amount':res.total,                
+                    'pre_amount':res.total,
+                    'delivery_mode':res.courier_option,                
                 }
                 billing_lines.append((0,0,billing_value))
             rec.write({'pres_bill':billing_lines})
-        
+      
         orm = self.env['medical.doctor'].search([('patient','=',res.patient_id.id)])
         lines=[]
         value={
             'prescription_alot':res.id,
             'date':datetime.now(),
-            # 'medicine_name':res.medicine_name.id,
+            'patient_name':res.patient_id.id,
             'delivery_option':res.delivery_option,
+            'delivery_mode':res.courier_option,
             }
         lines.append((0,0,value))
         orm.write({'prescription_patient':lines})

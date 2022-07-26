@@ -1,18 +1,19 @@
 from odoo import api, fields, models, _
 from datetime import date,datetime
-from odoo.exceptions import Warning, ValidationError
-
+from odoo.exceptions import Warning
 
 class medical_patient_lab_test(models.Model):
     _name = 'medical.patient.lab.test'
     _rec_name = 'request'
 
+
+    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.patient.lab.test'))
     request = fields.Char('Request', readonly = True)
     date =  fields.Datetime('Date', default = fields.Datetime.now)
     lab_test_owner_partner_id = fields.Many2one('res.partner', 'Owner Name')
     urgent =  fields.Boolean('Urgent',)
     owner_partner_id = fields.Many2one('res.partner')
-    state = fields.Selection([('draft', 'New'),('tested', 'Waiting'),('ontest','Tested'),('cancel', 'Cancel')], readonly= True, default = 'draft')
+    state = fields.Selection([('draft', 'New'),('tested', 'Waiting'), ('cancel', 'Cancel'),('ontest', 'On Testing')], readonly= True, default = 'draft')
     medical_test_type_id = fields.Many2one('medical.test_type', 'Test',required = True)
     test_types = fields. Many2one('medical.lab.test.units',string='Test Types',required = True)
     test_amount = fields.Float(string="Test Amount", related='test_types.code')
@@ -24,18 +25,9 @@ class medical_patient_lab_test(models.Model):
     is_invoiced = fields.Boolean(copy=False,default = False)
     units= fields.Many2one('test.units', string="Units",related='test_types.units')
     normal_range = fields.Float(related='test_types.normal_range')
+    normal_ranges = fields.Char(related='test_types.normal_ranges')
     reports= fields.One2many('scan.test.document','scan_t',string="Documents")
 
-
-    @api.onchange('units','normal_range')
-    def _range(self):
-        lines=[(5,0,0)]
-        val={
-            'test_unit':self.units,
-            'normal_range':self.normal_range
-        }
-        lines.append((0,0,val))
-        self.reports = lines
 
     @api.depends('write_date')
     def update_time(self):
@@ -56,10 +48,23 @@ class medical_patient_lab_test(models.Model):
     patient_waiting = fields.Char(string="Waiting Time", compute=update_time)
 
 
+
+
+
     def update_result(self):
         self.state = 'ontest'
-        # if self.state == 'tested':
-        
+
+
+
+    @api.onchange('units','normal_range')
+    def _range(self):
+        lines=[(5,0,0)]
+        val={
+            'test_unit':self.units,
+            'normal_ranges':self.normal_ranges
+        }
+        lines.append((0,0,val))
+        self.reports = lines
 
     # @api.onchange('test_types')
     # def _range_change(self):
@@ -95,6 +100,7 @@ class medical_patient_lab_test(models.Model):
             'test_name':result.medical_test_type_id.name,
             'test_types':result.test_types.name,
             'bill_amount':result.test_amount,
+
         }
         lines.append((0,0,value))
         orm.write({'lab_bill':lines})
@@ -142,7 +148,7 @@ class medical_patient_lab_test(models.Model):
                                        'requestor_physician_id': browse_record.doctor_id.id or False,
                                        })
             res_ids.append(res.id)
-            if res_ids:                        
+            if res_ids:                     
                 imd = self.env['ir.model.data']
                 action = imd.xmlid_to_object('basic_hms.action_medical_lab_form')
                 list_view_id = imd.xmlid_to_res_id('basic_hms.medical_lab_tree_view')
@@ -172,8 +178,9 @@ class Testdocuments(models.Model):
 
     scan_t = fields.Many2one('medical.patient.lab.test',string="Doctor")
     report_name = fields.Char(string="Report Name")
-    normal_range = fields. Float( string="Normal Range")
-    tested_range = fields.Float(string="Tested Range")
+    normal_range = fields.Float( string="Normal Range")
+    normal_ranges = fields.Char( string="Normal Range",rewuired=True)
+    tested_range = fields.Char(string="Tested Range")
     test_unit = fields.Many2one('test.units',string="Unit")
     attachments = fields.Many2many('ir.attachment',string="Attachment")
 

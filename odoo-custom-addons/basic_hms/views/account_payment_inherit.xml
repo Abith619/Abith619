@@ -8,6 +8,7 @@
                 <field name="partner_id" position="after">
                     <field name ="bill_no"/>
                 </field>
+                <field name = 'journal_id' invisible='1'/>
                 <xpath expr="//sheet" position="inside">
                 <notebook>
                     <page string ="Patient bills">
@@ -24,5 +25,3 @@
             </field>
         </record>
         </odoo>
-
-

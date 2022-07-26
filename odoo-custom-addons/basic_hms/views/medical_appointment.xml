@@ -12,9 +12,9 @@
                 <header>
                     <button name="send_msg" string="Whatsapp Message" class="oe_highlight" type="object"/>
                     <!-- <button name="rolls" string="send check" type="object"/> -->
-                    <button name="button_registrations" string="Convert To Registration" class="oe_highlight" type="object" attrs="{'invisible': [('stages','=', 'done')]}"/>
+                    <button name="button_registrations" attrs="{'invisible': [('stages','=', 'done')]}" string="Convert To Registration" class="oe_highlight" type="object" />
                     <!-- <button name="button_contact" string="Create number" class="oe_highlight" type="object"/> -->
-                    <field name ="stages" widget="statusbar"/>
+                    <field name ="stages" widget="statusbar" style="display:none !important"/>
                     <!-- <field name='date'/> -->
                 </header>
                  
@@ -35,8 +35,11 @@
                                     </div>
                                     <div class="col-6">
                                     </div>
+
+                                 
                                     <!-- <div class="col-2">
                                     </div> -->
+                                    
                                 </div>
                                 <field name = "patient_id"  style="height:70%;width:50%" options="{'no_create':True,'no_create_edit':True,'no_open': True}" attrs="{'invisible': [('patient_selection','=', 'new')]}"/> 
                           </div>
@@ -54,11 +57,19 @@
                         <group>
                             <field name = "patient_id" options="{'no_create':True,'no_create_edit':True,'no_open': True}"/> 
                             <field name= "gender"/>
-                            <!-- <field name= "age"/> -->
-                            <field name= "phone_number"/>
-                            <field name= "contact_number"/>
+                            <field name= "age"/>
+                            <label for="phone_number" string="Contact Number" />
+                            <div class="o_address_format">
+                                   
+                                <field name="phone_number" style="width: 30%;margin-right: 10px;" attrs="{'readonly': [('stages','=', 'done')]}" />
+                                 <field name = "whatsapp_check" style="width: 10%;border-left-width: 10px;margin-right: 0px;"/>
+                                 <strong><label for="contact_number"  style="font-weight: bold !important;color: #333;" string="Whats App "/></strong>
+                                 <field name="contact_number"  style="width: 30%;" attrs="{'readonly': [('stages','=', 'done')],'invisible': [('whatsapp_check','=', True)]} " />
+                                 
+                             </div> 
                             <field name= "region"/>
                             <field name= "treatment_for" required='1' options="{'no_create_edit':True,'no_open': True}"/>
+                            <!-- <field name ="patient_signs_symptoms" widget="many2many_tags"/> -->
                             <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
 
 
@@ -79,13 +90,21 @@
                             <group>
                                 <field name = "patient_id" /> 
                                 <field name= "gender" attrs="{'invisible': [('patient_id','=', False)]}"/>
-                                <!-- <field name= "age" attrs="{'invisible': [('patient_id','=', False)]}"/> -->
-                                <field name= "phone_number" attrs="{'invisible': [('patient_id','=', False)]}"/>
-                                <field name= "contact_number" attrs="{'invisible': [('patient_id','=', False)]}"/>
+                                <field name= "age" attrs="{'invisible': [('patient_id','=', False)]}"/>
+                                <label for="phone_number" string="Contact Number" />
+                                <div class="o_address_format">
+                                   
+                                   <field name="phone_number" style="width: 30%;margin-right: 10px;" attrs="{'readonly': [('stages','=', 'done')]}" />
+                                    <field name = "whatsapp_check" style="width: 10%;border-left-width: 10px;margin-right: 0px;"/>
+                                    <strong><label for="contact_number"  style="font-weight: bold !important;color: #333;" string="Whats App "/></strong>
+                                    <field name="contact_number"  style="width: 30%;" attrs="{'readonly': [('stages','=', 'done')],'invisible': [('whatsapp_check','=', True)]} " />
+                                    
+                                </div> 
                                 <field name= "region" attrs="{'invisible': [('patient_id','=', False)]}"/>
                                 <field name= "treatment_for" attrs="{'invisible': [('patient_id','=', False)]}"/>
+                                <!-- <field name ="patient_signs_symptoms" widget="many2many_tags"/> -->
                                 <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}" attrs="{'invisible': [('patient_id','=', False)]}"/>
-
+                                  
                                 </group>
                             <group>
     
@@ -197,10 +216,11 @@
             <filter string="Next Month" name="dates" separator="1" domain="[('dates','&gt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%Y-%m-%d'))]"/>
             <filter string="Past Month" name="dates" separator="1" domain="[('dates','&gt;=',(datetime.date.today()-relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
             <filter string="Past week" name="dates" separator="1" domain="[('dates','&gt;=',(datetime.date.today()-relativedelta(week=1)).strftime('%Y-%m-%d'))]"/>
-            <filter string="This Month" name="dates" separator="1" domain="[('dates','&lt;=',(datetime.date.today()+relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
+            <!-- <filter string="This Month" name="dates" separator="1" domain="[('dates','&lt;=',(datetime.date.today()+relativedelta(months=1)).strftime('%Y-%m-%d'))]"/> -->
         </search>
     </field>
 </record>
+
 
 
     <record id="action_medical_appointment" model="ir.actions.act_window">
@@ -210,8 +230,8 @@
         <field name="view_mode">tree,form,calendar,pivot,graph</field>
     </record>
 
-    <menuitem id="menu_appointment" name='Appointments' action="action_medical_appointment"
+    <menuitem id="menu_appointment" name='Telecallers' action="action_medical_appointment"
               parent="main_menu_hospital_management"
-              sequence="1"/>
+              sequence="7"/>
 
 </odoo>

@@ -4,10 +4,10 @@ import datetime
 class Prescribediet(models.Model):
     _name = 'prescribe.diet'
 
-    name = fields.Many2one('set.diets', string="diets",required = True)
+    name = fields.Many2one('set.diets', string="Diets")
     pre_diet_line = fields.One2many('prescribe.diet.line','name',string="Diet Advisied")
     patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name")
-    dates=fields.Date(string='Date',default=fields.Datetime.now(),readonly=True)
+    dates=fields.Date(string='Date',default=fields.Datetime.now())
 
     wakeup1=fields.Char(string="Time")
     food=fields.Text(string="Food")
@@ -37,6 +37,9 @@ class Prescribediet(models.Model):
                 val={
                     'wakeup1': line.wakeup1,
                     'food': line.food,
+                    'fruit_diet': line.fruit_diet,
+                    'veg_diet': line.veg_diet,
+                    'protein_diet': line.protein_diet,
                     'quantity': line.quantity,
                     'exercise1': line.exercise1,
                     'note':line.note,
@@ -57,103 +60,6 @@ class Prescribediet(models.Model):
         diet_lines.append((0,0,values))
         diet_page.write({'diet_fields':diet_lines})
         return result
-
-
-        # for rec in self:
-        #     lines = [(5, 0, 0)]
-        #     for line in self.name.diet_line1:
-        #         val={
-        #             'juice1': line.juice1,
-        #             'quantity':line.quantity,
-        #             'exercise1':line.exercise1,
-        #             'note':line.note,
-        #         }
-        #         lines.append((0,0,val))
-        #     rec.diet_line1=lines
-        # for rec in self:
-        #     lines = [(5, 0, 0)]
-        #     for line in self.name.diet_line2:
-        #         val={
-        #             'fruits1': line.fruits1,
-        #             'grams':line.grams,
-        #             'note':line.note,
-        #         }
-        #         lines.append((0,0,val))
-        #     rec.diet_line2=lines
-        # for rec in self:
-        #     lines = [(5, 0, 0)]
-        #     for line in self.name.diet_line3:
-        #         val={
-        #             'medicine': line.medicine,
-        #             'milk':line.milk,
-        #             'note':line.note,
-        #         }
-        #         lines.append((0,0,val))
-        #     rec.diet_line3=lines
-        # for rec in self:
-        #     lines = [(5, 0, 0)]
-        #     for line in self.name.diet_line4:
-        #         val={
-        #             'breakfast_list': line.breakfast_list,
-        #             'breakfast':line.breakfast,
-        #             'quantity':line.quantity,
-        #             'note':line.note,
-        #         }
-        #         lines.append((0,0,val))
-        #     rec.diet_line4=lines
-        # for rec in self:
-        #     lines = [(5, 0, 0)]
-        #     for line in self.name.diet_line5:
-        #         val={
-        #             'drinks_list': line.drinks_list,
-        #             'drinks':line.drinks,
-        #             'litres':line.litres,
-        #             'note':line.note,
-        #         }
-        #         lines.append((0,0,val))
-        #     rec.diet_line5=lines
-        # for rec in self:
-        #     lines = [(5, 0, 0)]
-        #     for line in self.name.diet_line6:
-        #         val={
-        #             'fruit_diet': line.fruit_diet,
-        #             'veg_diet':line.veg_diet,
-        #             'protein_diet':line.protein_diet,
-        #             'grams':line.grams,
-        #             'rice':line.rice,
-        #             'note':line.note,
-        #         }
-        #         lines.append((0,0,val))
-        #     rec.diet_line6=lines
-        # for rec in self:
-        #     lines = [(5, 0, 0)]
-        #     for line in self.name.diet_line7:
-        #         val={
-        #             'snacks1': line.snacks1,
-        #             'note':line.note,
-        #         }
-        #         lines.append((0,0,val))
-        #     rec.diet_line7=lines
-        # for rec in self:
-        #     lines = [(5, 0, 0)]
-        #     for line in self.name.diet_line8:
-        #         val={
-        #             'snacks12': line.snacks12,
-        #             'snackss':line.snackss,
-        #             'snacks2':line.snacks2,
-        #             'note':line.note,
-        #         }
-        #         lines.append((0,0,val))
-        #     rec.diet_line8=lines
-        # for rec in self:
-        #     lines = [(5, 0, 0)]
-        #     for line in self.name.diet_line9:
-        #         val={
-        #             'exercise': line.exercise,
-        #             'note':line.note,
-        #         }
-        #         lines.append((0,0,val))
-        #     rec.diet_line9=lines
 
 
 class PrescribeDietAssign(models.Model):
@@ -178,7 +84,6 @@ class DietAssign(models.Model):
     protein_diet=fields.Many2many('set.protein',string="Protein Diet")
     quantity=fields.Char(string="Quantity")
     exercise1=fields.Char(string="Exercise")
-    # wakeup=fields.Selection([('ghee','Ghee'),('butter','Butter'),('coconut','Coconut-Oil')],string="Morning")
     note=fields.Char('Notes')
 
 class diet_six(models.Model):
@@ -188,8 +93,6 @@ class diet_six(models.Model):
     juice1=fields.Char(string="Juice",default='Sorraka 150ml')
     quantity=fields.Char(string="Quantity")
     exercise1=fields.Char(string="Exercise")
-    # juice=fields.Selection([('sorraka','Sorraka Juice'),('nil','Nil')],string="Juice",default='Sorraka 150ml')
-    # exercise=fields.Selection([('walking','Walking'),('plank','Plank'),('namaskar','Surya Namaskar'),('strech','Streches'),('namaz','Namaz'),('exercise','Ground Exercise'),('nil','Nil')],string="Exercise")
     note=fields.Char('Notes')
 
 class diet_seven(models.Model):
@@ -234,7 +137,6 @@ class diet_four(models.Model):
     name=fields.Many2one('prescribe.diet')
     note=fields.Char('Notes')
     snacks1=fields.Char(string="Snacks")
-    # snacks=fields.Selection([('coconut','Coconut-Milk 200 ml'),('sp-coconut','SP-Coconut'),('nil','Nil')],string="Snacks")
 
 class diet_seven_one(models.Model):
     _name='assign.diet.five'
@@ -250,8 +152,6 @@ class diet_seven_one(models.Model):
     note=fields.Char('Notes')
     snackss=fields.Char(string="Snacks")
     snacks12=fields.Char(string="Afternoon")
-    # snacks=fields.Selection([('sabzi','Veg-Sabzi 200 gm'),('salad','Veg-Salad 150 gm'),('veg-salad','Veg-Salad 200 gm + Omelete')],string="Snacks")
-    # snacks1=fields.Selection([('egg','Egg'),('phulka','Phulka'),('both','Egg & Phulka'),('nil','Nil')],string="Egg / Phulka")
     snacks2=fields.Selection([('semiya','Red Semiya'),('Aval','Red Aval'),('puttu','Red Puttu')],string="Dinner")
 
 class Diet_One(models.Model):
@@ -264,5 +164,3 @@ class Diet_One(models.Model):
     rice=fields.Many2many('set.rice',string="Rice")
     protein_diet=fields.Many2many('set.protein',string="Protein Diet")
     note=fields.Char('Notes')
-    
-

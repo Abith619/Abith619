@@ -31,31 +31,32 @@ class medical_prescription_line(models.Model):
     short_comment = fields.Char('Comment', size=128 )
     end_treatment = fields.Datetime('End of treatment')
     start_treatment = fields.Datetime('Start of treatment')
-    prescription_id = fields.Char('Prescription ID')
 
 
     # names = fields.Many2one('medical.prescription.order','Prescription ID')
     prescribed_quantity = fields.Float(string="Prescribed Quantity")
     medicine_name = fields.Many2one('product.product',string='Medicine Name')
     quantity = fields.Float(related='medicine_name.qty_available', string="Quantity Available")
-    morning= fields.Integer('Morning')
-    noon= fields.Integer('After Noon')
+    morning= fields.Float('Morning')
+    noon= fields.Float('After Noon')
     evening= fields.Integer('Evening')
     night= fields.Float('Night')
     before_after = fields.Selection([('bf',"Before Food"),('af',"After food")],'Before Food')
     comment= fields.Char('Comment')
-    days1= fields.Integer('Days')           
+    days1= fields.Integer('Days')
     units= fields.Many2one('uom.uom',string="units")
     potency = fields.Char(string="Potency")
-    anupana = fields.Char(string="Anupana")
+    anupana = fields.Char(string="Notes")
     price = fields.Float(string="Price/unit",related='medicine_name.lst_price')
     total_price = fields.Float(string="Total Price")
-
+    all_day=fields.Char(string="Dose")
 
     @api.onchange('prescribed_quantity','medicine_name')
     def compute_price(self):
         val=self.price*self.prescribed_quantity
         self.total_price=val
+
+    bf_af=fields.Selection([('before','Before Food'),('after','After Food')])
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
@@ -63,16 +64,9 @@ class medical_prescription_line(models.Model):
     def prescribe_medicine(self):
         rec= self.env['product.product'].search([('id', '=', self.medicine_name.id)])
         for res in rec.medicine_details:
-            self.morning=res.morning
-            self.noon = res.noon
-            self.night= res.night
-            self.evening = res.evening
+            self.all_day=res.all_day
             self.units = res.units
-            self.medicine_name = res.medicine_name
-            self.potency = res.potency
             self.anupana = res.anupana
-
-            
     sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
 
     @api.depends('name.prescription_line_ids', 'name.prescription_line_ids.medicine_name')

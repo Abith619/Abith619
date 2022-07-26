@@ -14,7 +14,6 @@
                         </group>
                         <group>
 
-
                         </group>
                     </group>
                 </sheet>
@@ -47,6 +46,6 @@
                     <field name="view_mode">tree,form</field>
                 </record>
 
-            <menuitem id="menus_payment"  name ="payment" action="payment_action_view"
+            <menuitem id="menus_payment"  name ="Register Payment" action="payment_action_view"
                 parent="main_menu_configartion" sequence="0" />
                 </odoo>

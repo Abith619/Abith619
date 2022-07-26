@@ -27,17 +27,17 @@ class Registerwizard(models.TransientModel):
     treatment = fields.Many2one('medical.pathology',string="Treatment for")
     fees = fields.Float(string="Fees")
     reason=fields.Text(string="Reason")
-    currency = fields.Many2one('res.currency',string="Currency")
+    currency = fields.Many2one('res.currency',string="Currency",default=20)
     payment_status = fields.Boolean(string="Paid")
     duration_ailments = fields.Char(string="Duration of Ailments")
     doctor_changes=fields.Boolean(string="Change",readonly=True)
-    reg_type=fields.Selection([('dir',"Direct"),('on',"Online"),('app',"Appoinment"),('rev',"Review"),('stop',"Stopped"),('cam','Camp')],string="Registration Type")
+    designation = fields.Char(string="Designation")
+    ebook_id = fields.Char(string='Patient ID')
+    reg_type=fields.Selection([('dir',"Direct"),('on',"Online"),('app',"Appointment"),('rev',"Review"),('stop',"Stopped"),('cam','Camp')],string="Registration Type")
     # patient_id = fields.Many2one('')
-    
 
     insurance = fields.Boolean(string="Insurance if any")
     type_of_insurance= fields.Text(string='Insurance Details')
-
 
     @api.onchange('doctors')
     def doctor_change(self):
@@ -50,23 +50,14 @@ class Registerwizard(models.TransientModel):
         create_payment=self.env['register.payment'].create({
             'patient_id':self.patient_id.id,
             'date':datetime.now().date(),
-            'amount':self.fees,
+            'amount':self.fees
+        })
+        
 
-        })
-        bill_lines=[]
-        bills={
-            'name':'Registration Payment',
-            'date':datetime.now(),
-            'bill_amount':self.fees,
-            'payment_status':self.payment_status,
-        }
-        bill_lines.append((0,0,bills))
-        bill_create=self.env['patient.bills'].create({
-            'patient_name':self.patient_id.id,
-            'reception_bills':bill_lines,
-            'insurance':self.insurance,
-            'type_of_insurance':self.type_of_insurance,
-        })
+        record = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id )])
+        record.update({
+                'payment':self.fees
+            })
         payment_count = self.env['medical.doctor'].search_count([('patient', '=', self.patient_id.id)])
         if self.patient_selection == 'new':
             if payment_count >0:
@@ -74,12 +65,13 @@ class Registerwizard(models.TransientModel):
                 '                                                                                                                                                                                                            '
                 ' Please select - Existing Patient')
             else:
-                # lines=[]
-                # val={
-                # 'patient_currents_ailments':self.treatment.id,
-                # 'duration':self.duration_ailments,
-                # }
-                # lines.append((0,0,val))
+
+                lines=[]
+                val={
+                'patient_currents_ailments':self.treatment.id,
+                'duration':self.duration_ailments,
+                }
+                lines.append((0,0,val))
                 create_patient = self.env['medical.doctor'].create({
                     'patient':self.patient_id.id ,
                     'age':self.age, 
@@ -97,10 +89,11 @@ class Registerwizard(models.TransientModel):
                     'weight':self.weight,
                     'bmi_value':self.bmi_value,
                     'opnumber':self.name,
-                    # 'currents_ailments':lines,
+                    'currents_ailments':lines,
+                    'designation':self.designation,
+                    'patient_status':True,
                     'stages':'done',
                     })
-                return create_patient
 
         elif self.patient_selection == 'exi':
             val = self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
@@ -108,8 +101,23 @@ class Registerwizard(models.TransientModel):
                 'doctor':self.doctors.id,
                 'patient_status':True,
                 })
-
-
+        orm_id=self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
+        bill_lines=[]
+        bills={
+            'name':'Registration Payment',
+            'date':datetime.now(),
+            'bill_amount':self.fees,
+            'payment_status':self.payment_status
+        }
+        bill_lines.append((0,0,bills))
+        bill_create=self.env['patient.bills'].create({
+            'patient_name':self.patient_id.id,
+            'doctor_id':self.doctors.id,
+            'reception_bills':bill_lines,
+            'insurance':self.insurance,
+            'ebook_id':orm_id.serial_number,
+            'type_of_insurance':self.type_of_insurance,
+        })
 
 
 

@@ -28,15 +28,17 @@
             <field name="arch" type="xml">
                 <form string="Prescription">
                     <group colspan="4" col="4">
-                        <field name="medicine_name" required="1"/>
+                        <field name="medicine_name" required="1" />
+                        <field name="all_day"/>
                         <field name="quantity"/>
-                        <field name="morning" invisible='1'/>
-                        <field name="noon" />
-                        <field name="evening" />
-                        <field name="night" />
-                        <field name="before_after" />
+                        <field name="morning" invisible="1"/>
+                        <field name="noon" invisible="1" />
+                        <field name="evening"  invisible="1"/>
+                        <field name="night"  invisible="1"/>
+                        <field name="before_after" invisible="1" />
                         <!-- <field name="after_food" /> -->
                         <field name="comment" />
+                        
                         <field name="days1" />
                     </group>
                     <!-- <group colspan="4" string="Dosage">

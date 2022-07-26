@@ -11,176 +11,119 @@
                     <form string="Lab Test">
 
         <sheet>
+        <div class="oe_button_box" name="button_box">     
+                                
+        <button class="oe_stat_button" name="lab_button"  type="object" icon="fa-clipboard">
+            <field name ="lab_recs" widget="statinfo" />
+            </button>
+        </div>
+        <field name ="request" invisible='1'/>
+        <field name ="name" invisible='1'/>
+        <field name ="date" invisible='1'/>
+                                <field name ="patient_id" invisible='1'/>
+                                <field name ="price" invisible='1'/>
+                                <field name ="range" invisible='1'/>
+                                <field name ="test_range" invisible='1'/>
+                                <field name ="company_id" invisible='1'/>
     <div class='row'>
 
 <!-- colum1 -->
     <div class='col-3'>
-        <label for="hemo_coag12" string="HAEMATOLOGY" />
+        <label for="hemo_coag12" string="HAEMATOLOGY" class='labtestcls'/>
         <div class=''>
             <field name = 'hemo_coag12' widget='many2many_checkboxes' />
         </div>
-            <label for="hemo_coag1" string="URINE"/>
+            <label for="hemo_coag1" string="URINE" class='labtestcls'/>
         <div class=''>
             <field name = 'hemo_coag1' widget='many2many_checkboxes' />
         </div>
-        <label for="hemo_coag2" string="Stool Analysis"/>
+        <label for="hemo_coag2" string="Stool Analysis" class='labtestcls'/>
         <div class=''>
             <field name = 'hemo_coag2' widget='many2many_checkboxes' />
         </div>
-        <label for="lab_test_hos" string="SEMEN"/>
+        <label for="lab_test_hos" string="SEMEN" class='labtestcls'/>
         <div class=''>
             <field name = 'lab_test_hos' widget='many2many_checkboxes' />
         </div>
-        <label for="lab_test_hos_data" string="SEROLOGY"/>
-        <div class=''>
-            <field name = 'lab_test_hos_data' widget='many2many_checkboxes' />
-        </div>
+        
     </div>
 <!-- column2 -->
         <div class= 'col-3'>
-        <label for="lab_test_hos_data" string="BIOCHEMISTRY" />
+        <label for="lab_test_hos_form" string="BIOCHEMISTRY" class='labtestcls'/>
         <div class="">
-            <field name = 'lab_test_hos_data' widget='many2many_checkboxes'/>
+            <field name = 'lab_test_hos_form' widget='many2many_checkboxes'/>
         </div>
-        <label for="lab_enzymes" string="LIVER FUNCTION"/>
+        <label for="lab_enzymes" string="LIVER FUNCTION" class='labtestcls'/>
         <div class=''>
             <field name = 'lab_enzymes' widget='many2many_checkboxes' />
         </div>
-        <label for="lab_lipid" string="Enzymes"/>
+        <label for="lab_lipid" string="Enzymes" class='labtestcls'/>
         <div class=''>
             <field name = 'lab_lipid' widget='many2many_checkboxes' />
         </div>
-        <label for="lab_protein" string="Lipid Profile"/>
+        <label for="lab_protein" string="Lipid Profile" class='labtestcls'/>
         <div class=''>
             <field name = 'lab_protein' widget='many2many_checkboxes' />
         </div>
-        <label for="lab_checkup" string="Lipoproteins"/>
+        <label for="lab_checkup" string="Lipoproteins" class='labtestcls'/>
         <div class=''>
             <field name = 'lab_checkup' widget='many2many_checkboxes' />
         </div>
-        <label for="lab_endocrinology" string="Master Health Check-up"/>
-        <div class=''>
-            <field name = 'lab_endocrinology' widget='many2many_checkboxes' />
-        </div>
+        
         </div>
 
 <!-- column3 -->
         <div class= 'col-3'>
-        <label for="lab_endocrinology" string="ENDOCRINOLOGY" />
+        <label for="lab_endocrinology" string="ENDOCRINOLOGY" class='labtestcls'/>
         <div class="">
             <field name = 'lab_endocrinology' widget='many2many_checkboxes'/>
         </div>
-        <!-- <label for="lab_enzymes" string="LIVER FUNCTION"/>
+        <label for="lab_immune_test" string="Immunology" class='labtestcls'/>
         <div class=''>
-            <field name = 'lab_enzymes' widget='many2many_checkboxes' />
-        </div> -->
-        <label for="lab_immunology" string="Tumour Makers"/>
+            <field name = 'lab_immune_test' widget='many2many_checkboxes' />
+        </div>
+        <label for="lab_immunology" string="Tumour Makers" class='labtestcls'/>
         <div class=''>
             <field name = 'lab_immunology' widget='many2many_checkboxes' />
         </div>
-        <label for="lab_tumour" string="Drug Assays"/>
+        <label for="lab_tumour" string="Drug Assays" class='labtestcls'/>
         <div class=''>
             <field name = 'lab_tumour' widget='many2many_checkboxes' />
+        </div>
+        <label for="lab_liver" string="Master Health Check-up" class='labtestcls'/>
+        <div class=''>
+            <field name = 'lab_liver' widget='many2many_checkboxes' />
         </div>
         </div>
 
 <!-- column4 -->
 <div class= 'col-3'>
-        <label for="lab_drug" string="Serology Torch" />
+        <label for="lab_drug" string="Serology Torch" class='labtestcls'/>
         <div class="">
             <field name = 'lab_drug' widget='many2many_checkboxes'/>
         </div>
-        <label for="lab_serology" string="Leptospirosis"/>
+        <label for="lab_serology" string="Leptospirosis" class='labtestcls'/>
         <div class=''>
             <field name = 'lab_serology' widget='many2many_checkboxes' />
         </div>
-        <label for="lab_leptospirosis" string="HIV TEST"/>
+        <label for="lab_leptospirosis" string="HIV TEST" class='labtestcls'/>
         <div class=''>
             <field name = 'lab_leptospirosis' widget='many2many_checkboxes' />
         </div>
-        <label for="lab_hiv" string="Hepatitis Panel"/>
+        <label for="lab_hiv" string="Hepatitis Panel" class='labtestcls'/>
         <div class=''>
             <field name = 'lab_hiv' widget='many2many_checkboxes' />
         </div>
-        <label for="lab_hepatis" string="X-Ray Digital"/>
+        <label for="lab_hepatis" string="X-Ray Digital" class='labtestcls'/>
         <div class=''>
             <field name = 'lab_hepatis' widget='many2many_checkboxes' />
         </div>
+        <label for="lab_test_hos_data" string="SEROLOGY" class='labtestcls'/>
+        <div class=''>
+            <field name = 'lab_test_hos_data' widget='many2many_checkboxes' />
+        </div>
         </div>
     </div>
-    
-    <!-- <div class=''>
-        <label for="lab_endocrinology" string="ENDOCRINOLOGY" text-align='justify'></label>
-        <field name = 'lab_endocrinology' widget='many2many_checkboxes'/>
-         
-        <label for="lab_test_hos" string="SEROLOGY" text-align='justify'></label>
-        <field name = 'lab_test_hos' widget='many2many_checkboxes'/>
-
-        <label for="lab_test_hos_form" string="LIVER FUNCTION" text-align='justify'></label>
-        <field name = 'lab_test_hos_form' widget='many2many_checkboxes'/>
-
-        <label for="lab_leptospirosis" string="LEPTOSPIROSIS" text-align='justify'></label>
-        <field name = 'lab_leptospirosis' widget='many2many_checkboxes'/>
-        </div>
-    <div class='col-3'>
-
-        <label for="hemo_coag1" string="STOOL Analysis" text-align='justify'></label>
-        <field name = 'hemo_coag1' widget='many2many_checkboxes'/>
-
-        <label for="lab_enzymes" string="ENZYMES" text-align='justify'></label>
-        <field name = 'lab_enzymes' widget='many2many_checkboxes'/>
-
-        <label for="lab_hiv" string="HIV / AIDS TEST" text-align='justify'></label>
-        <field name = 'lab_hiv' widget='many2many_checkboxes'/>
-
-        <label for="hemo_coag2" string="SEMEN" text-align='justify'></label>
-        <field name = 'hemo_coag2' widget='many2many_checkboxes'/>
-
-        <label for="lab_lipid" string="LIPID PROFILE" text-align='justify'></label>
-        <field name = 'lab_lipid' widget='many2many_checkboxes'/>
-
-        </div>
-    <div class='row'>
-
-        <label for="lab_tumour" string="TUMOUR MAKERS" text-align='justify'></label>
-        <field name = 'lab_tumour' widget='many2many_checkboxes'/>
-
-        <label for="lab_hepatis" string="HEPATIS PANEL" text-align='justify'></label>
-        <field name = 'lab_hepatis' widget='many2many_checkboxes'/>
-
-        <label for="lab_serology" string="SEROLOGY - BLOOD" text-align='justify'></label>
-        <field name = 'lab_serology' widget='many2many_checkboxes'/>
-
-        <label for="lab_protein" string="LIPOPROTEINS" text-align='justify'></label>
-        <field name = 'lab_protein' widget='many2many_checkboxes'/> -->
-
-
-<!-- #commented -->
-        <!-- <label for="lab_serology" string="X-RAYS DIGITAL" text-align='justify'></label>
-        <field name = 'lab_serology' widget='many2many_checkboxes'/> -->
-
-<!-- commented -->
-
-        <!-- </div>
-    <div class='row'>
-
-        <label for="lab_drug" string="DRUG ASSAYS" text-align='justify'></label>
-        <field name = 'lab_drug' widget='many2many_checkboxes'/>
-
-        <label for="lab_checkup" string="MASTER HEALTH CHECKUP" text-align='justify'></label>
-        <field name = 'lab_checkup' widget='many2many_checkboxes'/> -->
-
-<!-- commented -->
-        <!-- <label for="lab_hepatis" string="URINE" text-align='justify'></label>
-        <field name = 'lab_hepatis' widget='many2many_checkboxes'/> -->
-
-        <!-- <label for="hemo_coag2" string="ENDOCRINOLOGY" text-align='justify'></label>
-        <field name = 'hemo_coag2' widget='many2many_checkboxes'/>
-
-        <label for="hemo_coag2" string="ENDOCRINOLOGY" text-align='justify'></label>
-        <field name = 'hemo_coag2' widget='many2many_checkboxes'/> -->
-
-        <!-- </div> -->
     </sheet>
         </form>
         </field>
@@ -195,7 +138,52 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="menu_labs" name="Labs" parent= "main_menu_hospital_management" action="labs_action"/>
+            <menuitem id="menu_labs" name="Lab" parent="main_menu_hospital_management" sequence= "3" action="labs_action"/>
+
+            <record id="lab_test_tree_view" model="ir.ui.view">
+                <field name="name">lab.scan.form.tree.view</field>
+                <field name="model">lab.scan.form</field>
+                <field name="arch" type="xml">
+                    <tree string="Lab Tests" >
+                        <field name ="request" />
+                        <field name ="ebook_id" />
+                        <field name ="patient_id" />
+                        <field name ="date" />
+                        <field name ="write_date" />
+                        <field name ="range" />
+                        <field name ="test_range" />
+                        <!-- <field name ="company_id" invisible='1'/> -->
+                    </tree>
+                </field>
+            </record>
+
+            <!--Search View-->
+
+<record id="view_lab_land_filter" model="ir.ui.view">
+    <field name="name">Lab Test</field>
+    <field name="model">lab.scan.form</field>
+    <field name="type">search</field>
+    <field name="arch" type="xml">
+        <search string="Lab Test">
+            <!-- <field name="request"/> -->
+            <field name="ebook_id"/>
+            <field name="patient_id"/>
+            <field name="write_date"/>
+        <!-- <filter string="Doctor" name="doctor" domain="[('doctor', '!=', '')]"/> -->
+            <!-- <filter string="Doctor" name="doctor" context="{'group_by': 'doctor'}"/> -->
+            <filter string="Branch" name="company_id" context="{'group_by': 'company_id'}"/>
+            <filter string="Today" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
+            <filter string="Yesterday" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+            <filter string="Tomorrow" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+            
+            <filter string="Past 6 Month" name="write_date" separator="1" domain="[('write_date','&lt;=',(datetime.date.today()-relativedelta(months=6)).strftime('%Y-%m-%d'))]"/>
+            <!-- <filter string="Next Month" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%Y-%m-%d'))]"/> -->
+            <filter string="Past Month" name="write_date" separator="1" domain="[('write_date','&lt;=',(datetime.date.today()-relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
+            <!-- <filter string="Past week" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()-relativedelta(week=1)).strftime('%Y-%m-%d'))]"/> -->
+            <!-- <filter string="This Month" name="prescription_date" separator="1" domain="[('prescription_date','&lt;=',(datetime.date.today()+relativedelta(months=1)).strftime('%Y-%m-%d'))]"/> -->
+        </search>
+    </field>
+</record>
 
     <record id="lab_many_form" model="ir.ui.view">
             <field name="name">Lab Data</field>
@@ -210,6 +198,10 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="date" />
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -225,9 +217,9 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="menu_lab_many" name="Hematology" parent= "main_menu_hospital_management" action="lab_many_action"/>
+            <menuitem id="menu_lab_many" name="Hematology" parent= "main_menu_configartion" action="lab_many_action"/>
 
-<record id="lab_many_data_form" model="ir.ui.view">
+<record id="lab_many_data_forms1123" model="ir.ui.view">
             <field name="name">Lab Urine Tests</field>
             <field name="model">lab.many.data</field>
             <field name="priority" eval="8" />
@@ -240,12 +232,16 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="date" />
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
                         </field>
         </record>
-        <record model="ir.actions.act_window" id="lab_many_data_action_urine">            
+        <record model="ir.actions.act_window" id="lab_many_data_action_urines">            
             <field name="name">Lab Urine Tests</field>         
                 <field name="res_model">lab.many.data</field>           
                 <field name="view_mode">tree,form</field>
@@ -255,7 +251,7 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_form" name="Urine" parent= "main_menu_hospital_management" action="lab_many_data_action_urine"/>
+            <menuitem id="lab_many_data_forms1212" name="Urine" parent= "main_menu_configartion" action="lab_many_data_action_urines"/>
 
         <record id="lab_many_data_stool" model="ir.ui.view">
             <field name="name">Stool Analysis</field>
@@ -270,6 +266,10 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="patient_id"/>
+                                <field name ="date" />
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -285,7 +285,7 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_Stool" name="Stool Analysis" parent= "main_menu_hospital_management" action="lab_many_data_form_action"/>
+            <menuitem id="lab_many_data_Stool" name="Stool Analysis" parent= "main_menu_configartion" action="lab_many_data_form_action"/>
     <record id="lab_many_data_form2" model="ir.ui.view">
             <field name="name">Lab Semen Form</field>
             <field name="model">lab.test.form</field>
@@ -299,6 +299,10 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="patient_id"/>
+                                <field name ="date" />
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -314,7 +318,7 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="menu_lab_semen2" name="Semen" parent= "main_menu_hospital_management" action="lab_many_data_form_semen"/>
+            <menuitem id="menu_lab_semen2" name="Semen" parent= "main_menu_configartion" action="lab_many_data_form_semen"/>
 
         <record id="lab_many_data_form3" model="ir.ui.view">
             <field name="name">Lab Serology Data</field>
@@ -329,6 +333,10 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="date" />
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -344,7 +352,7 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="menu_lab_many_form3" name="Serology" parent= "main_menu_hospital_management" action="lab_many_data_form_serology"/>
+            <menuitem id="menu_lab_many_form3" name="Serology-Blood" parent= "main_menu_configartion" action="lab_many_data_form_serology"/>
 
     <record id="lab_many_data_form4" model="ir.ui.view">
             <field name="name">Lab Bio Chemistry</field>
@@ -359,6 +367,10 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="date" />
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -375,7 +387,7 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="menu_lab_many_form4" name="Bio Chemistry" parent= "main_menu_hospital_management" action="lab_many_data_form_biochem"/>
+            <menuitem id="menu_lab_many_form4" name="Bio Chemistry" parent= "main_menu_configartion" action="lab_many_data_form_biochem"/>
 
         <record id="lab_many_data_form5" model="ir.ui.view">
             <field name="name">Lab Liver Function</field>
@@ -390,6 +402,10 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="date" />
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -405,7 +421,7 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_liver" name="Liver Function" parent= "main_menu_hospital_management" action="lab_many_data_form_liver"/>
+            <menuitem id="lab_many_data_liver" name="Liver Function" parent= "main_menu_configartion" action="lab_many_data_form_liver"/>
 
     <record id="lab_many_data_form6" model="ir.ui.view">
             <field name="name">Lab Enzymes</field>
@@ -420,6 +436,10 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="date" />
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -435,7 +455,7 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_enzymes" name="Enzymes" parent= "main_menu_hospital_management" action="lab_many_data_form_enzymes"/>
+            <menuitem id="lab_many_data_enzymes" name="Enzymes" parent= "main_menu_configartion" action="lab_many_data_form_enzymes"/>
 
         <record id="lab_many_data_form7" model="ir.ui.view">
             <field name="name">Lab Lipid</field>
@@ -450,6 +470,10 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="date" />
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -466,9 +490,9 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_form7" name="Lipid" parent= "main_menu_hospital_management" action="lab_many_data_form_lipid"/>
+            <menuitem id="lab_many_data_form7" name="Lipid" parent= "main_menu_configartion" action="lab_many_data_form_lipid"/>
 
-        <record id="lab_many_data_form8" model="ir.ui.view">
+        <record id="lab_many_data_form819" model="ir.ui.view">
             <field name="name">Lab Lipoproteins</field>
             <field name="model">lab.test.data.form.many.form.many</field>
             <field name="priority" eval="8" />
@@ -481,6 +505,10 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="date" />
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -497,7 +525,7 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_form8" name="Lipoproteins" parent= "main_menu_hospital_management" action="lab_many_data_form_lipoprotein"/>
+            <menuitem id="lab_many_data_form8" name="Lipoproteins" parent= "main_menu_configartion" action="lab_many_data_form_lipoprotein"/>
 
     <record id="lab_many_data_form9" model="ir.ui.view">
             <field name="name">Master Health Check-up</field>
@@ -512,6 +540,10 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="date" />
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -527,9 +559,9 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_health" name="Full CheckUp" parent= "main_menu_hospital_management" action="lab_many_data_form_full_checkup"/>
+            <menuitem id="lab_many_data_health" name="Full CheckUp" parent= "main_menu_configartion" action="lab_many_data_form_full_checkup"/>
 
-     <!-- <record id="lab_many_data_form10" model="ir.ui.view">
+     <record id="lab_many_data_form10" model="ir.ui.view">
             <field name="name">Endocrinology Blood</field>
             <field name="model">lab.test.hospital.data</field>
             <field name="priority" eval="8" />
@@ -542,6 +574,10 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="date" />
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                            </group>
                          </sheet>
                         </form>
@@ -557,11 +593,11 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_form10" name="Endocrinology" parent= "main_menu_hospital_management" action="lab_many_data_form_endocrinology"/> -->
+            <menuitem id="lab_many_data_form10" name="Endocrinology" parent= "main_menu_configartion" action="lab_many_data_form_endocrinology"/>
 
-        <!-- <record id="lab_many_data_form11" model="ir.ui.view">
+        <record id="lab_many_immune" model="ir.ui.view">
             <field name="name">Immunology Blood</field>
-            <field name="model">lab.test.hospital.form</field>
+            <field name="model">immunology.test</field>
             <field name="priority" eval="8" />
                 <field name="arch" type="xml">
                     <form string="Immunology">
@@ -572,6 +608,10 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="date" />
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -579,7 +619,7 @@
         </record>
         <record model="ir.actions.act_window" id="lab_many_data_form_immunology">            
             <field name="name">Immunology</field>         
-                <field name="res_model">lab.test.hospital.form</field>           
+                <field name="res_model">immunology.test</field>           
                 <field name="view_mode">tree,form</field>
                 <field name="domain">[]</field>            
                 <field name="help" type="html">                
@@ -587,7 +627,7 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_form11" name="Immunology Blood" parent= "main_menu_hospital_management" action="lab_many_data_form_immunology"/> --> -->
+            <menuitem id="lab_many_data_immune" name="Immunology Blood" parent= "main_menu_configartion" action="lab_many_data_form_immunology"/>
 
         <record id="lab_many_data_form12" model="ir.ui.view">
             <field name="name">Tumour Makers</field>
@@ -602,6 +642,10 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="date" />
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -617,7 +661,7 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_tumour" name="Tumour Makers" parent= "main_menu_hospital_management" action="lab_many_data_form_tumour"/>
+            <menuitem id="lab_many_data_tumour" name="Tumour Makers" parent= "main_menu_configartion" action="lab_many_data_form_tumour"/>
 
         <record id="lab_many_data_form13" model="ir.ui.view">
             <field name="name">Drug Assays</field>
@@ -632,6 +676,10 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="date" />
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -647,9 +695,9 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_drugs" name="Drug Assays" parent= "main_menu_hospital_management" action="lab_many_data_form_drug"/>
+            <menuitem id="lab_many_data_drugs" name="Drug Assays" parent= "main_menu_configartion" action="lab_many_data_form_drug"/>
 
-        <record id="lab_many_data_form14" model="ir.ui.view">
+        <record id="lab_many_data_form144" model="ir.ui.view">
             <field name="name">Serology Torch</field>
             <field name="model">lab.test.hospital.form.many.form</field>
             <field name="priority" eval="8" />
@@ -662,15 +710,18 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="date" />
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
                         </field>
         </record>
         <record model="ir.actions.act_window" id="lab_many_data_form_serology_torch">            
-            <field name="name">Serology Torch</field>         
+            <field name="name">Serology Torch</field>
                 <field name="res_model">lab.test.hospital.form.many.form</field>           
-                <!-- <field name="view_type">form</field>-->
                 <field name="view_mode">tree,form</field>
                 <field name="domain">[]</field>            
                 <field name="help" type="html">                
@@ -678,9 +729,9 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_form14" name="Serology Torch" parent= "main_menu_hospital_management" action="lab_many_data_form_serology_torch"/>
+            <menuitem id="lab_many_data_form145" name="Serology Torch" parent= "main_menu_configartion" action="lab_many_data_form_serology_torch"/>
 
-        <record id="lab_many_data_form15" model="ir.ui.view">
+        <record id="lab_many_data_sform15975" model="ir.ui.view">
             <field name="name">Leptospirosis</field>
             <field name="model">lab.test.hospital.form.many.form.data</field>
             <field name="priority" eval="8" />
@@ -693,12 +744,16 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="date" />
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
                         </field>
         </record>
-        <record model="ir.actions.act_window" id="lab_many_data_form_leptospirosis">            
+        <record model="ir.actions.act_window" id="lab_many_data_forms_leptospirosis">            
             <field name="name">Leptospirosis</field>         
                 <field name="res_model">lab.test.hospital.form.many.form.data</field>           
                 <!-- <field name="view_type">form</field>-->
@@ -709,14 +764,14 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_form15" name="Leptospirosis" parent= "main_menu_hospital_management" action="lab_many_data_form_leptospirosis"/>
+            <menuitem id="lab_many_data_form156" name="Leptospirosis" parent= "main_menu_configartion" action="lab_many_data_forms_leptospirosis"/>
 
-        <record id="lab_many_data_form16" model="ir.ui.view">
+        <record id="lab_many_data_forms16" model="ir.ui.view">
             <field name="name">HIV TEST</field>
             <field name="model">lab.hospital.test</field>
             <field name="priority" eval="8" />
                 <field name="arch" type="xml">
-                    <form string="HIV TEST">
+                    <form string="HIVTEST">
                         <header>
                         </header>
                         <sheet>
@@ -724,6 +779,10 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="date" />
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -740,7 +799,7 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_form16" name="HIV TEST" parent= "main_menu_hospital_management" action="lab_many_data_form_hiv"/>
+            <menuitem id="lab_many_16" name="HIV TEST" parent= "main_menu_configartion" action="lab_many_data_form_hiv"/>
 
     <record id="lab_many_data_form17" model="ir.ui.view">
             <field name="name">Hepatitis Panel</field>
@@ -755,6 +814,10 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="date" />
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -771,9 +834,9 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_form17" name="Hepatitis Panel" parent= "main_menu_hospital_management" action="lab_many_data_form_hepatitis"/>
+            <menuitem id="lab_many_data_form17" name="Hepatitis Panel" parent= "main_menu_configartion" action="lab_many_data_form_hepatitis"/>
 
-        <record id="lab_many_data_form18" model="ir.ui.view">
+        <record id="lab_many_data_form318" model="ir.ui.view">
             <field name="name">X-Ray Digital</field>
             <field name="model">lab.hospital.test.form</field>
             <field name="priority" eval="8" />
@@ -786,6 +849,10 @@
                             </div>
                             <group >
                                 <field name ="name"/>
+                                <field name ="date" />
+                                <field name ="patient_id"/>
+                                <field name ="price"/>
+                                <field name ="range"/>
                             </group>
                         </sheet>
                         </form>
@@ -802,7 +869,7 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_form18" name="X-Ray Digital" parent= "main_menu_hospital_management" action="lab_many_data_form_x_ray"/>
+            <menuitem id="lab_many_data_form18" name="X-Ray Digital" parent= "main_menu_configartion" action="lab_many_data_form_x_ray"/>
 
         </data>
         </odoo>

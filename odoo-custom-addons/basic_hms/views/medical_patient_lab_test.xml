@@ -12,7 +12,6 @@
                     <field name="patient_id" required="1" />
                     <field name="doctor_id" />
                     <field name="state" />
-                    <field name="patient_waiting" />
                 </tree>
             </field>
         </record>
@@ -24,9 +23,9 @@
             <field name="arch" type="xml">
                 <form string="Test Requests">
                     <header>
-                    <button name="update_result"
-                            string="Update Result" type="object"
-                            class="oe_highlight" />
+                        <button name="update_result"
+                        string="Update Result" type="object"
+                        class="oe_highlight" />
                         <!-- <button name="%(action_create_lab_result2)d"
                             string="Create Lab Test" type="action"
                             class="oe_highlight" attrs="{'invisible':[('state','=','cancel')]}"/> -->
@@ -49,17 +48,15 @@
                                 <field name ="normal_range"  invisible='1'/>
                                 <field name ="test_amount" attrs="{'invisible': [('medical_test_type_id','=', False)]}"/>
                                 <field name="date" invisible="1"/>
-                                <field name="patient_waiting" />
-                                <field name="write_date" />
+                                <field name= 'company_id' attrs="{'invisible':[('state','!=','ontest')]}" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                                <!-- <field name="invoice_to_insurer" /> -->
                             </group>
                             <group>
                                 <field name="patient_id" required="1"
                                     options="{&quot;always_reload&quot;: 1}"  attrs="{'invisible':[('state','=','tested')]}"/>
                                 <field name="doctor_id" attrs="{'invisible':[('state','=','tested')]}"/>
-                                
                                 <!-- <field name="insurer_id"
                                     attrs="{'invisible': [('invoice_to_insurer','=', False)]}" /> -->
-
                             </group>
                         </group>
                         <notebook attrs="{'invisible':[('state','!=','ontest')]}">
@@ -67,13 +64,14 @@
                                         <field name = 'reports'>
                                             <tree string="Reports" editable="bottom" >
                                                 <!-- <field name="report_name" /> -->
-                                               <field name = "normal_range"/>
+                                               <field name = "normal_ranges"/>
                                                <field name="tested_range"/>
                                                <field name="test_unit"/>
                                                 <field name ="attachments" widget="many2many_binary"/>
                                             </tree>
                                         </field>
                                 </page>
+                                <!--  -->
                         </notebook>
                     </sheet>
                 </form>
@@ -91,7 +89,7 @@
         </record>
 
         <record id="action_medical_patient_lab_test_draft" model="ir.actions.act_window">
-            <field name="name">Lab Requests</field>
+            <field name="name">Draft Lab Requests</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">medical.patient.lab.test</field>
             <field name="binding_view_types">form</field>
@@ -109,14 +107,14 @@
         </record>
 
         <!-- <menuitem name="Laboratory" id="main_menu_laboratory"
-            parent="main_menu_hospital_management" sequence='7' />
+            parent="main_menu_hospital_management" sequence='7' /> -->
 
-        <menuitem name="Lab Requests" id="menu_lab_requests"
+        <!-- <menuitem name="Lab Requests" id="menu_lab_requests"
             parent="basic_hms.main_menu_laboratory"
             sequence="1" action="action_medical_patient_lab_test_draft"/> -->
 
-        <menuitem name="Laboratory" id="sub_menu_draft_req"
-            parent="main_menu_hospital_management" action="action_medical_patient_lab_test_draft" />
+        <menuitem name="Labs" id="sub_menu_draft_req"
+            parent="main_menu_configartion" sequence= "3" action="action_medical_patient_lab_test_draft" />
 
         <!-- <menuitem name="Today's Draft Lab Requests" id="sub_menu_today_draft_req"
             parent="menu_lab_requests" action="action_medical_patient_lab_test_todays_draft" /> -->

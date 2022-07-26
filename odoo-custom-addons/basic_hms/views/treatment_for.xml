@@ -16,9 +16,6 @@
                         </form>
                         </field>
         </record>
-
-
-
         <record model="ir.actions.act_window" id="treatment_action">            
             <field name="name">Treatment Advised</field>         
                 <field name="res_model">treatment.for</field>           

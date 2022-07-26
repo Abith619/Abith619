@@ -8,7 +8,10 @@
             web_icon="basic_hms,static/description/icon.png"
            />
 
-         <menuitem name="Configuration"
+
+           <!-- <menuitem name="Inventory" id="menu_stock_root" parent = "main_menu_hospital_management"  sequence="4"/> -->
+
+         <menuitem name="Others"
             id="main_menu_configartion"
             parent = "main_menu_hospital_management"
             sequence = '13'

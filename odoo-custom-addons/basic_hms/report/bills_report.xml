@@ -44,9 +44,9 @@
                    <table class="table table-bordered" style="border: 1px solid black;">
                     <thead>
                         <tr>
-                        <th style="border: 1px solid black;">Type of Bill</th>
+                        <!-- <th style="border: 1px solid black;">Type of Bill</th> -->
                         <th style="border: 1px solid black;"> Test Name </th>
-                        <th style="border: 1px solid black;"> Test Type </th>
+                        <!-- <th style="border: 1px solid black;"> Test Type </th> -->
 
                         <th style="border: 1px solid black;"> Bill Amount </th>
                         <!-- <th style="border: 1px solid black;"> Paid  </th> -->
@@ -57,12 +57,12 @@
                        <td style="border: 1px solid black;">
                        <span t-field="line.name"/>
                        </td>
-                       <td style="border: 1px solid black;">
+                       <!-- <td style="border: 1px solid black;">
                        <span t-field="line.test_name"/>
-                       </td>
-                       <td style="border: 1px solid black;">
+                       </td> -->
+                       <!-- <td style="border: 1px solid black;">
                        <span t-field="line.test_types"/>
-                       </td>
+                       </td> -->
                        <td style="border: 1px solid black;">
                         <span t-field="line.bill_amount"/>
                         </td>
@@ -98,7 +98,7 @@
                         <!-- <t t-set="total" t-value="total+line_pro.lst_price"/>    -->
                         </td>
                         <td style="border: 1px solid black;">
-                         <span t-field="lines.bill_amount"/>
+                         <span t-field="lines.pre_amount"/>
                        </td>
                         
                        <!-- </tr> -->

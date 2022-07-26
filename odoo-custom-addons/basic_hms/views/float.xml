@@ -1,0 +1,12 @@
+<odoo>
+    <template id="assets_backend" name="kw_remove_default_zero_assets_backend" inherit_id="web.assets_backend">
+        
+        
+        <xpath expr="." position="inside">
+            <script src="/basic_hms/static/src/js/float.js"
+                    type="text/javascript"/>
+            <link rel="stylesheet" href="/basic_hms/static/src/css/style.css"/>
+        </xpath>
+    </template>
+</odoo>
+

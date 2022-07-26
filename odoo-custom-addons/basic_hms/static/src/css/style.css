@@ -29,12 +29,16 @@ img#logo_img
     padding-left: 10%;
 
 }
-.nav-item a{
-    border-top-left-radius: 3px !important;
-    border-top-right-radius: 3px !important;
-    border: 1px solid #7777 !important;
-    border-bottom: 0 !important;
-    padding: 8px 16px !important;
+.labtestcls{
+    font-size: 16px !important; 
+    padding-bottom: 23px !important;
+    margin-left: 3px !important;
+    color: #3acd46;
+    font-weight: bold !important;
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+    right: auto !important;
+    padding-right: 0px;
+    padding-left: 0px
 }
-
 

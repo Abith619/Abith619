@@ -23,7 +23,7 @@ class dietFor(models.Model):
 class treatmentFor(models.Model):
     _name='treatment.for'
 
-    name =fields.Char("Treatment For")
+    name =fields.Char("Treatment For", required=True)
 
 
 class documentFor(models.Model):

@@ -15,6 +15,7 @@
                             <field name ="reason" attrs="{'invisible': [('doctor_changes','=', False)]}" />
                             <field name ="insurance"/>
                             <field name = "type_of_insurance" attrs="{'invisible': [('insurance','=', False)]}"/>
+                        
                         </group>
 
                         <group class= "col-5">

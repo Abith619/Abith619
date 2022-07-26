@@ -19,8 +19,8 @@ class res_partner(models.Model):
     password=fields.Char(string='Password')
     user_name=fields.Char(string='User Name')
     branches=fields.Char(string='Branch')
-    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('res.partner')))
-
+    # company_id=fields.Many2one('res.company',string='Branch')
+    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.patient.lab.test'))
 
     invisible=fields.Boolean(string="Boo", default=True)
 
@@ -240,7 +240,7 @@ class MedicineMaster(models.Model):
 
     is_medicine=fields.Boolean(string="Medicine")
     medicine_details = fields.One2many('medicine.line','med',string="Medicine Details")
-
+    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('product.product'))
 
 
 class medicine_dose(models.Model):
@@ -248,12 +248,13 @@ class medicine_dose(models.Model):
 
     med = fields.Many2one('product.product')
     morning=fields.Float(string="Morning")
+    all_day=fields.Char(string="Dose")
     noon = fields.Float(string="Noon")
     evening=fields.Float(string="Evening")
     night= fields.Float(string="Night")
     units= fields.Many2one('uom.uom',string="units")
     potency = fields.Char(string="Potency")
-    anupana = fields.Char(string="Anupana")
+    anupana = fields.Char(string="Notes")
 
 class document_type_upload(models.Model):
     _name = 'document.type.line'

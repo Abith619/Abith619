@@ -38,11 +38,10 @@
                 <p><b> Contact Number : </b> <span t-field="o.contact_no"/></p>
                 <p><b> Whatsapp Number : </b> <span t-field="o.contact_number"/></p>
                 <p><b> Address : </b> <span t-field="o.address"/></p>
-                <p><b> City : </b> <span t-field="o.city"/></p>
                 <p><b> State : </b> <span t-field="o.state"/></p>
                 <p><b> Country : </b> <span t-field="o.country"/></p>
                 <p><b> Occupation : </b> <span t-field="o.occupation"/></p>
-                <p><b> Experince : </b> <span t-field="o.designation"/></p>
+                <p><b> Designation : </b> <span t-field="o.designation"/></p>
                 <p><b> Father / Husband Name : </b> <span t-field="o.name_father"/></p>
                 <p><b> Father's Occupation : </b> <span t-field="o.father_occupation"/></p>
                 <!-- <p><b> Date :</b> <span t-field="o.dates"/></p> -->

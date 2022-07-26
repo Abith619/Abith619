@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
         <data>
-    
             <!-- <record model="ir.ui.view" id="product_qr_code">
                 <field name="name">product.qr.qr.code</field>
                 <field name="model">product.qr</field>
@@ -20,37 +19,37 @@
                 <field name="arch" type="xml">
                     <form string="doctor">
                         <header>
-                            <!-- <button name="scan_button" type="object" string="Assign Scans/Tests" class="oe_highlight"/>
-                            <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight"/> -->
+                            <button name="scan_button" type="object" string="Assign Scans/Tests" class="oe_highlight" invisible ='1'/>
+                            <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight" invisible ='1'/>
+                            <button name="diet_for" type="object" string="Prescribed Diet" class="oe_highlight" invisible ='1'/>
                             
-                            
-                            <field name ="stages" widget="statusbar"/>
+                            <field name ="stages" widget="statusbar" style="display:none !important"/>
                         </header>
 
                         <sheet>
                                           
-                          <!-- <div class="oe_button_box" name="button_box">     
+                            <div class="oe_button_box" name="button_box">     
                                 
                                 <button class="oe_stat_button" name="prescribe_button"  type="object" icon="fa-clipboard">
-                                    <field name ="pre_diet" widget="statinfo"/>
-                                    </button> 
+                                    <field name ="pre_diet" widget="statinfo" />
+                                    </button>
 
-                                <button class="oe_stat_button" name="patient_prescription" type="object" icon="fa-clipboard">
-                                <field name ="patients" widget="statinfo"/>
+                                <button class="oe_stat_button" name="patient_prescription" type="object" icon="fa-clipboard" invisible="1">
+                                <field name ="patients" widget="statinfo" />
                         </button>
 
 
-                    <button class="oe_stat_button" name="scans_prescription" type="object" icon="fa-clipboard">
-                            <field name ="sacns_tests" widget="statinfo"/>
+                    <button class="oe_stat_button" name="scans_prescription" type="object" icon="fa-clipboard" invisible="1">
+                            <field name ="sacns_tests" widget="statinfo"  />
                         </button>
                             
 
-                    <button class="oe_stat_button"  name="document_button" type="object" icon="fa-clipboard">
-                                <field name ="document_test" widget="statinfo"/>
+                    <button class="oe_stat_button"  name="document_button" type="object" icon="fa-clipboard" invisible="1">
+                                <field name ="document_test" widget="statinfo"  />
                                 
                         </button>
                     
-                    </div>  -->
+                    </div>
                  <div class="row">
                     <div class="col-4">
                         <div><label for="image1" string="Patient Image" /></div>
@@ -89,45 +88,49 @@
                                     </div>
 
                                     <field name= "patient_habits" widget="many2many_tags"/>
-                    
+                                    <field name= "medicine_id" invisible='1'/>
                                     </group>
                                     <group>
+                                        <field name="user_doctor" invisible='1'/>
                                         <field name="doctor" attrs="{'readonly': [('stages','=', 'done')]}" options="{'no_create':True,'no_create_edit':True}"/>
+                                        
                                         <field name ="phone_number" attrs="{'readonly': [('stages','=', 'done')]}" />
                                         <field name ="contact_number" attrs="{'readonly': [('stages','=', 'done')]}" />
-                                        
-                                            <label for="occupation" string="Occupation" />
-                                        <div class="o_address_format">
-                                            <field name ="occupation" attrs="{'readonly': [('stages','=', 'done')]}"  class="o_address_state"  style="width: 40%;"/>
-                                        <label for="experince" style="font-weight: bold !important;color: #333;" string="Experience" />
-                                            <field name ="experince" class="o_address_city"/>
-                                    </div>
+                                        <!-- <field name ="occupation" /> -->
+                                        <label for="occupation" string="Occupation"  attrs="{'readonly': [('stages','=', 'done')]}"/>
+                                <div class="o_address_format">
+                                    <field name="occupation" class="o_address_city"  style="width: 35%;"  attrs="{'readonly': [('stages','=', 'done')]}"/>
+                                    <label for="designation" style="font-weight: bold !important;color: #333;" string="Experience"/>
+                                    <field name="designation" class="o_address_state"  style="width: 35%;"/>
+                                </div>
                                         <field name='address' attrs="{'readonly': [('stages','=', 'done')]}" />
                                         <label for="father_name" string="Relation" />
                                         <div class="o_address_format">
                                             <field name="father_name" class="o_address_city" attrs="{'readonly': [('stages','=', 'done')]}" />
                                             <label for="name_father" style="font-weight: bold !important;color: #333;" string="Name"/>
                                             <field name="name_father" class="o_address_state" attrs="{'readonly': [('stages','=', 'done')]}" style="width: 40%;"/>     
-                                            <field name="last_update" invisible="1" />
                                         </div>
+                                      
                                 </group>
                                 <group>
                                   
                                 </group>
                                 <group>
-                                    
+                                
                                 </group>
                                 <group>
-                                   <field name="prescription_date" />
+                                   
                                
                                 </group>
                                 <group>
                                     <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                                    
                                 </group>
                                 <group>
-                                <field name="patient_waiting"/>
-                                    <field name= 'write_date' />
+                                    <!-- <field name="patient_waiting" invisible='1'/>
+                                    <field name= 'write_date' invisible='1'/> -->
 
+                                    
                                 </group>
                                         
                                 </group>
@@ -135,12 +138,12 @@
 
                                  <page string="Present Complaints">
                                         <field name = 'currents_ailments'>
-                                            <tree string="Present Complaints" editable="bottom" >
-                                            <field name="sequence_ref" text-align='center'/>
-                                            <field name="patient_currents_ailments" />
-                                            <field name="duration"/>
-                                        
-                                            <field name ="patient_signs_symptoms" widget="many2many_tags"/>
+                                            <tree string="Current Aliments" editable="bottom" >
+                                                <field name="sequence_ref"/>
+                                                <field name="patient_currents_ailments" />
+                                                <field name="duration"/>
+                                                <field name ="patient_signs_symptoms" widget="many2many_tags"/>
+                                                <field name="write_date"/>
                                             </tree>
                                         </field>
                                     </page>
@@ -154,43 +157,62 @@
                                             </tree>
                                         </field>
                                     </page>
-                                    <page string="Diet Plan" >
-                                    <button name="diet_for" type="object" string="Prescribed Diet" class="oe_highlight"/>
-                                        <field name="diet_fields">
-
-                                            <tree string="Diet" editable="bottom">
-                                                    <field name ="sequence_ref"/>
-                                                    <field name ="diet_for"/>
+                                    <page string="Personalized Diet" >
+                        <button name="diet_for" type="object" string="Personalized Diet" class="oe_highlight" /> 
+                            <field name="diet_fields">
+                                                <tree string="Diet" editable="bottom">
+                                                    <field name="sequence_ref"/>
                                                     <field name ="dates"/>
-                                                    
-                                            </tree>
-                                        </field>
-                                    </page>
-
-                                <page string="Lab / Scan" >
-                                    <button name="scan_button" type="object" string="Assign Scans/Tests" class="oe_highlight"/>
-                                    <field name="history_surgery">
-                                        <tree string="Lab sacn History" editable="bottom" >
-                                            <field name="sequence_ref"/>
-                                            <field name="date"/>
-                                        </tree>
-                                    </field>
-                                </page>
-
+                                                        <field name ="diet_for"/>
+                                                        
+                                                        
+                                                </tree>
+                                            </field>
+                                        </page>
+    
                                     <page string="Prescriptions" >
                                         <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight"/>
                                         <field name="prescription_patient">
                                         <tree string="Prescription" editable="bottom" >
                                             <field name="sequence_ref"/>
-                                            <!-- <field name="medicine_name"/> -->
-                                            <field name="date"/>
-                                            <field name="delivery_option"/>  
-                                            <field name="prescription_alot"/>   
-                                        </tree>
+                                        <field name="prescription_alot"/>
+                                        
+                                        <field name="date"/>
+                                        <field name="delivery_option"/>   
+                                        <field name="delivery_mode"/>  
+                                            </tree>
                                         </field>
                                     </page>
-              
-                                
+                                    
+                                        <page string='Lab Test'>
+                                            <button name="scan_button" type="object" string="Assign Lab Tests"  style ="margin-left: 20px;margin-bottom: 10px;" class="oe_highlight"/>
+                                            <field name="lab_test_line">
+                                            <tree string="Lab History" editable="bottom" >
+                                                <field name="sequence_ref"/>
+                                                <field name="lab_type" string='Test ID'/>
+                                                <field name="name"/>
+                                                <field name="range_test"/>
+                                                <field name="range_normal"/>
+                                                <field name="date"/>
+                                            </tree>
+                                        </field>
+                                        </page>
+                                        
+                                    <page string='Scan Test'>
+                                        <button name="labscan_button" style="margin-bottom: 10px;margin-left: 10px;" type="object"  string="Assign Scan Tests" class="oe_highlight"/>
+                                        <field name="scan_test">
+                                            <tree string="Scan History" editable="bottom" >
+                                                <field name="sequence_ref"/>
+                                                <field name="scan_id" string='Test ID'/>
+                                                <field name="name"/>
+                                                <field name="range_test"/>
+                                                <field name="range_normal"/>
+                                                <field name="date"/>
+                                            </tree>
+                                        </field>
+                                        </page>
+                                        
+    
                                     <page string="Documents">
                                         <field name = 'documents'>
                                             <tree string="Documents" editable="bottom">
@@ -202,6 +224,14 @@
                                     </page>
 
                                     </notebook>
+                                    <label for = 'adoption_details' style="font-size: 25px !important;font-weight: 600;padding-left: 550px;" string ="Adoption Agreement"/>
+                                    <div class ='row'>      
+                                        <div class='col-12' 
+                                        style ='padding-left: 550px;'>
+                                            <field name ="adoption_details"/>
+                                            <label for = 'adoption_details' string ="I Hereby is Incharge of this Patient"/>
+                                        </div>
+                                    </div>
                                 </sheet>
     
                             <div class="oe_chatter">
@@ -222,12 +252,10 @@
                             <field name="opnumber" />
                             <field name="patient" />
                             <field name="sex" />
-                            <field name="age" />
-                            <field name="doctor" />
+                            <field name="write_date" />
                             <field name ="patient_status"/>
-                            <!-- <field name="patient_waiting"/> -->
-                            <!-- <field name ="write_date"/> -->
                             <field name="date1" invisible="1"/>
+                            <field name="wait_date" />
                         </tree>
                     </field>
                 </record>
@@ -240,24 +268,26 @@
     <field name="type">search</field>
     <field name="arch" type="xml">
         <search string="EBook">
-            <field name="opnumber"/>
+            <!-- <field name="opnumber"/> -->
+            <field name="serial_number"/>
             <field name="patient"/>
             <field name="phone_number"/>
         <!-- <filter string="Doctor" name="doctor" domain="[('doctor', '!=', '')]"/> -->
             <filter string="Doctor" name="doctor" context="{'group_by': 'doctor'}"/>
             <filter string="Branch" name="company_id" context="{'group_by': 'company_id'}"/>
-            <filter string="Today" name="prescription_date" separator="1" domain="[('prescription_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
-            <filter string="Yesterday" name="prescription_date" separator="1" domain="[('prescription_date','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
-            <filter string="Tomorrow" name="prescription_date" separator="1" domain="[('prescription_date','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+            <filter string="Today" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
+            <filter string="Yesterday" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+            <!-- <filter string="Tomorrow" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/> -->
             
-            <filter string="Past 6 Month" name="prescription_date" separator="1" domain="[('prescription_date','&lt;=',(datetime.date.today()-relativedelta(months=6)).strftime('%Y-%m-%d'))]"/>
+            <filter string="Past 6 Month" name="write_date" separator="1" domain="[('write_date','&lt;=',(datetime.date.today()-relativedelta(months=6)).strftime('%Y-%m-%d'))]"/>
             <!-- <filter string="Next Month" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%Y-%m-%d'))]"/> -->
-            <filter string="Past Month" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()-relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
+            <filter string="Past Month" name="write_date" separator="1" domain="[('write_date','&gt;=',(datetime.date.today()-relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
             <!-- <filter string="Past week" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()-relativedelta(week=1)).strftime('%Y-%m-%d'))]"/> -->
-            <filter string="This Month" name="prescription_date" separator="1" domain="[('prescription_date','&lt;=',(datetime.date.today()+relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
+            <!-- <filter string="This Month" name="prescription_date" separator="1" domain="[('prescription_date','&lt;=',(datetime.date.today()+relativedelta(months=1)).strftime('%Y-%m-%d'))]"/> -->
         </search>
     </field>
 </record>
+
 
     <record id="medical_doctor_pivot_view" model="ir.ui.view">
         <field name="name">medical.doctor.view.pivot</field>
@@ -280,7 +310,18 @@
             </graph>
         </field>
     </record>
-
+    <!-- <record id="medical_appointment_calendar_view" model="ir.ui.view">
+        <field name="name">medical.appointment.calendar.view</field>
+        <field name="model">medical.appointment</field>
+        <field name="arch" type="xml">
+            <calendar string="Appointments" color="doctor_id"
+                quick_add="False" date_start="appointment_date">        
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="patient_selection" />
+            </calendar>
+        </field>
+    </record> -->
                 <record model="ir.actions.act_window" id="action_view_doctor">            
                     <field name="name">EBook</field>         
                         <field name="res_model">medical.doctor</field>                 
@@ -292,6 +333,8 @@
                         </field>        
                     </record>      
 
-    <menuitem id="menu_doctor" name="EBook" parent= "main_menu_hospital_management"  sequence="2" action="action_view_doctor"/>
-                    </data> 
+    <menuitem id="menu_doctor" name="Doctor" parent= "main_menu_hospital_management"  sequence="2" action="action_view_doctor"/>
+            
+    
+                    </data>
     </odoo>

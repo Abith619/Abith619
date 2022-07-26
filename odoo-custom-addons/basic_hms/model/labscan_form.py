@@ -1,87 +1,114 @@
 from odoo import models, fields, api
+from datetime import datetime
+from odoo.exceptions import Warning, ValidationError
 
 class manylabs(models.Model):
     _name = 'lab.many'
 
+    patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
+    date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
 
 class manylabs_data(models.Model):
     _name = 'lab.many.data'
 
+    patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
+    date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
 
 class manylabs_form(models.Model):
     _name = 'lab.many.form'
 
+    patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
     range = fields.Char(string='Range')
+    date= fields.Datetime(string="Date of Lab/Scan")
 
 class lab_test_form(models.Model):
     _name = 'lab.test.form'
 
     name = fields.Char(string='Name')
-
+    date= fields.Datetime(string="Date of Lab/Scan")
+    patient_id = fields.Many2one('res.partner', string='Patient')
     price = fields.Integer(string='Price')
     range = fields.Char(string='Range')
 
 class lab_test_data(models.Model):
     _name = 'lab.test.data'
 
+    patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
+    date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
 
 class lab_test_data_form(models.Model):
     _name = 'lab.test.data.form'
 
+    patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
+    date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
 
 class lab_test_data_form_many(models.Model):
     _name = 'lab.test.data.form.many'
 
+    patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
+    date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
 
 class lab_test_data_form_many_data(models.Model):
     _name = 'lab.test.data.form.many.data'
 
+    patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
+    date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
 
 class lab_test_data_form_many_form(models.Model):
     _name = 'lab.test.data.form.many.form'
 
+    patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
+    date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
 
 class lab_test_data_form_many_form_many(models.Model):
     _name = 'lab.test.data.form.many.form.many'
 
+    patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
+    date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
 
 class lab_test_hospital(models.Model):
     _name = 'lab.test.hospital'
 
+    patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
+    date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
 
-# class lab_test_hospital_data(models.Model):
-#     _name = 'lab.test.hospital.data'
+class lab_test_hospital_data(models.Model):
+    _name = 'lab.test.hospital.data'
 
-#     name = fields.Char(string='Name')
+    patient_id = fields.Many2one('res.partner', string='Patient')
+    name = fields.Char(string='Name')
+    price = fields.Integer(string='Price')
+    date= fields.Datetime(string="Date of Lab/Scan")
+    range = fields.Char(string='Range')
 
 # class lab_test_hospital_form(models.Model):
 #     _name = 'lab.test.hospital.form'
@@ -91,54 +118,91 @@ class lab_test_hospital(models.Model):
 class lab_test_hospital_form_many(models.Model):
     _name = 'lab.test.hospital.form.many'
 
+    patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
+    date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
 
 class lab_test_hospital_form_many_data(models.Model):
     _name = 'lab.test.hospital.form.many.data'
 
+    patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
+    date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
 
 class lab_test_hospital_form_many_form(models.Model):
     _name = 'lab.test.hospital.form.many.form'
 
+    patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
+    date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
 
 class lab_test_hospital_form_many_form_data(models.Model):
     _name = 'lab.test.hospital.form.many.form.data'
 
+    patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
+    date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
 
 class lab_hospital_test(models.Model):
     _name = 'lab.hospital.test'
 
+    patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
+    date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
 
 class lab_hospital_test_data(models.Model):
     _name = 'lab.hospital.test.data'
 
+    patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
+    date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
 
 class lab_hospital_test_form(models.Model):
     _name = 'lab.hospital.test.form'
 
+    patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
+    date= fields.Datetime(string="Date of Lab/Scan")
+    range = fields.Char(string='Range')
+
+class Immunology_test(models.Model):
+    _name = 'immunology.test'
+
+    patient_id = fields.Many2one('res.partner', string='Patient')
+    name = fields.Char(string='Name')
+    price = fields.Integer(string='Price')
+    date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
 
 class LabsScansd(models.Model):
     _name='lab.scan.form'
+    _rec_name = 'request'
+
+    request = fields.Char('ID Number', readonly = True)
+    patient_id = fields.Many2one('res.partner', string='Patient Name')
+    name = fields.Char(string='Name')
+    price = fields.Integer(string='Price')
+    range = fields.Char(string='Range')
+    test_range = fields.Char(string='Tested Range')
+    date= fields.Datetime(string="Date of Lab/Scan")
+    write_date=fields.Date(string='Date')
+    ebook_id = fields.Char(string='Patient ID')
+    # appoinment_by=fields.Many2one('res.users',string='Appointment By',default=lambda self: self.env.user,readonly='1')
+
+    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.doctor'))
 
     hemo_coag12 = fields.Many2many('lab.many', string="HAEMATOLOGY")
     hemo_coag1 = fields.Many2many('lab.many.data', string='Urine')
@@ -146,6 +210,7 @@ class LabsScansd(models.Model):
     lab_test_hos = fields.Many2many('lab.test.form', string='Semen')
     lab_test_hos_data = fields.Many2many('lab.test.data', string='Serology')
     lab_test_hos_form = fields.Many2many('lab.test.data.form', string='Bio Chemistry')
+    lab_liver = fields.Many2many('lab.test.hospital.data', string='Endocrinology')
     lab_enzymes = fields.Many2many('lab.test.data.form.many',string='Liver Function')
     lab_lipid = fields.Many2many('lab.test.data.form.many.data',string='Enzymes')
     lab_protein = fields.Many2many('lab.test.data.form.many.form',string='Lipid')
@@ -158,6 +223,324 @@ class LabsScansd(models.Model):
     lab_leptospirosis = fields.Many2many('lab.hospital.test',string='HIV TEST')
     lab_hiv = fields.Many2many('lab.hospital.test.data',string='Hepatitis Panel')
     lab_hepatis = fields.Many2many('lab.hospital.test.form',string='X-Ray Digital')
+    lab_immune_test = fields.Many2many('immunology.test',string='Immunology')
+
+    def lab_button(self):
+            return {
+    'name': "Lab Details",
+    'domain':[('patient_id', '=', self.patient_id.id)],
+    'view_mode': 'tree,form',
+    'res_model': 'lab.scan.form',
+    'view_type': 'form',
+    'type': 'ir.actions.act_window',
+    }
+#      Count in Smart Button
+    def lab_count(self):
+        for res in self :
+            count_d = self.env['lab.scan.form'].search_count([('patient_id', '=', res.patient_id.id)])
+            self.lab_recs= count_d
+
+    lab_recs = fields.Integer(compute='lab_count',string="Lab Details")
+
+    @api.model
+    def create(self, vals):
+        vals['request'] = self.env['ir.sequence'].next_by_code('test_seq')
+        result = super(LabsScansd, self).create(vals)
+        
+        orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
+        lines=[]
+        
+        for rec in result.hemo_coag12:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.hemo_coag1:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.hemo_coag2:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.lab_test_hos:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.lab_test_hos_data:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.lab_test_hos_form:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.lab_enzymes:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.lab_lipid:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.lab_protein:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.lab_checkup:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.lab_endocrinology:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.lab_immunology:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.lab_tumour:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.lab_drug:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.lab_serology:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.lab_leptospirosis:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.lab_hiv:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.lab_hepatis:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.lab_immune_test:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        for rec in result.lab_liver:
+            valuez={
+                'name': rec.name,
+                'date':datetime.now(),
+                'bill_amount': rec.price
+            }
+            lines.append((0, 0, valuez))
+        orm.write({'lab_bill':lines})
+
+        labscan = self.env['medical.doctor'].search([('patient','=',result.patient_id.id)])
+        lab_lines=[]
+        
+        for rec in result.hemo_coag12:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.hemo_coag1:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.hemo_coag2:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.lab_test_hos:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.lab_test_hos_data:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.lab_test_hos_form:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.lab_enzymes:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.lab_lipid:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.lab_protein:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.lab_checkup:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.lab_endocrinology:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.lab_immunology:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.lab_tumour:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.lab_drug:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.lab_serology:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.lab_leptospirosis:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.lab_hiv:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.lab_hepatis:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.lab_immune_test:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                }
+            lab_lines.append((0,0,values))
+        for rec in result.lab_liver:
+            values={
+                'date':datetime.now(),
+                'lab_type':result.id,
+                'name':rec.name,
+                
+                }
+            lab_lines.append((0,0,values))
+
+        labscan.write({'lab_test_line':lab_lines})
+
+
+        return result
     
 
     hemo_coag = fields.Boolean("HAEMATOLOGY & COAGULATION - BLOOD")

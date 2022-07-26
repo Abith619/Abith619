@@ -21,6 +21,6 @@
                     <field name="view_mode">tree,form</field>
             </record>
 
-            <!-- <menuitem id="menus_medical_diet_protein"  name ="Create Diet Protein" action="action_diet_protein"
-                parent="main_menu_configartion" sequence="1" /> -->
+            <menuitem id="menus_medical_diet_protein"  name ="Create Diet Protein" action="action_diet_protein"
+                parent="main_menu_configartion" sequence="1" />
 </odoo>

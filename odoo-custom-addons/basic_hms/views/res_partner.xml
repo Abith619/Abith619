@@ -61,7 +61,7 @@
                 </xpath>
 
                 <xpath expr="//field[@name='company_type']" position="attributes">
-                    <attribute name="invisible">1</attribute>
+                    <attribute name="invisible">0</attribute>
                 </xpath>
 
                 <xpath expr="//page[@name='contact_addresses']" position="attributes">
@@ -72,9 +72,9 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
 
-                <xpath expr="//page[@name='followup_tab']" position="attributes">
+                <!-- <xpath expr="//page[@name='followup_tab']" position="attributes">
                     <attribute name="invisible">1</attribute>
-                </xpath>
+                </xpath> -->
 
                 <xpath expr="//page[@name='accounting']" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -134,8 +134,8 @@
 
                         <field name="document_type">
                             <tree string="Proof Documents" editable="bottom" >
-                                <field name="document_detail" options="{'no_create_edit':True}"/>
                                 <field name="doc_types"/>
+                                <field name="document_detail" options="{'no_create_edit':True}"/>
                             </tree>
                         </field>
                     </page>
@@ -216,11 +216,12 @@
             <page string="Medicine Details" attrs="{'invisible': [('is_medicine','=', False)]}">
             <field name="medicine_details">
                 <tree string="Medicine Details" editable="bottom">
-                  <field name="potency"/>
-                    <field name="morning"/>
-                    <field name="noon"/>
-                    <field name ="evening"/>
-                    <field name="night"/>
+                  <!-- <field name="potency"/> -->
+                    <!-- <field name="morning"/> -->
+                    <!-- <field name="noon"/> -->
+                    <field name ='all_day'/>
+                    <!-- <field name ="evening"/> -->
+                    <!-- <field name="night"/> -->
                     <field name="units"/>                 
                     <field name="anupana"/>
                 </tree>
@@ -249,11 +250,11 @@
             <field name="binding_view_types">form</field>
             <field name="view_mode">kanban,tree,form</field>
             <field name="domain">[('is_telecaller','=',1)]</field>
-            <field name="context">{'default_is_telecaller': 1,'search_default_is_telecaller': 1} 
+            <field name="context">{'default_roles_selection': 'telecaller','search_default_is_telecaller': 1} 
             </field>
         </record>
         <menuitem id="menu_contact_telecaller" name="Telecaller" 
-        parent="contacts.menu_contacts"  action="act_res_partner_telecaller" sequence='3' />
+        parent="contacts.menu_contacts"  action="act_res_partner_telecaller" sequence='5' />
 
         <record model="ir.actions.act_window" id="act_res_partner_billing">
             <field name="name">Billing</field>
@@ -262,11 +263,11 @@
             <field name="binding_view_types">form</field>
             <field name="view_mode">kanban,tree,form</field>
             <field name="domain">[('is_billing','=',1)]</field>
-            <field name="context">{'default_is_billing': 1,'search_default_is_billing': 1} 
+            <field name="context">{'default_roles_selection': 'billing','search_default_is_billing': 1} 
             </field>
         </record>
         <menuitem id="menu_contact_billing" name="Billing" 
-        parent="contacts.menu_contacts"  action="act_res_partner_billing" sequence='3' />
+        parent="contacts.menu_contacts"  action="act_res_partner_billing" sequence='9' />
 
         <record model="ir.actions.act_window" id="act_res_partner_lab">
             <field name="name">Lab / Scan</field>
@@ -275,11 +276,11 @@
             <field name="binding_view_types">form</field>
             <field name="view_mode">kanban,tree,form</field>
             <field name="domain">[('lab_scan','=',1)]</field>
-            <field name="context">{'default_lab_scan': 1,'search_default_lab_scan': 1} 
+            <field name="context">{'default_roles_selection': 'lab','search_default_lab_scan': 1} 
             </field>
         </record>
         <menuitem id="menu_contact_lab" name="Lab / Scan" 
-        parent="contacts.menu_contacts"  action="act_res_partner_lab" sequence='3' />
+        parent="contacts.menu_contacts"  action="act_res_partner_lab" sequence='8' />
 
         <record model="ir.actions.act_window" id="act_res_partner_reception">
             <field name="name">Reception</field>
@@ -288,11 +289,11 @@
             <field name="binding_view_types">form</field>
             <field name="view_mode">kanban,tree,form</field>
             <field name="domain">[('is_reception','=',1)]</field>
-            <field name="context">{'default_is_reception': 1,'search_default_is_reception': 1} 
+            <field name="context">{'default_roles_selection': 'reception','search_default_is_reception': 1} 
             </field>
         </record>
         <menuitem id="menu_contact_reception" name="Reception" 
-        parent="contacts.menu_contacts"  action="act_res_partner_reception" sequence='3' />
+        parent="contacts.menu_contacts"  action="act_res_partner_reception" sequence='5' />
 
         <record model="ir.actions.act_window" id="act_res_partner_pharmacy">
             <field name="name">Pharmacy</field>
@@ -301,11 +302,11 @@
             <field name="binding_view_types">form</field>
             <field name="view_mode">kanban,tree,form</field>
             <field name="domain">[('is_pharmacy','=',1)]</field>
-            <field name="context">{'default_is_pharmacy': 1,'search_default_is_pharmacy': 1} 
+            <field name="context">{'default_roles_selection': 'pharmacy','search_default_is_pharmacy': 1} 
             </field>
         </record>
         <menuitem id="menu_contact_pharmacy" name="Pharmacy" 
-        parent="contacts.menu_contacts"  action="act_res_partner_pharmacy" sequence='3' />
+        parent="contacts.menu_contacts"  action="act_res_partner_pharmacy" sequence='7' />
 
         <record model="ir.actions.act_window" id="act_res_partner_patients">
             <field name="name">Patients</field>
@@ -314,11 +315,11 @@
             <field name="binding_view_types">form</field>
             <field name="view_mode">kanban,tree,form</field>
             <field name="domain">[('is_patient','=',1)]</field>
-            <field name="context">{'default_is_patient': 1,'search_default_is_patient': 1} 
+            <field name="context">{'default_roles_selection': 'patient','search_default_is_patient': 1} 
             </field>
         </record>
         <menuitem id="menu_contact_patient" name="Patients" 
-        parent="contacts.menu_contacts"  action="act_res_partner_patients" sequence='3' />
+        parent="contacts.menu_contacts"  action="act_res_partner_patients" sequence='2' />
 
         <record model="ir.actions.act_window" id="act_res_partner_doctors">
             <field name="name">Doctors</field>
@@ -327,11 +328,12 @@
             <field name="binding_view_types">form</field>
             <field name="view_mode">kanban,tree,form</field>
             <field name="domain">[('is_doctor','=',1)]</field>
-            <field name="context">{'default_is_doctor': 1,'search_default_is_doctor': 1} 
+            <field name="context">{'default_roles_selection': 'doctor','search_default_is_doctor': 1} 
             </field>
         </record>
+
         <menuitem id="menu_contact_doctor" name="Doctors" 
-            parent="contacts.menu_contacts"  action="act_res_partner_doctors" sequence='2' />
+            parent="contacts.menu_contacts"  action="act_res_partner_doctors" sequence='4' />
 
         <menuitem id="menu_health_centers1" name="Health Centers"
             parent="main_menu_configartion" />
@@ -342,6 +344,11 @@
         <menuitem id="menu_insurance_company" action="act_res_partner"
             sequence="0" parent="menu_insurance" />
 
-        
+            <!-- <menuitem id="res_partner_menu_config"
+            name="Configuration"
+            parent="contacts.menu_contacts"
+            groups="base.make_invisible"
+            sequence="6"/> -->
+            <!-- groups="base.group_system"  -->
 
 </odoo>
