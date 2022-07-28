@@ -46,6 +46,7 @@
         'views/scan_test.xml',
         'report/diet_plan.xml',
         'views/set_fruits.xml',
+        'views/picking_inherit.xml',
         'views/set_veg.xml',
         'views/set_protein.xml',
         'views/set_rice.xml',

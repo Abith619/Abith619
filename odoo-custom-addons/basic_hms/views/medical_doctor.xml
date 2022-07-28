@@ -89,10 +89,12 @@
 
                                     <field name= "patient_habits" widget="many2many_tags"/>
                                     <field name= "medicine_id" invisible='1'/>
+                                    <field name= "diet_id" invisible='1'/>
                                     </group>
                                     <group>
                                         <field name="user_doctor" invisible='1'/>
-                                        <field name="doctor" attrs="{'readonly': [('stages','=', 'done')]}" options="{'no_create':True,'no_create_edit':True}"/>
+                                        <field name="doctor" attrs="{'readonly': [('stages','=', 'done')]}" options="{'no_create':True,'no_create_edit':True}"
+                                        />
                                         
                                         <field name ="phone_number" attrs="{'readonly': [('stages','=', 'done')]}" />
                                         <field name ="contact_number" attrs="{'readonly': [('stages','=', 'done')]}" />
@@ -137,6 +139,7 @@
                                 <notebook>
 
                                  <page string="Present Complaints">
+                                    <button name="edit_button" type="object" string="Edit Symptoms" class="oe_highlight" />
                                         <field name = 'currents_ailments'>
                                             <tree string="Current Aliments" editable="bottom" >
                                                 <field name="sequence_ref"/>
@@ -157,7 +160,7 @@
                                             </tree>
                                         </field>
                                     </page>
-                                    <page string="Personalized Diet" >
+                            <page string="Personalized Diet" >
                         <button name="diet_for" type="object" string="Personalized Diet" class="oe_highlight" /> 
                             <field name="diet_fields">
                                                 <tree string="Diet" editable="bottom">
@@ -224,6 +227,21 @@
                                     </page>
 
                                     </notebook>
+                                    <!-- <notebook>
+                                    <page string="Present Complaints">
+                                        <field name = 'currents_ailments'>
+                                        <button name="edit_button" type="object" string="Edit Symptoms" class="oe_highlight" />
+                                            <tree string="Current Aliments" editable="bottom" >
+                                                
+                                                <field name="sequence_ref"/>
+                                                <field name="patient_currents_ailments" />
+                                                <field name="duration"/>
+                                                <field name ="patient_signs_symptoms" widget='many2many_tags' mode="tree" editable="bottom" readonly='0' nolabel="1"/>
+                                                <field name="write_date"/>
+                                            </tree>
+                                        </field>
+                                    </page>
+                                    </notebook> -->
                                     <label for = 'adoption_details' style="font-size: 25px !important;font-weight: 600;padding-left: 550px;" string ="Adoption Agreement"/>
                                     <div class ='row'>      
                                         <div class='col-12' 
@@ -310,18 +328,7 @@
             </graph>
         </field>
     </record>
-    <!-- <record id="medical_appointment_calendar_view" model="ir.ui.view">
-        <field name="name">medical.appointment.calendar.view</field>
-        <field name="model">medical.appointment</field>
-        <field name="arch" type="xml">
-            <calendar string="Appointments" color="doctor_id"
-                quick_add="False" date_start="appointment_date">        
-                <field name="patient_id"/>
-                <field name="doctor_id"/>
-                <field name="patient_selection" />
-            </calendar>
-        </field>
-    </record> -->
+    
                 <record model="ir.actions.act_window" id="action_view_doctor">            
                     <field name="name">EBook</field>         
                         <field name="res_model">medical.doctor</field>                 
@@ -335,6 +342,5 @@
 
     <menuitem id="menu_doctor" name="Doctor" parent= "main_menu_hospital_management"  sequence="2" action="action_view_doctor"/>
             
-    
-                    </data>
+        </data>
     </odoo>

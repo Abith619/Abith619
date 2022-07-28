@@ -1,6 +1,5 @@
 
 from builtins import super
-from inspect import signature
 from odoo import api, fields, models, _
 from datetime import date,datetime
 from dateutil.relativedelta import relativedelta 
@@ -81,6 +80,8 @@ class medical_directions(models.Model):
     image1=fields.Binary(string="Image")
     
     user_doctor = fields.Many2one('res.users',string="User Doctor")
+    
+    diet_id = fields.Many2one('prescribe.diet',string='Diet')
 
     @api.onchange('doctor')
     def login_orm(self):
@@ -162,6 +163,8 @@ class medical_directions(models.Model):
     patient_waiting = fields.Char(string="Waiting Time")
     wait_date=fields.Datetime(string='Datetime', default=datetime.now())
     
+    
+    
 
     # def _get_default_stage(self):
         # self.qr_id=self.serial_number
@@ -173,7 +176,17 @@ class medical_directions(models.Model):
     # @api.onchange('patient')
     # def _existing_contact(self):
     #     if
-  
+    def edit_button(self):
+        return {
+        'name': "Edit Symptoms",
+        # 'domain':[('patient_id', '=', self.patient.id)],
+        'view_mode': 'tree',
+        'res_model': 'medical.symptoms',
+        'view_type': 'form',
+        'type': 'ir.actions.act_window',
+        'view_id': self.env.ref('basic_hms.symptoms_tree_view').id,
+        'target': 'new'
+        }
 
     @api.onchange('ailments')
     def onchange_test(self):
@@ -184,8 +197,11 @@ class medical_directions(models.Model):
     @api.model
     def create(self, vals):
         vals['serial_number'] = self.env['ir.sequence'].next_by_code('medical.doctor') or 'EB'
-        result = super(medical_directions, self).create(vals)
-        return result
+        res = super(medical_directions, self).create(vals)
+        orm = self.env['medical.doctor'].search([('patient','=',res.patient_name.id)])
+        orm.write({'diet_id':res.diet_seq.id})
+        orm.write({'medicine_id':res.prescription_alot.id})
+        return res
 
     def done_action(self):
         self.appoinment_status=False
@@ -221,6 +237,7 @@ class medical_directions(models.Model):
             },
             'target': 'new'
             }
+    
 
 #scan/test:
     def scan_button(self):
@@ -618,14 +635,14 @@ class Patientprescription(models.Model):
                 no += 1
                 l.sequence_ref = no
 
-    @api.model
-    def create(self , vals):
-        res = super(Patientprescription, self).create(vals)
+    # @api.model
+    # def create(self , vals):
+    #     res = super(Patientprescription, self).create(vals)
 
-        orm = self.env['medical.doctor'].search([('patient','=',res.patient_name.id)])
+    #     orm = self.env['medical.doctor'].search([('patient','=',res.patient_name.id)])
         
-        orm.write({'medicine_id':res.prescription_alot.id})
-        return res
+    #     orm.write({'medicine_id':res.prescription_alot.id})
+    #     return res
 
 class Currentailgnments(models.Model):
     _name='current.ailments'
@@ -648,7 +665,8 @@ class Currentailgnments(models.Model):
                 no += 1
                 l.sequence_ref = no
             
-
+    
+    
     @api.onchange('patient_currents_ailments')
     def onchange_test(self):
         for rec in self:

@@ -41,7 +41,7 @@
 
                     </header>
                     <sheet>
-                        <group string="Patient and Doctor Information" attrs="{'invisible': [('stages',  '=', 'draft')]}">
+                        <group string="Patient Prescription Information" attrs="{'invisible': [('stages',  '=', 'draft')]}">
                             <group>
                                 <field name="patient_id" required="1"
                                 options="{'no_create_edit':True,'no_open': True}" />
@@ -86,7 +86,7 @@
                                         <field name="prescribed_quantity" invisible="1"/>
                                         <field name ="medicine_name" options="{'no_create_edit':True}"/>
                                         <field name="all_day"/>
-                                        <field name ="quantity" invisible="1"/>
+                                        <field name ="quantity_medicine"/>
                                         <field name ="potency" invisible="1"/>
                                         <field name="morning"  invisible="1"/>
                                         <field name="noon" invisible="1"/>

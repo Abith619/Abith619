@@ -8,14 +8,7 @@
             <field name="model">medical.symptoms</field>
             <field name="priority" eval="8" />
                 <field name="arch" type="xml">
-                    <!-- <form string="Symptoms">
-                        <sheet>
-                                <field name="name" />
-                                <field name="diseases" />
-                        </sheet>
-                        </form> -->
-
-
+                    
                         <form string="Symptoms">
                             <sheet>
                                 <group colspan="4" col="4">
@@ -34,7 +27,7 @@
             <field name="name">symptoms_tree_view</field>
             <field name="model">medical.symptoms</field>
             <field name="arch" type="xml">
-                <tree string="Symptoms">
+                <tree string="Symptoms" editable='bottom'>
 
                     <field name="name" />
                     <field name="diseases"/>
@@ -43,10 +36,6 @@
                     </tree>
                     </field>
                 </record>
-
-
-
-
 
         <record model="ir.actions.act_window" id="symptoms_action">            
             <field name="name">Disease Symptoms</field>         

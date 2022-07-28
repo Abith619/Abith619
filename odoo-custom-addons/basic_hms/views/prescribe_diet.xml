@@ -11,6 +11,7 @@
                     </h1>
                     <field name="patient_ids" invisible='1'/>
                     <field name="patient_id" invisible='1'/>
+                    <field name="serial_number" invisible='0'/>
                     <notebook>
                         <page string="Diet List">
                             <field name ="diet_line">

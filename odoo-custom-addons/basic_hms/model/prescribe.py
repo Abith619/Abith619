@@ -16,6 +16,8 @@ class Prescribediet(models.Model):
     fruit_diet=fields.Many2many('set.fruits',string="Fruit Diet")
     veg_diet=fields.Many2many('set.veg',string="Veg Diet")
     protein_diet=fields.Many2many('set.protein',string="Protein Diet")
+    diet_seq = fields.Many2one('prescribe.diet',string='Diet S.No')
+    serial_number = fields.Char(string="Patient ID", readonly=True,copy=False,required=True, default='Patient ID')
     patient_ids=fields.Char(string="Patient",default=lambda self: self.env['medical.doctor'].browse(self.env['medical.doctor']._context.get("patient.id")))
     
     diet_line = fields.One2many('assign.diet.lines','names',string="Diet Advisied")
@@ -49,6 +51,7 @@ class Prescribediet(models.Model):
 
     @api.model
     def create(self, vals):
+        vals['serial_number'] = self.env['ir.sequence'].next_by_code('prescribe.diet') or 'DT'
         result = super(Prescribediet, self).create(vals)
 
         diet_page = self.env['medical.doctor'].search([('patient','=',result.patient_id.id)])

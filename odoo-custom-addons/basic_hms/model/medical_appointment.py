@@ -2,6 +2,7 @@
 # Part of BrowseInfo. See LICENSE file for full copyright and licensing details.
 
 from ast import Pass
+import requests
 from odoo import api, fields, models, _
 #from datetime import datetime, date
 from datetime import datetime, timedelta
@@ -156,6 +157,15 @@ class medical_appointment(models.Model):
 		for msg in self:
 			msg.message_post(body=msg_body)
 		result = super(medical_appointment, self).create(vals)
+  
+		url = "https://sm.mo.vc/api/send.php?number=919941922115&type=text&message='goodmorning'&instance_id=62D117E44E1E8&access_token=a27e1f9ca2347bb766f332b8863ebe9f"
+
+		payload={}
+		headers = {}
+
+		response = requests.request("GET", url, headers=headers, data=payload, verify=False)
+
+		# print(response.text)
 		return result
 
 	

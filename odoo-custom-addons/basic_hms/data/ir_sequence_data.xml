@@ -74,6 +74,22 @@
             <field name="company_id" eval="1"/>
         </record>
 
+        <record id="medical_diet_code" model="ir.sequence">
+            <field name="name">Diet</field>
+            <field name="code">prescribe.diet</field>
+            <field name="prefix">DT</field>
+            <field name="padding">4</field>
+            <!-- <field name="company_id" eval="6"/> -->
+        </record>
+
+        <!-- <record id="medical_diet_code_seq" model="ir.sequence">
+            <field name="name">Diet</field>
+            <field name="code">prescribe.diet</field>
+            <field name="prefix">DT</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="1"/>
+        </record> -->
+
         <record id="prescription_order_sequence" model="ir.sequence">
             <field name="name">Prescriptions</field>
             <field name="code">medical.prescription.order</field>

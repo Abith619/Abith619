@@ -12,8 +12,7 @@
     
      <record id="group_ebooks_admin" model="res.groups">
         <field name="name">ebooks Admin</field>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+                 <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         <field name="category_id" ref="module_category_ebooks"/>
     </record>
 
@@ -29,14 +28,14 @@
         <field name="name">ebooks User</field>
       <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         <field name="users" eval="[(4, ref('base.user_root'))]"/>
-    <field name="category_id" ref="module_category_ebooks"/>
+        <field name="category_id" ref="module_category_ebooks"/>
     </record>
     
     <record  model="ir.rule" id="ebooksdoc_record_rule">
         <field name="name">See only his ebooks</field>
-            <field name="model_id" ref="model_medical_doctor"/>
+        <field name="model_id" ref="model_medical_doctor"/>
         <field name="domain_force">[('user_doctor.user_id','=',user.id)]</field>
-            <field name="groups" eval="[(4, ref('group_ebooks__user'))]"/> 
+        <field name="groups" eval="[(4, ref('group_ebooks__user'))]"/> 
     </record>
     
     <!-- <record  model="ir.rule" id="appointment_record_rule">
@@ -54,12 +53,12 @@
     <field name="groups" eval="[(4, ref('group_ebooks__user'))]"/> 
 </record> -->
 
-<!-- <record  model="ir.rule" id="billing_record_rule">
+<record  model="ir.rule" id="billing_record_rule">
     <field name="name">See only his Billing Records</field>
     <field name="model_id" ref="model_patient_bills"/>
     <field name="domain_force">[('user_billed_by.user_id','=',user.id)]</field>
     <field name="groups" eval="[(4, ref('group_ebooks__user'))]"/> 
-</record> -->
+</record>
     
 <!-- <record  model="ir.rule" id="prescription_record_rule">
     <field name="name">See only his Prescription Records</field>
@@ -77,7 +76,7 @@
         </record>
     
     
-    <record  model="ir.rule" id="ebookscomp_record_rule">
+    <record  model="ir.rule" id="ebooksdoc_record_rule">
         <field name="name">ebooks User company</field>
         <field name="model_id" ref="model_medical_doctor"/>
         <field name="global" eval="True"/>

@@ -83,7 +83,7 @@
 </record>
 
 
-<record id="basic_hms.hospital_menu_bill" model="ir.ui.menu">
+<record id="basic_hms.patient_bills" model="ir.ui.menu">
 <field name="groups_id" eval="[(4, ref('basic_hms.group_billing_user'))]"/>
 </record>
 

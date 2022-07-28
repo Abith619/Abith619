@@ -82,6 +82,27 @@ class medical_prescription_order(models.Model):
             }
         lines.append((0,0,value))
         orm.write({'prescription_patient':lines})
+        
+        picking_list=[]
+        for rec in res.prescription_line_ids:
+            for data in rec:
+                datas={
+                    'name':'Prescribed Medicine',
+                    'product_id':data.medicine_name,
+                    'product_uom_qty':data.quantity_medicine,
+                    'product_uom':data.units
+                }
+            picking_list.append((0,0,datas))
+
+        picking_data={
+            'partner_id':res.patient_id.id,
+            'picking_type_id':2,
+            'location_id':8,
+            'location_dest_id':5,
+            'prescerption_ids':res.id,
+            'move_ids_without_package':picking_list          
+        } 
+        picking_orm = self.env['stock.picking'].create(picking_data)
         return res
 
 
@@ -91,3 +112,28 @@ class medical_prescription_order(models.Model):
 
 
 
+class Pickinginherit(models.Model):
+    _inherit='stock.picking'
+
+    prescerption_ids=fields.Many2one('medical.prescription.order',string="Prescription Id")
+    partner_ids = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Delivery Contact")
+
+
+
+class Pickingline_inherit(models.Model):
+    _inherit='stock.move'
+
+
+    user_id = fields.Many2one('res.users',string="User Name",readonly=True,store=True)
+    pin_num = fields.Char(string="Pin Number",default="")
+
+
+    @api.onchange('pin_num')
+    def get_user(self):
+        if self.pin_num != "":
+            user_orm = self.env['res.users'].search([('otp_num','=',self.pin_num)])
+            if user_orm:
+                for rec in user_orm:
+                    self.user_id = rec.id
+            else:
+                raise ValidationError('Invalid Pin')
