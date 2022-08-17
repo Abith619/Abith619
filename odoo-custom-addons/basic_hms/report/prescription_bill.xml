@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<data>
+    <template id="basic_hms.prescription_bils_report" name="Diet Plan">
+        <t t-call="web.external_layout">
+            <t t-call="web.html_container">
+               <t t-foreach="docs" t-as="o">
+                   <t >
+                   <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p>
+                <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p>
+                    <div class="header_tag">
+                    <h4 class="text-center heading_text_cor">Prescription</h4>
+                    </div>
+                   <table class="table table-bordered" style="border: 1px solid black;">
+                    <thead>
+                        <tr>
+                        <th style="border: 1px solid black;">Prescription ID</th>
+                        <th style="border: 1px solid black;"> Name  </th>
+                        <th style="border: 1px solid black;"> Date  </th>
+                        <th style="border: 1px solid black;"> Bill Amount </th>
+                        <th style="border: 1px solid black;"> Taxes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                     <tr t-foreach='docs.pres_bill' t-as='lines'>
+                        <td style="border: 1px solid black;">
+                         <span t-field="lines.prescription_id"/>
+                       </td>
+                       <td style="border: 1px solid black;">
+                        <span t-field="lines.medicine_name"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                        <span t-field="lines.date"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                         <span t-field="lines.pre_amount"/>
+                       </td>
+                       <td style="border: 1px solid black;">
+                         <span t-field="lines.gst_tax"/>
+                       </td>
+                       </tr>
+                    </tbody>
+                    </table>
+                    <td>
+                    <p class="text-right"><strong>Medicine Amount :  </strong> <i class="fa fa-inr"/><span t-field="o.total1"/></p>
+                    <p class="text-right"><strong>TAX Amount :  </strong><i class="fa fa-inr"/><span t-field="o.total_tax" /></p>
+                    <p class="text-right"><strong>Grand Total :  </strong><i class="fa fa-inr"/><span t-field="o.gst_total_tax"/></p>
+
+                    </td>
+                </t>
+            </t>
+        </t>
+    </t>
+</template>
+ </data>
+</odoo>

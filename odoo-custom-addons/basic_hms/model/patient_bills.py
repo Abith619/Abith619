@@ -1,15 +1,18 @@
-from socket import SOL_CAN_RAW
+
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 from datetime import datetime, timedelta
+
 
 class PatientBills(models.Model):
     _name = 'patient.bills'
     _rec_name ='bill_no'
+    _inherit = 'mail.thread'
 
     patient_name = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name",required=True)
     date_date = fields.Datetime(string="Bill Date",default=datetime.now())
     bills_lines = fields.One2many('patient.bills.lines','bill',string="Patient Bills")
-    total_amount = fields.Float(string ='Due Amount',compute='onchan_func',store=True)
+    total_amount = fields.Float(string ='Due Amount',compute='onchan_func',store=True,track_visibility='always')
     bill_no = fields.Char('Bill No.', default='/')
 
     company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.prescription.order'))
@@ -27,13 +30,15 @@ class PatientBills(models.Model):
     pres_bill=fields.One2many('prescription.bills','bill',string='Doctor Bills')
     total=fields.Float(string='Lab Total',compute='onchan_func_lab')
     total_scan=fields.Float(string='Lab Total',compute='onchan_func_scan')
+    total_tax = fields.Float(String='Total Taxes', compute='onchan_func_gst')
     total1=fields.Float(string='Total',compute='onchan_func_pres')
     total2=fields.Float(string='Total',compute='onchan_func_rec')
     write_date=fields.Date(string='Date')
     ebook_id = fields.Char(string='Patient ID')
     paid_status = fields.Boolean(string='Paid')
-    billed_amount = fields.Float(string='Total Amount',compute='on_total_func',store=True)
-    total_tree=fields.Float(compute='total_func_rec',string ='total_tree',store=True)
+    gst_total_tax = fields.Float(string='Medicine Amount With GST', compute='onchan_func_gst')
+    billed_amount = fields.Float(string='Total Amount',compute='on_total_func',store=True,track_visibility='always')
+    total_tree=fields.Float(compute='total_func_rec',string ='Total Tree',store=True)
     billed_by=fields.Many2one('res.users',string='Billed By',default=lambda self: self.env.user,readonly='1')
 
     def invoice_button(self):        
@@ -61,19 +66,6 @@ class PatientBills(models.Model):
         if self.paid_status == True:
             self.total_amount = 0.00
         
-
-    @api.depends('total_amount','total','total1','total2','total_scan',)
-    def onchan_func(self):
-        for rec_sum in self:
-            k =(rec_sum.total2 + rec_sum.total_scan)+(rec_sum.total + rec_sum.total1 )
-        self.total_amount = k
-
-    @api.depends('total_amount','total','total1','total_tree','total_scan',)
-    def on_total_func(self):
-        for rec_sum in self:
-            k =(rec_sum.total_tree + rec_sum.total_scan)+(rec_sum.total + rec_sum.total1 )
-        self.billed_amount = k
-
     @api.depends('reception_bills')
     def total_func_rec(self):
         sums = []
@@ -87,8 +79,8 @@ class PatientBills(models.Model):
         sums = []
         for i in self:
             for k in i.reception_bills:
-                if k.payment_status == False:
-                    sums.append(k.bill_amount)
+                # if k.payment_status == False:
+                sums.append(k.bill_amount)
             i.total2 = sum(sums)
 
     @api.depends('lab_bill')
@@ -117,11 +109,37 @@ class PatientBills(models.Model):
                 if k.payment_status == False:
                     sums.append(k.pre_amount)
             i.total1 = sum(sums)
+            
+    @api.depends('total_amount','total','gst_total_tax','total2','total_scan',)
+    def on_total_func(self):
+        for rec_sum in self:
+            k =(rec_sum.total2 + rec_sum.total_scan)+(rec_sum.total + rec_sum.gst_total_tax )
+        self.billed_amount = k
+
+    @api.depends('total_amount','total','total1','total2','total_scan','total_tax')
+    def onchan_func(self):
+        for rec_sum in self:
+            k =(rec_sum.total2 + rec_sum.total_scan)+(rec_sum.total + rec_sum.total1 )+(rec_sum.total_tax)
+        self.total_amount = k
+
+    @api.depends('pres_bill')
+    def onchan_func_gst(self):
+        for rec in self:
+            taxed_amount = 0
+            for k in rec.pres_bill:
+                if k.payment_status == False:
+                    total_tax = 0
+                    for gst_id in k.gst_tax:
+                        percentage = self.env['account.tax'].search([('id','=',gst_id.id)])
+                        total_tax += percentage.amount
+                        taxed_amount += (k.pre_amount / 100) * total_tax 
+            rec.total_tax = taxed_amount
+            rec.gst_total_tax = rec.total1 + taxed_amount 
 
 class Billlines(models.Model):
     _name = 'patient.bills.lines'
 
-    bill = fields.Many2one('patient.bills')
+    bill = fields.Many2one('patient.bills',ondelete='cascade')
     name= fields.Char(string="Type of  Bill")
     date= fields.Datetime(string="Bill Date")
     bill_amount =fields.Float(string='Bill Amount')
@@ -133,7 +151,7 @@ class ReceptionBills(models.Model):
     # patient_name = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name",required=True)
     name= fields.Char(string="Type of  Bill")
     date= fields.Datetime(string="Bill Date")
-    bill = fields.Many2one('patient.bills')
+    bill = fields.Many2one('patient.bills',ondelete='cascade')
     bill_amount =fields.Float(string='Bill Amount')
     payment_status = fields.Boolean(string="Paid",readonly=True)
     total=fields.Float(string="Total")
@@ -144,7 +162,7 @@ class DoctorBills(models.Model):
     # patient_name = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name",required=True)
     name= fields.Char(string="Type of  Bill")
     date= fields.Datetime(string="Bill Date")
-    bill = fields.Many2one('patient.bills')
+    bill = fields.Many2one('patient.bills',ondelete='cascade')
     bill_amount =fields.Float(string='Bill Amount')
     payment_status = fields.Boolean(string="Paid",readonly=True)
 
@@ -154,8 +172,8 @@ class LabBills(models.Model):
     # patient_name = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name",required=True)
     name= fields.Char(string="Test Name")
     date= fields.Datetime(string="Bill Date")
-    bill = fields.Many2one('patient.bills')
-    bill_amount =fields.Float(string='Bill Amount')
+    bill = fields.Many2one('patient.bills',ondelete='cascade')
+    bill_amount =fields.Float(string='Bill Amount',track_visibility='always')
     payment_status = fields.Boolean(string="Paid",readonly=True)
     test_name=fields.Char(string="Test Name")
     test_types=fields.Char(string="Test Type")
@@ -167,7 +185,7 @@ class ScanBills(models.Model):
     # patient_name = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name",required=True)
     name= fields.Char(string="Test Name")
     date= fields.Datetime(string="Bill Date")
-    bill = fields.Many2one('patient.bills')
+    bill = fields.Many2one('patient.bills',ondelete='cascade')
     bill_amount =fields.Float(string='Bill Amount')
     payment_status = fields.Boolean(string="Paid",readonly=True)
     test_name=fields.Char(string="Test Name")
@@ -178,17 +196,20 @@ class ScanBills(models.Model):
 class PrescriptionBills(models.Model):
     _name='prescription.bills'
 
-    # patient_name = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name",required=True)
     name= fields.Char(string="Type of  Bill")
     date= fields.Datetime(string="Bill Date")
-    bill = fields.Many2one('patient.bills')
+    bill = fields.Many2one('patient.bills',ondelete='cascade')
     pre_amount =fields.Float(string='Bill Amount',related='medicine_name.lst_price')
     payment_status = fields.Boolean(string="Paid",readonly=True)
     medicine_name = fields.Many2one('product.product',string='Medicine Name')
     prescription_id = fields.Char(string="Prescription ID")
     total=fields.Float(string="Total")
+    gst_tax = fields.Many2many('account.tax', string='Tax',related='medicine_name.taxes_id')
+    gst_calc = fields.Float(string='Total Tax Value')
+    
     delivery_mode = fields.Selection([('domestic','Domestic'),('international',"International")],string='Courier Mode')
 
+    
 
 class Billingpayment(models.Model):
     _inherit='account.payment'
@@ -246,7 +267,7 @@ class Billingpayment(models.Model):
 class Paymentlines(models.Model):
     _name = 'account.bills.lines'
 
-    bill = fields.Many2one('account.payment')
+    bill = fields.Many2one('account.payment',ondelete='cascade')
     name= fields.Char(string="Type of  Bill")
     date= fields.Datetime(string="Bill Date")
     bill_amount =fields.Float(string='Bill Amount')

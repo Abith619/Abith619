@@ -4,6 +4,21 @@
      <t t-call="web.external_layout">
      <t t-call="web.html_container">
         <t t-foreach="docs" t-as="o">
+        <style>
+
+            .footer_section{
+
+            }
+            .border{
+                border-collapse: collapse;
+            }
+            .heading_text_cor{
+                color:#000;
+                font-weight:600;
+
+                }
+                    
+        </style>
             <t >
             <h2 >Patient Details</h2>
             <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
@@ -16,8 +31,9 @@
             <td style="border: 0px;width: 50%;">
         <!-- <img t-att-src="'/report/barcode/QR/%s'%(o.qr_code)" width="100" height="100"/> -->
         <!-- <span t-field="o.qr_code"> -->
-            <!-- <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', o.qr_code, 100, 100)"/> -->
         <img t-att-src="'data:image/png;base64,%s' % to_text(o.qr_code)" style="height:100px;width:100px;float:center;"/>
+            <!-- <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', o.qr_code, 100, 100)"/> -->
+            <!-- <img t-if="o.qr_code" t-att-src="'data:image/png;base64,%s' % o.qr_code" style="max-height: 100px;"/> -->
             <!-- </span> -->
             </td>
             </div>
@@ -49,7 +65,9 @@
             </tr>
             </thead>
             </table>
-            <h1 >Present Complaints</h1>
+            <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Present Complaints</h4>
+        </div>
             <table class="table table-bordered" style="border: 1px solid black;">
                 <thead>
                     <tr>
@@ -72,7 +90,9 @@
                     </tr>
                 </tbody>
                 </table>
-                <h1 >Past Complaints</h1>
+                <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Past Complaints</h4>
+        </div>
                 <table class="table table-bordered" style="border: 1px solid black;">
                 <thead>
                     <tr>
@@ -91,7 +111,10 @@
                     </tr>
                 </tbody>
                 </table>
-                    <h1 >Lab Test</h1>
+                <div style="page-break-before:always">
+                     <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Lab Test</h4>
+        </div>
                     <table class="table table-bordered" style="border: 1px solid black;">
                 <thead>
                     <tr>
@@ -122,14 +145,16 @@
                     </tr>
                 </tbody>
                 </table>
-                <h1 >Scan Details</h1>
+                <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Scan details</h4>
+        </div>
                 <table class="table table-bordered" style="border: 1px solid black;">
                     <thead>
                         <tr>
                         <th style="border: 1px solid black;">Scan Test ID</th>
                         <th style="border: 1px solid black;">Test Name </th>
-                        <th style="border: 1px solid black;">Tested Range </th>
-                        <th style="border: 1px solid black;">Normal Range </th>
+                        <!-- <th style="border: 1px solid black;">Tested Range </th>
+                        <th style="border: 1px solid black;">Normal Range </th> -->
                         <th style="border: 1px solid black;">Date </th>
                         </tr>
                     </thead>
@@ -141,28 +166,30 @@
                         <td style="border: 1px solid black;">
                         <span t-field="line.name"/>
                         </td>
-                        <td style="border: 1px solid black;">
+                        <!-- <td style="border: 1px solid black;">
                     <span t-field="line.range_test"/>
                     </td>
                     <td style="border: 1px solid black;">
                     <span t-field="line.range_normal"/>
-                    </td>
+                    </td> -->
                         <td style="border: 1px solid black;">
                             <span t-field="line.date"/>
                             </td>
                         </tr>
                     </tbody>
                     </table>
-                <h1 >Medicine</h1>
+                <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Medicine</h4>
+        </div>
                 <table class="table table-bordered" style="border: 1px solid black;">
                     <thead>
                         <tr>
                             <th style="border: 1px solid black;">Medicine Name</th>
-                            <th style="border: 1px solid black;">Unit</th>
                             <th style="border: 1px solid black;">Dose</th>
-                            <th style="border: 1px solid black;">Quantity</th>
-                            <th style="border: 1px solid black;">Days</th>
+                            <th style="border: 1px solid black;">Unit</th>
                             <th style="border: 1px solid black;">Notes</th>
+                            <th style="border: 1px solid black;">Before/After Food</th>
+                            <th style="border: 1px solid black;">Days</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -171,24 +198,26 @@
                             <span t-field="line.medicine_name"/>
                             </td>
                             <td style="border: 1px solid black;">
-                            <span t-field="line.units"/>
-                            </td>
-                            <td style="border: 1px solid black;">
                             <span t-field="line.all_day"/>
-                            </td> 
-                            <td style="border: 1px solid black;">
-                            <span t-field="line.quantity_medicine"/>
-                            </td> 
-                            <td style="border: 1px solid black;">
-                            <span t-field="line.days1"/>
                             </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.units"/>
+                            </td> 
                             <td style="border: 1px solid black;">
                             <span t-field="line.anupana"/>
+                            </td> 
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.bf_af"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.days1"/>
                             </td>     
                         </tr>
                     </tbody>
                     </table>
-                    <h1 >Diet</h1>
+                   <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Diet</h4>
+        </div>
                     <table class="table table-bordered" style="border: 1px solid black;">
                         <thead>
                             <tr>
@@ -231,6 +260,7 @@
                             </tr>
                         </tbody>
                         </table>
+                        </div>
             </t>
             </t>
         </t>

@@ -72,9 +72,9 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
 
-                <!-- <xpath expr="//page[@name='followup_tab']" position="attributes">
+                <xpath expr="//page[@name='followup_tab']" position="attributes">
                     <attribute name="invisible">1</attribute>
-                </xpath> -->
+                </xpath>
 
                 <xpath expr="//page[@name='accounting']" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -110,8 +110,8 @@
                 <field name="dob_contact" attrs="{'invisible': ['|',('roles_selection','=', 'reception'),('roles_selection','=', 'telecaller')]}"/>
                 <field name ="patient_gender" attrs="{'invisible': ['|',('roles_selection','=', 'reception'),('roles_selection','=', 'pharmacy')]}"/>
                 <field name ="designation" attrs="{'invisible': ['|',('roles_selection','=', 'reception'),('roles_selection','=', 'pharmacy')]}"/>
-                <field name ="user_name"/>
-                <field name ="password" password="True" />
+                <field name ="user_name" attrs="{'invisible': [('roles_selection','=', 'patient')]}"/>
+                <field name ="password" password="True" attrs="{'invisible': [('roles_selection','=', 'patient')]}"/>
             </field>
             
             <field name="vat" position="after">
@@ -122,7 +122,7 @@
             <notebook >
                 
                 <page string="Medical Documents" >
-                    <group colspan="6" col="6" invisible='1'>
+                    <group colspan="6" col="6" >
                             <field name="is_patient" />
                             <field name="is_doctor" />
                             <field name="is_pharmacy" />
@@ -161,21 +161,6 @@
             </field>
         </record>
 
-<record id="view_expense_land_filter" model="ir.ui.view">
-    <field name="name">Expense</field>
-    <field name="model">hr.expense</field>
-    <field name="type">search</field>
-    <field name="inherit_id" ref="hr_expense.hr_expense_view_search"/>
-    <field name="arch" type="xml">
-    <filter name="my_expenses" position="replace">
-        <filter string="Today" name="date" separator="1" domain="[('date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
-    </filter>
-    <filter name="my_team_expenses" position="replace">
-        <filter string="Expense" name="name" context="{'group_by': 'name'}"/>
-    </filter>
-    </field>
-</record>
-
 <record id="view_contacts_land_filter" model="ir.ui.view">
     <field name="name">Contacts</field>
     <field name="model">res.partner</field>
@@ -188,7 +173,7 @@
     </filter>
 
     <filter name="type_company" position="replace">
-        <filter string="Patient" name="is_patient" domain="[('is_patient', '=', True)]"/>
+        <!-- <filter string="Patient" name="is_patient" domain="[('is_patient', '=', True)]"/> -->
     </filter>
 
     <filter name="type_person" position="replace">
@@ -329,7 +314,7 @@
             <field name="res_model">res.partner</field>
             <field name="binding_view_types">form</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="domain">[('is_patient','=',1)]</field>
+            <field name="domain">[('roles_selection','=','patient')]</field>
             <field name="context">{'default_roles_selection': 'patient','search_default_is_patient': 1} 
             </field>
         </record>

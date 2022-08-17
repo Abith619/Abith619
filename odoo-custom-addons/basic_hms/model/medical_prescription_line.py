@@ -8,7 +8,7 @@ from odoo.exceptions import  ValidationError
 class medical_prescription_line(models.Model):
     _name = "medical.prescription.line"
 
-    name = fields.Many2one('medical.prescription.order','Prescription ID')
+    name = fields.Many2one('medical.prescription.order','Prescription ID',ondelete='cascade')
     medicament_id = fields.Many2one('medical.medicament','Medicament')
     indication = fields.Char('Indication')
     allow_substitution = fields.Boolean('Allow Substitution')
@@ -31,7 +31,7 @@ class medical_prescription_line(models.Model):
     short_comment = fields.Char('Comment', size=128 )
     end_treatment = fields.Datetime('End of treatment')
     start_treatment = fields.Datetime('Start of treatment')
-    quantity_medicine = fields.Float(string='Quantity')
+
 
     # names = fields.Many2one('medical.prescription.order','Prescription ID')
     prescribed_quantity = fields.Float(string="Prescribed Quantity")

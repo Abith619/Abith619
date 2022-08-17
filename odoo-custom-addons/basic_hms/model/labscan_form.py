@@ -198,7 +198,6 @@ class LabsScansd(models.Model):
     range = fields.Char(string='Range')
     test_range = fields.Char(string='Tested Range')
     date= fields.Datetime(string="Date of Lab/Scan")
-    doctor = fields.Many2one('res.partner',string='Doctor')
     write_date=fields.Date(string='Date')
     ebook_id = fields.Char(string='Patient ID')
     # appoinment_by=fields.Many2one('res.users',string='Appointment By',default=lambda self: self.env.user,readonly='1')
@@ -245,7 +244,7 @@ class LabsScansd(models.Model):
 
     @api.model
     def create(self, vals):
-        vals['request'] = self.env['ir.sequence'].next_by_code('test_seq')
+        vals['request'] = self.env['ir.sequence'].next_by_code('lab.scan.form') or 'LAB'
         result = super(LabsScansd, self).create(vals)
         
         orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)

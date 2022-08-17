@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id = "external_layout_boxed_inherits" inherit_id = "web.external_layout_boxed">
+		<xpath expr="//span[@t-field='company.partner_id']" position="replace">
+           <div class="row">
+           
+           <div class="col-md-6" style="width:100%;font-weight:300px;">
+            <div style = "text-align: center;">
+                <h6 style="text-align: center;">
+            <span class="company_address" t-field="company.partner_id"/><br></br>
+            <span t-field="company.street"/><br></br>
+            <span t-field="company.city"/>
+            <span t-field="company.state_id"/>
+            <span t-field="company.zip"/>
+            <span t-field="company.country_id"/><br></br>
+            GSTIN:<span t-field="company.vat"/><br></br>
+           PH.No : <span t-field="company.phone"/>
+        </h6>
+        </div>
+
+           </div>
+           
+           </div>
+		</xpath>
+    </template>
+</odoo>

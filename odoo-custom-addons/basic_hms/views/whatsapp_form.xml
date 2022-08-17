@@ -15,6 +15,7 @@
                     <field name="name" style="width: 30%"  placeholder="Whatsapp "/>
                     <field name="number"/>
                     <field name="random_number"/>
+                    <field name="url_link"/>
                     </group>
                     </sheet>
                 </form>

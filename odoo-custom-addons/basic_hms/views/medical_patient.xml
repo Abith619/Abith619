@@ -106,38 +106,39 @@
                     </div>
                    <group>
                             
-                <group>
-                                                    
-                    <field name="treatment" required="1" attrs="{'readonly': [('stages','=', 'on')]}"  options="{'no_create_edit':True}" invisible='1'/>
-                    <field name="duration_ailmenmts" string="Duration of Ailment" invisible='1'/>
-                    
-                    <field name ="doctors" attrs="{'readonly': [('stages','=', 'done')]}" options="{'no_create': True, 'no_create_edit':True}"
-                        domain="[('user_name', 'in', company_id)]"/>
-                    <field name="dates" widget="date" attrs="{'invisible': [('doctors','=', False)]}" class="o_address_city" />
+                            <group>
+                                                                
+            <field name="treatment" required="1" attrs="{'readonly': [('stages','=', 'on')]}"  options="{'no_create_edit':True}" invisible='1'/>
+            <field name="duration_ailmenmts" string="Duration of Ailment" invisible='1'/>
+            
+            <field name ="doctors" attrs="{'readonly': [('stages','=', 'done')]}" options="{'no_create': True, 'no_create_edit':True}"
+            domain="[('company_id','=',company_id)]"/>
+                <field name="dates" widget="date" attrs="{'invisible': [('doctors','=', False)]}" class="o_address_city" />
 
-                        <field name="appointment_from" attrs="{'invisible': [('dates','=', False)]}" class="o_address_state"/>
-                        <field name= 'treatment_for' />
-                        <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
-                        
-                </group>
+                <field name="appointment_from" attrs="{'invisible': [('dates','=', False)]}" class="o_address_state"/>
+                <field name= 'treatment_for' />
+                <!-- <field name ="patient_signs_symptoms" widget="many2many_tags"/> -->
+                <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                                   
+                            </group>
 
 
-                <group attrs="{'invisible': [('family_details','=', False)]}">
-                    
-                    <label for="father_name" string="Relation" />
-                    <div class="o_address_format">
-                        <field name="father_name" class="o_address_city" />
-                        <label for="name_father" style="font-weight: bold !important;color: #333;" string="Name"/>
-                        <field name="name_father" class="o_address_state"  style="width: 40%;"/>
-                        
-                    </div>
-                    <field name="father_occupation" string ="Relation's Occupation"/>
-                    </group>
+                            <group attrs="{'invisible': [('family_details','=', False)]}">
+                                
+                                <label for="father_name" string="Relation" />
+                                <div class="o_address_format">
+                                    <field name="father_name" class="o_address_city" />
+                                    <label for="name_father" style="font-weight: bold !important;color: #333;" string="Name"/>
+                                    <field name="name_father" class="o_address_state"  style="width: 40%;"/>
+                                    
+                                </div>
+                                <field name="father_occupation" string ="Relation's Occupation"/>
+                                </group>
 
-                <group attrs="{'invisible': [('family_details','=', True)]}" >
-                    
+                            <group attrs="{'invisible': [('family_details','=', True)]}" >
+                                
 
-                </group>
+                            </group>
                    </group>
                 <group>
                  <group>
@@ -196,17 +197,18 @@
             <filter string="Camp" name="reg_type" separator="1" domain="[('reg_type','=','cam')]"/>
             <filter string="Online" name="reg_type" separator="1" domain="[('reg_type','=','on')]"/>
             <filter string="Review Cases" name="reg_type" separator="1" domain="[('reg_type','=','rev')]"/>
-            <filter string="Blood Report" name="reg_type" separator="1" domain="[('reg_type','=','blood')]"/>
-            <filter string="Blood Report" name="reg_type" separator="1" domain="[('reg_type','=','stop')]"/>
+            <!-- <filter string="Blood Report" name="reg_type" separator="1" domain="[('reg_type','=','blood')]"/> -->
+            <filter string="Stopped" name="reg_type" separator="1" domain="[('reg_type','=','stop')]"/>
             <filter string="Appointment" name="reg_type" separator="1" domain="[('reg_type','=','app')]"/>
             <filter string="Today" name="dates" separator="1" domain="[('dates','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
             <filter string="Yesterday" name="dates" separator="1" domain="[('dates','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
-            <filter string="Tomorrow" name="dates" separator="1" domain="[('dates','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>           
+            <filter string="Tomorrow" name="dates" separator="1" domain="[('dates','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
             <filter string="Next Month" name="dates" separator="1" domain="[('dates','&gt;=',(datetime.date.today()+relativedelta(days=31)).strftime('%Y-%m-%d'))]"/>
             <filter string="Past Month" name="dates" separator="1" domain="[('dates','&lt;=',(datetime.date.today()-relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
         </search>
     </field>
 </record>
+
 
         <record id="medical_patients_tree_view" model="ir.ui.view">
             <field name="name">medical.patients.tree.view</field>
@@ -223,6 +225,7 @@
                 </tree>
             </field>
         </record>
+
 
 
     <record id="medical_patient_pivot_view" model="ir.ui.view">

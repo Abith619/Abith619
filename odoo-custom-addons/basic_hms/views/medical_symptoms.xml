@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
     <data>
-    
         <record id="symptoms_form" model="ir.ui.view">
             <field name="name">Disease Symptoms</field>
             <field name="model">medical.symptoms</field>
             <field name="priority" eval="8" />
                 <field name="arch" type="xml">
-                    
                         <form string="Symptoms">
                             <sheet>
                                 <group colspan="4" col="4">
                                     <field name="name" required="1" />
                                     <field name="diseases" required="1"/>
-                                    <!-- <field name="code" />
-                                    <field name ="units"/> -->
                                 </group>
         
                             </sheet>
@@ -36,6 +31,10 @@
                     </tree>
                     </field>
                 </record>
+
+
+
+
 
         <record model="ir.actions.act_window" id="symptoms_action">            
             <field name="name">Disease Symptoms</field>         

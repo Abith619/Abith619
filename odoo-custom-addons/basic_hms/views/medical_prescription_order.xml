@@ -41,7 +41,7 @@
 
                     </header>
                     <sheet>
-                        <group string="Patient Prescription Information" attrs="{'invisible': [('stages',  '=', 'draft')]}">
+                        <group string="Patient and Doctor Information" attrs="{'invisible': [('stages',  '=', 'draft')]}">
                             <group>
                                 <field name="patient_id" required="1"
                                 options="{'no_create_edit':True,'no_open': True}" />
@@ -86,13 +86,13 @@
                                         <field name="prescribed_quantity" invisible="1"/>
                                         <field name ="medicine_name" options="{'no_create_edit':True}"/>
                                         <field name="all_day"/>
-                                        <field name ="quantity_medicine"/>
+                                        <field name ="prescribed_quantity" string='Quantity'/>
                                         <field name ="potency" invisible="1"/>
                                         <field name="morning"  invisible="1"/>
                                         <field name="noon" invisible="1"/>
                                         <field name="evening"  invisible="1"/>
                                         <field name ="night" invisible="1"/>
-                                        <field name ="units"/>
+                                        <field name ="units" string='Units'/>
                                         <!-- <field name ="after_food"/> -->
                                         <field name ="anupana"/>
                                         <field name="bf_af" string='BF / AF'/>
@@ -135,11 +135,10 @@
                 <!-- <filter string="Doctor" name="doctor" domain="[('doctor', '!=', '')]"/> -->
                     <filter string="Doctor" name="doctor_id" context="{'group_by': 'doctor_id'}"/>
                     <filter string="Branch" name="company_id" context="{'group_by': 'company_id'}"/>
-                    <filter string="Courier" name="courier_option" context="{'group_by': 'courier_option'}"/>
                     <filter string="Today" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
                     <filter string="Yesterday" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
                     <filter string="Tomorrow" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
-                    <filter string="Courier" name="courier_option" separator="1" domain="[('courier_option','=','domestic')]"/>
+                    
                     <filter string="Past 6 Month" name="write_date" separator="1" domain="[('write_date','&lt;=',(datetime.date.today()-relativedelta(months=6)).strftime('%Y-%m-%d'))]"/>
                     <!-- <filter string="Next Month" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%Y-%m-%d'))]"/> -->
                     <filter string="Past Month" name="write_date" separator="1" domain="[('write_date','&lt;=',(datetime.date.today()-relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
@@ -163,7 +162,7 @@
 
 
 
-        <menuitem id="menu_prescription" action="action_medical_prescription_order"
+        <menuitem id="menu_prescription" action="action_medical_prescription_order" 
         name="Prescriptions" parent= "main_menu_hospital_management" sequence="4" />
 
 

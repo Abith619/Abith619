@@ -30,7 +30,7 @@ class medical_patient(models.Model):
         patient_orm.write({'roles_selection':'patient',
         'mobile':self.contact_no,
         'patient_gender':self.sex,
-    
+        'is_patient':True
         })
 
     def print_report(self):
@@ -47,7 +47,6 @@ class medical_patient(models.Model):
             else:
                 rec.age = "Age"
 
-    
     whatsapp_check=fields.Boolean()
     stages= fields.Selection([('draft',"New"),('on',"On Process"),('done',"Done")])
     patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name", required= True)
@@ -341,7 +340,11 @@ class medical_patient(models.Model):
                 rec.patient_waiting = "00:00"
 
     write_date=fields.Datetime(string='Registration Time',default=datetime.now())
-
+    
+    @api.depends('whatsapp_check')
+    def number_swap(self):
+        if self.whatsapp_check == True:
+            self.contact_no = self.contact_number
 
     @api.onchange('dates','doctors')
     def roll(self):
@@ -437,7 +440,7 @@ class medical_patient(models.Model):
         if patient_id:
             val.update({
                         'name':patient_id,
-                        # 'Patien':True
+                     
                        })
         result = super(medical_patient, self).create(val)
         return result
@@ -452,8 +455,6 @@ class medical_patient(models.Model):
         #     val_1 = {'name': self.env['res.partner'].browse(val['patient_id']).name}
         #     patient= res_partner_obj.create(val_1)
         #     val.update({'patient_id': patient.id})
-        # if val.get('date_of_birth'):
-        #     dt = val.get('date_of_birth')
         #     d1 = datetime.strptime(str(dt), "%Y-%m-%d").date()
         #     d2 = datetime.today().date()
         #     rd = relativedelta(d2, d1)

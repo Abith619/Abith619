@@ -4,7 +4,7 @@
     <data>
     
         <record id="labs_form" model="ir.ui.view">
-            <field name="name">Lab Scan</field>
+            <field name="name">Lab</field>
             <field name="model">lab.scan.form</field>
             <field name="priority" eval="8" />
                 <field name="arch" type="xml">
@@ -20,12 +20,11 @@
         <field name ="request" invisible='1'/>
         <field name ="name" invisible='1'/>
         <field name ="date" invisible='1'/>
-        <field name ="doctor" invisible='1'/>
-        <field name ="patient_id" invisible='1'/>
-        <field name ="price" invisible='1'/>
-        <field name ="range" invisible='1'/>
-        <field name ="test_range" invisible='1'/>
-        <field name ="company_id" invisible='1'/>
+                                <field name ="patient_id" invisible='1'/>
+                                <field name ="price" invisible='1'/>
+                                <field name ="range" invisible='1'/>
+                                <field name ="test_range" invisible='1'/>
+                                <field name ="company_id" invisible='1'/>
     <div class='row'>
 
 <!-- colum1 -->
@@ -129,24 +128,8 @@
         </form>
         </field>
         </record>
-
-            <record id="labs_tests_tree_view" model="ir.ui.view">
-                <field name="name">lab.scan.form.tree.view</field>
-                <field name="model">lab.scan.form</field>
-                <field name="arch" type="xml">
-                    <tree string="Lab Tests" >
-                        <field name ="request" />
-                        <field name ="ebook_id" />
-                        <field name ="doctor" invisible='0'/>
-                        <field name ="write_date" />
-                        <field name ="range" />
-                        <field name ="test_range" />
-                    </tree>
-                </field>
-            </record>
-
-        <record model="ir.actions.act_window" id="labs_actions">            
-            <field name="name">Lab Scan</field>         
+        <record model="ir.actions.act_window" id="labs_action">            
+            <field name="name">Lab Test</field>         
                 <field name="res_model">lab.scan.form</field>           
                 <field name="view_mode">tree,form</field>
                 <field name="domain">[]</field>            
@@ -155,8 +138,24 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="menu_labs" name="Lab" parent="main_menu_hospital_management" sequence= "3" action="labs_actions"/>
+            <menuitem id="menu_labs" name="Lab" parent="main_menu_hospital_management" sequence= "3" action="labs_action"/>
 
+            <record id="lab_test_tree_view" model="ir.ui.view">
+                <field name="name">lab.scan.form.tree.view</field>
+                <field name="model">lab.scan.form</field>
+                <field name="arch" type="xml">
+                    <tree string="Lab Tests" >
+                        <field name ="request" />
+                        <field name ="ebook_id" />
+                        <field name ="patient_id" />
+                        <!-- <field name ="date" /> -->
+                        <field name ="write_date" />
+                        <field name ="range" />
+                        <field name ="test_range" />
+                        <!-- <field name ="company_id" invisible='1'/> -->
+                    </tree>
+                </field>
+            </record>
 
             <!--Search View-->
 
@@ -166,17 +165,22 @@
     <field name="type">search</field>
     <field name="arch" type="xml">
         <search string="Lab Test">
+            <!-- <field name="request"/> -->
             <field name="ebook_id"/>
             <field name="patient_id"/>
             <field name="write_date"/>
-            <filter string="Doctor" name="doctor" context="{'group_by': 'doctor'}"/>
+        <!-- <filter string="Doctor" name="doctor" domain="[('doctor', '!=', '')]"/> -->
+            <!-- <filter string="Doctor" name="doctor" context="{'group_by': 'doctor'}"/> -->
             <filter string="Branch" name="company_id" context="{'group_by': 'company_id'}"/>
             <filter string="Today" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
             <filter string="Yesterday" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
-            <filter string="Tomorrow" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+            <!-- <filter string="Tomorrow" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/> -->
             
             <filter string="Past 6 Month" name="write_date" separator="1" domain="[('write_date','&lt;=',(datetime.date.today()-relativedelta(months=6)).strftime('%Y-%m-%d'))]"/>
+            <!-- <filter string="Next Month" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%Y-%m-%d'))]"/> -->
             <filter string="Past Month" name="write_date" separator="1" domain="[('write_date','&lt;=',(datetime.date.today()-relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
+            <!-- <filter string="Past week" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()-relativedelta(week=1)).strftime('%Y-%m-%d'))]"/> -->
+            <!-- <filter string="This Month" name="prescription_date" separator="1" domain="[('prescription_date','&lt;=',(datetime.date.today()+relativedelta(months=1)).strftime('%Y-%m-%d'))]"/> -->
         </search>
     </field>
 </record>
@@ -453,7 +457,7 @@
             </record>
             <menuitem id="lab_many_data_enzymes" name="Enzymes" parent= "main_menu_configartion" action="lab_many_data_form_enzymes"/>
 
-        <record id="lab_many_data_form7" model="ir.ui.view">
+        <record id="lab_many_data_formss" model="ir.ui.view">
             <field name="name">Lab Lipid</field>
             <field name="model">lab.test.data.form.many.form</field>
             <field name="priority" eval="8" />
@@ -475,7 +479,7 @@
                         </form>
                         </field>
         </record>
-        <record model="ir.actions.act_window" id="lab_many_data_form_lipid">            
+        <record model="ir.actions.act_window" id="lab_many_data_form_lipids">            
             <field name="name">Lab Lipid</field>         
                 <field name="res_model">lab.test.data.form.many.form</field>           
                 <!-- <field name="view_type">form</field>-->
@@ -486,7 +490,7 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_form7" name="Lipid" parent= "main_menu_configartion" action="lab_many_data_form_lipid"/>
+            <menuitem id="lab_many_data_form7" name="Lipid" parent= "main_menu_configartion" action="lab_many_data_form_lipids"/>
 
         <record id="lab_many_data_form819" model="ir.ui.view">
             <field name="name">Lab Lipoproteins</field>
@@ -557,7 +561,7 @@
             </record>
             <menuitem id="lab_many_data_health" name="Full CheckUp" parent= "main_menu_configartion" action="lab_many_data_form_full_checkup"/>
 
-     <record id="lab_many_data_form10" model="ir.ui.view">
+     <record id="lab_many_data_form1014" model="ir.ui.view">
             <field name="name">Endocrinology Blood</field>
             <field name="model">lab.test.hospital.data</field>
             <field name="priority" eval="8" />

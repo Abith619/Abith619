@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<data>
+    <template id="basic_hms.scan_bils_report" name="Diet Plan">
+        <t t-call="web.external_layout">
+            <t t-call="web.html_container">
+               <t t-foreach="docs" t-as="o">
+                   <t >
+                   <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p>
+                <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p>
+                    <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Scan Test</h4>
+        </div>
+                   <table class="table table-bordered" style="border: 1px solid black;">
+                    <thead>
+                        <tr>
+                        <th style="border: 1px solid black;"> Test Name </th>
+                        <th style="border: 1px solid black;"> Date </th>
+
+                        <th style="border: 1px solid black;"> Bill Amount </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                              <tr t-foreach='docs.scan_bill' t-as='line'>
+                       <td style="border: 1px solid black;">
+                       <span t-field="line.name"/>
+                       </td>
+                       <td style="border: 1px solid black;">
+                       <span t-field="line.date"/>
+                       </td>
+                       <td style="border: 1px solid black;">
+                        <span t-field="line.bill_amount"/>
+                        </td>
+                       </tr>
+                    </tbody>
+                    </table>
+                    <p class="text-right"><strong>Grand Total :  </strong><i class="fa fa-inr"/><span t-field="o.total_scan"/></p>
+                    
+                </t>
+            </t>
+        </t>
+    </t>
+</template>
+ </data>
+</odoo>

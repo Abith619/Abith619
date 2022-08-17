@@ -25,13 +25,9 @@ access_medical_diet_belief,access_medical_diet_belief,model_medical_diet_belief,
 
 
 
-access_medical_patient_doctor,medical.group.patient.doctor,model_medical_patient,base.group_user,1,1,1,1
-access_medical_patient_chemist,medical.group.patient.chemist,model_medical_patient,base.group_user,1,1,1,1
-access_medical_patient_medical_group,medical.group.patient.medical.group,model_medical_patient,base.group_user,1,1,1,1
 
 
 
-access_doctor_medical_patient_disease_chemist,medical.doctor.group.medical.patient.disease.chemist,model_medical_patient_disease,base.group_user,1,1,1,1
 
 
 
@@ -79,15 +75,8 @@ access_medical_test_type_chemist,medical.group.medical.test.type.chem,model_medi
 access_receptionist_medical_physician,medical.group.physician,model_medical_physician,base.group_user,1,1,1,1
 access_receptionist_line,receptionist.prescription.line,model_medical_prescription_line,base.group_user,1,1,1,1
 
-access_receptionist_medical_patient_medication,receptionist.group.patient,model_medical_patient,base.group_user,1,1,1,1
 
 access_receptionist_physician,receptionist.group.physician,model_medical_physician,base.group_user,1,1,1,1
-access_doctor_medical_inpatient_registration,medical.doctor.group.medical.inpatient.registration,model_medical_inpatient_registration,base.group_user,1,1,1,1
-
-access_doctor_medical_patient_disease,medical.doctor.group.medical.patient.disease,model_medical_patient_disease,base.group_user,1,1,1,1
-
-access_doctor_medical_patient_disease_line,medical.doctor.group.medical.patient.disease.line,model_medical_prescription_line,base.group_user,1,1,1,1
-access_doctor_medical_dose_unit,medical.doctor.group.medical_dose_unit,model_medical_dose_unit,base.group_user,1,1,1,1
 access_sale_order,sale.order,sale.model_sale_order,base.group_user,1,1,1,1
 access_sale_order_line,sale.order.line,sale.model_sale_order_line,base.group_user,1,1,1,1
 access_sale_order_line_accountant,sale.order.line accountant,sale.model_sale_order_line,base.group_user,1,1,1,1
@@ -182,8 +171,6 @@ access_medical_medicament,access_medical_medicament,model_medical_medicament,bas
 
 access_medical_patient_lab_test,access_medical_patient_lab_test,model_medical_patient_lab_test,base.group_user,1,1,1,1
 
-access_medical_prescription_order,access_medical_prescription_order,model_medical_prescription_order,base.group_user,1,1,1,1
-access_medical_prescription_order_doctor,access_medical_prescription_order_doctor,model_medical_prescription_order,base.group_user,1,1,1,1
 
 access_medical_patient_psc,access_medical_patient_psc,model_medical_patient_psc,base.group_user,1,1,1,1
 access_medical_medicament_doctor,access_medical_medicament_doctor,model_medical_medicament,base.group_user,1,1,1,
@@ -192,7 +179,6 @@ access_medical_medicament_doctor,access_medical_medicament_doctor,model_medical_
 access_pet_type,access_pet_type,model_pet_type,base.group_user,1,1,1,1
 access_medical_patient_evaluation,access_medical_patient_evaluation,model_medical_patient_evaluation,base.group_user,1,1,1,1
 access_medical_appointment,access_medical_appointment,model_medical_appointment,base.group_user,1,1,1,1
-access_medical_appointment1,access_medical_appointment1,model_medical_appointment,base.group_user,1,1,1,1
 access_medical_insurance,medical.insurance,model_medical_insurance,base.group_user,1,1,1,1
 
 access_medical_patient_lab_test,medical.patient.lab.test,model_medical_patient_lab_test,base.group_user,1,1,1,1
@@ -210,7 +196,8 @@ access_medical_lab_test_create,medical.lab.test.create,model_medical_lab_test_cr
 
 access_medical_lab_test_invoice,medical.lab.test.invoice,model_medical_lab_test_invoice,base.group_user,1,1,1,1
 
-access_medical_doctor,medical.group.medical.doctor,model_medical_doctor,base.group_user,1,1,1,1
+
+
 access_pervious_medication,medical.group.pervious.medication,model_pervious_medication,base.group_user,1,1,1,1
 access_patient_surgery,medical.group.patient.surgery,model_patient_surgery,base.group_user,1,1,1,1
 access_patient_family,medical.group.patient.family,model_patient_family,base.group_user,1,1,1,1
@@ -265,7 +252,6 @@ access_register_payment,medical.group.register.payment,model_register_payment,ba
 
 access_register_wizard,medical.group.register.wizard,model_register_wizard,base.group_user,1,1,1,1
 
-access_patient_bills,medical.group.patient.bills,model_patient_bills,base.group_user,1,1,1,1
 
 access_patient_bills_lines,medical.group.patient.bills.lines,model_patient_bills_lines,base.group_user,1,1,1,1
 
@@ -306,7 +292,6 @@ access_reception_bills,medical.group.reception.bills,model_reception_bills,base.
 access_doctor_bills,medical.group.doctor.bills,model_doctor_bills,base.group_user,1,1,1,1
 access_lab_bills,medical.group.lab.bills,model_lab_bills,base.group_user,1,1,1,1
 access_prescription_bills,medical.group.prescription.bills,model_prescription_bills,base.group_user,1,1,1,1
-access_lab_scan_form,medical.group.lab.scan.form,model_lab_scan_form,base.group_user,1,1,1,1
 access_lab_many,medical.group.lab.many,model_lab_many,base.group_user,1,1,1,1
 access_lab_many_data,medical.group.lab.many.data,model_lab_many_data,base.group_user,1,1,1,1
 access_lab_many_form,medical.group.lab.many.form,model_lab_many_form,base.group_user,1,1,1,1
@@ -333,7 +318,6 @@ access_other_studies,medical.group.other.studies,model_other_studies,base.group_
 access_ct_angiogram,medical.group.ct.angiogram,model_ct_angiogram,base.group_user,1,1,1,1
 access_ultra_sound_studies,medical.group.ultra.sound.studies,model_ultra_sound_studies,base.group_user,1,1,1,1
 access_ct_guided_intervention,medical.group.ct.guided.intervention,model_ct_guided_intervention,base.group_user,1,1,1,1
-access_scan_test,medical.group.scan.test,model_scan_test,base.group_user,1,1,1,1
 access_lab_test_line,medical.group.lab.test.line,model_lab_test_line,base.group_user,1,1,1,1
 access_scan_line,medical.group.scan.line,model_scan_line,base.group_user,1,1,1,1
 access_scan_bills,medical.group.scan.bills,model_scan_bills,base.group_user,1,1,1,1
@@ -341,3 +325,24 @@ access_lab_test_line,medical.group.lab.test.line,model_lab_test_line,base.group_
 access_immunology_test,medical.group.immunology.test,model_immunology_test,base.group_user,1,1,1,1
 access_lab_test_hospital_data,medical.group.lab.test.hospital.data,model_lab_test_hospital_data,base.group_user,1,1,1,1
 access_whatsapp_form_qr,medical.group.whatsapp.form.qr,model_whatsapp_form_qr,base.group_user,1,1,1,1
+
+access_ebook_access,medical.group.medical.doctor,model_medical_doctor,base.group_user,1,1,1,0
+user_access,user.access,model_medical_doctor,user_access,1,1,1,1
+
+access_telecaler_access,medical.group.telecaler.access,model_medical_appointment,telecaler_access,1,1,1,0
+user_access,user.access,model_medical_appointment,user_access,1,1,1,1
+
+access_registration_access,medical.group.medical.patient,model_medical_patient,base.group_user,1,1,1,0
+user_access,user.access,model_medical_patient,user_access,1,1,1,1
+
+access_billing_access,medical.group.patient.bills,model_patient_bills,base.group_user,1,1,1,0
+user_access,user.access,model_patient_bills,user_access,1,1,1,1
+
+access_prescription_access,medical.group.medical.prescription.order,model_medical_prescription_order,base.group_user,1,1,1,0
+user_access,user.access,model_medical_prescription_order,user_access,1,1,1,1
+
+access_lab_access,medical.group.lab.scan.form,model_lab_scan_form,base.group_user,1,1,1,0
+user_access,user.access,model_lab_scan_form,user_access,1,1,1,1
+
+access_scan_access,medical.group.scan.test,model_scan_test,base.group_user,1,1,1,0
+user_access,user.access,model_scan_test,user_access,1,1,1,1

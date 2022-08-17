@@ -76,7 +76,6 @@ class Scan_test(models.Model):
     request = fields.Char('ID Number', readonly = True)
     write_date=fields.Date(string='Date')
     ebook_id = fields.Char(srting='Patient ID')
-    doctor = fields.Many2one('res.partner',string='Doctor')
     company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.doctor'))
 
     mri_test = fields.Many2many('mri.test.study', string='MRI Test')
@@ -107,7 +106,7 @@ class Scan_test(models.Model):
 
     @api.model
     def create(self, vals):
-        vals['request'] = self.env['ir.sequence'].next_by_code('test_seq')
+        vals['request'] = self.env['ir.sequence'].next_by_code('scan.test') or 'SCAN'
         result = super(Scan_test, self).create(vals)
         
         orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)

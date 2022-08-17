@@ -3,7 +3,7 @@
         <!-- QWeb Reports -->
 
         <report
-            id="report_print_prescription"
+            id="report_print_prescriptions"
             model="medical.prescription.order"
             report_type="qweb-pdf"
             string="Prescription"
@@ -11,6 +11,41 @@
             file="basic_hms.prescription_demo_report"
             />
 
+        <report
+            id="report_print_registration"
+            model="patient.bills"
+            report_type="qweb-pdf"
+            string="Registration"
+            name="basic_hms.registration_bils_report"
+            file="basic_hms.prescription_demo_report"
+        />
+
+        <report
+            id="report_print_lab"
+            model="patient.bills"
+            report_type="qweb-pdf"
+            string="LAB"
+            name="basic_hms.lab_bils_report"
+            file="basic_hms.prescription_demo_report"
+        />
+
+        <report
+            id="report_print_scan"
+            model="patient.bills"
+            report_type="qweb-pdf"
+            string="SCAN"
+            name="basic_hms.scan_bils_report"
+            file="basic_hms.prescription_demo_report"
+        />
+
+        <report
+            id="report_print_prescription"
+            model="patient.bills"
+            report_type="qweb-pdf"
+            string="Prescription"
+            name="basic_hms.prescription_bils_report"
+            file="basic_hms.prescription_demo_report"
+        />
 
             <report
             id="report_diet_print_diet"
@@ -85,15 +120,15 @@
             name="basic_hms.patient_diseases_document"
             file="basic_hms.patient_diseases_document"
             /> -->
+        
         <report
             id="report_print_bills"
             model="patient.bills"
             report_type="qweb-pdf"
             string="Bill"
-            name="basic_hms.patient_bils_report"
+            name="basic_hms.subcontract_warehouseout"
             file="basic_hms.doctor_bill"
         />
-
         <report
             id="report_print_diet"
             model="set.diets"

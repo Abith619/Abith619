@@ -3,6 +3,7 @@ import datetime
 
 class Prescribediet(models.Model):
     _name = 'prescribe.diet'
+    _rec_name = "serial_number"
 
     name = fields.Many2one('set.diets', string="Diets")
     pre_diet_line = fields.One2many('prescribe.diet.line','name',string="Diet Advisied")
@@ -17,7 +18,7 @@ class Prescribediet(models.Model):
     veg_diet=fields.Many2many('set.veg',string="Veg Diet")
     protein_diet=fields.Many2many('set.protein',string="Protein Diet")
     diet_seq = fields.Many2one('prescribe.diet',string='Diet S.No')
-    serial_number = fields.Char(string="Patient ID", readonly=True,copy=False,required=True, default='Patient ID')
+    serial_number = fields.Char(string="Patient ID", readonly=True,copy=False,required=True, default='ID')
     patient_ids=fields.Char(string="Patient",default=lambda self: self.env['medical.doctor'].browse(self.env['medical.doctor']._context.get("patient.id")))
     
     diet_line = fields.One2many('assign.diet.lines','names',string="Diet Advisied")
@@ -59,10 +60,13 @@ class Prescribediet(models.Model):
         values={
             'diet_for':result.name.id,
             'dates':datetime.datetime.now(),
+            'diet_seq':result.id,
             }
         diet_lines.append((0,0,values))
-        diet_page.write({'diet_fields':diet_lines})
+        diet_page.write({'diet_fields':diet_lines,
+            'diet_id':result.id})
         return result
+
 
 
 class PrescribeDietAssign(models.Model):

@@ -88,6 +88,7 @@ class Registerwizard(models.TransientModel):
                     'height':self.height,
                     'weight':self.weight,
                     'bmi_value':self.bmi_value,
+                    # '':self.treatment,
                     'opnumber':self.name,
                     'currents_ailments':lines,
                     'designation':self.designation,

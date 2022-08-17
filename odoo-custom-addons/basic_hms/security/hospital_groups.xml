@@ -1,15 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>  
 
-    <record model="ir.module.category" id="module_category_hospital">
-        <field name="name">Set User Access</field>
-        <field name="description">Access</field>
+    <record id="telecaller_access" model="res.groups">
+        <field name="name">Telecaller</field>
     </record>
 
+    <record model="ir.ui.menu" id="basic_hms.menu_appointment">
+        <field name="groups_id" eval="[(6,0,[ref('basic_hms.telecaller_access')])]"/>
+    </record>
+
+    <record id="registration_access" model="res.groups">
+        <field name="name">Registration</field>
+    </record>
+
+    <record model="ir.ui.menu" id="basic_hms.menu_medical_patient_code">
+        <field name="groups_id" eval="[(6,0,[ref('registration_access')])]"/>
+    </record>
+
+    <record id="prescription_access" model="res.groups">
+        <field name="name">Prescription</field>
+    </record>
+
+    <record model="ir.ui.menu" id="basic_hms.menu_prescription">
+        <field name="groups_id" eval="[(6,0,[ref('prescription_access')])]"/>
+    </record>
+
+    <record id="lab_access" model="res.groups">
+        <field name="name">Lab</field>
+    </record>
+
+    <record model="ir.ui.menu" id="basic_hms.menu_labs">
+        <field name="groups_id" eval="[(6,0,[ref('lab_access')])]"/>
+    </record>
+
+    <record id="scan_access" model="res.groups">
+        <field name="name">Scan</field>
+    </record>
+
+    <record model="ir.ui.menu" id="basic_hms.menu_scan_test_main">
+        <field name="groups_id" eval="[(6,0,[ref('scan_access')])]"/>
+    </record>
+
+    <record id="pharmacy_access" model="res.groups">
+        <field name="name">Pharmacy</field>
+    </record>
+
+    <record model="ir.ui.menu" id="basic_hms.menus_pharmacy">
+        <field name="groups_id" eval="[(6,0,[ref('pharmacy_access')])]"/>
+    </record>
+
+    <record id="billing_access" model="res.groups">
+        <field name="name">Billing</field>
+    </record>
+
+    <record model="ir.ui.menu" id="basic_hms.hospital_menu_bill">
+        <field name="groups_id" eval="[(6,0,[ref('billing_access')])]"/>
+    </record>
+
+    <record id="other_access" model="res.groups">
+        <field name="name">Other</field>
+    </record>
+
+    <record model="ir.ui.menu" id="basic_hms.main_menu_configartion">
+        <field name="groups_id" eval="[(6,0,[ref('other_access')])]"/>
+    </record>
+
+    <record id="ebook_access" model="res.groups">
+        <field name="name">E-Book</field>
+    </record>
+
+    <record model="ir.ui.menu" id="basic_hms.menu_doctor">
+        <field name="groups_id" eval="[(6,0,[ref('basic_hms.ebook_access')])]"/>
+    </record>
+
+    <record id="user_access" model="res.groups">
+        <field name="name">Admin</field>
+        <field></field>
+    </record>
+
+</odoo>
+    <!-- <record id="basic_hms.menu_doctor" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6,0,[ref('user_access')])]"/>
+    </record>
+
+    <record id="basic_hms.hospital_menu_bill" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6,0,[ref('user_access')])]"/>
+    </record>
+
+    <record id="basic_hms.menus_pharmacy" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6,0,[ref('user_access')])]"/>
+    </record>
+
+    <record id="basic_hms.menu_medical_patient_code" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6,0,[ref('user_access')])]"/>
+    </record>
+
+    <record id="basic_hms.menu_appointment" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6,0,[ref('user_access')])]"/>
+    </record>
+
+    <record id="basic_hms.menu_prescription" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6,0,[ref('user_access')])]"/>
+    </record>
+
+    <record id="basic_hms.menu_labs" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6,0,[ref('user_access')])]"/>
+    </record>
+
+    <record id="basic_hms.menu_scan_test_main" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6,0,[ref('user_access')])]"/>
+    </record>
+
+    <record model="ir.ui.menu" id="basic_hms.main_menu_configartion">
+        <field name="groups_id" eval="[(6,0,[ref('user_access')])]"/>
+    </record> -->
+
+   <!-- 
     <record id="group_doctor_user" model="res.groups">
         <field name="name">Reception</field>
-        <!-- <field name="category_id" ref="module_category_hospital"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/> -->
     </record>
 
     <record id="basic_hms.menu_medical_patient_code" model="ir.ui.menu">
@@ -26,29 +134,16 @@
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
+    <record id="basic_hms.menu_prescription" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('basic_hms.group_chemist_user'))]"/>
+    </record>
 
-<record id="basic_hms.menus_pharmacy" model="ir.ui.menu">
-    <field name="groups_id" eval="[(4, ref('basic_hms.group_chemist_user'))]"/>
-</record>
-
- <record id="basic_hms.menu_doctor" model="ir.ui.menu">
-    <field name="groups_id" eval="[(4, ref('basic_hms.group_chemist_user'))]"/>
-</record>
-
-<record id="basic_hms.menu_prescription" model="ir.ui.menu">
-    <field name="groups_id" eval="[(4, ref('basic_hms.group_chemist_user'))]"/>
-</record>
-
-<record id="basic_hms.menu_labs" model="ir.ui.menu">
-    <field name="groups_id" eval="[(4, ref('basic_hms.group_chemist_user'))]"/>
-</record>
-
-<record id="basic_hms.menu_scan_test_main" model="ir.ui.menu">
-    <field name="groups_id" eval="[(4, ref('basic_hms.group_chemist_user'))]"/>
-</record>
+    <record id="basic_hms.menu_doctor" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('basic_hms.group_chemist_user'))]"/>
+    </record>
 
     <record id="group_appointment_user" model="res.groups">
-        <field name="name">Appointment</field>
+        <field name="name">Telecaller</field>
         <field name="category_id" ref="module_category_hospital"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
@@ -69,38 +164,36 @@
 
     <record id="group_pharmacy_user" model="res.groups">
         <field name="name">Pharmacy</field>
-        <!-- <field name="category_id" ref="module_category_hospital"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/> -->
     </record>
 
 
- <record id="basic_hms.menus_pharmacy" model="ir.ui.menu">
-    <field name="groups_id" eval="[(4, ref('basic_hms.group_pharmacy_user'))]"/>
-</record>
+    <record id="basic_hms.menus_pharmacy" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('basic_hms.group_pharmacy_user'))]"/>
+    </record>
 
-<record id="group_billing_user" model="res.groups">
-    <field name="name">Billing</field>
-</record>
-
-
-<record id="basic_hms.patient_bills" model="ir.ui.menu">
-<field name="groups_id" eval="[(4, ref('basic_hms.group_billing_user'))]"/>
-</record>
-
-<record id="group_others_user" model="res.groups">
-        <field name="name">Others</field>
+    <record id="group_billing_user" model="res.groups">
+        <field name="name">Billing</field>
     </record>
 
 
- <record id="basic_hms.main_menu_configartion" model="ir.ui.menu">
-    <field name="groups_id" eval="[(4, ref('basic_hms.group_others_user'))]"/>
-</record>
+    <record id="basic_hms.patient_bills" model="ir.ui.menu">
+    <field name="groups_id" eval="[(4, ref('basic_hms.group_billing_user'))]"/>
+    </record>
 
-<record id="group_labscan_user" model="res.groups">
-    <field name="name">Lab</field>
-    <field name="category_id" ref="module_category_hospital"/>
-    <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-</record>
+    <record id="group_others_user" model="res.groups">
+            <field name="name">Others</field>
+        </record>
+
+
+    <record id="basic_hms.main_menu_configartion" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('basic_hms.group_others_user'))]"/>
+    </record>
+
+    <record id="group_labscan_user" model="res.groups">
+        <field name="name">Lab,Scan</field>
+        <field name="category_id" ref="module_category_hospital"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
 
     <record id="basic_hms.menu_labs" model="ir.ui.menu">
         <field name="groups_id" eval="[(4, ref('basic_hms.group_labscan_user'))]"/>
@@ -108,6 +201,5 @@
 
     <record id="basic_hms.menu_scan_test_main" model="ir.ui.menu">
         <field name="groups_id" eval="[(4, ref('basic_hms.group_labscan_user'))]"/>
-    </record>    
+    </record>     -->
     
-</odoo>

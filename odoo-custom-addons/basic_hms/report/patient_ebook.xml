@@ -7,13 +7,20 @@
             <t t-call="web.external_layout">
      <t t-call="web.html_container">
         <t t-foreach="docs" t-as="o">
+        <style>
+            .flex-parent {
+                display: flex;
+
+            }
+        </style>
+
             <t >
             <tr>
             <td style="border: 0px;width: 50%;">
-                <p><strong>Patient ID : </strong><span t-field="o.name"/></p>
+                <p><b>Patient ID : </b><span t-field="o.name"/></p>
             </td>
             <td style="border: 0px;width: 50%;">
-                <p><strong>Registration Date : </strong><span t-field="o.dates"/></p>
+                <p><b>Registration Date : </b><span t-field="o.dates"/></p>
             </td>
             </tr>
             <table border="4" class="table table-bordered" style="border: 1px solid black;">
@@ -41,7 +48,7 @@
                 <p><b> State : </b> <span t-field="o.state"/></p>
                 <p><b> Country : </b> <span t-field="o.country"/></p>
                 <p><b> Occupation : </b> <span t-field="o.occupation"/></p>
-                <p><b> Designation : </b> <span t-field="o.designation"/></p>
+                <p><b> Experience : </b> <span t-field="o.designation"/></p>
                 <p><b> Father / Husband Name : </b> <span t-field="o.name_father"/></p>
                 <p><b> Father's Occupation : </b> <span t-field="o.father_occupation"/></p>
                 <!-- <p><b> Date :</b> <span t-field="o.dates"/></p> -->
@@ -53,12 +60,14 @@
             <!-- <td style="border: 0px;width: 50%;">
                 <p><strong>Duration of Ailments :</strong><span t-field="o.duration_ailmenmts"/></p>
             </td> -->
-            <td style="border: 0px;width: 50%;">
-                <p><strong>Feedback :</strong><span t-field="o.data_value"/></p>
-            </td>
-            <td style="border: 0px;width: 50%;">
-                <p><strong>Fees :</strong><span t-field="o.fees"/></p>
-            </td>
+           
+            <!-- <div style="border: 0px;width: 50%; text-align: right;">
+               
+            </div> -->
+            <div style="border: 0px;width: 100%; ">
+                <p style="text-align: right;"><strong>Fees :  </strong><i class="fa fa-inr"/><span t-field="o.fees"/></p>
+                <p style="text-align: left;"><strong>Feedback :  </strong><span t-field="o.data_value"/></p>
+            </div>
             </t>
             </t>
             </t>

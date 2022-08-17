@@ -297,13 +297,12 @@
                 <field name ="scan_recs" widget="statinfo" />
             </button>
                 </div>
-            <field name ="request" invisible='1'/>
+                            <field name ="request" invisible='1'/>
         <field name ="name" invisible='1'/>
-            <field name ="patient_id" invisible='1'/>
-            <field name ="price" invisible='1'/>
-            <field name ="range" invisible='1'/>
-            <field name ="doctor" invisible='1'/>
-            <field name ="company_id" invisible='1'/>
+                                <field name ="patient_id" invisible='1'/>
+                                <field name ="price" invisible='1'/>
+                                <field name ="range" invisible='1'/>
+                                <field name ="company_id" invisible='1'/>
                 <div class="row">
             <div class='col-3'>
         <label for="mri_test" class='labtestcls' string='1.5 M.R.I STUDY'/>
@@ -377,7 +376,7 @@
                         <field name ="ebook_id" />
                         <field name ="patient_id" />
                         <field name="write_date"/>
-                        <field name ="doctor" />
+                        <!-- <field name ="range" /> -->
                         <!-- <field name ="company_id" invisible='1'/> -->
                     </tree>
                 </field>
@@ -394,7 +393,7 @@
                         <field name="patient_id"/>
                         <field name="write_date"/>
                     <!-- <filter string="Doctor" name="doctor" domain="[('doctor', '!=', '')]"/> -->
-                        <filter string="Doctor" name="doctor" context="{'group_by': 'doctor'}"/>
+                        <!-- <filter string="Doctor" name="doctor" context="{'group_by': 'doctor'}"/> -->
                         <filter string="Branch" name="company_id" context="{'group_by': 'company_id'}"/>
                         <filter string="Today" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
                         <filter string="Yesterday" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>

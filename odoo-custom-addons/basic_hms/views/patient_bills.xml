@@ -24,8 +24,6 @@
                         <field name="paid_status"/>
                         </group>
                     </group>
-
-                    
                     <notebook>
                         <page string ="Reception">
                             <field name="reception_bills">
@@ -86,28 +84,60 @@
                                     <field name ="date"/>
                                     <field name ="pre_amount"/>
                                     <field name ="delivery_mode"/>
+                                    <field name ="gst_tax" widget='many2many_tags'/>
                                 </tree>
                             </field>
-                            <div class ="col-md-2" style="display: flex; align-items: flex-start; justify-content: center;">
-                                <label for="total1" string="Medicine Amount : " />
-                                <field name ="total1"/>
+                            <div class='row'>
+                            <div class ="col-3">
+                            <div>
+                                <label for="total2" string="Registration Fees : " />
+                                    <field name ="total2"/>
+                            </div>
+                            <div>
+                                <label for="total" string="Lab Amount : " />
+                                    <field name ="total"/>
+                            </div>
+                            <div>
+                                <label for="total_scan" string="Scan Amount : " />
+                                    <field name ="total_scan"/>
+                            </div>
+                            </div>
+                            <div class='col-6'>
+                            </div>
+                            <div class ="col-md-3" style="text-align:end;">
+                                <div>
+                                    <label for="total1" string="Medicine Amount : " />
+                                        <field name ="total1"/>
+                                </div>
+                                <div>
+                                    <label for="total_tax" string="Tax: " />
+                                        <field name ="total_tax"/>
+                                </div>
+                                <div>
+                                    <label for="gst_total_tax" string="Amount With Tax : " />
+                                        <field name ="gst_total_tax"/>
+                                </div>
+                                    </div>
                             </div>
                         </page>
                     </notebook>
                     <div class="row">
                         <div class ="col-md-10">      
                         </div>
-
                         <div class ="col-md-2" style="display: flex; align-items: flex-start; justify-content: center;">
                         <label for="billed_amount" string="Total Amount : " />
                             <field name='billed_amount' readonly='1' force_save='1'/>
-                            
                         </div>
                     </div>
                 </sheet>
+        <div class="oe_chatter">
+            <!-- <field name="message_follower_ids" widget="mail_followers"/> -->
+            <field name="message_ids" widget="mail_thread"/>
+        </div>
                 </form>
-                </field>
-                </record>
+            </field>
+            </record>
+
         <!--Search View-->
 
 <record id="view_bill_land_filter" model="ir.ui.view">
@@ -164,12 +194,12 @@
                 sequence="6"/> -->
 
 
-                <menuitem id="hospital_menu_bill" name="Billing"  parent="main_menu_hospital_management"
+            <menuitem id="hospital_menu_bill" name="Billing"  parent="main_menu_hospital_management"
                 sequence="6"/>
 
 
             <menuitem id="patient_bills"  name ="Bills" action="bills_action_views"
-                parent="hospital_menu_bill"/>
+                parent="hospital_menu_bill" sequence="1"/>
 
             <!-- <record id="Cashier_form" model="ir.ui.view">
                 <field name="name">Cashier</field>
@@ -206,6 +236,6 @@
                     </field>        
                 </record>-->
             <menuitem id="menu_Cashier" name="Cashier" parent= "hospital_menu_bill" 
-            action="account.action_account_payments"/> 
+            action="account.action_account_payments" sequence="2"/> 
 
     </odoo>

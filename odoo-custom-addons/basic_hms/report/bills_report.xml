@@ -1,55 +1,79 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <odoo>
-<data>
-    <template id="basic_hms.patient_bils_report" name="Diet Plan">
+    <template id = "subcontract_warehouseout" >
         <t t-call="web.external_layout">
             <t t-call="web.html_container">
-               <t t-foreach="docs" t-as="o">
-                   <t >
-                   <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
-                   <td style="border: 0px;width: 50%;">
-                       <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p>
-                       <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p>
-                   </td>
-                   </table>
-                   <h1><th style="border: 1px solid black;">Reception</th></h1>
-                   <table class="table table-bordered" style="border: 1px solid black;">
-                    <thead>
-                        <tr>
-                        <th style="border: 1px solid black;">Type of Bill</th>
-                        <!-- <th style="border: 1px solid black;"> Bill Date </th> -->
-                        <th style="border: 1px solid black;"> Bill Amount </th>
-                        <!-- <th style="border: 1px solid black;"> Paid Amount </th> -->
-                        </tr>
-                    </thead>
-                    <tbody>
-                         <tr t-foreach='docs.reception_bills' t-as='line'>
-                       <td style="border: 1px solid black;">
-                       <span t-field="line.name"/>
-                       </td>
-                       <!-- <td style="border: 1px solid black;">
-                       <span t-field="line.date"/>
-                       </td> -->
-                       <td style="border: 1px solid black;">
-                        <span t-field="line.bill_amount"/>
-                        </td>
-                        <!-- <td style="border: 1px solid black;">
-                        <span t-field="line.payment_status"/>
-                        </td> -->
-                        </tr>
-                    </tbody>
-                    </table>
+            
+                <t t-foreach="docs" t-as="o">
+                    <style>
 
-                    <span style="font-weight: bold;"><th style="border: 1px solid black;">Lab / Scan</th></span>
+                        .footer_section{
+
+                        }
+                        .border{
+                            border-collapse: collapse;
+                        }
+                        .heading_text_cor{
+                           color:#000;
+                           font-weight:600;
+
+                          }
+
+
+                        
+
+                    </style>
+        
+                  <xpath expr="//div[@class='header_tag']" position="repalce">
+
+                <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
+                <td style="border: 0px;width: 50%;">
+                <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p>
+                <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p>
+                </td>
+                </table>
+                        </xpath>
+        <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Registration</h4>
+        </div>
+          
+        <table class="table table-bordered" style="border: 1px solid black;">
+        <thead>
+            <tr>
+            <th style="border: 1px solid black;">Type of Bill</th>
+            <th style="border: 1px solid black;"> Bill Date </th>
+            <th style="border: 1px solid black;"> Bill Amount </th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr t-foreach='docs.reception_bills' t-as='line'>
+        <td style="border: 1px solid black;">
+        <span t-field="line.name"/>
+        </td>
+        <td style="border: 1px solid black;">
+        <span t-field="line.date"/>
+        </td>
+        <td style="border: 1px solid black;">
+        <span t-field="line.bill_amount"/>
+        </td>
+        </tr>
+        </tbody>
+
+        </table>
+       
+         <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Lab Test</h4>
+        </div>
                    <table class="table table-bordered" style="border: 1px solid black;">
                     <thead>
                         <tr>
-                        <!-- <th style="border: 1px solid black;">Type of Bill</th> -->
+                     
                         <th style="border: 1px solid black;"> Test Name </th>
-                        <!-- <th style="border: 1px solid black;"> Test Type </th> -->
+                        <th style="border: 1px solid black;"> Date </th>
 
                         <th style="border: 1px solid black;"> Bill Amount </th>
-                        <!-- <th style="border: 1px solid black;"> Paid  </th> -->
+                      
                         </tr>
                     </thead>
                     <tbody>
@@ -57,64 +81,88 @@
                        <td style="border: 1px solid black;">
                        <span t-field="line.name"/>
                        </td>
-                       <!-- <td style="border: 1px solid black;">
-                       <span t-field="line.test_name"/>
-                       </td> -->
-                       <!-- <td style="border: 1px solid black;">
-                       <span t-field="line.test_types"/>
-                       </td> -->
+                       <td style="border: 1px solid black;">
+                       <span t-field="line.date"/>
+                       </td>
+                    
                        <td style="border: 1px solid black;">
                         <span t-field="line.bill_amount"/>
                         </td>
-                        <!-- <td style="border: 1px solid black;">
-                        <span t-field="line.payment_status"/>
-                        </td> -->
                         </tr>
+                      
                     </tbody>
                     </table>
+                  
+             <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Scan Test</h4>
+        </div>
+                   <table class="table table-bordered" style="border: 1px solid black;">
+                    <thead>
+                        <tr>
+                        <th style="border: 1px solid black;"> Test Name </th>
+                        <th style="border: 1px solid black;"> Date </th>
 
-                    <th style="border: 1px solid black;">Prescription</th>
-                    <!-- <t t-set="total" t-value="0"/> -->
+                        <th style="border: 1px solid black;"> Bill Amount </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                              <tr t-foreach='docs.scan_bill' t-as='line'>
+                       <td style="border: 1px solid black;">
+                       <span t-field="line.name"/>
+                       </td>
+                       <td style="border: 1px solid black;">
+                       <span t-field="line.date"/>
+                       </td>
+                       <td style="border: 1px solid black;">
+                        <span t-field="line.bill_amount"/>
+                        </td>
+                       </tr>
+                    </tbody>
+                    </table>
+                   
+                    <div class="header_tag">
+                    <h4 class="text-center heading_text_cor">Prescription</h4>
+                    </div>
                    <table class="table table-bordered" style="border: 1px solid black;">
                     <thead>
                         <tr>
                         <th style="border: 1px solid black;">Prescription ID</th>
                         <th style="border: 1px solid black;"> Name  </th>
+                        <th style="border: 1px solid black;"> Date  </th>
                         <th style="border: 1px solid black;"> Bill Amount </th>
-                        <!-- <th style="border: 1px solid black;"> Bill Date </th> -->
-                        <!--  -->
+                        <th style="border: 1px solid black;"> Taxes</th>
                         </tr>
                     </thead>
                     <tbody>
-                         
-                       <tr t-foreach='docs.pres_bill' t-as='lines'>
-                       <!-- <tr t-foreach='lines.medicine_name' t-as='line_pro'> -->
-                     
+                     <tr t-foreach='docs.pres_bill' t-as='lines'>
                         <td style="border: 1px solid black;">
                          <span t-field="lines.prescription_id"/>
                        </td>
                        <td style="border: 1px solid black;">
                         <span t-field="lines.medicine_name"/>
-                        <!-- <t t-set="total" t-value="total+line_pro.lst_price"/>    -->
+                        </td>
+                        <td style="border: 1px solid black;">
+                        <span t-field="lines.date"/>
                         </td>
                         <td style="border: 1px solid black;">
                          <span t-field="lines.pre_amount"/>
                        </td>
-                        
-                       <!-- </tr> -->
-                       
-                       <!-- <td style="border: 1px solid black;">
-                       <span t-field="lines.date"/>
-                       </td> -->
-                        
-                        </tr>
-                        
-                       
+                       <td style="border: 1px solid black;">
+                         <span t-field="lines.gst_tax"/>
+                       </td>
+                       </tr>
                     </tbody>
                     </table>
-
-                    <p><strong>Total/Due Amount :</strong><span t-field="o.total_amount"/></p>
-                    </t></t></t></t>
-                    </template>
-</data>
+                    <td>
+                    <p class="text-left"><strong>Registration Fees : </strong> <i class="fa fa-inr"/><span t-field="o.bill_amount"/></p>
+                    <p class="text-right"><strong>Lab Amount : </strong> <i class="fa fa-inr"/><span t-field="o.total"/></p>
+                    <p class="text-left"><strong>Scan Amount : </strong><i class="fa fa-inr"/><span t-field="o.total_scan" /></p>
+                    <p class="text-right"><strong>Medicine Amount :  </strong> <i class="fa fa-inr"/><span t-field="o.total1"/></p>
+                    <p class="text-left"><strong>TAX Amount :  </strong><i class="fa fa-inr"/><span t-field="o.total_tax" /></p>
+                    <p class="text-right"><strong>Amount with Tax:  </strong><i class="fa fa-inr"/><span t-field="o.gst_total_tax" /></p>
+                    </td>
+                    
+                    <p class="text-right"><strong>Grand Total :  </strong><i class="fa fa-inr"/><span t-field="o.billed_amount"/></p>
+                </t></t></t>
+    </template>
 </odoo>
