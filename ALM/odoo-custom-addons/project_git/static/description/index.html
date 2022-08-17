@@ -1,0 +1,80 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_picture" style="max-height: initial;">
+            <h2 class="oe_slogan">Project Git</h2>
+            <h4 class="oe_slogan">Overview</h4>
+            <p class="text-center">
+                This is the base module for integrating Project module with remote Git repositories.
+                This module by itself only implements common logic among different Git repository managers.
+                In order to be able to use Project Git, user must install additional module for each
+                Git repository manager (eg. GitHub, GitLab, BitBucket, etc.)
+            </p>
+            <p class="text-center"><b>Models introduced:</b>
+            <ul>
+                <li>Git Repository</li>
+                <li>Git User (As defined in commit definition)</li>
+                <li>Git Branch</li>
+                <li>Git Commit</li>
+            </ul>
+            </p>
+        </div>
+    </div>
+</section>
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_picture" style="max-height: initial;">
+            <h4 class="oe_slogan">Usage</h4>
+            <p class="text-center"><i>Following demos are made in conjunction with Project Git Github module,
+                but principle is the same for any Git repository manager.</i></p>
+            <ol>
+                <li>Make sure to install additional module for Git repository manager of your choice.</li>
+                <li>Go to Git > Repositories and create new Repository.</li>
+                <li>Choose Project, and Git repository manager.</li>
+                <li>On save, Webhook Uri and Secret will be generated.</li>
+                <li>Setup Webhook in Git repository manager using previously generated Webhook Uri and Secret.</li>
+            </ol>
+            <p class="text-center"></p>
+            <div class="oe_demo oe_screenshot">
+                <img src="create_repo.gif" alt="Creating new Git repository"/>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_picture" style="max-height: initial;">
+            <p class="text-center">On first commit, system will parse payload from webhook, and create
+Git Users, Branches and Commits, and also populate previously unknown data on
+Repository model.
+<br/>
+You can link commit to one ore more tasks by including task key in commit message.</p>
+            <div class="oe_demo oe_screenshot">
+                <img src="after_push_overview.gif" alt="Project Form View"/>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_picture" style="max-height: initial;">
+            <h2 class="oe_slogan" style="margin-bottom: 0;">
+                <img src="https://www.modoolar.com/modoolar/static/modoolar-logo.png"> MODOOLAR
+            </h2>
+            <p class="text-center">
+                With extensive experience in implementing Odoo based applications, we can offer you a custom-tailored
+                solution that perfectly meets your needs, and spanning through CRM, Sales management, Accounting, HR
+                management, Project management, Document management, eCommerce, Webshop, and many more. With our
+                hands-on expertise, we can help you get exclusive tailor-made apps for your unique business needs. Our
+                knowledge extends beyond our tech-stack expertise - we follow startup trends, so that we can provide
+                guidance to our clients regarding the business process, legal issues and marketing strategies.
+            </p>
+            <div class="oe_slogan" style="margin: 10px 0 0 0;">
+                <a class="btn btn-lg mt8 oe_purple" href="https://www.modoolar.com/contactus">
+                    <i class="fa fa-phone" style="margin-right: 6px;"></i>Contact us</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+

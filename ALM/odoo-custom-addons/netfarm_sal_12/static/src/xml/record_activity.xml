@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="sal_template_left_record" xml:space="preserve">
+    <t t-name="netfarm_sal_12.record_activity">
+        <div class="card oe_kanban_card o_kanban_record oe_kanban_global_click sal_draggable"
+             t-attf-data-id="#{widget.data.id}"
+             t-attf-data-model="#{widget.data_model}"
+             t-attf-id="#{widget.data.id}-record">
+            <div class="o_dropdown_kanban dropdown">
+                <span class="fa fa-arrow-circle-right card-open"></span>
+                <span class="fa fa-plus create_sal"></span>
+            </div>
+            <div class="card-body">
+
+                <p class="card-title"><t t-esc="widget.data.display_name"/></p>
+            </div>
+        </div>
+    </t>
+</templates>

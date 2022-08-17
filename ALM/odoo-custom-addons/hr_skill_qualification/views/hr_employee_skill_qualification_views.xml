@@ -1,0 +1,310 @@
+<odoo>
+	<!-- Inherited view of Employee for employee skills -->
+	<record id="view_hr_employee_form" model="ir.ui.view">
+		<field name="name">view.hr.employee.form</field>
+		<field name="model">hr.employee</field>
+		<field name="inherit_id" ref="hr.view_employee_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook" position="inside">
+				<page name="hr_skills" string="Skills">
+					<separator string="Technical Skills"/>
+					<field name="techskill_ids">
+					<tree editable="Top">
+					   <field name="tech_id" required="True"/>
+                       <field name="levels" required="True"/>   
+					</tree>
+					<form>
+					   <group col="4">
+                           <field name="tech_id"/>
+                           <field name="levels"/>					    
+					   </group>
+					</form>
+					</field>
+					<separator string="Non Technical Skills"/>
+					<field name="nontechskill_ids">
+					   <tree editable="Top">
+					       <field name="nontech_id" required="True"/>
+					       <field name="levels" required="True"/>
+					   </tree>
+					   <form>
+					       <group col="4">
+					           <field name="nontech_id"/>
+					           <field name="levels"/>
+					       </group>
+					   </form>
+					</field>
+			     </page>
+			     <page name="hr_qualification" string="Qualifications">
+			         <separator string="Educational Qualification"/>
+			         <field name="education_ids">
+			             <tree>
+			                 <field name="type_id"/>
+			                 <field name="institute_id"/>
+			                 <field name="score"/>
+			                 <field name="qualified_year"/>
+			                 <field name="doc"/>
+			             </tree>
+			             <form>
+			                 <group col="4">
+				                 <field name="type_id" required="True"/>
+		                         <field name="institute_id"/>
+                                 <field name="subject"/>
+		                         <field name="score"/>
+		                         <field name="qualified_year"/>
+		                         <field name="doc"/>
+			                 </group>
+			             </form>
+			         </field>
+			         <separator string="Certifications"/>
+			         <field name="certification_ids">
+			             <tree>
+			                 <field name="course_id"/>
+			                 <field name="levels"/>
+			                 <field name="year"/>
+			                 <field name="doc"/>
+			             </tree>
+			             <form>
+			                 <group col="4">
+			                     <field name="course_id" required="True"/>
+	                             <field name="levels" required="True"/>
+	                             <field name="year"/>
+	                             <field name="doc"/>
+			                 </group>
+			             </form>
+			         </field>
+			         <separator string="Professional Experience"/>
+                     <field name="profession_ids">
+                         <tree>
+                             <field name="job_id"/>
+                             <field name="location"/>
+                             <field name="from_date"/>
+                             <field name="to_date"/>
+                             <field name="doc"/>
+                         </tree>
+                         <form>
+                             <group col="4">
+                                 <field name="job_id" required="True"/>
+	                             <field name="location"/>
+	                             <field name="from_date" required="True"/>
+	                             <field name="to_date" required="True"/>
+	                             <field name="doc"/>
+                             </group>
+                         </form>
+                     </field>
+			     </page>
+			 </xpath>
+		</field>
+	</record>
+	
+	
+	<!-- Form view of Technical Skills -->
+    <record id="view_tech_tech_form" model="ir.ui.view">
+        <field name="name">view.tech.tech.form</field>
+        <field name="model">tech.tech</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name" required="True"/> 
+                    <field name="sequence"/>   
+                </group>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Tree view of Technical Skills -->
+    <record id="view_tech_tech_tree" model="ir.ui.view">
+        <field name="name">view.tech.tech.tree</field>
+        <field name="model">tech.tech</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="sequence"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!-- Action of Technical Skills -->
+    <record id="action_tech_skills" model="ir.actions.act_window">
+        <field name="name">Technical Skills</field>
+        <field name="res_model">tech.tech</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+    
+    
+    <!-- Form view of Non Technical Skills -->
+    <record id="view_nontech_nontech_form" model="ir.ui.view">
+        <field name="name">view.nontech.nontech.form</field>
+        <field name="model">nontech.nontech</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name" required="True"/> 
+                    <field name="sequence"/>   
+                </group>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Tree view of Non Technical Skills -->
+    <record id="view_nontech_nontech_tree" model="ir.ui.view">
+        <field name="name">view.nontech.nontech.tree</field>
+        <field name="model">nontech.nontech</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="sequence"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!-- Action of Non Technical Skills -->
+    <record id="action_nontech_skills" model="ir.actions.act_window">
+        <field name="name">Non Technical Skills</field>
+        <field name="res_model">nontech.nontech</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+    
+    
+    <!-- Form view of Educational Qualification -->
+    <record id="view_emp_degree_form" model="ir.ui.view">
+        <field name="name">view.emp.degree.form</field>
+        <field name="model">hr.recruitment.degree</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name" required="True"/>
+                    <field name="sequence"/> 
+                </group>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Tree view of Educational Qualification -->
+    <record id="hr_recruitment.hr_recruitment_degree_tree" model="ir.ui.view">
+        <field name="name">view.emp.degree.tree</field>
+        <field name="model">hr.recruitment.degree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="sequence"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!-- Action of Educational Qualification -->
+    <record id="action_emp_degree" model="ir.actions.act_window">
+        <field name="name">Degrees</field>
+        <field name="res_model">hr.recruitment.degree</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+    
+    <!-- Form view of Institutes -->
+    <record id="view_institute_form" model="ir.ui.view">
+        <field name="name">view.institute.form</field>
+        <field name="model">hr.institute</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name" required="True"/>
+                    <field name="country_id"/>
+                    <field name="state_id"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Tree view of Institutes -->
+    <record id="view_institute_tree" model="ir.ui.view">
+        <field name="name">view.institute.tree</field>
+        <field name="model">hr.institute</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="country_id"/>
+                <field name="state_id"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!-- Action for Institute -->
+    <record id="action_hr_institute" model="ir.actions.act_window">
+        <field name="name">Institute</field>
+        <field name="res_model">hr.institute</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+    
+    <!-- Form view of Employee Certification -->
+    <record id="view_emp_cert_form" model="ir.ui.view">
+        <field name="name">view.emp.cert.form</field>
+        <field name="model">cert.cert</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name" required="True"/>
+                    <field name="sequence"/>    
+                </group>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Tree view of Employee Certification -->
+    <record id="view_emp_cert_tree" model="ir.ui.view">
+        <field name="name">view.emp.cert.tree</field>
+        <field name="model">cert.cert</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="sequence"/>
+            </tree>
+        </field>
+    </record>
+    
+    <!-- Action of Employee Certification -->
+    <record id="action_emp_cert" model="ir.actions.act_window">
+        <field name="name">Certifications</field>
+        <field name="res_model">cert.cert</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    </record>
+    
+    
+    <!-- Inherited menu of configuration -->
+    <menuitem
+            id="hr.menu_human_resources_configuration"
+            name="Configuration"
+            parent="hr.menu_hr_root"
+            groups="hr.group_hr_manager,hr.group_hr_user"
+            sequence="100"/>
+            
+    <!-- Menu item for Skills -->
+    <menuitem id="menu_skills" parent="hr.menu_human_resources_configuration" 
+    name="Skills" groups="hr.group_hr_manager,hr.group_hr_user" sequence="1"/>
+    
+    <!-- Menu for Technical Skills -->
+    <menuitem id="menu_tech_skills" parent="menu_skills" action="action_tech_skills" 
+    groups="hr.group_hr_manager,hr.group_hr_user" sequence="2"/> 
+    
+    <!-- Menu for Non-Technical Skills -->
+    <menuitem id="menu_nontech_skills" parent="menu_skills"
+     action="action_nontech_skills" groups="hr.group_hr_manager,hr.group_hr_user" sequence="3"/>
+    
+    <!-- Menu of Qualifications -->
+    <menuitem id="menu_qualifications" parent="hr.menu_human_resources_configuration" 
+    name="Qualifications" groups="hr.group_hr_manager,hr.group_hr_user" sequence="4"/>
+    
+    <!-- Menu for Degree -->
+    <menuitem id="menu_emp_degree" parent="menu_qualifications"
+    action="action_emp_degree" groups="hr.group_hr_manager,hr.group_hr_user" sequence="5"/>
+    
+    <!-- Menu for Institute -->
+    <menuitem id="menu_hr_institute" parent="menu_qualifications"
+    action="action_hr_institute" groups="hr.group_hr_manager,hr.group_hr_user" sequence="6"/>
+     
+    <!-- Menu for Certifications -->
+    <menuitem id="menu_emp_cert" parent="menu_qualifications" 
+    action="action_emp_cert" groups="hr.group_hr_manager,hr.group_hr_user" sequence="7"/>
+</odoo>

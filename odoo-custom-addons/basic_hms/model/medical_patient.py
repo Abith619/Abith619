@@ -290,7 +290,7 @@ class medical_patient(models.Model):
     contact_number=fields.Char(string="Whatsapp Number")
     date1 = fields.Datetime(string="Date", default=fields.Datetime.now())
     fess = fields.Float(string="Consultation Fee",default=150)
-    doctors = fields.Many2one('res.partner',string="Doctor Allocation",required= True,domain=[('is_doctor','=',True),('user_name', '=', 'company_id')])
+    doctors = fields.Many2one('res.partner',string="Doctor Allocation",required= True,domain=[('is_doctor','=',True)])
     height = fields.Float(string="Height in Cms")
     weight = fields.Float(string="Weight in Kgs")
     occupation = fields.Char(string="Occupation")

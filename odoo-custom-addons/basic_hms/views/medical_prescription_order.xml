@@ -135,10 +135,11 @@
                 <!-- <filter string="Doctor" name="doctor" domain="[('doctor', '!=', '')]"/> -->
                     <filter string="Doctor" name="doctor_id" context="{'group_by': 'doctor_id'}"/>
                     <filter string="Branch" name="company_id" context="{'group_by': 'company_id'}"/>
+                    <filter string="Courier" name="courier_option" context="{'group_by': 'courier_option'}"/>
                     <filter string="Today" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
                     <filter string="Yesterday" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
                     <filter string="Tomorrow" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
-                    
+                    <filter string="Courier" name="courier_option" separator="1" domain="[('courier_option','=','domestic')]"/>
                     <filter string="Past 6 Month" name="write_date" separator="1" domain="[('write_date','&lt;=',(datetime.date.today()-relativedelta(months=6)).strftime('%Y-%m-%d'))]"/>
                     <!-- <filter string="Next Month" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%Y-%m-%d'))]"/> -->
                     <filter string="Past Month" name="write_date" separator="1" domain="[('write_date','&lt;=',(datetime.date.today()-relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>

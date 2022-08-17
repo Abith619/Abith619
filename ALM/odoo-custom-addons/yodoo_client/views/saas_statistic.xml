@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="20"/>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='integration']" position="after">
+                <div id="yodoo_database_statistics">
+                    <h2>Yodoo Statistics</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box mb0">
+                            <div class="o_setting_right_pane">
+                                <label for="users_total_count" string="Users Total"/>
+                                <field name="users_total_count" class="badge badge-primary mr4" style="font-size: 100%; width: auto;"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box mb0">
+                            <div class="o_setting_right_pane">
+                                <label for="db_storage"/>
+                                <field name="db_storage" class="badge badge-primary mr4" style="font-size: 100%; width: auto;"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box mt0 mb0">
+                            <div class="o_setting_right_pane">
+                                <label for="users_internal_count" string="Users Internal"/>
+                                <field name="users_internal_count" class="badge badge-primary mr4" style="font-size: 100%; width: auto;"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box mt0 mb0">
+                            <div class="o_setting_right_pane">
+                                <label for="file_storage"/>
+                                <field name="file_storage" class="badge badge-primary mr4" style="font-size: 100%; width: auto;"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box mt0">
+                            <div class="o_setting_right_pane">
+                                <label for="users_external_count" string="Users External"/>
+                                <field name="users_external_count" class="badge badge-primary mr4" style="font-size: 100%; width: auto;"/>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Yodoo Statistics</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box mb0">
+                            <div class="o_setting_left_pane">
+                                <field name="yodoo_allow_admin_logins"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="yodoo_allow_admin_logins"/>
+                                <div class="text-muted">
+                                    <button name="%(action_show_active_auth_sessions)d"
+                                            type="action"
+                                            string="Show admin auth sessions"
+                                            class="oe_link"
+                                            attrs="{'invisible': [('yodoo_allow_admin_logins', '=', False)]}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

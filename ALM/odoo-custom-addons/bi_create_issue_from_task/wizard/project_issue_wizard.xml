@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+
+        <record id="view_project_issue_wizard_form" model="ir.ui.view">
+            <field name="name">project.issue.wizard.form</field>
+            <field name="model">project.issue.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Create" class="oe_highlight"
+                            name="create_issue" type="object" />
+                        or
+                        <button string="Cancel" class="oe_highlight" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_project_issue_wizard" model="ir.actions.act_window">
+            <field name="name">Create Issue</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">project.issue.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+		<field name="binding_model_id" ref="project.model_project_task"></field>
+        </record>
+
+     
+    </data>
+</odoo>

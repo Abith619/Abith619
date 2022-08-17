@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+        <record id="view_employee_badge_configuration_tree" model="ir.ui.view">
+            <field name="name">employee_badge.configuration.tree</field>
+            <field name="model">employee_badge.configuration</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Badges">
+                    <field name="name"/>
+                    <field name="priority"/>
+                </tree>  
+            </field>
+        </record>
+
+        <record id="view_employee_badge_configuration_form" model="ir.ui.view">
+            <field name="name">employee_badge.configuration.form</field>
+            <field name="model">employee_badge.configuration</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Employee Badge">
+                    <sheet>
+                        <group style="width:50%">
+                            <field name="name" required="1"/>
+                            <field name="priority" required="1"/>
+                        </group>
+
+                        <group style="width:100%" string="Badge History">
+                            <field name="badge_line_ids" readonly="1" nolabel="1">
+                              <tree editable="bottom">
+                                <field name="date"/>
+                                <field name="task_id"/>
+                                <field name="employee_id"/>
+                                <field name="badge_id" invisible="1"/>
+                              </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_employee_badge_configuration" model="ir.actions.act_window">
+            <field name="name">Employee Badges</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">employee_badge.configuration</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="view_id" ref="view_employee_badge_configuration_tree"/>
+        </record>
+
+        <menuitem id="menu_employee_badge_configuration" name="Employee Badges" parent="hr.menu_human_resources_configuration" action="action_employee_badge_configuration" sequence="101"/>
+
+</odoo>

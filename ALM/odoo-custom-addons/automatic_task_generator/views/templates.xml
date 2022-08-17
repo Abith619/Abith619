@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <record forcecreate="True" id="base_cron_tasks" model="ir.cron">
+            <field name="name">Base cron automatic tasks</field>
+            <field name="model_id" ref="model_automatic_task_generator_generate_tasks"/>
+            <field name="state">code</field>
+            <field name="code">model.generate_by_date()</field>
+            <field eval="True" name="active" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="nextcall" eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 16:20:00')"/>
+        </record>
+    </data>
+</odoo>

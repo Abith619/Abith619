@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2017 - 2018 Modoolar <info@modoolar.com>
+License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html).
+-->
+<odoo>
+    <menuitem id="project_workflow_management.project_workflows_menu" parent="project_workflow_management.project_workflow_menu"
+              action="project_workflow_management.project_workflow_read_only_action"/>
+
+    <menuitem id="project_workflow_management.project_workflow_import" name="Import" parent="project_workflow_management.project_workflow_menu"
+              action="project_workflow_management.project_workflow_import_wizard_action"/>
+
+    <menuitem id="project_workflow_management.project_workflow_export" name="Export" parent="project_workflow_management.project_workflow_menu"
+              action="project_workflow_management.project_workflow_export_wizard_action"/>
+</odoo>

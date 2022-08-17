@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_extend_project_task_for_employee_rewards_form" model="ir.ui.view">
+        <field name="name">project.task.form</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="related_employee_id"/>
+                <field name="is_task_reward_done" invisible="1"/>
+            </field>
+            <header position="inside">
+                <button name="%(action_employee_reward_wizard_view)d" string="Give Badge" type="action" context="{'default_task_id':id,'default_employee_id':related_employee_id}" attrs="{'invisible':[('is_task_reward_done','!=',False)]}"/>
+            </header>
+        </field>
+    </record>
+
+</odoo>

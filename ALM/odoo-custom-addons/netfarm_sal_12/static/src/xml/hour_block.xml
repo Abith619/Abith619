@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="sal_template_hour" xml:space="preserve">
+    <t t-name="netfarm_sal_12.hour_block">
+        <div class="total_hour" >
+            <b><span class="assigned"><t t-esc="widget.total_assigned"/></span> / <span class="total"><t t-esc="widget.total_daily"/></span></b>
+        </div>
+    </t>
+</templates>

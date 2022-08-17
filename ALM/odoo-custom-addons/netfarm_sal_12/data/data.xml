@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record model="ir.module.category" id="module_category_netfarm_sal">
+            <field name="name">Sal</field>
+            <field name="description">Sal Rules</field>
+            <field name="sequence">99</field>
+        </record>
+
+        <record id="group_netfarm_sal_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="module_category_netfarm_sal"/>
+        </record>
+
+        <record id="group_netfarm_sal_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="module_category_netfarm_sal"/>
+            <field name="implied_ids" eval="[(4,ref('netfarm_sal_12.group_netfarm_sal_user'))]"/>
+            <field name="users" eval="[(4,ref('base.user_root'))]"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+
+  <!--form view of the brand menu-->
+<record model="ir.ui.view" id="studentss_view">
+            <field name="name">afterins_form</field>
+            <field name="model">afterin.afterin</field>
+            <field name="arch" type="xml">
+                <form string="afterin">
+                   <sheet>
+                                       <group><field name="names">names</field> </group>
+                <group>
+        	 <group string="Handling"></group>
+</group>
+
+					 
+                        <group><field name="name">hospitality</field> </group>
+                         <group><field name="ourbehaviour">ourbehaviour</field> </group>
+                          <group><field name="emailphone">emailphone</field> </group>
+                           <group><field name="timing">timing</field> </group>
+                            <group><field name="doubts">doubts</field> </group>
+                              <group><field name="conduct">conduct</field> </group>
+                <group>
+        	 <group string="Office Environment"></group>
+</group>
+         <group><field name="office">office</field> </group>
+                  <group><field name="officeoutside">officeoutside</field> </group>
+                           <group><field name="officesafety">officesafety</field> </group>
+                                    <group><field name="officeinside">officeinside</field> </group>
+                                                  <group>
+        	 <group string="Suggestion For Improvement"></group>
+</group>
+         <group><field name="specify">specify</field> </group>
+                       <group>
+        	 <group string="Other Feedback"></group>
+</group>
+<group><field name="specifyifany">specifyifany</field> </group>
+
+
+
+</sheet>
+ </form>
+  </field>
+</record>
+
+  <record id="afterin_status_tree_view" model="ir.ui.view">
+            <field name="name">After Interview</field>
+            <field name="model">afterin.afterin</field>
+            <field name="arch" type="xml">
+                <tree>
+               <!--<field name="name"/>-->
+                    <field name="names"/>
+                                  <field name="ourbehaviour"/>
+                                  
+                    
+                
+                </tree>
+            </field>
+        </record>
+
+
+		<!--action for brand-->
+		 <record id="afterin_menu_action" model="ir.actions.act_window">
+        	<field name="name">Candidate After Interview</field>
+        	<field name="res_model">afterin.afterin</field>
+
+        	<field name="view_mode">tree,form,kanban</field>
+             <field name="context" eval="{'search_default_male': 1}"/>
+        	<field name="domain">[]</field>
+        	<field name="help" type="html">
+            	<p class="oe_view_nocontent_create">Create The First Model
+            	</p>
+        	</field>
+
+    </record>
+
+
+      
+	</data>
+</odoo>
+

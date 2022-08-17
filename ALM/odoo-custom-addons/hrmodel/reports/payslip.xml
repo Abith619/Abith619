@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+<template id="payslip_inherit" inherit_id="hr_payroll.report_payslip">
+<xpath expr="//div[@class='page']" position="replace">
+ <!--<h2> Pay Slip</h2>-->
+                   <p class="text-center" style="font-size:15px"><span t-field="o.name"/></p>
+
+                    <table class="table table-sm table-bordered">
+                    <tr>
+                            <td><strong>Employee Code</strong></td>
+                            <td><span t-field="o.Employeecodes"/></td>
+                            <td><strong>Name</strong></td>
+                            <td><span t-field="o.employee_id"/></td>
+                        </tr>
+
+                       <!-- <tr>
+                            <td><strong>Address</strong></td>
+                            <td colspan="3">
+                                <div t-field="o.employee_id.address_home_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+                            </td>
+                        </tr>-->
+                        <tr>
+                            <td><strong>Designation</strong></td>
+                            <td><span t-field="o.employee_id.job_id"/></td>
+                            <td><strong>Department Name</strong></td>
+                            <td><span t-field="o.department"/></td>
+                         
+                        </tr>
+                         <tr>
+                            <td><strong>Date of Joining</strong></td>
+                            <td><span t-field="o.dateofjoin"/></td>
+                            <td><strong>No of Days Present</strong></td>
+                            <td></td>
+                        </tr>
+                         <tr>
+                            <td><strong>Leave Availed</strong></td>
+                            <td><span t-field="o.noofdayspresent"/></td>
+                            <td><strong>LOP</strong></td>
+                            <td><span t-field="o.lop"/></td>
+                        </tr>
+
+
+                         
+
+
+                        <tr>
+                            <td><strong>Bank Name</strong></td>
+                            <td><span t-field="o.bankname"/></td>
+                            <td><strong>Bank Account</strong></td>
+                            <td><span t-field="o.employee_id.bank_account_id"/></td>
+                        </tr>
+
+                         <tr>
+                            <td><strong>Branch Name</strong></td>
+                            <td><span t-field="o.branchname"/></td>
+                            <td><strong>IFSC Code</strong></td>
+                            <td></td>
+                        </tr>
+                        <!-- <tr>
+                            <td><strong>Date From</strong></td>
+                            <td><span t-field="o.date_from"/></td>
+                            <td><strong>Date To</strong></td>
+                            <td><span t-field="o.date_to"/></td>
+                        </tr> -->
+
+
+                        
+                    </table>
+
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Earnings</th>
+<!--<th>Quantity/rate</th>--> 
+                                 <th>Amount</th>
+                                  <th>Deduction</th>
+                                <th>Deduction Amount</th>
+                                <th>Net Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
+                                <td><span t-field="line.code"/></td>
+                                <td><span t-field="line.name"/></td>
+                              <!--  <td><span t-field="line.quantity"/></td>-->
+                                <td><span t-esc="line.amount" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.company_id.currency_id}"/></td>
+                               <td><span t-field="line.deduction"/></td>
+                                <td><span t-esc="line.deduction_amount" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.company_id.currency_id}"/></td>
+                                <td><span t-esc="line.net_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.company_id.currency_id}"/></td>
+
+                            </tr>
+
+                        
+                        </tbody>
+                    </table>
+              
+                  <!--  <p class="text-right"><strong>Authorized signature</strong></p>-->
+<p class="text-center" style="font-size:15px"><strong>Amount (In words) : </strong><span t-field="o.num_word"/></p>
+<br/>
+ <p class="text-left"><h6><strong>IT IS COMPUTER GENERATED SALARY SLIP, HENCE SIGNATURE IS NOT REQUIRED</strong></h6></p>
+
+
+
+
+</xpath>
+
+</template>
+</data>
+</odoo>

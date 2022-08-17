@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="discount_sale_order_view_form">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']//tree[1]//field[@name='price_subtotal']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//tree[1]" position="inside">
+                    <field name="price" />
+                </xpath>
+                <xpath expr="//field[@name='note']" position="before">
+                    <div>
+                        <label for="discount_type" string="Discount Type :"/>
+                        <field name="discount_type" class="oe_inline"/>
+                    </div>
+                    <div>
+                        <label for="discount_rate" string="Discount Rate :"/>
+                        <field name="discount_rate" class="oe_inline"/>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='amount_untaxed']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='amount_untaxed']" position="before">
+                    <field name="total_before_discount" />
+                </xpath>
+                <xpath expr="//field[@name='amount_untaxed']" position="after">
+                    <field name="discount" />
+                </xpath>
+            </field>
+        </record>
+
+
+        <template id="portal_order_page_inherit" inherit_id="sale.sale_order_portal_content">
+            <xpath expr="//table[1]//tbody[1]//tr[1]//td[3]" position="replace">
+                <td t-attf-class="text-right {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">
+                    <div t-field="line.price_unit"
+                         t-options='{"widget": "monetary", "display_currency": sale_order.pricelist_id.currency_id}'
+                    />
+                </td>
+            </xpath>
+
+            <xpath expr="//table[1]//thead[1]//tr[1]" position="inside">
+                <th class="text-right">Subtotal</th>
+            </xpath>
+            <xpath expr="//table[1]//thead[1]//tr[1]//th[6]" position="attributes">
+                <attribute name="style">display: none</attribute>
+            </xpath>
+            <xpath expr="//table[1]//tbody[1]//tr" position="inside">
+                <td class="text-right"><span t-field="line.price"/></td>
+            </xpath>
+            <xpath expr="//table[1]//tbody[1]//tr//td[6]" position="attributes">
+                <attribute name="style">display: none</attribute>
+            </xpath>
+
+            <xpath expr="//div[@id='total']//table[1]//tr[1]" position="before">
+                <tr class="border-black" style="border-bottom:1px solid #dddddd;">
+                    <td><strong>Subtotal</strong></td>
+                    <td class="text-right">
+                        <span t-field="sale_order.total_before_discount"
+                              t-options='{"widget": "monetary", "display_currency": sale_order.pricelist_id.currency_id}'/>
+                    </td>
+                </tr>
+            </xpath>
+            <xpath expr="//div[@id='total']//table[1]//tr[2]" position="before">
+                <tr t-if="sale_order.discount > 0">
+                    <td><strong>Discount</strong></td>
+                    <td class="text-right">
+                        <span t-field="sale_order.discount"
+                              t-options='{"widget": "monetary", "display_currency": sale_order.pricelist_id.currency_id}'/>
+                    </td>
+                </tr>
+            </xpath>
+            <xpath expr="//div[@id='total']//table[1]//tr[3]" position="attributes">
+                <attribute name="style">display: none</attribute>
+            </xpath>
+        </template>
+
+        <template id="report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//table[1]//thead[1]//tr[1]" position="inside">
+                <th class="text-right">Subtotal</th>
+            </xpath>
+            <xpath expr="//table[1]//thead[1]//tr[1]//th[6]" position="attributes">
+                <attribute name="style">display: none</attribute>
+            </xpath>
+            <xpath expr="//table[1]//tbody[1]//tr" position="inside">
+                <td class="text-right"><span t-field="line.price"/></td>
+            </xpath>
+            <xpath expr="//table[1]//tbody[1]//tr//td[6]" position="attributes">
+                <attribute name="style">display: none</attribute>
+            </xpath>
+            <xpath expr="//div[@id='total']//table[1]//tr[1]" position="before">
+                <tr style="border-bottom:1px solid #dddddd;">
+                    <td><strong>Subtotal</strong></td>
+                    <td class="text-right">
+                        <span t-field="doc.total_before_discount"
+                              t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                    </td>
+                </tr>
+            </xpath>
+            <xpath expr="//div[@id='total']//table[1]//tr[2]" position="before">
+                <tr t-if="doc.discount > 0" class="border-black">
+                    <td><strong>Discount</strong></td>
+                    <td class="text-right">
+                        <span t-field="doc.discount"
+                              t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
+                    </td>
+                </tr>
+            </xpath>
+            <xpath expr="//div[@id='total']//table[1]//tr[3]" position="attributes">
+                <attribute name="style">display: none</attribute>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

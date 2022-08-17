@@ -93,12 +93,17 @@ class medical_prescription_order(models.Model):
                     'product_uom':data.units
                 }
             picking_list.append((0,0,datas))
+        company_orm = self.env['stock.picking.type'].search([('company_id','=',res.company_id.id),('sequence_code','=','OUT')])
+        company_orm_id=company_orm[0]['id']
+        company_orm_1 = self.env['stock.location'].search([('company_id','=',res.company_id.id),('usage','=','internal')])
+        company_orm_id_1=company_orm_1[0]['id']
+        # raise ValidationError(company_orm_id)
 
         picking_data={
             'partner_id':res.patient_id.id,
-            'picking_type_id':2,
-            'location_id':8,
-            'location_dest_id':5,
+            'picking_type_id':company_orm_id,
+            'location_id':company_orm_id_1,
+            # 'location_dest_id':5,
             'prescerption_ids':res.id,
             'move_ids_without_package':picking_list          
         } 

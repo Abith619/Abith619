@@ -78,5 +78,6 @@ from. import register_payment
 from. import patient_bills
 from. import labscan_form
 from. import scan_test
+from. import whatsapp_form
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:s

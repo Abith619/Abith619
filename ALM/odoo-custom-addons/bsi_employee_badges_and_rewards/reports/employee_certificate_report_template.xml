@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paperformat_employee_certificate" model="report.paperformat">
+        <field name="name">Paper format for Employee Certificate</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">65</field>
+        <field name="margin_bottom">28</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">55</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <template id="employee_certificate_report_document">
+        <t t-call="web.basic_layout">
+            <t t-set="doc" t-value="doc.with_context()"/>
+            <div class="page">
+                <div class="oe-structure"/>
+                <head>
+                    <title>Employee Certificate</title>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+                </head>
+                <body style="margin: 10px auto; padding: 20px; text-align: center;">
+                    <div style="border: 2px solid #AB5197; border-radius: 50px; padding: 60px 20px 20px 20px; margin: 20px auto 10px auto; text-align: center; font-family: Helvetica, Arial, sans-serif; width: 720px; *width: 800px; height: auto; position: relative;">
+                        <div style="position: absolute; top:-20px; left: -20px;">
+                            <img src="/bsi_employee_badges_and_rewards/static/images/flower.png"/>
+                        </div>
+                        <div class="logo">
+                            <img class="aligncenter size-full wp-image-33" t-if="doc.company_id.logo" alt="Logo" width="480" height="150" t-att-src="image_data_uri(doc.company_id.logo)"/>
+                        </div>
+                        <h1 style="font-size: 42px; font-family: Georgia, serif;">
+                            <strong><span style="color: #8a9c2d;">CERTIFICATE</span></strong><br/>
+                        </h1>
+                        <h1 style="font-size: 30px; font-family: Georgia, serif;">
+                            <t t-if="doc.reward == 'month_best'">
+                                <span style="color: #8a9c2d;">Employee of the Month</span>
+                            </t>
+                            <t t-if="doc.reward == 'year_best'">
+                                <span style="color: #8a9c2d;">Employee of the Year</span>
+                            </t>
+                        </h1>
+                        <p style="font-size: 16px;">To: <strong><t t-esc="doc.name"/></strong></p>
+                        <p style="font-size: 16px;">If this makes you feel better, a raise can't be framed and hung on the wall like this can.</p>
+                        <p style="font-size: 16px;">The CERTIFICATE is achieved with <strong><t t-esc='doc.reward_points'/> reward points</strong>.</p>
+                        <p><img class="aligncenter size-full wp-image-32" alt="hr1" src="/bsi_employee_badges_and_rewards/static/images/hr1.png" width="109" height="32"/></p>
+                        <h5><span style="color: #8a9c2d;">In recognition of your constant effort to improve your performance. Awarded on <strong><t t-esc="(doc.reward_date).strftime('%d-%m-%Y')"/></strong> by the member of the <strong><t t-esc='doc.company_id.name'/></strong>. </span></h5>
+                        <p><img class="aligncenter size-full wp-image-32" alt="hr1" src="/bsi_employee_badges_and_rewards/static/images/bt1.png" width="109" height="32" /></p>
+                    </div>
+                </body>
+            </div>
+        </t>
+    </template>
+
+    <template id="employee_certificate_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="bsi_employee_badges_and_rewards.employee_certificate_report_document"/>
+            </t>
+        </t>
+    </template>
+
+    <report
+        id="action_employee_certificate_report"
+        string="Employee Certificate"
+        model="hr.employee"
+        report_type="qweb-pdf"
+        file="bsi_employee_badges_and_rewards.employee_certificate_report_template"
+        name="bsi_employee_badges_and_rewards.employee_certificate_report_template"
+        paperformat="bsi_employee_badges_and_rewards.paperformat_employee_certificate"
+    />
+
+</odoo>

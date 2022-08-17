@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="sal_template" xml:space="preserve">
+    <t t-name="netfarm_sal_12.employee_block">
+        <div class="o_kanban_group right-block-model">
+            <div class="o_kanban_header">
+                <span class="o_column_title"><t t-esc="widget.title"/></span>
+            </div>
+            <div class="form-group">
+                <select class="form-control form-control dep_select">
+                    <option selected="1" disabled="1"><t t-esc="widget.choose_first"/></option>
+                    <t t-foreach="widget.departments" t-as="dep">
+                        <option t-att-value="dep[0]" selected="1" t-if="dep[0] == widget.selected_department"><t t-esc="dep[1]"/></option>
+                        <option t-att-value="dep[0]" t-else=""><t t-esc="dep[1]"/></option>
+                    </t>
+                </select>
+            </div>
+            <div class="content-employee">
+                <t t-foreach="widget.employees" t-as="dep">
+                    <div t-attf-id="dep#{dep}" t-attf-class="card_employees #{widget.selected_department == dep ? 'd-block': 'd-none' }">
+                         <t t-foreach="widget.employees[dep]" t-as="employee">
+                             <div t-attf-class="
+                             card
+                             oe_kanban_card
+                             o_kanban_record
+                             oe_kanban_global_click
+                             select_employee #{widget.selected_employee == employee['id'] ? 'selected_employee' : ''}"
+                                  t-attf-data-id="#{employee['id']}">
+                                 <t t-esc="employee['name']"/>
+                             </div>
+                         </t>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

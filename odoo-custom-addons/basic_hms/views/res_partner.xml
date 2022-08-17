@@ -161,6 +161,21 @@
             </field>
         </record>
 
+<record id="view_expense_land_filter" model="ir.ui.view">
+    <field name="name">Expense</field>
+    <field name="model">hr.expense</field>
+    <field name="type">search</field>
+    <field name="inherit_id" ref="hr_expense.hr_expense_view_search"/>
+    <field name="arch" type="xml">
+    <filter name="my_expenses" position="replace">
+        <filter string="Today" name="date" separator="1" domain="[('date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
+    </filter>
+    <filter name="my_team_expenses" position="replace">
+        <filter string="Expense" name="name" context="{'group_by': 'name'}"/>
+    </filter>
+    </field>
+</record>
+
 <record id="view_contacts_land_filter" model="ir.ui.view">
     <field name="name">Contacts</field>
     <field name="model">res.partner</field>

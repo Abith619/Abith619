@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+	<report id="report_emp_performance" string="Task Performance Report"
+		model="hr.employee"
+		report_type="qweb-pdf"
+		file="abs_employee_performance_report.report_emp_performance_ok"
+		name="abs_employee_performance_report.report_emp_performance_ok" />
+    </data>
+</odoo>

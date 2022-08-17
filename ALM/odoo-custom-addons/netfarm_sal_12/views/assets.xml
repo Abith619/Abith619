@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <template id="assets_backend" name="web_kanban assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/netfarm_sal_12/static/src/css/style.css"/>
+                <script type="text/javascript" src="/netfarm_sal_12/static/src/js/hour_block.js"></script>
+                <script type="text/javascript" src="/netfarm_sal_12/static/src/js/ckanban_record.js"></script>
+                <script type="text/javascript" src="/netfarm_sal_12/static/src/js/employee_block.js"></script>
+                <script type="text/javascript" src="/netfarm_sal_12/static/src/js/record_activity.js"></script>
+                <script type="text/javascript" src="/netfarm_sal_12/static/src/js/activity_block.js"></script>
+                <script type="text/javascript" src="/netfarm_sal_12/static/src/js/ckanban_controller.js"></script>
+                <script type="text/javascript" src="/netfarm_sal_12/static/src/js/ckanban_model.js"></script>
+                <script type="text/javascript" src="/netfarm_sal_12/static/src/js/ckanban_renderer.js"></script>
+                <script type="text/javascript" src="/netfarm_sal_12/static/src/js/ckanban_view.js"></script>
+            </xpath>
+        </template>
+</odoo>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="report.paperformat" id="paperformat_project_report">
+        <field name="name">paperformat.project.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_width">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">40</field>
+        <field name="margin_right">5</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">30</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <template id="template_report">
+        <t t-call="web.html_container">
+        <t t-call="web.external_layout" t-lang="en_US">
+        <div class="page">
+            <div class="oe_structure"/>
+            <br/><br/>
+            <div style="color:#66b3ff; width: 100%"><strong><h2 class="text-center"> <span t-esc="project_id.name"/></h2></strong>
+            </div>
+
+            <div class="row mt32 mb32">
+                <div class="col-auto mw-500 mb-3" style = "width : 25%">
+                    <strong>Assigned To</strong>
+                    <p class="m-0" t-esc="user_id.name"/>
+                </div>
+                <div class="col-auto mw-110 mb-3"  style = "width : 25%">
+                    <strong>Stage</strong>
+                    <p class="m-0" t-esc="stage_id.name"/>
+                </div>
+                <div class="col-auto mw-100 mb-3"  style = "width : 25%">
+                    <strong>Start Date</strong>
+                    <p class="m-0" t-esc="start_date"/>
+                </div>
+                <div  class="col-auto mw-100 mb-3"  style = "width : 25%">
+                    <strong>End Date</strong>
+                    <p class="m-0" t-esc="end_date"/>
+                </div>
+            </div>
+
+            <div class= "row">
+            <table class="table table-condensed table-bordered" style="width: 100%">
+                <thead style=" background-color: #8080ff;">
+                    <th class="text-center" style="width: 11%">Task Name</th>
+                    <th class="text-center" style="width: 11%">Assigned To</th>
+                    <th class="text-center" style="width: 11%">Assigning Date</th>
+                    <th class="text-center" style="width: 11%">Deadline</th>
+                    <th class="text-center" style="width: 11%">Planned Hours</th>
+                    <th class="text-center" style="width: 11%">Spent Hours</th>
+                    <th class="text-center" style="width: 11%">Remaining Hours</th>
+                </thead>
+                <tbody>
+                    <t t-foreach="docs" t-as="doc">  
+                        <tr>
+                            <td>
+                                <span t-esc="doc['name']"/>
+                            </td>
+                             <td class="text-center">
+                                <span t-esc="doc['user_id']"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-esc="doc['date_assign']"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-esc="doc['date_deadline']"/>
+                            </td>
+                            <td>
+                                <span t-esc="doc['planned_hours']"/>
+                            </td>
+                            <td>
+                                <span t-esc="doc['total_hours_spent']"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-esc="doc['remaining_hours']"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+        </div>
+        <div class="footer">
+            <div class="row text-center" style="border-top: 1px solid black;">
+                <div class="col-xs-3 col-xs-offset-9 text-right">
+                    <ul class="list-inline" style="margin-top:10px;">
+                        <li>Page: <span class="page"/></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </t>
+</t>
+</template>
+
+<report id="project_report_action" model="project.details"
+   string="Project Report" report_type="qweb-pdf"
+   name="project_task_report_app.template_report"
+   paperformat="paperformat_project_report"
+   menu="False"
+/>
+</odoo>

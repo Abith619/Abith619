@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_project_task_inherit_form" model="ir.ui.view">
+            <field name="name">project.task.form.inherit</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2" />
+            <field name="arch" type="xml">
+                <div class="oe_button_box" name="button_box" position="inside">
+                    <button name="tasks_issue_count" type="object" class="oe_stat_button" icon="fa-bug">
+                        <field name="task_issue_count" string="Issues" widget="statinfo"/>
+
+                    </button>
+                    <field name="tag_ids" position="after">
+                        <field name="issue_id"/>
+                    </field>
+                </div>
+            </field>
+        </record>
+
+        <record id="action_task_issue" model="ir.actions.act_window">
+        <field name="name">Issue</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">project.task</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_project_issue" name="Project Issue" parent="project.menu_main_pm"/>
+        <menuitem action="action_task_issue" id="menu_sub_support_issue" name="Issue" parent="menu_project_issue" />
+
+    </data>
+</odoo>

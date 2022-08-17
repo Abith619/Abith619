@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="approve_description_form" model="ir.ui.view">
+        <field name="name">approve_description.wizard.name</field>
+        <field name="model">approve.description</field>
+        <field name="arch" type="xml">
+			<form string="My Form">
+				<sheet>		                	
+					<group>
+						<field name="description_field"/>
+						<field name="unauth_1" string='Unauthorized leave'/>
+					</group>
+				</sheet>
+				<footer>
+					<button name="addeds" type="object" string="SAVE" class="oe_highlight"/>
+					<button name="cancel" special="cancel" string="Cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>             
+
+<record id="approve_description_wizard"  model="ir.actions.act_window">
+	<field name="name">approve description</field>
+	<field name="type">ir.actions.act_window</field>		
+	<field name="res_model">approve.description</field>
+	<field name="view_mode">form</field>
+	<field name="view_id" ref="approve_description_form"/>
+	<field name="target">new</field>
+</record>
+</odoo>

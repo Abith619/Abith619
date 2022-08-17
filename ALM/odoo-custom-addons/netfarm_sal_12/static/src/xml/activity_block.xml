@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="sal_template_left" xml:space="preserve">
+    <t t-name="netfarm_sal_12.activityblock">
+        <div class="o_kanban_group left-block-model">
+            <div class="o_kanban_header">
+                <span class="o_column_title"><t t-esc="widget.title"/></span>
+            </div>
+            <div class="form-group">
+                <select class="form-control form-control models_select">
+                    <option selected="1" disabled="1"><t t-esc="widget.choose_first"/></option>
+                    <t t-foreach="widget.models_allowed" t-as="models">
+                        <option t-att-value="models[0]" selected="1" t-if="models[0] == widget.model_selected"><t t-esc="models[1]"/></option>
+                        <option t-att-value="models[0]" t-else=""><t t-esc="models[1]"/></option>
+                    </t>
+                </select>
+
+            </div>
+            <div class="form-group">
+                <input class="form-control form-control search-object" type="text" placeholder="Search..."/>
+            </div>
+            <div>
+                <button type="button" class="btn btn-link page-prev">Prev</button>
+                <button type="button" class="btn btn-link page-next">Next</button>
+            </div>
+            <div class="content-activity"></div>
+
+        </div>
+    </t>
+</templates>

@@ -340,4 +340,4 @@ access_scan_bills,medical.group.scan.bills,model_scan_bills,base.group_user,1,1,
 access_lab_test_line,medical.group.lab.test.line,model_lab_test_line,base.group_user,1,1,1,1
 access_immunology_test,medical.group.immunology.test,model_immunology_test,base.group_user,1,1,1,1
 access_lab_test_hospital_data,medical.group.lab.test.hospital.data,model_lab_test_hospital_data,base.group_user,1,1,1,1
-
+access_whatsapp_form_qr,medical.group.whatsapp.form.qr,model_whatsapp_form_qr,base.group_user,1,1,1,1

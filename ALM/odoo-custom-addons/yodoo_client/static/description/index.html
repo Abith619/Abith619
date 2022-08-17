@@ -1,0 +1,105 @@
+
+<section style="max-width: 896px; margin: 0 auto;">
+<div align="center">
+<h1 style="color:#875A7B;">Yodoo Client</h1>
+</div>
+<div align="center">
+<p><a href="https://crnd.pro/"><img alt="CR&amp;D" src="https://img.shields.io/badge/maintainer-CR&amp;D-purple.png" /></a></p>
+<p><br></p>
+</div>
+</section>
+
+<section style="margin: 0 auto; max-width: 896px;">
+<div style="padding: 0.3em 0.6em; font-size: 120%;">
+<p>
+The Yodoo Client application is the client addon for the Yodoo Cockpit.
+It allows you to connect Odoo instance to Yodoo Cockpit.
+</p>
+</div>
+</section>
+<section style="margin: 0 auto; max-width: 896px;">
+<h2 style="color:#875A7B;text-align: center">Yodoo Cockpit</h2>
+<div style="padding: 0.3em 0.6em; font-size: 120%;">
+<p>Take a look at [Yodoo Cockpit](https://crnd.pro/yodoo-cockpit) project, and discover the easiest way to manage your odoo installations, or run your product as SaaS.</p>
+<p>Just short notes about [Yodoo Cockpit](https://crnd.pro/yodoo-cockpit):</p>
+<ul>
+<li>start new production-ready odoo instance in 1-2 minutes.</li>
+<li>add custom addons to your odoo instances in few clicks.</li>
+<li>out-of-the-box email configuration: just press button and add some records to your DNS, and get a working email</li>
+<li>make your odoo instance available to external world (internet) in 30 seconds (just add single record in your DNS)</li>
+<li>easy way to sell your odoo-based product in SaaS way.</li>
+<li>Yodoo Cockpit could be launched as <i>Infrastructure as a Service (IaaS)</i>, thus you even do not need to worry about servers.</li>
+</ul>
+
+<p>If you have any questions, then contact us at info@crnd.pro, so we could schedule online-demonstration.</p>
+</div>
+</section>
+<section style="margin: 0 auto; max-width: 896px;">
+<h2 style="color:#875A7B;text-align: center">Configuration</h2>
+<div style="padding: 0.3em 0.6em; font-size: 120%;">
+<p>The configuration has several steps.</p>
+<ol>
+<li><p>Set <code>yodoo_token</code> to the <code>odoo.conf</code> file. This is a series of random ascii characters. This is the same as the <code>odoo_instance_token</code> field on the remote server.</p>
+<pre><code>yodoo_token = Your_random_token</code></pre>
+</li>
+<li><p>Set <code>admin_access_url</code> and <code>admin_access_credentials</code> to the <code>odoo.conf</code> file.</p>
+<p>Enables full administrator access from the remote server via the button.</p>
+<pre><code>admin_access_url = True
+admin_access_credentials = True</code></pre>
+<p>Enables administrator access from the remote server via a temporary login and password.</p>
+<pre><code>admin_access_url = False
+admin_access_credentials = True</code></pre>
+<p>Disabled administrator access from the remote server.</p>
+<pre><code>admin_access_url = False
+admin_access_credentials = False</code></pre>
+</li>
+<li><p>Set <code>server_wide_modules</code> to <code>odoo.conf</code> file.</p>
+<pre><code>server_wide_modules = base,web,yodoo_client</code></pre>
+</li>
+</ol>
+</div>
+</section>
+
+<section style="max-width: 896px; margin: 0 auto;">
+<h2 style="color:#875A7B;text-align: center">Bug Tracker</h2>
+<div style="padding: 0.3em 0.6em; font-size: 120%;">
+<p>Bugs are tracked at our [Service Desk](https://crnd.pro/requests). In case of any trouble, please report there.
+</p>
+<p><br></p>
+</div>
+</section>
+
+<section style="max-width: 896px; margin: 0 auto;">
+<h2 style="color:#875A7B;text-align: center">Level up your service quality</h2>
+<div style="padding: 0.3em 0.6em; font-size: 120%;">
+<p>
+Level up your service with one of our solutions:</p>
+<ul>
+<li>[Helpdesk](https://crnd.pro/solutions/helpdesk)</li>
+<li>[Service Desk](https://crnd.pro/solutions/service-desk)</li>
+<li>[ITSM](https://crnd.pro/itsm) solution.</li>
+</ul>
+<p>Just test it at [yodoo.systems](https://yodoo.systems/saas/templates): choose template you like, and start working.
+</p>
+
+<p>Test all available features of [Bureaucrat ITSM](https://crnd.pro/itsm) with template https://yodoo.systems/saas/template/bureaucrat-itsm-demo-data-95.</p>
+</div>
+</section>
+
+<section align="center" style="max-width: 896px; margin: 0 auto;">
+<div>
+<h2 style="color: #138c33">Maintainer</h2>
+<a href="https://crnd.pro/"><img alt="CR&amp;D" src="https://crnd.pro/web/image/3699/300x140/crnd.png" /></a>
+<p>Our web site: <a href="https://crnd.pro">https://crnd.pro</a>
+</p>
+<p>This module is maintained by the <a href="https://crnd.pro/">Center of Research &amp; Development</a>
+company.
+</p>
+<p>
+We can provide you further Odoo Support, Odoo implementation, Odoo customization, Odoo 3rd Party development and integration software, consulting services. Our main goal is to provide the best quality product for you. 
+</p>
+<p>
+For any questions <a href="mailto:info@crnd.pro">contact us</a>.
+</p>
+</div>
+</section>

@@ -1,0 +1,24 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="view_bank_statement_extend">
+      <field name="name">Bank statement Inherit</field>
+      <field name="model">res.partner.bank</field>
+      <field name="inherit_id" ref="base.view_partner_bank_form"/>
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='acc_number']" position="after">
+
+          <field name ="ifsc_code"/>
+           <field name ="branch_name"/>
+           <field name ="typess"/>
+        
+                    
+          </xpath>
+         
+
+          </field>
+    </record>
+
+     </data>
+</odoo> 

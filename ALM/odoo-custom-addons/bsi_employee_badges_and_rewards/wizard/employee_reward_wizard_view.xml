@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="employee_reward_wizard_form_view" model="ir.ui.view">
+    <field name="name">employee.reward.wizard.form</field>
+    <field name="model">employee.reward.wizard</field>
+    <field name="arch" type="xml">
+      <form>
+          <group style="width:50%">
+              <field name="date" readonly="1"/>
+              <field name="task_id" readonly="1"/>
+              <field name="employee_id" readonly="1"/>
+          </group>
+          <group style="width:50%">
+              <field name="badge_id"/>
+          </group>
+          <footer>
+            <button name="confirm_employee_reward" string="Confirm" type="object" class="btn-primary"/>
+            <button string="Cancel" class="btn-secondary" special="cancel"/>
+          </footer>
+      </form>
+    </field>
+  </record>
+
+    <record id="action_employee_reward_wizard_view" model="ir.actions.act_window">
+        <field name="name">Employee Badge Wizard</field>
+        <field name="res_model">employee.reward.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="employee_reward_wizard_form_view"/>	
+    </record>
+
+</odoo>

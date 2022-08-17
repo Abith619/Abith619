@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+# Copyright 2017 - 2018 Modoolar <info@modoolar.com>
+# License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html).
+-->
+<odoo noupdate="1">
+    <record id="wkf_simple_kanban" model="project.workflow">
+        <field name="name">Simple Kanban Workflow</field>
+        <field name="description">Workflow for simple kanban software development.</field>
+        <field name="state">live</field>
+    </record>
+
+    <record id="project_task_stage_draft" model="project.task.type">
+        <field name="name">Draft</field>
+        <field name="description">This means that task is not yet approved to go to ToDo stage.</field>
+        <field name="sequence" eval="0"/>
+    </record>
+
+    <!-- Workflow States -->
+    <record id="wkf_simple_kanban_state_draft" model="project.workflow.state">
+        <field name="workflow_id" ref="wkf_simple_kanban"/>
+        <field name="stage_id" ref="project_task_stage_draft"/>
+        <field name="type">todo</field>
+    </record>
+    <!--Set default workflow state-->
+    <!-- pylint:disable=redundant-modulename-xml -->
+    <record id="project_agile_kanban.wkf_simple_kanban" model="project.workflow">
+        <field name="default_state_id" ref="wkf_simple_kanban_state_draft"/>
+    </record>
+
+    <record id="wkf_simple_kanban_state_todo" model="project.workflow.state">
+        <field name="workflow_id" ref="wkf_simple_kanban"/>
+        <field name="stage_id" ref="project_agile.project_task_stage_todo"/>
+        <field name="type">todo</field>
+    </record>
+
+    <record id="wkf_simple_kanban_state_in_progress" model="project.workflow.state">
+        <field name="workflow_id" ref="wkf_simple_kanban"/>
+        <field name="stage_id" ref="project_agile.project_task_stage_in_progress"/>
+        <field name="type">in_progress</field>
+    </record>
+
+    <record id="wkf_simple_kanban_state_done" model="project.workflow.state">
+        <field name="workflow_id" ref="wkf_simple_kanban"/>
+        <field name="stage_id" ref="project_agile.project_task_stage_done"/>
+        <field name="type">done</field>
+    </record>
+    <!-- Transitions -->
+
+    <!-- Start Progress: From ``Draft`` to ``ToDo`` -->
+    <record id="wkf_simple_kanban_trn_draft_todo" model="project.workflow.transition">
+        <field name="workflow_id" ref="wkf_simple_kanban"/>
+        <field name="name">Ready</field>
+        <field name="src_id" ref="wkf_simple_kanban_state_draft"/>
+        <field name="dst_id" ref="wkf_simple_kanban_state_todo"/>
+        <field name="description">Task is accepted.</field>
+    </record>
+
+    <!-- Start Progress: From ``ToDo`` to ``Draft`` -->
+    <record id="wkf_simple_kanban_trn_todo_draft" model="project.workflow.transition">
+        <field name="workflow_id" ref="wkf_simple_kanban"/>
+        <field name="name">Back to draft</field>
+        <field name="src_id" ref="wkf_simple_kanban_state_todo"/>
+        <field name="dst_id" ref="wkf_simple_kanban_state_draft"/>
+        <field name="description">Move task back to planning.</field>
+    </record>
+
+    <!-- Start Progress: From ``ToDo`` to ``In Progress`` -->
+    <record id="wkf_simple_kanban_trn_todo_in_progress" model="project.workflow.transition">
+        <field name="workflow_id" ref="wkf_simple_kanban"/>
+        <field name="name">Start Progress</field>
+        <field name="src_id" ref="wkf_simple_kanban_state_todo"/>
+        <field name="dst_id" ref="wkf_simple_kanban_state_in_progress"/>
+        <field name="description">Start working on this task.</field>
+    </record>
+
+    <!-- Stop Progress: From ``In Progress`` to ``ToDo``  -->
+    <record id="wkf_simple_kanban_trn_in_progress_todo" model="project.workflow.transition">
+        <field name="workflow_id" ref="wkf_simple_kanban"/>
+        <field name="name">Stop Progress</field>
+        <field name="src_id" ref="wkf_simple_kanban_state_in_progress"/>
+        <field name="dst_id" ref="wkf_simple_kanban_state_todo"/>
+        <field name="description">Stop working on this task.</field>
+    </record>
+
+    <!-- Finish Work: From ``In Progress`` to ``Done``  -->
+    <record id="wkf_simple_kanban_trn_in_progress_done" model="project.workflow.transition">
+        <field name="workflow_id" ref="wkf_simple_kanban"/>
+        <field name="name">Finish Work</field>
+        <field name="src_id" ref="wkf_simple_kanban_state_in_progress"/>
+        <field name="dst_id" ref="wkf_simple_kanban_state_done"/>
+        <field name="description">Work on this task has been finished.</field>
+    </record>
+
+    <!-- Start Progress: From ``Done`` to ``In Progress``  -->
+    <record id="wkf_simple_kanban_trn_done_in_progress" model="project.workflow.transition">
+        <field name="workflow_id" ref="wkf_simple_kanban"/>
+        <field name="name">Start Progress</field>
+        <field name="src_id" ref="wkf_simple_kanban_state_done"/>
+        <field name="dst_id" ref="wkf_simple_kanban_state_in_progress"/>
+        <field name="description">Start working on this task again.</field>
+    </record>
+
+    <!-- Back on the list: From ``Done`` to ``ToDo``  -->
+    <record id="wkf_simple_kanban_trn_done_todo" model="project.workflow.transition">
+        <field name="workflow_id" ref="wkf_simple_kanban"/>
+        <field name="name">Back on the list</field>
+        <field name="src_id" ref="wkf_simple_kanban_state_done"/>
+        <field name="dst_id" ref="wkf_simple_kanban_state_todo"/>
+        <field name="description">Put the task back to TDOD list.</field>
+    </record>
+
+    <!-- Back on the list: From ``ToDo`` to ``Done`` -->
+    <record id="wkf_simple_kanban_trn_todo_done" model="project.workflow.transition">
+        <field name="workflow_id" ref="wkf_simple_kanban"/>
+        <field name="name">Done</field>
+        <field name="src_id" ref="wkf_simple_kanban_state_todo"/>
+        <field name="dst_id" ref="wkf_simple_kanban_state_done"/>
+        <field name="description">Put the task directly to done.</field>
+    </record>
+</odoo>

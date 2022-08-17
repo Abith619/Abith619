@@ -1,0 +1,185 @@
+.netfarm_calendar_kanban{
+    min-width: 170px !important;
+    background-color: white !important;
+    border-right: 1px solid #e9e6e6;
+    padding: 0 !important;
+    width:14.28% !important;
+    position: relative;
+}
+.netfarm_calendar_kanban.o_column_folded{
+    min-width: 50px !important;
+    width: 1vw !important;
+}
+.netfarm_calendar_kanban .o_kanban_record {
+    width: 10vw !important;
+    margin: auto !important;
+    display: block !important;
+}
+.netfarm_calendar_kanban .o_column_title{
+    text-align: center !important;
+}
+.netfarm_calendar_kanban_today{
+    background-color: #f6e58d !important;
+}
+.right-block-model, .left-block-model{
+    background-color: #f0eeee !important;
+    padding: 4px !important;
+}
+.right-block-model .o_column_title, .left-block-model .o_column_title{
+    webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    flex: 1 1 auto;
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center !important;
+    width:100%;
+    height: 35px;
+    line-height: 35px;
+
+}
+.right-block-model{
+    position: fixed;
+    min-height: 100%;
+    right: 0;
+    width:11.5% !important;
+    padding-top: 8px !important;
+}
+.left-block-model{
+    position: fixed;
+    min-height: 100%;
+    left: 0;
+    width:11.5% !important;
+    padding-top: 8px !important;
+}
+.left-block-model .content-activity, .right-block-model .content-employee{
+    height: 60vh;
+    overflow-y: auto;
+}
+.left-block-model .card, .right-block-model .card{
+    width: 90% !important;
+    margin: 0 auto;
+}
+.ckanban{
+    width: 77% !important;
+    overflow-x: auto !important;
+    margin-left: 11.5%;
+    overflow-y: hidden;
+    display: flex !important;
+}
+.select_employee{
+    padding: 8px;
+    cursor: pointer;
+}
+.left-block-model .form-control, .right-block-model .form-control{
+    width: 90%;
+    margin: auto;
+}
+.ckanban .o_view_nocontent, .ckanban .o_kanban_config{
+    display:none !important;
+}
+.sal_draggable{
+    cursor: grab;
+}
+.sal_draggable .o_dropdown_kanban{
+    position: absolute;
+    right: 5px;
+    top: 2px;
+    display: none;
+}
+.sal_draggable:hover .o_dropdown_kanban{
+    display: block !important;
+}
+.sal_draggable .card-title{
+    margin-bottom: 0 !important;
+}
+.card-open, .create_sal{
+    cursor: pointer;
+}
+.okr-kanban-card{
+    border: 0 !important;
+    outline:1px solid #ced4da;
+}
+
+/**OTHER**/
+.selected_employee{
+    background-color: #f6e58d !important;
+}
+
+
+.ckanban-record{
+    padding: 0 !important;
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+    position: relative;
+}
+.ckanban-right{
+    float:right;
+    background-color: #f0eeee;
+    height: 100%;
+    width: 30%;
+    padding:3px;
+    overflow: hidden;
+    margin-bottom: 0 !important;
+}
+.ckanban-left{
+    float:left;
+    height:100%;
+    width:50%;
+    padding:3px;
+    overflow: hidden;
+}
+.ckanban-right p, .ckanban-left p{
+    overflow: hidden;
+}
+
+.netfarm_calendar_kanban .o_kanban_header{
+    height: 50px !important;
+}
+.total_hour{
+    height: 25px;
+    width:100%;
+    padding: 3px;
+    text-align: center;
+    border-bottom: 1px solid #f0eeee;
+}
+.red_hour{
+    background-color: #e74c3c;
+    color: white;
+}
+
+.linea{
+    height: 1px;
+    display: block;
+    background-color: #e55039;
+    position: absolute;
+    width: 100%;
+    right: 0px;
+}
+.sal_draggable{
+    z-index: 99999999 !important;
+}
+.ck-dropdown{
+    position: absolute;
+    top: 5px !important;
+    right: 35% !important;
+}
+.ckanban-done{
+    background-color: #b8e994 !important;
+}
+.page-next{
+    float: right !important;
+}
+.page-next, .page-prev{
+    outline: none !important;
+}
+.models_select:focus, .dep_select:focus, .search-object:focus{
+    border-color: #ccc !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}

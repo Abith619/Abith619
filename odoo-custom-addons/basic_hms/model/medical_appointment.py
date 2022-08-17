@@ -158,7 +158,7 @@ class medical_appointment(models.Model):
 			msg.message_post(body=msg_body)
 		result = super(medical_appointment, self).create(vals)
   
-		url = "https://sm.mo.vc/api/send.php?number=919941922115&type=text&message='goodmorning'&instance_id=62D117E44E1E8&access_token=a27e1f9ca2347bb766f332b8863ebe9f"
+		url = "https://sm.mo.vc/api/send.php?number=919941922115&type=text&message='good morning'&instance_id=62D117E44E1E8&access_token=a27e1f9ca2347bb766f332b8863ebe9f"
 
 		payload={}
 		headers = {}

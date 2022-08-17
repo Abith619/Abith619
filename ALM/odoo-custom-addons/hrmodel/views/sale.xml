@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<data>
+<record id="sale_order_line_inherit" model="ir.ui.view">
+        <field name="model">sale.order.line</field>
+        <field name="inherite_id">sale.sale_order_line_view_form_readonly</field>
+        <field name="arch" type="xml">
+            <form string="saleorderline">
+                    <group>
+                      <xpath expr="//field[@name='product_uom_qty']" position="replace">
+                        <field name="product_uom_qty"/>
+                      </xpath>
+                    </group>
+            </form>
+        </field>
+   </record>
+
+
+
+
+</data>                       
+
+</odoo>

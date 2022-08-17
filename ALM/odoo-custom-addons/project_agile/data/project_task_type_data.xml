@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+# Copyright 2017 - 2018 Modoolar <info@modoolar.com>
+# License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html).
+-->
+<odoo noupdate="1">
+    <record id="project_task_stage_todo" model="project.task.type">
+        <field name="name">ToDo</field>
+        <field name="description">This stage means that the task is waiting on TODO list to be picked up for work.
+        </field>
+        <field name="sequence" eval="1"/>
+    </record>
+
+    <record id="project_task_stage_done" model="project.task.type">
+        <field name="name">Done</field>
+        <field name="description">This stage means that the task has been completed.</field>
+        <field name="sequence" eval="1"/>
+    </record>
+
+    <record id="project_task_stage_waiting_approval" model="project.task.type">
+        <field name="name">Waiting Approval</field>
+        <field name="description">This stage means that the task is waiting for a "green light" to be worked on.</field>
+        <field name="sequence" eval="1"/>
+    </record>
+
+    <record id="project_task_stage_rejected" model="project.task.type">
+        <field name="name">Rejected</field>
+        <field name="description">This stage means that the task has been rejected.</field>
+        <field name="sequence" eval="1"/>
+    </record>
+
+    <record id="project_task_stage_init" model="project.task.type">
+        <field name="name">Init</field>
+        <field name="description">This stage means that the task is under construction. It should be ignored until
+            reporter says otherwise.
+        </field>
+        <field name="sequence" eval="1"/>
+    </record>
+
+    <record id="project_task_stage_actionable" model="project.task.type">
+        <field name="name">Actionable</field>
+        <field name="description">This stage means that the task definition has been completed and that it's ready for
+            review by project manager.
+        </field>
+        <field name="sequence" eval="2"/>
+    </record>
+
+    <record id="project_task_stage_accepted" model="project.task.type">
+        <field name="name">Accepted</field>
+        <field name="description">This stage means that the task has been accepted by the project manager</field>
+        <field name="sequence" eval="3"/>
+    </record>
+
+    <record id="project_task_stage_open" model="project.task.type">
+        <field name="name">Open</field>
+        <field name="description">This stage means that it can be worked on this task.</field>
+        <field name="sequence" eval="4"/>
+    </record>
+
+    <record id="project_task_stage_close" model="project.task.type">
+        <field name="name">Closed</field>
+        <field name="description">This stage means that this task is closed.</field>
+        <field name="sequence" eval="55"/>
+    </record>
+
+    <record id="project_task_stage_reopened" model="project.task.type">
+        <field name="name">Reopened</field>
+        <field name="description">This means that the task has been reopened for some reason.</field>
+        <field name="sequence" eval="6"/>
+    </record>
+
+    <record id="project_task_stage_in_progress" model="project.task.type">
+        <field name="name">In Progress</field>
+        <field name="description">This stage means that on this task is been actively worked on.</field>
+        <field name="sequence" eval="7"/>
+    </record>
+
+    <record id="project_task_stage_blocked" model="project.task.type">
+        <field name="name">Blocked</field>
+        <field name="description">This means that on this task could not be worked anymore due the missing information
+            or similar.
+        </field>
+        <field name="sequence" eval="8"/>
+    </record>
+
+    <record id="project_task_stage_code_review" model="project.task.type">
+        <field name="name">Code Review</field>
+        <field name="description">This means that on this task requires code review.</field>
+        <field name="sequence" eval="9"/>
+    </record>
+
+    <record id="project_task_stage_integration" model="project.task.type">
+        <field name="name">Integration</field>
+        <field name="description">This means that on this task requires integration testing (i.e. Unit Testing).</field>
+        <field name="sequence" eval="10"/>
+    </record>
+
+    <record id="project_task_stage_qa" model="project.task.type">
+        <field name="name">QA</field>
+        <field name="description">This means that this task is ready for QA</field>
+        <field name="sequence" eval="11"/>
+    </record>
+
+    <record id="project_task_stage_in_progress_qa" model="project.task.type">
+        <field name="name">In Progress QA</field>
+        <field name="description">This means that QA is working on this task.</field>
+        <field name="sequence" eval="12"/>
+    </record>
+
+    <record id="project_task_stage_deployment_uat" model="project.task.type">
+        <field name="name">Deployment UAT</field>
+        <field name="description">This means that the task is ready to be deployed on UAT.</field>
+        <field name="sequence" eval="13"/>
+    </record>
+
+    <record id="project_task_stage_uat_qa" model="project.task.type">
+        <field name="name">UAT QA</field>
+        <field name="description">This means that the task is ready to be tested on UAT.</field>
+        <field name="sequence" eval="14"/>
+    </record>
+
+    <record id="project_task_stage_in_progress_uat_qa" model="project.task.type">
+        <field name="name">In Progress UAT QA</field>
+        <field name="description">This means that QA is testing this task on UAT environment.</field>
+        <field name="sequence" eval="15"/>
+    </record>
+
+    <record id="project_task_stage_resolved" model="project.task.type">
+        <field name="name">Resolved</field>
+        <field name="description">This stage means that a task has been successfully test on UAT.</field>
+        <field name="sequence" eval="16"/>
+    </record>
+
+    <record id="project_task_stage_deployment" model="project.task.type">
+        <field name="name">Deployment</field>
+        <field name="description">This stage means that a task is ready to be deployed to production.</field>
+        <field name="sequence" eval="17"/>
+    </record>
+
+    <record id="project_task_stage_qa_production" model="project.task.type">
+        <field name="name">QA Production</field>
+        <field name="description">This stage means that a ticket has been deployed to production and it's waiting to be
+            verified on production if possible..
+        </field>
+        <field name="sequence" eval="18"/>
+    </record>
+</odoo>

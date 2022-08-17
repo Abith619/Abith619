@@ -1,0 +1,54 @@
+
+<odoo>
+  <data>
+<record model="ir.ui.view" id="crm_case_form_view_job">
+    <field name="name">RecruitmentForm</field>
+    <field name="model">hr.applicant</field>
+    
+    <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='reference']" position="after">
+          
+            <!--<field name="howdoyou"/>-->
+              <field name="interested"/>
+                <field name="reason"/>
+                  <field name="relieving"/>
+         
+        </xpath>
+                <xpath expr="//field[@name='partner_mobile']" position="after">
+          
+            <!--<field name="howdoyou"/>-->
+              <field name="loaction"/>
+               <field name="relocate"/>
+                <field name="nativa"/>
+                  <field name="background"/>
+                 <field name="status"/>
+                  <field name="date"/>
+            
+         
+        </xpath>
+             <xpath expr="//form/sheet/group" position="after">
+                                                                     <notebook>
+                                                                     
+    <page string="Languages Know">
+                                <field name="appointment_lines">
+                                    <tree string="Consignment Request" editable="bottom">
+									 <field name="types"/>
+                                        <field name="delivery_orders"/>
+										<field name="dtimess"/>
+                                        <field name="times"/>
+                                        
+                                        
+                                       
+                                    </tree>
+                                </field>
+                            </page>
+                             </notebook>
+         
+        </xpath>
+    
+     
+    </field>
+</record>
+</data>
+</odoo>

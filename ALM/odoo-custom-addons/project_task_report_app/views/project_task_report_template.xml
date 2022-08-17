@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="report.paperformat" id="paperformat_task_report_report">
+        <field name="name">paperformat.task.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_width">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">40</field>
+        <field name="margin_right">5</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">30</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report id="task_report_template"
+            model="project.details"
+            string="Report"
+            report_type="qweb-pdf"
+            name="project_task_report_app.task_template_report"
+            paperformat="paperformat_task_report_report"
+            menu="False"/>
+
+    <template id="task_template_report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+        <div class="page">
+            <div class="oe_structure"/>
+            <br/><br/>
+                <div style="color:#66b3ff;">
+                    <strong><h2 class="text-center"><span t-esc="task_id.name"/></h2></strong>
+                </div>
+
+                <div class="row mt32 mb32">
+                    <div class="col-auto mw-500 mb-3" style = "width : 25%">
+                        <strong>Assigned To</strong>
+                        <p class="m-0" t-esc="task_id.user_id.name"/>
+                    </div>
+                    <div class="col-auto mw-110 mb-3"  style = "width : 25%">
+                        <strong>Project</strong>
+                        <p class="m-0" t-esc="task_id.project_id.name"/>
+                    </div>
+                    <div class="col-auto mw-100 mb-3"  style = "width : 25%">
+                        <strong>Stage</strong>
+                        <p class="m-0" t-esc="task_id.stage_id.name"/>
+                    </div>
+                    <div  class="col-auto mw-100 mb-3"  style = "width : 25%">
+                        <strong>Deadline</strong>
+                        <p class="m-0" t-esc="end_date"/>
+                    </div>
+                </div>
+        
+                <table class="table table-condensed table-bordered" style="width: 100%">
+                    <thead style="background-color: #8080ff;">
+                        <th class="text-center" style="width: 11%">User</th>
+                        <th class="text-center" style="width: 11%">Date</th>
+                        <th class="text-center" style="width: 11%">Description</th>
+                        <th class="text-center" style="width: 11%">Duration</th>
+                    </thead>
+                    <tbody>
+                         <t t-foreach="docs" t-as="doc">  
+                             <tr>
+                                <td>
+                                    <span t-esc="doc['employee_id']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="doc['date']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="doc['name']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="'{0:02.0f}:{1:02.0f}'.format(*divmod(doc['unit_amount'] * 60, 60)) "/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            <div class="clearfix">
+                <div class="row">
+                    <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
+                        <table class="table table-sm">
+                            <tr class="border-black o_subtotal">
+                                <td class="text-right">
+                                    <strong>Planned Hours</strong> : 
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="task_id.planned_hours"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">
+                                    <strong>Spent Hours</strong> :
+                                </td> 
+                                <td class="text-right">
+                                    <span t-esc="'{0:02.0f}:{1:02.0f}'.format(*divmod((sum(line['unit_amount'] for line in docs)) * 60, 60)) "/><br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">
+                                    <strong>Remaining Hours</strong> :
+                                </td>
+                                <td class="text-right">
+                                    <t t-if="docs"><span t-esc="task_id.remaining_hours or 0.0"/>
+                                    </t>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="row text-center" style="border-top: 1px solid black;">
+                <div class="col-xs-3 col-xs-offset-9 text-right">
+                    <ul class="list-inline" style="margin-top:10px;">
+                        <li>Page:</li>
+                        <li>
+                            <span class="page"/>
+                        </li>
+                        <li>/</li>
+                        <li>
+                            <span class="topage"/>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </t>
+</t>
+</template>
+</odoo>

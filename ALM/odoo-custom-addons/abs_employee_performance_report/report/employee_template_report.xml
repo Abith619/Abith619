@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="report_emp_performace_document">
+		<t t-call="web.external_layout">
+			<t t-set="doc" t-value="doc.with_context()"/>
+			<div class="page">
+				<div class="oe_structure"/>
+				<br/>
+				<h2>
+				     <span>Task Performance Report of </span>
+				     <span t-field="doc.name"/>
+				</h2>
+				<div class="row mt32 mb32" id="informations">
+			 		<table class="table table-condensed">
+						<thead>
+							<tr>
+							    <th>On Time Completion Task</th>
+							    <th>Late Completion Task</th>
+							    <th>Total Spent Hours</th>
+							    <th>Extra Spent Hours</th>   
+							</tr>
+						</thead>
+						<tbody class="sale_tbody">			
+							<tr>
+								<td><span t-field="doc.on_time_count"/></td>
+								<td><span t-field="doc.late_count"/></td>
+								<td><span t-field="doc.total_spent_hours"/> hours</td>
+								<td><span t-field="doc.late_time"/> hours </td>	
+							</tr>
+						
+						</tbody>
+					    </table>
+					    
+                                    
+				</div>
+				<table class="table table-condensed">
+					<thead>
+						<tr>
+						    <th>Task Name</th>
+						    <th>Stage</th>
+						    <th>Deadline</th>
+						    <th>Estimated Hours</th>
+						    <th>Spent Hours</th>
+						</tr>
+					</thead>
+					<tbody class="sale_tbody">
+						<t t-foreach="doc.task_ids" t-as="l">
+							<tr>
+								<td><span t-field="l.name"/></td>
+								<td><span t-field="l.stage_id"/></td>	
+								<td><span t-field="l.date_deadline"/></td>
+								<td><span t-field="l.planned_hours"/></td>
+								<td><span t-field="l.effective_hours"/></td>
+							</tr>
+						</t>
+					</tbody>
+				</table>		
+			</div>
+		   </t>		
+	</template>
+	<template id="report_emp_performance_ok">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="doc">
+				<t t-call="abs_employee_performance_report.report_emp_performace_document"/>
+			</t>
+		</t>
+	</template>			
+</odoo>

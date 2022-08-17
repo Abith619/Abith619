@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+<!-- project  wizard -->
+    	<act_window
+            id="print_project_report_action"
+            name="Print Project Report"
+            src_model="project.project"
+            res_model="project.details"
+            view_type="form"
+            view_mode="form"
+            key2="client_action_multi" target="new"
+        	/>
+
+<!-- project task wizard -->
+        <act_window
+            id="print_project_task_action"
+            name="Print Task Report"
+            src_model="project.task"
+            res_model="task.details"
+            view_type="form"
+            view_mode="form"
+            key2="client_action_multi" target="new"
+            />
+
+<!-- project task wizard -->
+        <record model="ir.ui.view" id="project_details_wizard_view">
+            <field name="name">project.details</field>
+            <field name="model">project.details</field>
+            <field name="arch" type="xml">
+                <form string="Project">
+                    <group colspan="2" string="Filter Project Report">
+                        <group>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="stage_id"/>
+                        </group>
+
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Print Report" 
+                          type="object" default_focus="1" class="oe_highlight" icon="fa-print"/>
+                        <button string="Cancel" class="btn-default" special="cancel" icon="fa-times"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+<!-- project task wizard -->
+        <record model="ir.ui.view" id="project_task_wizard_view">
+            <field name="name">task.details</field>
+            <field name="model">task.details</field>
+            <field name="arch" type="xml">
+                <form string="Task">
+                    <group colspan="2" string="Filter Task Report">
+                        <group>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                        <group>
+                            <field name="user_id"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="print_task_report" string="Print Report" 
+                          type="object" default_focus="1" class="oe_highlight" icon="fa-print"/>
+                        <button string="Cancel" class="btn-default" special="cancel" icon="fa-times"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

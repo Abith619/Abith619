@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="param_yodoo_allow_admin_logins" model="ir.config_parameter" forcecreate="False">
+        <field name="key">yodoo_client.yodoo_allow_admin_logins</field>
+        <field name="value">True</field>
+    </record>
+</odoo>

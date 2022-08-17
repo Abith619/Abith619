@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     <record id="view_task_form2" model="ir.ui.view">
+     <field name="name">project.task.form</field>
+     <field name="model">project.task</field>
+     <field name="inherit_id" ref="project.view_task_form2"/> 
+     <field name="arch" type="xml">
+         <xpath expr="//field[@name='user_id']" position="after"> <!--- Added one field employee_id -->
+             <field name="employee_id"/>
+         </xpath>
+     </field>		
+     </record>
+
+     <record id="view_timesheet_form" model="ir.ui.view">
+     <field name="name">hr.employee.form</field>
+     <field name="model">hr.employee</field>
+     <field name="inherit_id" ref="hr.view_employee_form"/> 
+     <field name="arch" type="xml">
+         <xpath expr="//field[@name='work_phone']" position="after">
+	         <field name="task_ids" invisible="1" /><!--- One2many field to display task details -->
+		      <field name="total_spent_hours" invisible="1" />
+		     <field name="total_planned_hours" invisible="1" />
+		     <field name="late_time" invisible="1" />	 
+		     <field name="late_count" invisible="1" />
+		     <field name="on_time_count" invisible="1" />
+	  </xpath>			
+     </field>		
+</record>
+</odoo>
+
+
+

@@ -1,0 +1,140 @@
+<odoo>
+		<!-- Inherited view of HrApplicant -->
+		<record id="view_hr_applicant_form" model="ir.ui.view">
+			<field name="name">view.hr.applicant.form</field>
+			<field name="model">hr.applicant</field>
+			<field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job" />
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/group" position="after">
+					<notebook>
+						<page name="hr_skills" string="Skills">
+							<separator string="Technical Skills" />
+							<field name="techskill_ids">
+								<tree editable="Top">
+									<field name="tech_id" required="True"/>
+									<field name="levels" required="True"/>
+								</tree>
+								<form>
+									<group col="4">
+										<field name="tech_id"/>
+										<field name="levels" />
+									</group>
+								</form>
+							</field>
+							<separator string="Non Technical Skills" />
+							<field name="nontechskill_ids">
+								<tree editable="Top">
+									<field name="nontech_id" required="True"/>
+									<field name="levels" required="True"/>
+								</tree>
+								<form>
+									<group col="4">
+										<field name="nontech_id"/>
+										<field name="levels" />
+									</group>
+								</form>
+							</field>
+						</page>
+						<page name="hr_qualification" string="Qualifications">
+							<separator string="Educational Qualification" />
+							<field name="education_ids">
+								<tree>
+									<field name="type_id" />
+									<field name="institute_id" />
+									<field name="score" />
+									<field name="qualified_year" />
+									<field name="doc" />
+								</tree>
+								<form>
+									<group col="4">
+										<field name="type_id" required="True" />
+										<field name="institute_id" />
+										<field name="score" />
+										<field name="qualified_year" />
+										<field name="doc" />
+									</group>
+								</form>
+							</field>
+							<separator string="Certifications" />
+							<field name="certification_ids">
+								<tree>
+									<field name="course_id" />
+									<field name="levels" />
+									<field name="year" />
+									<field name="doc" />
+								</tree>
+								<form>
+									<group col="4">
+										<field name="course_id" required="True" />
+										<field name="levels" />
+										<field name="year" />
+										<field name="doc" />
+									</group>
+								</form>
+							</field>
+							<separator string="Professional Experience" />
+							<field name="profession_ids">
+								<tree>
+									<field name="job_id" />
+									<field name="location" />
+									<field name="from_date" />
+									<field name="to_date" />
+									<field name="doc" />
+								</tree>
+								<form>
+									<group col="4">
+										<field name="job_id" required="True" />
+										<field name="location" />
+										<field name="from_date" required="True" />
+										<field name="to_date" required="True" />
+										<field name="doc" />
+									</group>
+								</form>
+							</field>
+						</page>
+						<page string="Application Summary">
+                            <field name="description" placeholder="Feedback of interviews..."/>
+                        </page>
+					</notebook>
+				</xpath>
+				<xpath expr="//form/sheet/separator" position="attributes">
+                    <attribute name="invisible">True</attribute>				    
+				</xpath>
+				<xpath expr="//form/sheet/field[@name='description']" position="attributes">
+				    <attribute name="invisible">True</attribute>
+				</xpath>
+				<xpath expr="//form/sheet/group/group/field[@name='type_id']" position="attributes">
+				    <attribute name="invisible">True</attribute>
+				</xpath>
+			</field>
+		</record>
+		
+		
+		<!-- Menu of Qualifications -->
+        <menuitem id="qualifications_menu" parent="hr_recruitment.menu_hr_recruitment_configuration" 
+        name="Qualifications" sequence="3" groups="hr.group_hr_manager,hr.group_hr_user"/>
+        
+        <!-- Menu for Degree -->
+         <menuitem id="emp_degree_menu" parent="qualifications_menu"
+        action="action_emp_degree" groups="hr.group_hr_manager,hr.group_hr_user"/>
+        
+        <!-- Menu for Institute -->
+        <menuitem id="menu_hr_institute" parent="menu_qualifications"
+        action="action_hr_institute" groups="hr.group_hr_manager,hr.group_hr_user" sequence="6"/>
+        
+        <!-- Menu for Certifications -->
+        <menuitem id="emp_cert_menu" parent="qualifications_menu" 
+        action="action_emp_cert" groups="hr.group_hr_manager,hr.group_hr_user"/>
+        
+        <!-- Menu item for Skills -->
+        <menuitem id="skills_menu" parent="hr_recruitment.menu_hr_recruitment_configuration" 
+        name="Skills" sequence="4" groups="hr.group_hr_manager,hr.group_hr_user"/>
+        
+        <!-- Menu for Non-Technical Skills -->
+        <menuitem id="nontech_skills_menu" parent="skills_menu"
+        action="action_nontech_skills" groups="hr.group_hr_manager,hr.group_hr_user"/> 
+        
+        <!-- Menu for Technical Skills -->
+        <menuitem id="tech_skills_menu" parent="skills_menu" action="action_tech_skills"
+         groups="hr.group_hr_manager,hr.group_hr_user"/>   
+</odoo>

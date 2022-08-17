@@ -1,0 +1,22 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="view_account_bank_journal_form1">
+      <field name="name">account journal Inherit</field>
+      <field name="model">account.journal</field>
+      <field name="inherit_id" ref="account.view_account_bank_journal_form"/>
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='bank_id']" position="after">
+
+          <field name ="description"/>
+          
+                    
+          </xpath>
+         
+
+          </field>
+    </record>
+
+     </data>
+</odoo> 

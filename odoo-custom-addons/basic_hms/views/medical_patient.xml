@@ -187,25 +187,26 @@
             <field name="name"/>
             <field name="contact_no"/>
             <field name="patient_id"/>
-            <!-- <filter string="Doctor" name="doctor" context="{'group_by': 'doctor'}"/> -->
+
+            <filter string="Doctor" name="doctors" context="{'group_by': 'doctors'}"/>
             <filter string="Branch" name="company_id" context="{'group_by': 'company_id'}"/>
-            <filter string="Registration Type" name="regs_type" separator="1"/>
+            <filter string="Male / Female" name="sex" context="{'group_by': 'sex'}"/>
+
+            <filter string="Registration Type" name="reg_type" separator="1"/>
             <filter string="Camp" name="reg_type" separator="1" domain="[('reg_type','=','cam')]"/>
+            <filter string="Online" name="reg_type" separator="1" domain="[('reg_type','=','on')]"/>
             <filter string="Review Cases" name="reg_type" separator="1" domain="[('reg_type','=','rev')]"/>
-            <filter string="Blood Report" name="reg_type" separator="1" domain="[('reg_type','=','br')]"/>
-            <!-- <filter string="Review Cases" name="reg_type" separator="1" domain="[('reg_type','=','rev')]"/> -->
+            <filter string="Blood Report" name="reg_type" separator="1" domain="[('reg_type','=','blood')]"/>
+            <filter string="Blood Report" name="reg_type" separator="1" domain="[('reg_type','=','stop')]"/>
             <filter string="Appointment" name="reg_type" separator="1" domain="[('reg_type','=','app')]"/>
             <filter string="Today" name="dates" separator="1" domain="[('dates','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
             <filter string="Yesterday" name="dates" separator="1" domain="[('dates','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
             <filter string="Tomorrow" name="dates" separator="1" domain="[('dates','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>           
-            <filter string="Next Month" name="dates" separator="1" domain="[('dates','&gt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%Y-%m-%d'))]"/>
-            <filter string="Past Month" name="dates" separator="1" domain="[('dates','&gt;=',(datetime.date.today()-relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
-            <!-- <filter string="Past week" name="dates" separator="1" domain="[('dates','&lt;=',(datetime.date.today()-relativedelta(week=1)).strftime('%Y-%m-%d'))]"/> -->
-            <!-- <filter string="This Month" name="dates" separator="1" domain="[('dates','=',(datetime.date.month().strftime('%Y-%m-%d')))]"/>             -->
+            <filter string="Next Month" name="dates" separator="1" domain="[('dates','&gt;=',(datetime.date.today()+relativedelta(days=31)).strftime('%Y-%m-%d'))]"/>
+            <filter string="Past Month" name="dates" separator="1" domain="[('dates','&lt;=',(datetime.date.today()-relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
         </search>
     </field>
 </record>
-
 
         <record id="medical_patients_tree_view" model="ir.ui.view">
             <field name="name">medical.patients.tree.view</field>

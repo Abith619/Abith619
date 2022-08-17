@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+ticket_user,ticket.user,model_ticket_ticket,group_ticket_user,1,1,1,0
+ticket_create,ticket.create,model_ticket_ticket,group_ticket_create,1,0,1,0
+ticket_read,ticket.read,model_ticket_ticket,group_ticket_read,1,0,0,0
+ticket_update,ticket.update,model_ticket_ticket,group_ticket_update,1,1,0,0
+ticket_delete,ticket.delete,model_ticket_ticket,group_ticket_delete,1,0,0,1

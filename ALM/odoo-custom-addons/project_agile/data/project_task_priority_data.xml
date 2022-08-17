@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+# Copyright 2017 - 2018 Modoolar <info@modoolar.com>
+# License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html).
+-->
+<odoo noupdate="1">
+    <!-- List of common priorities -->
+    <record id="project_task_priority_blocker" model="project.task.priority">
+        <field name="name">Blocker</field>
+        <field name="description">Block development and/or testing work,production could not run.</field>
+        <field name="icon" type="base64" file="project_agile/static/img/priority-blocker.png"/>
+    </record>
+
+    <record id="project_task_priority_critical" model="project.task.priority">
+        <field name="name">Critical</field>
+        <field name="description">Crashed, loss of data,severe memory leak.</field>
+        <field name="icon" type="base64" file="project_agile/static/img/priority-critical.png"/>
+    </record>
+
+    <record id="project_task_priority_major" model="project.task.priority">
+        <field name="name">Major</field>
+        <field name="description">Major loss of function.</field>
+        <field name="icon" type="base64" file="project_agile/static/img/priority-major.png"/>
+    </record>
+
+    <record id="project_task_priority_minor" model="project.task.priority">
+        <field name="name">Minor</field>
+        <field name="description">Minor loss of function or other problem where easy workaround is present.</field>
+        <field name="icon" type="base64" file="project_agile/static/img/priority-minor.png"/>
+    </record>
+
+    <record id="project_task_priority_trivial" model="project.task.priority">
+        <field name="name">Trivial</field>
+        <field name="description">Cosmetic problem like misspelt words or misaligned text</field>
+        <field name="icon" type="base64" file="project_agile/static/img/priority-trivial.png"/>
+    </record>
+
+    <!-- List of MoSCoW priorities -->
+    <record id="project_task_moscow_priority_must_have" model="project.task.priority">
+        <field name="name">Must have</field>
+        <field name="description">
+            <![CDATA[
+<strong>‘Must Haves‘</strong> are features that must be included before the product can be launched.
+It is good to have clarity on this before a project begins, as this is the minimum scope for the product to be useful.
+            ]]>
+        </field>
+        <field name="icon" type="base64" file="project_agile/static/img/priority-must-have.png"/>
+    </record>
+
+    <record id="project_task_moscow_priority_should_have" model="project.task.priority">
+        <field name="name">Should have</field>
+        <field name="description">
+            <![CDATA[
+<strong>‘Should Haves‘</strong> are features that are not critical to launch, but are considered to be important and of a high value to the user.
+            ]]>
+        </field>
+        <field name="icon" type="base64" file="project_agile/static/img/priority-should-have.png"/>
+    </record>
+
+    <record id="project_task_moscow_priority_could_have" model="project.task.priority">
+        <field name="name">Could have</field>
+        <field name="description">
+            <![CDATA[
+<strong>‘Could Haves‘</strong> are features that are nice to have and could potentially be included without incurring too much effort or cost.
+These will be the first features to be removed from scope if the project’s timescales are later at risk.
+            ]]>
+        </field>
+        <!--<field name="order" eval="8"/>-->
+        <field name="icon" type="base64" file="project_agile/static/img/priority-could-have.png"/>
+    </record>
+
+    <record id="project_task_moscow_priority_wont_have" model="project.task.priority">
+        <field name="name">Won't have (but Would like in future)</field>
+        <field name="description">
+            <![CDATA[
+<strong>‘Won’t Haves‘</strong> are features that have been reqeusted but are explicitly excluded from scope for the planned duration, and may be included in a future phase of development.
+            ]]>
+        </field>
+        <field name="icon" type="base64" file="project_agile/static/img/priority-would-have.png"/>
+    </record>
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!-- Hours spent in kanban view-->
+<record id="view_task_kanban" model="ir.ui.view" >
+            <field name="name">project.task.kanban</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//t[@t-name='kanban-box']//div/div/field[@name='priority']" position = 'after'>
+                    <label>Hours Spent:  <field name="effective_hours" widget="float_time"/></label>
+                </xpath>
+                 <xpath expr="//div[@name='button_box']" position="inside">
+                    <div style="margin-top:10px;">
+                    <widget name="web_ribbon" text="Started"
+                                attrs="{'invisible': [('task_timer', '=', False)]}"/>
+                    </div>
+                </xpath>
+            </field>
+</record>
+</odoo>
+
+

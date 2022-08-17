@@ -96,14 +96,13 @@ class res_partner(models.Model):
     qr_code = fields.Binary("QR Code", attachment=True, )
     barcode = fields.Char("Barcode")
 
-    @api.onchange('name')
-    def generate_qr_code(self):
+    # @api.onchange('name')
+    @api.model
+    def create(self):
         for rec in self:
             p_details={
-                'Patient Id':rec.doctor_idxs,
-                'Patient Name':rec.name,
-                
-
+                'Patient_Id':rec.doctor_idxs,
+                'Patient_Name':rec.name,
             }
             qr = qrcode.QRCode(
                 version=1,
@@ -118,7 +117,6 @@ class res_partner(models.Model):
             img.save(temp, format="PNG")
             qr_image = base64.b64encode(temp.getvalue())
             self.qr_code = qr_image
-
 
     @api.model
     def _name_search(self, name='', args=None, operator='ilike', limit=100, name_get_uid=None):

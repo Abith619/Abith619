@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+    <record id="group_show_tasks_on_employee" model="res.groups">
+        <field name="name">Show tasks on employee</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="comment">Show tasks on employee</field>
+    </record>
+</data>
+</odoo>

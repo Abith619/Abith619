@@ -1,0 +1,29 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="view_account_bank_statement_extend">
+      <field name="name">account bank statement Inherit</field>
+      <field name="model">account.bank.statement</field>
+      <field name="inherit_id" ref="account.view_bank_statement_form"/>
+      <field name="arch" type="xml">
+   <!-- <xpath expr='//field[@name="statement_line_ids"]//tree/field[@name="date"]' position="before"> -->
+      <xpath expr="//field[@name='line_ids']/tree//field[@name='date']" position="after">
+
+
+        <field name ="credit"/>
+           <field name ="debit"/>
+           <field name ="desicrption"/>
+</xpath>
+
+         
+        
+                    
+         
+         
+
+          </field>
+    </record>
+
+     </data>
+</odoo> 

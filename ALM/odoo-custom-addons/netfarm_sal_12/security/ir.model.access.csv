@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_manager_sal,access_manager_sal,model_netfarm_sal,group_netfarm_sal_manager,1,1,1,1
+access_user_sal,access_user_sal,model_netfarm_sal,group_netfarm_sal_user,1,1,1,0

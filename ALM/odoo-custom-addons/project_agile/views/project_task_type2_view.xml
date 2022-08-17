@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+# Copyright 2017 - 2018 Modoolar <info@modoolar.com>
+# License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html).
+-->
+<odoo>
+    <record id="project_task_type2_tree" model="ir.ui.view">
+        <field name="name">project_task_type2_tree</field>
+        <field name="model">project.task.type2</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="allow_sub_tasks"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="project_task_type2_form" model="ir.ui.view">
+        <field name="name">project_task_type2_form</field>
+        <field name="model">project.task.type2</field>
+        <field name="arch" type="xml">
+            <form string="Task Type">
+                <header>
+                </header>
+                <sheet>
+                    <field name="icon" widget='image' class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" required="1"/></h1>
+                    </div>
+
+                    <group name="configuration">
+                        <field name="allow_sub_tasks"/>
+                        <field name="allow_story_points"/>
+                    </group>
+                    <notebook>
+                        <page name="description" string="Description">
+                            <field name="description" />
+                        </page>
+                        <page name="priorities" string="Task Priorities">
+                            <group>
+                                <field name="default_priority_id" context="{'selected_priority_ids': priority_ids}"/>
+                            </group>
+                            <group string="Task Priorities">
+                                <field name="priority_ids" nolabel="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="description"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page name="sub_types" string="Sub Types"
+                              attrs="{'invisible': [('allow_sub_tasks', '=', False)]}">
+                            <group string="Sub Types">
+                                <field name="type_ids" nolabel="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="description"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page name="project_types" string="Project Types">
+                            <field name="project_type_ids" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_task_type2_search_form" model="ir.ui.view">
+        <field name="name">project.task.type2.search.form</field>
+        <field name="model">project.task.type2</field>
+        <field name="arch" type="xml">
+           <search string="Task Types">
+                <field name="name" string="Types"/>
+                <field name="project_type_ids"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="open_task_type2_form" model="ir.actions.act_window">
+        <field name="name">Task Types</field>
+        <field name="res_model">project.task.type2</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="project_task_type2_tree"/>
+        <field name="search_view_id" ref="view_task_type2_search_form"/>
+    </record>
+</odoo>

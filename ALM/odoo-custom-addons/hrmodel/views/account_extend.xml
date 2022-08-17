@@ -1,0 +1,102 @@
+<odoo>
+  <data>
+<!-- explicit list view definition -->
+<record model="ir.ui.view" id="view_list_account_extend">
+      <field name="name">Account Inherit</field>
+      <field name="model">account.invoice</field>
+      <field name="inherit_id" ref="account.invoice_tree_with_onboarding"/>
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='company_id']" position="after">
+
+          <field name ="particulars" string='Particulars'/>
+          
+          </xpath>
+
+          <xpath expr="//field[@name='particulars']" position="after">
+
+          <field name ="service_type" string='Service Type'/>
+          
+          </xpath>
+
+          <xpath expr="//field[@name='amount_untaxed_invoice_signed']" position="attributes">
+           <attribute name="string">Gross Total</attribute>
+         
+          
+          </xpath>
+
+          <xpath expr="//field[@name='amount_tax_signed']" position="attributes">
+      <attribute name="string">GST 18%</attribute>
+</xpath>   
+
+<xpath expr="//field[@name='amount_total_signed']" position="attributes">
+      <attribute name="string">Invoice Total</attribute>
+</xpath>
+
+<xpath expr="//field[@name='amount_total_signed']" position="after">
+       <field name ="received_amount" sum="total of received_amount" string='Received Amount'  widget="monetary" options="{'currency_field': 'currency_id'}"/>
+
+       <field name ="pending_amount" sum="total of pending_amount" string='Pending Amount' widget="monetary" options="{'currency_field': 'currency_id'}"/>
+
+
+</xpath>
+
+
+          
+           </field>
+    </record>
+<!-- explicit form view definition -->
+<record model="ir.ui.view" id="view_form_account_extend">
+      <field name="name">Account Form Inherit</field>
+      <field name="model">account.invoice</field>
+      <field name="inherit_id" ref="account.invoice_form"/>
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='partner_id']" position="after">
+
+          <field name ="particulars" string='Particulars'/>
+          
+          </xpath>
+
+           <xpath expr="//field[@name='particulars']" position="after">
+
+          <field name ="service_type" string='Service Type'/>
+          
+          </xpath>
+
+          <xpath expr="//field[@name='service_type']" position="after">
+
+          <field name ="received_amount" string='Received Amount'/>
+          
+          </xpath>
+
+            <xpath expr="//field[@name='amount_total']" position="after">
+
+          <field name ="received_amount" string='Received Amount'  widget="monetary" options="{'currency_field': 'currency_id'}"/>
+          
+          </xpath>
+          
+            <xpath expr="//field[@name='residual']" position="after">
+
+          <field name ="pending_amount" string='Pending Amount '  widget="monetary" options="{'currency_field': 'currency_id'}"/>
+          
+          </xpath>
+           
+  <xpath expr="//field[@name='residual']" position="replace" invisible="1"> 
+
+          </xpath>
+
+            <xpath expr="//field[@name='team_id']" position="after">
+
+          <field name ="department" />
+          
+          </xpath>
+
+
+           
+           </field>
+    </record>
+
+  
+
+
+  </data>
+</odoo>

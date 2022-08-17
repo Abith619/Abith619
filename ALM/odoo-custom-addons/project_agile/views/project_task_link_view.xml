@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+# Copyright 2017 - 2018 Modoolar <info@modoolar.com>
+# License LGPLv3.0 or later (https://www.gnu.org/licenses/lgpl-3.0.en.html).
+-->
+<odoo>
+    <record id="project_task_link_tree_view" model="ir.ui.view">
+        <field name="name">project_task_link_tree_view</field>
+        <field name="model">project.task.link</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="relation_name"/>
+                <field name="related_task_id" required="1"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

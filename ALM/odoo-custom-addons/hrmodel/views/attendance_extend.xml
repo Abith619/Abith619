@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="view_form_attendance_extend">
+      <field name="name">Attendance Inherit</field>
+      <field name="model">hr.attendance</field>
+      <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='employee_id']" position="after">
+       <!--<field name ="joining_dates"/>-->
+       
+       <!-- <field name ="date"/>-->
+        <field name ="month"/>
+       <!-- <field name ="job_id"/>-->
+       
+
+         </xpath>
+
+      <xpath expr="//field[@name='check_out']" position="after">
+      <field name ="remarks"/>
+      <field name ="actual_duty_hours"/>
+      <field name ="worked_hours"/>  
+      <field name ="over_time_in"/> 
+      <field name ="over_time_out"/> 
+      <field name ="overtime"/>
+      <field name ="total_hours"/>
+    
+
+        
+      </xpath>
+
+
+          </field>
+    </record>
+
+            <record model="ir.ui.view" id="view_list_attendance_extend">
+      <field name="name">Attendance Inherit</field>
+      <field name="model">hr.attendance</field>
+      <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+      <field name="arch" type="xml">
+      <xpath expr="//field[@name='employee_id']" position="after">
+
+       <!--<field name ="joining_dates"/>-->
+         <!-- <field name ="date"/>-->
+        <!-- <field name ="month"/> -->
+       <!--  <field name ="job_id"/>-->
+        </xpath>
+
+
+      <xpath expr="//field[@name='check_out']" position="after">
+      <field name ="remarks"/>
+      <field name ="actual_duty_hours"/>
+      <field name ="worked_hours"/>
+      <field name ="over_time_in"/>
+      <field name ="over_time_out"/> 
+     
+    <field name ="overtime"/>
+      <field name ="total_hours"/>
+    
+      
+      </xpath>
+</field>
+    </record>
+
+
+     </data>
+</odoo>

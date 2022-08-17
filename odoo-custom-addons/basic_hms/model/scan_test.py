@@ -76,6 +76,7 @@ class Scan_test(models.Model):
     request = fields.Char('ID Number', readonly = True)
     write_date=fields.Date(string='Date')
     ebook_id = fields.Char(srting='Patient ID')
+    doctor = fields.Many2one('res.partner',string='Doctor')
     company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.doctor'))
 
     mri_test = fields.Many2many('mri.test.study', string='MRI Test')

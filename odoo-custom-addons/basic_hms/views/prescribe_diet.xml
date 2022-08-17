@@ -34,6 +34,17 @@
                 </field>
                 </record>
 
+        <record id="medical_diet_tree_view" model="ir.ui.view">
+            <field name="name">prescribe.diet.tree.view</field>
+            <field name="model">prescribe.diet</field>
+            <field name="arch" type="xml">
+                <tree string="Patient Information">
+                    <field name="name" />
+                    <field name="serial_number" />
+                </tree>
+            </field>
+        </record>
+
                 <record id="action_pre_diet_patient" model="ir.actions.act_window">
                     <field name="name">Diet Information</field>
                     <field name="res_model">prescribe.diet</field>

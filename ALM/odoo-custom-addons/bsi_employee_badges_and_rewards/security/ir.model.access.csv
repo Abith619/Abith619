@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_employee_badge_configuration,access_employee_badge_configuration,model_employee_badge_configuration,base.group_user,1,1,1,1
+access_employee_badge_line,access_employee_badge_line,model_employee_badge_line,base.group_user,1,1,1,1

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+
+  <!--form view of the brand menu-->
+<record model="ir.ui.view" id="studentsss_view">
+            <field name="name">hrafter_form</field>
+            <field name="model">hrafter.hrafter</field>
+            <field name="arch" type="xml">
+                <form string="hrafter">
+                   <sheet>
+                    <group><field name="names">names</field> </group>
+
+                <group>
+        	 <group string="Personal"></group>
+</group>
+ <group><field name="name">Family Occupation</field> </group>
+  <group><field name="bornbrought">bornbrought</field> </group>
+   <group><field name="friends">friends</field> </group>
+    <group><field name="relatives">relatives</field> </group>
+             <group>
+        	 <group string="Academic"></group>
+</group>
+ <group><field name="school">school</field> </group>
+  <group><field name="college">college</field> </group>
+   <group><field name="scholarship">scholarship</field> </group>
+
+                <group>
+        	 <group string="Additional Activites"></group>
+</group>
+   <group><field name="courses">courses</field> </group>
+   <group><field name="projects">projects</field> </group>
+   <group><field name="extracur">extracur</field> </group>
+             <group>
+        	 <group string="Interest And Goals"></group>
+</group>
+   <group><field name="freetime">freetime</field> </group>
+   <group><field name="goals">goals</field> </group>
+   <group><field name="aboutsociety">aboutsociety</field> </group>
+             <group>
+        	 <group string="Current And Past Employee Details"></group>
+</group>
+ <group><field name="processwork">processwork</field> </group>
+  <group><field name="reasonfor">reasonfor</field> </group>
+   <group><field name="relieving">relieving</field> </group>
+    <group><field name="current">current</field> </group>
+     <group><field name="expection">expection</field> </group>
+             <group>
+        	 <group string="Related To Current Opening"></group>
+</group>
+ <group><field name="roles">roles</field> </group>
+    <group><field name="skills">skills</field> </group>
+     <group><field name="practical">practical</field> </group>
+             <group>
+        	 <group string="Request And Assurances"></group>
+</group>
+ <group><field name="requestand">requestand</field> </group>
+    <group><field name="reuestinterview">reuestinterview</field> </group>
+     <group><field name="otherkey">otherkey</field> </group>
+   
+</sheet>
+ </form>
+  </field>
+</record>
+
+
+
+
+		<!--action for brand-->
+		 <record id="hrafter_menu_action" model="ir.actions.act_window">
+        	<field name="name">HR After Interview</field>
+        	<field name="res_model">hrafter.hrafter</field>
+
+        	<field name="view_mode">tree,form,kanban</field>
+             <field name="context" eval="{'search_default_male': 1}"/>
+        	<field name="domain">[]</field>
+        	<field name="help" type="html">
+            	<p class="oe_view_nocontent_create">Create The First Model
+            	</p>
+        	</field>
+
+    </record>
+
+
+    
+	</data>
+</odoo>
+

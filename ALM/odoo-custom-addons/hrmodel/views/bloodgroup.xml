@@ -1,0 +1,67 @@
+
+<odoo>
+  <data>
+<record model="ir.ui.view" id="hr_employee_form">
+    <field name="name">hr_employee_form</field>
+    <field name="model">hr.employee</field>
+    
+    <field name="inherit_id" ref="hr.view_employee_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='country_of_birth']" position="after">
+          
+            <field name="bloodgroup"/>
+         
+        </xpath>
+         <xpath expr="//field[@name='address_home_id']" position="after">
+          
+            <field name="Permanentaddress"/>
+         
+        </xpath>
+           <xpath expr="//field[@name='km_home_work']" position="after">
+          
+            <field name="hostelwardennumber" invisible="1"/>
+         
+        </xpath>
+                <xpath expr="//field[@name='tz']" position="after">
+          
+            <field name="scoress"/>
+             <field name="production_active"/>
+              
+         
+        </xpath>
+          <xpath expr="//field[@name='category_ids']" position="after">
+
+        <group> <group> <field name ="employee_status"/> 
+       <field name ="employee_code"/>
+        
+        </group>
+        
+        
+        </group>
+                    
+          </xpath>
+
+          <xpath expr="//field[@name='joining_date']" position="after">
+
+         <field name ="confirmation_date"/>
+         <field name ="left_date"/>
+                    
+          </xpath>
+          
+         <xpath expr="//field[@name='job_title']" position="after">
+          <field name ="job_level"/>   
+         <field name ="with_effect_from"/>
+                    
+          </xpath>
+           <xpath expr="//field[@name='work_phone']" position="after">
+
+         <field name ="employee_personal_number"/>
+                    
+          </xpath>
+
+
+     
+    </field>
+</record>
+</data>
+</odoo>

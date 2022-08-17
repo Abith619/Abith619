@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+<template id="new_invoice_report" inherit_id="account.report_invoice_document_with_payments" >
+
+<xpath expr="//address" position="replace">
+</xpath>
+<xpath expr="//div[@class='page']" position="replace">
+
+        <style>
+                    .example-css-class {
+                         text-align: center;
+                         text-decoration: underline;
+                         font-weight: bold;
+                     }
+
+                     table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.padding
+                    {
+      padding:5px;
+      }
+
+                     </style>
+         <div class ="example-css-class" ><h2><strong>Invoice</strong></h2></div>
+ <table style="width:100%" >
+ <tr>
+<td rowspan="3" colspan="3"><span t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}"/>
+</td>
+<td class="padding">Invoice No.</td>
+<td class="padding"><span t-field="o.number"/></td>
+</tr>
+<tr>
+<td class="padding">Date</td>
+<td class="padding"><span t-field="o.date_invoice"/></td>
+</tr>
+
+<tr>
+<td class="padding">Payment Terms</td>
+<td class="padding"><span t-field="o.payment_term_id"/>
+                    </td>
+</tr>
+
+<tr>
+<td class="text-center">S.No</td>
+<td class="text-center">Particulars</td>
+<td class="text-center">Qty</td>
+<td class="text-center">Price (Rs)</td>
+<td class="text-center">Amount (Rs)</td>
+
+</tr>
+
+<t t-foreach="o.invoice_line_ids" t-as="line">
+<tr>
+
+<td class="padding" scope="row"><span t-raw="line_index+1"/></td>
+<td class="padding"><span t-field="line.name"/></td>
+
+
+<!--<td class="padding"><span t-esc="'%.Of'%line.quantity"/></td>-->
+<td class="padding"><span t-esc="line.quantity"/></td>
+
+<td class="text-center"><span t-field="line.price_unit"/></td>
+<td class="text-right"><span t-field="line.price_subtotal"/></td>
+
+</tr>
+</t>
+
+
+<tr>
+<td rowspan="5" colspan="3"></td>
+<td class="text-center">Gross Amt</td>
+<td class="text-right"><span t-field="o.amount_untaxed"/></td>
+</tr>
+
+
+<tr>
+<td class="text-center">GST 18%</td>
+<td class="text-right"><span t-field="o.amount_tax"/></td>
+
+</tr>
+
+
+
+
+<tr>
+<td class="text-center">Invoice Total</td>
+<td class="text-right"><span t-field="o.amount_total"/></td>
+
+
+
+</tr>
+
+<tr>
+<td class="text-center">Received Amt</td>
+<td class="text-right"><span t-field="o.received_amount"  widget="monetary" options="{'currency_field': 'currency_id'}"/></td>
+
+
+
+</tr>
+
+<tr>
+<td class="text-center">Balance Amt</td>
+<td class="text-right"><span t-field="o.pending_amount"  widget="monetary" options="{'currency_field': 'currency_id'}"/></td>
+
+
+
+</tr>
+
+
+<tr><td colspan="5">Amount(In Words):<span t-field="o.pending_amount_words"/></td></tr>
+
+<tr><td colspan="3">GSTIN ID : 33ADJPL0821G1ZZ<br/>
+PAN ID : ADJPL0821G<br/>
+Trade Name : X MEDIA SOLUTIONS
+</td>
+<td colspan="2">
+For <font color='orange'><b>XMEDIA SOLUTIONS </b></font><br/><br/><br/>	</td></tr>
+
+
+</table>
+<br/>
+<br/>
+ <p>Note:</p>                                      
+ <p>Our Bank Account Details : XMEDIASOLUTIONS . </p>
+ <p>Corporation Bank, Ambattur, Chennai-600053 (A/c: 510101002416246, Current Account, IFSC# CORP0000781).  </p>
+
+
+<p>for <b>XMEDIASOLUTIONS</b></p>
+ <p>We thank you! for giving us an opportunity to be a part of your family. We are grateful for your continued support, we wouldn’t be here without loyal people like you. Thank you, again!  </p>
+
+         </xpath>
+
+
+        
+          </template>
+    </data>
+</odoo>

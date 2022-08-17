@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="netfarm_sal_kanban">
+            <field name="model">netfarm.sal</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="date:day"
+                        default_order="sequence"
+                        js_class="ckanban_view"
+                        class="o_kanban_mobile"
+                        >
+                    <field name="date"/>
+                    <field name="employee_id"/>
+                    <field name="duration"/>
+                    <field name="ref_value"/>
+                    <field name="ref_doc_id"/>
+                    <field name="height"/>
+                    <field name="done"/>
+                    <field name="sequence"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class=" oe_kanban_card oe_kanban_global_click okr-kanban-card ckanban-record">
+                                <div class="name-kanban ckanban-left">
+                                    <div class="o_kanban_record_top" style="margin-bottom: 0 !important">
+                                        <div class="o_kanban_record_headings">
+                                            <strong class="o_kanban_record_title ckanban-open"><b><t t-esc="record.ref_value.value"/></b></strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_dropdown_kanban dropdown ck-dropdown">
+                                    <span t-attf-class="fa fa-check ckrecord-check #{record.done.raw_value == true ? 'd-none': '' }" ></span>
+                                    <span class="fa fa-times ckrecord-cancel"></span>
+                                </div>
+                                <div t-attf-class="o_kanban_record_body ckanban-right #{record.done.raw_value == true ? 'ckanban-done': '' }">
+                                    <p>
+                                        <span class="duration"><t t-esc="record.duration.value"/></span><br/>
+                                        <t t-esc="record.employee_id.value"/>
+                                    </p>
+
+                                </div>
+                        </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+    </data>
+</odoo>

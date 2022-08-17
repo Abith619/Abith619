@@ -1,0 +1,20 @@
+<odoo>
+    <template id="portal_my_orders_tags" inherit_id="sale.portal_my_orders" name="My Sales Orders - Add Tags">
+        <xpath expr="//t[@t-foreach='orders']//tr//td[3]" position="replace">
+            <td class="text-center">
+                <t t-if="order.invoice_status == 'to invoice'">
+                    <span class="badge badge-pill badge-info">
+                        <i class="fa fa-fw fa-clock-o" aria-label="Opened" title="Opened" role="img"></i>
+                        <span class="d-none d-md-inline"> Waiting for Payment</span>
+                    </span>
+                </t>
+                <t t-elif="order.invoice_status == 'invoiced'">
+                    <span class="badge badge-pill badge-success">
+                        <i class="fa fa-fw fa-check" aria-label="Paid" title="Paid" role="img"></i>
+                        <span class="d-none d-md-inline"> Paid</span>
+                    </span>
+                </t>
+            </td>
+        </xpath>
+    </template>
+</odoo>

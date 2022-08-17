@@ -16,7 +16,6 @@ class medical_directions(models.Model):
 
 
     company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.doctor'))
-    doctor = fields.Many2one('res.partner',domain=[('is_doctor','=',True)],string="Doctor" ,track_visibility='always')
     age=fields.Char(string='Age')
     address = fields.Char(string="Address")
     marital_status = fields.Selection([('s','Single'),('m','Married'),('w','Widowed'),('d','Divorced'),('x','Seperated')],string='Marital Status')
@@ -79,14 +78,24 @@ class medical_directions(models.Model):
 
     image1=fields.Binary(string="Image")
     
-    user_doctor = fields.Many2one('res.users',string="User Doctor")
-    
+    user_doctor = fields.Many2one('res.users',string="User Doctor",related='doctor.user_id')
+    doctor = fields.Many2one('res.partner',domain=[('is_doctor','=',True)],string="Doctor" ,track_visibility='always')
     diet_id = fields.Many2one('prescribe.diet',string='Diet')
 
+    
+    # @api.depends('user_doctor')
+    # def _compute_doctor(self):
+    # #     # dec = self.env['res.users'].search([('partner_id','=',self.doctor.id)])
+    # #     # self.user_doctor = dec.id    
+        
+    #     doc = self.env['res.partner'].search([('activity_user_id','=',self.doctor.id)])
+    #     self.user_doctor = doc.id 
+    #     # raise ValidationError(self.user_doctor)
     @api.onchange('doctor')
     def login_orm(self):
-        login_doc = self.env['res.users'].search([('partner_id', '=', self.doctor.id)])
-        self.user_doctor = login_doc.id
+        doc = self.env['res.partner'].search([('user_id','=',self.doctor.id)])
+        self.user_doctor = doc.id
+        raise ValidationError(self.user_doctor)
 
     experince = fields.Char(string="Experience")
 
@@ -198,9 +207,9 @@ class medical_directions(models.Model):
     def create(self, vals):
         vals['serial_number'] = self.env['ir.sequence'].next_by_code('medical.doctor') or 'EB'
         res = super(medical_directions, self).create(vals)
-        orm = self.env['medical.doctor'].search([('patient','=',res.patient_name.id)])
-        orm.write({'diet_id':res.diet_seq.id})
-        orm.write({'medicine_id':res.prescription_alot.id})
+        # orm = self.env['medical.doctor'].search([('patient','=',res.patient.id)])
+        # orm.write({'diet_id':res.diet_seq.id})
+        # orm.write({'medicine_id':res.prescription_alot.id})
         return res
 
     def done_action(self):
@@ -216,7 +225,7 @@ class medical_directions(models.Model):
 
 # prescription
     def prescription_button(self):
-        self.patient_status =False
+        self.patient_status = False
         return{
         'name': "Prescription",
         'type': 'ir.actions.act_window',
@@ -241,7 +250,8 @@ class medical_directions(models.Model):
 
 #scan/test:
     def scan_button(self):
-            return{
+        self.patient_status = False
+        return{
         'name': "Lab Tests",
         'type': 'ir.actions.act_window',
         'view_type': 'form',
@@ -250,7 +260,7 @@ class medical_directions(models.Model):
         'context': {
             'default_patient_id': self.patient.id,
             'default_ebook_id': self.serial_number,
-        # 'default_name': self.name,
+            'default_doctor': self.doctor.id,
         # 'default_price': self.price,
         # 'default_range': self.range,
         'default_state':'tested'
@@ -259,6 +269,7 @@ class medical_directions(models.Model):
         }
 
     def labscan_button(self):
+        self.patient_status = False
         return{
     'name': "Scan Tests",
     'type': 'ir.actions.act_window',
@@ -268,6 +279,7 @@ class medical_directions(models.Model):
     'context': {
         'default_patient_id': self.patient.id,
         'default_ebook_id': self.serial_number,
+        'default_doctor': self.doctor.id,
         # 'default_price': self.price,
         # 'default_range': self.range,
         'default_state':'tested'
@@ -283,6 +295,7 @@ class medical_directions(models.Model):
                 raise ValidationError("only numbers are Allowed")
 
     def diet_for(self):
+        self.patient_status = False
         return{
         'name': "Prescribe Diet",
         'type': 'ir.actions.act_window', 

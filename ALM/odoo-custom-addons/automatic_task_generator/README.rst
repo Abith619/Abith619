@@ -1,0 +1,3 @@
+Periodic task generator allows you to set up tasks so that they are automatically assigned at a specific interval.
+For example you can set up automatic assignment task for selected project in 7 day interval, then new task with same attributes is created every week.
+Automatic task with selected periodicity simplifies planning and reduces your workload. Assigment of periodic tasks can be stopped and modified.

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="what_app_form_view" model="ir.ui.view">
+        <field name="name">whatsapp.form.view</field>
+        <field name="model">whatsapp.form.qr</field>
+        <field name="arch" type="xml">
+            <form string="Whatsapp QR">
+                <sheet> 
+                    <h1>
+                        
+                        <field name="qr_code" widget='image' class="oe_avatar" style="float:left;" 
+                        force_save='1' readonly="1" />
+                    </h1>
+                    <group>
+                    <field name="name" style="width: 30%"  placeholder="Whatsapp "/>
+                    <field name="number"/>
+                    <field name="random_number"/>
+                    </group>
+                    </sheet>
+                </form>
+                </field>
+                </record>
+
+             <record id="action_what_app" model="ir.actions.act_window">
+                    <field name="name">Whatsapp</field>
+                    <field name="res_model">whatsapp.form.qr</field>
+                    <field name="binding_view_types">form</field>
+                    <field name="view_mode">tree,form</field>
+            </record>
+
+            <menuitem id="menus_medical_whatsapp"  name ="Create Whatsapp QR" action="action_what_app"
+                parent="main_menu_configartion" sequence="1" />
+</odoo>

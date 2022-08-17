@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+        <record id="sal_search_view" model="ir.ui.view">
+            <field name="name">Sal Search</field>
+            <field name="model">netfarm.sal</field>
+            <field name="arch" type="xml">
+                <search string="SAL">
+                    <filter name="my_sal" string="My Sal" domain="[('employee_id.user_id', '=', uid)]"/>
+                    <separator/>
+                    <filter name="current_week" string="Current Week" domain="[('date','&gt;=',(context_today()+relativedelta(weeks=0, weekday= 0)).strftime('%Y-%m-%d')),
+        ('date','&lt;=',(context_today()+relativedelta(weeks=0, weekday= 0, days = 6)).strftime('%Y-%m-%d'))]"/>
+                </search>
+            </field>
+        </record>
+
+      <record model="ir.actions.act_window" id="sal_list_action">
+          <field name="name">Sal Planning</field>
+          <field name="res_model">netfarm.sal</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">tree,form,kanban</field>
+          <field name="search_view_id" ref="netfarm_sal_12.sal_search_view"/>
+          <field name="context">
+              {'search_default_my_sal': 1}
+          </field>
+          <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">Create your First Sal!</p>
+          </field>
+      </record>
+
+      <menuitem id="sal" name="Sal Planning"/>
+
+      <menuitem id="sal_menu" name="Sal Planning"/>
+
+      <menuitem id="sal_menu_planning" name="Sal" parent="sal" action="sal_list_action"/>
+
+      <record model="ir.ui.view" id="sal_tree_view" >
+          <field name="name">sal.tree</field>
+          <field name="model">netfarm.sal</field>
+          <field name="priority">4</field>
+          <field name="arch" type="xml">
+              <tree>
+                <field name="employee_id"/>
+                <field name="sequence"/>
+                <field name="date"/>
+                <field name="duration" widget="float_time"/>
+              </tree>
+          </field>
+      </record>  
+
+    <record model="ir.ui.view" id="sal_tree_form" >
+          <field name="name">sal.form</field>
+          <field name="model">netfarm.sal</field>
+          <field name="priority">4</field>
+          <field name="arch" type="xml">
+              <form>
+                <sheet>
+                    <group>
+                        <field name="employee_id"/>
+                        <field name="ref_doc_id"/>
+                    </group>
+                    <group>
+                        <field name="sequence"/>
+                        <field name="date"/>
+                    </group>
+                    <group>
+                        <field name="duration" widget="float_time"/>
+                        <field name="description"/>
+                        <field name="done"/>
+                        <field name="active"/>
+                    </group>
+                    
+                </sheet>
+              </form>
+          </field>
+      </record>  
+
+        <record id="reallocate_sal_form" model="ir.ui.view">
+            <field name="name">Reallocate Sal</field>
+            <field name="model">reallocate.sal</field>
+            <field name="arch" type="xml">
+            <form string="Create Sal">
+                <sheet>
+                    <group>
+                        <field name="ref_doc_id" readonly="1"/>
+                        <field name="employee_id" readonly="1"/>
+                        <field name="duration" widget="float_time" readonly="1"/>
+                        <field name="date"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="execute" type="object" string="Save" class="oe_highlight pull-left"/>
+                    <button special="cancel" string="Cancel" class="pull-right"/>
+                </footer>
+            </form>
+            </field>
+      </record>
+
+      <record id="create_sal_form" model="ir.ui.view">
+            <field name="name">Create Sal</field>
+            <field name="model">create.sal</field>
+            <field name="arch" type="xml">
+                <form string="Create Sal">
+                    <sheet>
+                        <group>
+                            <field name="ref_doc_id" required="1"/>
+                            <field name="employee_id" required="1"/>
+                            <field name="duration" required="1" widget="float_time"/>
+                            <field name="date_start" />
+                            <field name="date_end"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="execute" type="object" string="Save" class="oe_highlight pull-left"/>
+                        <button special="cancel" string="Cancel" class="pull-right"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+  </data>
+</odoo>

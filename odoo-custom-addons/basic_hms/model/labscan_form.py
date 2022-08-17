@@ -198,6 +198,7 @@ class LabsScansd(models.Model):
     range = fields.Char(string='Range')
     test_range = fields.Char(string='Tested Range')
     date= fields.Datetime(string="Date of Lab/Scan")
+    doctor = fields.Many2one('res.partner',string='Doctor')
     write_date=fields.Date(string='Date')
     ebook_id = fields.Char(string='Patient ID')
     # appoinment_by=fields.Many2one('res.users',string='Appointment By',default=lambda self: self.env.user,readonly='1')
