@@ -19,10 +19,17 @@
                                 <field name ="payment" widget="statinfo"/>
                             </button>
                 </div>  
+                
 
                 <field name="name"/> 
-                <!-- <field name="related_field"/> -->
-                                     
+                <div class="row">
+                    <div class="col-6">
+                    </div>
+                    <div class="col-2">
+                        <div><label style="float:center;" for="qr_code" string="Qr Code" /></div>
+                        <field name="qr_code" widget='image' class="oe_avatar" style="float:left;" force_save='1' readonly="1"/>
+                    </div>
+                </div>
                             <group>
                                 <group class="col-5"> 
                                     <field name ="reg_type" widget="radio" options="{'horizontal': true}"/>
@@ -58,6 +65,7 @@
                                 </div>
                                 
                                 <field name ="bmi_value" />
+                                <field name="patient_activity"/>
                             </group>
 
                              <group>
@@ -108,17 +116,16 @@
                             
                             <group>
                                                                 
-            <field name="treatment" required="1" attrs="{'readonly': [('stages','=', 'on')]}"  options="{'no_create_edit':True}" invisible='1'/>
-            <field name="duration_ailmenmts" string="Duration of Ailment" invisible='1'/>
-            
-            <field name ="doctors" attrs="{'readonly': [('stages','=', 'done')]}" options="{'no_create': True, 'no_create_edit':True}"
-            domain="[('company_id','=',company_id)]"/>
-                <field name="dates" widget="date" attrs="{'invisible': [('doctors','=', False)]}" class="o_address_city" />
+                                <field name="treatment" required="1" attrs="{'readonly': [('stages','=', 'on')]}"  options="{'no_create_edit':True}" invisible='1'/>
+                                <field name="duration_ailmenmts" string="Duration of Ailment" invisible='1'/>
+                                
+                                <field name ="doctors" attrs="{'readonly': [('stages','=', 'done')]}" options="{'no_create': True, 'no_create_edit':True}" />
+                                    <field name="dates" widget="date" attrs="{'invisible': [('doctors','=', False)]}" class="o_address_city" />
 
-                <field name="appointment_from" attrs="{'invisible': [('dates','=', False)]}" class="o_address_state"/>
-                <field name= 'treatment_for' />
-                <!-- <field name ="patient_signs_symptoms" widget="many2many_tags"/> -->
-                <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                                    <field name="appointment_from" attrs="{'invisible': [('dates','=', False)]}" class="o_address_state"/>
+                                    <field name= 'treatment_for' />
+                                    <!-- <field name ="patient_signs_symptoms" widget="many2many_tags"/> -->
+                                    <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
                                    
                             </group>
 
@@ -198,7 +205,7 @@
             <filter string="Online" name="reg_type" separator="1" domain="[('reg_type','=','on')]"/>
             <filter string="Review Cases" name="reg_type" separator="1" domain="[('reg_type','=','rev')]"/>
             <!-- <filter string="Blood Report" name="reg_type" separator="1" domain="[('reg_type','=','blood')]"/> -->
-            <filter string="Stopped" name="reg_type" separator="1" domain="[('reg_type','=','stop')]"/>
+            <filter string="Blood Report" name="reg_type" separator="1" domain="[('reg_type','=','stop')]"/>
             <filter string="Appointment" name="reg_type" separator="1" domain="[('reg_type','=','app')]"/>
             <filter string="Today" name="dates" separator="1" domain="[('dates','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
             <filter string="Yesterday" name="dates" separator="1" domain="[('dates','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
@@ -221,7 +228,7 @@
                     <field name="doctors" />
                     <field name="dates" />
                     <field name="contact_no"/>
-                    <!-- <field name="patient_waiting"/> -->
+                    <field name="patient_activity"/>
                 </tree>
             </field>
         </record>

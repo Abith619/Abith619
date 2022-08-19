@@ -40,7 +40,7 @@ class res_partner(models.Model):
     # gender = fields.Slection(string='gender')
     relationship = fields.Char(string='Relationship')
     relative_partner_id = fields.Many2one('res.partner',string="Relative_id")
-    is_patient = fields.Boolean(string='Patient',compute='onchange_is_patient')
+    is_patient = fields.Boolean(string='Patient')
     is_person = fields.Boolean(string="Person")
     is_doctor = fields.Boolean(string="Doctor")
     is_insurance_company = fields.Boolean(string='Insurance Company')
@@ -50,6 +50,7 @@ class res_partner(models.Model):
     company_insurance_ids = fields.One2many('medical.insurance','insurance_compnay_id','Insurance')
     reference = fields.Char('ID Number')
     patient_gender = fields.Selection([('m', 'Male'),('f', 'Female')], string ="Gender")
+    # patient_gender = fields.Selection([('m', 'Male'),('f', 'Female')], string ="Sex")
     is_reception = fields.Boolean(string='Reception')
     lab_scan = fields.Boolean(string='Lab & Scan')
     is_billing = fields.Boolean(string='Billing')
@@ -95,12 +96,14 @@ class res_partner(models.Model):
     qr_code = fields.Binary("QR Code", attachment=True, compute='generate_qr_code')
     barcode = fields.Char("Barcode")
 
-    # @api.constrains
+    # @api.onchange('name')
     def generate_qr_code(self):
         for rec in self:
             p_details={
-                'Patient Id':rec.doctor_idxs,
-                'Patient Name':rec.name,
+                'Id':rec.doctor_idxs,
+                'Name':rec.name,
+                
+
             }
             qr = qrcode.QRCode(
                 version=1,

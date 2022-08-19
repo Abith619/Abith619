@@ -23,7 +23,7 @@
             <field name="code">medical.appointment</field>
             <field name="prefix">APT</field>
             <field name="padding">3</field>
-            <field name="company_id" eval="2"/>
+            <field name="company_id" eval="1"/>
         </record>
 
         <record id="medical_appointment_code" model="ir.sequence">
@@ -31,7 +31,7 @@
             <field name="code">medical.appointment</field>
             <field name="prefix">APT</field>
             <field name="padding">3</field>
-            <field name="company_id" eval="1"/>
+            <field name="company_id" eval="2"/>
         </record>
 
 
@@ -63,7 +63,7 @@
             <field name="code">medical.doctor</field>
             <field name="prefix">EB</field>
             <field name="padding">4</field>
-            <field name="company_id" eval="2"/>
+            <field name="company_id" eval="1"/>
         </record>
         
         <record id="medical_doctor_code_sequence_company" model="ir.sequence">
@@ -71,7 +71,7 @@
             <field name="code">medical.doctor</field>
             <field name="prefix">EB</field>
             <field name="padding">4</field>
-            <field name="company_id" eval="1"/>
+            <field name="company_id" eval="2"/>
         </record>
 
         <record id="medical_diet_code" model="ir.sequence">

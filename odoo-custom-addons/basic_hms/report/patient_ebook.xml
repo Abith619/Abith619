@@ -13,16 +13,23 @@
 
             }
         </style>
-
             <t >
             <tr>
+            <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
+                    <div>
             <td style="border: 0px;width: 50%;">
                 <p><b>Patient ID : </b><span t-field="o.name"/></p>
-            </td>
-            <td style="border: 0px;width: 50%;">
                 <p><b>Registration Date : </b><span t-field="o.dates"/></p>
             </td>
+        <div>
+            <td style="border: 0px;width: 50%;">
+        <img t-att-src="'data:image/png;base64,%s' % to_text(o.qr_code)" style="height:100px;width:100px;float:center;"/>
+            </td>
+                </div>
+            </div>
+        </table>
             </tr>
+        
             <table border="4" class="table table-bordered" style="border: 1px solid black;">
             <thead>
             <tr style="height:40px">

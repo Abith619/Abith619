@@ -37,9 +37,10 @@
         </tr>
         </tbody>
         </table>
-            <tr t-foreach='docs.reception_bills' t-as='line'>
+                     <tr t-foreach='docs.reception_bills' t-as='line'>
                     <p class="text-right"><strong>Grand Total :  </strong><i class="fa fa-inr"/><span t-field="line.bill_amount"/></p>
             </tr>
+
                 </t>
             </t>
         </t>

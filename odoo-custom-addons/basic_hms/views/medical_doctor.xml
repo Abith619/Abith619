@@ -212,6 +212,7 @@
                                                 <field name="date"/>
                                             </tree>
                                         </field>
+                                        <field name ="patient_activity"/>
                                         </page>
                                         
     
@@ -257,7 +258,7 @@
                             <field name="write_date" />
                             <field name ="patient_status"/>
                             <field name="date1" invisible="1"/>
-                            <!-- <field name="wait_date" /> -->
+                            <field name="patient_activity" />
                         </tree>
                     </field>
                 </record>
@@ -335,7 +336,8 @@
                         </field>        
                     </record>      
 
-    <menuitem id="menu_doctor" name="Doctor" parent= "main_menu_hospital_management"  
-      sequence="2" action="action_view_doctor"/>
+    <menuitem id="menu_doctor" name="Doctor" parent= "main_menu_hospital_management"  sequence="2" action="action_view_doctor"/>
+            
+    
                     </data>
     </odoo>

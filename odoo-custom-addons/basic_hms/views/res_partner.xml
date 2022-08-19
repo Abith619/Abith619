@@ -110,8 +110,8 @@
                 <field name="dob_contact" attrs="{'invisible': ['|',('roles_selection','=', 'reception'),('roles_selection','=', 'telecaller')]}"/>
                 <field name ="patient_gender" attrs="{'invisible': ['|',('roles_selection','=', 'reception'),('roles_selection','=', 'pharmacy')]}"/>
                 <field name ="designation" attrs="{'invisible': ['|',('roles_selection','=', 'reception'),('roles_selection','=', 'pharmacy')]}"/>
-                <field name ="user_name" attrs="{'invisible': [('roles_selection','=', 'patient')]}"/>
-                <field name ="password" password="True" attrs="{'invisible': [('roles_selection','=', 'patient')]}"/>
+                <field name ="user_name"/>
+                <field name ="password" password="True" />
             </field>
             
             <field name="vat" position="after">
@@ -173,7 +173,7 @@
     </filter>
 
     <filter name="type_company" position="replace">
-        <!-- <filter string="Patient" name="is_patient" domain="[('is_patient', '=', True)]"/> -->
+        <filter string="Patient" name="is_patient" domain="[('is_patient', '=', True)]"/>
     </filter>
 
     <filter name="type_person" position="replace">

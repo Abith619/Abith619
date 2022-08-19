@@ -83,16 +83,18 @@
                                     <tree string="Medical History" editable="bottom" >
                                         <!-- <field name="name" /> -->
                                         <field name ="sequence_ref"/>
-                                        <field name="prescribed_quantity" invisible="1"/>
+                                        <!-- <field name="prescribed_quantity" /> -->
                                         <field name ="medicine_name" options="{'no_create_edit':True}"/>
                                         <field name="all_day"/>
-                                        <field name ="prescribed_quantity" string='Quantity'/>
+                                        <field name="prescribed_quantity" string='Quantity'/>
+                                        <field name ="quantity" invisible="1"/>
                                         <field name ="potency" invisible="1"/>
                                         <field name="morning"  invisible="1"/>
                                         <field name="noon" invisible="1"/>
                                         <field name="evening"  invisible="1"/>
                                         <field name ="night" invisible="1"/>
                                         <field name ="units" string='Units'/>
+                                        <field name="company_id"/>
                                         <!-- <field name ="after_food"/> -->
                                         <field name ="anupana"/>
                                         <field name="bf_af" string='BF / AF'/>
@@ -162,7 +164,7 @@
 
 
 
-        <menuitem id="menu_prescription" action="action_medical_prescription_order" 
+        <menuitem id="menu_prescription" action="action_medical_prescription_order"
         name="Prescriptions" parent= "main_menu_hospital_management" sequence="4" />
 
 

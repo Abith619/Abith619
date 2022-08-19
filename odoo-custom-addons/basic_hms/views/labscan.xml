@@ -561,7 +561,7 @@
             </record>
             <menuitem id="lab_many_data_health" name="Full CheckUp" parent= "main_menu_configartion" action="lab_many_data_form_full_checkup"/>
 
-     <record id="lab_many_data_form1014" model="ir.ui.view">
+     <record id="lab_many_data_form10" model="ir.ui.view">
             <field name="name">Endocrinology Blood</field>
             <field name="model">lab.test.hospital.data</field>
             <field name="priority" eval="8" />
@@ -801,7 +801,7 @@
             </record>
             <menuitem id="lab_many_16" name="HIV TEST" parent= "main_menu_configartion" action="lab_many_data_form_hiv"/>
 
-    <record id="lab_many_data_form17" model="ir.ui.view">
+    <record id="lab_many_data_form457" model="ir.ui.view">
             <field name="name">Hepatitis Panel</field>
             <field name="model">lab.hospital.test.data</field>
             <field name="priority" eval="8" />

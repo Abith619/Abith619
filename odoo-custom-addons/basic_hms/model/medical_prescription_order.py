@@ -91,20 +91,17 @@ class medical_prescription_order(models.Model):
                     'name':'Prescribed Medicine',
                     'product_id':data.medicine_name,
                     'product_uom_qty':data.prescribed_quantity,
-                    
                     'product_uom':data.units
                 }
             picking_list.append((0,0,datas))
         company_orm = self.env['stock.picking.type'].search([('company_id','=',res.company_id.id),('sequence_code','=','OUT')])
         company_orm_id=company_orm[0]['id']
-        
+
         company_orm_1 = self.env['stock.location'].search([('company_id','=',res.company_id.id),('usage','=','internal')])
         company_orm_id_1=company_orm_1[0]['id']
-        
+
         company_orm_2 = self.env['stock.location'].search([('usage','=','customer')])
         company_orm_id_2=company_orm_2[0]['id']
-        
-        
         
         picking_data={
             'partner_id':res.patient_id.id,
@@ -114,6 +111,7 @@ class medical_prescription_order(models.Model):
             'prescerption_ids':res.id,
             'move_ids_without_package':picking_list          
         } 
+
         picking_orm = self.env['stock.picking'].create(picking_data)
         return res
 

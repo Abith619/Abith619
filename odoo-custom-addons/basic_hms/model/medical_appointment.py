@@ -9,7 +9,6 @@ from odoo.exceptions import UserError
 import datetime
 from dateutil.relativedelta import relativedelta
 from odoo.exceptions import  ValidationError
-import requests
 
 
 
@@ -87,7 +86,6 @@ class medical_appointment(models.Model):
 	
 	def send_msg(self):
 		if self.whatsapp_check == True:
-            
 			return {
 					'type': 'ir.actions.act_window',
 					'name': 'Whatsapp Message',
@@ -140,6 +138,7 @@ class medical_appointment(models.Model):
 	@api.onchange('appointment_from')
 	def date_appointment(self):
 		l1 = []
+
 		all_slots = ['09:00 Am - 10:00 Am','10:00 Am - 11:00 Am','11:00 Am - 12:00 Pm',"12:00 Pm - 01:00 Pm","02:00 Pm - 03:00 Pm","03:00 Pm - 04:00 Pm"]
 		value=self.env['medical.appointment'].search([('dates','=',self.dates),('doctor_id','=',self.doctor_id.id),('appointment_from','=',self.appointment_from)])
 		if len(value) >= 3:
@@ -156,7 +155,6 @@ class medical_appointment(models.Model):
 		msg_body = 'Appointment created'
 		for msg in self:
 			msg.message_post(body=msg_body)
-			
 		result = super(medical_appointment, self).create(vals)
 		return result
 

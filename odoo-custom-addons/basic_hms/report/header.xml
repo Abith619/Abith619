@@ -8,7 +8,7 @@
             <div style = "text-align: center;">
                 <h6 style="text-align: center;">
             <span class="company_address" t-field="company.partner_id"/><br></br>
-            <span t-field="company.street"/><br></br>
+            <!-- <span t-field="company.street"/><br></br> -->
             <span t-field="company.city"/>
             <span t-field="company.state_id"/>
             <span t-field="company.zip"/>
@@ -24,3 +24,4 @@
 		</xpath>
     </template>
 </odoo>
+

@@ -41,7 +41,6 @@
         'security/hospital_groups.xml',
         'security/ir.model.access.csv',
         'data/ir_sequence_data.xml',
-        'data/ir_cron.xml',
         'views/assets.xml',
         'views/labscan.xml',
         'views/scan_test.xml',
@@ -52,7 +51,6 @@
         'report/prescription_bill.xml',
         'report/registration_bill.xml',
         'views/set_fruits.xml',
-        'views/whatsapp_form.xml',
         'views/set_veg.xml',
         'views/picking_inherit.xml',
         'views/set_protein.xml',
@@ -140,7 +138,4 @@
     "auto_install": False,
     "images": ["static/description/Banner.png"],
     "live_test_url": 'https://youtu.be/fk9dY53I9ow',
-
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

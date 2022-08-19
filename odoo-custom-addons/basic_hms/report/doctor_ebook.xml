@@ -29,12 +29,8 @@
             </td>
             <div>
             <td style="border: 0px;width: 50%;">
-        <!-- <img t-att-src="'/report/barcode/QR/%s'%(o.qr_code)" width="100" height="100"/> -->
-        <!-- <span t-field="o.qr_code"> -->
         <img t-att-src="'data:image/png;base64,%s' % to_text(o.qr_code)" style="height:100px;width:100px;float:center;"/>
-            <!-- <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', o.qr_code, 100, 100)"/> -->
-            <!-- <img t-if="o.qr_code" t-att-src="'data:image/png;base64,%s' % o.qr_code" style="max-height: 100px;"/> -->
-            <!-- </span> -->
+            
             </td>
             </div>
             </div>

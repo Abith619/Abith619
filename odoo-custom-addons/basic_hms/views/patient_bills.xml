@@ -24,6 +24,8 @@
                         <field name="paid_status"/>
                         </group>
                     </group>
+
+                    
                     <notebook>
                         <page string ="Reception">
                             <field name="reception_bills">
@@ -87,57 +89,27 @@
                                     <field name ="gst_tax" widget='many2many_tags'/>
                                 </tree>
                             </field>
-                            <div class='row'>
-                            <div class ="col-3">
-                            <div>
-                                <label for="total2" string="Registration Fees : " />
-                                    <field name ="total2"/>
-                            </div>
-                            <div>
-                                <label for="total" string="Lab Amount : " />
-                                    <field name ="total"/>
-                            </div>
-                            <div>
-                                <label for="total_scan" string="Scan Amount : " />
-                                    <field name ="total_scan"/>
-                            </div>
-                            </div>
-                            <div class='col-6'>
-                            </div>
-                            <div class ="col-md-3" style="text-align:end;">
-                                <div>
-                                    <label for="total1" string="Medicine Amount : " />
-                                        <field name ="total1"/>
-                                </div>
-                                <div>
-                                    <label for="total_tax" string="Tax: " />
-                                        <field name ="total_tax"/>
-                                </div>
-                                <div>
-                                    <label for="gst_total_tax" string="Amount With Tax : " />
-                                        <field name ="gst_total_tax"/>
-                                </div>
-                                    </div>
-                            </div>
+
+                            <group> 
+<group>      <field name='total2' readonly='1' force_save='1' string="Registration Fees : "/> </group>
+<group>        <field name='total1' readonly='1' force_save='1' string="Medicine Amount :"/> </group> 
+<group>       <field name='total' readonly='1' force_save='1'  string="Lab Amount :" /> </group>                           
+<group>        <field name='total_tax' readonly='1' force_save='1'  string="Tax Amount:" /> </group> 
+<group>         <field name='total_scan' readonly='1' force_save='1' string="Scan Amount :" /> </group> 
+<group>        <field name='gst_total_tax' readonly='1' force_save='1' string="Medicine Amount With Tax "/> </group> 
+
+                            </group> 
+
+<group>       <field name='billed_amount' readonly='1' force_save='1'  string="Total Amount : "/> </group>    
+
                         </page>
                     </notebook>
-                    <div class="row">
-                        <div class ="col-md-10">      
-                        </div>
-                        <div class ="col-md-2" style="display: flex; align-items: flex-start; justify-content: center;">
-                        <label for="billed_amount" string="Total Amount : " />
-                            <field name='billed_amount' readonly='1' force_save='1'/>
-                        </div>
-                    </div>
+ 
+                
                 </sheet>
-        <div class="oe_chatter">
-            <!-- <field name="message_follower_ids" widget="mail_followers"/> -->
-            <field name="message_ids" widget="mail_thread"/>
-        </div>
                 </form>
-            </field>
-            </record>
-
+                </field>
+                </record>
         <!--Search View-->
 
 <record id="view_bill_land_filter" model="ir.ui.view">
@@ -159,8 +131,7 @@
             <filter string="Past 6 Month" name="write_date" separator="1" domain="[('write_date','&lt;=',(datetime.date.today()-relativedelta(months=6)).strftime('%Y-%m-%d'))]"/>
             <!-- <filter string="Next Month" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%Y-%m-%d'))]"/> -->
             <filter string="Past Month" name="write_date" separator="1" domain="[('write_date','&lt;=',(datetime.date.today()-relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
-            <!-- <filter string="Past week" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()-relativedelta(week=1)).strftime('%Y-%m-%d'))]"/> -->
-            <!-- <filter string="This Month" name="date_date" separator="1" domain="[('date_date','=',(datetime.date.today()+relativedelta(months=1)).strftime('%Y-%m-%d'))]"/> -->
+          
         </search>
     </field>
 </record>
@@ -194,12 +165,12 @@
                 sequence="6"/> -->
 
 
-            <menuitem id="hospital_menu_bill" name="Billing"  parent="main_menu_hospital_management"
+                <menuitem id="hospital_menu_bill" name="Billing"  parent="main_menu_hospital_management"
                 sequence="6"/>
 
 
             <menuitem id="patient_bills"  name ="Bills" action="bills_action_views"
-                parent="hospital_menu_bill" sequence="1"/>
+                parent="hospital_menu_bill"/>
 
             <!-- <record id="Cashier_form" model="ir.ui.view">
                 <field name="name">Cashier</field>
@@ -236,6 +207,6 @@
                     </field>        
                 </record>-->
             <menuitem id="menu_Cashier" name="Cashier" parent= "hospital_menu_bill" 
-            action="account.action_account_payments" sequence="2"/> 
+            action="account.action_account_payments"/> 
 
     </odoo>

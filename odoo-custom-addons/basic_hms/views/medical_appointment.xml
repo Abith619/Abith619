@@ -231,6 +231,7 @@
     </record>
 
     <menuitem id="menu_appointment" name='Telecallers' action="action_medical_appointment"
-              parent="main_menu_hospital_management" sequence="7"/>
+              parent="main_menu_hospital_management"
+              sequence="7"/>
 
 </odoo>

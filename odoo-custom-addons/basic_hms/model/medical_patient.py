@@ -7,6 +7,9 @@ from odoo import api, fields, models, _
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta 
 from odoo.exceptions import  ValidationError
+import qrcode
+import base64
+from io import BytesIO
 
 
 class medical_patient(models.Model):
@@ -15,15 +18,6 @@ class medical_patient(models.Model):
     _rec_name = 'patient_id'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    # @api.onchange('patient_id')
-    # def _onchange_patient(self):
-    #     '''
-    #     The purpose of the method is to define a domain for the available
-    #     purchase orders.
-    #     '''
-    #     address_id = self.patient_id
-    #     self.partner_address_id = address_id
-    
     @api.onchange('patient_id')
     def on_patient(self):
         patient_orm = self.env['res.partner'].search([('id','=',self.patient_id.id)])
@@ -36,6 +30,11 @@ class medical_patient(models.Model):
     def print_report(self):
         return self.env.ref('basic_hms.report_print_patient_card').report_action(self)
 
+    @api.depends('whatsapp_check')
+    def number_swap(self):
+        if self.whatsapp_check == True:
+            self.contact_no = self.contact_number
+    
     @api.depends('date_of_birth')
     def onchange_age(self):
         for rec in self:
@@ -47,6 +46,7 @@ class medical_patient(models.Model):
             else:
                 rec.age = "Age"
 
+    
     whatsapp_check=fields.Boolean()
     stages= fields.Selection([('draft',"New"),('on',"On Process"),('done',"Done")])
     patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name", required= True)
@@ -277,8 +277,8 @@ class medical_patient(models.Model):
 
     appoinment_by = fields.Many2one('res.users',string='Appointment By',readonly=True,default=lambda self: self.env.user)
 
+#   inherit fields
 
-#inherit fields
     adoption_agreement = fields.Boolean()
     family_details = fields.Boolean() 
     area=fields.Char(string="Area")
@@ -318,13 +318,34 @@ class medical_patient(models.Model):
     treatment_for=fields.Many2one('medical.pathology',string="Treatment For")
     patient_signs_symptoms = fields.Many2many('medical.symptoms',string="Signs/Symptoms")
     related_field = fields.Char(string='Appointment ID')
-    # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.prescription.order')))
-
-    # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']
-	# .browse(self.env['res.company']._company_default_get('medical.patient')))
 
     company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.patient'))
     patient_waiting = fields.Char(string="Waiting Time",compute='waiting')
+    patient_activity = fields.Selection([('wait',"Waiting"),('doc','Consulting'),('lab','Lab Testing'),('scan','Scan Testing'),('bill',"Billing"),('pharmacy','Pharmacy')],default='wait')
+
+    qr_code = fields.Binary("QR Code", attachment=True, compute='generate_qr_code')
+    barcode = fields.Char("Barcode")
+
+    # @api.onchange('bp')
+    def generate_qr_code(self):
+        for rec in self:
+            p_details={
+                'Patient Id':rec.name,
+                'Patient Name':rec.patient_id.name,
+            }
+            qr = qrcode.QRCode(
+                version=1,
+                error_correction=qrcode.constants.ERROR_CORRECT_H,
+                box_size=10,
+                border=4,
+            )
+            qr.add_data(p_details)
+            qr.make(fit=True)
+            img = qr.make_image()
+            temp = BytesIO()
+            img.save(temp, format="PNG")
+            qr_image = base64.b64encode(temp.getvalue())
+            self.qr_code = qr_image
 
     @api.depends('write_date')
     def waiting(self):
@@ -340,11 +361,7 @@ class medical_patient(models.Model):
                 rec.patient_waiting = "00:00"
 
     write_date=fields.Datetime(string='Registration Time',default=datetime.now())
-    
-    @api.depends('whatsapp_check')
-    def number_swap(self):
-        if self.whatsapp_check == True:
-            self.contact_no = self.contact_number
+
 
     @api.onchange('dates','doctors')
     def roll(self):
@@ -360,7 +377,6 @@ class medical_patient(models.Model):
     @api.onchange('appointment_from')
     def date_appointment(self):
         l1 = []
-
         all_slots = ['09:00 Am - 10:00 Am','10:00 Am - 11:00 Am','11:00 Am - 12:00 Pm',"12:00 Pm - 01:00 Pm","02:00 Pm - 03:00 Pm","03:00 Pm - 04:00 Pm"]
         value=self.env['medical.patient'].search([('dates','=',self.dates),('doctors','=',self.doctors.id),('appointment_from','=',self.appointment_from)])
         if len(value) >= 3:
@@ -455,6 +471,8 @@ class medical_patient(models.Model):
         #     val_1 = {'name': self.env['res.partner'].browse(val['patient_id']).name}
         #     patient= res_partner_obj.create(val_1)
         #     val.update({'patient_id': patient.id})
+        # if val.get('date_of_birth'):
+        #     dt = val.get('date_of_birth')
         #     d1 = datetime.strptime(str(dt), "%Y-%m-%d").date()
         #     d2 = datetime.today().date()
         #     rd = relativedelta(d2, d1)

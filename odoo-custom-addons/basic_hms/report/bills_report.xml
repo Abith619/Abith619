@@ -34,6 +34,11 @@
                 </td>
                 </table>
                         </xpath>
+        
+
+        
+        
+         
         <div class="header_tag">
         <h4 class="text-center heading_text_cor">Registration</h4>
         </div>
@@ -62,6 +67,10 @@
 
         </table>
        
+
+        
+            
+      
          <div class="header_tag">
         <h4 class="text-center heading_text_cor">Lab Test</h4>
         </div>
@@ -93,6 +102,11 @@
                     </tbody>
                     </table>
                   
+                   
+
+
+      
+      
              <div class="header_tag">
         <h4 class="text-center heading_text_cor">Scan Test</h4>
         </div>
@@ -120,6 +134,11 @@
                     </tbody>
                     </table>
                    
+                   
+
+                    
+                
+                    
                     <div class="header_tag">
                     <h4 class="text-center heading_text_cor">Prescription</h4>
                     </div>
@@ -153,16 +172,33 @@
                        </tr>
                     </tbody>
                     </table>
-                    <td>
-                    <p class="text-left"><strong>Registration Fees : </strong> <i class="fa fa-inr"/><span t-field="o.bill_amount"/></p>
+                  
+                    
+                    <p class="text-right"><strong>Registration Fees : </strong> <i class="fa fa-inr"/><span t-field="o.total2"/></p>
                     <p class="text-right"><strong>Lab Amount : </strong> <i class="fa fa-inr"/><span t-field="o.total"/></p>
-                    <p class="text-left"><strong>Scan Amount : </strong><i class="fa fa-inr"/><span t-field="o.total_scan" /></p>
+                    <p class="text-right"><strong>Scan Amount : </strong><i class="fa fa-inr"/><span t-field="o.total_scan" /></p>
                     <p class="text-right"><strong>Medicine Amount :  </strong> <i class="fa fa-inr"/><span t-field="o.total1"/></p>
-                    <p class="text-left"><strong>TAX Amount :  </strong><i class="fa fa-inr"/><span t-field="o.total_tax" /></p>
+                    <p class="text-right"><strong>TAX Amount :  </strong><i class="fa fa-inr"/><span t-field="o.total_tax" /></p>
                     <p class="text-right"><strong>Amount with Tax:  </strong><i class="fa fa-inr"/><span t-field="o.gst_total_tax" /></p>
-                    </td>
+              
+
                     
                     <p class="text-right"><strong>Grand Total :  </strong><i class="fa fa-inr"/><span t-field="o.billed_amount"/></p>
+
+
+                     
+
+
+
+
+                        
+               
                 </t></t></t>
+        
+
+
+
+            
+
     </template>
 </odoo>

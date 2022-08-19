@@ -11,6 +11,7 @@
                     <div class="header_tag">
                     <h4 class="text-center heading_text_cor">Prescription</h4>
                     </div>
+
                    <table class="table table-bordered" style="border: 1px solid black;">
                     <thead>
                         <tr>

@@ -14,8 +14,9 @@
                     <field name="evening" />
                     <field name="night" />
                     <field name="before_after" />
+                    <!-- <field name="after_food" /> -->
                     <field name="comment" />
-                    <field name="days1" />
+                    <field name="days1" />  
                 </tree>
 
             </field>
@@ -30,11 +31,42 @@
                         <field name="medicine_name" required="1" />
                         <field name="all_day"/>
                         <field name="quantity"/>
-                        <field name="prescribed_quantity" />
+                        <field name="morning" invisible="1"/>
+                        <field name="noon" invisible="1" />
+                        <field name="evening"  invisible="1"/>
+                        <field name="night"  invisible="1"/>
+                        <field name="before_after" invisible="1" />
+                        <!-- <field name="after_food" /> -->
                         <field name="comment" />
+                        
                         <field name="days1" />
                     </group>
-                   
+                    <!-- <group colspan="4" string="Dosage">
+                        <group colspan="6" col="6">
+                            <field name="dose" />
+                            <field name="dose_unit_id" />
+
+                            <field name="qty" />
+                        </group>
+                        <separator string="Common Dosage" />
+                        <group colspan="4" col="4">
+                            <field name="medication_dosage_id" />
+                            <field name="admin_times" />
+                        </group>
+                        <separator string="Specific Dosage" />
+                        <group colspan="4" col="4">
+                            <field name="frequency" />
+                            <field name="frequency_unit" />
+                        </group>
+                    </group> -->
+                    <!-- <group colspan="4" col="4">
+                        <field name="duration" />
+                        <field name="duration_period" />
+                        <field name="review" />
+                        <field name="quantity" />
+                        <field name="refills" />
+                        <field name="short_comment" />
+                    </group> -->
                 </form>
 
             </field>

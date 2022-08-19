@@ -67,7 +67,7 @@ class medical_directions(models.Model):
     treatment_initial=fields.One2many('treatment.form','treatment1',string='Treatment')
 
 
-    prescription_patient = fields.One2many( 'patient.prescription','patient_name',string ='Prescription')
+    prescription_patient = fields.One2many( 'patient.prescription','medical_doctor',string ='Prescription')
 
     currents_ailments = fields.One2many('current.ailments','doctor_aliments',string="Current Ailments")
     
@@ -162,6 +162,7 @@ class medical_directions(models.Model):
 
     patient_waiting = fields.Char(string="Waiting Time")
     wait_date=fields.Datetime(string='Datetime', default=datetime.now())
+    patient_activity = fields.Selection([('wait',"Waiting"),('doc','Consulted'),('lab','Lab Testing'),('scan','Scan Testing'),('bill',"Billing"),('pharmacy','Pharmacy')],default='wait')
     
 
     # def _get_default_stage(self):
@@ -215,10 +216,18 @@ class medical_directions(models.Model):
         'view_id': self.env.ref('basic_hms.symptoms_tree_view').id,
         'target': 'new'
         }
+        
+    # @api.depends('patient_activity')
+    # def activity_change(self):
+    #     for rec in self:
+            
 
-# prescription
+#    prescription
+
     def prescription_button(self):
-        self.patient_status =False
+        self.patient_activity = 'doc'
+        orm = self.env['medical.patient'].search([('patient_id','=',self.patient.id)])
+        orm.write({'patient_activity':self.patient_activity})
         return{
         'name': "Prescription",
         'type': 'ir.actions.act_window',
@@ -235,16 +244,16 @@ class medical_directions(models.Model):
             'default_sex': self.sex,
             'default_height': self.height,
             'default_weight': self.weight,
-            # 'default_treatments_for':self.treatment,
-            # 'default_treatment_for':self.treatment,
             'default_stages':'draft'
             },
             'target': 'new'
             }
-
+        
 #scan/test:
     def scan_button(self):
-        self.patient_status =False
+        self.patient_activity = 'lab'
+        orm = self.env['medical.patient'].search([('patient_id','=',self.patient.id)])
+        orm.write({'patient_activity':self.patient_activity})
         return{
         'name': "Lab Tests",
         'type': 'ir.actions.act_window',
@@ -254,16 +263,16 @@ class medical_directions(models.Model):
         'context': {
             'default_patient_id': self.patient.id,
             'default_ebook_id': self.serial_number,
-        # 'default_name': self.name,
-        # 'default_price': self.price,
-        # 'default_range': self.range,
-        'default_state':'tested'
-        },
+            'default_state':'tested'
+            },
         'target': 'new'
         }
 
     def labscan_button(self):
         self.patient_status =False
+        self.patient_activity = 'scan'
+        orm = self.env['medical.patient'].search([('patient_id','=',self.patient.id)])
+        orm.write({'patient_activity':self.patient_activity})
         return{
     'name': "Scan Tests",
     'type': 'ir.actions.act_window',
@@ -273,12 +282,10 @@ class medical_directions(models.Model):
     'context': {
         'default_patient_id': self.patient.id,
         'default_ebook_id': self.serial_number,
-        # 'default_price': self.price,
-        # 'default_range': self.range,
         'default_state':'tested'
         },
         'target': 'new'
-        }
+    }
 
     @api.onchange("contact_number")
     def number_val(self):
@@ -289,14 +296,16 @@ class medical_directions(models.Model):
 
     def diet_for(self):
         self.patient_status =False
+        self.patient_activity = 'doc'
+        orm = self.env['medical.patient'].search([('patient_id','=',self.patient.id)])
+        orm.write({'patient_activity':self.patient_activity})
         return{
-        'name': "Prescribe Diet",
-        'type': 'ir.actions.act_window', 
-        'view_type': 'form',
-        'view_mode': 'form',
-        'res_model': 'prescribe.diet',
-        # 'flags' : { 'action_buttons' : True,},
-        'context': {
+            'name': "Prescribe Diet",
+            'type': 'ir.actions.act_window', 
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'prescribe.diet',
+            'context': {
             'default_patient_id': self.patient.id
             },
             'target': 'new'
@@ -396,7 +405,7 @@ class medical_directions(models.Model):
 #      QR Code
 
 
-    qr_code = fields.Binary("QR Code", attachment=True, compute='generate_qr_code')
+    qr_code = fields.Binary("QR Code", attachment=True,compute='generate_qr_code' )
     barcode = fields.Char("Barcode")
 
     # @api.onchange('bp')
@@ -405,6 +414,8 @@ class medical_directions(models.Model):
             p_details={
                 'Patient Id':rec.serial_number,
                 'Patient Name':rec.patient.name,
+
+
             }
             qr = qrcode.QRCode(
                 version=1,
@@ -622,9 +633,9 @@ class Patientprescription(models.Model):
     _name ='patient.prescription'
 
     # serial_number=fields.Integer(string="SL")
-    medical_doctor=fields.Many2one('medical.doctor',string="Patient Name")
+    medical_doctor=fields.Many2one('medical.doctor',string="Patient Name",ondelete='cascade')
     # medicine_name = fields.Many2one('product.product',string='Medicine Name')
-    patient_name = fields.Many2one('res.partner',string="Patient Name",ondelete='cascade')
+    patient_name = fields.Many2one('res.partner',string="Patient Name")
     
     prescription_alot= fields.Many2one('medical.prescription.order',string="Prescriptions",required=True)
     date= fields.Datetime(string="Date of Prescription")
@@ -640,7 +651,6 @@ class Patientprescription(models.Model):
             for l in line.medical_doctor.prescription_patient:
                 no += 1
                 l.sequence_ref = no
-
 
 class Currentailgnments(models.Model):
     _name='current.ailments'
@@ -668,6 +678,3 @@ class Currentailgnments(models.Model):
     def onchange_test(self):
         for rec in self:
             return {'domain':{'patient_signs_symptoms':[('diseases', '=', rec.patient_currents_ailments.id)]}}
-
-
-
