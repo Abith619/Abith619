@@ -30,7 +30,6 @@
             <div>
             <td style="border: 0px;width: 50%;">
         <img t-att-src="'data:image/png;base64,%s' % to_text(o.qr_code)" style="height:100px;width:100px;float:center;"/>
-            
             </td>
             </div>
             </div>
@@ -86,7 +85,7 @@
                     </tr>
                 </tbody>
                 </table>
-                <div class="header_tag">
+                <!-- <div class="header_tag">
         <h4 class="text-center heading_text_cor">Past Complaints</h4>
         </div>
                 <table class="table table-bordered" style="border: 1px solid black;">
@@ -106,9 +105,9 @@
                     </td>
                     </tr>
                 </tbody>
-                </table>
-                <div style="page-break-before:always">
-                     <div class="header_tag">
+                </table> -->
+                
+                     <!-- <div class="header_tag">
         <h4 class="text-center heading_text_cor">Lab Test</h4>
         </div>
                     <table class="table table-bordered" style="border: 1px solid black;">
@@ -140,8 +139,8 @@
                         </td>
                     </tr>
                 </tbody>
-                </table>
-                <div class="header_tag">
+                </table> -->
+                <!-- <div class="header_tag">
         <h4 class="text-center heading_text_cor">Scan details</h4>
         </div>
                 <table class="table table-bordered" style="border: 1px solid black;">
@@ -149,8 +148,7 @@
                         <tr>
                         <th style="border: 1px solid black;">Scan Test ID</th>
                         <th style="border: 1px solid black;">Test Name </th>
-                        <!-- <th style="border: 1px solid black;">Tested Range </th>
-                        <th style="border: 1px solid black;">Normal Range </th> -->
+                       
                         <th style="border: 1px solid black;">Date </th>
                         </tr>
                     </thead>
@@ -162,21 +160,17 @@
                         <td style="border: 1px solid black;">
                         <span t-field="line.name"/>
                         </td>
-                        <!-- <td style="border: 1px solid black;">
-                    <span t-field="line.range_test"/>
-                    </td>
-                    <td style="border: 1px solid black;">
-                    <span t-field="line.range_normal"/>
-                    </td> -->
+                        
                         <td style="border: 1px solid black;">
                             <span t-field="line.date"/>
                             </td>
                         </tr>
                     </tbody>
-                    </table>
+                    </table> -->
                 <div class="header_tag">
         <h4 class="text-center heading_text_cor">Medicine</h4>
         </div>
+        <!-- <div style="page-break-before:always"> -->
                 <table class="table table-bordered" style="border: 1px solid black;">
                     <thead>
                         <tr>
@@ -211,6 +205,7 @@
                         </tr>
                     </tbody>
                     </table>
+                <div style="page-break-before:always">
                    <div class="header_tag">
         <h4 class="text-center heading_text_cor">Diet</h4>
         </div>
@@ -252,12 +247,43 @@
                             </td>
                             <td style="border: 1px solid black;">
                                 <span t-field="line.note"/>
-                                </td>
+                            </td>
                             </tr>
                         </tbody>
                         </table>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                            <thead>
+                        </thead>
+                            <tr t-foreach='docs.diet_id' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                    <span t-field="line.disclaimer"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="page-break-before:always">
+                        <div class="header_tag">
+                        <h4 class="text-center heading_text_cor">Exercise</h4>
                         </div>
-            </t>
+                        <tr t-foreach='docs.image_work' t-as='line'>
+                        <center><span t-field="line.workout" class="text-center "/></center>
+                        <br>
+                        </br>
+                        <center><img t-attf-src="data:image/*;base64,{{line.workout_img.datas}}"
+                        style="max-height:450px; max-width:1000px;" /></center>
+                        <br>
+                        </br>
+                        <br>
+                        </br>
+                        </tr>
+                        </div>
+                    <!-- </div> -->
+                        <div class="footer">
+                        <div class="float-right">
+                            <p><b>Doctor's Signature </b></p>
+                        </div>
+                        </div>
+                    </t>
             </t>
         </t>
     </t>

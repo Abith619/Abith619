@@ -43,6 +43,7 @@
         'data/ir_sequence_data.xml',
         'views/assets.xml',
         'views/labscan.xml',
+        'views/file_room.xml',
         'views/scan_test.xml',
         'report/diet_plan.xml',
         'report/header.xml',
@@ -125,11 +126,13 @@
         'views/res_city.xml',
         'views/treatment_for.xml',
         'views/register_payment.xml',
-         'views/float.xml',
+        'views/float.xml',
         'wizard/register_wizard.xml',
         'views/patient_bills.xml',
         'views/account_payment_inherit.xml',
         'views/product_product.xml',
+        'report/reg_barcode.xml',
+        
     ],
     "author": "BrowseInfo",
     "website": "https://www.browseinfo.in",
@@ -138,4 +141,7 @@
     "auto_install": False,
     "images": ["static/description/Banner.png"],
     "live_test_url": 'https://youtu.be/fk9dY53I9ow',
+
 }
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -200,6 +200,10 @@ class LabsScansd(models.Model):
     date= fields.Datetime(string="Date of Lab/Scan")
     write_date=fields.Date(string='Date')
     ebook_id = fields.Char(string='Patient ID')
+    patient_activity = fields.Selection([('wait',"Doctor Assigned"),('doc','Diet Assigned'),
+                                         ('lab','Lab Assigned'),('pres','Prescription'),('scan','Scan Assigned'),
+                                         ('labs','Lab Completed'),('scans','Scan Completed'),
+                                         ('bill',"Pharmacy Bill Assigned"),('completed',"Completed")],default='wait')
     # appoinment_by=fields.Many2one('res.users',string='Appointment By',default=lambda self: self.env.user,readonly='1')
 
     company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.doctor'))
@@ -225,12 +229,31 @@ class LabsScansd(models.Model):
     lab_hepatis = fields.Many2many('lab.hospital.test.form',string='X-Ray Digital')
     lab_immune_test = fields.Many2many('immunology.test',string='Immunology')
 
+    def document_button(self):
+        self.patient_activity = 'labs'
+        orm = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id)])
+        orm.write({'patient_activity':'labs'})
+        orm1 = self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
+        orm1.write({'patient_activity':'labs'})
+        return{
+            'name': "Document Upload",
+            'domain':[('patient_id', '=', self.patient_id.id)],
+            'view_mode': 'form',
+            'res_model': 'document.type.line',
+            'view_type': 'form',
+            'type': 'ir.actions.act_window',
+            'context': {
+            'default_patient_id': self.patient_id.id
+            },
+            'target': 'new'
+        }
+
     def lab_button(self):
             return {
     'name': "Lab Details",
     'domain':[('patient_id', '=', self.patient_id.id)],
     'view_mode': 'tree,form',
-    'res_model': 'lab.scan.form',
+    'res_model': 'document.type.line',
     'view_type': 'form',
     'type': 'ir.actions.act_window',
     }
@@ -400,6 +423,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.hemo_coag1:
@@ -407,6 +431,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.hemo_coag2:
@@ -414,6 +439,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.lab_test_hos:
@@ -421,6 +447,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.lab_test_hos_data:
@@ -428,6 +455,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.lab_test_hos_form:
@@ -435,6 +463,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.lab_enzymes:
@@ -442,6 +471,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.lab_lipid:
@@ -449,6 +479,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.lab_protein:
@@ -456,6 +487,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.lab_checkup:
@@ -463,6 +495,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.lab_endocrinology:
@@ -470,6 +503,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.lab_immunology:
@@ -477,6 +511,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.lab_tumour:
@@ -484,6 +519,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.lab_drug:
@@ -491,6 +527,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.lab_serology:
@@ -498,6 +535,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.lab_leptospirosis:
@@ -505,6 +543,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.lab_hiv:
@@ -512,6 +551,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.lab_hepatis:
@@ -519,6 +559,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.lab_immune_test:
@@ -526,6 +567,7 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 }
             lab_lines.append((0,0,values))
         for rec in result.lab_liver:
@@ -533,12 +575,12 @@ class LabsScansd(models.Model):
                 'date':datetime.now(),
                 'lab_type':result.id,
                 'name':rec.name,
+                'range_normal':rec.range
                 
                 }
             lab_lines.append((0,0,values))
 
         labscan.write({'lab_test_line':lab_lines})
-
 
         return result
     

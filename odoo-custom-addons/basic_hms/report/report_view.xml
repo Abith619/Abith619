@@ -75,6 +75,14 @@
             file="basic_hms.patient_registration"
             />
 
+            <report
+            id="report_print_patient_code"
+            model="medical.patient"
+            report_type="qweb-pdf"
+            string="Barcode"
+            name="basic_hms.registration_patient_barcode"
+            file="basic_hms.patient_registration_code"
+            />
         <!-- <report
             id="report_print_appointment"
             model="medical.appointment"

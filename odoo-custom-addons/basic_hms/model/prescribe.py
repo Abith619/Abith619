@@ -18,6 +18,7 @@ class Prescribediet(models.Model):
     veg_diet=fields.Many2many('set.veg',string="Veg Diet")
     protein_diet=fields.Many2many('set.protein',string="Protein Diet")
     diet_seq = fields.Many2one('prescribe.diet',string='Diet S.No')
+    disclaimer = fields.Char(string='')
     serial_number = fields.Char(string="Patient ID", readonly=True,copy=False,required=True, default='ID')
     patient_ids=fields.Char(string="Patient",default=lambda self: self.env['medical.doctor'].browse(self.env['medical.doctor']._context.get("patient.id")))
     
@@ -49,6 +50,7 @@ class Prescribediet(models.Model):
                 }
                 lines.append((0,0,val))
             rec.diet_line=lines
+            rec.disclaimer=self.name.disclaimer
 
     @api.model
     def create(self, vals):

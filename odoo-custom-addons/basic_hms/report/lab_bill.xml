@@ -6,8 +6,19 @@
             <t t-call="web.html_container">
                <t t-foreach="docs" t-as="o">
                    <t >
-                <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p>
-                <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p>
+                    <td style="border: 0px;width: 50%;">
+                        <div  >
+                        <div class='float-left'>
+                            
+                    <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p>
+                    <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p></div>
+                    
+                <div class="float-right" >
+                    <p><strong>Payment Type :</strong><span t-field="o.payment_type"/></p>
+                    <!-- <p><strong>Payment Type :</strong><span t-field="o.payment_id"/></p> -->
+                </div>
+            </div>
+                    </td>
                     <div class="header_tag">
         <h4 class="text-center heading_text_cor">Lab Test</h4>
         </div>

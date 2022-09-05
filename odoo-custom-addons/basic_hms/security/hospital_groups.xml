@@ -73,9 +73,81 @@
         <field name="groups_id" eval="[(6,0,[ref('basic_hms.ebook_access')])]"/>
     </record>
 
-    <!-- <record id="user_access" model="res.groups">
-        <field name="name">Admin</field>
-        <field></field>
+    <record id="user_access" model="res.groups">
+        <field name="name">Admin User</field>
+    </record>
+
+    
+    <record id="contact_access" model="res.groups">
+        <field name="name">Contacts</field>
+    </record>
+
+    <record model="ir.ui.menu" id="contacts.menu_contacts">
+        <field name="groups_id" eval="[(6,0,[ref('basic_hms.contact_access')])]"/>
+    </record>
+
+    <record id="inventory_access" model="res.groups">
+        <field name="name">Inventory</field>
+    </record>
+
+    <record model="ir.ui.menu" id="stock.menu_stock_root">
+        <field name="groups_id" eval="[(6,0,[ref('basic_hms.inventory_access')])]"/>
+    </record>
+
+    <record id="accounting_access" model="res.groups">
+        <field name="name">Accounting</field>
+    </record>
+
+    <record model="ir.ui.menu" id="account.menu_finance">
+        <field name="groups_id" eval="[(6,0,[ref('basic_hms.accounting_access')])]"/>
+    </record>
+
+    <record id="expense_access" model="res.groups">
+        <field name="name">Expense</field>
+    </record>
+
+    <record model="ir.ui.menu" id="hr_expense.menu_hr_expense_root">
+        <field name="groups_id" eval="[(6,0,[ref('basic_hms.expense_access')])]"/>
+    </record>
+
+    <record id="sale_access" model="res.groups">
+        <field name="name">Sale</field>
+    </record>
+
+    <record model="ir.ui.menu" id="sale.sale_menu_root">
+        <field name="groups_id" eval="[(6,0,[ref('basic_hms.sale_access')])]"/>
+    </record>
+
+    <!-- <record id="purchase_access" model="res.groups">
+        <field name="name">Purchase</field>
+    </record>
+
+    <record model="ir.ui.menu" id="purchase.menu_purchase_root">
+        <field name="groups_id" eval="[(6,0,[ref('basic_hms.purchase_access')])]"/>
     </record> -->
+
+    <record id="employee_access" model="res.groups">
+        <field name="name">Employee</field>
+    </record>
+
+    <record model="ir.ui.menu" id="hr.menu_hr_root">
+        <field name="groups_id" eval="[(6,0,[ref('basic_hms.employee_access')])]"/>
+    </record>
+    
+    <record id="out_transfer_access" model="res.groups">
+        <field name="name">Transfers</field>
+    </record>
+
+    <record model="ir.ui.menu" id="all_pickings">
+        <field name="groups_id" eval="[(6,0,[ref('basic_hms.out_transfer_access')])]"/>
+    </record>
+
+    <record id="file_room_access" model="res.groups">
+        <field name="name">File Room</field>
+    </record>
+
+    <record model="ir.ui.menu" id="menu_contact_patientss">
+        <field name="groups_id" eval="[(6,0,[ref('basic_hms.file_room_access')])]"/>
+    </record>
 
 </odoo>

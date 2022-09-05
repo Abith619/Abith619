@@ -18,7 +18,7 @@ class medical_appointment(models.Model):
 
 	appoinment_by=fields.Many2one('res.users',string='Appointment By',default=lambda self: self.env.user,readonly='1')
 	contact_number=fields.Char(string='Whatsapp Number')
-	stages= fields.Selection([('draft',"New"),('done',"Done")],default="draft")
+	stages= fields.Selection([('draft',"Draft"),('done',"Registered")],default="draft")
 	date=fields.Datetime('', default=datetime.datetime.now())
 	treatment_for=fields.Many2one('medical.pathology',string="Treatment For")
 	name = fields.Char(string="Appointment ID", readonly=True ,copy=True)
@@ -68,11 +68,12 @@ class medical_appointment(models.Model):
 	# fix_appoinment_line=fields.One2many('fix.appointment.line','fixed',string="Appoinment Slot")
 	dates= fields.Date(string="Date")
 	appointment_from=fields.Selection([('09:00 Am - 10:00 Am','09:00 Am - 10:00 Am'),('10:00 Am - 11:00 Am','10:00 Am - 11:00 Am'),('11:00 Am - 12:00 Pm',"11:00 Am - 12:00 Pm"),
-    ('12:00 Pm - 01:00 Pm','12:00 Pm - 01:00 Pm'),('02:00 Pm - 03:00 Pm','02:00 Pm - 03:00 Pm'),('03:00 Pm - 04:00 Pm','03:00 Pm - 04:00 Pm')],string='Appointment Slot')
+    ('12:00 Pm - 01:00 Pm','12:00 Pm - 01:00 Pm'),('02:00 Pm - 03:00 Pm','02:00 Pm - 03:00 Pm'),('03:00 Pm - 04:00 Pm','03:00 Pm - 04:00 Pm'),('04:00 Pm - 05:00 Pm','04:00 Pm - 05:00 Pm'),
+    ('05:00 Pm - 06:00 Pm','05:00 Pm - 06:00 Pm'),('06:00 Pm - 07:00 Pm','06:00 Pm - 07:00 Pm')],string='Appointment Slot')
 
 	appoinment_through =fields.Selection([('onl',"Online"),('of',"Offline")],required=True,default='onl',string ="Appointment Through")
 
-	fees = fields.Float(string='Fees',readonly=True,compute='fee_change')
+	fees = fields.Float(string='Fees')
 	whatsapp_check=fields.Boolean()
 	patient_signs_symptoms = fields.Many2many('medical.symptoms',string="Signs/Symptoms")
 
@@ -114,14 +115,13 @@ class medical_appointment(models.Model):
 
 
 
-	@api.depends('appoinment_through')
+	@api.onchange('appoinment_through')
 	def fee_change(self):
 		if self.appoinment_through =='onl':
 			self.fees=float(500)
 		else:
 			self.fees=float(150)
-		# else:
-		# 	self.fee=float(0)
+
     		
 
 	@api.onchange('dates','doctor_id')
@@ -139,7 +139,7 @@ class medical_appointment(models.Model):
 	def date_appointment(self):
 		l1 = []
 
-		all_slots = ['09:00 Am - 10:00 Am','10:00 Am - 11:00 Am','11:00 Am - 12:00 Pm',"12:00 Pm - 01:00 Pm","02:00 Pm - 03:00 Pm","03:00 Pm - 04:00 Pm"]
+		all_slots = ['09:00 Am - 10:00 Am','10:00 Am - 11:00 Am','11:00 Am - 12:00 Pm',"12:00 Pm - 01:00 Pm","02:00 Pm - 03:00 Pm","03:00 Pm - 04:00 Pm","04:00 Pm - 05:00 Pm","05:00 Pm - 06:00 Pm","06:00 Pm - 07:00 Pm"]
 		value=self.env['medical.appointment'].search([('dates','=',self.dates),('doctor_id','=',self.doctor_id.id),('appointment_from','=',self.appointment_from)])
 		if len(value) >= 3:
 			empty=self.env['medical.appointment'].search([('dates','=',self.dates),('doctor_id','=',self.doctor_id.id)])

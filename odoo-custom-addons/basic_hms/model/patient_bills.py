@@ -32,43 +32,105 @@ class PatientBills(models.Model):
     write_date=fields.Date(string='Date')
     ebook_id = fields.Char(string='Patient ID')
     paid_status = fields.Boolean(string='Paid')
-    gst_total_tax = fields.Float(string='Medicine Amount With GST', compute='onchan_func_gst')
-    total_tax = fields.Float(String='Total Taxes', compute='onchan_func_gst')
-    billed_amount = fields.Float(string='Total Amount',compute='on_total_func',store=True)
-    total_tree=fields.Float(compute='total_func_rec',string ='total_tree',store=True)
+    gst_total_tax = fields.Float(string='Medicine Amount With GST', compute="depend_fun_gst")
+    total_tax = fields.Float(String='Total Taxes',compute='depend_fun_gst' )
+    billed_amount = fields.Float(string='Total Amount',compute='onchan_func_gst',store=True)
+    total_tree=fields.Float(compute='total_func_rec',string ='total tree',store=True)
     billed_by=fields.Many2one('res.users',string='Billed By',default=lambda self: self.env.user,readonly='1')
+    patient_activity = fields.Selection([('wait',"Doctor Assigned"),('doc','Diet Assigned'),
+                                         ('lab','Lab Assigned'),('pres','Prescription'),('scan','Scan Assigned'),
+                                         ('bill',"Pharmacy Bill Assigned"),('completed',"Completed")],default='wait')
+    discounted = fields.Float(string='Discount',readonly=False)
+    discounted_total = fields.Float(string='Total With Discount')
+    payment_type = fields.Selection([('cash','Cash'),('card','Card'),('upi','Upi')], string='Payment Type')
+    payment_id = fields.Char(string='Payment ID')
 
+
+
+    @api.onchange('discounted')
+    def onchan_func_gst(self):
+        for rec in self:
+            for k in rec.pres_bill:
+                for j in k.gst_tax:
+                    percentage = self.env['account.tax'].search([('id','=',j._origin.id)])
+                    rec.discounted_total = (rec.total1 - rec.discounted)
+                    rec.total_tax = ((rec.discounted_total / 100) * (percentage.amount))
+
+    @api.depends('discounted_total','total_tax','total2','total_scan','total','gst_total_tax')
+    def depend_fun_gst(self):
+        for rec in self:
+            for tax_id in self.pres_bill:
+                tax = tax_id.gst_tax.amount
+            # percentage = self.env['account.tax'].search([('id','=',76)])
+                rec.discounted_total = (rec.total1 - rec.discounted)
+                rec.total_tax = ((rec.discounted_total / 100) * tax)
+        # raise ValidationError((percentage.amount))
+        rec.gst_total_tax = (rec.discounted_total)+(rec.total_tax)
+        a =(rec.total2 + rec.total_scan + rec.total) 
+        j = rec.gst_total_tax
+        self.billed_amount = (a+j)
+
+    @api.model
+    def _default_gst(self):
+        company_id = self.env.company.id
+        gst = self.env['account.journal'].search([('company_id', '=', company_id)])
+        if gst:
+            return gst[0]
+        return self.env['account.journal']
+
+    journal_id = fields.Many2one('account.journal', string='GST',  default=_default_gst, check_company=True)
+                                     
     def invoice_button(self):        
-       return{
-            'name': "Patient Invoice",
-            'type': 'ir.actions.act_window',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'account.payment',
-            'context': {
-                'default_partner_id':self.patient_name.id,
-                'default_bill_no':self.id
-                },
-            }
-     
+        context ={
+                'partner_id':self.patient_name.id,
+                'bill_no':self.id,
+                'name':self.id,
+                'amount':self.billed_amount
+                }
+        orm = self.env['account.payment'].create(context)
+    
     def create(self, vals):
         obj = super(PatientBills, self).create(vals)
         if obj.bill_no == '/':
             number = self.env['ir.sequence'].get('bill.sequence') or '/'
             obj.write({'bill_no': number})
+            
+        # context ={
+        #         'partner_id':obj.patient_name.id,
+        #         'bill_no':obj.id,
+        #         'amount':self.billed_amount
+        #         }
+        # orm = self.env['account.payment'].create(context)
+
         return obj
+        
+        
+        # return{
+        #     'name': "Patient Invoice",
+        #     'type': 'ir.actions.act_window',
+        #     'view_type': 'form',
+        #     'view_mode': 'form',
+        #     'res_model': 'account.payment',
+        #     'context': {
+        #         'default_partner_id':self.patient_name.id,
+        #         'default_bill_no':self.id
+        #         },
+        #     }
 
     @api.onchange('paid_status')
     def paid_not(self):
         if self.paid_status == True:
             self.total_amount = 0.00
+            orm = self.env['medical.patient'].search([('patient_id','=',self.patient_name.id)])
+            orm.write({'patient_activity':'completed'})
+
         
 
-    @api.depends('total_amount','total','gst_total_tax','total_tree','total_scan',)
-    def on_total_func(self):
-        for rec_sum in self:
-            k =(rec_sum.total2 + rec_sum.total_scan)+(rec_sum.total + rec_sum.gst_total_tax )
-        self.billed_amount = k
+    # @api.depends('total_amount','total','gst_total_tax','total2','total_scan',)
+    # def on_total_func(self):
+    #     for rec_sum in self:
+    #         k =(rec_sum.total2 + rec_sum.total_scan)+(rec_sum.total + rec_sum.gst_total_tax )
+    #     self.billed_amount = k
 
 
     # @api.depends('total_amount','total','gst_total_tax','total_tree','total_scan',)
@@ -83,8 +145,8 @@ class PatientBills(models.Model):
         sums = []
         for i in self:
             for k in i.reception_bills:
-                if k.payment_status == False:
-                    sums.append(k.bill_amount)
+                # if k.payment_status == False:
+                sums.append(k.bill_amount)
             i.total_tree = sum(sums)
 
     @api.depends('reception_bills')
@@ -101,8 +163,8 @@ class PatientBills(models.Model):
         sums = []
         for i in self:
             for k in i.lab_bill:
-                if k.payment_status == False:
-                    sums.append(k.bill_amount)
+                # if k.payment_status == False:
+                sums.append(k.bill_amount)
             i.total = sum(sums)
 
     @api.depends('scan_bill')
@@ -110,8 +172,8 @@ class PatientBills(models.Model):
         sums = []
         for i in self:
             for k in i.scan_bill:
-                if k.payment_status == False:
-                    sums.append(k.bill_amount)
+                # if k.payment_status == False:
+                sums.append(k.bill_amount)
             i.total_scan = sum(sums)
 
     @api.depends('pres_bill')
@@ -119,23 +181,23 @@ class PatientBills(models.Model):
         sums = []
         for i in self:
             for k in i.pres_bill:
-                if k.payment_status == False:
-                    sums.append(k.pre_amount)
+                # if k.payment_status == False:
+                sums.append(k.pre_amount)
             i.total1 = sum(sums)
 
-    @api.depends('pres_bill')
-    def onchan_func_gst(self):
-        for rec in self:
-            taxed_amount = 0
-            for k in rec.pres_bill:
-                if k.payment_status == False:
-                    total_tax = 0
-                    for gst_id in k.gst_tax:
-                        percentage = self.env['account.tax'].search([('id','=',gst_id.id)])
-                        total_tax += percentage.amount
-                    taxed_amount += (k.pre_amount / 100) * total_tax 
-            rec.total_tax = taxed_amount
-            rec.gst_total_tax = rec.total1 + taxed_amount 
+    # @api.depends('pres_bill')
+    # def onchan_func_gst(self):
+    #     for rec in self:
+    #         taxed_amount = 0
+    #         for k in rec.pres_bill:
+    #             if k.payment_status == False:
+    #                 total_tax = 0
+    #                 for gst_id in k.gst_tax:
+    #                     percentage = self.env['account.tax'].search([('id','=',gst_id.id)])
+    #                     total_tax += percentage.amount
+    #                 taxed_amount += (k.pre_amount / 100) * total_tax 
+    #         rec.total_tax = taxed_amount
+    #         rec.gst_total_tax = rec.total1 + taxed_amount 
 
 
 class Billlines(models.Model):

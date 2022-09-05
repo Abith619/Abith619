@@ -34,17 +34,18 @@
         </field>
      </record> 
 
-     <!-- <record id="view_stock_move_new" model="ir.ui.view">
-        <field name="name">stock.move.tree.inherit</field>
-        <field name="model">stock.move</field>
-        <field name="inherit_id" ref="stock.view_move_tree"/>
-        <field name="arch" type="xml">
-            <data>
-                <field name="product_id" position="before">
-                    <field name="pin_num"/>
-                </field>
-            </data>
-        </field>
-    </record> -->
+     <record model="ir.actions.act_window" id="action_view_transfers">            
+        <field name="name">Transfers</field>         
+            <field name="res_model">stock.picking</field>                 
+            <field name="view_mode">tree,form,graph,pivot</field>
+            <field name="domain">[('picking_type_id','=','Delivery Orders')]</field>            
+            <field name="help" type="html">                
+                <p class="oe_view_nocontent_create">Transfers
+                </p>            
+            </field>
+        </record>
+
+    <menuitem id="all_pickings" name="Transfers" parent="main_menu_hospital_management" sequence="6" action="action_view_transfers" />
+
 </odoo>
       

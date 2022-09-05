@@ -86,13 +86,36 @@ class Scan_test(models.Model):
     ct_angiogram = fields.Many2many('ct.angiogram', string='CT Angiogram')
     ultra_sound_test = fields.Many2many('ultra.sound.studies', string='Ultrasound Test')
     ct_guided_intervention = fields.Many2many('ct.guided.intervention', string='CT Guided Intervention')
+    patient_activity = fields.Selection([('wait',"Doctor Assigned"),('doc','Diet Assigned'),
+                                         ('lab','Lab Assigned'),('pres','Prescription'),('scan','Scan Assigned'),
+                                         ('labs','Lab Completed'),('scans','Scan Completed'),
+                                         ('bill',"Pharmacy Bill Assigned"),('completed',"Completed")],default='wait')
+
+    def document_button(self):
+        self.patient_activity = 'scans'
+        orm = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id)])
+        orm.write({'patient_activity':'scans'})
+        orm1 = self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
+        orm1.write({'patient_activity':'scans'})
+        return{
+            'name': "Document Upload",
+            'domain':[('patient_id', '=', self.patient_id.id)],
+            'view_mode': 'form',
+            'res_model': 'document.type.line',
+            'view_type': 'form',
+            'type': 'ir.actions.act_window',
+            'context': {
+            'default_patient_id': self.patient_id.id
+            },
+            'target': 'new'
+        }
     
     def scan_button(self):
             return {
     'name': "Scan Details",
     'domain':[('patient_id', '=', self.patient_id.id)],
     'view_mode': 'tree,form',
-    'res_model': 'scan.test',
+    'res_model': 'document.type.line',
     'view_type': 'form',
     'type': 'ir.actions.act_window',
     }

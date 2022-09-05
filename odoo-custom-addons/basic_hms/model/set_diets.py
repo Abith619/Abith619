@@ -9,6 +9,7 @@ class SetDiets(models.Model):
     name = fields.Char('Name', required = True)
     exercise1=fields.Char(string="Exercise")
     fruit_diet=fields.Many2many('set.fruits',string="Fruit Diet")
+    disclaimer = fields.Char(string='')
 
     
     patient_id=fields.Char(string="Patient",default=lambda self: self.env['medical.doctor'].browse(self.env['medical.doctor']._context.get('patient.id')))

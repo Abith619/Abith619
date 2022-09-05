@@ -12,12 +12,22 @@ import base64
 from io import BytesIO
 
 
+
 class medical_patient(models.Model):
     
     _name = 'medical.patient'
     _rec_name = 'patient_id'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
+    # @api.onchange('patient_id')
+    # def _onchange_patient(self):
+    #     '''
+    #     The purpose of the method is to define a domain for the available
+    #     purchase orders.
+    #     '''
+    #     address_id = self.patient_id
+    #     self.partner_address_id = address_id
+    
     @api.onchange('patient_id')
     def on_patient(self):
         patient_orm = self.env['res.partner'].search([('id','=',self.patient_id.id)])
@@ -25,16 +35,12 @@ class medical_patient(models.Model):
         'mobile':self.contact_no,
         'patient_gender':self.sex,
         'is_patient':True
+    
         })
 
     def print_report(self):
         return self.env.ref('basic_hms.report_print_patient_card').report_action(self)
 
-    @api.depends('whatsapp_check')
-    def number_swap(self):
-        if self.whatsapp_check == True:
-            self.contact_no = self.contact_number
-    
     @api.depends('date_of_birth')
     def onchange_age(self):
         for rec in self:
@@ -277,8 +283,8 @@ class medical_patient(models.Model):
 
     appoinment_by = fields.Many2one('res.users',string='Appointment By',readonly=True,default=lambda self: self.env.user)
 
-#   inherit fields
 
+#inherit fields
     adoption_agreement = fields.Boolean()
     family_details = fields.Boolean() 
     area=fields.Char(string="Area")
@@ -318,13 +324,30 @@ class medical_patient(models.Model):
     treatment_for=fields.Many2one('medical.pathology',string="Treatment For")
     patient_signs_symptoms = fields.Many2many('medical.symptoms',string="Signs/Symptoms")
     related_field = fields.Char(string='Appointment ID')
+    # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.prescription.order')))
+
+    # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']
+	# .browse(self.env['res.company']._company_default_get('medical.patient')))
 
     company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.patient'))
     patient_waiting = fields.Char(string="Waiting Time",compute='waiting')
-    patient_activity = fields.Selection([('wait',"Waiting"),('doc','Consulting'),('lab','Lab Testing'),('scan','Scan Testing'),('bill',"Billing"),('pharmacy','Pharmacy')],default='wait')
-
+    patient_activity = fields.Selection([('wait',"Doctor Assigned"),('doc','Diet Assigned'),
+                                         ('lab','Lab Assigned'),('pres','Prescription'),('scan','Scan Assigned'),
+                                         ('labs','Lab Completed'),('scans','Scan Completed'),
+                                         ('bill',"Pharmacy Bill Assigned"),('completed',"Completed")],default='wait')
+    status_report = fields.Selection([('file','File'),('consult','Consultation'),('br','BR')])
+    file_num = fields.Char(string='File ID')
     qr_code = fields.Binary("QR Code", attachment=True, compute='generate_qr_code')
     barcode = fields.Char("Barcode")
+
+    abroad_addr = fields.Char(string='Abroad Address')
+
+
+    @api.onchange('whatsapp_check')
+    def number_swaps(self):
+        if self.whatsapp_check == True:
+            self.contact_number = self.contact_no
+
 
     # @api.onchange('bp')
     def generate_qr_code(self):
@@ -346,6 +369,9 @@ class medical_patient(models.Model):
             img.save(temp, format="PNG")
             qr_image = base64.b64encode(temp.getvalue())
             self.qr_code = qr_image
+
+
+    
 
     @api.depends('write_date')
     def waiting(self):
@@ -377,7 +403,8 @@ class medical_patient(models.Model):
     @api.onchange('appointment_from')
     def date_appointment(self):
         l1 = []
-        all_slots = ['09:00 Am - 10:00 Am','10:00 Am - 11:00 Am','11:00 Am - 12:00 Pm',"12:00 Pm - 01:00 Pm","02:00 Pm - 03:00 Pm","03:00 Pm - 04:00 Pm"]
+
+        all_slots = ['09:00 Am - 10:00 Am','10:00 Am - 11:00 Am','11:00 Am - 12:00 Pm',"12:00 Pm - 01:00 Pm","02:00 Pm - 03:00 Pm","03:00 Pm - 04:00 Pm","04:00 Pm - 05:00 Pm","05:00 Pm - 06:00 Pm","06:00 Pm - 07:00 Pm"]
         value=self.env['medical.patient'].search([('dates','=',self.dates),('doctors','=',self.doctors.id),('appointment_from','=',self.appointment_from)])
         if len(value) >= 3:
             empty=self.env['medical.patient'].search([('dates','=',self.dates),('doctors','=',self.doctors.id)])
@@ -419,8 +446,8 @@ class medical_patient(models.Model):
     fix_appoinment=fields.One2many('fix.appointment','fix',string="Appoinment Slot")
     dates= fields.Date(string="Date")
     appointment_from=fields.Selection([('09:00 Am - 10:00 Am','09:00 Am - 10:00 Am'),('10:00 Am - 11:00 Am','10:00 Am - 11:00 Am'),('11:00 Am - 12:00 Pm',"11:00 Am - 12:00 Pm"),
-    ('12:00 Pm - 01:00 Pm','12:00 Pm - 01:00 Pm'),('02:00 Pm - 03:00 Pm','02:00 Pm - 03:00 Pm'),('03:00 Pm - 04:00 Pm','03:00 Pm - 04:00 Pm')],
-    string='Appointment Slot')
+    ('12:00 Pm - 01:00 Pm','12:00 Pm - 01:00 Pm'),('02:00 Pm - 03:00 Pm','02:00 Pm - 03:00 Pm'),('03:00 Pm - 04:00 Pm','03:00 Pm - 04:00 Pm'),('04:00 Pm - 05:00 Pm','04:00 Pm - 05:00 Pm'),
+    ('05:00 Pm - 06:00 Pm','05:00 Pm - 06:00 Pm'),('06:00 Pm - 07:00 Pm','06:00 Pm - 07:00 Pm')],string='Appointment Slot')
     payment = fields.Float(string="Payments")
 
 

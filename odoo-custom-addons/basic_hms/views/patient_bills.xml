@@ -6,19 +6,23 @@
         <field name="arch" type="xml">
             <form string="Patient Bills">
                 <header >
-                    <button name="invoice_button" type="object" string="Create Invoice" class="oe_highlight"/>
+                    <button name="invoice_button" type="object" string="Create Invoice" class="oe_highlight" />
                 </header>             
                 <sheet> 
                     <group>
                         <group>
+                        <field name ="ebook_id"/>
                             <field name ="patient_name"/>
                             <field name ="date_date"/> 
                             <field name= "doctor_id" invisible='1'/>
                             <field name= "billed_by"/>
                         </group>
                         <group>
+                        <field name ="journal_id"/>
                             <field name ="insurance"/>
                             <field name = "type_of_insurance" attrs="{'invisible': [('insurance','=', False)]}"/>
+                            <field name="payment_type"/>
+                            <field name="payment_id"/>
                         <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
                         <field name='total_amount' string='Due Amount' force_save='1'/>
                         <field name="paid_status"/>
@@ -93,6 +97,8 @@
                             <group> 
 <group>      <field name='total2' readonly='1' force_save='1' string="Registration Fees : "/> </group>
 <group>        <field name='total1' readonly='1' force_save='1' string="Medicine Amount :"/> </group> 
+<group>  <field name='discounted' force_save='1' string="Discount :"/></group>
+<group> <field name='discounted_total' force_save='1'/></group> 
 <group>       <field name='total' readonly='1' force_save='1'  string="Lab Amount :" /> </group>                           
 <group>        <field name='total_tax' readonly='1' force_save='1'  string="Tax Amount:" /> </group> 
 <group>         <field name='total_scan' readonly='1' force_save='1' string="Scan Amount :" /> </group> 

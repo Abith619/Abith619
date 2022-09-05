@@ -5,6 +5,9 @@ from odoo import api, fields, models, _
 import qrcode
 import base64
 from io import BytesIO
+import pytz
+from datetime import datetime, timedelta
+from odoo.exceptions import  ValidationError
 
 
 class res_partner(models.Model):
@@ -55,8 +58,16 @@ class res_partner(models.Model):
     lab_scan = fields.Boolean(string='Lab & Scan')
     is_billing = fields.Boolean(string='Billing')
     is_telecaller = fields.Boolean(string='Telecaller')
+    serial_number = fields.Char(string="Patient ID", readonly=True,copy=False,required=True, default='Patient ID')
+
     roles_selection=fields.Selection([('manager','Manager'),('reception','Reception'),('doctor','Doctor'),('pharmacy','Pharmacy'),
     ('billing','Billing'),('lab','Lab & Scan'),('telecaller','Telecaller'),('patient','Patient')],string='Roles')
+
+    @api.model
+    def create(self, vals):
+        vals['serial_number'] = self.env['ir.sequence'].next_by_code('res.partner') or 'RES'
+        res = super(res_partner, self).create(vals)
+        return res
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
@@ -235,6 +246,24 @@ class res_partner(models.Model):
     'type': 'ir.actions.act_window',
     }
 
+    def document_count(self):
+        
+        for res in self :
+            document_count_appointment1 = self.env['document.type.line'].search_count([('patient_id', '=', res.name)])
+            self.document_count_appointment= document_count_appointment1
+    document_count_appointment=fields.Integer(compute='document_count',string="Green Documents")
+
+    def document_count_button(self):
+        return {
+    'name': "Document",
+    'domain':[('patient_id', '=', self.name)],
+    'view_mode': 'tree,form',
+    'res_model': 'document.type.line',
+    'view_type': 'form',
+    'type': 'ir.actions.act_window',
+    }
+
+
 class MedicineMaster(models.Model):
     _inherit='product.product'
 
@@ -260,5 +289,44 @@ class document_type_upload(models.Model):
     _name = 'document.type.line'
 
     name = fields.Char(string="Name")
+    patient_id = fields.Many2one('res.partner',string='Patient Name')
     document_detail=fields.Binary(string="Upload Documents")
-    doc_types=fields.Selection([('gov','Gov ID'),('original','Original')],string="Document Type")
+    doc_types=fields.Selection([('green','Green Document'),('gov','Gov ID'),('original','Original'),('lab','Lab Document'),('scan','Scan Document')],string="Document Type")
+
+class ir_sequence_master(models.Model):
+    _inherit = 'ir.sequence'
+
+    def _get_prefix_suffix(self):
+        def _interpolate(s, d):
+            return (s % d) if s else ''
+
+        def _interpolation_dict():
+            now = range_date = effective_date = datetime.now(pytz.timezone(self._context.get('tz') or 'UTC'))
+            if self._context.get('ir_sequence_date'):
+                effective_date = fields.Datetime.from_string(self._context.get('ir_sequence_date'))
+            if self._context.get('ir_sequence_date_range'):
+                range_date = fields.Datetime.from_string(self._context.get('ir_sequence_date_range'))
+
+            sequences = {
+                'year': '%Y', 'month': '%m', 'day': '%d', 'y': '%y', 'doy': '%j', 'woy': '%W',
+                'weekday': '%w', 'h24': '%H', 'h12': '%I', 'min': '%M', 'sec': '%S'
+            }
+            if range_date:
+                ay = str(range_date.year)[2:] + '-' + \
+                    str(range_date.year + 1)[2:]
+                sequences.update({'ay': ay, 'month_text': '%b'})
+            res = {}
+            for key, format in sequences.items():
+                res[key] = effective_date.strftime(format)
+                res['range_' + key] = range_date.strftime(format)
+                res['current_' + key] = now.strftime(format)
+
+            return res
+
+        d = _interpolation_dict()
+        try:
+            interpolated_prefix = _interpolate(self.prefix, d)
+            interpolated_suffix = _interpolate(self.suffix, d)
+        except ValueError:
+            raise ValidationError(_('Invalid prefix or suffix for sequence \'%s\'') % (self.get('name')))
+        return interpolated_prefix, interpolated_suffix

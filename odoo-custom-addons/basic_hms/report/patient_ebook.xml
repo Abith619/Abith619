@@ -13,6 +13,7 @@
 
             }
         </style>
+
             <t >
             <tr>
             <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
@@ -29,7 +30,7 @@
             </div>
         </table>
             </tr>
-        
+
             <table border="4" class="table table-bordered" style="border: 1px solid black;">
             <thead>
             <tr style="height:40px">

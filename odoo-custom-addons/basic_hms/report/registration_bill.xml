@@ -7,10 +7,19 @@
                <t t-foreach="docs" t-as="o">
                    <t >
                     <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
-                <td style="border: 0px;width: 50%;">
-                <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p>
-                <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p>
-                </td>
+                        <td style="border: 0px;width: 50%;">
+                            <div  >
+                            <div class='float-left'>
+                                
+                        <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p>
+                        <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p></div>
+                        
+                    <div class="float-right" >
+                        <p><strong>Payment Type :</strong><span t-field="o.payment_type"/></p>
+                        <!-- <p><strong>Payment Type :</strong><span t-field="o.payment_id"/></p> -->
+                    </div>
+                </div>
+                        </td>
                 </table>
                 <div class="header_tag">
         <h4 class="text-center heading_text_cor">Registration</h4>

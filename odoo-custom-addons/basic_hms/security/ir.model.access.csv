@@ -42,7 +42,6 @@ access_medical_physician,medical.group.physician,model_medical_physician,base.gr
 access_medical_physician_doctor,medical.group.physician.doctor,model_medical_physician,base.group_user,1,1,1,1
 access_dose_unit,medical.group.dose.unit,model_medical_dose_unit,base.group_user,1,1,1,1
 access_medical_patient_medication,medical.group.patient.medication,model_medical_patient_medication,base.group_user,1,1,1,1
-access_medical_patient_medication,medical.group.patient,model_medical_patient,base.group_user,1,1,1,1
 access_patient_diseases,medical.group.patient.diseases,model_medical_patient_disease,base.group_user,1,1,1,1
 access_medical_medication_dosage,medical.group.medication.dosage,model_medical_medication_dosage,base.group_user,1,1,1,1
 access_medical_physician,medical.group.medical.physician,model_medical_physician,base.group_user,1,1,1,1
@@ -106,7 +105,6 @@ access_res_partner_sale_manager_m,res.partner.sale.manager.m,base.model_res_part
 
 
 access_product_template_sale_user,product.template sale use,product.model_product_template,base.group_user,1,1,1,1
-access_product_product_sale_user,product.product sale use,product.model_product_product,base.group_user,1,1,1,1
 access_account_tax_user,account.tax.user,account.model_account_tax,base.group_user,1,1,1,1
 access_ir_attachment_sales,ir.attachment.sales,base.model_ir_attachment,base.group_user,1,1,1,1
 access_ir_attachment_manager,ir.attachment.manager,base.model_ir_attachment,base.group_user,1,1,1,1
@@ -323,16 +321,30 @@ access_lab_test_line,medical.group.lab.test.line,model_lab_test_line,base.group_
 access_immunology_test,medical.group.immunology.test,model_immunology_test,base.group_user,1,1,1,1
 access_lab_test_hospital_data,medical.group.lab.test.hospital.data,model_lab_test_hospital_data,base.group_user,1,1,1,1
 
-access_ebook_access,medical.group.medical.doctor,model_medical_doctor,base.group_user,1,1,1,0
+access_medical_doctor,medical.group.medical.doctor,model_medical_doctor,base.group_user,1,1,1,1
+access_user_access,medical.group.medical.doctor,model_medical_doctor,user_access,1,1,1,1
 
-access_telecaller_access1,medical.group.telecaller.access1,model_medical_appointment,base.group_user,1,1,1,0
+access_medical_appointment,medical.group.telecaller.access1,model_medical_appointment,base.group_user,1,1,1,1
+access_user_access,medical.group.telecaller.access1,model_medical_appointment,user_access,1,1,1,1
 
-access_registration_access,medical.group.medical.patient,model_medical_patient,base.group_user,1,1,1,0
+access_medical_patient,medical.group.medical.patient,model_medical_patient,base.group_user,1,1,1,1
+access_user_access,medical.group.medical.patient,model_medical_patient,user_access,1,1,1,1
 
-access_billing_access,medical.group.patient.bills,model_patient_bills,base.group_user,1,1,1,0
+access_patient_bills,medical.group.patient.bills,model_patient_bills,base.group_user,1,1,1,1
+access_user_access,medical.group.patient.bills,model_patient_bills,user_access,1,1,1,1
 
-access_prescription_access,medical.group.medical.prescription.order,model_medical_prescription_order,base.group_user,1,1,1,0
+access_medical_prescription_order,medical.group.medical.prescription.order,model_medical_prescription_order,base.group_user,1,1,1,1
+access_user_access,medical.group.medical.prescription.order,model_medical_prescription_order,user_access,1,1,1,1
 
-access_lab_access,medical.group.lab.scan.form,model_lab_scan_form,base.group_user,1,1,1,0
+access_lab_scan_form,medical.group.lab.scan.form,model_lab_scan_form,base.group_user,1,1,1,1
+access_user_access,medical.group.lab.scan.form,model_lab_scan_form,user_access,1,1,1,1
 
-access_scan_access,medical.group.scan.test,model_scan_test,base.group_user,1,1,1,0
+access_scan_test,medical.group.scan.test,model_scan_test,base.group_user,1,1,1,1
+access_user_access,medical.group.scan.test,model_scan_test,user_access,1,1,1,1
+
+access_product_product,medical.group.product.product,model_product_product,base.group_user,1,1,1,1
+access_user_access,medical.group.product.product,model_product_product,user_access,1,1,1,1
+
+access_file_room,medical.group.file.room,model_file_room,base.group_user,1,1,1,1
+
+access_assign_workout,medical.group.assign.workout,model_assign_workout,base.group_user,1,1,1,1

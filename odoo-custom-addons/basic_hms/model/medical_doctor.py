@@ -23,7 +23,7 @@ class medical_directions(models.Model):
     marital_status = fields.Selection([('s','Single'),('m','Married'),('w','Widowed'),('d','Divorced'),('x','Seperated')],string='Marital Status')
     height = fields.Float(string="Height in Cms")
     weight = fields.Float(string="Weight in Kgs")
-    bp = fields.Float(string='BP in mmHg')
+    bp = fields.Char(string='BP in mmHg')
     patient_timing=fields.Datetime(string='Patient Timing')
     treatment = fields.Char(string="Treatment Adviced")
     opnumber =fields.Char(string="OP Number")
@@ -39,7 +39,7 @@ class medical_directions(models.Model):
     diet_fields=fields.One2many('diet.field.for','diet2',string='Diet')
     patient_status = fields.Boolean(string='Patient Status')
     adoption_details = fields.Boolean(required=True)
-    designation = fields.Char(string="Designation")
+    designation = fields.Char(string="Designation",readonly=True)
     date1=fields.Date(default=datetime.today())
     medicine_name = fields.Many2one('product.product',string='Medicine Name')
     medicine_id = fields.Many2one('medical.prescription.order',string='Medicine Name')
@@ -71,6 +71,7 @@ class medical_directions(models.Model):
 
     currents_ailments = fields.One2many('current.ailments','doctor_aliments',string="Current Ailments")
     
+    pdf_file = fields.One2many('file.room','name',string='Images')
 
     lab_reports = fields.Many2one('medical.lab',string ="Lab Reports")
     scan_reports = fields.Many2one('medical.lab',string ="Scan Reports")
@@ -162,9 +163,11 @@ class medical_directions(models.Model):
 
     patient_waiting = fields.Char(string="Waiting Time")
     wait_date=fields.Datetime(string='Datetime', default=datetime.now())
-    patient_activity = fields.Selection([('wait',"Waiting"),('doc','Consulted'),('lab','Lab Testing'),('scan','Scan Testing'),('bill',"Billing"),('pharmacy','Pharmacy')],default='wait')
+    patient_activity = fields.Selection([('wait',"Doctor Assigned"),('doc','Diet Assigned'),
+                                         ('lab','Lab Assigned'),('pres','Prescription'),('scan','Scan Assigned'),
+                                         ('labs','Lab Completed'),('scans','Scan Completed'),
+                                         ('bill',"Pharmacy Bill Assigned"),('completed',"Completed")],default='wait')    
     
-
     # def _get_default_stage(self):
         # self.qr_id=self.serial_number
     # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']
@@ -187,12 +190,6 @@ class medical_directions(models.Model):
     def create(self, vals):
         vals['serial_number'] = self.env['ir.sequence'].next_by_code('medical.doctor') or 'EB'
         res = super(medical_directions, self).create(vals)
-
-        # orm = self.env['medical.doctor'].search([('patient','=',res.patient.id)])
-
-        # orm.write({'diet_id':res.diet_seq.id})
-        # orm.write({'medicine_id':res.prescription_alot.id})
-
         return res
 
     def done_action(self):
@@ -216,15 +213,10 @@ class medical_directions(models.Model):
         'view_id': self.env.ref('basic_hms.symptoms_tree_view').id,
         'target': 'new'
         }
-        
-    # @api.depends('patient_activity')
-    # def activity_change(self):
-    #     for rec in self:
-            
 
-#    prescription
-
+# prescription
     def prescription_button(self):
+        self.patient_status =False
         self.patient_activity = 'doc'
         orm = self.env['medical.patient'].search([('patient_id','=',self.patient.id)])
         orm.write({'patient_activity':self.patient_activity})
@@ -248,10 +240,11 @@ class medical_directions(models.Model):
             },
             'target': 'new'
             }
-        
+
 #scan/test:
     def scan_button(self):
-        self.patient_activity = 'lab'
+        self.patient_status =False
+        self.patient_activity = 'doc'
         orm = self.env['medical.patient'].search([('patient_id','=',self.patient.id)])
         orm.write({'patient_activity':self.patient_activity})
         return{
@@ -263,14 +256,17 @@ class medical_directions(models.Model):
         'context': {
             'default_patient_id': self.patient.id,
             'default_ebook_id': self.serial_number,
-            'default_state':'tested'
-            },
+        # 'default_name': self.name,
+        # 'default_price': self.price,
+        # 'default_range': self.range,
+        'default_state':'tested'
+        },
         'target': 'new'
         }
 
     def labscan_button(self):
         self.patient_status =False
-        self.patient_activity = 'scan'
+        self.patient_activity = 'doc'
         orm = self.env['medical.patient'].search([('patient_id','=',self.patient.id)])
         orm.write({'patient_activity':self.patient_activity})
         return{
@@ -282,10 +278,12 @@ class medical_directions(models.Model):
     'context': {
         'default_patient_id': self.patient.id,
         'default_ebook_id': self.serial_number,
+        # 'default_price': self.price,
+        # 'default_range': self.range,
         'default_state':'tested'
         },
         'target': 'new'
-    }
+        }
 
     @api.onchange("contact_number")
     def number_val(self):
@@ -300,12 +298,12 @@ class medical_directions(models.Model):
         orm = self.env['medical.patient'].search([('patient_id','=',self.patient.id)])
         orm.write({'patient_activity':self.patient_activity})
         return{
-            'name': "Prescribe Diet",
-            'type': 'ir.actions.act_window', 
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'prescribe.diet',
-            'context': {
+        'name': "Prescribe Diet",
+        'type': 'ir.actions.act_window', 
+        'view_type': 'form',
+        'view_mode': 'form',
+        'res_model': 'prescribe.diet',
+        'context': {
             'default_patient_id': self.patient.id
             },
             'target': 'new'
@@ -445,12 +443,31 @@ class medical_directions(models.Model):
     #         'context': {},
     #         'target': 'new'
     #             }
-
+    image_work = fields.One2many('assign.workout','name', string='Images')
 class GreenAgreement(models.Model):
     _name = "green.agreement"
     
 
     agreement=fields.Binary(string="Agreement", attachment=True, store=True,ondelete='cascade')
+    
+class assignWorkout(models.Model):
+    _name='assign.workout'
+    
+    name = fields.Char(string="Workout")
+    workout_img = fields.Many2many('ir.attachment', string='Images')
+    workout=fields.Many2one('file.room',string='Workout')
+    work_image = fields.Many2many('file.room', string='Images')
+    
+    @api.onchange('workout')
+    def work_out(self):
+        for rec in self:
+            orm=self.env['file.room'].search([('id','=',rec.workout.id)])
+            att_ids = []
+            for i in orm.attachment:
+                    att_ids.append(i.id)
+            rec.write({'workout_img':[(6,0,att_ids)]})
+            # rec.workout_img = att_ids
+            # raise ValidationError(att_ids)
 
 class Perviousmedication(models.Model):
     _name='pervious.medication'
@@ -652,6 +669,7 @@ class Patientprescription(models.Model):
                 no += 1
                 l.sequence_ref = no
 
+
 class Currentailgnments(models.Model):
     _name='current.ailments'
 
@@ -678,3 +696,6 @@ class Currentailgnments(models.Model):
     def onchange_test(self):
         for rec in self:
             return {'domain':{'patient_signs_symptoms':[('diseases', '=', rec.patient_currents_ailments.id)]}}
+
+
+

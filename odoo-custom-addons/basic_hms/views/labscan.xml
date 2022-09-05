@@ -11,8 +11,8 @@
                     <form string="Lab Test">
 
         <sheet>
+        <button class="oe_highlight" name="document_button"  type="object" string='Upload Result'/>
         <div class="oe_button_box" name="button_box">     
-                                
         <button class="oe_stat_button" name="lab_button"  type="object" icon="fa-clipboard">
             <field name ="lab_recs" widget="statinfo" />
             </button>
@@ -152,7 +152,7 @@
                         <field name ="write_date" />
                         <field name ="range" />
                         <field name ="test_range" />
-                        <!-- <field name ="company_id" invisible='1'/> -->
+                        <field name ='patient_activity'/>
                     </tree>
                 </field>
             </record>
@@ -801,7 +801,7 @@
             </record>
             <menuitem id="lab_many_16" name="HIV TEST" parent= "main_menu_configartion" action="lab_many_data_form_hiv"/>
 
-    <record id="lab_many_data_form457" model="ir.ui.view">
+    <record id="lab_many_data_form17" model="ir.ui.view">
             <field name="name">Hepatitis Panel</field>
             <field name="model">lab.hospital.test.data</field>
             <field name="priority" eval="8" />

@@ -1,0 +1,40 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="photo_master_id" model="ir.ui.view">
+            <field name="name">Photos Master</field>
+            <field name="model">file.room</field>
+            <field name="priority" eval="8" />
+                <field name="arch" type="xml">
+                    <form string="Exercise Photos">
+                        <header>
+                        </header>
+                        <sheet>
+                            <div class="oe_button_box">
+                            </div>
+                            <group >
+                                <field name ="name"/>
+                                <!-- <field name ="patient_id"/> -->
+                                <field name ="attachment" widget='many2many_binary'/>
+                                <!-- <field name ="range"/> -->
+                            </group>
+                        </sheet>
+                        </form>
+                        </field>
+        </record>
+        <record model="ir.actions.act_window" id="photo_master_action">            
+            <field name="name">Photos Master</field>         
+                <field name="res_model">file.room</field>           
+                <!-- <field name="view_type">form</field>-->
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>            
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">Exercise Photos
+                    </p>            
+                </field>        
+            </record>
+            
+    <menuitem id="menu_photo_master" name="Photos Master" parent= "main_menu_configartion" action="photo_master_action"/>
+
+    </data>
+</odoo>

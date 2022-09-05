@@ -25,6 +25,9 @@
                     <button class="oe_stat_button" name="doctor_report_button" type="object" icon="fa-clipboard" attrs="{'invisible': [('roles_selection','!=','doctor')]}">
                         <field name ="doctor_report_appointment" widget="statinfo"/>
                     </button>
+                    <button class="oe_stat_button" name="document_count_button" type="object" icon="fa-clipboard" >
+                        <field name ="document_count_appointment" widget="statinfo"/>
+                    </button>
                 </div>
                 </xpath>
         <!-- attrs="{'invisible': ['|',('roles_selection','in', ['reception', 'billing', 'lab']),('roles_selection','in', ['pharmacy', 'telecaller'])]}" -->
@@ -134,6 +137,7 @@
 
                         <field name="document_type">
                             <tree string="Proof Documents" editable="bottom" >
+                            <field name="patient_id"/>
                                 <field name="doc_types"/>
                                 <field name="document_detail" options="{'no_create_edit':True}"/>
                             </tree>
@@ -160,6 +164,20 @@
                
             </field>
         </record>
+        
+           <record id="document_type_line_tree_view" model="ir.ui.view">
+            <field name="name">document.type.line.tree.view</field>
+            <field name="model">document.type.line</field>
+            <field name="arch" type="xml">
+                <tree string="Documents" >
+                    <field name="patient_id" />
+                    <field name="doc_types"/>
+                    <field name="document_detail" />
+                    <!-- <field name="patient_id" readonly="1"/> -->
+                                </tree>
+            </field>
+        </record>
+
 
 <record id="view_contacts_land_filter" model="ir.ui.view">
     <field name="name">Contacts</field>
@@ -320,6 +338,9 @@
         </record>
         <menuitem id="menu_contact_patient" name="Patients" 
         parent="contacts.menu_contacts"  action="act_res_partner_patients" sequence='2' />
+
+        <menuitem id="menu_contact_patientss" name="File Room" 
+        parent="main_menu_hospital_management"  action="act_res_partner_patients" sequence='7' />
 
         <record model="ir.actions.act_window" id="act_res_partner_doctors">
             <field name="name">Doctors</field>

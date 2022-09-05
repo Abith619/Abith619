@@ -81,7 +81,7 @@
                                         </div>
                                         <label for="bp" string="BP in mmHg" />
                                         <div class="o_address_format">
-                                        <field name ="bp" class="o_address_state"  style="width: 40%;"/>
+                                        <field name ="bp" class="o_address_state"  style="width: 40%;" widget='char'/>
                                         <label for="bmi_value" style="font-weight: bold !important;color: #333;" string="BMI : " />
                                         <field name ="bmi_value" class="o_address_city"/>
                                         
@@ -90,6 +90,7 @@
                                     <field name= "patient_habits" widget="many2many_tags"/>
                                     <field name= "medicine_id" invisible='1'/>
                                     <field name= "diet_id" invisible='1'/>
+                                    <field name="patient_activity" invisible='1'/>
                                     <!-- <field name= "diet_seq" invisible='0'/> -->
                                     </group>
                                     <group>
@@ -212,7 +213,6 @@
                                                 <field name="date"/>
                                             </tree>
                                         </field>
-                                        <field name ="patient_activity"/>
                                         </page>
                                         
     
@@ -222,6 +222,16 @@
                                                 <field name="sequence_ref"/>
                                                 <field name="report_name" />
                                                 <field name ="attachment" widget="many2many_binary"/>
+                                            </tree>
+                                        </field>
+                                    </page>
+
+                                    <page string="Workout">
+                                        <field name = 'image_work'>
+                                            <tree string="Images" editable="bottom">
+                                                <!-- <field name="sequence_ref"/>-->
+                                                <field name="workout" /> 
+                                                <field name ="workout_img" widget="many2many_tags"/>
                                             </tree>
                                         </field>
                                     </page>
@@ -256,9 +266,10 @@
                             <field name="patient" />
                             <field name="sex" />
                             <field name="write_date" />
-                            <field name ="patient_status"/>
+                            
                             <field name="date1" invisible="1"/>
                             <field name="patient_activity" />
+                            <field name="patient_status" />
                         </tree>
                     </field>
                 </record>
@@ -325,16 +336,16 @@
             </calendar>
         </field>
     </record> -->
-                <record model="ir.actions.act_window" id="action_view_doctor">            
-                    <field name="name">EBook</field>         
-                        <field name="res_model">medical.doctor</field>                 
-                        <field name="view_mode">tree,form,graph,pivot</field>
-                        <field name="domain">[]</field>            
-                        <field name="help" type="html">                
-                            <p class="oe_view_nocontent_create">Create a Doctor Appointment
-                            </p>            
-                        </field>        
-                    </record>      
+        <record model="ir.actions.act_window" id="action_view_doctor">            
+            <field name="name">EBook</field>         
+                <field name="res_model">medical.doctor</field>                 
+                <field name="view_mode">tree,form,graph,pivot</field>
+                <field name="domain">[]</field>            
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">Create a Doctor Appointment
+                    </p>            
+                </field>        
+            </record>      
 
     <menuitem id="menu_doctor" name="Doctor" parent= "main_menu_hospital_management"  sequence="2" action="action_view_doctor"/>
             

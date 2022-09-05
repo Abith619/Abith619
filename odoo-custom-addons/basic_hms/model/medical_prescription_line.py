@@ -31,7 +31,7 @@ class medical_prescription_line(models.Model):
     short_comment = fields.Char('Comment', size=128 )
     end_treatment = fields.Datetime('End of treatment')
     start_treatment = fields.Datetime('Start of treatment')
-    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env.user.company_id )
+    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.prescription.order'))
 
     # names = fields.Many2one('medical.prescription.order','Prescription ID')
     prescribed_quantity = fields.Float(string="Prescribed Quantity")

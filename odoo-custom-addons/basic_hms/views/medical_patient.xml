@@ -19,7 +19,6 @@
                                 <field name ="payment" widget="statinfo"/>
                             </button>
                 </div>  
-                
 
                 <field name="name"/> 
                 <div class="row">
@@ -30,6 +29,8 @@
                         <field name="qr_code" widget='image' class="oe_avatar" style="float:left;" force_save='1' readonly="1"/>
                     </div>
                 </div>
+
+                                     
                             <group>
                                 <group class="col-5"> 
                                     <field name ="reg_type" widget="radio" options="{'horizontal': true}"/>
@@ -65,7 +66,7 @@
                                 </div>
                                 
                                 <field name ="bmi_value" />
-                                <field name="patient_activity"/>
+                                <field name="patient_activity" invisible='1'/>
                             </group>
 
                              <group>
@@ -91,7 +92,7 @@
                                     <field name="state" placeholder="State" class="o_address_city" options="{'no_create':True,'no_create_edit':True,'no_open': True}" style="width: 45%;"/>
                                     <field name="country" class="o_address_state" placeholder="Country"  style="width: 45%;" options="{'no_create':True,'no_create_edit':True,'no_open': True}"/>
                                 </div>
-
+                            <field name="abroad_addr"/>
                                 <label for="occupation" string="Occupation" />
                                 <div class="o_address_format">
                                     <field name="occupation" class="o_address_city"  style="width: 35%;"/>
@@ -157,7 +158,7 @@
                     <field name = 'data_value' widget="many2many_tags" options="{'no_create':True,'no_create_edit':True,'no_open': True}"/>
                  </group>
                    <group>
-
+                    <field name ="status_report" invisible='1'/>
                 </group>
                 </group>
                 <!-- <label for = 'adoption_agreement' style="font-size: 25px !important;font-weight: 600;padding-left: 550px;" string ="Adoption Agreement"/>
@@ -221,17 +222,21 @@
             <field name="name">medical.patients.tree.view</field>
             <field name="model">medical.patient</field>
             <field name="arch" type="xml">
-                <tree string="Patient Information">
-                    <field name="name" />
-                    <field name="patient_id" />
-                    <field name="sex" />
-                    <field name="doctors" />
-                    <field name="dates" />
-                    <field name="contact_no"/>
-                    <field name="patient_activity"/>
+                <tree string="Patient Information" multi_edit="1" duplicate="false" sample="1">
+                    <field name="file_num" />
+                    <field name="name" readonly="1"/>
+                    <field name="patient_id" readonly="1"/>
+                    <field name="age" readonly="1"/>
+                    <field name="sex" readonly="1"/>
+                    <field name="doctors" readonly="1"/>
+                    <field name="dates" readonly="1"/>
+                    <field name="contact_no" readonly="1"/>
+                    <field name="status_report"/>
+                    <field name="patient_activity" readonly="1"/>
                 </tree>
             </field>
         </record>
+
 
 
 

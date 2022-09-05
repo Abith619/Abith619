@@ -29,16 +29,22 @@
 
                 <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
                 <td style="border: 0px;width: 50%;">
+                    <div  >
+                    <div class='float-left'>
+                        
                 <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p>
-                <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p>
+                <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p></div>
+                
+            <div class="float-right" >
+                <p><strong>Payment Type :</strong><span t-field="o.payment_type"/></p>
+                <!-- <p><strong>Payment ID :</strong><span t-field="o.payment_id"/></p> -->
+            </div>
+        </div>
                 </td>
+                
                 </table>
                         </xpath>
         
-
-        
-        
-         
         <div class="header_tag">
         <h4 class="text-center heading_text_cor">Registration</h4>
         </div>
@@ -173,25 +179,28 @@
                     </tbody>
                     </table>
                   
-                    
-                    <p class="text-right"><strong>Registration Fees : </strong> <i class="fa fa-inr"/><span t-field="o.total2"/></p>
-                    <p class="text-right"><strong>Lab Amount : </strong> <i class="fa fa-inr"/><span t-field="o.total"/></p>
-                    <p class="text-right"><strong>Scan Amount : </strong><i class="fa fa-inr"/><span t-field="o.total_scan" /></p>
-                    <p class="text-right"><strong>Medicine Amount :  </strong> <i class="fa fa-inr"/><span t-field="o.total1"/></p>
-                    <p class="text-right"><strong>TAX Amount :  </strong><i class="fa fa-inr"/><span t-field="o.total_tax" /></p>
-                    <p class="text-right"><strong>Amount with Tax:  </strong><i class="fa fa-inr"/><span t-field="o.gst_total_tax" /></p>
-              
+                 <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
+                        <div class="text-left">
+                        <td style="border: 0px;width: 50%;">
+                    <p><strong>Registration Fees : </strong> <i class="fa fa-inr"/><span t-field="o.total2"/></p>
+                       <p ><strong>Lab Amount : </strong> <i class="fa fa-inr"/><span t-field="o.total"/></p>
+                      <p ><strong>Scan Amount : </strong><i class="fa fa-inr"/><span t-field="o.total_scan" /></p>
+                        </td>
+                    <div class="text-right">
+                        <td style="border: 0px;width: 50%;">
+                    <p ><strong>Medicine Amount :  </strong> <i class="fa fa-inr"/><span t-field="o.total1"/></p>
+                    <p ><strong>Discount :  </strong><i class="fa fa-inr"/><span t-field="o.discounted" /></p>
+                    <p ><strong>Total with Discount :  </strong> <i class="fa fa-inr"/><span t-field="o.discounted_total"/></p>
+                    <p ><strong>TAX Amount :  </strong><i class="fa fa-inr"/><span t-field="o.total_tax" /></p>
+                    <p ><strong>Amount with Tax:  </strong><i class="fa fa-inr"/><span t-field="o.gst_total_tax" /></p>
+                        </td>
+                            </div>
+                        </div>
+                        </table>
 
                     
                     <p class="text-right"><strong>Grand Total :  </strong><i class="fa fa-inr"/><span t-field="o.billed_amount"/></p>
 
-
-                     
-
-
-
-
-                        
                
                 </t></t></t>
         
