@@ -81,23 +81,14 @@
                             <page string="Prescription Details">
                                 <field name = 'prescription_line_ids'>
                                     <tree string="Medical History" editable="bottom" >
-                                        <!-- <field name="name" /> -->
                                         <field name ="sequence_ref"/>
-                                        <!-- <field name="prescribed_quantity" /> -->
                                         <field name ="medicine_name" options="{'no_create_edit':True}"/>
                                         <field name="all_day"/>
                                         <field name="prescribed_quantity" string='Quantity'/>
-                                        <field name ="quantity" invisible="1"/>
-                                        <field name ="potency" invisible="1"/>
-                                        <field name="morning"  invisible="1"/>
-                                        <field name="noon" invisible="1"/>
-                                        <field name="evening"  invisible="1"/>
-                                        <field name ="night" invisible="1"/>
                                         <field name ="units" string='Units'/>
                                         <field name="company_id"/>
-                                        <!-- <field name ="after_food"/> -->
-                                        <field name ="anupana"/>
                                         <field name="bf_af" string='BF / AF'/>
+                                        <field name ="anupana"/>
                                         <field name ="days1"/>
                                         <field name ="price" invisible="1"/>
                                         <field name ="total_price" invisible="1"/>
@@ -156,7 +147,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">medical.prescription.order</field>
             <field name="binding_view_types">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
             <field name="search_view_id" ref="medical_prescription_order_search_view" />
             <field name="domain">[]</field>
             <field name="context">{}</field>

@@ -321,30 +321,33 @@ access_lab_test_line,medical.group.lab.test.line,model_lab_test_line,base.group_
 access_immunology_test,medical.group.immunology.test,model_immunology_test,base.group_user,1,1,1,1
 access_lab_test_hospital_data,medical.group.lab.test.hospital.data,model_lab_test_hospital_data,base.group_user,1,1,1,1
 
-access_medical_doctor,medical.group.medical.doctor,model_medical_doctor,base.group_user,1,1,1,1
-access_user_access,medical.group.medical.doctor,model_medical_doctor,user_access,1,1,1,1
+access_user_doctor_access_id,group.medical.doctor,model_medical_doctor,base.group_user,1,1,1,1
 
 access_medical_appointment,medical.group.telecaller.access1,model_medical_appointment,base.group_user,1,1,1,1
-access_user_access,medical.group.telecaller.access1,model_medical_appointment,user_access,1,1,1,1
 
 access_medical_patient,medical.group.medical.patient,model_medical_patient,base.group_user,1,1,1,1
-access_user_access,medical.group.medical.patient,model_medical_patient,user_access,1,1,1,1
 
 access_patient_bills,medical.group.patient.bills,model_patient_bills,base.group_user,1,1,1,1
-access_user_access,medical.group.patient.bills,model_patient_bills,user_access,1,1,1,1
+
 
 access_medical_prescription_order,medical.group.medical.prescription.order,model_medical_prescription_order,base.group_user,1,1,1,1
-access_user_access,medical.group.medical.prescription.order,model_medical_prescription_order,user_access,1,1,1,1
 
 access_lab_scan_form,medical.group.lab.scan.form,model_lab_scan_form,base.group_user,1,1,1,1
-access_user_access,medical.group.lab.scan.form,model_lab_scan_form,user_access,1,1,1,1
+
 
 access_scan_test,medical.group.scan.test,model_scan_test,base.group_user,1,1,1,1
-access_user_access,medical.group.scan.test,model_scan_test,user_access,1,1,1,1
+
 
 access_product_product,medical.group.product.product,model_product_product,base.group_user,1,1,1,1
-access_user_access,medical.group.product.product,model_product_product,user_access,1,1,1,1
+
 
 access_file_room,medical.group.file.room,model_file_room,base.group_user,1,1,1,1
 
 access_assign_workout,medical.group.assign.workout,model_assign_workout,base.group_user,1,1,1,1
+
+ebook_pat_doc,medical.doctor,model_medical_doctor,base.group_user,1,1,1,1
+access_document_add_line,document.add.line,model_document_add_line,base.group_user,1,1,1,1
+access_in_patient,in.patient,model_in_patient,base.group_user,1,1,1,1
+access_in_patient_dayone,in.patient.dayone,model_in_patient_dayone,base.group_user,1,1,1,1
+access_sister_round,sister.round,model_sister_round,base.group_user,1,1,1,1
+access_ip_therapy,ip.therapy,model_ip_therapy,base.group_user,1,1,1,1

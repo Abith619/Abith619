@@ -22,6 +22,7 @@
                         </form>
                         </field>
         </record>
+
         <record model="ir.actions.act_window" id="photo_master_action">            
             <field name="name">Photos Master</field>         
                 <field name="res_model">file.room</field>           
@@ -33,8 +34,123 @@
                     </p>            
                 </field>        
             </record>
-            
+
     <menuitem id="menu_photo_master" name="Photos Master" parent= "main_menu_configartion" action="photo_master_action"/>
+
+
+        <record id="ip_doctor_master_id" model="ir.ui.view">
+            <field name="name">IP Master</field>
+            <field name="model">in.patient</field>
+            <field name="priority" eval="8" />
+                <field name="arch" type="xml">
+                    <form string="In-Patient Hospitalization">
+                        <header>
+                        </header>
+                    <sheet>
+                        <div class="oe_button_box">
+                        </div>
+                <group >
+                    <group >
+                    <field name ="reg_no"/>
+                    <field name ="patient_id"/>
+                    <field name ="gender"/>
+                    <field name ="conditions" />
+                    <field name ="contact_num"/>
+                    <field name ="address"/>
+                </group>
+                <group >
+                    <field name ="file_num"/>
+                    <field name ="dob"/>
+                    <field name ="doctor_in"/>
+                    <field name ="attend_num" />
+                    <!-- <field name ="contact_num"/>
+                    <field name ="address"/> -->
+                </group>
+            </group>
+            <notebook>
+                <page string='Day1'>
+                <notebook>
+                    <page string='Doctor Rounds'>
+                        <field name = 'in_pat_line'>
+                            <tree string="Doctor" editable="bottom" >
+                                <field name="time"/>
+                                <field name="doctor" />
+                                <field name="review"/>
+                                <field name ="medicine" />
+                            </tree>
+                        </field>
+                    </page>
+                <page string='Sister Rounds'>
+                    <div class='row'>
+                        <div class='col-2'>
+                <label for="time" string="Time" />
+                    <field name="time"/>
+                <label for="nurse_name" string="Sister Name" />
+                    <field name="nurse_name"/></div></div>
+                        <field name = 'sister_line'>
+                            <tree string="Sister" editable="bottom" >
+                                <field name="lbg"/>
+                                <field name="bp"/>
+                                <field name="temp"/>
+                                <field name="spo2"/>
+                                <field name="motion"/>
+                                <field name="urine"/>
+                                <field name="sleep"/>
+                                <field name="digestion"/>
+                                <field name="pain"/>
+                                <field name="notes"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='Diet'>
+                        <field name = 'diet_line'>
+                            <tree string="Diet" editable="bottom" >
+                                <field name="diet_for"/>
+                                <field name="dates"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='Medicine'>
+
+                    </page>
+                    <page string='TPR Chart'>
+
+                    </page>
+                    <page string='Therapy'>
+                        <field name = 'therapy_line'>
+                            <tree string="Therapy" editable="bottom" >
+                                <field name="time"/>
+                                <field name="therapy"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='LAB'>
+
+                    </page>
+                    <page string='SCAN'>
+
+                    </page>
+        </notebook>
+            </page>
+    </notebook>
+        </sheet>
+    </form>
+        </field>
+    </record>
+
+        <record model="ir.actions.act_window" id="ip_doc_master_action">            
+            <field name="name">In-Patient Hospitalization</field>         
+                <field name="res_model">in.patient</field>           
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>            
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">In-Patient Hospitalization
+                    </p>            
+                </field>        
+            </record>
+
+    <menuitem id="menu_ip_doc_master" name="In-Patient" parent= "main_menu_configartion" action="ip_doc_master_action"/>     
 
     </data>
 </odoo>

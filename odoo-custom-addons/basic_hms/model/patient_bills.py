@@ -81,41 +81,24 @@ class PatientBills(models.Model):
     journal_id = fields.Many2one('account.journal', string='GST',  default=_default_gst, check_company=True)
                                      
     def invoice_button(self):        
-        context ={
-                'partner_id':self.patient_name.id,
-                'bill_no':self.id,
-                'name':self.id,
-                'amount':self.billed_amount
-                }
-        orm = self.env['account.payment'].create(context)
-    
+       return{
+            'name': "Patient Invoice",
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'account.payment',
+            'context': {
+                'default_partner_id':self.patient_name.id,
+                'default_bill_no':self.id
+                },
+            }
+     
     def create(self, vals):
         obj = super(PatientBills, self).create(vals)
         if obj.bill_no == '/':
             number = self.env['ir.sequence'].get('bill.sequence') or '/'
             obj.write({'bill_no': number})
-            
-        # context ={
-        #         'partner_id':obj.patient_name.id,
-        #         'bill_no':obj.id,
-        #         'amount':self.billed_amount
-        #         }
-        # orm = self.env['account.payment'].create(context)
-
         return obj
-        
-        
-        # return{
-        #     'name': "Patient Invoice",
-        #     'type': 'ir.actions.act_window',
-        #     'view_type': 'form',
-        #     'view_mode': 'form',
-        #     'res_model': 'account.payment',
-        #     'context': {
-        #         'default_partner_id':self.patient_name.id,
-        #         'default_bill_no':self.id
-        #         },
-        #     }
 
     @api.onchange('paid_status')
     def paid_not(self):

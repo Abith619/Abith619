@@ -146,7 +146,7 @@
         <field name="name">File Room</field>
     </record>
 
-    <record model="ir.ui.menu" id="menu_contact_patientss">
+    <record model="ir.ui.menu" id="menu_contact_patientss1">
         <field name="groups_id" eval="[(6,0,[ref('basic_hms.file_room_access')])]"/>
     </record>
 

@@ -131,7 +131,7 @@
         <record model="ir.actions.act_window" id="labs_action">            
             <field name="name">Lab Test</field>         
                 <field name="res_model">lab.scan.form</field>           
-                <field name="view_mode">tree,form</field>
+                <field name="view_mode">tree,form,pivot,graph</field>
                 <field name="domain">[]</field>            
                 <field name="help" type="html">                
                     <p class="oe_view_nocontent_create">Lab Test
@@ -210,7 +210,7 @@
         <record model="ir.actions.act_window" id="lab_many_action">            
             <field name="name">Lab Data</field>         
                 <field name="res_model">lab.many</field>           
-                <field name="view_mode">tree,form</field>
+                <field name="view_mode">tree,form,pivot,graph</field>
                 <field name="domain">[]</field>            
                 <field name="help" type="html">                
                     <p class="oe_view_nocontent_create">Lab Data

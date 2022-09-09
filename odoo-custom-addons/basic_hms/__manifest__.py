@@ -54,6 +54,7 @@
         'views/set_fruits.xml',
         'views/set_veg.xml',
         'views/picking_inherit.xml',
+        'security/doctor_access.xml',
         'views/set_protein.xml',
         'views/set_rice.xml',
         'report/bills_report.xml',

@@ -71,7 +71,6 @@ class medical_directions(models.Model):
 
     currents_ailments = fields.One2many('current.ailments','doctor_aliments',string="Current Ailments")
     
-    pdf_file = fields.One2many('file.room','name',string='Images')
 
     lab_reports = fields.Many2one('medical.lab',string ="Lab Reports")
     scan_reports = fields.Many2one('medical.lab',string ="Scan Reports")
@@ -167,7 +166,7 @@ class medical_directions(models.Model):
                                          ('lab','Lab Assigned'),('pres','Prescription'),('scan','Scan Assigned'),
                                          ('labs','Lab Completed'),('scans','Scan Completed'),
                                          ('bill',"Pharmacy Bill Assigned"),('completed',"Completed")],default='wait')    
-    
+
     # def _get_default_stage(self):
         # self.qr_id=self.serial_number
     # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']
@@ -190,6 +189,12 @@ class medical_directions(models.Model):
     def create(self, vals):
         vals['serial_number'] = self.env['ir.sequence'].next_by_code('medical.doctor') or 'EB'
         res = super(medical_directions, self).create(vals)
+
+        # orm = self.env['medical.doctor'].search([('patient','=',res.patient.id)])
+
+        # orm.write({'diet_id':res.diet_seq.id})
+        # orm.write({'medicine_id':res.prescription_alot.id})
+
         return res
 
     def done_action(self):
@@ -220,6 +225,7 @@ class medical_directions(models.Model):
         self.patient_activity = 'doc'
         orm = self.env['medical.patient'].search([('patient_id','=',self.patient.id)])
         orm.write({'patient_activity':self.patient_activity})
+
         return{
         'name': "Prescription",
         'type': 'ir.actions.act_window',
@@ -236,6 +242,8 @@ class medical_directions(models.Model):
             'default_sex': self.sex,
             'default_height': self.height,
             'default_weight': self.weight,
+            # 'default_treatments_for':self.treatment,
+            # 'default_treatment_for':self.treatment,
             'default_stages':'draft'
             },
             'target': 'new'
@@ -298,18 +306,17 @@ class medical_directions(models.Model):
         orm = self.env['medical.patient'].search([('patient_id','=',self.patient.id)])
         orm.write({'patient_activity':self.patient_activity})
         return{
-        'name': "Prescribe Diet",
-        'type': 'ir.actions.act_window', 
-        'view_type': 'form',
-        'view_mode': 'form',
-        'res_model': 'prescribe.diet',
-        'context': {
-            'default_patient_id': self.patient.id
-            },
+            'name': "Prescribe Diet",
+            'type': 'ir.actions.act_window', 
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'prescribe.diet',
+            'context': {
+                'default_patient_id': self.patient.id
+                },
             'target': 'new'
         }
-       
-
+        
     def treatment_advised(self):
             select_plan = False
             return {
@@ -429,7 +436,7 @@ class medical_directions(models.Model):
             qr_image = base64.b64encode(temp.getvalue())
             self.qr_code = qr_image
 
-
+    image_work = fields.One2many('assign.workout','name', string='Images')
 
 
 
@@ -443,21 +450,15 @@ class medical_directions(models.Model):
     #         'context': {},
     #         'target': 'new'
     #             }
-    image_work = fields.One2many('assign.workout','name', string='Images')
-class GreenAgreement(models.Model):
-    _name = "green.agreement"
-    
 
-    agreement=fields.Binary(string="Agreement", attachment=True, store=True,ondelete='cascade')
-    
 class assignWorkout(models.Model):
     _name='assign.workout'
     
-    name = fields.Char(string="Workout")
+    name = fields.Char(string="Exercise")
     workout_img = fields.Many2many('ir.attachment', string='Images')
     workout=fields.Many2one('file.room',string='Workout')
     work_image = fields.Many2many('file.room', string='Images')
-    
+
     @api.onchange('workout')
     def work_out(self):
         for rec in self:
@@ -466,8 +467,13 @@ class assignWorkout(models.Model):
             for i in orm.attachment:
                     att_ids.append(i.id)
             rec.write({'workout_img':[(6,0,att_ids)]})
-            # rec.workout_img = att_ids
-            # raise ValidationError(att_ids)
+
+
+class GreenAgreement(models.Model):
+    _name = "green.agreement"
+    
+
+    agreement=fields.Binary(string="Agreement", attachment=True, store=True,ondelete='cascade')
 
 class Perviousmedication(models.Model):
     _name='pervious.medication'
@@ -594,9 +600,8 @@ class diet_field_for(models.Model):
     diet2 = fields.Many2one('medical.doctor',string="Patient Name",required=True, ondelete='cascade', index=True, copy=False)
     diet_for = fields.Many2one('set.diets',string="Diet Name")
     diet_seq = fields.Many2one('prescribe.diet',string='Diet S.No')
-    # diet_prescribe = fields.Many2one('prescribe.diet',string="Diet Name")
-    # followed_duration= fields.Integer(string="Duration Followed/Months")
     dates=fields.Datetime(string='Date')
+    name=fields.Many2one('in.patient',string='Name')
 
     sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
 

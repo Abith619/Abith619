@@ -1,79 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- <record model="ir.module.category" id="module_category_hospital">
-        <field name="name">Set User Access</field>
-        <field name="description">Access</field>
-    </record> -->
 
-    <record model="ir.module.category" id="module_category_ebooks">
-        <field name="name">Ebook Management</field>
-        <field name="description"> Category For Ebook </field>
+    <record model="ir.module.category" id="module_category_company">
+        <field name="name">Company Management</field>
+        <field name="description"> Company Management </field>
     </record>
     
-    <record id="group_doctor_doctor" model="res.groups">
-        <field name="name">Doctor</field>
-        <field name="category_id" ref="module_category_ebooks" />
-    </record>
-    <record id="group_doctor_patient" model="res.groups">
-            <field name="name">Patient</field>
-            <field name="category_id" ref="module_category_ebooks" />
-    </record> 
-    <record model="ir.rule" id="see_his_own_patient">
-        <field name="name">See only His patients</field>
-        <field name="model_id" ref="model_medical_doctor"></field>
-        <field name="domain_force">[('doctor.id','=',user.id)]</field>
-        <field name="groups" eval="[(4, ref('group_doctor_doctor'))]"/>
-        <field name="perm_create" eval="1"/>
-        <field name="perm_write" eval="1"/>
-        <field name="perm_unlink" eval="1"/>
-        <field name="perm_read" eval="1"/>
-    </record>
-    
-    <!-- <record  model="ir.rule" id="appointment_record_rule">
-        <field name="name">See only his Telecaller Records</field>
-        <field name="model_id" ref="model_medical_appointment"/>
-        <field name="domain_force">[('user_appoinment_by.user_id','=',user.id)]</field>
-        <field name="groups" eval="[(4, ref('group_ebooks__user'))]"/> 
-    </record> -->
-
-
-<!-- <record  model="ir.rule" id="reception_record_rule">
-    <field name="name">See only his Reception Records</field>
-    <field name="model_id" ref="model_medical_patient"/>
-    <field name="domain_force">[('user_appoinment_by.user_id','=',user.id)]</field>
-    <field name="groups" eval="[(4, ref('group_ebooks__user'))]"/> 
-</record> -->
-
-<!-- <record  model="ir.rule" id="billing_record_rule">
-    <field name="name">See only his Billing Records</field>
-    <field name="model_id" ref="model_patient_bills"/>
-    <field name="domain_force">[('user_billed_by.user_id','=',user.id)]</field>
-    <field name="groups" eval="[(4, ref('group_ebooks__user'))]"/> 
-</record> -->
-    
-<!-- <record  model="ir.rule" id="prescription_record_rule">
-    <field name="name">See only his Prescription Records</field>
-    <field name="model_id" ref="model_medical_prescription_order"/>
-    <field name="domain_force">[('user_prescribed_by.user_id','=',user.id)]</field>
-    <field name="groups" eval="[(4, ref('group_ebooks__user'))]"/> 
-</record> -->
-
-
-
     <record id="group_ebooks_company_user" model="res.groups">
-        <field name="name">ebooks User company</field>
+        <field name="name">User company</field>
       <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-            <field name="category_id" ref="module_category_ebooks"/>
-        </record>
+        <field name="category_id" ref="module_category_company"/>
+    </record>
     
-    
-    <record  model="ir.rule" id="ebookscomp_record_rule">
+    <!-- <record  model="ir.rule" id="ebooks_company">
         <field name="name">ebooks User company</field>
         <field name="model_id" ref="model_medical_doctor"/>
         <field name="global" eval="True"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="domain_force">['|',('user_doctor','=',user.id),('company_id', '=', company_ids)]</field>
         <field name="groups" eval="[(4, ref('group_ebooks_company_user'))]"/> 
-    </record>
+    </record> -->
 
     <record  model="ir.rule" id="stock_transfer_record_rule">
         <field name="name">Transfers User company</field>

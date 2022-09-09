@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <form string="Patient Bills">
                 <header >
-                    <button name="invoice_button" type="object" string="Create Invoice" class="oe_highlight" />
+                    <button name="invoice_button" type="object" string="Create Invoice" class="oe_highlight"/>
                 </header>             
                 <sheet> 
                     <group>
@@ -164,7 +164,7 @@
                     <field name="name">Bill Information</field>
                     <field name="res_model">patient.bills</field>
                     <field name="binding_view_types">form</field>
-                    <field name="view_mode">tree,form</field>
+                    <field name="view_mode">tree,form,pivot,graph</field>
                 </record>
 
                 <!-- <menuitem id= "bill_menus_hospital" name ="Billing" parent="main_menu_hospital_management"

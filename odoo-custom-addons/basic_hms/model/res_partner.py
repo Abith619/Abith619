@@ -58,16 +58,14 @@ class res_partner(models.Model):
     lab_scan = fields.Boolean(string='Lab & Scan')
     is_billing = fields.Boolean(string='Billing')
     is_telecaller = fields.Boolean(string='Telecaller')
-    serial_number = fields.Char(string="Patient ID", readonly=True,copy=False,required=True, default='Patient ID')
-
     roles_selection=fields.Selection([('manager','Manager'),('reception','Reception'),('doctor','Doctor'),('pharmacy','Pharmacy'),
     ('billing','Billing'),('lab','Lab & Scan'),('telecaller','Telecaller'),('patient','Patient')],string='Roles')
 
-    @api.model
-    def create(self, vals):
-        vals['serial_number'] = self.env['ir.sequence'].next_by_code('res.partner') or 'RES'
-        res = super(res_partner, self).create(vals)
-        return res
+    # @api.model
+    # def create(self, vals):
+    #     vals['serial_number'] = self.env['ir.sequence'].next_by_code('res.partner') or 'RES'
+    #     res = super(res_partner, self).create(vals)
+    #     return res
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
@@ -261,8 +259,10 @@ class res_partner(models.Model):
     'res_model': 'document.type.line',
     'view_type': 'form',
     'type': 'ir.actions.act_window',
+    'context': {
+        'default_name': self.name,
+        },
     }
-
 
 class MedicineMaster(models.Model):
     _inherit='product.product'
@@ -288,10 +288,21 @@ class medicine_dose(models.Model):
 class document_type_upload(models.Model):
     _name = 'document.type.line'
 
-    name = fields.Char(string="Name")
-    patient_id = fields.Many2one('res.partner',string='Patient Name')
+    name = fields.Char(string="Patient Name")
+    patient_id = fields.Many2one('res.partner',string='Name')
     document_detail=fields.Binary(string="Upload Documents")
     doc_types=fields.Selection([('green','Green Document'),('gov','Gov ID'),('original','Original'),('lab','Lab Document'),('scan','Scan Document')],string="Document Type")
+    
+    document_line = fields.One2many('document.add.line','Documents',string='Document Lines')
+    
+    
+    
+class documentAddLine(models.Model):
+    _name = 'document.add.line'
+    
+    Documents = fields.Many2one('document.type.line',string='Document')
+    name = fields.Char(string='Patient Document')
+    attachment = fields.Many2many('ir.attachment',string='Attach')
 
 class ir_sequence_master(models.Model):
     _inherit = 'ir.sequence'

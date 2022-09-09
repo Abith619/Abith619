@@ -173,11 +173,38 @@
                     <field name="patient_id" />
                     <field name="doc_types"/>
                     <field name="document_detail" />
-                    <!-- <field name="patient_id" readonly="1"/> -->
-                                </tree>
+                </tree>
             </field>
         </record>
 
+    <record id="document_type_order_form_view" model="ir.ui.view">
+        <field name="name">document.type.line.form.view</field>
+        <field name="model">document.type.line</field>
+        <field name="arch" type="xml">
+            <form string="Prescription">
+                <sheet>
+                <group>
+                    <field name="name" />
+                    <field name="patient_id" /></group>
+                <group >
+                    <field name="doc_types"/>
+                    <!-- <field name="document_detail" /> -->
+                </group>
+            <notebook>
+                    <page string='Green Files'>
+                        <field name = 'document_line'>
+                    <tree string='Documents' editable='bottom'>
+                            <field name='name'/>
+                            <!-- <field name='Documents'/> -->
+                            <field name='attachment' widget='many2many_binary'/>
+                    </tree>
+                        </field>
+                    </page>
+                </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
 <record id="view_contacts_land_filter" model="ir.ui.view">
     <field name="name">Contacts</field>
@@ -339,7 +366,7 @@
         <menuitem id="menu_contact_patient" name="Patients" 
         parent="contacts.menu_contacts"  action="act_res_partner_patients" sequence='2' />
 
-        <menuitem id="menu_contact_patientss" name="File Room" 
+        <menuitem id="menu_contact_patientss1" name="File Room" 
         parent="main_menu_hospital_management"  action="act_res_partner_patients" sequence='7' />
 
         <record model="ir.actions.act_window" id="act_res_partner_doctors">

@@ -122,7 +122,7 @@ class Scan_test(models.Model):
 #      Count in Smart Button
     def scan_count(self):
         for res in self :
-            count_d = self.env['scan.test'].search_count([('patient_id', '=', res.patient_id.id)])
+            count_d = self.env['document.type.line'].search_count([('patient_id', '=', res.patient_id.id)])
             self.scan_recs= count_d
 
     scan_recs = fields.Integer(compute='scan_count',string="Scan Details")
