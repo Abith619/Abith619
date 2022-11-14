@@ -8,8 +8,8 @@
                 <form string="Patient">
                     
                     <header>   
-                        <button name="assign_button" type="object" string="Paid" class="oe_highlight"/>
-                        
+                        <button name="assign_button" type="object" string="Payment" class="oe_highlight"/>
+                        <button name="no_fees" type="object" string="No Consulting Fees" class="oe_highlight"/>
                         <field name ="stages" widget="statusbar" style="display:none !important"/>
 
                     </header>
@@ -28,12 +28,13 @@
                         <div><label style="float:center;" for="qr_code" string="Qr Code" /></div>
                         <field name="qr_code" widget='image' class="oe_avatar" style="float:left;" force_save='1' readonly="1"/>
                     </div>
-                </div>
-
-                                     
+                </div>        
                             <group>
                                 <group class="col-5"> 
                                     <field name ="reg_type" widget="radio" options="{'horizontal': true}"/>
+                                    <field name ="online_type" widget="radio" options="{'horizontal': true}" attrs="{'invisible': [('reg_type','!=', 'on')]}"/>
+                                    <field name ="direct_type" widget="radio" options="{'horizontal': true}" attrs="{'invisible': [('reg_type','!=', 'dir')]}"/>
+                                    <field name='review_type' widget="radio" options="{'horizontal': true}" attrs="{'invisible': [('online_type','!=', 'rev'),('direct_type','!=', 'rev')]}"/>
                                 </group>
                             <group  class="col-5">
                                 <!--  <field name="patient_movement"/> -->
@@ -52,7 +53,7 @@
                                 <field name="marital_status" />
                                 <label for="date_of_birth" string="DOB" />
                                 <div class="o_address_format">
-                                    <field name="date_of_birth" class="o_address_city" placeholder="dd-mm-yyyy" />
+                                    <field name="date_of_birth" class="o_address_city" placeholder="dd-mm-yyyy" data-date-format="DD-MM-YYYY"/>
                                     <label for="age" style="font-weight: bold !important;color: #333;"  font-family= "Franklin Gothic Medium" />
                                     <field name="age" class="o_address_state" readonly='0' style="width: 45%;"/>
                                 </div>
@@ -159,6 +160,7 @@
                  </group>
                    <group>
                     <field name ="status_report" invisible='1'/>
+                    <field name ="consulting_fees" invisible='1'/>
                 </group>
                 </group>
                 <!-- <label for = 'adoption_agreement' style="font-size: 25px !important;font-weight: 600;padding-left: 550px;" string ="Adoption Agreement"/>
@@ -180,9 +182,7 @@
                                 <field name="message_ids" widget="mail_thread" string= "Mail"/>
                                 <field name="activity_ids" widget="mail_activity"/>
                             </div>
-
                 </form>
-
             </field>
         </record>
 <!--Search View-->
@@ -200,8 +200,8 @@
             <filter string="Doctor" name="doctors" context="{'group_by': 'doctors'}"/>
             <filter string="Branch" name="company_id" context="{'group_by': 'company_id'}"/>
             <filter string="Male / Female" name="sex" context="{'group_by': 'sex'}"/>
-
-            <filter string="Registration Type" name="reg_type" separator="1"/>
+            
+            <filter string="Registration Type" name="reg_type" domain="[('reg_type','=','rev')]" context="{'group_by': 'create_date:month'}" />
             <filter string="Camp" name="reg_type" separator="1" domain="[('reg_type','=','cam')]"/>
             <filter string="Online" name="reg_type" separator="1" domain="[('reg_type','=','on')]"/>
             <filter string="Review Cases" name="reg_type" separator="1" domain="[('reg_type','=','rev')]"/>
@@ -232,13 +232,13 @@
                     <field name="dates" readonly="1"/>
                     <field name="contact_no" readonly="1"/>
                     <field name="status_report"/>
-                    <field name="patient_activity" readonly="1"/>
+                    <field name="patient_activity" readonly="1" widget="badge" decoration-danger="patient_activity == 'discontinued'" decoration-warning="patient_activity in ('wait', 'bill')" decoration-success="patient_activity in ('completed', 'scans', 'labs', 'pres')"/>
+                    <!-- <field name="payment_state" widget="badge" decoration-danger="payment_state == 'not_paid'" decoration-warning="payment_state in ('partial', 'in_payment')" decoration-success="payment_state in ('paid', 'reversed')" attrs="{'invisible': [('payment_state', 'in', ('invoicing_legacy'))]}"/> -->
+
+                    <!-- <field name="med_cancell"/> -->
                 </tree>
             </field>
         </record>
-
-
-
 
     <record id="medical_patient_pivot_view" model="ir.ui.view">
         <field name="name">medical.appointment.view.pivot</field>

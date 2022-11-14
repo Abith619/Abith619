@@ -1,0 +1,29 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<odoo>
+
+<record id="diet_delete_tree_view" model="ir.ui.view">
+    <field name="name">diet.line.old.tree.view</field>
+    <field name="model">diet.line.old</field>
+    <field name="arch" type="xml">
+        <tree string="EBook">
+            
+            <field name ="diet_id" />
+            
+        </tree>
+    </field>
+</record>
+
+<record model="ir.actions.act_window" id="delete_action_id">            
+    <field name="name">Delete Line </field>         
+        <field name="res_model">diet.line.old</field>           
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>            
+        <field name="help" type="html">                
+            <p class="oe_view_nocontent_create">In-Patient Hospitalization
+            </p>            
+        </field>        
+    </record>
+
+<menuitem id="menu_test_delete_id" name="Delete" parent= "main_menu_configartion" action="delete_action_id"/>
+
+</odoo>

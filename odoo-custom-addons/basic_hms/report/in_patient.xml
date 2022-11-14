@@ -1,0 +1,2433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<template id="basic_hms.in_patient_report">
+     <t t-call="web.external_layout">
+     <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+        <style>
+
+            .footer_section{
+
+            }
+            .border{
+                border-collapse: collapse;
+            }
+            .heading_text_cor{
+                color:#000;
+                font-weight:600;
+
+                }
+                    
+        </style>
+            
+            <h2 >Patient Details</h2>
+            <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
+            <div>
+            <td style="border: 0px;width: 50%;">
+                <p><strong>Name :</strong><span t-field="o.patient_id"/></p>
+                <p><b>ID Number :</b> <span t-field="o.reg_no"/></p>
+            </td>
+            </div>
+            </table>
+            <table border="4" class="table table-bordered" style="border: 1px solid black;">
+            <thead>
+            <tr style="height:40px">
+            <td style="border: 1px solid black;" >
+                <p><b>Gender :</b> <span t-field="o.gender"/></p>
+                <p><b>Conditions :</b> <span t-field="o.conditions"/></p>
+                <p><b>address :</b> <span t-field="o.address"/></p>
+                <p><b>Branch :</b> <span t-field="o.company_id"/></p>
+            </td>
+            <td style="border: 1px solid black;">
+                <p><b>File Number :</b> <span t-field="o.file_num"/></p>
+                <p><b> Doctor :</b> <span t-field="o.doctor_in"/></p>
+                <p><b> Contact Number :</b> <span t-field="o.contact_num"/></p>
+                <p><b> Attender Number :</b> <span t-field="o.attend_num"/></p>
+            </td>
+            </tr>
+            </thead>
+            </table>
+
+            <h3 class="text-left heading_text_cor">DAY 1</h3>
+        <t t-if="docs.sister_line">
+            <div class="header_tag">
+                <h4 class="text-center heading_text_cor">TPR CHART</h4>
+                </div>
+                <table class="table table-bordered" style="border: 1px solid black;">
+                    <thead>
+                        <tr>
+                        <th style="border: 1px solid black;">CBG</th>
+                        <th style="border: 1px solid black;"> BP </th>
+                        <th style="border: 1px solid black;"> TEMP </th>
+                        <th style="border: 1px solid black;"> SPO2 </th>
+                        <th style="border: 1px solid black;"> MOTION </th>
+                        <th style="border: 1px solid black;"> URINE </th>
+                        <th style="border: 1px solid black;"> SLEEP </th>
+                        <th style="border: 1px solid black;"> DIGESTION </th>
+                        <th style="border: 1px solid black;"> PAIN </th>
+                        <th style="border: 1px solid black;"> NOTES </th>
+                        </tr>
+                    </thead>
+            <tbody>
+                <tr t-foreach='docs.sister_line' t-as='line'>
+                    <td style="border: 1px solid black;">
+                       <span t-field="line.cbg"/>
+                    </td>
+                       <td style="border: 1px solid black;">
+                    <span t-field="line.bp"/>
+                       </td>
+                       <td style="border: 1px solid black;">
+                    <span t-field="line.temp"/>
+                       </td>
+                       <td style="border: 1px solid black;">
+                    <span t-field="line.spo2"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                    <span t-field="line.motion"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                        <span t-field="line.urine"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                        <span t-field="line.sleep"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <span t-field="line.digestion"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <span t-field="line.pain"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <span t-field="line.notes"/>
+                        </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    </t>
+                <t t-if="docs.therapy_line">
+                    <div class="header_tag">
+                        <h4 class="text-center heading_text_cor">IP THERAPY</h4>
+                        </div>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                            <thead>
+                                <tr>
+                                <th style="border: 1px solid black;">Time</th>
+                                <th style="border: 1px solid black;"> Therapy </th>
+                                
+                                </tr>
+                            </thead>
+                    <tbody>
+                        <tr t-foreach='docs.therapy_line' t-as='line'>
+                            <td style="border: 1px solid black;">
+                               <span t-field="line.time"/>
+                            </td>
+                               <td style="border: 1px solid black;">
+                            <span t-field="line.therapy"/>
+                               </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </t>
+
+                        <t t-if="docs.diet_id_diet.diet_line">
+            <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Diet</h4>
+        </div>
+        <table class="table table-bordered" style="border: 1px solid black;">
+            <thead>
+                <tr >
+                <th style="border: 1px solid black;">Time</th>
+                <th style="border: 1px solid black;"> Food </th>
+                <th style="border: 1px solid black;"> Fruit Diet </th>
+                <th style="border: 1px solid black;"> Veg Diet </th>
+                <th style="border: 1px solid black;"> Protein Diet </th>
+                <th style="border: 1px solid black;"> Quantity </th>
+                <th style="border: 1px solid black;"> Exercise </th>
+                <th style="border: 1px solid black;"> Notes </th>
+                </tr>
+            </thead>
+    <tbody>
+        <tr t-foreach='docs.diet_id_diet.diet_line' t-as='line'>
+            <td style="border: 1px solid black;">
+               <span t-field="line.wakeup1"/>
+            </td>
+               <td style="border: 1px solid black;">
+            <span t-field="line.food"/>
+               </td>
+               <td style="border: 1px solid black;">
+            <span t-field="line.fruit_diet"/>
+               </td>
+               <td style="border: 1px solid black;">
+            <span t-field="line.veg_diet"/>
+                </td>
+                <td style="border: 1px solid black;">
+            <span t-field="line.protein_diet"/>
+                </td>
+                <td style="border: 1px solid black;">
+                <span t-field="line.quantity"/>
+                </td>
+                <td style="border: 1px solid black;">
+                <span t-field="line.exercise1"/>
+                </td>
+                <td style="border: 1px solid black;">
+                    <span t-field="line.note"/>
+                </td>
+                </tr>
+            </tbody>
+            </table>
+        </t>
+
+        <t t-if="docs.lab_line">
+                <div class="header_tag">
+                    <h4 class="text-center heading_text_cor">Lab</h4>
+                </div>
+            <table class="table table-bordered" style="border: 1px solid black;">
+                <thead>
+                    <tr>
+                    <th style="border: 1px solid black;">Lab Test ID</th>
+                    <th style="border: 1px solid black;">Test Name </th>
+                    <th style="border: 1px solid black;">Tested Range </th>
+                    <th style="border: 1px solid black;">Normal Range </th>
+                    <th style="border: 1px solid black;">Date </th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr t-foreach='docs.lab_line' t-as='line'>
+                    <td style="border: 1px solid black;">
+                    <span t-field="line.lab_type"/>
+                    </td>
+                    <td style="border: 1px solid black;">
+                    <span t-field="line.name"/>
+                    </td>
+                    <td style="border: 1px solid black;">
+                    <span t-field="line.range_test"/>
+                    </td>
+                    <td style="border: 1px solid black;">
+                    <span t-field="line.range_normal"/>
+                    </td>
+                    <td style="border: 1px solid black;">
+                        <span t-field="line.date"/>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+            </t>
+            <t t-if="docs.scan_line">
+                <div class="header_tag" style='page-break-before: always;'>
+                    <h4 class="text-center heading_text_cor">Scan</h4>
+                </div>
+                <table class="table table-bordered" style="border: 1px solid black;">
+                    <thead>
+                        <tr>
+                        <th style="border: 1px solid black;">Scan Test ID</th>
+                        <th style="border: 1px solid black;">Test Name </th>
+                       
+                        <th style="border: 1px solid black;">Date </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr t-foreach='docs.scan_line' t-as='line'>
+                        <td style="border: 1px solid black;">
+                        <span t-field="line.scan_id"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                        <span t-field="line.name"/>
+                        </td>
+                        
+                        <td style="border: 1px solid black;">
+                            <span t-field="line.date"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </t>
+
+                <t t-if="docs.medicine_line.prescription_alot.prescription_line_ids">
+
+                    <div class="header_tag">
+                        <h4 class="text-center heading_text_cor">Medicine</h4>
+                    </div>
+                    <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr>
+                                <th style="border: 1px solid black;">Medicine Name</th>
+                                <th style="border: 1px solid black;">Dose</th>
+                                <th style="border: 1px solid black;">Unit</th>
+                                <th style="border: 1px solid black;">Notes</th>
+                                <th style="border: 1px solid black;">Before/After Food</th>
+                                <th style="border: 1px solid black;">Days</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach='docs.medicine_line.prescription_alot.prescription_line_ids' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.medicine_name"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.all_day"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.units"/>
+                                </td> 
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.anupana"/>
+                                </td> 
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.bf_af"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.days1"/>
+                                </td>     
+                            </tr>
+                        </tbody>
+                        </table>
+                    </t>
+
+                <t t-if="docs.sister_line_two">
+                    <h3 class="text-left heading_text_cor">DAY 2</h3>
+                </t>
+                    <t t-if="docs.sister_line_two">
+                        <div class="header_tag">
+                            <h4 class="text-center heading_text_cor">TPR CHART</h4>
+                            </div>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">CBG</th>
+                                    <th style="border: 1px solid black;"> BP </th>
+                                    <th style="border: 1px solid black;"> TEMP </th>
+                                    <th style="border: 1px solid black;"> SPO2 </th>
+                                    <th style="border: 1px solid black;"> MOTION </th>
+                                    <th style="border: 1px solid black;"> URINE </th>
+                                    <th style="border: 1px solid black;"> SLEEP </th>
+                                    <th style="border: 1px solid black;"> DIGESTION </th>
+                                    <th style="border: 1px solid black;"> PAIN </th>
+                                    <th style="border: 1px solid black;"> NOTES </th>
+                                    </tr>
+                                </thead>
+                        <tbody>
+                            <tr t-foreach='docs.sister_line_two' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                   <span t-field="line.cbg"/>
+                                </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.bp"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.temp"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.spo2"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                <span t-field="line.motion"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.urine"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.sleep"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.digestion"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.pain"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.notes"/>
+                                    </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                                </t>
+
+                            <t t-if="docs.therapy_line_two">
+                                <div class="header_tag">
+                                    <h4 class="text-center heading_text_cor">IP THERAPY</h4>
+                                    </div>
+                                    <table class="table table-bordered" style="border: 1px solid black;">
+                                        <thead>
+                                            <tr>
+                                            <th style="border: 1px solid black;">Time</th>
+                                            <th style="border: 1px solid black;"> Therapy </th>
+                                            
+                                            </tr>
+                                        </thead>
+                                <tbody>
+                                    <tr t-foreach='docs.therapy_line_two' t-as='line'>
+                                        <td style="border: 1px solid black;">
+                                           <span t-field="line.time"/>
+                                        </td>
+                                           <td style="border: 1px solid black;">
+                                        <span t-field="line.therapy"/>
+                                           </td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                                    </t>
+            
+                                    <t t-if="docs.diet_line_two.diet_for.diet_line">
+                        <div class="header_tag">
+                    <h4 class="text-center heading_text_cor">Diet</h4>
+                    </div>
+                    <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr >
+                            <th style="border: 1px solid black;">Time</th>
+                            <th style="border: 1px solid black;"> Food </th>
+                            <th style="border: 1px solid black;"> Fruit Diet </th>
+                            <th style="border: 1px solid black;"> Veg Diet </th>
+                            <th style="border: 1px solid black;"> Protein Diet </th>
+                            <th style="border: 1px solid black;"> Quantity </th>
+                            <th style="border: 1px solid black;"> Exercise </th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                <tbody>
+                    <tr t-foreach='docs.diet_line_two.diet_for.diet_line' t-as='line'>
+                        <td style="border: 1px solid black;">
+                           <span t-field="line.wakeup1"/>
+                        </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.food"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.fruit_diet"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.veg_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                        <span t-field="line.protein_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.quantity"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.exercise1"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-field="line.note"/>
+                            </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </t>
+            
+                    <t t-if="docs.lab_line_two">
+                            <div class="header_tag">
+                                <h4 class="text-center heading_text_cor">Lab</h4>
+                            </div>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                            <thead>
+                                <tr>
+                                <th style="border: 1px solid black;">Lab Test ID</th>
+                                <th style="border: 1px solid black;">Test Name </th>
+                                <th style="border: 1px solid black;">Tested Range </th>
+                                <th style="border: 1px solid black;">Normal Range </th>
+                                <th style="border: 1px solid black;">Date </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr t-foreach='docs.lab_line_two' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.lab_type"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.name"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.range_test"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.range_normal"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                    <span t-field="line.date"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </t>
+                        <t t-if="docs.scan_line_two">
+                            <div class="header_tag" style='page-break-before: always;'>
+                                <h4 class="text-center heading_text_cor">Scan</h4>
+                            </div>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">Scan Test ID</th>
+                                    <th style="border: 1px solid black;">Test Name </th>
+                                   
+                                    <th style="border: 1px solid black;">Date </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr t-foreach='docs.scan_line_two' t-as='line'>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.scan_id"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.name"/>
+                                    </td>
+                                    
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.date"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                            </t>
+            
+                            <t t-if="docs.medicine_line_two.prescription_alot.prescription_line_ids">
+            
+                                <div class="header_tag">
+                                    <h4 class="text-center heading_text_cor">Medicine</h4>
+                                </div>
+                                <table class="table table-bordered" style="border: 1px solid black;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border: 1px solid black;">Medicine Name</th>
+                                            <th style="border: 1px solid black;">Dose</th>
+                                            <th style="border: 1px solid black;">Unit</th>
+                                            <th style="border: 1px solid black;">Notes</th>
+                                            <th style="border: 1px solid black;">Before/After Food</th>
+                                            <th style="border: 1px solid black;">Days</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach='docs.medicine_line_two.prescription_alot.prescription_line_ids' t-as='line'>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.medicine_name"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.all_day"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.units"/>
+                                            </td> 
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.anupana"/>
+                                            </td> 
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.bf_af"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.days1"/>
+                                            </td>     
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </t>            
+
+                                <t t-if="docs.sister_line_three">
+                                    <h3 class="text-left heading_text_cor">DAY 3</h3>
+                                </t>
+                    <t t-if="docs.sister_line_three">
+                        <div class="header_tag">
+                            <h4 class="text-center heading_text_cor">TPR CHART</h4>
+                            </div>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">CBG</th>
+                                    <th style="border: 1px solid black;"> BP </th>
+                                    <th style="border: 1px solid black;"> TEMP </th>
+                                    <th style="border: 1px solid black;"> SPO2 </th>
+                                    <th style="border: 1px solid black;"> MOTION </th>
+                                    <th style="border: 1px solid black;"> URINE </th>
+                                    <th style="border: 1px solid black;"> SLEEP </th>
+                                    <th style="border: 1px solid black;"> DIGESTION </th>
+                                    <th style="border: 1px solid black;"> PAIN </th>
+                                    <th style="border: 1px solid black;"> NOTES </th>
+                                    </tr>
+                                </thead>
+                        <tbody>
+                            <tr t-foreach='docs.sister_line_three' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                   <span t-field="line.cbg"/>
+                                </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.bp"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.temp"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.spo2"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                <span t-field="line.motion"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.urine"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.sleep"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.digestion"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.pain"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.notes"/>
+                                    </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                                </t>
+
+                            <t t-if="docs.therapy_line_three">
+                                <div class="header_tag">
+                                    <h4 class="text-center heading_text_cor">IP THERAPY</h4>
+                                    </div>
+                                    <table class="table table-bordered" style="border: 1px solid black;">
+                                        <thead>
+                                            <tr>
+                                            <th style="border: 1px solid black;">Time</th>
+                                            <th style="border: 1px solid black;"> Therapy </th>
+                                            
+                                            </tr>
+                                        </thead>
+                                <tbody>
+                                    <tr t-foreach='docs.therapy_line_three' t-as='line'>
+                                        <td style="border: 1px solid black;">
+                                           <span t-field="line.time"/>
+                                        </td>
+                                           <td style="border: 1px solid black;">
+                                        <span t-field="line.therapy"/>
+                                           </td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                                    </t>
+            
+                                    <t t-if="docs.diet_line_three.diet_for.diet_line">
+                        <div class="header_tag">
+                    <h4 class="text-center heading_text_cor">Diet</h4>
+                    </div>
+                    <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr >
+                            <th style="border: 1px solid black;">Time</th>
+                            <th style="border: 1px solid black;"> Food </th>
+                            <th style="border: 1px solid black;"> Fruit Diet </th>
+                            <th style="border: 1px solid black;"> Veg Diet </th>
+                            <th style="border: 1px solid black;"> Protein Diet </th>
+                            <th style="border: 1px solid black;"> Quantity </th>
+                            <th style="border: 1px solid black;"> Exercise </th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                <tbody>
+                    <tr t-foreach='docs.diet_line_three.diet_for.diet_line' t-as='line'>
+                        <td style="border: 1px solid black;">
+                           <span t-field="line.wakeup1"/>
+                        </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.food"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.fruit_diet"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.veg_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                        <span t-field="line.protein_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.quantity"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.exercise1"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-field="line.note"/>
+                            </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </t>
+            
+                    <t t-if="docs.lab_line_three">
+                            <div class="header_tag">
+                                <h4 class="text-center heading_text_cor">Lab</h4>
+                            </div>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                            <thead>
+                                <tr>
+                                <th style="border: 1px solid black;">Lab Test ID</th>
+                                <th style="border: 1px solid black;">Test Name </th>
+                                <th style="border: 1px solid black;">Tested Range </th>
+                                <th style="border: 1px solid black;">Normal Range </th>
+                                <th style="border: 1px solid black;">Date </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr t-foreach='docs.lab_line_three' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.lab_type"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.name"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.range_test"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.range_normal"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                    <span t-field="line.date"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </t>
+                        <t t-if="docs.scan_line_three">
+                            <div class="header_tag" style='page-break-before: always;'>
+                                <h4 class="text-center heading_text_cor">Scan</h4>
+                            </div>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">Scan Test ID</th>
+                                    <th style="border: 1px solid black;">Test Name </th>
+                                   
+                                    <th style="border: 1px solid black;">Date </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr t-foreach='docs.scan_line_three' t-as='line'>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.scan_id"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.name"/>
+                                    </td>
+                                    
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.date"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                            </t>
+            
+                            <t t-if="docs.medicine_line_three.prescription_alot.prescription_line_ids">
+            
+                                <div class="header_tag">
+                                    <h4 class="text-center heading_text_cor">Medicine</h4>
+                                </div>
+                                <table class="table table-bordered" style="border: 1px solid black;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border: 1px solid black;">Medicine Name</th>
+                                            <th style="border: 1px solid black;">Dose</th>
+                                            <th style="border: 1px solid black;">Unit</th>
+                                            <th style="border: 1px solid black;">Notes</th>
+                                            <th style="border: 1px solid black;">Before/After Food</th>
+                                            <th style="border: 1px solid black;">Days</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach='docs.medicine_line_three.prescription_alot.prescription_line_ids' t-as='line'>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.medicine_name"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.all_day"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.units"/>
+                                            </td> 
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.anupana"/>
+                                            </td> 
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.bf_af"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.days1"/>
+                                            </td>     
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </t>
+
+                                <t t-if="docs.sister_line_four">
+                                <h3 class="text-left heading_text_cor">DAY 4</h3>
+                                </t>
+                    <t t-if="docs.sister_line_four">
+                        <div class="header_tag">
+                            <h4 class="text-center heading_text_cor">TPR CHART</h4>
+                            </div>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">CBG</th>
+                                    <th style="border: 1px solid black;"> BP </th>
+                                    <th style="border: 1px solid black;"> TEMP </th>
+                                    <th style="border: 1px solid black;"> SPO2 </th>
+                                    <th style="border: 1px solid black;"> MOTION </th>
+                                    <th style="border: 1px solid black;"> URINE </th>
+                                    <th style="border: 1px solid black;"> SLEEP </th>
+                                    <th style="border: 1px solid black;"> DIGESTION </th>
+                                    <th style="border: 1px solid black;"> PAIN </th>
+                                    <th style="border: 1px solid black;"> NOTES </th>
+                                    </tr>
+                                </thead>
+                        <tbody>
+                            <tr t-foreach='docs.sister_line_four' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                   <span t-field="line.cbg"/>
+                                </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.bp"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.temp"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.spo2"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                <span t-field="line.motion"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.urine"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.sleep"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.digestion"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.pain"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.notes"/>
+                                    </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                                </t>
+
+                            <t t-if="docs.therapy_line_four">
+                                <div class="header_tag">
+                                    <h4 class="text-center heading_text_cor">IP THERAPY</h4>
+                                    </div>
+                                    <table class="table table-bordered" style="border: 1px solid black;">
+                                        <thead>
+                                            <tr>
+                                            <th style="border: 1px solid black;">Time</th>
+                                            <th style="border: 1px solid black;"> Therapy </th>
+                                            
+                                            </tr>
+                                        </thead>
+                                <tbody>
+                                    <tr t-foreach='docs.therapy_line_four' t-as='line'>
+                                        <td style="border: 1px solid black;">
+                                           <span t-field="line.time"/>
+                                        </td>
+                                           <td style="border: 1px solid black;">
+                                        <span t-field="line.therapy"/>
+                                           </td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                                    </t>
+            
+                                    <t t-if="docs.diet_line_four.diet_for.diet_line">
+                        <div class="header_tag">
+                    <h4 class="text-center heading_text_cor">Diet</h4>
+                    </div>
+                    <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr >
+                            <th style="border: 1px solid black;">Time</th>
+                            <th style="border: 1px solid black;"> Food </th>
+                            <th style="border: 1px solid black;"> Fruit Diet </th>
+                            <th style="border: 1px solid black;"> Veg Diet </th>
+                            <th style="border: 1px solid black;"> Protein Diet </th>
+                            <th style="border: 1px solid black;"> Quantity </th>
+                            <th style="border: 1px solid black;"> Exercise </th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                <tbody>
+                    <tr t-foreach='docs.diet_line_four.diet_for.diet_line' t-as='line'>
+                        <td style="border: 1px solid black;">
+                           <span t-field="line.wakeup1"/>
+                        </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.food"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.fruit_diet"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.veg_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                        <span t-field="line.protein_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.quantity"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.exercise1"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-field="line.note"/>
+                            </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </t>
+            
+                    <t t-if="docs.lab_line_four">
+                            <div class="header_tag">
+                                <h4 class="text-center heading_text_cor">Lab</h4>
+                            </div>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                            <thead>
+                                <tr>
+                                <th style="border: 1px solid black;">Lab Test ID</th>
+                                <th style="border: 1px solid black;">Test Name </th>
+                                <th style="border: 1px solid black;">Tested Range </th>
+                                <th style="border: 1px solid black;">Normal Range </th>
+                                <th style="border: 1px solid black;">Date </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr t-foreach='docs.lab_line_four' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.lab_type"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.name"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.range_test"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.range_normal"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                    <span t-field="line.date"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </t>
+                        <t t-if="docs.scan_line_four">
+                            <div class="header_tag" style='page-break-before: always;'>
+                                <h4 class="text-center heading_text_cor">Scan</h4>
+                            </div>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">Scan Test ID</th>
+                                    <th style="border: 1px solid black;">Test Name </th>
+                                   
+                                    <th style="border: 1px solid black;">Date </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr t-foreach='docs.scan_line_four' t-as='line'>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.scan_id"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.name"/>
+                                    </td>
+                                    
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.date"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                            </t>
+            
+                            <t t-if="docs.medicine_line_four.prescription_alot.prescription_line_ids">
+            
+                                <div class="header_tag">
+                                    <h4 class="text-center heading_text_cor">Medicine</h4>
+                                </div>
+                                <table class="table table-bordered" style="border: 1px solid black;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border: 1px solid black;">Medicine Name</th>
+                                            <th style="border: 1px solid black;">Dose</th>
+                                            <th style="border: 1px solid black;">Unit</th>
+                                            <th style="border: 1px solid black;">Notes</th>
+                                            <th style="border: 1px solid black;">Before/After Food</th>
+                                            <th style="border: 1px solid black;">Days</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach='docs.medicine_line_four.prescription_alot.prescription_line_ids' t-as='line'>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.medicine_name"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.all_day"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.units"/>
+                                            </td> 
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.anupana"/>
+                                            </td> 
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.bf_af"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.days1"/>
+                                            </td>     
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </t>
+
+                                <t t-if="docs.sister_line_five">
+                                    <h3 class="text-left heading_text_cor">DAY 5</h3>
+                                </t>
+                    <t t-if="docs.sister_line_five">
+                        <div class="header_tag">
+                            <h4 class="text-center heading_text_cor">TPR CHART</h4>
+                            </div>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">CBG</th>
+                                    <th style="border: 1px solid black;"> BP </th>
+                                    <th style="border: 1px solid black;"> TEMP </th>
+                                    <th style="border: 1px solid black;"> SPO2 </th>
+                                    <th style="border: 1px solid black;"> MOTION </th>
+                                    <th style="border: 1px solid black;"> URINE </th>
+                                    <th style="border: 1px solid black;"> SLEEP </th>
+                                    <th style="border: 1px solid black;"> DIGESTION </th>
+                                    <th style="border: 1px solid black;"> PAIN </th>
+                                    <th style="border: 1px solid black;"> NOTES </th>
+                                    </tr>
+                                </thead>
+                        <tbody>
+                            <tr t-foreach='docs.sister_line_five' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                   <span t-field="line.cbg"/>
+                                </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.bp"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.temp"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.spo2"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                <span t-field="line.motion"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.urine"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.sleep"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.digestion"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.pain"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.notes"/>
+                                    </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                                </t>
+
+                            <t t-if="docs.therapy_line_five">
+                                <div class="header_tag">
+                                    <h4 class="text-center heading_text_cor">IP THERAPY</h4>
+                                    </div>
+                                    <table class="table table-bordered" style="border: 1px solid black;">
+                                        <thead>
+                                            <tr>
+                                            <th style="border: 1px solid black;">Time</th>
+                                            <th style="border: 1px solid black;"> Therapy </th>
+                                            
+                                            </tr>
+                                        </thead>
+                                <tbody>
+                                    <tr t-foreach='docs.therapy_line_five' t-as='line'>
+                                        <td style="border: 1px solid black;">
+                                           <span t-field="line.time"/>
+                                        </td>
+                                           <td style="border: 1px solid black;">
+                                        <span t-field="line.therapy"/>
+                                           </td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                                    </t>
+            
+                                    <t t-if="docs.diet_line_five.diet_for.diet_line">
+                        <div class="header_tag">
+                    <h4 class="text-center heading_text_cor">Diet</h4>
+                    </div>
+                    <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr >
+                            <th style="border: 1px solid black;">Time</th>
+                            <th style="border: 1px solid black;"> Food </th>
+                            <th style="border: 1px solid black;"> Fruit Diet </th>
+                            <th style="border: 1px solid black;"> Veg Diet </th>
+                            <th style="border: 1px solid black;"> Protein Diet </th>
+                            <th style="border: 1px solid black;"> Quantity </th>
+                            <th style="border: 1px solid black;"> Exercise </th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                <tbody>
+                    <tr t-foreach='docs.diet_line_five.diet_for.diet_line' t-as='line'>
+                        <td style="border: 1px solid black;">
+                           <span t-field="line.wakeup1"/>
+                        </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.food"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.fruit_diet"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.veg_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                        <span t-field="line.protein_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.quantity"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.exercise1"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-field="line.note"/>
+                            </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </t>
+            
+                    <t t-if="docs.lab_line_five">
+                            <div class="header_tag">
+                                <h4 class="text-center heading_text_cor">Lab</h4>
+                            </div>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                            <thead>
+                                <tr>
+                                <th style="border: 1px solid black;">Lab Test ID</th>
+                                <th style="border: 1px solid black;">Test Name </th>
+                                <th style="border: 1px solid black;">Tested Range </th>
+                                <th style="border: 1px solid black;">Normal Range </th>
+                                <th style="border: 1px solid black;">Date </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr t-foreach='docs.lab_line_five' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.lab_type"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.name"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.range_test"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.range_normal"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                    <span t-field="line.date"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </t>
+                        <t t-if="docs.scan_line_five">
+                            <div class="header_tag" style='page-break-before: always;'>
+                                <h4 class="text-center heading_text_cor">Scan</h4>
+                            </div>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">Scan Test ID</th>
+                                    <th style="border: 1px solid black;">Test Name </th>
+                                   
+                                    <th style="border: 1px solid black;">Date </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr t-foreach='docs.scan_line_five' t-as='line'>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.scan_id"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.name"/>
+                                    </td>
+                                    
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.date"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                            </t>
+            
+                            <t t-if="docs.medicine_line_five.prescription_alot.prescription_line_ids">
+            
+                                <div class="header_tag">
+                                    <h4 class="text-center heading_text_cor">Medicine</h4>
+                                </div>
+                                <table class="table table-bordered" style="border: 1px solid black;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border: 1px solid black;">Medicine Name</th>
+                                            <th style="border: 1px solid black;">Dose</th>
+                                            <th style="border: 1px solid black;">Unit</th>
+                                            <th style="border: 1px solid black;">Notes</th>
+                                            <th style="border: 1px solid black;">Before/After Food</th>
+                                            <th style="border: 1px solid black;">Days</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach='docs.medicine_line_five.prescription_alot.prescription_line_ids' t-as='line'>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.medicine_name"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.all_day"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.units"/>
+                                            </td> 
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.anupana"/>
+                                            </td> 
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.bf_af"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.days1"/>
+                                            </td>     
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </t>
+                                <t t-if="docs.sister_line_six">
+                                    <h3 class="text-left heading_text_cor">DAY 6</h3>
+                                </t>
+                    <t t-if="docs.sister_line_six">
+                        <div class="header_tag">
+                            <h4 class="text-center heading_text_cor">TPR CHART</h4>
+                            </div>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">CBG</th>
+                                    <th style="border: 1px solid black;"> BP </th>
+                                    <th style="border: 1px solid black;"> TEMP </th>
+                                    <th style="border: 1px solid black;"> SPO2 </th>
+                                    <th style="border: 1px solid black;"> MOTION </th>
+                                    <th style="border: 1px solid black;"> URINE </th>
+                                    <th style="border: 1px solid black;"> SLEEP </th>
+                                    <th style="border: 1px solid black;"> DIGESTION </th>
+                                    <th style="border: 1px solid black;"> PAIN </th>
+                                    <th style="border: 1px solid black;"> NOTES </th>
+                                    </tr>
+                                </thead>
+                        <tbody>
+                            <tr t-foreach='docs.sister_line_six' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                   <span t-field="line.cbg"/>
+                                </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.bp"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.temp"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.spo2"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                <span t-field="line.motion"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.urine"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.sleep"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.digestion"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.pain"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.notes"/>
+                                    </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                                </t>
+
+                            <t t-if="docs.therapy_line_six">
+                                <div class="header_tag">
+                                    <h4 class="text-center heading_text_cor">IP THERAPY</h4>
+                                    </div>
+                                    <table class="table table-bordered" style="border: 1px solid black;">
+                                        <thead>
+                                            <tr>
+                                            <th style="border: 1px solid black;">Time</th>
+                                            <th style="border: 1px solid black;"> Therapy </th>
+                                            
+                                            </tr>
+                                        </thead>
+                                <tbody>
+                                    <tr t-foreach='docs.therapy_line_six' t-as='line'>
+                                        <td style="border: 1px solid black;">
+                                           <span t-field="line.time"/>
+                                        </td>
+                                           <td style="border: 1px solid black;">
+                                        <span t-field="line.therapy"/>
+                                           </td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                                    </t>
+            
+                                    <t t-if="docs.diet_line_six.diet_for.diet_line">
+                        <div class="header_tag">
+                    <h4 class="text-center heading_text_cor">Diet</h4>
+                    </div>
+                    <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr >
+                            <th style="border: 1px solid black;">Time</th>
+                            <th style="border: 1px solid black;"> Food </th>
+                            <th style="border: 1px solid black;"> Fruit Diet </th>
+                            <th style="border: 1px solid black;"> Veg Diet </th>
+                            <th style="border: 1px solid black;"> Protein Diet </th>
+                            <th style="border: 1px solid black;"> Quantity </th>
+                            <th style="border: 1px solid black;"> Exercise </th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                <tbody>
+                    <tr t-foreach='docs.diet_line_six.diet_for.diet_line' t-as='line'>
+                        <td style="border: 1px solid black;">
+                           <span t-field="line.wakeup1"/>
+                        </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.food"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.fruit_diet"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.veg_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                        <span t-field="line.protein_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.quantity"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.exercise1"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-field="line.note"/>
+                            </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </t>
+            
+                    <t t-if="docs.lab_line_six">
+                            <div class="header_tag">
+                                <h4 class="text-center heading_text_cor">Lab</h4>
+                            </div>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                            <thead>
+                                <tr>
+                                <th style="border: 1px solid black;">Lab Test ID</th>
+                                <th style="border: 1px solid black;">Test Name </th>
+                                <th style="border: 1px solid black;">Tested Range </th>
+                                <th style="border: 1px solid black;">Normal Range </th>
+                                <th style="border: 1px solid black;">Date </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr t-foreach='docs.lab_line_six' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.lab_type"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.name"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.range_test"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.range_normal"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                    <span t-field="line.date"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </t>
+                        <t t-if="docs.scan_line_six">
+                            <div class="header_tag" style='page-break-before: always;'>
+                                <h4 class="text-center heading_text_cor">Scan</h4>
+                            </div>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">Scan Test ID</th>
+                                    <th style="border: 1px solid black;">Test Name </th>
+                                   
+                                    <th style="border: 1px solid black;">Date </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr t-foreach='docs.scan_line_six' t-as='line'>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.scan_id"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.name"/>
+                                    </td>
+                                    
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.date"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                            </t>
+            
+                            <t t-if="docs.medicine_line_six.prescription_alot.prescription_line_ids">
+            
+                                <div class="header_tag">
+                                    <h4 class="text-center heading_text_cor">Medicine</h4>
+                                </div>
+                                <table class="table table-bordered" style="border: 1px solid black;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border: 1px solid black;">Medicine Name</th>
+                                            <th style="border: 1px solid black;">Dose</th>
+                                            <th style="border: 1px solid black;">Unit</th>
+                                            <th style="border: 1px solid black;">Notes</th>
+                                            <th style="border: 1px solid black;">Before/After Food</th>
+                                            <th style="border: 1px solid black;">Days</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach='docs.medicine_line_six.prescription_alot.prescription_line_ids' t-as='line'>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.medicine_name"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.all_day"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.units"/>
+                                            </td> 
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.anupana"/>
+                                            </td> 
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.bf_af"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.days1"/>
+                                            </td>     
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </t>
+
+                                <t t-if="docs.sister_line_seven">
+                                <h3 class="text-left heading_text_cor">DAY 7</h3>
+                                </t>
+                    <t t-if="docs.sister_line_seven">
+                        <div class="header_tag">
+                            <h4 class="text-center heading_text_cor">TPR CHART</h4>
+                            </div>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">CBG</th>
+                                    <th style="border: 1px solid black;"> BP </th>
+                                    <th style="border: 1px solid black;"> TEMP </th>
+                                    <th style="border: 1px solid black;"> SPO2 </th>
+                                    <th style="border: 1px solid black;"> MOTION </th>
+                                    <th style="border: 1px solid black;"> URINE </th>
+                                    <th style="border: 1px solid black;"> SLEEP </th>
+                                    <th style="border: 1px solid black;"> DIGESTION </th>
+                                    <th style="border: 1px solid black;"> PAIN </th>
+                                    <th style="border: 1px solid black;"> NOTES </th>
+                                    </tr>
+                                </thead>
+                        <tbody>
+                            <tr t-foreach='docs.sister_line_seven' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                   <span t-field="line.cbg"/>
+                                </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.bp"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.temp"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.spo2"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                <span t-field="line.motion"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.urine"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.sleep"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.digestion"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.pain"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.notes"/>
+                                    </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                                </t>
+
+                            <t t-if="docs.therapy_line_seven">
+                                <div class="header_tag">
+                                    <h4 class="text-center heading_text_cor">IP THERAPY</h4>
+                                    </div>
+                                    <table class="table table-bordered" style="border: 1px solid black;">
+                                        <thead>
+                                            <tr>
+                                            <th style="border: 1px solid black;">Time</th>
+                                            <th style="border: 1px solid black;"> Therapy </th>
+                                            
+                                            </tr>
+                                        </thead>
+                                <tbody>
+                                    <tr t-foreach='docs.therapy_line_seven' t-as='line'>
+                                        <td style="border: 1px solid black;">
+                                           <span t-field="line.time"/>
+                                        </td>
+                                           <td style="border: 1px solid black;">
+                                        <span t-field="line.therapy"/>
+                                           </td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                                    </t>
+            
+                                    <t t-if="docs.diet_line_seven.diet_for.diet_line">
+                        <div class="header_tag">
+                    <h4 class="text-center heading_text_cor">Diet</h4>
+                    </div>
+                    <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr >
+                            <th style="border: 1px solid black;">Time</th>
+                            <th style="border: 1px solid black;"> Food </th>
+                            <th style="border: 1px solid black;"> Fruit Diet </th>
+                            <th style="border: 1px solid black;"> Veg Diet </th>
+                            <th style="border: 1px solid black;"> Protein Diet </th>
+                            <th style="border: 1px solid black;"> Quantity </th>
+                            <th style="border: 1px solid black;"> Exercise </th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                <tbody>
+                    <tr t-foreach='docs.diet_line_seven.diet_for.diet_line' t-as='line'>
+                        <td style="border: 1px solid black;">
+                           <span t-field="line.wakeup1"/>
+                        </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.food"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.fruit_diet"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.veg_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                        <span t-field="line.protein_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.quantity"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.exercise1"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-field="line.note"/>
+                            </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </t>
+            
+                    <t t-if="docs.lab_line_seven">
+                            <div class="header_tag">
+                                <h4 class="text-center heading_text_cor">Lab</h4>
+                            </div>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                            <thead>
+                                <tr>
+                                <th style="border: 1px solid black;">Lab Test ID</th>
+                                <th style="border: 1px solid black;">Test Name </th>
+                                <th style="border: 1px solid black;">Tested Range </th>
+                                <th style="border: 1px solid black;">Normal Range </th>
+                                <th style="border: 1px solid black;">Date </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr t-foreach='docs.lab_line_seven' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.lab_type"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.name"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.range_test"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.range_normal"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                    <span t-field="line.date"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </t>
+                        <t t-if="docs.scan_line_seven">
+                            <div class="header_tag" style='page-break-before: always;'>
+                                <h4 class="text-center heading_text_cor">Scan</h4>
+                            </div>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">Scan Test ID</th>
+                                    <th style="border: 1px solid black;">Test Name </th>
+                                   
+                                    <th style="border: 1px solid black;">Date </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr t-foreach='docs.scan_line_seven' t-as='line'>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.scan_id"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.name"/>
+                                    </td>
+                                    
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.date"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                            </t>
+            
+                            <t t-if="docs.medicine_line_seven.prescription_alot.prescription_line_ids">
+            
+                                <div class="header_tag">
+                                    <h4 class="text-center heading_text_cor">Medicine</h4>
+                                </div>
+                                <table class="table table-bordered" style="border: 1px solid black;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border: 1px solid black;">Medicine Name</th>
+                                            <th style="border: 1px solid black;">Dose</th>
+                                            <th style="border: 1px solid black;">Unit</th>
+                                            <th style="border: 1px solid black;">Notes</th>
+                                            <th style="border: 1px solid black;">Before/After Food</th>
+                                            <th style="border: 1px solid black;">Days</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach='docs.medicine_line_seven.prescription_alot.prescription_line_ids' t-as='line'>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.medicine_name"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.all_day"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.units"/>
+                                            </td> 
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.anupana"/>
+                                            </td> 
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.bf_af"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.days1"/>
+                                            </td>     
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </t>
+
+                            <t t-if="docs.sister_line_eight">
+                                <h3 class="text-left heading_text_cor">DAY 8</h3>
+                            </t>
+                    <t t-if="docs.sister_line_eight">
+                        <div class="header_tag">
+                            <h4 class="text-center heading_text_cor">TPR CHART</h4>
+                            </div>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">CBG</th>
+                                    <th style="border: 1px solid black;"> BP </th>
+                                    <th style="border: 1px solid black;"> TEMP </th>
+                                    <th style="border: 1px solid black;"> SPO2 </th>
+                                    <th style="border: 1px solid black;"> MOTION </th>
+                                    <th style="border: 1px solid black;"> URINE </th>
+                                    <th style="border: 1px solid black;"> SLEEP </th>
+                                    <th style="border: 1px solid black;"> DIGESTION </th>
+                                    <th style="border: 1px solid black;"> PAIN </th>
+                                    <th style="border: 1px solid black;"> NOTES </th>
+                                    </tr>
+                                </thead>
+                        <tbody>
+                            <tr t-foreach='docs.sister_line_eight' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                   <span t-field="line.cbg"/>
+                                </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.bp"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.temp"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.spo2"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                <span t-field="line.motion"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.urine"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.sleep"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.digestion"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.pain"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.notes"/>
+                                    </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                                </t>
+
+                            <t t-if="docs.therapy_line_eight">
+                                <div class="header_tag">
+                                    <h4 class="text-center heading_text_cor">IP THERAPY</h4>
+                                    </div>
+                                    <table class="table table-bordered" style="border: 1px solid black;">
+                                        <thead>
+                                            <tr>
+                                            <th style="border: 1px solid black;">Time</th>
+                                            <th style="border: 1px solid black;"> Therapy </th>
+                                            
+                                            </tr>
+                                        </thead>
+                                <tbody>
+                                    <tr t-foreach='docs.therapy_line_eight' t-as='line'>
+                                        <td style="border: 1px solid black;">
+                                           <span t-field="line.time"/>
+                                        </td>
+                                           <td style="border: 1px solid black;">
+                                        <span t-field="line.therapy"/>
+                                           </td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                                    </t>
+            
+                                    <t t-if="docs.diet_line_eight.diet_for.diet_line">
+                        <div class="header_tag">
+                    <h4 class="text-center heading_text_cor">Diet</h4>
+                    </div>
+                    <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr >
+                            <th style="border: 1px solid black;">Time</th>
+                            <th style="border: 1px solid black;"> Food </th>
+                            <th style="border: 1px solid black;"> Fruit Diet </th>
+                            <th style="border: 1px solid black;"> Veg Diet </th>
+                            <th style="border: 1px solid black;"> Protein Diet </th>
+                            <th style="border: 1px solid black;"> Quantity </th>
+                            <th style="border: 1px solid black;"> Exercise </th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                <tbody>
+                    <tr t-foreach='docs.diet_line_eight.diet_for.diet_line' t-as='line'>
+                        <td style="border: 1px solid black;">
+                           <span t-field="line.wakeup1"/>
+                        </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.food"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.fruit_diet"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.veg_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                        <span t-field="line.protein_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.quantity"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.exercise1"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-field="line.note"/>
+                            </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </t>
+            
+                    <t t-if="docs.lab_line_eight">
+                            <div class="header_tag">
+                                <h4 class="text-center heading_text_cor">Lab</h4>
+                            </div>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                            <thead>
+                                <tr>
+                                <th style="border: 1px solid black;">Lab Test ID</th>
+                                <th style="border: 1px solid black;">Test Name </th>
+                                <th style="border: 1px solid black;">Tested Range </th>
+                                <th style="border: 1px solid black;">Normal Range </th>
+                                <th style="border: 1px solid black;">Date </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr t-foreach='docs.lab_line_eight' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.lab_type"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.name"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.range_test"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.range_normal"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                    <span t-field="line.date"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </t>
+                        <t t-if="docs.scan_line_eight">
+                            <div class="header_tag" style='page-break-before: always;'>
+                                <h4 class="text-center heading_text_cor">Scan</h4>
+                            </div>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">Scan Test ID</th>
+                                    <th style="border: 1px solid black;">Test Name </th>
+                                   
+                                    <th style="border: 1px solid black;">Date </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr t-foreach='docs.scan_line_eight' t-as='line'>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.scan_id"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.name"/>
+                                    </td>
+                                    
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.date"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                            </t>
+            
+                            <t t-if="docs.medicine_line_eight.prescription_alot.prescription_line_ids">
+            
+                                <div class="header_tag">
+                                    <h4 class="text-center heading_text_cor">Medicine</h4>
+                                </div>
+                                <table class="table table-bordered" style="border: 1px solid black;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border: 1px solid black;">Medicine Name</th>
+                                            <th style="border: 1px solid black;">Dose</th>
+                                            <th style="border: 1px solid black;">Unit</th>
+                                            <th style="border: 1px solid black;">Notes</th>
+                                            <th style="border: 1px solid black;">Before/After Food</th>
+                                            <th style="border: 1px solid black;">Days</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach='docs.medicine_line_eight.prescription_alot.prescription_line_ids' t-as='line'>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.medicine_name"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.all_day"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.units"/>
+                                            </td> 
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.anupana"/>
+                                            </td> 
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.bf_af"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.days1"/>
+                                            </td>     
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </t>
+
+                                <t t-if="docs.sister_line_nine">
+                                <h3 class="text-left heading_text_cor">DAY 9</h3>
+                                </t>
+                    <t t-if="docs.sister_line_nine">
+                        <div class="header_tag">
+                            <h4 class="text-center heading_text_cor">TPR CHART</h4>
+                            </div>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">CBG</th>
+                                    <th style="border: 1px solid black;"> BP </th>
+                                    <th style="border: 1px solid black;"> TEMP </th>
+                                    <th style="border: 1px solid black;"> SPO2 </th>
+                                    <th style="border: 1px solid black;"> MOTION </th>
+                                    <th style="border: 1px solid black;"> URINE </th>
+                                    <th style="border: 1px solid black;"> SLEEP </th>
+                                    <th style="border: 1px solid black;"> DIGESTION </th>
+                                    <th style="border: 1px solid black;"> PAIN </th>
+                                    <th style="border: 1px solid black;"> NOTES </th>
+                                    </tr>
+                                </thead>
+                        <tbody>
+                            <tr t-foreach='docs.sister_line_nine' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                   <span t-field="line.cbg"/>
+                                </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.bp"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.temp"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.spo2"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                <span t-field="line.motion"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.urine"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.sleep"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.digestion"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.pain"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.notes"/>
+                                    </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                                </t>
+
+                            <t t-if="docs.therapy_line_nine">
+                                <div class="header_tag">
+                                    <h4 class="text-center heading_text_cor">IP THERAPY</h4>
+                                    </div>
+                                    <table class="table table-bordered" style="border: 1px solid black;">
+                                        <thead>
+                                            <tr>
+                                            <th style="border: 1px solid black;">Time</th>
+                                            <th style="border: 1px solid black;"> Therapy </th>
+                                            
+                                            </tr>
+                                        </thead>
+                                <tbody>
+                                    <tr t-foreach='docs.therapy_line_nine' t-as='line'>
+                                        <td style="border: 1px solid black;">
+                                           <span t-field="line.time"/>
+                                        </td>
+                                           <td style="border: 1px solid black;">
+                                        <span t-field="line.therapy"/>
+                                           </td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                                    </t>
+            
+                                    <t t-if="docs.diet_line_nine.diet_for.diet_line">
+                        <div class="header_tag">
+                    <h4 class="text-center heading_text_cor">Diet</h4>
+                    </div>
+                    <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr >
+                            <th style="border: 1px solid black;">Time</th>
+                            <th style="border: 1px solid black;"> Food </th>
+                            <th style="border: 1px solid black;"> Fruit Diet </th>
+                            <th style="border: 1px solid black;"> Veg Diet </th>
+                            <th style="border: 1px solid black;"> Protein Diet </th>
+                            <th style="border: 1px solid black;"> Quantity </th>
+                            <th style="border: 1px solid black;"> Exercise </th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                <tbody>
+                    <tr t-foreach='docs.diet_line_nine.diet_for.diet_line' t-as='line'>
+                        <td style="border: 1px solid black;">
+                           <span t-field="line.wakeup1"/>
+                        </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.food"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.fruit_diet"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.veg_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                        <span t-field="line.protein_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.quantity"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.exercise1"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-field="line.note"/>
+                            </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </t>
+            
+                    <t t-if="docs.lab_line_nine">
+                            <div class="header_tag">
+                                <h4 class="text-center heading_text_cor">Lab</h4>
+                            </div>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                            <thead>
+                                <tr>
+                                <th style="border: 1px solid black;">Lab Test ID</th>
+                                <th style="border: 1px solid black;">Test Name </th>
+                                <th style="border: 1px solid black;">Tested Range </th>
+                                <th style="border: 1px solid black;">Normal Range </th>
+                                <th style="border: 1px solid black;">Date </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr t-foreach='docs.lab_line_nine' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.lab_type"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.name"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.range_test"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.range_normal"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                    <span t-field="line.date"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </t>
+                        <t t-if="docs.scan_line_nine">
+                            <div class="header_tag" style='page-break-before: always;'>
+                                <h4 class="text-center heading_text_cor">Scan</h4>
+                            </div>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">Scan Test ID</th>
+                                    <th style="border: 1px solid black;">Test Name </th>
+                                   
+                                    <th style="border: 1px solid black;">Date </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr t-foreach='docs.scan_line_nine' t-as='line'>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.scan_id"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.name"/>
+                                    </td>
+                                    
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.date"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                            </t>
+            
+                            <t t-if="docs.medicine_line_nine.prescription_alot.prescription_line_ids">
+            
+                                <div class="header_tag">
+                                    <h4 class="text-center heading_text_cor">Medicine</h4>
+                                </div>
+                                <table class="table table-bordered" style="border: 1px solid black;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border: 1px solid black;">Medicine Name</th>
+                                            <th style="border: 1px solid black;">Dose</th>
+                                            <th style="border: 1px solid black;">Unit</th>
+                                            <th style="border: 1px solid black;">Notes</th>
+                                            <th style="border: 1px solid black;">Before/After Food</th>
+                                            <th style="border: 1px solid black;">Days</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach='docs.medicine_line_nine.prescription_alot.prescription_line_ids' t-as='line'>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.medicine_name"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.all_day"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.units"/>
+                                            </td> 
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.anupana"/>
+                                            </td> 
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.bf_af"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.days1"/>
+                                            </td>     
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </t>
+
+                            <t t-if="docs.sister_line_ten">
+                                <h3 class="text-left heading_text_cor">DAY 10</h3>
+                            </t>
+                    <t t-if="docs.sister_line_ten">
+                        <div class="header_tag">
+                            <h4 class="text-center heading_text_cor">TPR CHART</h4>
+                            </div>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">CBG</th>
+                                    <th style="border: 1px solid black;"> BP </th>
+                                    <th style="border: 1px solid black;"> TEMP </th>
+                                    <th style="border: 1px solid black;"> SPO2 </th>
+                                    <th style="border: 1px solid black;"> MOTION </th>
+                                    <th style="border: 1px solid black;"> URINE </th>
+                                    <th style="border: 1px solid black;"> SLEEP </th>
+                                    <th style="border: 1px solid black;"> DIGESTION </th>
+                                    <th style="border: 1px solid black;"> PAIN </th>
+                                    <th style="border: 1px solid black;"> NOTES </th>
+                                    </tr>
+                                </thead>
+                        <tbody>
+                            <tr t-foreach='docs.sister_line_ten' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                   <span t-field="line.cbg"/>
+                                </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.bp"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.temp"/>
+                                   </td>
+                                   <td style="border: 1px solid black;">
+                                <span t-field="line.spo2"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                <span t-field="line.motion"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.urine"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.sleep"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.digestion"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.pain"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.notes"/>
+                                    </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                                </t>
+
+                            <t t-if="docs.therapy_line_ten">
+                                <div class="header_tag">
+                                    <h4 class="text-center heading_text_cor">IP THERAPY</h4>
+                                    </div>
+                                    <table class="table table-bordered" style="border: 1px solid black;">
+                                        <thead>
+                                            <tr>
+                                            <th style="border: 1px solid black;">Time</th>
+                                            <th style="border: 1px solid black;"> Therapy </th>
+                                            
+                                            </tr>
+                                        </thead>
+                                <tbody>
+                                    <tr t-foreach='docs.therapy_line_ten' t-as='line'>
+                                        <td style="border: 1px solid black;">
+                                           <span t-field="line.time"/>
+                                        </td>
+                                           <td style="border: 1px solid black;">
+                                        <span t-field="line.therapy"/>
+                                           </td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                                    </t>
+            
+                                    <t t-if="docs.diet_line_ten.diet_for.diet_line">
+                        <div class="header_tag">
+                    <h4 class="text-center heading_text_cor">Diet</h4>
+                    </div>
+                    <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr >
+                            <th style="border: 1px solid black;">Time</th>
+                            <th style="border: 1px solid black;"> Food </th>
+                            <th style="border: 1px solid black;"> Fruit Diet </th>
+                            <th style="border: 1px solid black;"> Veg Diet </th>
+                            <th style="border: 1px solid black;"> Protein Diet </th>
+                            <th style="border: 1px solid black;"> Quantity </th>
+                            <th style="border: 1px solid black;"> Exercise </th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                <tbody>
+                    <tr t-foreach='docs.diet_line_ten.diet_for.diet_line' t-as='line'>
+                        <td style="border: 1px solid black;">
+                           <span t-field="line.wakeup1"/>
+                        </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.food"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.fruit_diet"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                        <span t-field="line.veg_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                        <span t-field="line.protein_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.quantity"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.exercise1"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-field="line.note"/>
+                            </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </t>
+            
+                    <t t-if="docs.lab_line_ten">
+                            <div class="header_tag">
+                                <h4 class="text-center heading_text_cor">Lab</h4>
+                            </div>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                            <thead>
+                                <tr>
+                                <th style="border: 1px solid black;">Lab Test ID</th>
+                                <th style="border: 1px solid black;">Test Name </th>
+                                <th style="border: 1px solid black;">Tested Range </th>
+                                <th style="border: 1px solid black;">Normal Range </th>
+                                <th style="border: 1px solid black;">Date </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr t-foreach='docs.lab_line_ten' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.lab_type"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.name"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.range_test"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                <span t-field="line.range_normal"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                    <span t-field="line.date"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </t>
+                        <t t-if="docs.scan_line_ten">
+                            <div class="header_tag" style='page-break-before: always;'>
+                                <h4 class="text-center heading_text_cor">Scan</h4>
+                            </div>
+                            <table class="table table-bordered" style="border: 1px solid black;">
+                                <thead>
+                                    <tr>
+                                    <th style="border: 1px solid black;">Scan Test ID</th>
+                                    <th style="border: 1px solid black;">Test Name </th>
+                                   
+                                    <th style="border: 1px solid black;">Date </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr t-foreach='docs.scan_line_ten' t-as='line'>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.scan_id"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                    <span t-field="line.name"/>
+                                    </td>
+                                    
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.date"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                            </t>
+            
+                            <t t-if="docs.medicine_line_ten.prescription_alot.prescription_line_ids">
+            
+                                <div class="header_tag">
+                                    <h4 class="text-center heading_text_cor">Medicine</h4>
+                                </div>
+                                <table class="table table-bordered" style="border: 1px solid black;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border: 1px solid black;">Medicine Name</th>
+                                            <th style="border: 1px solid black;">Dose</th>
+                                            <th style="border: 1px solid black;">Unit</th>
+                                            <th style="border: 1px solid black;">Notes</th>
+                                            <th style="border: 1px solid black;">Before/After Food</th>
+                                            <th style="border: 1px solid black;">Days</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach='docs.medicine_line_ten.prescription_alot.prescription_line_ids' t-as='line'>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.medicine_name"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.all_day"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.units"/>
+                                            </td> 
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.anupana"/>
+                                            </td> 
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.bf_af"/>
+                                            </td>
+                                            <td style="border: 1px solid black;">
+                                            <span t-field="line.days1"/>
+                                            </td>     
+                                        </tr>
+                                    </tbody>
+                                    </table>
+                                </t>
+
+                        <div class="footer">
+                        </div>
+                    </t>
+            </t>
+        </t>
+</template>
+</odoo>

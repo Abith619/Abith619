@@ -14,7 +14,7 @@
     <record id="ebook_pat_admin" model="ir.rule">
         <field name="name">admin Ebook</field>
         <field name="model_id" ref="model_medical_doctor"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="domain_force"></field>
         <field name="groups" eval="[(4, ref('basic_hms.group_ebook_all'))]"/>
     </record>
 
@@ -26,9 +26,12 @@
     <record id="ebook_pat_doc" model="ir.rule">
         <field name="name">Own Ebook</field>
         <field name="model_id" ref="model_medical_doctor"/>
-        <field name="domain_force">['|',('doctor','=',user.partner_id.id),('doctor','=',False),('company_id', 'in', company_ids)]</field>
+        <field name="domain_force">[('doctor','=',user.partner_id.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
         <field name="groups" eval="[(4, ref('basic_hms.group_ebook_pat'))]"/>
     </record>
-
-      
+   
 </odoo>

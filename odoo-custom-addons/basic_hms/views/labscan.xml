@@ -12,11 +12,13 @@
 
         <sheet>
         <button class="oe_highlight" name="document_button"  type="object" string='Upload Result'/>
+        <button name="send_msg" type="object" string="Whatsapp" class="oe_highlight"/>
         <div class="oe_button_box" name="button_box">     
         <button class="oe_stat_button" name="lab_button"  type="object" icon="fa-clipboard">
             <field name ="lab_recs" widget="statinfo" />
             </button>
         </div>
+        <field name ="num_days" invisible='1'/>
         <field name ="request" invisible='1'/>
         <field name ="name" invisible='1'/>
         <field name ="date" invisible='1'/>
@@ -152,7 +154,7 @@
                         <field name ="write_date" />
                         <field name ="range" />
                         <field name ="test_range" />
-                        <field name ='patient_activity'/>
+                        <field name="patient_activity" readonly="1" widget="badge" decoration-danger="patient_activity == 'discontinued'" decoration-warning="patient_activity in ('wait', 'bill')" decoration-success="patient_activity in ('completed', 'scans', 'labs', 'pres')"/>
                     </tree>
                 </field>
             </record>
@@ -561,7 +563,7 @@
             </record>
             <menuitem id="lab_many_data_health" name="Full CheckUp" parent= "main_menu_configartion" action="lab_many_data_form_full_checkup"/>
 
-     <record id="lab_many_data_form10" model="ir.ui.view">
+     <record id="lab_many_data_form1015" model="ir.ui.view">
             <field name="name">Endocrinology Blood</field>
             <field name="model">lab.test.hospital.data</field>
             <field name="priority" eval="8" />
@@ -801,7 +803,7 @@
             </record>
             <menuitem id="lab_many_16" name="HIV TEST" parent= "main_menu_configartion" action="lab_many_data_form_hiv"/>
 
-    <record id="lab_many_data_form17" model="ir.ui.view">
+    <record id="lab_many_data_form1775" model="ir.ui.view">
             <field name="name">Hepatitis Panel</field>
             <field name="model">lab.hospital.test.data</field>
             <field name="priority" eval="8" />
@@ -834,7 +836,7 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_form17" name="Hepatitis Panel" parent= "main_menu_configartion" action="lab_many_data_form_hepatitis"/>
+            <menuitem id="lab_many_data_form1772" name="Hepatitis Panel" parent= "main_menu_configartion" action="lab_many_data_form_hepatitis"/>
 
         <record id="lab_many_data_form318" model="ir.ui.view">
             <field name="name">X-Ray Digital</field>

@@ -1,27 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 <data>
+    <record id="paperformat_lab" model="report.paperformat">
+        <field name="name">Custom Paper</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">120</field>
+        <field name="page_width">260</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">25</field>
+        <field name="dpi">90</field>
+    </record>
     <template id="basic_hms.lab_bils_report" name="Diet Plan">
         <t t-call="web.external_layout">
             <t t-call="web.html_container">
                <t t-foreach="docs" t-as="o">
                    <t >
                     <td style="border: 0px;width: 50%;">
+                        <div class="header_tag">
+                            <h4 class="text-center heading_text_cor"><strong>Lab Test</strong></h4>
+                            </div>
                         <div  >
                         <div class='float-left'>
                             
-                    <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p>
-                    <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p></div>
-                    
-                <div class="float-right" >
-                    <p><strong>Payment Type :</strong><span t-field="o.payment_type"/></p>
+                            <p><strong>SL NO :</strong><span t-field="o.ebook_id"/></p> 
+                            <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p></div>
+                            
+                        <div class="float-right" >
+                            <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p>
+                            <p><strong>Payment Type :</strong><span t-field="o.payment_type"/></p>
                     <!-- <p><strong>Payment Type :</strong><span t-field="o.payment_id"/></p> -->
                 </div>
             </div>
                     </td>
-                    <div class="header_tag">
-        <h4 class="text-center heading_text_cor">Lab Test</h4>
-        </div>
+                    
                    <table class="table table-bordered" style="border: 1px solid black;">
                     <thead>
                         <tr>
@@ -49,8 +66,14 @@
                       
                     </tbody>
                     </table>
-                    <p class="text-right"><strong>Grand Total :  </strong><i class="fa fa-inr"/><span t-field="o.total"/></p>
-                    <!-- <p><strong>Total :</strong><span t-field="o.total"/></p> -->
+                    <table class="table table-sm" id="box" style="width:28%; float:right;margin-left: 0px; border: 1px solid black;">
+                        <tr class="border-black o_subtotal" style="font-size: 15px; ">
+                        <td style="background-color:white;color:#black;font-size: 15px;"><strong>Total</strong></td>
+                            <td style="background-color:white;color:#black;font-size: 15px;" class="text-right">
+                                <b><strong><span t-field="o.total" class="fa fa-inr"/></strong></b>
+                            </td>
+                        </tr>
+                    </table>
                 </t>
             </t>
         </t>

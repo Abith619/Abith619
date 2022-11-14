@@ -13,7 +13,6 @@
 						</h3>
 					<br/>
 					
-                        
                             <td style="border: 1px solid black;" class="text-left"><strong>Name :</strong>
                                 <span style="border: 0px ;" t-field="doc.patient_id"/>
 							</td> 

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <data>
+ 
+    <template id="appointment_page" name="Create Appointment"> 
+    <t t-call="website.layout">
+        <style>
+            .qr-code {
+                max-width: 200px;
+                margin: 10px;
+            }
+            </style>
+        <div id="wrap">
+            <div class="oe_structure">
+                <div class="container"> 
+        <h1 style="text-align:center;">Appointment Form</h1>                  
+            <form role="form" action="/website/page1" method="POST"  class="s_website_form" 
+                    enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="name" class="control-label">Patient Name</label>
+                            <input type="text" id="name" name="name" class="form-control" />  
+                            <label for="gender" class="control-label">Sex</label>
+                            <select  class="form-control" name="gender">
+                                <option value="m">Male</option>
+                                <option value="f">Female</option>
+                            </select>   
+                            <label for="age" class="control-label">Age :</label>
+                                <input type="text" id="age" name="age" class="form-control" />  
+                            
+                            <label for="region" class="control-label">Area</label>
+                                <select name="region" class="form-control link-style">
+                                    <t t-foreach="many2one_area" t-as="connect">
+                                        <option t-esc="connect.name" t-att-value="connect.id"/>
+                                    </t>
+                                </select>
+                            <label for="treatment_for" class="control-label">Treatment For</label>
+                                <input type="text" id="treatment_for" name="treatment_for" class="form-control" />  
+                        </div>
+                        <div class="col-6">
+                            <label for="dates" class="control-label">Date:</label>
+                                <input type="date" class="form-control" id="dates" name="dates" t-att-value='datetime.date.today()'/>
+                            <label for="phone_number" class="control-label">Contact Number</label>
+                            <input type="text" name="phone_number" id="phone_number" class="form-control" pattern="[1-9]{1}[0-9]{9}"
+                        t-att-value="number" />
+                        <label for="contact_number" class="control-label">Whatsapp Number</label>
+                            <input type="text" name="contact_number" id="contact_number" class="form-control" pattern="[1-9]{1}[0-9]{9}"
+                        t-att-value="number" />
+                            
+                        </div>
+                    </div>
+                        <div class="clearfix oe_login_buttons">  
+                            <button type="submit" class="btn btn-primary pull-left">Submit</button>
+                        </div>
+
+                            </form>   
+                    </div>
+                </div>       
+            </div>
+        </t>
+    </template>
+
+
+    <record id="applied_thanks" model="website.page">
+        <field name="name">Thanks</field>
+        <field name="type">qweb</field>
+        <field name="url">/applied-thank-you</field>
+        <field name="website_published">True</field>
+        <field name="key">basic_hms.applied_thanks</field>
+        <field name="arch" type="xml">
+            <t name="Thanks" t-name="basic_hms.applied_thanks">
+                <t t-call="website.layout">
+                    <div id="wrap">
+                        <div class="container">
+                            <h1>Thank You!</h1>
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="alert alert-success" role="status"> 
+                                            <p>
+                                                Your job application has been successfully registered,we will get back to you soon
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div> 
+                        </div>              
+                    </div>
+                </t>
+            </t>
+        </field>
+    </record> 
+    
+</data>
+</odoo>

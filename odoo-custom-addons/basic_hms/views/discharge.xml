@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="discharge_form" model="ir.ui.view">
+            <field name="name">Discharge Form</field>
+            <field name="model">discharge.summary</field>
+            <field name="priority" eval="8" />
+                <field name="arch" type="xml">
+                    <form string="Discharge Form">
+                        <header>
+                        </header>
+                        <sheet>
+                            
+                            <div class="row">
+                                <div class="col-6" >
+                        <group>
+                                <field name ="name" string='Patient ID'/>
+                                <field name ="patient_id" />
+                                <field name ="age" />
+                                <field name ="address" />
+                                <field name ="chief_complaint" widget='many2many_tags'/>
+                                <field name ="associated_complaint" />
+                                <field name ="history_complaint" />
+                                <field name ="treat_history" />
+                                <field name ="vitals" />
+                                <field name ="apperance" />
+                                <field name ="bp" />
+                                <field name ="ip_summary" />
+                                <field name ="treatment_given" />
+                                <field name="company_id" invisible='0' />
+                            </group></div>
+                            <div class="col-6" >
+                             <group style="float:right;">
+                                <field name ="file_num"/>
+                                <field name ="doctor_incharge"/>
+                                <field name ="therapy_given" style="float:right;"/>
+                                <field name ="discharge_condition"/>
+                                <field name ="pres_discharge"/>
+                                <field name ="advice_discharge"/>
+                                <field name ="diet_discharge"/>
+                                <field name ="admission_date"/>
+                                <field name ="write_date" string='Discharge Date'/>
+                            </group> </div>
+                            </div>
+                            <div>
+                        <group >
+                            <div class ='row'>      
+                                <field name ="acknowledgement" attrs="{'required':[('acknowledgement','=',True)]}"/>
+                                <label for = 'acknowledgement' string='I\we have Understood the Instruction given about the Medicine Dosage and Discharge after Case'/>
+                            </div>
+                        </group></div>
+                        </sheet>
+                        </form>
+                        </field>
+        </record>
+
+        <record id="medical_discharge_tree_view" model="ir.ui.view">
+            <field name="name">discharge.summary.tree.view</field>
+            <field name="model">discharge.summary</field>
+            <field name="arch" type="xml">
+                <tree string="EBook">
+                    <field name ="name" string='Patient ID'/>
+                    <field name ="file_num"/>
+                    <field name ="patient_id" />
+                    <field name ="doctor_incharge"/>
+                    <field name ="write_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="discharge_action">            
+            <field name="name">Discharge Form</field>         
+                <field name="res_model">discharge.summary</field>           
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>            
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">Discharge Form
+                    </p>            
+                </field>        
+            </record>
+            <menuitem id="menu_discharge" name="Discharge" parent= "hospital_menu_patient" sequence="2" action="discharge_action"/>
+
+        <record id="medical_lab_details_tree_view" model="ir.ui.view">
+            <field name="name">Lab Details.tree.view</field>
+            <field name="model">lab.menu</field>
+            <field name="arch" type="xml">
+                <tree string="Lab">
+                    <field name ="ebook_id"/>
+                    <field name ="patient_id" string='Patient Name'/>
+                    <field name ="test_name" />
+                    <field name ="range"/>
+                    <field name ="test_range"/>
+                    <field name ="write_date"/>
+                    <field name ="patient_activity" invisible='1'/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="lab_details_action">            
+            <field name="name">Lab Details</field>         
+                <field name="res_model">lab.menu</field>           
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>            
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">Lab Details
+                    </p>            
+                </field>        
+            </record>
+            <menuitem id="menu_lab_details" name="Lab Details" parent= "main_menu_hospital_management" action="lab_details_action"/>
+
+            <record id="medical_scan_details_tree_view" model="ir.ui.view">
+                <field name="name">Scan Details.tree.view</field>
+                <field name="model">scan.menu</field>
+                <field name="arch" type="xml">
+                    <tree string="Scan">
+                        <field name ="ebook_id"/>
+                        <field name ="patient_id" string='Patient Name'/>
+                        <field name ="test_name" />
+                        <field name ="write_date"/>
+                        <field name ="patient_activity" invisible='1'/>
+                    </tree>
+                </field>
+            </record>
+    
+            <record model="ir.actions.act_window" id="scan_details_action">            
+                <field name="name">Scan Details</field>         
+                    <field name="res_model">scan.menu</field>           
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>            
+                    <field name="help" type="html">                
+                        <p class="oe_view_nocontent_create">Scan Details
+                        </p>            
+                    </field>        
+                </record>
+                <menuitem id="menu_scan_details" name="Scan Details" parent= "main_menu_configartion" action="scan_details_action"/>
+
+    </data>
+</odoo>

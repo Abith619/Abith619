@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<template id="basic_hms.ebook_doctor_report_pres">
+     <t t-call="web.external_layout">
+     <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+
+            <t t-if="docs.medicine_id.prescription_line_ids">
+                <style>
+
+                    .footer_section{
+        
+                    }
+                    .border{
+                        border-collapse: collapse;
+                    }
+                    .heading_text_cor{
+                        color:#000;
+                        font-weight:600;
+        
+                        }
+                            
+                </style>
+                    <t >
+                    <h2 >Patient Details</h2>
+                    <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
+                    <div>
+                    <td style="border: 0px;width: 50%;">
+                        <p><strong>Name :</strong><span t-field="o.patient"/></p>
+                        <p><b>ID Number :</b> <span t-field="o.serial_number"/></p>
+                    </td>
+                    <div>
+                    <td style="border: 0px;width: 50%;">
+                <img t-att-src="'data:image/png;base64,%s' % to_text(o.qr_code)" style="height:100px;width:100px;float:center;"/>
+                    </td>
+                    </div>
+                    </div>
+                    </table>
+                <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Medicine</h4>
+        </div>
+                <table class="table table-bordered" style="border: 1px solid black;">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid black;">Medicine Name</th>
+                            <th style="border: 1px solid black;">Dose</th>
+                            <th style="border: 1px solid black;">Unit</th>
+                            <th style="border: 1px solid black;">Notes</th>
+                            <th style="border: 1px solid black;">Before/After Food</th>
+                            <th style="border: 1px solid black;">Days</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach='docs.medicine_id.prescription_line_ids' t-as='line'>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.medicine_name"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.all_day"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.units"/>
+                            </td> 
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.anupana"/>
+                            </td> 
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.bf_af"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.days1"/>
+                            </td>     
+                        </tr>
+                    </tbody>
+                    </table>
+
+                    <div><table></table></div>
+                    <p>For any Doubts, Enquiries Contact, CHENNAI : 9566990022, Erode : 9176114400, Thirunelveli : 9176990088</p>
+                    </t>
+            </t>
+        </t>
+    </t>
+</t>
+</template>
+</odoo>

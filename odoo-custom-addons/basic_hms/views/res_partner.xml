@@ -19,6 +19,9 @@
                     <button class="oe_stat_button" name="lab_count_button"  type="object" icon="fa-clipboard" attrs="{'invisible': ['|',('roles_selection','in', ['reception']),('roles_selection','in', ['pharmacy', 'telecaller'])]}">
                         <field name ="lab_count_appointment" widget="statinfo"/>
                     </button>
+                    <button class="oe_stat_button" name="scan_count_button"  type="object" icon="fa-clipboard" attrs="{'invisible': ['|',('roles_selection','in', ['reception']),('roles_selection','in', ['pharmacy', 'telecaller'])]}">
+                        <field name ="scan_count_appointment" widget="statinfo"/>
+                    </button>
                     <button class="oe_stat_button" name="billing_count_button"  type="object" icon="fa-clipboard" attrs="{'invisible': ['|',('roles_selection','in', ['reception']),('roles_selection','in', ['pharmacy', 'telecaller'])]}">
                         <field name ="billing_count_appointment" widget="statinfo"/>
                     </button>
@@ -30,7 +33,6 @@
                     </button>
                 </div>
                 </xpath>
-        <!-- attrs="{'invisible': ['|',('roles_selection','in', ['reception', 'billing', 'lab']),('roles_selection','in', ['pharmacy', 'telecaller'])]}" -->
                 <xpath expr="//field[@name='name']" position="before">
                     <div><field name ="roles_selection" widget="radio" options="{'horizontal': true}"/></div>
                 </xpath>
@@ -75,9 +77,9 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
 
-                <xpath expr="//page[@name='followup_tab']" position="attributes">
+                <!-- <xpath expr="//page[@name='followup_tab']" position="attributes">
                     <attribute name="invisible">1</attribute>
-                </xpath>
+                </xpath> -->
 
                 <xpath expr="//page[@name='accounting']" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -108,19 +110,24 @@
                 </group>
             </xpath>
             
-            <field name="function" position="after">
+            <field name="function" position="replace">
                 <field name="doctor_idxs" attrs="{'invisible': ['|',('roles_selection','=', 'reception'),('roles_selection','=', 'pharmacy')]}"/>
                 <field name="dob_contact" attrs="{'invisible': ['|',('roles_selection','=', 'reception'),('roles_selection','=', 'telecaller')]}"/>
                 <field name ="patient_gender" attrs="{'invisible': ['|',('roles_selection','=', 'reception'),('roles_selection','=', 'pharmacy')]}"/>
-                <field name ="designation" attrs="{'invisible': ['|',('roles_selection','=', 'reception'),('roles_selection','=', 'pharmacy')]}"/>
-                <field name ="user_name"/>
-                <field name ="password" password="True" />
+                <field name ="marital_status" />
+                <field name ="designation" />
+                <field name ="experience" />
+                <field name ="user_name" attrs="{'invisible': [('roles_selection','=', 'patient')]}"/>
+                <field name ="password" password="True" attrs="{'invisible': [('roles_selection','=', 'patient')]}"/>
+                <field name ="treatment_for" attrs="{'invisible': [('roles_selection','!=', 'patient')]}"/>
             </field>
             
             <field name="vat" position="after">
+                <field name ="abroad_addr" />
                 <field name ="whatsapp" widget="phone"/>
                 <field name ="mobile" string='Recovery Number' widget="phone" attrs="{'invisible': [('roles_selection','=', 'reception')]}"/>
                 <field name ="company_id" attrs="{'invisible': [('roles_selection','=', 'reception')]}"/>
+                <field name ='ebook_print' invisible='1'/>
             </field>
             <notebook >
                 
@@ -152,16 +159,32 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_tree" />
             <field name="arch" type="xml">
-                <xpath expr="/tree/field[@name='email']" position="after">
-                    <field name ="is_doctor"/>
-                </xpath>
+                
                 <xpath expr="//field[@name='user_id']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
                     <xpath expr="//field[@name='activity_ids']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
-               
+                
+                <xpath expr="//field[@name='email']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='state_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='country_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='vat']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='category_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
             </field>
         </record>
         
@@ -170,12 +193,13 @@
             <field name="model">document.type.line</field>
             <field name="arch" type="xml">
                 <tree string="Documents" >
-                    <field name="patient_id" />
-                    <field name="doc_types"/>
-                    <field name="document_detail" />
+                    <field name="name" />
+                     <field name="attach_types"/>
+                  <!--  <field name="document_detail" /> -->
                 </tree>
             </field>
         </record>
+
 
     <record id="document_type_order_form_view" model="ir.ui.view">
         <field name="name">document.type.line.form.view</field>
@@ -185,17 +209,14 @@
                 <sheet>
                 <group>
                     <field name="name" />
-                    <field name="patient_id" /></group>
+                </group>
                 <group >
-                    <field name="doc_types"/>
-                    <!-- <field name="document_detail" /> -->
                 </group>
             <notebook>
                     <page string='Green Files'>
                         <field name = 'document_line'>
                     <tree string='Documents' editable='bottom'>
-                            <field name='name'/>
-                            <!-- <field name='Documents'/> -->
+                            <field name='attach_types'/>
                             <field name='attachment' widget='many2many_binary'/>
                     </tree>
                         </field>
@@ -261,12 +282,7 @@
             <page string="Medicine Details" attrs="{'invisible': [('is_medicine','=', False)]}">
             <field name="medicine_details">
                 <tree string="Medicine Details" editable="bottom">
-                  <!-- <field name="potency"/> -->
-                    <!-- <field name="morning"/> -->
-                    <!-- <field name="noon"/> -->
                     <field name ='all_day'/>
-                    <!-- <field name ="evening"/> -->
-                    <!-- <field name="night"/> -->
                     <field name="units"/>                 
                     <field name="anupana"/>
                 </tree>
@@ -392,11 +408,5 @@
         <menuitem id="menu_insurance_company" action="act_res_partner"
             sequence="0" parent="menu_insurance" />
 
-            <!-- <menuitem id="res_partner_menu_config"
-            name="Configuration"
-            parent="contacts.menu_contacts"
-            groups="base.make_invisible"
-            sequence="6"/> -->
-            <!-- groups="base.group_system"  -->
 
 </odoo>

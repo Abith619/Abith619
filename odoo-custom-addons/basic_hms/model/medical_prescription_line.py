@@ -10,6 +10,7 @@ class medical_prescription_line(models.Model):
 
     name = fields.Many2one('medical.prescription.order','Prescription ID',ondelete='cascade')
     medicament_id = fields.Many2one('medical.medicament','Medicament')
+    ip_name = fields.Many2one('in.patient',string='In-Patient')
     indication = fields.Char('Indication')
     allow_substitution = fields.Boolean('Allow Substitution')
     form = fields.Char('Form')
@@ -68,6 +69,24 @@ class medical_prescription_line(models.Model):
             self.units = res.units
             self.anupana = res.anupana
     sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
+    
+    # @api.constrains('medicine_name')
+    # def write_list(self):
+    #     # orm = self.env['patient.bills'].search([('patient_name','=',self.patient_id.id)])
+    #     orm_update = self.env['prescription.bills'].search([('prescription_id', '=', self.name.name)])
+    #     # raise ValidationError(orm_update)
+    #     billing_lines=[]
+    #     for i in self.name:
+    #         billing_value = {
+    #             'date':i.write_date,
+    #             'medicine_name':self.medicine_name.id,
+    #             'prescription_id':i.name,
+    #             'pre_amount':i.total,
+    #             'delivery_mode':i.courier_option,
+    #         }
+    #         billing_lines.append(0,0,0,billing_value)
+    #         orm_update.update(billing_lines)
+    #         # orm.write({'pres_bill':billing_lines})
 
     @api.depends('name.prescription_line_ids', 'name.prescription_line_ids.medicine_name')
     def _sequence_ref(self):

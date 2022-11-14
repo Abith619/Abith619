@@ -21,13 +21,18 @@
                         <header>
                             <button name="scan_button" type="object" string="Assign Scans/Tests" class="oe_highlight" invisible ='1'/>
                             <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight" invisible ='1'/>
+                            <button name="in_patient" type="object" string="In-Patient" class="oe_highlight" />
+                            <button name="med_cancell_fun" type="object" string="Discontinued" class="oe_highlight"/>
                             <button name="diet_for" type="object" string="Prescribed Diet" class="oe_highlight" invisible ='1'/>
-                            
                             <field name ="stages" widget="statusbar" style="display:none !important"/>
+                        <style>
+                            div.c {
+                                position: relative;
+                                top: 0;
+                              } 
+                        </style>
                         </header>
-
                         <sheet>
-                                          
                             <div class="oe_button_box" name="button_box">     
                                 
                                 <button class="oe_stat_button" name="prescribe_button"  type="object" icon="fa-clipboard">
@@ -50,6 +55,7 @@
                         </button>
                     
                     </div>
+
                  <div class="row">
                     <div class="col-4">
                         <div><label for="image1" string="Patient Image" /></div>
@@ -64,15 +70,15 @@
                 </div>
                     <h1>
                         <field name="serial_number" text-align='left' string='Patient'/>
-
                     </h1>
+                    <field name="reg_type" invisible='1'/>
                             <group>
                                 <group>
                                     <field name ="patient" attrs="{'readonly': [('stages','=', 'done')]}" placeholder="Patient Name" options="{'no_create_edit':True,'no_open': True}"/>
                                     <field name ="sex" attrs="{'readonly': [('stages','=', 'done')]}" />
                                     <field name ="marital_status" attrs="{'readonly': [('stages','=', 'done')]}" />
                                         <field name ="age" attrs="{'readonly': [('stages','=', 'done')]}" />
-
+                                        <!-- <field name ="adoption_details" /> -->
                                         <label for="height" string="Height" />
                                         <div class="o_address_format">
                                             <field name="height" placeholder='in Cms' class="o_address_city" attrs="{'readonly': [('stages','=', 'done')]}"  />
@@ -88,8 +94,10 @@
                                     </div>
 
                                     <field name= "patient_habits" widget="many2many_tags"/>
+                            <field name="patient_status" invisible='0'/>
                                     <field name= "medicine_id" invisible='1'/>
                                     <field name= "diet_id" invisible='1'/>
+                                    <field name= "no_fees" invisible='1'/>
                                     <field name="patient_activity" invisible='1'/>
                                     <!-- <field name= "diet_seq" invisible='0'/> -->
                                     </group>
@@ -139,8 +147,9 @@
                                 </group>
                                 <notebook>
 
-                                 <page string="Present Complaints">
+                                 <page string="Present Complaints"><div class='row'><div class='col-md-2'><group>
                                     <button name="edit_button" type="object" string="Edit Symptoms" class="oe_highlight" />
+                                    <button name="upload_ebook" type="object" string="Upload Ebook" class="oe_highlight" /></group></div></div>
                                         <field name = 'currents_ailments'>
                                             <tree string="Current Aliments" editable="bottom" >
                                                 <field name="sequence_ref"/>
@@ -192,6 +201,7 @@
     
                                     <page string="Prescriptions" >
                                         <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight"/>
+                                        <!-- <button name="prescription_edit_button" type="object" string="Edit Prescription" domain="[('patient','=','patient_id')]" class="oe_highlight"/> -->
                                         <field name="prescription_patient">
                                         <tree string="Prescription" editable="bottom" >
                                             <field name="sequence_ref"/>
@@ -238,11 +248,11 @@
 
                                     </notebook>
                                     <label for = 'adoption_details' style="font-size: 25px !important;font-weight: 600;padding-left: 550px;" string ="Adoption Agreement"/>
-                                    <div class ='row'>      
+                                    <div class ='row' >      
                                         <div class='col-12' 
                                         style ='padding-left: 550px;'>
-                                            <field name ="adoption_details" attrs="{'required':[('adoption_details','=',True)]}"/>
-                                            <label for = 'adoption_details' string ="I Hereby is Incharge of this Patient"/>
+                                            <field name ="adoption_details" />
+                                            <label for = 'adoption_details' string ="I Hereby is Incharge of this Patient" />
                                         </div>
                                     </div>
                                 </sheet>
@@ -266,14 +276,13 @@
                             <field name="patient" />
                             <field name="sex" />
                             <field name="write_date" />
-                            
-                            <field name="date1" invisible="1"/>
-                            <field name="patient_activity" />
                             <field name="patient_status" />
+                            <field name="date1" invisible="1"/>
+                            <field name="patient_activity" readonly="1" widget="badge" decoration-danger="patient_activity == 'discontinued'" decoration-warning="patient_activity in ('wait', 'bill')" decoration-success="patient_activity in ('completed', 'scans', 'labs', 'pres')"/>
+                            <!-- <field name="no_fees" /> -->
                         </tree>
                     </field>
                 </record>
-
 <!--Search View-->
 
 <record id="view_ebook_land_filter" model="ir.ui.view">
@@ -292,7 +301,9 @@
             <filter string="Today" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
             <filter string="Yesterday" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
             <!-- <filter string="Tomorrow" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/> -->
-            
+            <filter string="Camp" name="reg_type" separator="1" domain="[('reg_type','=','cam')]"/>
+            <filter string="Online" name="reg_type" separator="1" domain="[('reg_type','=','on')]"/>
+            <filter string="Review Cases" name="reg_type" separator="1" domain="[('reg_type','=','rev')]"/>
             <filter string="Past 6 Month" name="write_date" separator="1" domain="[('write_date','&lt;=',(datetime.date.today()-relativedelta(months=6)).strftime('%Y-%m-%d'))]"/>
             <!-- <filter string="Next Month" name="prescription_date" separator="1" domain="[('prescription_date','&gt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%Y-%m-%d'))]"/> -->
             <filter string="Past Month" name="write_date" separator="1" domain="[('write_date','&gt;=',(datetime.date.today()-relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>

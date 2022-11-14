@@ -118,13 +118,13 @@
         <field name="groups_id" eval="[(6,0,[ref('basic_hms.sale_access')])]"/>
     </record>
 
-    <!-- <record id="purchase_access" model="res.groups">
+    <record id="purchase_access" model="res.groups">
         <field name="name">Purchase</field>
     </record>
 
     <record model="ir.ui.menu" id="purchase.menu_purchase_root">
         <field name="groups_id" eval="[(6,0,[ref('basic_hms.purchase_access')])]"/>
-    </record> -->
+    </record>
 
     <record id="employee_access" model="res.groups">
         <field name="name">Employee</field>
@@ -138,8 +138,17 @@
         <field name="name">Transfers</field>
     </record>
 
-    <record model="ir.ui.menu" id="all_pickings">
+    <record model="ir.ui.menu" id="all_pickings_in">
         <field name="groups_id" eval="[(6,0,[ref('basic_hms.out_transfer_access')])]"/>
+    </record>
+
+    <record id="in_patient_access" model="res.groups">
+        <field name="name">In Patient</field>
+    </record>
+
+    <record model="ir.ui.menu" id="hospital_menu_patient">
+        <field name="groups_id" eval="[(6,0,[ref('basic_hms.in_patient_access')])]"/>
+        <!-- <field name="domain">[('company_id', 'in', company_ids)]</field> -->
     </record>
 
     <record id="file_room_access" model="res.groups">
@@ -149,5 +158,9 @@
     <record model="ir.ui.menu" id="menu_contact_patientss1">
         <field name="groups_id" eval="[(6,0,[ref('basic_hms.file_room_access')])]"/>
     </record>
+
+    <!-- <record id="make_invisible" model="res.groups">
+        <field name="name">Invisible</field>
+    </record> -->
 
 </odoo>

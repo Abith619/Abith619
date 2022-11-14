@@ -17,14 +17,12 @@
                     <field name ="stages" widget="statusbar" style="display:none !important"/>
                     <!-- <field name='date'/> -->
                 </header>
-                 
                 <sheet>
-                    
-                 
                         <div class="row" attrs="{'invisible': [('stages','=', 'done')]}">
-                            <div class="col-4">
-                                <div><field name ="patient_selection" widget="radio"  options="{'horizontal': true}"/></div>
 
+                            <div class="col-4">
+                                <div><field name ="types_app" widget="radio"  options="{'horizontal': true}"/></div>
+                                <div><field name ="patient_selection" widget="radio"  options="{'horizontal': true}"/></div>
                             </div>
                             <div class="col-6">
                                 <div class="row">
@@ -35,20 +33,14 @@
                                     </div>
                                     <div class="col-6">
                                     </div>
-
-                                 
                                     <!-- <div class="col-2">
                                     </div> -->
-                                    
                                 </div>
                                 <field name = "patient_id"  style="height:70%;width:50%" options="{'no_create':True,'no_create_edit':True,'no_open': True}" attrs="{'invisible': [('patient_selection','=', 'new')]}"/> 
                           </div>
                                 <div class="col-2">
                                 </div>
                             </div>     
-
-                    
-                        
                     <h1>
                         <field name="name" class="oe_inline"/>                                  
                     </h1>
@@ -56,24 +48,19 @@
                     <group attrs="{'invisible': [('patient_selection','!=', 'new')]}">
                         <group>
                             <field name = "patient_id" options="{'no_create':True,'no_create_edit':True,'no_open': True}"/> 
+                            <!-- <field name= "patient_name"/> -->
                             <field name= "gender"/>
                             <field name= "age"/>
                             <label for="phone_number" string="Contact Number" />
                             <div class="o_address_format">
-                                   
                                 <field name="phone_number" style="width: 30%;margin-right: 10px;" attrs="{'readonly': [('stages','=', 'done')]}" />
                                  <field name = "whatsapp_check" style="width: 10%;border-left-width: 10px;margin-right: 0px;"/>
                                  <strong><label for="contact_number"  style="font-weight: bold !important;color: #333;" string="Whats App "/></strong>
                                  <field name="contact_number"  style="width: 30%;" attrs="{'readonly': [('stages','=', 'done')],'invisible': [('whatsapp_check','=', True)]} " />
-                                 
                              </div> 
                             <field name= "region"/>
                             <field name= "treatment_for" required='1' options="{'no_create_edit':True,'no_open': True}"/>
-                            <!-- <field name ="patient_signs_symptoms" widget="many2many_tags"/> -->
                             <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
-
-
-                              
                             </group>
                         <group>
 
@@ -83,6 +70,8 @@
                                 <field name ="appoinment_through" attrs="{'invisible': [('appointment_from','=', False)]}" widget="radio"  options="{'horizontal': true}"/>
                                 <field name ="fees"/>
                                 <field name ="appoinment_by"/>
+                                <field name="feedback" widget='many2many_tags'/>
+
                         </group>
                         </group>
 
@@ -182,16 +171,21 @@
         <field name="arch" type="xml">
             <tree string="Appointment Information">
                 <field name="name" />
-               
                 <field name="patient_id" />
+                <field name="age" />
+                <field name="gender" />
+                <field name="feedback" string='Source'/>
+                <field name="phone_number" />
+                <field name="region" />
+                <field name="treatment_for" />
+
                 <field name="doctor_id" />
 
                 <field name="urgency_level" invisible="1"/>
-                <field name="dates" />
+                <field name="dates" string='Appointment'/>
 
                 <field name="institution_partner_id" invisible="1"/>
-                <field name="patient_selection" />
-                <field name="stages" />
+                <field name="appoinment_by" />
             </tree>
 
         </field>

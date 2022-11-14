@@ -42,7 +42,8 @@ class medical_prescription_order(models.Model):
     bf_af=fields.Selection([('before','Before Food'),('after','After Food')],string='BF - AF')
     delivery_option= fields.Selection([('dir','Direct'),('on',"Online")],string="Delivery Option",default='dir')
     courier_option = fields.Selection([('domestic','Domestic'),('international',"International")],string='Courier')
-    # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.prescription.order')))
+    num_days = fields.Selection([('ed','edit'),('e','ebook'),('1','Day1'),('2','Day2'),('3','Day3'),('4','Day4'),('5','Day5'),
+                                ('6','Day6'),('7','Day7'),('8','Day8'),('9','Day9'),('10','Day10')])
 
     @api.onchange('prescription_line_ids')
     def onchan_func(self):
@@ -51,38 +52,333 @@ class medical_prescription_order(models.Model):
             for k in i.prescription_line_ids:
                 sums.append(k.total_price)
             i.total = sum(sums)
-
+            
+    @api.constrains('patient_id')
+    def write_lab(self):
+        orm_e = self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
+        orm_e.write({'patient_activity' : 'pres'})
+        
+        orm = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id)])
+        orm.write({'patient_activity' : 'pres'})
+        
+        # self.patient_a
+            
+    # @api.constrains('prescription_line_ids.medicine_name')
+    def write(self, vals):
+        orm = self.env['patient.bills'].search([('pres_bill.prescription_id','=',self.name)]).write({'pres_bill':[(5, 0, 0)]})
+        return orm
+        # orm_med = self.env['patient.bills'].browse([(orm.pres_bill.medicine_name)])
+        # orm_id = self.env['patient.bills'].browse([(orm)])
+        # med_id = self.prescription_line_ids.medicine_name
+        # raise ValidationError(type(med_id))
+        
+        # for line in orm_med:
+        #     if line not in med_id:
+        #         return orm_id.unlink()
+        #     else:
+        #         pass
+                # self.orm_id = [(5,0,0)]
+                
+        # orm_update = self.env['prescription.bills'].search([('prescription_id', '=', self.name)])
+        # orm__med = self.env['patient.bills'].search([('pres_bill.medicine_name', '=', self.prescription_line_ids.medicine_name.id)])
+        # billing_lines=[]
+        # for i in self.prescription_line_ids:
+        #     billing_value ={
+        #         'date':self.write_date,
+        #         'medicine_name':i.medicine_name.id,
+        #         'prescription_id':self.name,
+        #         'pre_amount':self.total,
+        #         'delivery_mode':self.courier_option,
+        #     }
+            # orm_update.write(0,0,{
+            #     'date':self.write_date,
+            #     'medicine_name':i.medicine_name.id,
+            #     'prescription_id':self.name,
+            #     'pre_amount':self.total,
+            #     'delivery_mode':self.courier_option,
+            # })
+        #     billing_lines.append((2,0,billing_value))
+        # orm.update({'pres_bill':billing_lines})
+        # orm_update.update({billing_data})
+        
 
     @api.model
     def create(self , vals):
         vals['name'] = self.env['ir.sequence'].next_by_code('medical.prescription.order') or '/'   
         res = super(medical_prescription_order, self).create(vals)
-        billing = self.env['patient.bills'].search([('patient_name','=',res.patient_id.id)], order='id desc', limit=1)
-        for rec in billing:
-            billing_lines=[]
-            for rez in res.prescription_line_ids:
-                billing_value={
-                    'date':datetime.now(),
-                    'medicine_name':rez.medicine_name.id,
-                    'prescription_id':res.name,
-                    'pre_amount':res.total,
-                    'delivery_mode':res.courier_option,                
-                    }
-                billing_lines.append((0,0,billing_value))
-            rec.write({'pres_bill':billing_lines})
-      
-        orm = self.env['medical.doctor'].search([('patient','=',res.patient_id.id)])
-        lines=[]
-        value={
-            'prescription_alot':res.id,
-            'date':datetime.now(),
-            'patient_name':res.patient_id.id,
-            'delivery_option':res.delivery_option,
-            'delivery_mode':res.courier_option,
-            }
-        lines.append((0,0,value))
-        orm.write({'prescription_patient':lines,
-                   'medicine_id':res.id})
+        if res.num_days == 'e':
+            billing = self.env['patient.bills'].search([('patient_name','=',res.patient_id.id)], order='id desc', limit=1)
+            for rec in billing:
+                billing_lines=[]
+                for rez in res.prescription_line_ids:
+                    billing_value = {
+                        'date':datetime.now(),
+                        'medicine_name':rez.medicine_name.id,
+                        'prescription_id':res.name,
+                        'pre_amount':res.total,
+                        'delivery_mode':res.courier_option,                
+                            }
+                    billing_lines.append((0,0,billing_value))
+                rec.write({'pres_bill':billing_lines})
+                
+            orm = self.env['medical.doctor'].search([('patient','=',res.patient_id.id)])
+            lines=[]
+            value={
+                'prescription_alot':res.id,
+                'date':datetime.now(),
+                'patient_name':res.patient_id.id,
+                'delivery_option':res.delivery_option,
+                'delivery_mode':res.courier_option,
+                }
+            lines.append((0,0,value))
+            orm.write({'prescription_patient':lines,
+                    'medicine_id':res.id})
+
+        if res.num_days == '1':
+            billing = self.env['patient.bills'].search([('patient_name','=',res.patient_id.id)], order='id desc', limit=1)
+            orm_id = self.env['in.patient'].search([('patient_id','=',res.patient_id.id)])
+            
+            for rec in billing:
+                billing_lines=[]
+                for rez in res.prescription_line_ids:
+                    billing_value={
+                        'date':datetime.now(),
+                        'medicine_name':rez.medicine_name.id,
+                        'prescription_id':res.name,
+                        'pre_amount':res.total,
+                        'delivery_mode':res.courier_option,                
+                        }
+                    billing_lines.append((0,0,billing_value))
+                rec.write({'inpatient_tablet':billing_lines})
+            lines=[]
+            value={
+                'prescription_alot':res.id,
+                'date':datetime.now(),
+                'patient_name':res.patient_id.id,
+                }
+            lines.append((0,0,value))
+            orm_id.write({'medicine_line':lines})
+            
+            
+            
+        elif res.num_days == '2':
+            billing = self.env['patient.bills'].search([('patient_name','=',res.patient_id.id)], order='id desc', limit=1)
+            orm_id = self.env['in.patient'].search([('patient_id','=',res.patient_id.id)])
+            for rec in billing:
+                billing_lines=[]
+                for rez in res.prescription_line_ids:
+                    billing_value={
+                        'date':datetime.now(),
+                        'medicine_name':rez.medicine_name.id,
+                        'prescription_id':res.name,
+                        'pre_amount':res.total,
+                        'delivery_mode':res.courier_option,                
+                        }
+                    billing_lines.append((0,0,billing_value))
+                rec.write({'inpatient_tablet':billing_lines})            
+            lines=[]
+            value={
+                'prescription_alot':res.id,
+                'date':datetime.now(),
+                'patient_name':res.patient_id.id,
+                }
+            lines.append((0,0,value))
+            orm_id.write({'medicine_line_two':lines})
+            
+        elif res.num_days == '3':
+            billing = self.env['patient.bills'].search([('patient_name','=',res.patient_id.id)], order='id desc', limit=1)
+            orm_id = self.env['in.patient'].search([('patient_id','=',res.patient_id.id)])
+            for rec in billing:
+                billing_lines=[]
+                for rez in res.prescription_line_ids:
+                    billing_value={
+                        'date':datetime.now(),
+                        'medicine_name':rez.medicine_name.id,
+                        'prescription_id':res.name,
+                        'pre_amount':res.total,
+                        'delivery_mode':res.courier_option,                
+                        }
+                    billing_lines.append((0,0,billing_value))
+                rec.write({'inpatient_tablet':billing_lines})            
+            lines=[]
+            value={
+                'prescription_alot':res.id,
+                'date':datetime.now(),
+                'patient_name':res.patient_id.id,
+                }
+            lines.append((0,0,value))
+            orm_id.write({'medicine_line_three':lines})
+            
+        elif res.num_days == '4':
+            billing = self.env['patient.bills'].search([('patient_name','=',res.patient_id.id)], order='id desc', limit=1)
+            orm_id = self.env['in.patient'].search([('patient_id','=',res.patient_id.id)])
+            for rec in billing:
+                billing_lines=[]
+                for rez in res.prescription_line_ids:
+                    billing_value={
+                        'date':datetime.now(),
+                        'medicine_name':rez.medicine_name.id,
+                        'prescription_id':res.name,
+                        'pre_amount':res.total,
+                        'delivery_mode':res.courier_option,                
+                        }
+                    billing_lines.append((0,0,billing_value))
+                rec.write({'inpatient_tablet':billing_lines})            
+            lines=[]
+            value={
+                'prescription_alot':res.id,
+                'date':datetime.now(),
+                'patient_name':res.patient_id.id,
+                }
+            lines.append((0,0,value))
+            orm_id.write({'medicine_line_four':lines})
+            
+        elif res.num_days == '5':
+            billing = self.env['patient.bills'].search([('patient_name','=',res.patient_id.id)], order='id desc', limit=1)
+            orm_id = self.env['in.patient'].search([('patient_id','=',res.patient_id.id)])
+            for rec in billing:
+                billing_lines=[]
+                for rez in res.prescription_line_ids:
+                    billing_value={
+                        'date':datetime.now(),
+                        'medicine_name':rez.medicine_name.id,
+                        'prescription_id':res.name,
+                        'pre_amount':res.total,
+                        'delivery_mode':res.courier_option,                
+                        }
+                    billing_lines.append((0,0,billing_value))
+                rec.write({'inpatient_tablet':billing_lines})            
+            lines=[]
+            value={
+                'prescription_alot':res.id,
+                'date':datetime.now(),
+                'patient_name':res.patient_id.id,
+                }
+            lines.append((0,0,value))
+            orm_id.write({'medicine_line_five':lines})
+            
+        elif res.num_days == '6':
+            billing = self.env['patient.bills'].search([('patient_name','=',res.patient_id.id)], order='id desc', limit=1)
+            orm_id = self.env['in.patient'].search([('patient_id','=',res.patient_id.id)])
+            for rec in billing:
+                billing_lines=[]
+                for rez in res.prescription_line_ids:
+                    billing_value={
+                        'date':datetime.now(),
+                        'medicine_name':rez.medicine_name.id,
+                        'prescription_id':res.name,
+                        'pre_amount':res.total,
+                        'delivery_mode':res.courier_option,                
+                        }
+                    billing_lines.append((0,0,billing_value))
+                rec.write({'inpatient_tablet':billing_lines})            
+            lines=[]
+            value={
+                'prescription_alot':res.id,
+                'date':datetime.now(),
+                'patient_name':res.patient_id.id,
+                }
+            lines.append((0,0,value))
+            orm_id.write({'medicine_line_six':lines})
+            
+        elif res.num_days == '7':
+            billing = self.env['patient.bills'].search([('patient_name','=',res.patient_id.id)], order='id desc', limit=1)
+            orm_id = self.env['in.patient'].search([('patient_id','=',res.patient_id.id)])
+            for rec in billing:
+                billing_lines=[]
+                for rez in res.prescription_line_ids:
+                    billing_value={
+                        'date':datetime.now(),
+                        'medicine_name':rez.medicine_name.id,
+                        'prescription_id':res.name,
+                        'pre_amount':res.total,
+                        'delivery_mode':res.courier_option,                
+                        }
+                    billing_lines.append((0,0,billing_value))
+                rec.write({'inpatient_tablet':billing_lines})            
+            lines=[]
+            value={
+                'prescription_alot':res.id,
+                'date':datetime.now(),
+                'patient_name':res.patient_id.id,
+                }
+            lines.append((0,0,value))
+            orm_id.write({'medicine_line_seven':lines})
+            
+        elif res.num_days == '8':
+            billing = self.env['patient.bills'].search([('patient_name','=',res.patient_id.id)], order='id desc', limit=1)
+            orm_id = self.env['in.patient'].search([('patient_id','=',res.patient_id.id)])
+            for rec in billing:
+                billing_lines=[]
+                for rez in res.prescription_line_ids:
+                    billing_value={
+                        'date':datetime.now(),
+                        'medicine_name':rez.medicine_name.id,
+                        'prescription_id':res.name,
+                        'pre_amount':res.total,
+                        'delivery_mode':res.courier_option,                
+                        }
+                    billing_lines.append((0,0,billing_value))
+                rec.write({'inpatient_tablet':billing_lines})            
+            lines=[]
+            value={
+                'prescription_alot':res.id,
+                'date':datetime.now(),
+                'patient_name':res.patient_id.id,
+                }
+            lines.append((0,0,value))
+            orm_id.write({'medicine_line_eight':lines})
+            
+        elif res.num_days == '9':
+            billing = self.env['patient.bills'].search([('patient_name','=',res.patient_id.id)], order='id desc', limit=1)
+            orm_id = self.env['in.patient'].search([('patient_id','=',res.patient_id.id)])
+            for rec in billing:
+                billing_lines=[]
+                for rez in res.prescription_line_ids:
+                    billing_value={
+                        'date':datetime.now(),
+                        'medicine_name':rez.medicine_name.id,
+                        'prescription_id':res.name,
+                        'pre_amount':res.total,
+                        'delivery_mode':res.courier_option,                
+                        }
+                    billing_lines.append((0,0,billing_value))
+                rec.write({'inpatient_tablet':billing_lines})            
+            lines=[]
+            value={
+                'prescription_alot':res.id,
+                'date':datetime.now(),
+                'patient_name':res.patient_id.id,
+                }
+            lines.append((0,0,value))
+            orm_id.write({'medicine_line_nine':lines})
+            
+        elif res.num_days == '10':
+            billing = self.env['patient.bills'].search([('patient_name','=',res.patient_id.id)], order='id desc', limit=1)
+            orm_id = self.env['in.patient'].search([('patient_id','=',res.patient_id.id)])
+            for rec in billing:
+                billing_lines=[]
+                for rez in res.prescription_line_ids:
+                    billing_value={
+                        'date':datetime.now(),
+                        'medicine_name':rez.medicine_name.id,
+                        'prescription_id':res.name,
+                        'pre_amount':res.total,
+                        'delivery_mode':res.courier_option,                
+                        }
+                    billing_lines.append((0,0,billing_value))
+                rec.write({'inpatient_tablet':billing_lines})            
+            lines=[]
+            value={
+                'prescription_alot':res.id,
+                'date':datetime.now(),
+                'patient_name':res.patient_id.id,
+                }
+            lines.append((0,0,value))
+            orm_id.write({'medicine_line_ten':lines})
+        
+        
+        
 
         picking_list=[]
         for rec in res.prescription_line_ids:

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="basic_hms.file_patient_barcode">
+            <t t-call="web.external_layout">
+     <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <style>
+                .flex-parent {
+                    display: flex;
+                }
+            </style>
+            <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 30px;">
+                <div>
+            <div>
+                <td style="border: 0px;width: 30%;">
+                    <img t-att-src="'/report/barcode/EAN13/%s' % o.doctor_idxs"/>
+                </td>
+                <td style="border: 0px;width: 50%;">
+                <p><b>Patient ID : </b><span t-field="o.doctor_idxs"/></p>
+                <p><b>Name : </b> <span t-field="o.name"/></p>
+                <p><b> Contact Number : </b> <span t-field="o.phone"/></p>
+            </td>
+         </div>
+        </div>
+         </table>
+        </t>
+    </t>
+    </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<template id="basic_hms.ebook_doctor_report_scan">
+     <t t-call="web.external_layout">
+     <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+
+            <t t-if="docs.scan_test">
+                <style>
+
+                    .footer_section{
+        
+                    }
+                    .border{
+                        border-collapse: collapse;
+                    }
+                    .heading_text_cor{
+                        color:#000;
+                        font-weight:600;
+        
+                        }
+                            
+                </style>
+                    <t >
+                    <h2 >Patient Details</h2>
+                    <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
+                    <div>
+                    <td style="border: 0px;width: 50%;">
+                        <p><strong>Name :</strong><span t-field="o.patient"/></p>
+                        <p><b>ID Number :</b> <span t-field="o.serial_number"/></p>
+                    </td>
+                    <div>
+                    <td style="border: 0px;width: 50%;">
+                <img t-att-src="'data:image/png;base64,%s' % to_text(o.qr_code)" style="height:100px;width:100px;float:center;"/>
+                    </td>
+                    </div>
+                    </div>
+                    </table>
+                <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Scan details</h4>
+        </div>
+                <table class="table table-bordered" style="border: 1px solid black;">
+                    <thead>
+                        <tr>
+                        <th style="border: 1px solid black;">Scan Test ID</th>
+                        <th style="border: 1px solid black;">Test Name </th>
+                       
+                        <th style="border: 1px solid black;">Date </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr t-foreach='docs.scan_test' t-as='line'>
+                        <td style="border: 1px solid black;">
+                        <span t-field="line.scan_id"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                        <span t-field="line.name"/>
+                        </td>
+                        
+                        <td style="border: 1px solid black;">
+                            <span t-field="line.date"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                    </table> 
+                    </t>
+                </t>
+        </t>
+    </t>
+</t>
+</template>
+</odoo>

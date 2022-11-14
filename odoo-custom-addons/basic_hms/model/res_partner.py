@@ -60,13 +60,16 @@ class res_partner(models.Model):
     is_telecaller = fields.Boolean(string='Telecaller')
     roles_selection=fields.Selection([('manager','Manager'),('reception','Reception'),('doctor','Doctor'),('pharmacy','Pharmacy'),
     ('billing','Billing'),('lab','Lab & Scan'),('telecaller','Telecaller'),('patient','Patient')],string='Roles')
-
-    # @api.model
-    # def create(self, vals):
-    #     vals['serial_number'] = self.env['ir.sequence'].next_by_code('res.partner') or 'RES'
-    #     res = super(res_partner, self).create(vals)
-    #     return res
-
+    ebook_print=fields.Many2one('medical.doctor', string='Ebook',compute='orm_ebook')
+    
+    experience = fields.Char(string='Experience')
+    marital_status = fields.Selection([('s','Single'),('m','Married'),('w','Widowed'),('d','Divorced'),('x','Seperated')],string='Marital Status')
+    treatment_for=fields.Many2one('medical.pathology',string="Treatment For")
+    abroad_addr = fields.Char(string='Abroad Address')
+    
+    def orm_ebook(self):
+        orm=self.env['medical.doctor'].search([('patient','=',self.name)])
+        self.ebook_print = orm
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
     @api.depends('roles_selection')
@@ -138,11 +141,6 @@ class res_partner(models.Model):
         return self._search(args, limit=limit, access_rights_uid=name_get_uid)
     
     
-    # def name_get(self):
-    #     result = []
-    #     for rec in self:
-    #         result.append((rec.id, '%s - %s' % (rec.name,rec.mobile)))
-    #     return result
     def appointment_count(self):
         for res in self :
             count_appointment1 = self.env['medical.appointment'].search_count([('patient_id', '=', res.name)])
@@ -163,6 +161,7 @@ class res_partner(models.Model):
         for res in self :
             doctor_count_appointment1 = self.env['medical.doctor'].search_count([('patient', '=', res.name)])
             self.doctor_count_appointment= doctor_count_appointment1
+            
     doctor_count_appointment=fields.Integer(compute='doctor_count',string="Doctor Visit")
 
     def doctor_count_button(self):
@@ -176,10 +175,7 @@ class res_partner(models.Model):
     }
 
     
-    
     def doctor_report(self):
-        
-        
         for res in self :
             doctor_report_appointment1 = self.env['medical.doctor'].search_count([('doctor', '=', res.name)])
             self.doctor_report_appointment= doctor_report_appointment1
@@ -214,7 +210,7 @@ class res_partner(models.Model):
 
     def lab_count(self):
         for res in self :
-            lab_count_appointment1 = self.env['medical.patient.lab.test'].search_count([('patient_id', '=', res.name)])
+            lab_count_appointment1 = self.env['lab.scan.form'].search_count([('patient_id', '=', res.name)])
             self.lab_count_appointment= lab_count_appointment1
     lab_count_appointment=fields.Integer(compute='lab_count',string="Lab Test")
 
@@ -223,7 +219,23 @@ class res_partner(models.Model):
     'name': "Lab Test",
     'domain':[('patient_id', '=', self.name)],
     'view_mode': 'tree,form',
-    'res_model': 'medical.patient.lab.test',
+    'res_model': 'lab.scan.form',
+    'view_type': 'form',
+    'type': 'ir.actions.act_window',
+    }
+        
+    def scan_count(self):
+        for res in self :
+            scan_count_appointment1 = self.env['scan.test'].search_count([('patient_id', '=', res.name)])
+            self.scan_count_appointment= scan_count_appointment1
+    scan_count_appointment=fields.Integer(compute='scan_count',string="Scan Test")
+
+    def scan_count_button(self):
+        return {
+    'name': "Scan Test",
+    'domain':[('patient_id', '=', self.name)],
+    'view_mode': 'tree,form',
+    'res_model': 'scan.test',
     'view_type': 'form',
     'type': 'ir.actions.act_window',
     }
@@ -247,14 +259,14 @@ class res_partner(models.Model):
     def document_count(self):
         
         for res in self :
-            document_count_appointment1 = self.env['document.type.line'].search_count([('patient_id', '=', res.name)])
+            document_count_appointment1 = self.env['document.type.line'].search_count([('name', '=', res.name)])
             self.document_count_appointment= document_count_appointment1
     document_count_appointment=fields.Integer(compute='document_count',string="Green Documents")
 
     def document_count_button(self):
         return {
     'name': "Document",
-    'domain':[('patient_id', '=', self.name)],
+    'domain':[('name', '=', self.name)],
     'view_mode': 'tree,form',
     'res_model': 'document.type.line',
     'view_type': 'form',
@@ -291,19 +303,39 @@ class document_type_upload(models.Model):
     name = fields.Char(string="Patient Name")
     patient_id = fields.Many2one('res.partner',string='Name')
     document_detail=fields.Binary(string="Upload Documents")
-    doc_types=fields.Selection([('green','Green Document'),('gov','Gov ID'),('original','Original'),('lab','Lab Document'),('scan','Scan Document')],string="Document Type")
+    doc_types=fields.Selection([('voice','Voice Recording'),('ebook','Ebook'),('Video','Video'),('photo','Photo'),('green','Green Document'),('gov','Gov ID'),
+        ('original','Original'),('lab','Lab Document'),('scan','Scan Document')],string="Document Type")
     
     document_line = fields.One2many('document.add.line','Documents',string='Document Lines')
+    attach_types = fields.Selection([('voice','Voice Recording'),('Video','Video'),('ebook','Ebook'),('photo','Photo'),('green','Green Document'),('gov','Gov ID'),
+        ('original','Original'),('lab','Lab Document'),('scan','Scan Document')],string='Attachment Type')
     
-    
+    @api.model
+    def create(self, vals):
+        result = super(document_type_upload,self).create(vals)
+        orm_i = self.env['medical.doctor'].search([('patient', '=',result.name)])
+        
+        lines=[]
+        for i in result.document_line:
+            values={
+                'report_name':i.attach_types,
+                'attachment':i.attachment,
+            }
+            lines.append((0,0,values))
+            
+        orm_i.write({'documents':lines})
+        return result
     
 class documentAddLine(models.Model):
     _name = 'document.add.line'
     
     Documents = fields.Many2one('document.type.line',string='Document')
     name = fields.Char(string='Patient Document')
+    patient_id = fields.Many2one('res.partner',string='Name')
     attachment = fields.Many2many('ir.attachment',string='Attach')
-
+    attach_types = fields.Selection([('voice','Voice Recording'),('Video','Video'),('photo','Photo'),('green','Green Document'),('gov','Gov ID'),
+        ('original','Original'),('lab','Lab Document'),('scan','Scan Document')])
+    
 class ir_sequence_master(models.Model):
     _inherit = 'ir.sequence'
 

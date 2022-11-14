@@ -14,9 +14,7 @@
                             </div>
                             <group >
                                 <field name ="name"/>
-                                <!-- <field name ="patient_id"/> -->
                                 <field name ="attachment" widget='many2many_binary'/>
-                                <!-- <field name ="range"/> -->
                             </group>
                         </sheet>
                         </form>
@@ -26,7 +24,6 @@
         <record model="ir.actions.act_window" id="photo_master_action">            
             <field name="name">Photos Master</field>         
                 <field name="res_model">file.room</field>           
-                <!-- <field name="view_type">form</field>-->
                 <field name="view_mode">tree,form</field>
                 <field name="domain">[]</field>            
                 <field name="help" type="html">                
@@ -37,6 +34,20 @@
 
     <menuitem id="menu_photo_master" name="Photos Master" parent= "main_menu_configartion" action="photo_master_action"/>
 
+    <record id="medical_in_patient_tree_view" model="ir.ui.view">
+        <field name="name">IP.summary.tree.view</field>
+        <field name="model">in.patient</field>
+        <field name="arch" type="xml">
+            <tree string="EBook">
+                <field name ="reg_no" string='Patient ID'/>
+                <field name ="patient_id" />
+                <field name ="file_num"/>
+                <field name ="doctor_in"/>
+                <field name ="contact_num"/>
+                <field name ="write_date"/>
+            </tree>
+        </field>
+    </record>
 
         <record id="ip_doctor_master_id" model="ir.ui.view">
             <field name="name">IP Master</field>
@@ -45,34 +56,39 @@
                 <field name="arch" type="xml">
                     <form string="In-Patient Hospitalization">
                         <header>
+    <button name="discharge" type="object" string="Discharge" class="oe_highlight" />
                         </header>
                     <sheet>
                         <div class="oe_button_box">
                         </div>
-                <group >
+                <group>
                     <group >
-                    <field name ="reg_no"/>
+                    <field name ="reg_no" />
                     <field name ="patient_id"/>
                     <field name ="gender"/>
-                    <field name ="conditions" />
+                    <field name ="age"/>
                     <field name ="contact_num"/>
                     <field name ="address"/>
+                    <field name ="bp"/>
                 </group>
                 <group >
                     <field name ="file_num"/>
-                    <field name ="dob"/>
+                    <field name ="write_date" string='Date of Admission'/>
+                    <field name ="conditions" widget='many2many_tags'/>
+                    <field name ="history_complaint" />
                     <field name ="doctor_in"/>
                     <field name ="attend_num" />
-                    <!-- <field name ="contact_num"/>
-                    <field name ="address"/> -->
+                    <field name ="company_id" />
+                    <field name= "diet_id_diet" invisible='1'/>
                 </group>
             </group>
             <notebook>
-                <page string='Day1'>
+                <page string='Day 1'>
                 <notebook>
                     <page string='Doctor Rounds'>
                         <field name = 'in_pat_line'>
                             <tree string="Doctor" editable="bottom" >
+                                <field name ="drounds" />
                                 <field name="time"/>
                                 <field name="doctor" />
                                 <field name="review"/>
@@ -80,16 +96,46 @@
                             </tree>
                         </field>
                     </page>
-                <page string='Sister Rounds'>
-                    <div class='row'>
-                        <div class='col-2'>
-                <label for="time" string="Time" />
-                    <field name="time"/>
-                <label for="nurse_name" string="Sister Name" />
-                    <field name="nurse_name"/></div></div>
+                    <page string='Sister Rounds'>
+                            <field name = 'sister_line'>
+                                <tree string="Sister" editable="bottom">
+                                    <!-- <field name="nurse_name"/> -->
+                                    <field name="time"/>
+                                    <field name="cbg"/>
+                                    <field name="bp"/>
+                                    <field name="temp"/>
+                                    <field name="spo2"/>
+                                    <field name="motion"/>
+                                    <field name="urine"/>
+                                    <field name="sleep"/>
+                                    <field name="digestion"/>
+                                    <field name="pain"/>
+                                    <field name="notes"/>
+                                </tree>
+                            </field>
+                        </page>
+                    <page string='Diet'>
+                        <button name="diet_for" type="object" string="Personalized Diet" class="oe_highlight" />
+                        <field name = 'diet_line'>
+                            <tree string="Diet" editable="bottom" >
+                                <field name="diet_for"/>
+                                <field name="dates"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Medicine">
+                        <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight"/>
+                        <field name = 'medicine_line'>
+                            <tree string="Prescription" editable="bottom" >
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
+                        </field>
+                    </page>
+                    <page string='TPR Chart'>
                         <field name = 'sister_line'>
-                            <tree string="Sister" editable="bottom" >
-                                <field name="lbg"/>
+                            <tree string="Sister" editable="bottom">
+                                <field name="cbg"/>
                                 <field name="bp"/>
                                 <field name="temp"/>
                                 <field name="spo2"/>
@@ -102,21 +148,7 @@
                             </tree>
                         </field>
                     </page>
-                    <page string='Diet'>
-                        <field name = 'diet_line'>
-                            <tree string="Diet" editable="bottom" >
-                                <field name="diet_for"/>
-                                <field name="dates"/>
-                            </tree>
-                        </field>
-                    </page>
-                    <page string='Medicine'>
-
-                    </page>
-                    <page string='TPR Chart'>
-
-                    </page>
-                    <page string='Therapy'>
+                    <page string='IP-Therapy'>
                         <field name = 'therapy_line'>
                             <tree string="Therapy" editable="bottom" >
                                 <field name="time"/>
@@ -126,13 +158,932 @@
                         </field>
                     </page>
                     <page string='LAB'>
-
+                        <button name="lab_button" type="object" string="Assign Lab Tests"  style ="margin-left: 20px;margin-bottom: 10px;" class="oe_highlight"/>
+                        <field name="lab_line">
+                            <tree string="Lab History" editable="bottom" >
+                                <field name="lab_type" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="range_test"/>
+                                <field name="range_normal"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
                     </page>
                     <page string='SCAN'>
-
+                        <button name="scan_one" style="margin-bottom: 10px;margin-left: 10px;" type="object"  string="Assign Scan Tests" class="oe_highlight"/>
+                        <field name="scan_line">
+                            <tree string="Scan History" editable="bottom" >
+                                <field name="scan_id" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
                     </page>
         </notebook>
             </page>
+
+            <page string='Day 2'>
+                <notebook>
+                    <page string='Doctor Rounds'>
+                        <field name = 'in_pat_line_two'>
+                            <tree string="Doctor" editable="bottom" >
+                                <field name ="drounds" />
+                                <field name="time"/>
+                                <field name="doctor" />
+                                <field name="review"/>
+                                <field name ="medicine" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='Sister Rounds'>
+                            <field name = 'sister_line_two'>
+                                <tree string="Sister" editable="bottom">
+                                    <field name="nurse_name"/>
+                                    <field name="time"/>
+                                    <field name="cbg"/>
+                                    <field name="bp"/>
+                                    <field name="temp"/>
+                                    <field name="spo2"/>
+                                    <field name="motion"/>
+                                    <field name="urine"/>
+                                    <field name="sleep"/>
+                                    <field name="digestion"/>
+                                    <field name="pain"/>
+                                    <field name="notes"/>
+                                </tree>
+                            </field>
+                        </page>
+                    <page string='Diet'>
+                        <button name="diet_one" type="object" string="Personalized Diet" class="oe_highlight" />
+                        <field name = 'diet_line_two'>
+                            <tree string="Diet" editable="bottom" >
+                                <field name="diet_for"/>
+                                <field name="dates"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Medicine">
+                        <button name="prescription_one" type="object" string="Create Prescription" class="oe_highlight"/>
+                        <field name = 'medicine_line_two'>
+                            <tree string="Prescription" editable="bottom" >
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
+                        </field>
+                    </page>
+                    <page string='TPR Chart'>
+                        <field name = 'sister_line_two'>
+                            <tree string="Sister" editable="bottom">
+                                <field name="time"/>
+                                <field name="cbg"/>
+                                <field name="bp"/>
+                                <field name="temp"/>
+                                <field name="spo2"/>
+                                <field name="motion"/>
+                                <field name="urine"/>
+                                <field name="sleep"/>
+                                <field name="digestion"/>
+                                <field name="pain"/>
+                                <field name="notes"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='IP-Therapy'>
+                        <field name = 'therapy_line_two'>
+                            <tree string="Therapy" editable="bottom" >
+                                <field name="time"/>
+                                <field name="therapy"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='LAB'>
+                        <button name="lab_one" type="object" string="Assign Lab Tests"  style ="margin-left: 20px;margin-bottom: 10px;" class="oe_highlight"/>
+                        <field name="lab_line_two">
+                            <tree string="Lab History" editable="bottom" >
+                                <field name="lab_type" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="range_test"/>
+                                <field name="range_normal"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='SCAN'>
+                        <button name="scan_two" style="margin-bottom: 10px;margin-left: 10px;" type="object"  string="Assign Scan Tests" class="oe_highlight"/>
+                        <field name="scan_line_two">
+                            <tree string="Scan History" editable="bottom" >
+                                <field name="scan_id" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+        </notebook>
+            </page>
+
+            <page string='Day 3'>
+                <notebook>
+                    <page string='Doctor Rounds'>
+                        <field name = 'in_pat_line_three'>
+                            <tree string="Doctor" editable="bottom" >
+                                <field name ="drounds" />
+                                <field name="time"/>
+                                <field name="doctor" />
+                                <field name="review"/>
+                                <field name ="medicine" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='Sister Rounds'>
+                        
+                            <field name = 'sister_line_three'>
+                                <tree string="Sister" editable="bottom">
+                                    <field name="nurse_name"/>
+                                    <field name="time"/>
+                                    <field name="cbg"/>
+                                    <field name="bp"/>
+                                    <field name="temp"/>
+                                    <field name="spo2"/>
+                                    <field name="motion"/>
+                                    <field name="urine"/>
+                                    <field name="sleep"/>
+                                    <field name="digestion"/>
+                                    <field name="pain"/>
+                                    <field name="notes"/>
+                                </tree>
+                            </field>
+                        </page>
+                    <page string='Diet'>
+                        <button name="diet_two" type="object" string="Personalized Diet" class="oe_highlight" />
+                        <field name = 'diet_line_three'>
+                            <tree string="Diet" editable="bottom" >
+                                <field name="diet_for"/>
+                                <field name="dates"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Medicine">
+                        <button name="prescription_two" type="object" string="Create Prescription" class="oe_highlight"/>
+                        <field name = 'medicine_line_three'>
+                            <tree string="Prescription" editable="bottom" >
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
+                        </field>
+                    </page>
+                    <page string='TPR Chart'>
+                        <field name = 'sister_line_three'>
+                            <tree string="Sister" editable="bottom">
+                                <field name="time"/>
+                                <field name="cbg"/>
+                                <field name="bp"/>
+                                <field name="temp"/>
+                                <field name="spo2"/>
+                                <field name="motion"/>
+                                <field name="urine"/>
+                                <field name="sleep"/>
+                                <field name="digestion"/>
+                                <field name="pain"/>
+                                <field name="notes"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='IP-Therapy'>
+                        <field name = 'therapy_line_three'>
+                            <tree string="Therapy" editable="bottom" >
+                                <field name="time"/>
+                                <field name="therapy"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='LAB'>
+                        <button name="lab_two" type="object" string="Assign Lab Tests"  style ="margin-left: 20px;margin-bottom: 10px;" class="oe_highlight"/>
+                        <field name="lab_line_three">
+                            <tree string="Lab History" editable="bottom" >
+                                <field name="lab_type" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="range_test"/>
+                                <field name="range_normal"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='SCAN'>
+                        <button name="scan_three" style="margin-bottom: 10px;margin-left: 10px;" type="object"  string="Assign Scan Tests" class="oe_highlight"/>
+                        <field name="scan_line_three">
+                            <tree string="Scan History" editable="bottom" >
+                                <field name="scan_id" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+        </notebook>
+            </page>
+
+            <page string='Day 4'>
+                <notebook>
+                    <page string='Doctor Rounds'>
+                        <field name = 'in_pat_line_four'>
+                            <tree string="Doctor" editable="bottom" >
+                                <field name ="drounds" />
+                                <field name="time"/>
+                                <field name="doctor" />
+                                <field name="review"/>
+                                <field name ="medicine" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='Sister Rounds'>
+                        
+                            <field name = 'sister_line_four'>
+                                <tree string="Sister" editable="bottom">
+                                    <field name="nurse_name"/>
+                                    <field name="time"/>
+                                    <field name="cbg"/>
+                                    <field name="bp"/>
+                                    <field name="temp"/>
+                                    <field name="spo2"/>
+                                    <field name="motion"/>
+                                    <field name="urine"/>
+                                    <field name="sleep"/>
+                                    <field name="digestion"/>
+                                    <field name="pain"/>
+                                    <field name="notes"/>
+                                </tree>
+                            </field>
+                        </page>
+                    <page string='Diet'>
+                        <button name="diet_three" type="object" string="Personalized Diet" class="oe_highlight" />
+                        <field name = 'diet_line_four'>
+                            <tree string="Diet" editable="bottom" >
+                                <field name="diet_for"/>
+                                <field name="dates"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Medicine">
+                        <button name="prescription_three" type="object" string="Create Prescription" class="oe_highlight"/>
+                        <field name = 'medicine_line_four'>
+                            <tree string="Prescription" editable="bottom" >
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
+                        </field>
+                    </page>
+                    <page string='TPR Chart'>
+                        <field name = 'sister_line_four'>
+                            <tree string="Sister" editable="bottom">
+                                <field name="cbg"/>
+                                <field name="bp"/>
+                                <field name="temp"/>
+                                <field name="spo2"/>
+                                <field name="motion"/>
+                                <field name="urine"/>
+                                <field name="sleep"/>
+                                <field name="digestion"/>
+                                <field name="pain"/>
+                                <field name="notes"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='IP-Therapy'>
+                        <field name = 'therapy_line_four'>
+                            <tree string="Therapy" editable="bottom" >
+                                <field name="time"/>
+                                <field name="therapy"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='LAB'>
+                        <button name="lab_three" type="object" string="Assign Lab Tests"  style ="margin-left: 20px;margin-bottom: 10px;" class="oe_highlight"/>
+                        <field name="lab_line_four">
+                            <tree string="Lab History" editable="bottom" >
+                                <field name="lab_type" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="range_test"/>
+                                <field name="range_normal"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='SCAN'>
+                        <button name="scan_four" style="margin-bottom: 10px;margin-left: 10px;" type="object"  string="Assign Scan Tests" class="oe_highlight"/>
+                        <field name="scan_line_four">
+                            <tree string="Scan History" editable="bottom" >
+                                <field name="scan_id" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+        </notebook>
+            </page>
+
+            <page string='Day 5'>
+                <notebook>
+                    <page string='Doctor Rounds'>
+                        <field name = 'in_pat_line_five'>
+                            <tree string="Doctor" editable="bottom" >
+                                <field name ="drounds" />
+                                <field name="time"/>
+                                <field name="doctor" />
+                                <field name="review"/>
+                                <field name ="medicine" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='Sister Rounds'>
+                        
+                            <field name = 'sister_line_five'>
+                                <tree string="Sister" editable="bottom">
+                                    <field name="nurse_name"/>
+                                    <field name="time"/>
+                                    <field name="cbg"/>
+                                    <field name="bp"/>
+                                    <field name="temp"/>
+                                    <field name="spo2"/>
+                                    <field name="motion"/>
+                                    <field name="urine"/>
+                                    <field name="sleep"/>
+                                    <field name="digestion"/>
+                                    <field name="pain"/>
+                                    <field name="notes"/>
+                                </tree>
+                            </field>
+                        </page>
+                    <page string='Diet'>
+                        <button name="diet_four" type="object" string="Personalized Diet" class="oe_highlight" />
+                        <field name = 'diet_line_five'>
+                            <tree string="Diet" editable="bottom" >
+                                <field name="diet_for"/>
+                                <field name="dates"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Medicine">
+                        <button name="prescription_four" type="object" string="Create Prescription" class="oe_highlight"/>
+                        <field name = 'medicine_line_five'>
+                            <tree string="Prescription" editable="bottom" >
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
+                        </field>
+                    </page>
+                    <page string='TPR Chart'>
+                        <field name = 'sister_line_five'>
+                            <tree string="Sister" editable="bottom">
+                                <field name="cbg"/>
+                                <field name="bp"/>
+                                <field name="temp"/>
+                                <field name="spo2"/>
+                                <field name="motion"/>
+                                <field name="urine"/>
+                                <field name="sleep"/>
+                                <field name="digestion"/>
+                                <field name="pain"/>
+                                <field name="notes"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='IP-Therapy'>
+                        <field name = 'therapy_line_five'>
+                            <tree string="Therapy" editable="bottom" >
+                                <field name="time"/>
+                                <field name="therapy"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='LAB'>
+                        <button name="lab_four" type="object" string="Assign Lab Tests"  style ="margin-left: 20px;margin-bottom: 10px;" class="oe_highlight"/>
+                        <field name="lab_line_five">
+                            <tree string="Lab History" editable="bottom" >
+                                <field name="lab_type" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="range_test"/>
+                                <field name="range_normal"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='SCAN'>
+                        <button name="scan_five" style="margin-bottom: 10px;margin-left: 10px;" type="object"  string="Assign Scan Tests" class="oe_highlight"/>
+                        <field name="scan_line_five">
+                            <tree string="Scan History" editable="bottom" >
+                                <field name="scan_id" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+        </notebook>
+            </page>
+
+            <page string='Day 6'>
+                <notebook>
+                    <page string='Doctor Rounds'>
+                        <field name = 'in_pat_line_six'>
+                            <tree string="Doctor" editable="bottom" >
+                                <field name ="drounds" />
+                                <field name="time"/>
+                                <field name="doctor" />
+                                <field name="review"/>
+                                <field name ="medicine" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='Sister Rounds'>
+                        
+                            <field name = 'sister_line_six'>
+                                <tree string="Sister" editable="bottom">
+                                    <field name="nurse_name"/>
+                                    <field name="time"/>
+                                    <field name="cbg"/>
+                                    <field name="bp"/>
+                                    <field name="temp"/>
+                                    <field name="spo2"/>
+                                    <field name="motion"/>
+                                    <field name="urine"/>
+                                    <field name="sleep"/>
+                                    <field name="digestion"/>
+                                    <field name="pain"/>
+                                    <field name="notes"/>
+                                </tree>
+                            </field>
+                        </page>
+                    <page string='Diet'>
+                        <button name="diet_five" type="object" string="Personalized Diet" class="oe_highlight" />
+                        <field name = 'diet_line_six'>
+                            <tree string="Diet" editable="bottom" >
+                                <field name="diet_for"/>
+                                <field name="dates"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Medicine">
+                        <button name="prescription_five" type="object" string="Create Prescription" class="oe_highlight"/>
+                        <field name = 'medicine_line_six'>
+                            <tree string="Prescription" editable="bottom" >
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
+                        </field>
+                    </page>
+                    <page string='TPR Chart'>
+                        <field name = 'sister_line_six'>
+                            <tree string="Sister" editable="bottom">
+                                <field name="time"/>
+                                <field name="cbg"/>
+                                <field name="bp"/>
+                                <field name="temp"/>
+                                <field name="spo2"/>
+                                <field name="motion"/>
+                                <field name="urine"/>
+                                <field name="sleep"/>
+                                <field name="digestion"/>
+                                <field name="pain"/>
+                                <field name="notes"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='IP-Therapy'>
+                        <field name = 'therapy_line_six'>
+                            <tree string="Therapy" editable="bottom" >
+                                <field name="time"/>
+                                <field name="therapy"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='LAB'>
+                        <button name="lab_five" type="object" string="Assign Lab Tests"  style ="margin-left: 20px;margin-bottom: 10px;" class="oe_highlight"/>
+                        <field name="lab_line_six">
+                            <tree string="Lab History" editable="bottom" >
+                                <field name="lab_type" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="range_test"/>
+                                <field name="range_normal"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='SCAN'>
+                        <button name="scan_six" style="margin-bottom: 10px;margin-left: 10px;" type="object"  string="Assign Scan Tests" class="oe_highlight"/>
+                        <field name="scan_line_six">
+                            <tree string="Scan History" editable="bottom" >
+                                <field name="scan_id" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+        </notebook>
+            </page>
+
+            <page string='Day 7'>
+                <notebook>
+                    <page string='Doctor Rounds'>
+                        <field name = 'in_pat_line_seven'>
+                            <tree string="Doctor" editable="bottom" >
+                                <field name ="drounds" />
+                                <field name="time"/>
+                                <field name="doctor" />
+                                <field name="review"/>
+                                <field name ="medicine" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='Sister Rounds'>
+                        
+                            <field name = 'sister_line_seven'>
+                                <tree string="Sister" editable="bottom">
+                                    <field name="nurse_name"/>
+                                    <field name="time"/>
+                                    <field name="cbg"/>
+                                    <field name="bp"/>
+                                    <field name="temp"/>
+                                    <field name="spo2"/>
+                                    <field name="motion"/>
+                                    <field name="urine"/>
+                                    <field name="sleep"/>
+                                    <field name="digestion"/>
+                                    <field name="pain"/>
+                                    <field name="notes"/>
+                                </tree>
+                            </field>
+                        </page>
+                    <page string='Diet'>
+                        <button name="diet_six" type="object" string="Personalized Diet" class="oe_highlight" />
+                        <field name = 'diet_line_seven'>
+                            <tree string="Diet" editable="bottom" >
+                                <field name="diet_for"/>
+                                <field name="dates"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Medicine">
+                        <button name="prescription_six" type="object" string="Create Prescription" class="oe_highlight"/>
+                        <field name = 'medicine_line_seven'>
+                            <tree string="Prescription" editable="bottom" >
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
+                        </field>
+                    </page>
+                    <page string='TPR Chart'>
+                        <field name = 'sister_line_seven'>
+                            <tree string="Sister" editable="bottom">
+                                <field name="cbg"/>
+                                <field name="bp"/>
+                                <field name="temp"/>
+                                <field name="spo2"/>
+                                <field name="motion"/>
+                                <field name="urine"/>
+                                <field name="sleep"/>
+                                <field name="digestion"/>
+                                <field name="pain"/>
+                                <field name="notes"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='IP-Therapy'>
+                        <field name = 'therapy_line_seven'>
+                            <tree string="Therapy" editable="bottom" >
+                                <field name="time"/>
+                                <field name="therapy"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='LAB'>
+                        <button name="lab_six" type="object" string="Assign Lab Tests"  style ="margin-left: 20px;margin-bottom: 10px;" class="oe_highlight"/>
+                        <field name="lab_line_seven">
+                            <tree string="Lab History" editable="bottom" >
+                                <field name="lab_type" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="range_test"/>
+                                <field name="range_normal"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='SCAN'>
+                        <button name="scan_seven" style="margin-bottom: 10px;margin-left: 10px;" type="object"  string="Assign Scan Tests" class="oe_highlight"/>
+                        <field name="scan_line_seven">
+                            <tree string="Scan History" editable="bottom" >
+                                <field name="scan_id" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+        </notebook>
+            </page>
+
+            <page string='Day 8'>
+                <notebook>
+                    <page string='Doctor Rounds'>
+                        <field name = 'in_pat_line_eight'>
+                            <tree string="Doctor" editable="bottom" >
+                                <field name ="drounds" />
+                                <field name="time"/>
+                                <field name="doctor" />
+                                <field name="review"/>
+                                <field name ="medicine" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='Sister Rounds'>
+                        
+                            <field name = 'sister_line_eight'>
+                                <tree string="Sister" editable="bottom">
+                                    <field name="nurse_name"/>
+                                    <field name="time"/>
+                                    <field name="cbg"/>
+                                    <field name="bp"/>
+                                    <field name="temp"/>
+                                    <field name="spo2"/>
+                                    <field name="motion"/>
+                                    <field name="urine"/>
+                                    <field name="sleep"/>
+                                    <field name="digestion"/>
+                                    <field name="pain"/>
+                                    <field name="notes"/>
+                                </tree>
+                            </field>
+                        </page>
+                    <page string='Diet'>
+                        <button name="diet_seven" type="object" string="Personalized Diet" class="oe_highlight" />
+                        <field name = 'diet_line_eight'>
+                            <tree string="Diet" editable="bottom" >
+                                <field name="diet_for"/>
+                                <field name="dates"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Medicine">
+                        <button name="prescription_seven" type="object" string="Create Prescription" class="oe_highlight"/>
+                        <field name = 'medicine_line_eight'>
+                            <tree string="Prescription" editable="bottom" >
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
+                        </field>
+                    </page>
+                    <page string='TPR Chart'>
+                        <field name = 'sister_line_eight'>
+                            <tree string="Sister" editable="bottom">
+                                <field name="cbg"/>
+                                <field name="bp"/>
+                                <field name="temp"/>
+                                <field name="spo2"/>
+                                <field name="motion"/>
+                                <field name="urine"/>
+                                <field name="sleep"/>
+                                <field name="digestion"/>
+                                <field name="pain"/>
+                                <field name="notes"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='IP-Therapy'>
+                        <field name = 'therapy_line_eight'>
+                            <tree string="Therapy" editable="bottom" >
+                                <field name="time"/>
+                                <field name="therapy"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='LAB'>
+                        <button name="lab_seven" type="object" string="Assign Lab Tests"  style ="margin-left: 20px;margin-bottom: 10px;" class="oe_highlight"/>
+                        <field name="lab_line_eight">
+                            <tree string="Lab History" editable="bottom" >
+                                <field name="lab_type" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="range_test"/>
+                                <field name="range_normal"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='SCAN'>
+                        <button name="scan_eight" style="margin-bottom: 10px;margin-left: 10px;" type="object"  string="Assign Scan Tests" class="oe_highlight"/>
+                        <field name="scan_line_eight">
+                            <tree string="Scan History" editable="bottom" >
+                                <field name="scan_id" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+        </notebook>
+            </page>
+
+            <page string='Day 9'>
+                <notebook>
+                    <page string='Doctor Rounds'>
+                        <field name = 'in_pat_line_nine'>
+                            <tree string="Doctor" editable="bottom" >
+                                <field name ="drounds" />
+                                <field name="time"/>
+                                <field name="doctor" />
+                                <field name="review"/>
+                                <field name ="medicine" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='Sister Rounds'>
+                        
+                            <field name = 'sister_line_nine'>
+                                <tree string="Sister" editable="bottom">
+                                    <field name="nurse_name"/>
+                                    <field name="time"/>
+                                    <field name="cbg"/>
+                                    <field name="bp"/>
+                                    <field name="temp"/>
+                                    <field name="spo2"/>
+                                    <field name="motion"/>
+                                    <field name="urine"/>
+                                    <field name="sleep"/>
+                                    <field name="digestion"/>
+                                    <field name="pain"/>
+                                    <field name="notes"/>
+                                </tree>
+                            </field>
+                        </page>
+                    <page string='Diet'>
+                        <button name="diet_eight" type="object" string="Personalized Diet" class="oe_highlight" />
+                        <field name = 'diet_line_nine'>
+                            <tree string="Diet" editable="bottom" >
+                                <field name="diet_for"/>
+                                <field name="dates"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Medicine">
+                        <button name="prescription_eight" type="object" string="Create Prescription" class="oe_highlight"/>
+                        <field name = 'medicine_line_nine'>
+                            <tree string="Prescription" editable="bottom" >
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
+                        </field>
+                    </page>
+                    <page string='TPR Chart'>
+                        <field name = 'sister_line_nine'>
+                            <tree string="Sister" editable="bottom">
+                                <field name="cbg"/>
+                                <field name="bp"/>
+                                <field name="temp"/>
+                                <field name="spo2"/>
+                                <field name="motion"/>
+                                <field name="urine"/>
+                                <field name="sleep"/>
+                                <field name="digestion"/>
+                                <field name="pain"/>
+                                <field name="notes"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='IP-Therapy'>
+                        <field name = 'therapy_line_nine'>
+                            <tree string="Therapy" editable="bottom" >
+                                <field name="time"/>
+                                <field name="therapy"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='LAB'>
+                        <button name="lab_eight" type="object" string="Assign Lab Tests"  style ="margin-left: 20px;margin-bottom: 10px;" class="oe_highlight"/>
+                        <field name="lab_line_nine">
+                            <tree string="Lab History" editable="bottom" >
+                                <field name="lab_type" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="range_test"/>
+                                <field name="range_normal"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='SCAN'>
+                        <button name="scan_nine" style="margin-bottom: 10px;margin-left: 10px;" type="object"  string="Assign Scan Tests" class="oe_highlight"/>
+                        <field name="scan_line_nine">
+                            <tree string="Scan History" editable="bottom" >
+                                <field name="scan_id" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+        </notebook>
+            </page>
+
+            <page string='Day 10'>
+                <notebook>
+                    <page string='Doctor Rounds'>
+                        <field name = 'in_pat_line_ten'>
+                            <tree string="Doctor" editable="bottom" >
+                                <field name ="drounds" />
+                                <field name="time"/>
+                                <field name="doctor" />
+                                <field name="review"/>
+                                <field name ="medicine" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='Sister Rounds'>
+                        
+                            <field name = 'sister_line_ten'>
+                                <tree string="Sister" editable="bottom">
+                                    <field name="nurse_name"/>
+                                    <field name="time"/>
+                                    <field name="cbg"/>
+                                    <field name="bp"/>
+                                    <field name="temp"/>
+                                    <field name="spo2"/>
+                                    <field name="motion"/>
+                                    <field name="urine"/>
+                                    <field name="sleep"/>
+                                    <field name="digestion"/>
+                                    <field name="pain"/>
+                                    <field name="notes"/>
+                                </tree>
+                            </field>
+                        </page>
+                    <page string='Diet'>
+                        <button name="diet_nine" type="object" string="Personalized Diet" class="oe_highlight" />
+                        <field name = 'diet_line_ten'>
+                            <tree string="Diet" editable="bottom" >
+                                <field name="diet_for"/>
+                                <field name="dates"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Medicine">
+                        <button name="prescription_nine" type="object" string="Create Prescription" class="oe_highlight"/>
+                        <field name = 'medicine_line_ten'>
+                            <tree string="Prescription" editable="bottom" >
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
+                        </field>
+                    </page>
+                    <page string='TPR Chart'>
+                        <field name = 'sister_line_ten'>
+                            <tree string="Sister" editable="bottom">
+                                <field name="cbg"/>
+                                <field name="bp"/>
+                                <field name="temp"/>
+                                <field name="spo2"/>
+                                <field name="motion"/>
+                                <field name="urine"/>
+                                <field name="sleep"/>
+                                <field name="digestion"/>
+                                <field name="pain"/>
+                                <field name="notes"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='IP-Therapy'>
+                        <field name = 'therapy_line_ten'>
+                            <tree string="Therapy" editable="bottom" >
+                                <field name="time"/>
+                                <field name="therapy"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='LAB'>
+                        <button name="lab_nine" type="object" string="Assign Lab Tests"  style ="margin-left: 20px;margin-bottom: 10px;" class="oe_highlight"/>
+                        <field name="lab_line_ten">
+                            <tree string="Lab History" editable="bottom" >
+                                <field name="lab_type" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="range_test"/>
+                                <field name="range_normal"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='SCAN'>
+                        <button name="scan_ten" style="margin-bottom: 10px;margin-left: 10px;" type="object"  string="Assign Scan Tests" class="oe_highlight"/>
+                        <field name="scan_line_ten">
+                            <tree string="Scan History" editable="bottom" >
+                                <field name="scan_id" string='Test ID'/>
+                                <field name="name"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+        </notebook>
+            </page>
+
     </notebook>
         </sheet>
     </form>
@@ -150,7 +1101,11 @@
                 </field>        
             </record>
 
-    <menuitem id="menu_ip_doc_master" name="In-Patient" parent= "main_menu_configartion" action="ip_doc_master_action"/>     
+
+    <menuitem id="menu_ip_doc_master" name="In-Patient" parent= "main_menu_configartion" action="ip_doc_master_action" />     
+
+    <menuitem id="hospital_menu_patient" name="Admit"  parent="main_menu_hospital_management" sequence="8" />
+    <menuitem id="menu_ip_doc_masters" name="In-Patient" parent= "hospital_menu_patient" sequence="1" action="ip_doc_master_action"/> 
 
     </data>
 </odoo>

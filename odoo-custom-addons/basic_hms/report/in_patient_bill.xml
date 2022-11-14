@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template id = "basic_hms.in_patient_bills" >
+        <t t-call="web.external_layout">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <style>
+
+                        .footer_section{
+
+                        }
+                        .border{
+                            border-collapse: collapse;
+                        }
+                        .heading_text_cor{
+                           color:#000;
+                           font-weight:600;
+
+                          }
+
+                    </style>
+        
+                  <xpath expr="//div[@class='header_tag']" position="repalce">
+
+                <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
+                <td style="border: 0px;width: 50%;">
+                    <div  >
+                    <div class='float-left'>
+                        
+                <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p>
+                <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p></div>
+                
+            <div class="float-right" >
+                <p><strong>Payment Type :</strong><span t-field="o.payment_type"/></p>
+                <!-- <p><strong>Payment ID :</strong><span t-field="o.payment_id"/></p> -->
+            </div>
+        </div>
+                </td>
+                
+                </table>
+                        </xpath>
+        
+        
+    <div>
+    <div class="header_tag">
+        <h4 class="text-center heading_text_cor">In Patient</h4>
+    </div>
+    <t t-if="docs.inpatient_lab">
+            <div class="header_tag">
+                <h4 class="text-center heading_text_cor">Lab Test</h4>
+            </div>
+            <table class="table table-bordered" style="border: 1px solid black;">
+                <thead>
+                    <tr>
+                    
+                    <th style="border: 1px solid black;"> Test Name </th>
+                    <th style="border: 1px solid black;"> Date </th>
+
+                    <th style="border: 1px solid black;"> Bill Amount </th>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr t-foreach='docs.inpatient_lab' t-as='line'>
+                    <td style="border: 1px solid black;">
+                    <span t-field="line.name"/>
+                    </td>
+                    <td style="border: 1px solid black;">
+                    <span t-field="line.date"/>
+                    </td>
+                
+                    <td style="border: 1px solid black;">
+                    <span t-field="line.bill_amount"/>
+                    </td>
+                    </tr>
+                </tbody>
+                </table>
+                <table class="table table-sm" id="box" style="width:28%; float:right;margin-left: 0px; border: 1px solid black;">
+                    <tr class="border-black o_subtotal" style="font-size: 15px; ">
+                    <td style="background-color:white;color:#black;font-size: 15px;"><strong>Total</strong></td>
+                        <td style="background-color:white;color:#black;font-size: 15px;" class="text-right">
+                            <b><strong><span t-field="o.total_ip_lab" class="fa fa-inr"/></strong></b>
+                        </td>
+                    </tr>
+                </table>
+                </t>
+            </div>
+<br></br>
+    <t t-if="docs.inpatient_scan">
+        <div class="header_tag">
+            <h4 class="text-center heading_text_cor">Scan Test</h4>
+            </div>
+                <table class="table table-bordered" style="border: 1px solid black;">
+                <thead>
+                    <tr>
+                    <th style="border: 1px solid black;"> Test Name </th>
+                    <th style="border: 1px solid black;"> Date </th>
+
+                    <th style="border: 1px solid black;"> Bill Amount </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach='docs.inpatient_scan' t-as='line'>
+                <td style="border: 1px solid black;">
+                    <span t-field="line.name"/>
+                    </td>
+                <td style="border: 1px solid black;">
+                    <span t-field="line.date"/>
+                    </td>
+                <td style="border: 1px solid black;">
+                    <span t-field="line.bill_amount"/>
+                    </td>
+                    </tr>
+                </tbody>
+                </table>
+                <table class="table table-sm" id="box" style="width:28%; float:right;margin-left: 0px; border: 1px solid black;">
+                    <tr class="border-black o_subtotal" style="font-size: 15px; ">
+                    <td style="background-color:white;color:#black;font-size: 15px;"><strong>Total</strong></td>
+                        <td style="background-color:white;color:#black;font-size: 15px;" class="text-right">
+                            <b><strong><span t-field="o.total_ip_scan" class="fa fa-inr"/></strong></b>
+                        </td>
+                    </tr>
+                </table>
+                </t>
+                <br></br>
+    <t t-if="docs.inpatient_tablet" style='page-break-before: always;'>
+        <div style='page-break-before: always;'>
+        <div class="header_tag">
+            <h4 class="text-center heading_text_cor">Prescription</h4>
+            </div>
+            <table class="table table-bordered" style="border: 1px solid black;">
+            <thead>
+                <tr>
+                <th style="border: 1px solid black;">Prescription ID</th>
+                <th style="border: 1px solid black;"> Name  </th>
+                <th style="border: 1px solid black;"> Date  </th>
+                <th style="border: 1px solid black;"> Bill Amount </th>
+                <th style="border: 1px solid black;"> Taxes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr t-foreach='docs.inpatient_tablet' t-as='lines'>
+                <td style="border: 1px solid black;">
+                    <span t-field="lines.prescription_id"/>
+                </td>
+                <td style="border: 1px solid black;">
+                <span t-field="lines.medicine_name"/>
+                </td>
+                <td style="border: 1px solid black;">
+                <span t-field="lines.date"/>
+                </td>
+                <td style="border: 1px solid black;">
+                    <span t-field="lines.pre_amount"/>
+                </td>
+                <td style="border: 1px solid black;">
+                    <span t-field="lines.gst_tax"/>
+                </td>
+                </tr>
+            </tbody>
+            </table>
+            <table class="table table-sm" id="box" style="width:36.5%; float:right;margin-left: 0px; border: 1px solid black;">
+                <tr class="border-black o_subtotal" style="font-size: 15px; ">
+                    <td><strong>Medicine Amount</strong></td>
+                    <td class="text-right">
+                <strong><span t-field="o.total_ip_tab" class="fa fa-inr"/></strong>
+                    </td>
+                </tr>
+                <tr class="border-black o_subtotal" style="font-size: 15px; ">
+                <t>
+                    <td>GST 5%</td>
+                        <td class="text-right">
+                        <strong><span t-esc="o.total_tax_ip" class="fa fa-inr"/></strong>
+                        </td>
+                    </t>
+                </tr>
+                <tr class="border-black o_subtotal" style="font-size: 15px;">
+                <td style="background-color:white;color:#black;font-size: 15px;"><strong>Total</strong></td>
+                    <td style="background-color:white;color:#black;font-size: 15px;" class="text-right">
+                        <b><strong><span t-field="o.totals_ip" class="fa fa-inr"/></strong></b>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </t>
+        <br></br>
+        <br></br>
+        <br></br>
+        <t t-if="docs.ip_therapy">
+            <div class="header_tag" >
+                <h4 class="text-center heading_text_cor" >THERAPY</h4>
+                <table class="table table-bordered" style="border: 1px solid black;">
+                    <thead>
+                        <tr>
+                        <th style="border: 1px solid black;">Therapy</th>
+                        <th style="border: 1px solid black;"> Amount </th>
+                        
+                        </tr>
+                    </thead>
+            <tbody>
+                <tr t-foreach='docs.ip_therapy' t-as='line'>
+                    <td style="border: 1px solid black;">
+                       <span t-field="line.therapy"/>
+                    </td>
+                       <td style="border: 1px solid black;">
+                    <span t-field="line.amount"/>
+                       </td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    <table class="table table-sm" id="box" style="width:50%; float:right;margin-left: 0px; border: 1px solid black;">
+                        <tr class="border-black o_subtotal" style="font-size: 15px; ">
+                        <td style="background-color:white;color:#black;font-size: 15px;"><strong>Total</strong></td>
+                            <td style="background-color:white;color:#black;font-size: 15px;" class="text-right">
+                                <b><strong><span t-field="o.therapy_charge" class="fa fa-inr"/></strong></b>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                </t>
+                <br></br>
+                <h4 class='text-center' style='page-break-before: auto;'><strong>BILL SUMMARY</strong></h4>
+
+    <table class=" table-sm border" style = "width:100%;border-top: 2px solid white; page-break-inside: auto; border-bottom: 2px solid black !important; border-right: 2px solid black !important;border-left: 2px solid black !important; overflow:hidden">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black;" class='text-center'>Particulars</th>
+                    <th style="border: 1px solid black;" class='text-center'> Amount  </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td style="border: 1px solid black;">
+                    <p><strong>Lab Amount </strong></p>
+                </td>
+                <td style="border: 1px solid black;">
+                        <span t-field="o.total_ip_lab"  />
+                </td></tr>
+                <tr>
+                <td style="border: 1px solid black;">
+                    <p><strong>Scan Amount </strong></p>
+                </td>
+                <td style="border: 1px solid black;">
+                        <span t-field="o.total_ip_scan" />
+                </td></tr>
+                <tr>
+                <td style="border: 1px solid black;">
+                    <p><strong>Bed Charges </strong></p>
+                </td>
+                <td style="border: 1px solid black;">
+                        <span t-field="o.bed_charge" />
+                </td></tr>
+                <tr>
+                <td style="border: 1px solid black;">
+                    <p><strong>Therapy Charges </strong></p>
+                </td>
+                <td style="border: 1px solid black;">
+                        <span t-field="o.therapy_charge" />
+                </td></tr>
+                <tr>
+                <td style="border: 1px solid black;">
+                    <p><strong>Medicine Amount </strong></p>
+                </td>
+                <td style="border: 1px solid black;">
+                        <span t-field="o.total_ip_tab" />
+                </td></tr>
+        </tbody>  
+    </table>
+    <table class="table table-sm" id="box" style="width:33%; float:right;margin-left: 0px; border: 1px solid black;">
+        <tr class="border-black o_subtotal" style="font-size: 15px; ">
+        <t>
+            <td>GST 5%</td>
+                <td class="text-right">
+                <strong><span t-esc="o.total_tax_ip" class="fa fa-inr"/></strong>
+                </td>
+            </t>
+        </tr>
+        <tr class="border-black o_subtotal" style="font-size: 15px; ">
+        <td style="background-color:white;color:#black;font-size: 15px;"><strong>Total</strong></td>
+            <td style="background-color:white;color:#black;font-size: 15px;" class="text-right">
+                <b><strong><span t-field="o.total_tax_ip_tab" class="fa fa-inr"/></strong></b>
+            </td>
+        </tr>
+    </table>
+        </t></t></t>
+    </template>
+</odoo>

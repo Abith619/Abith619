@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+    
+    <template id="basic_hms.discharge_report">
+    <t t-call="web.external_layout">
+    <t t-call="web.html_container">
+    <t t-foreach="docs" t-as="o">
+        <style>
+            .flex-parent {
+                display: flex;
+            }
+        </style>
+            <h4 class="text-center heading_text_cor">Discharge Summary</h4>
+            <t >
+            <tr>
+            <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
+                    <div>
+            <td style="border: 0px;width: 50%;">
+                <p><b>Patient ID : </b><span t-field="o.name"/></p>
+                <p><b>Name : </b> <span t-field="o.patient_id"/></p>
+                <p><b>Age : </b> <span t-field="o.age"/></p>
+                <p><b>Address : </b> <span t-field="o.address"/></p>
+            </td>
+            <td style="border: 0px;width: 50%;">
+                <p><b>Date of Admission :</b><span t-field="o.admission_date"/></p>
+                <p><b>Date of Discharge :</b> <span t-field="o.write_date"/></p>
+                <p><b> File Number : </b> <span t-field="o.file_num"/></p>
+            </td>
+            </div>
+        </table>
+            </tr>
+            <table border="4" class="table table-bordered" style="border: 1px solid black;">
+            <thead>
+            <tr style="height:40px">
+            <td style="border: 1px solid black;" >
+                <p><b>Chief Complaints : </b> <span t-field="o.chief_complaint"/></p>
+                <p><b>BP : </b> <span t-field="o.bp"/></p>
+                <p><b>Associated Complaints : </b> <span t-field="o.associated_complaint"/></p>
+                <p><b>History of Present Illness : </b> <span t-field="o.history_complaint"/></p>
+                <p><b>Treatment History : </b> <span t-field="o.treat_history"/></p>
+                <p><b>Vitals : </b> <span t-field="o.vitals"/></p>
+                <p><b>General Apperance : </b> <span t-field="o.apperance"/></p>
+                <p><b>Summary of Key Investigation : </b> <span t-field="o.ip_summary"/></p>
+                <p><b>Treatment Given : </b> <span t-field="o.treatment_given"/></p>
+            </td>
+            <td style="border: 1px solid black;">
+                <p><b> Consultant : </b> <span t-field="o.doctor_incharge"/></p>
+                <p><b> Therapy Given : </b> <span t-field="o.therapy_given"/></p>
+                <p><b> Discharge Condition : </b> <span t-field="o.discharge_condition"/></p>
+                <p><b> Prescription on Discharge : </b> <span t-field="o.pres_discharge"/></p>
+                <p><b> Discharge Advice : </b> <span t-field="o.advice_discharge"/></p>
+                <p><b> Discharge Diet : </b> <span t-field="o.diet_discharge"/></p>
+            </td>
+            </tr>
+            </thead>
+            </table>
+            </t>
+            <footer>
+                <div t-attf-class="footer o_standard_footer; text-center;" style='text-center; border-top: 2px solid black;'>
+            <p id="footer">
+                <b><h6 style = 'padding-right:5px;'>Chennai : (Branch)</h6></b></p>
+                <p>No.3, Rangasamy Street,<br></br>
+                Chrompet, Chennai-600094<br></br>
+                Cell : 9566 99022<br></br></p>
+                </div>
+            </footer>
+            </t>
+            </t>
+            </t>
+        </template>
+        
+    </data>
+</odoo>

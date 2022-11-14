@@ -33,11 +33,33 @@ class Registerwizard(models.TransientModel):
     doctor_changes=fields.Boolean(string="Change",readonly=True)
     designation = fields.Char(string="Designation")
     ebook_id = fields.Char(string='Patient ID')
-    reg_type=fields.Selection([('dir',"Direct"),('on',"Online"),('app',"Appointment"),('rev',"Review"),('stop',"Stopped"),('cam','Camp')],string="Registration Type")
+    reg_type=fields.Selection([('dir',"Direct"),('on',"Online"),('app',"Appointment"),('rev',"Review"),('package','Package'),('stop',"Stopped"),('cam','Camp')],string="Registration Type")
     # patient_id = fields.Many2one('')
 
     insurance = fields.Boolean(string="Insurance if any")
     type_of_insurance= fields.Text(string='Insurance Details')
+    
+    pay_mode = fields.Selection([('cash','Cash'),('card','Card'),('upi','Upi')], string='Payment Mode', default='cash')
+    upi_pay = fields.Char(string='UPI')
+    card_pay = fields.Char(string='Card Payment')
+    due_amount = fields.Float(string='Due Amount')
+    amt_paid = fields.Float(string='Amount Paid')
+    
+    no_fees = fields.Boolean(string='No Consulting Fees')
+    
+    @api.onchange('amt_paid')
+    def fees_due(self):
+        self.due_amount = (self.fees - self.amt_paid)
+        
+    @api.onchange('payment_status')
+    def paid_status(self):
+        if self.payment_status == True:
+            self.amt_paid = self.fees
+            
+    @api.onchange('doctors')
+    def doc_change_orm(self):
+        orm = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id)])
+        orm.write(({'doctors':self.doctors}))
 
     @api.onchange('doctors')
     def doctor_change(self):
@@ -53,10 +75,9 @@ class Registerwizard(models.TransientModel):
             'amount':self.fees
         })
         
-
         record = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id )])
         record.update({
-                'payment':self.fees
+                'payment':self.fees,
             })
         payment_count = self.env['medical.doctor'].search_count([('patient', '=', self.patient_id.id)])
         if self.patient_selection == 'new':
@@ -88,11 +109,12 @@ class Registerwizard(models.TransientModel):
                     'height':self.height,
                     'weight':self.weight,
                     'bmi_value':self.bmi_value,
-                    # '':self.treatment,
+                    'reg_type':self.reg_type,
                     'opnumber':self.name,
                     'currents_ailments':lines,
                     'designation':self.designation,
                     'patient_status':True,
+                    'adoption_details':'',
                     'stages':'done',
                     })
 
@@ -101,6 +123,7 @@ class Registerwizard(models.TransientModel):
             val.write({
                 'doctor':self.doctors.id,
                 'patient_status':True,
+                'reg_type':self.reg_type,
                 })
         orm_id=self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
         bill_lines=[]
@@ -108,16 +131,21 @@ class Registerwizard(models.TransientModel):
             'name':'Registration Payment',
             'date':datetime.now(),
             'bill_amount':self.fees,
+            'due_rec':self.due_amount,
             'payment_status':self.payment_status
         }
         bill_lines.append((0,0,bills))
         bill_create=self.env['patient.bills'].create({
             'patient_name':self.patient_id.id,
             'doctor_id':self.doctors.id,
+            'payment_type':self.pay_mode,
+            'payment_id':self.upi_pay,
+            'payment_id':self.card_pay,
             'reception_bills':bill_lines,
             'insurance':self.insurance,
             'ebook_id':orm_id.serial_number,
             'type_of_insurance':self.type_of_insurance,
+            'file_charges':'200',
         })
 
 

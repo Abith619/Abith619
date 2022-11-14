@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<template id="basic_hms.ebook_file_report">
+     <t t-call="web.external_layout">
+     <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+        <style>
+            .footer_section{
+            }
+            .border{
+                border-collapse: collapse;
+            }
+            .heading_text_cor{
+                color:#000;
+                font-weight:600;
+                }
+        </style>
+            <t>
+            <h2 >Patient Details</h2>
+            <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-right: 150px;">
+                <!-- <div class="row">
+                    <div class="col-4">
+            <td style="border: 0px;width: 50%;">
+                <p><strong>Name :</strong><span t-field="o.patient"/></p>
+                <p><b>ID Number :</b> <span t-field="o.serial_number"/></p>
+            </td></div>
+            <div class="col-6">
+            </div>
+            <div class="col-2">
+            <td style="border: 0px;width: 50%;">
+        <img t-att-src="'data:image/png;base64,%s' % to_text(o.qr_code)" style="height:100px;width:100px;float:center;"/>
+            </td>
+            </div>
+            </div> -->
+
+            <div class="row">
+                <div class="col-4">
+                    <div><p><strong>Name :</strong><span t-field="o.ebook_print.patient"/></p>
+                <p><b>ID Number :</b> <span t-field="o.ebook_print.serial_number"/></p></div>
+                    
+                </div>
+                <div class="col-6">
+                </div>
+                <div class="col-2">
+                    <label style="float:center;" for="ebook_print.qr_code" string="Qr Code" />
+                    <field name="ebook_print.qr_code" widget='image' class="oe_avatar" style="float:left;" force_save='1' readonly="1"/>
+                </div>
+            </div>
+            </table>
+
+        <table border="4" class="table table-bordered" style="border: 1px solid black;">
+            <thead>
+            <tr style="height:40px">
+            <td style="border: 1px solid black;" >
+                <p><b>Gender :</b> <span t-field="o.ebook_print.sex"/></p>
+                <p><b>Martial Status :</b> <span t-field="o.ebook_print.marital_status"/></p>
+                <p><b>Age :</b> <span t-field="o.ebook_print.age"/></p>
+                <p><b>Height :</b> <span t-field="o.ebook_print.height"/></p>
+                <p><b>Weight :</b> <span t-field="o.ebook_print.weight"/></p>
+                <p><b>BP :</b> <span t-field="o.ebook_print.bp"/></p>
+                <p><b>BMI :</b> <span t-field="o.ebook_print.bmi_value"/></p>
+                <p><b>Branch :</b> <span t-field="o.ebook_print.company_id"/></p>
+                <!-- <p><b> Symptoms :</b> <span t-field="o.sign_symptoms"/></p> -->
+            </td>
+            <td style="border: 1px solid black;">
+                <p><b> Doctor :</b> <span t-field="o.ebook_print.doctor"/></p>
+                <p><b> Contact Number :</b> <span t-field="o.ebook_print.phone_number"/></p>
+                <p><b> Whatsapp Number :</b> <span t-field="o.ebook_print.contact_number"/></p>
+                <p><b> Address :</b> <span t-field="o.ebook_print.address"/></p>
+                <p><b> Father / Husband Name :</b> <span t-field="o.ebook_print.name_father"/></p>
+                <p><b> Occupation :</b> <span t-field="o.ebook_print.occupation"/></p>
+                <p><b> Habits :</b> <span t-field="o.ebook_print.patient_habits"/></p>
+            </td>
+            </tr>
+            </thead>
+            </table>
+            
+        <!--    <div class="header_tag">
+         <h4 class="text-center heading_text_cor">Present Complaints</h4>
+        </div>
+            <table class="table table-bordered" style="border: 1px solid black;">
+                <thead>
+                    <tr>
+                    <th style="border: 1px solid black;">Complaints</th>
+                    <th style="border: 1px solid black;"> Duration </th>
+                    <th style="border: 1px solid black;"> Signs / Symptoms </th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr t-foreach='docs.currents_ailments' t-as='line'>
+                    <td style="border: 1px solid black;">
+                    <span t-field="line.patient_currents_ailments"/>
+                    </td>
+                    <td style="border: 1px solid black;">
+                    <span t-field="line.duration"/>
+                    </td>
+                    <td style="border: 1px solid black;">
+                    <span t-field="line.patient_signs_symptoms"/>
+                    </td>
+                    </tr>
+                </tbody>
+                </table>
+                <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Past Complaints</h4>
+        </div>
+                <table class="table table-bordered" style="border: 1px solid black;">
+                <thead>
+                    <tr>
+                    <th style="border: 1px solid black;">Past Complaints</th>
+                    <th style="border: 1px solid black;">Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr t-foreach='docs.pervious_medication' t-as='line'>
+                    <td style="border: 1px solid black;">
+                    <span t-field="line.diseases_for"/>
+                    </td>
+                    <td style="border: 1px solid black;">
+                    <span t-field="line.medicine"/>
+                    </td>
+                    </tr>
+                </tbody>
+                </table> -->
+                <t t-if="docs.ebook_print.lab_test_line">
+                     <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Lab Test</h4>
+        </div>
+                    <table class="table table-bordered" style="border: 1px solid black;">
+                <thead>
+                    <tr>
+                    <th style="border: 1px solid black;">Lab Test ID</th>
+                    <th style="border: 1px solid black;">Test Name </th>
+                    <th style="border: 1px solid black;">Tested Range </th>
+                    <th style="border: 1px solid black;">Normal Range </th>
+                    <th style="border: 1px solid black;">Date </th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr t-foreach='docs.ebook_print.lab_test_line' t-as='line'>
+                    <td style="border: 1px solid black;">
+                    <span t-field="line.lab_type"/>
+                    </td>
+                    <td style="border: 1px solid black;">
+                    <span t-field="line.name"/>
+                    </td>
+                    <td style="border: 1px solid black;">
+                    <span t-field="line.range_test"/>
+                    </td>
+                    <td style="border: 1px solid black;">
+                    <span t-field="line.range_normal"/>
+                    </td>
+                    <td style="border: 1px solid black;">
+                        <span t-field="line.date"/>
+                        </td>
+                    </tr>
+                </tbody>
+                </table> 
+                </t>
+                <t t-if="docs.ebook_print.scan_test">
+                <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Scan details</h4>
+        </div>
+                <table class="table table-bordered" style="border: 1px solid black;">
+                    <thead>
+                        <tr>
+                        <th style="border: 1px solid black;">Scan Test ID</th>
+                        <th style="border: 1px solid black;">Test Name </th>
+                       
+                        <th style="border: 1px solid black;">Date </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr t-foreach='docs.ebook_print.scan_test' t-as='line'>
+                        <td style="border: 1px solid black;">
+                        <span t-field="line.scan_id"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                        <span t-field="line.name"/>
+                        </td>
+                        
+                        <td style="border: 1px solid black;">
+                            <span t-field="line.date"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                    </table> 
+                    </t>
+                    <t t-if="docs.ebook_print.medicine_id.prescription_line_ids">
+                <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Medicine</h4>
+        </div>
+        <!-- <div style="page-break-before:always"> -->
+                <table class="table table-bordered" style="border: 1px solid black;">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid black;">Medicine Name</th>
+                            <th style="border: 1px solid black;">Dose</th>
+                            <th style="border: 1px solid black;">Unit</th>
+                            <th style="border: 1px solid black;">Notes</th>
+                            <th style="border: 1px solid black;">Before/After Food</th>
+                            <th style="border: 1px solid black;">Days</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach='docs.ebook_print.medicine_id.prescription_line_ids' t-as='line'>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.medicine_name"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.all_day"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.units"/>
+                            </td> 
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.anupana"/>
+                            </td> 
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.bf_af"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.days1"/>
+                            </td>     
+                        </tr>
+                    </tbody>
+                    </table>
+                    </t>
+                <div style="page-break-before:always">
+                <t t-if="docs.ebook_print.diet_fields.diet_for.diet_line">
+                   <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Diet</h4>
+        </div>
+                    <table class="table table-bordered" style="border: 1px solid black;">
+                        <thead>
+                            <tr>
+                            <th style="border: 1px solid black;">Time</th>
+                            <th style="border: 1px solid black;"> Food </th>
+                            <th style="border: 1px solid black;"> Fruit Diet </th>
+                            <th style="border: 1px solid black;"> Veg Diet </th>
+                            <th style="border: 1px solid black;"> Protein Diet </th>
+                            <th style="border: 1px solid black;"> Quantity </th>
+                            <th style="border: 1px solid black;"> Exercise </th>
+                            <th style="border: 1px solid black;"> Notes </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr t-foreach='docs.ebook_print.diet_fields.diet_for.diet_line' t-as='line'>
+                           <td style="border: 1px solid black;">
+                                <span t-field="line.wakeup1"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.food"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                           <span t-field="line.fruit_diet"/>
+                           </td>
+                           <td style="border: 1px solid black;">
+                            <span t-field="line.veg_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.protein_diet"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.quantity"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                            <span t-field="line.exercise1"/>
+                            </td>
+                            <td style="border: 1px solid black;">
+                                <span t-field="line.note"/>
+                            </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        </t>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                            <thead>
+                        </thead>
+                            <tr t-foreach='docs.ebook_print.diet_id' t-as='line'>
+                                <td style="border: 1px solid black;">
+                                    <span t-field="line.disclaimer"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                <t t-if="docs.ebook_print.image_work">
+                    <div style="page-break-before:always">
+                        <div class="header_tag">
+                        <h4 class="text-center heading_text_cor">Exercise</h4>
+                        </div>
+                        <tr t-foreach='docs.ebook_print.image_work' t-as='line'>
+                        <center><span t-field="line.workout" class="text-center "/></center>
+                        <br>
+                        </br>
+                        <center><img t-attf-src="data:image/*;base64,{{line.workout_img.datas}}"
+                        style="max-height:450px; max-width:1000px;" /></center>
+                        <br>
+                        </br>
+                        <br>
+                        </br>
+                        </tr>
+                        </div>
+                    </t>
+                        <div class="footer">
+                        <div class="float-right">
+                            <p><b>Doctor's Signature </b></p>
+                        </div>
+                        </div>
+                    </t>
+            </t>
+        </t>
+    </t>
+</template>
+</odoo>

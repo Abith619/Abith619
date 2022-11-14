@@ -12,12 +12,47 @@
             />
 
         <report
+            id="report_print_patient_qr_code"
+            model="medical.appointment"
+            report_type="qweb-pdf"
+            string="QR Code"
+            name="basic_hms.appointment_patient_qrcode"
+            file="basic_hms.appointment_qrcode"
+        />
+
+        <report
             id="report_print_registration"
             model="patient.bills"
             report_type="qweb-pdf"
             string="Registration"
             name="basic_hms.registration_bils_report"
-            file="basic_hms.prescription_demo_report"
+            file="basic_hms.prescription_demo_report" 
+            paperformat = "basic_hms.paperformat_reigstration" />
+            
+        
+        <report
+            id="in_patient_registration"
+            model="in.patient"
+            report_type="qweb-pdf"
+            string="In Patient Registration"
+            name="basic_hms.in_patient_report"
+            file="basic_hms.in_patient"
+        />
+        <report
+            id="in_patient_registration_bills"
+            model="patient.bills"
+            report_type="qweb-pdf"
+            string="In Patient Registration"
+            name="basic_hms.in_patient_bills"
+            file="basic_hms.in_patient_bill"
+        />
+        <report
+            id="in_discharge_registration"
+            model="discharge.summary"
+            report_type="qweb-pdf"
+            string="Discharge Details"
+            name="basic_hms.discharge_report"
+            file="basic_hms.discharge"
         />
 
         <report
@@ -27,6 +62,7 @@
             string="LAB"
             name="basic_hms.lab_bils_report"
             file="basic_hms.prescription_demo_report"
+            paperformat = "basic_hms.paperformat_lab"
         />
 
         <report
@@ -36,6 +72,7 @@
             string="SCAN"
             name="basic_hms.scan_bils_report"
             file="basic_hms.prescription_demo_report"
+            paperformat = "basic_hms.paperformat_scan"
         />
 
         <report
@@ -45,18 +82,30 @@
             string="Prescription"
             name="basic_hms.prescription_bils_report"
             file="basic_hms.prescription_demo_report"
-        />
+            paperformat = "basic_hms.paperformat_prescription"
+            
+            />
+            <!-- print_report_name = "(Daisy Report +'.pdf')" -->
+        
 
-            <report
+        <report
             id="report_diet_print_diet"
             model="prescribe.diet"
             report_type="qweb-pdf"
             string="Diet"
             name="basic_hms.diet_doctor_report"
             file="basic_hms.diet_doctor_report"
-            />
+        />
 
-            
+        <report
+            id="report_print_EBook_file"
+            model="res.partner"
+            report_type="qweb-pdf"
+            string="EBook"
+            name="basic_hms.ebook_file_report"
+            file="basic_hms.file_room"
+        />
+        
         <report
             id="report_print_EBook"
             model="medical.doctor"
@@ -64,7 +113,52 @@
             string="EBook"
             name="basic_hms.ebook_doctor_report"
             file="basic_hms.doctor_ebook"
-            />
+        />
+
+        <report
+            id="report_print_EBook_lab"
+            model="medical.doctor"
+            report_type="qweb-pdf"
+            string="Lab"
+            name="basic_hms.ebook_doctor_report_lab"
+            file="basic_hms.doctor_ebook_lab"
+        />
+        
+        <report
+            id="report_print_EBook_scan"
+            model="medical.doctor"
+            report_type="qweb-pdf"
+            string="Scan"
+            name="basic_hms.ebook_doctor_report_scan"
+            file="basic_hms.doctor_ebook_scan"
+        />
+
+        <report
+            id="report_print_EBook_exercise"
+            model="medical.doctor"
+            report_type="qweb-pdf"
+            string="Exercise"
+            name="basic_hms.ebook_doctor_report_exercise"
+            file="basic_hms.doctor_ebook_exercise"
+        />
+
+        <report
+            id="report_print_EBook_diet"
+            model="medical.doctor"
+            report_type="qweb-pdf"
+            string="Diet"
+            name="basic_hms.ebook_doctor_report_diet"
+            file="basic_hms.doctor_ebook_diet"
+        />
+
+        <report
+            id="report_print_EBook_pres"
+            model="medical.doctor"
+            report_type="qweb-pdf"
+            string="Prescription"
+            name="basic_hms.ebook_doctor_report_pres"
+            file="basic_hms.doctor_ebook_pres"
+        />
 
         <report
             id="report_print_patient"
@@ -73,16 +167,27 @@
             string="Patient Registration"
             name="basic_hms.registration_patient_report"
             file="basic_hms.patient_registration"
-            />
+            paperformat="basic_hms.paper_custom_format"
+        />
 
-            <report
+        <report
             id="report_print_patient_code"
             model="medical.patient"
             report_type="qweb-pdf"
             string="Barcode"
             name="basic_hms.registration_patient_barcode"
             file="basic_hms.patient_registration_code"
-            />
+        />
+
+        <report
+            id="report_print_res_patient_code"
+            model="res.partner"
+            report_type="qweb-pdf"
+            string="Barcode"
+            name="basic_hms.file_patient_barcode"
+            file="basic_hms.patient_file_code"
+        />
+
         <!-- <report
             id="report_print_appointment"
             model="medical.appointment"

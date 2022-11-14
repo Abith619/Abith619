@@ -6,6 +6,8 @@ class manylabs(models.Model):
     _name = 'lab.many'
 
     patient_id = fields.Many2one('res.partner', string='Patient')
+    test_name = fields.Char(string='Test')
+    ebook_id = fields.Char(string='Patient ID')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
     date= fields.Datetime(string="Date of Lab/Scan")
@@ -15,6 +17,7 @@ class manylabs_data(models.Model):
     _name = 'lab.many.data'
 
     patient_id = fields.Many2one('res.partner', string='Patient')
+    ebook_id = fields.Char(string='Patient ID')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
     date= fields.Datetime(string="Date of Lab/Scan")
@@ -24,6 +27,7 @@ class manylabs_form(models.Model):
     _name = 'lab.many.form'
 
     patient_id = fields.Many2one('res.partner', string='Patient')
+    ebook_id = fields.Char(string='Patient ID')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
     range = fields.Char(string='Range')
@@ -34,6 +38,7 @@ class lab_test_form(models.Model):
 
     name = fields.Char(string='Name')
     date= fields.Datetime(string="Date of Lab/Scan")
+    ebook_id = fields.Char(string='Patient ID')
     patient_id = fields.Many2one('res.partner', string='Patient')
     price = fields.Integer(string='Price')
     range = fields.Char(string='Range')
@@ -43,6 +48,7 @@ class lab_test_data(models.Model):
 
     patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
+    ebook_id = fields.Char(string='Patient ID')
     price = fields.Integer(string='Price')
     date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
@@ -51,6 +57,7 @@ class lab_test_data_form(models.Model):
     _name = 'lab.test.data.form'
 
     patient_id = fields.Many2one('res.partner', string='Patient')
+    ebook_id = fields.Char(string='Patient ID')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
     date= fields.Datetime(string="Date of Lab/Scan")
@@ -60,6 +67,7 @@ class lab_test_data_form_many(models.Model):
     _name = 'lab.test.data.form.many'
 
     patient_id = fields.Many2one('res.partner', string='Patient')
+    ebook_id = fields.Char(string='Patient ID')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
     date= fields.Datetime(string="Date of Lab/Scan")
@@ -69,6 +77,7 @@ class lab_test_data_form_many_data(models.Model):
     _name = 'lab.test.data.form.many.data'
 
     patient_id = fields.Many2one('res.partner', string='Patient')
+    ebook_id = fields.Char(string='Patient ID')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
     date= fields.Datetime(string="Date of Lab/Scan")
@@ -78,6 +87,7 @@ class lab_test_data_form_many_form(models.Model):
     _name = 'lab.test.data.form.many.form'
 
     patient_id = fields.Many2one('res.partner', string='Patient')
+    ebook_id = fields.Char(string='Patient ID')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
     date= fields.Datetime(string="Date of Lab/Scan")
@@ -87,6 +97,7 @@ class lab_test_data_form_many_form_many(models.Model):
     _name = 'lab.test.data.form.many.form.many'
 
     patient_id = fields.Many2one('res.partner', string='Patient')
+    ebook_id = fields.Char(string='Patient ID')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
     date= fields.Datetime(string="Date of Lab/Scan")
@@ -97,6 +108,7 @@ class lab_test_hospital(models.Model):
 
     patient_id = fields.Many2one('res.partner', string='Patient')
     name = fields.Char(string='Name')
+    ebook_id = fields.Char(string='Patient ID')
     price = fields.Integer(string='Price')
     date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
@@ -105,6 +117,7 @@ class lab_test_hospital_data(models.Model):
     _name = 'lab.test.hospital.data'
 
     patient_id = fields.Many2one('res.partner', string='Patient')
+    ebook_id = fields.Char(string='Patient ID')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
     date= fields.Datetime(string="Date of Lab/Scan")
@@ -119,6 +132,7 @@ class lab_test_hospital_form_many(models.Model):
     _name = 'lab.test.hospital.form.many'
 
     patient_id = fields.Many2one('res.partner', string='Patient')
+    ebook_id = fields.Char(string='Patient ID')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
     date= fields.Datetime(string="Date of Lab/Scan")
@@ -128,6 +142,7 @@ class lab_test_hospital_form_many_data(models.Model):
     _name = 'lab.test.hospital.form.many.data'
 
     patient_id = fields.Many2one('res.partner', string='Patient')
+    ebook_id = fields.Char(string='Patient ID')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
     date= fields.Datetime(string="Date of Lab/Scan")
@@ -137,6 +152,7 @@ class lab_test_hospital_form_many_form(models.Model):
     _name = 'lab.test.hospital.form.many.form'
 
     patient_id = fields.Many2one('res.partner', string='Patient')
+    ebook_id = fields.Char(string='Patient ID')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
     date= fields.Datetime(string="Date of Lab/Scan")
@@ -146,6 +162,7 @@ class lab_test_hospital_form_many_form_data(models.Model):
     _name = 'lab.test.hospital.form.many.form.data'
 
     patient_id = fields.Many2one('res.partner', string='Patient')
+    ebook_id = fields.Char(string='Patient ID')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
     date= fields.Datetime(string="Date of Lab/Scan")
@@ -155,6 +172,7 @@ class lab_hospital_test(models.Model):
     _name = 'lab.hospital.test'
 
     patient_id = fields.Many2one('res.partner', string='Patient')
+    ebook_id = fields.Char(string='Patient ID')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
     date= fields.Datetime(string="Date of Lab/Scan")
@@ -164,6 +182,7 @@ class lab_hospital_test_data(models.Model):
     _name = 'lab.hospital.test.data'
 
     patient_id = fields.Many2one('res.partner', string='Patient')
+    ebook_id = fields.Char(string='Patient ID')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
     date= fields.Datetime(string="Date of Lab/Scan")
@@ -173,6 +192,7 @@ class lab_hospital_test_form(models.Model):
     _name = 'lab.hospital.test.form'
 
     patient_id = fields.Many2one('res.partner', string='Patient')
+    ebook_id = fields.Char(string='Patient ID')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
     date= fields.Datetime(string="Date of Lab/Scan")
@@ -182,6 +202,7 @@ class Immunology_test(models.Model):
     _name = 'immunology.test'
 
     patient_id = fields.Many2one('res.partner', string='Patient')
+    ebook_id = fields.Char(string='Patient ID')
     name = fields.Char(string='Name')
     price = fields.Integer(string='Price')
     date= fields.Datetime(string="Date of Lab/Scan")
@@ -194,6 +215,7 @@ class LabsScansd(models.Model):
     request = fields.Char('ID Number', readonly = True)
     patient_id = fields.Many2one('res.partner', string='Patient Name')
     name = fields.Char(string='Name')
+    ip_name = fields.Many2one('in.patient',string='Ip Name')
     price = fields.Integer(string='Price')
     range = fields.Char(string='Range')
     test_range = fields.Char(string='Tested Range')
@@ -207,6 +229,8 @@ class LabsScansd(models.Model):
     # appoinment_by=fields.Many2one('res.users',string='Appointment By',default=lambda self: self.env.user,readonly='1')
 
     company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.doctor'))
+    num_days = fields.Selection([('e','ebook'),('1','Day1'),('2','Day2'),('3','Day3'),('4','Day4'),('5','Day5'),
+                                ('6','Day6'),('7','Day7'),('8','Day8'),('9','Day9'),('10','Day10')])
 
     hemo_coag12 = fields.Many2many('lab.many', string="HAEMATOLOGY")
     hemo_coag1 = fields.Many2many('lab.many.data', string='Urine')
@@ -228,6 +252,28 @@ class LabsScansd(models.Model):
     lab_hiv = fields.Many2many('lab.hospital.test.data',string='Hepatitis Panel')
     lab_hepatis = fields.Many2many('lab.hospital.test.form',string='X-Ray Digital')
     lab_immune_test = fields.Many2many('immunology.test',string='Immunology')
+    
+    def send_msg(self):
+        return {'type': 'ir.actions.act_window',
+                'name': 'Whatsapp Message',
+                'res_model': 'whatsapp.wizard',
+                'target': 'new',
+                'view_mode': 'form',
+                'view_type': 'form',
+                'context': {'default_user_id': self.patient_id.id,
+                # 'default_mobile':self.contact_number,
+                'default_message':"Hi "+self.patient_id.name+",\n\nYou Have registrated With  "+"\nFeedback : https://www.google.co.in/webhp?hl=en&sa=X&ved=0ahUKEwji0JG87J_4AhVVv2MGHcWkCuwQPAgI"+"\n\nThank You,\nDaisy Hospital",
+                }}
+        
+    @api.constrains('patient_id')
+    def write_lab(self):
+        orm_e = self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
+        orm_e.write({'patient_activity' : 'lab'})
+        
+        orm = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id)])
+        orm.write({'patient_activity' : 'lab'})
+        
+        self.patient_activity = 'lab'
 
     def document_button(self):
         self.patient_activity = 'labs'
@@ -235,6 +281,15 @@ class LabsScansd(models.Model):
         orm.write({'patient_activity':'labs'})
         orm1 = self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
         orm1.write({'patient_activity':'labs'})
+        
+        lines=[]
+        # docs_line = self.env['document.type.line'].search([('name','=',self.patient_id.id)])
+        # for i in docs_line:
+        valuee={
+            'attach_types':'lab',
+            
+        }
+        lines.append(valuee)
         return{
             'name': "Document Upload",
             'domain':[('patient_id', '=', self.patient_id.id)],
@@ -243,7 +298,9 @@ class LabsScansd(models.Model):
             'view_type': 'form',
             'type': 'ir.actions.act_window',
             'context': {
-            'default_patient_id': self.patient_id.id
+            'default_name': self.patient_id.name,
+            'default_attach_types':'lab',
+            
             },
             'target': 'new'
         }
@@ -251,16 +308,17 @@ class LabsScansd(models.Model):
     def lab_button(self):
             return {
     'name': "Lab Details",
-    'domain':[('patient_id', '=', self.patient_id.id)],
+    'domain':[('name', '=', self.patient_id.name),('attach_types','=','lab')],
     'view_mode': 'tree,form',
     'res_model': 'document.type.line',
     'view_type': 'form',
     'type': 'ir.actions.act_window',
     }
+            
 #      Count in Smart Button
     def lab_count(self):
         for res in self :
-            count_d = self.env['document.type.line'].search_count([('patient_id', '=', res.patient_id.id)])
+            count_d = self.env['document.type.line'].search_count([('name', '=', res.patient_id.name),('attach_types','=','lab')])
             self.lab_recs= count_d
 
     lab_recs = fields.Integer(compute='lab_count',string="Lab Details")
@@ -269,318 +327,3574 @@ class LabsScansd(models.Model):
     def create(self, vals):
         vals['request'] = self.env['ir.sequence'].next_by_code('lab.scan.form') or 'LAB'
         result = super(LabsScansd, self).create(vals)
-        
-        orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
-        lines=[]
-        
-        for rec in result.hemo_coag12:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.hemo_coag1:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.hemo_coag2:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.lab_test_hos:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.lab_test_hos_data:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.lab_test_hos_form:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.lab_enzymes:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.lab_lipid:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.lab_protein:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.lab_checkup:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.lab_endocrinology:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.lab_immunology:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.lab_tumour:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.lab_drug:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.lab_serology:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.lab_leptospirosis:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.lab_hiv:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.lab_hepatis:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.lab_immune_test:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        for rec in result.lab_liver:
-            valuez={
-                'name': rec.name,
-                'date':datetime.now(),
-                'bill_amount': rec.price
-            }
-            lines.append((0, 0, valuez))
-        orm.write({'lab_bill':lines})
-
-        labscan = self.env['medical.doctor'].search([('patient','=',result.patient_id.id)])
-        lab_lines=[]
-        
-        for rec in result.hemo_coag12:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
+        if result.num_days == 'e' :
+            orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
+            labscan = self.env['lab.menu']
+            lab_test = self.env['medical.doctor'].search([('patient','=',result.patient_id.id)])
+            lines=[]
+            lab_lines=[]
+            for rec in result.hemo_coag12:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
                 }
-            lab_lines.append((0,0,values))
-        for rec in result.hemo_coag1:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
                 }
-            lab_lines.append((0,0,values))
-        for rec in result.hemo_coag2:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
                 }
-            lab_lines.append((0,0,values))
-        for rec in result.lab_test_hos:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
+                lab_lines.append((0,0,valuee))
+            for rec in result.hemo_coag1:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
                 }
-            lab_lines.append((0,0,values))
-        for rec in result.lab_test_hos_data:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
                 }
-            lab_lines.append((0,0,values))
-        for rec in result.lab_test_hos_form:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
                 }
-            lab_lines.append((0,0,values))
-        for rec in result.lab_enzymes:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
-                }
-            lab_lines.append((0,0,values))
-        for rec in result.lab_lipid:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
-                }
-            lab_lines.append((0,0,values))
-        for rec in result.lab_protein:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
-                }
-            lab_lines.append((0,0,values))
-        for rec in result.lab_checkup:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
-                }
-            lab_lines.append((0,0,values))
-        for rec in result.lab_endocrinology:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
-                }
-            lab_lines.append((0,0,values))
-        for rec in result.lab_immunology:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
-                }
-            lab_lines.append((0,0,values))
-        for rec in result.lab_tumour:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
-                }
-            lab_lines.append((0,0,values))
-        for rec in result.lab_drug:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
-                }
-            lab_lines.append((0,0,values))
-        for rec in result.lab_serology:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
-                }
-            lab_lines.append((0,0,values))
-        for rec in result.lab_leptospirosis:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
-                }
-            lab_lines.append((0,0,values))
-        for rec in result.lab_hiv:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
-                }
-            lab_lines.append((0,0,values))
-        for rec in result.lab_hepatis:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
-                }
-            lab_lines.append((0,0,values))
-        for rec in result.lab_immune_test:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
-                }
-            lab_lines.append((0,0,values))
-        for rec in result.lab_liver:
-            values={
-                'date':datetime.now(),
-                'lab_type':result.id,
-                'name':rec.name,
-                'range_normal':rec.range
+                lab_lines.append((0,0,valuee))
                 
+            for rec in result.hemo_coag2:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
                 }
-            lab_lines.append((0,0,values))
-
-        labscan.write({'lab_test_line':lab_lines})
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
+                }
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                }
+                lab_lines.append((0,0,valuee))
+                
+            for rec in result.lab_test_hos:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
+                }
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
+                }
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                }
+                lab_lines.append((0,0,valuee))
+                
+            for rec in result.lab_test_hos_data:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
+                }
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
+                }
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                }
+                lab_lines.append((0,0,valuee))
+                
+            for rec in result.lab_test_hos_form:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
+                }
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
+                }
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                }
+                lab_lines.append((0,0,valuee))
+                
+            for rec in result.lab_enzymes:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
+                }
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
+                }
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                }
+                lab_lines.append((0,0,valuee))
+                
+            for rec in result.lab_lipid:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
+                }
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
+                }
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                }
+                lab_lines.append((0,0,valuee))
+                
+            for rec in result.lab_protein:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
+                }
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
+                }
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                }
+                lab_lines.append((0,0,valuee))
+                
+            for rec in result.lab_checkup:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
+                }
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
+                }
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                }
+                lab_lines.append((0,0,valuee))
+                
+            for rec in result.lab_endocrinology:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
+                }
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
+                }
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                }
+                lab_lines.append((0,0,valuee))
+                
+            for rec in result.lab_immunology:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
+                }
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
+                }
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                }
+                lab_lines.append((0,0,valuee))
+                
+            for rec in result.lab_tumour:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
+                }
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
+                }
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                }
+                lab_lines.append((0,0,valuee))
+                
+            for rec in result.lab_drug:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
+                }
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
+                }
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                }
+                lab_lines.append((0,0,valuee))
+                
+            for rec in result.lab_serology:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
+                }
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
+                }
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                }
+                lab_lines.append((0,0,valuee))
+                
+            for rec in result.lab_leptospirosis:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
+                }
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
+                }
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                }
+                lab_lines.append((0,0,valuee))
+                
+            for rec in result.lab_hiv:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
+                }
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
+                }
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                }
+                lab_lines.append((0,0,valuee))
+                
+            for rec in result.lab_hepatis:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
+                }
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
+                }
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                }
+                lab_lines.append((0,0,valuee))
+                
+            for rec in result.lab_immune_test:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
+                }
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
+                }
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                }
+                lab_lines.append((0,0,valuee))
+                
+            for rec in result.lab_liver:
+                valuez={
+                    'name': rec.name,
+                    'date':datetime.now(),
+                    'bill_amount': rec.price
+                }
+                lines.append((0, 0, valuez))
+                values={
+                    'patient_id':result.patient_id.id,
+                    'ebook_id':result.ebook_id,
+                    'range':rec.range,
+                    'test_name':rec.name
+                }
+                labscan.create(values)
+                valuee={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                }
+                lab_lines.append((0,0,valuee))
+                
+            orm.write({'lab_bill':lines})
+            lab_test.write({'lab_test_line':lab_lines})
+        
+        if result.num_days == '1':
+            orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
+            lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
+            lines=[]
+            bill_lines=[]
+            for rec in result.hemo_coag12:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            for rec in result.hemo_coag1:
+                bill_lines=[]
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.hemo_coag2:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_data:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_form:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_enzymes:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_lipid:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_protein:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_checkup:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_endocrinology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immunology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_tumour:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_drug:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_serology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_leptospirosis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hiv:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hepatis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immune_test:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_liver:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            lab_in.write({'lab_line':lines})
+            orm.write({'inpatient_lab':bill_lines})
+            
+        elif result.num_days == '2':
+            orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
+            lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
+            lines=[]
+            bill_lines=[]
+            for rec in result.hemo_coag12:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            for rec in result.hemo_coag1:
+                bill_lines=[]
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.hemo_coag2:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_data:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_form:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_enzymes:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_lipid:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_protein:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_checkup:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_endocrinology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immunology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_tumour:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_drug:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_serology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_leptospirosis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hiv:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hepatis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immune_test:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_liver:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            lab_in.write({'lab_line_two':lines})
+            orm.write({'inpatient_lab':bill_lines})
+            
+        elif result.num_days == '3':
+            orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
+            lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
+            lines=[]
+            bill_lines=[]
+            for rec in result.hemo_coag12:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            for rec in result.hemo_coag1:
+                bill_lines=[]
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.hemo_coag2:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_data:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_form:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_enzymes:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_lipid:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_protein:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_checkup:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_endocrinology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immunology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_tumour:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_drug:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_serology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_leptospirosis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hiv:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hepatis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immune_test:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_liver:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            lab_in.write({'lab_line_three':lines})
+            orm.write({'inpatient_lab':bill_lines})
+            
+        elif result.num_days == '4':
+            orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
+            lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
+            lines=[]
+            bill_lines=[]
+            for rec in result.hemo_coag12:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            for rec in result.hemo_coag1:
+                bill_lines=[]
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.hemo_coag2:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_data:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_form:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_enzymes:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_lipid:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_protein:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_checkup:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_endocrinology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immunology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_tumour:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_drug:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_serology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_leptospirosis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hiv:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hepatis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immune_test:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_liver:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            lab_in.write({'lab_line_four':lines})
+            orm.write({'inpatient_lab':bill_lines})
+            
+        elif result.num_days == '5':
+            orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
+            lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
+            lines=[]
+            bill_lines=[]
+            for rec in result.hemo_coag12:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            for rec in result.hemo_coag1:
+                bill_lines=[]
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.hemo_coag2:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_data:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_form:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_enzymes:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_lipid:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_protein:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_checkup:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_endocrinology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immunology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_tumour:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_drug:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_serology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_leptospirosis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hiv:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hepatis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immune_test:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_liver:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            lab_in.write({'lab_line_five':lines})
+            orm.write({'inpatient_lab':bill_lines})
+            
+        elif result.num_days == '6':
+            orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
+            lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
+            lines=[]
+            bill_lines=[]
+            for rec in result.hemo_coag12:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            for rec in result.hemo_coag1:
+                bill_lines=[]
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.hemo_coag2:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_data:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_form:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_enzymes:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_lipid:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_protein:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_checkup:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_endocrinology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immunology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_tumour:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_drug:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_serology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_leptospirosis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hiv:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hepatis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immune_test:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_liver:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            lab_in.write({'lab_line_six':lines})
+            orm.write({'inpatient_lab':bill_lines})
+            
+        elif result.num_days == '7':
+            orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
+            lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
+            lines=[]
+            bill_lines=[]
+            for rec in result.hemo_coag12:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            for rec in result.hemo_coag1:
+                bill_lines=[]
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.hemo_coag2:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_data:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_form:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_enzymes:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_lipid:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_protein:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_checkup:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_endocrinology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immunology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_tumour:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_drug:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_serology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_leptospirosis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hiv:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hepatis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immune_test:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_liver:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            lab_in.write({'lab_line_seven':lines})
+            orm.write({'inpatient_lab':bill_lines})
+            
+        elif result.num_days == '8':
+            orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
+            lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
+            lines=[]
+            bill_lines=[]
+            for rec in result.hemo_coag12:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            for rec in result.hemo_coag1:
+                bill_lines=[]
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.hemo_coag2:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_data:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_form:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_enzymes:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_lipid:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_protein:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_checkup:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_endocrinology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immunology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_tumour:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_drug:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_serology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_leptospirosis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hiv:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hepatis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immune_test:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_liver:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            lab_in.write({'lab_line_eight':lines})
+            orm.write({'inpatient_lab':bill_lines})
+            
+        elif result.num_days == '9':
+            orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
+            lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
+            lines=[]
+            bill_lines=[]
+            for rec in result.hemo_coag12:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            for rec in result.hemo_coag1:
+                bill_lines=[]
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.hemo_coag2:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_data:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_form:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_enzymes:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_lipid:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_protein:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_checkup:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_endocrinology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immunology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_tumour:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_drug:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_serology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_leptospirosis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hiv:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hepatis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immune_test:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_liver:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            lab_in.write({'lab_line_nine':lines})
+            orm.write({'inpatient_lab':bill_lines})
+            
+        elif result.num_days == '10':
+            orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
+            lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
+            lines=[]
+            bill_lines=[]
+            for rec in result.hemo_coag12:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            for rec in result.hemo_coag1:
+                bill_lines=[]
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.hemo_coag2:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_data:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_test_hos_form:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_enzymes:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_lipid:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_protein:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_checkup:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_endocrinology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immunology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_tumour:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_drug:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_serology:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_leptospirosis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hiv:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_hepatis:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_immune_test:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+            for rec in result.lab_liver:
+                values={
+                    'date':datetime.now(),
+                    'lab_type':result.id,
+                    'name':rec.name,
+                    'range_normal':rec.range
+                    
+                    }
+                vals = {
+                    'date':datetime.now(),
+                    'name':rec.name,
+                    'bill_amount':rec.price,
+                    # '':,
+                    }
+                bill_lines.append((0,0,vals))
+                lines.append((0,0,values))
+                
+            lab_in.write({'lab_line_ten':lines})
+            orm.write({'inpatient_lab':bill_lines})
+       
 
         return result
     
@@ -654,10 +3968,6 @@ class LabsScansd(models.Model):
     iggg = fields.Boolean(string='IgG')
     igmm = fields.Boolean(string='IgM')
     ebv_abs = fields.Boolean(string='EBV Abs')
-
-
-
-
 
     biochemistry = fields.Boolean("BIOCHEMISTRY-BLOOD")
     blood_sugar = fields.Boolean("BLOOD SUGAR")
@@ -852,3 +4162,17 @@ class LabsScansd(models.Model):
     mhc = fields.Boolean(string='MHC-Gold')
     mhcplatinum = fields.Boolean(string='MHC-Platinum')
 
+class LabMenu(models.Model):
+    _name = 'lab.menu'
+    _rec_name = 'patient_id'
+    
+    patient_id = fields.Many2one('res.partner', string='Patient Name')
+    request = fields.Char(string='ID Number')
+    ebook_id = fields.Char(string='Patient ID')
+    range = fields.Char(string='Range')
+    test_range = fields.Char(string='Tested Range')
+    test_name = fields.Char(string='Test')
+    patient_activity = fields.Selection([('wait',"Doctor Assigned"),('doc','Diet Assigned'),('lab','Lab Assigned'),
+                                         ('pres','Prescription'),('scan','Scan Assigned'),('labs','Lab Completed'),
+                                         ('scans','Scan Completed'),('bill',"Pharmacy Bill Assigned"),
+                                         ('completed',"Completed")],default='wait')

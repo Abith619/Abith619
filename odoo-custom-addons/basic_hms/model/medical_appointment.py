@@ -30,7 +30,9 @@ class medical_appointment(models.Model):
 			('outpatient', 'Outpatient'),
 			('inpatient', 'Inpatient'),
 		], 'Patient status', sort=False,default='outpatient')
-	patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string='Patient Name',required=True)
+ 
+	# patient_name = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string='Patient Name',required=True)
+	patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string='Patient Name')
 	urgency_level = fields.Selection([
 			('a', 'Normal'),
 			('b', 'Urgent'),
@@ -38,7 +40,7 @@ class medical_appointment(models.Model):
 		], 'Urgency Level', sort=False,default="b")
 	appointment_date = fields.Datetime('Appointment Date')
 	appointment_end = fields.Datetime('Appointment End')
-	doctor_id = fields.Many2one('res.partner',domain=[('is_doctor','=',True)],string='Doctor',required=True)
+	doctor_id = fields.Many2one('res.partner',domain=[('is_doctor','=',True)],string='Doctor')
 	no_invoice = fields.Boolean(string='Bill exempt',default=True)
 	validity_status = fields.Selection([
 			('invoice', 'Bill'),
@@ -78,12 +80,9 @@ class medical_appointment(models.Model):
 	patient_signs_symptoms = fields.Many2many('medical.symptoms',string="Signs/Symptoms")
 
 	company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.prescription.order'))
+	feedback = fields.Many2many('medical.feedback', string="How you came to know about Daisy Health Care(P)LTD.")
 
-
-	# @api.onchange("patient_selection")
-    # def new_change(self):
-    #     if patient_selection == 'new':
-    #         return {'domain':{'patient_id':rage:('id','in',None)]}}
+	types_app = fields.Selection([('Tele','Telecaller'),('web','Website')], string='', default='Tele')
 	
 	def send_msg(self):
 		if self.whatsapp_check == True:
@@ -123,7 +122,6 @@ class medical_appointment(models.Model):
 			self.fees=float(150)
 
     		
-
 	@api.onchange('dates','doctor_id')
 	def roll(self):
 		date_today=self.dates
@@ -135,7 +133,7 @@ class medical_appointment(models.Model):
 		if vals >= 20:
 			raise ValidationError("Appointment Slots are full")
 
-	@api.onchange('appointment_from')
+	@api.depends('appointment_from')
 	def date_appointment(self):
 		l1 = []
 
@@ -148,6 +146,8 @@ class medical_appointment(models.Model):
 				l1.append(slots)
 				booked_slots = [i for i in all_slots if i not in l1]
 				raise ValidationError("Please Select from Available Slots: {}".format(booked_slots))
+
+
 
 	@api.model
 	def create(self, vals):
@@ -170,12 +170,11 @@ class medical_appointment(models.Model):
         'res_model': 'medical.patient',
 		'context': {
 				'default_patient_id':self.patient_id.id,
+				'default_reg_type':'on',
 				'default_sex':self.gender,
 				'default_contact_no':self.phone_number,
-				# 'default_patient_signs_symptoms':self.patient_signs_symptoms.id,
 				'default_contact_number':self.contact_number,
 				'default_doctors':self.doctor_id.id,
-				# 'default_related_field':self.name,
 				'default_dates':datetime.datetime.now(),
 				'default_appointment_from':self.appointment_from,
 				'default_treatment':self.treatment_for.id,
@@ -185,20 +184,16 @@ class medical_appointment(models.Model):
 				'default_reg_type':'app',
 				'default_stages':'on',
 				'default_treatment_for':self.treatment_for.id,
-				# 'default_patient_movement':datetime.now()
             },
 		}		
 		val = self.env['res.partner'].search([], order='id desc', limit=1)
 		val.write({
 			'name':self.patient_id.name,
+			# 'name':self.patient_name,
 			'mobile':self.phone_number,
 			'patient_gender':self.gender,
 			'is_patient':'True',
 			})
-		
-		# res=self.env['medical.patient'].search([('related_field','=',self.name)])
-		# for symptom in res.patient_signs_symptoms:
-		# 	res.update({'patient_signs_symptoms':symptom.id})
 		return ces
 
 	@api.onchange('patient_id')
@@ -212,7 +207,6 @@ class medical_appointment(models.Model):
 	def number_swap(self):
 		if self.whatsapp_check == True:
 			self.contact_number= self.phone_number
-
 
 
 	@api.onchange('duration')

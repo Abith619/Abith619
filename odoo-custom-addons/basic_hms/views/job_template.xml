@@ -1,0 +1,17 @@
+<odoo>
+    <record id="job_resume" model="ir.ui.view">
+        <field name="name">hr.job.inherited</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"></field>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_title']" position="before">
+                <label for="client"></label>
+                <h1><field name='client'/></h1>
+            </xpath>
+            <xpath expr="//field[@name='description']" position="after">
+                <group string="Target Date" />
+                <field name="target"></field>
+            </xpath>
+        </field>
+    </record>
+    </odoo>

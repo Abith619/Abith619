@@ -3,50 +3,30 @@
 
 {
 
-    "name": "Basic Hospital Management System in Odoo",
+    "name": "Daisy Hospital",
     "version": "14.0.0.1",
-    "currency": 'EUR',
-    "summary": "Apps basic Hospital Management system Healthcare Management Clinic Management apps manage clinic manage Patient hospital manage Healthcare system Patient Management Hospital Management Healthcare Management Clinic Management hospital Lab Test Request",
+    "currency": 'INR',
+    "summary": "Daisy Hospital Management System",
     "category": "Industries",
     "description": """
-    BrowseInfo developed a new odoo/OpenERP module apps
     This module is used to manage Hospital and Healthcare Management and Clinic Management apps. 
-    manage clinic manage Patient hospital in odoo manage Healthcare system Patient Management, 
-    Odoo Hospital Management odoo Healthcare Management Odoo Clinic Management
-    Odoo hospital Patients
-    Odoo Healthcare Patients Card Report
-    Odoo Healthcare Patients Medication History Report
-    Odoo Healthcare Appointments
-    Odoo hospital Appointments Invoice
-    Odoo Healthcare Families Prescriptions Healthcare Prescriptions
-    Odoo Healthcare Create Invoice from Prescriptions odoo hospital Prescription Report
-    Odoo Healthcare Patient Hospitalization
-    odoo Hospital Management System
-    Odoo Healthcare Management System
-    Odoo Clinic Management System
-    Odoo Appointment Management System
-    health care management system
-    Generate Report for patient details, appointment, prescriptions, lab-test
-
-    Odoo Lab Test Request and Result
-    Odoo Patient Hospitalization details
-    Generate Patient's Prescriptions
-
-    
 """,
 
-    "depends": ["base", "sale_management", "stock", "account","mail"],
+    "depends": ["base", "sale_management", "stock", "account","mail",'website'],
     "data": [
-        'security/company_access.xml',
-        'security/hospital_groups.xml',
-        'security/ir.model.access.csv',
-        'data/ir_sequence_data.xml',
+        
         'views/assets.xml',
+        'views/test_view.xml',
+        
         'views/labscan.xml',
         'views/file_room.xml',
+        'views/discharge.xml',
         'views/scan_test.xml',
         'report/diet_plan.xml',
         'report/header.xml',
+        'report/discharge.xml',
+        'report/in_patient_bill.xml',
+        'report/in_patient.xml',
         'report/lab_bill.xml',
         'report/scan_bill.xml',
         'report/prescription_bill.xml',
@@ -102,7 +82,7 @@
         'views/medical_test_type.xml',
         'views/medical_vaccination.xml',
         'views/res_partner.xml',
-        'views/medical_doctor.xml',
+        'views/medical_doctor.xml', 
         'report/report_view.xml',
         'report/appointment_recipts_report_template.xml',
         'report/medical_view_report_document_lab.xml',
@@ -114,7 +94,12 @@
         'report/patient_vaccinations_document_report.xml',
         'report/prescription_demo_report.xml',
         'report/patient_ebook.xml',
+        'report/doctor_ebook_diet.xml',
         'report/doctor_ebook.xml',
+        'report/doctor_ebook_lab.xml',
+        'report/doctor_ebook_scan.xml',
+        'report/doctor_ebook_pres.xml',
+        'report/doctor_ebook_exercise.xml',
         'report/diet_report.xml',
         'views/diet_for.xml',
         'views/set_diets.xml',
@@ -133,10 +118,20 @@
         'views/account_payment_inherit.xml',
         'views/product_product.xml',
         'report/reg_barcode.xml',
-        
+        'report/file_room.xml',
+        'report/file_barcode.xml',
+        'report/patient_ebook_format.xml',
+        'report/appointment_qrcode.xml',
+        'views/web_page.xml',
+        'security/company_access.xml',
+        'security/reception_access.xml',
+        'security/hospital_groups.xml',
+        'security/ir.model.access.csv',
+        'data/ir_sequence_data.xml',
+        'security/doctor_access.xml',
     ],
-    "author": "BrowseInfo",
-    "website": "https://www.browseinfo.in",
+    "author": "Abith",
+    "website": "https://www.facebook.com/abith.raj",
     "installable": True,
     "application": True,
     "auto_install": False,

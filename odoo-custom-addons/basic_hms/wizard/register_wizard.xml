@@ -9,21 +9,34 @@
                 <form string="Register Payment">
                         <field name="patient_selection" widget="radio"/>
                     <group>
+                        <style>
+                            .center{
+                                text-align = 'center',
+                            }
+                        </style>
                         <group class= "col-5"> 
+                            <!-- <field name="patient_id" invisible='1'/> -->
                             <field name="doctors"/>
                             <field name = "doctor_changes"/>
                             <field name ="reason" attrs="{'invisible': [('doctor_changes','=', False)]}" />
                             <field name ="insurance"/>
                             <field name = "type_of_insurance" attrs="{'invisible': [('insurance','=', False)]}"/>
-                        
+                            <field name ="no_fees" style='center'/>
                         </group>
 
                         <group class= "col-5">
                             <field name ="reg_type" readonly="1"/>
+                            <field name ="pay_mode" /> 
+                            <field name ="upi_pay" attrs="{'invisible': ['|',('pay_mode','=', 'cash'),('pay_mode','=', 'card')]}"/>
+                            <field name ="card_pay" attrs="{'invisible': ['|',('pay_mode','=', 'cash'),('pay_mode','=', 'upi')]}"/>
                             <field name="fees" widget="monetary"  options="{'currency_field': 'currency'}" />
                             <field name = "currency" />
                             <field name= "payment_status" string="Paid"/>
                         </group>
+                        <group >
+                            <field name ="amt_paid" widget="monetary"/>
+                                <field name ="due_amount" widget="monetary" attrs="{'invisible': [('payment_status','=', True)]}"/>
+                            </group>
                 </group>
       
                     <footer>

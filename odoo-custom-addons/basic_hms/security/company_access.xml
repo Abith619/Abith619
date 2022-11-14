@@ -12,14 +12,6 @@
         <field name="category_id" ref="module_category_company"/>
     </record>
     
-    <!-- <record  model="ir.rule" id="ebooks_company">
-        <field name="name">ebooks User company</field>
-        <field name="model_id" ref="model_medical_doctor"/>
-        <field name="global" eval="True"/>
-        <field name="domain_force">['|',('user_doctor','=',user.id),('company_id', '=', company_ids)]</field>
-        <field name="groups" eval="[(4, ref('group_ebooks_company_user'))]"/> 
-    </record> -->
-
     <record  model="ir.rule" id="stock_transfer_record_rule">
         <field name="name">Transfers User company</field>
         <field name="model_id" ref="model_stock_picking"/>
@@ -29,13 +21,13 @@
     </record>
     
     
-    <record  model="ir.rule" id="receptiondoc_record_rule">
+    <!-- <record  model="ir.rule" id="receptiondoc_record_rule">
         <field name="name">Reception User company</field>
         <field name="model_id" ref="model_medical_patient"/>
         <field name="global" eval="True"/>
         <field name="domain_force">[('company_id', 'in', company_ids)]</field>
         <field name="groups" eval="[(4, ref('group_ebooks_company_user'))]"/> 
-    </record>
+    </record> -->
     
     
     <record  model="ir.rule" id="appointmentdoc_record_rule">
@@ -83,6 +75,14 @@
     <record  model="ir.rule" id="billing_record_rule">
         <field name="name">Billing User company</field>
         <field name="model_id" ref="model_patient_bills"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('group_ebooks_company_user'))]"/> 
+    </record>
+
+    <record  model="ir.rule" id="ip_record_rule">
+        <field name="name">IP User company</field>
+        <field name="model_id" ref="model_in_patient"/>
         <field name="global" eval="True"/>
         <field name="domain_force">[('company_id', 'in', company_ids)]</field>
         <field name="groups" eval="[(4, ref('group_ebooks_company_user'))]"/> 
