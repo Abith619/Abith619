@@ -23,7 +23,7 @@
                             <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight" invisible ='1'/>
                             <button name="in_patient" type="object" string="In-Patient" class="oe_highlight" />
                             <button name="med_cancell_fun" type="object" string="Discontinued" class="oe_highlight"/>
-                            <button name="diet_for" type="object" string="Prescribed Diet" class="oe_highlight" invisible ='1'/>
+                            <button name="completed_pat" type="object" string="Completed" class="oe_highlight" invisible ='0'/>
                             <field name ="stages" widget="statusbar" style="display:none !important"/>
                         <style>
                             div.c {
@@ -42,13 +42,10 @@
                                 <button class="oe_stat_button" name="patient_prescription" type="object" icon="fa-clipboard" invisible="1">
                                 <field name ="patients" widget="statinfo" />
                         </button>
-
-
                     <button class="oe_stat_button" name="scans_prescription" type="object" icon="fa-clipboard" invisible="1">
                             <field name ="sacns_tests" widget="statinfo"  />
                         </button>
-                            
-
+                        
                     <button class="oe_stat_button"  name="document_button" type="object" icon="fa-clipboard" invisible="1">
                                 <field name ="document_test" widget="statinfo"  />
                                 
@@ -225,7 +222,16 @@
                                                 </tree>
                                             </field>
                                         </page>
-                    
+                                        
+                                        <page string="Therapy" >
+                                            <field name="therapy_line">
+                                                <tree string="Therapy List" editable="bottom" >
+                                                    <field name="time"/>
+                                                    <field name="therapy" />
+                                                    <field name="amount"/>
+                                                </tree>
+                                            </field>
+                                        </page>
                         
                                     <page string="Exercise">
                                         <field name = 'image_work'>
@@ -296,6 +302,10 @@
             <field name="patient"/>
             <field name="phone_number"/>
         <!-- <filter string="Doctor" name="doctor" domain="[('doctor', '!=', '')]"/> -->
+        <!-- <filter string="lab" name="lab_test_line" context="{'group_by': 'doctor'}"/>
+        <filter string="lab" name="lab_test_line" separator="1"/> -->
+
+
             <filter string="Doctor" name="doctor" context="{'group_by': 'doctor'}"/>
             <filter string="Branch" name="company_id" context="{'group_by': 'company_id'}"/>
             <filter string="Today" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>

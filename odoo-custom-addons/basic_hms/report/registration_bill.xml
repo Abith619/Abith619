@@ -6,9 +6,9 @@
         <field name="name">Custom Paper</field>
         <field name="default" eval="True"/>
         <field name="format">custom</field>
-        <field name="page_height">100</field>
-        <field name="page_width">260</field>
-        <field name="orientation">Portrait</field>
+        <field name="page_height">210</field>
+        <field name="page_width">140</field>
+        <field name="orientation">Landscape</field>
         <field name="margin_top">10</field>
         <field name="margin_bottom">0</field>
         <field name="margin_left">0</field>
@@ -17,37 +17,36 @@
         <field name="header_spacing">20</field>
         <field name="dpi">90</field>
     </record>
-    
 
     <template id="basic_hms.registration_bils_report" name="Diet Plan">
         <t t-call="web.external_layout">
             <t t-call="web.html_container">
                <t t-foreach="docs" t-as="o">
                    <t >
-                        <div class="header_tag">
+            <div class="header_tag">
         <h4 class="text-center heading_text_cor"><strong>Registration Bill</strong></h4>
-        </div>
+            </div>
+        
         <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
             <td style="border: 0px;width: 50%;">
                 <div  >
                 <div class='float-left'>
                     <p><strong>SL NO :</strong><span t-field="o.ebook_id"/></p> 
-                    <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p></div>
-                    
+                    <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p>
+                    <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p></div>
                 <div class="float-right" >
-                    <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p>
+                    <p><strong>Gender :</strong><span t-field="o.sex"/></p>
+                    <p><strong>Contact Number :</strong><span t-field="o.contact_no"/></p>
                     <p><strong>Payment Type :</strong><span t-field="o.payment_type"/></p>
+            </div>
         </div>
-    </div>
             </td>
-            
             </table>
 
                 <table class="table table-bordered" style="border: 1px solid black;">
         <thead>
             <tr>
             <th style="border: 1px solid black;">Type of Bill</th>
-            <th style="border: 1px solid black;"> Bill Date </th>
             <th style="border: 1px solid black;"> Bill Amount </th>
             </tr>
         </thead>
@@ -57,14 +56,12 @@
         <span t-field="line.name"/>
         </td>
         <td style="border: 1px solid black;">
-        <span t-field="line.date"/>
-        </td>
-        <td style="border: 1px solid black;">
         <span t-field="line.bill_amount"/>
         </td>
         </tr>
         </tbody>
         </table>
+        
         <table class="table table-sm" id="box" style="width:23%; float:right;margin-left: 0px; border: 1px solid black;">
             <tr class="border-black o_subtotal" style="font-size: 15px; ">
             <td style="background-color:white;color:#black;font-size: 15px;"><strong>Total</strong></td>
@@ -73,6 +70,19 @@
                 </td>
             </tr>
         </table>
+            <div class='row'>
+            <div class='col-9'> 
+                <br></br>  
+                <h5><strong>Terms and Condition</strong></h5>
+                <h6>1.Subject to Chennai jurisdiction</h6>
+                <h6>2.Medicines once purchased are not Refundable</h6>  
+            </div> 
+            <div class='col-3'>
+                <h6><strong>DAISY HOSPITAL</strong></h6>
+                <br></br><br></br>
+                <h6 style="text-align: center;"><strong> Authorised Signatory </strong></h6>
+            </div>
+                </div>
             </t>
         </t>
         </t>

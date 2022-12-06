@@ -83,6 +83,26 @@ class medical_directions(models.Model):
     user_doctor = fields.Many2one('res.users',string="User Doctor")
     required_field = fields.Boolean()
     
+    def completed_pat(self):
+        self.patient_activity = 'completed'
+        file = self.env['res.partner'].search([('display_name','=',self.patient.name)])
+        file.write({'patient_activity':'completed'})
+        
+        reg = self.env['medical.patient'].search([('patient_id','=',self.patient.id)])
+        reg.write({'patient_activity':'completed'})
+        
+        bill = self.env['patient.bills'].search([('patient_name','=',self.patient.id)])
+        bill.write({'patient_activity':'completed'})
+        
+        lab = self.env['lab.scan.form'].search([('patient_id','=',self.patient.id)])
+        lab.write({'patient_activity':'completed'})
+        
+        scan = self.env['scan.test'].search([('patient_id','=',self.patient.id)])
+        scan.write({'patient_activity':'completed'})
+        
+        prescription = self.env['medical.prescription.order'].search([('patient_id','=',self.patient.id)])
+        prescription.write({'patient_activity':'completed'})
+    
     @api.onchange('currents_ailments')
     def on_required(self):
         self.required_field = True
@@ -166,10 +186,10 @@ class medical_directions(models.Model):
 
     patient_waiting = fields.Char(string="Waiting Time")
     wait_date=fields.Datetime(string='Datetime', default=datetime.now())
-    patient_activity = fields.Selection([('wait',"Doctor Assigned"),('doc','Diet Assigned'),
-                                         ('lab','Lab Assigned'),('pres','Prescription'),('scan','Scan Assigned'),
-                                         ('labs','Lab Completed'),('scans','Scan Completed'),
-                                         ('bill',"Pharmacy Bill Assigned"),('discontinued','Discontinued'),('completed',"Completed")],default='wait')    
+    patient_activity = fields.Selection([('wait',"Waiting"),('doctor',"Doctor Assigned"),('doc','Diet Assigned'),
+                                         ('lab','Lab Bill Assigned'),('pres','Pharmacy Bill Assigned'),('scan','Scan Bill Assigned'),
+                                         ('labs','Lab Test Completed'),('scans','Scan Test Completed'),
+                                         ('bill',"Pharmacy Bill Assigned"),('discontinued','Discontinued'),('completed',"Completed")],default='wait', track_visibility='onchange')
 
     
     med_cancell = fields.Selection([('cancell','Cancelled'),('discontinued','Discontinued'),('Completed','Purchased')], string='Medicine Details')
@@ -182,9 +202,15 @@ class medical_directions(models.Model):
 
     def med_cancell_fun(self):
         self.patient_activity = 'discontinued'
-        
         orm = self.env['medical.patient'].search([('patient_id', '=', self.patient.id)])
         orm.write({'patient_activity':'discontinued'})
+        self.prescription_patient = [(5,0,0)]
+        orm1 = self.env['patient.bills'].search([('patient_name','=',self.patient.id)])
+        # raise ValidationError(orm1)
+        orm1.write({
+            'pres_bill':[(5,0,0)],
+            'med_cancell':'cancell',
+            })
         
     @api.onchange('bp','patient_habits','currents_ailments','pervious_medication')
     def adapt_req(val):
@@ -238,9 +264,9 @@ class medical_directions(models.Model):
 # prescription
     def prescription_button(self):
         self.patient_status =False
-        self.patient_activity = 'pres'
-        orm = self.env['medical.patient'].search([('patient_id','=',self.patient.id)])
-        orm.write({'patient_activity':self.patient_activity})
+        # self.patient_activity = 'pres'
+        # orm = self.env['medical.patient'].search([('patient_id','=',self.patient.id)])
+        # orm.write({'patient_activity':self.patient_activity})
 
         return{
         'name': "Prescription",
@@ -311,13 +337,11 @@ class medical_directions(models.Model):
                     'default_patient_id': self.patient.id,
                     'default_ebook_id': self.serial_number,
                     'default_num_days': 'e',
-                # 'default_price': self.price,
-                # 'default_range': self.range,
-                'default_state':'tested'
+                    'default_doctor_id':self.doctor.id,
+                    'default_state':'tested'
                 },
                 'target': 'new'
                 }
-            
         else:
             pass
         
@@ -349,12 +373,12 @@ class medical_directions(models.Model):
 
     def labscan_button(self):
         self.patient_status =False
-        self.patient_activity = 'scan'
-        orm = self.env['medical.patient'].search([('patient_id','=',self.patient.id)])
-        orm.write({'patient_activity':self.patient_activity})
-        orm_lab = self.env['lab.menu'].search([('patient_id','=',self.patient.id)])
-        orm_lab.write({'ebook_id':self.opnumber,
-                   'patient_id':self.patient})
+        # self.patient_activity = 'scan'
+        # orm = self.env['medical.patient'].search([('patient_id','=',self.patient.id)])
+        # orm.write({'patient_activity':self.patient_activity})
+        # orm_lab = self.env['lab.menu'].search([('patient_id','=',self.patient.id)])
+        # orm_lab.write({'ebook_id':self.opnumber,
+                #    'patient_id':self.patient})
         return{
             'name': "Scan Tests",
             'type': 'ir.actions.act_window',
@@ -366,6 +390,7 @@ class medical_directions(models.Model):
                 'default_ebook_id': self.serial_number,
                 'default_num_days': 'e',
                 # 'default_range': self.range,
+                'default_doctor_id':self.doctor.id,
                 'default_state':'tested'
                 },
                 'target': 'new'
@@ -520,18 +545,18 @@ class medical_directions(models.Model):
 
     image_work = fields.One2many('assign.workout','name', string='Images')
 
+    therapy_line = fields.One2many('therapy.ebook','name', string='Therapy')
 
+    
 
-    # def document_upload(self):
-    #         return{
-    #         'name': "Upload Documents",
-    #         'type': 'ir.actions.act_window',
-    #         'view_type': 'form',
-    #         'view_mode': 'form',
-    #         'res_model': 'patient.document',
-    #         'context': {},
-    #         'target': 'new'
-    #             }
+class Therapy_Ebook(models.Model):
+    _name = 'therapy.ebook'
+    
+    name = fields.Many2one('medical.doctor',string="Name",ondelete='cascade')
+    time = fields.Char(string='Time')
+    therapy = fields.Char(string='Therapy')
+    amount = fields.Char(string='Amount')
+
 
 class assignWorkout(models.Model):
     _name='assign.workout'
@@ -752,14 +777,39 @@ class Patientprescription(models.Model):
     date = fields.Datetime(string="Date of Prescription")
     delivery_option= fields.Selection([('dir','Direct'),('on',"Online")],string="Delivery Option")
     delivery_mode = fields.Selection([('domestic','Domestic'),('international',"International")],string='Courier Mode')
+    
+    medicine_name = fields.Many2one('product.product',string='Medicine Name',readonly='1')
+    all_day=fields.Char(string="Dose")
+    prescribed_quantity = fields.Float(string="Prescribed Quantity")
+    units= fields.Many2one('uom.uom',string="units")
+    bf_af = fields.Selection([('before','Before Food'),('after','After Food')])
+    anupana = fields.Char(string="Notes")
+    days1= fields.Integer('Days')
+    price = fields.Float(string="Price/unit",related='medicine_name.lst_price')
+    total_price = fields.Float(string="Total Price")
+    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('in.patient'))
+
+    @api.onchange('prescribed_quantity','medicine_name')
+    def compute_price(self):
+        val=self.price*self.prescribed_quantity
+        self.total_price=val
+
+    @api.onchange('medicine_name')
+    def prescribe_medicine(self):
+        rec= self.env['product.product'].search([('id', '=', self.medicine_name.id)])
+        for res in rec.medicine_details:
+            self.all_day=res.all_day
+            self.units = res.units
+            self.anupana = res.anupana
+            
     sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
 
-    @api.depends('medical_doctor.prescription_patient', 'medical_doctor.prescription_patient.prescription_alot')
+    @api.depends('ip_name.medicine_line', 'ip_name.medicine_line.prescription_alot')
     def _sequence_ref(self):
         for line in self:
             no = 0
             line.sequence_ref = no
-            for l in line.medical_doctor.prescription_patient:
+            for l in line.ip_name.medicine_line:
                 no += 1
                 l.sequence_ref = no
 

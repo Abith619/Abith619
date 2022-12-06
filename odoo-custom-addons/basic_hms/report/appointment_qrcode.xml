@@ -3,30 +3,28 @@
     <data>
         <template id="basic_hms.appointment_patient_qrcode">
             <t t-call="web.external_layout">
-     <t t-call="web.html_container">
-        <t t-foreach="docs" t-as="o">
-            <style>
-                .flex-parent {
-                    display: flex;
-                }
-            </style>
-            <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 30px;">
-                <div>
-            <div>
-                <td style="border: 0px;width: 30%;">
-                    <img src='/basic_hms/static/src/image/appointment_qr.png' style="max-height: 450px;"/>
-                </td>
-                <!-- <td style="border: 0px;width: 50%;">
-                <p><b>Patient ID : </b><span t-field="o.name"/></p>
-                <p><b>Name : </b> <span t-field="o.patient_id"/></p>
-                <p><b> Contact Number : </b> <span t-field="o.contact_no"/></p>
-            </td> -->
-         </div>
-        </div>
-         </table>
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <style>
+                        .flex-parent {
+                            display: flex;
+                        }
+                    </style>
+                    <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 30px;">
+                        <div>
+                    <div>
+                        <td style="border: 0px;width: 30%;">
+                            <img src='/basic_hms/static/src/image/appointment_qr.png' style="max-height: 450px;"/>
+                        </td>
+                </div>
+                <div style="border: 0px;width: 50%;" id='div'>
+                    <img t-att-src="'data:image/png;base64,%s' % to_text(o.qr_code)" style="height:100px;width:100px;float:center;"/>
+                </div>
+                </div>
+                </table>
+                </t>
+            </t>
         </t>
-    </t>
-    </t>
         </template>
     </data>
 </odoo>

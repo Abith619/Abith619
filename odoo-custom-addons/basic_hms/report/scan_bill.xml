@@ -26,16 +26,15 @@
                             <h4 class="text-center heading_text_cor"><strong>Scan Test</strong></h4>
                             </div>
                         <div  >
-                        <div class='float-left'>
-                            
-                            <p><strong>SL NO :</strong><span t-field="o.ebook_id"/></p> 
-                            <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p></div>
-                            
-                        <div class="float-right" >
-                            <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p>
-                            <p><strong>Payment Type :</strong><span t-field="o.payment_type"/></p>
-                    
-                </div>
+                            <div class='float-left'>
+                                <p><strong>SL NO :</strong><span t-field="o.ebook_id"/></p> 
+                                <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p>
+                                <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p></div>
+                            <div class="float-right" >
+                                <p><strong>Gender :</strong><span t-field="o.sex"/></p>
+                                <p><strong>Contact Number :</strong><span t-field="o.contact_no"/></p>
+                                <p><strong>Payment Type :</strong><span t-field="o.payment_type"/></p>
+                    </div>
             </div>
                     </td>
                     
@@ -43,7 +42,7 @@
                     <thead>
                         <tr>
                         <th style="border: 1px solid black;"> Test Name </th>
-                        <th style="border: 1px solid black;"> Date </th>
+                        <!-- <th style="border: 1px solid black;"> Date </th> -->
 
                         <th style="border: 1px solid black;"> Bill Amount </th>
                         </tr>
@@ -53,9 +52,9 @@
                        <td style="border: 1px solid black;">
                        <span t-field="line.name"/>
                        </td>
-                       <td style="border: 1px solid black;">
+                       <!-- <td style="border: 1px solid black;">
                        <span t-field="line.date"/>
-                       </td>
+                       </td> -->
                        <td style="border: 1px solid black;">
                         <span t-field="line.bill_amount"/>
                         </td>

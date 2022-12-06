@@ -21,13 +21,7 @@
     </record>
     
     
-    <!-- <record  model="ir.rule" id="receptiondoc_record_rule">
-        <field name="name">Reception User company</field>
-        <field name="model_id" ref="model_medical_patient"/>
-        <field name="global" eval="True"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-        <field name="groups" eval="[(4, ref('group_ebooks_company_user'))]"/> 
-    </record> -->
+    
     
     
     <record  model="ir.rule" id="appointmentdoc_record_rule">

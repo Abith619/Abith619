@@ -3,25 +3,19 @@
     <record id="medical_appointment_form_view" model="ir.ui.view">
         <field name="name">medical.appointment.form.view</field>
         <field name="model">medical.appointment</field>
-        <!-- <field name="parent_id" ref="res.partner"/>
-        <xpath expr="//field[@name='sales_price']" position="after">
-		    <field name="your_new_field"/>
-		</xpath> -->
         <field name="arch" type="xml">
             <form string="Appointment">
                 <header>
                     <button name="send_msg" string="Whatsapp Message" class="oe_highlight" type="object"/>
-                    <!-- <button name="rolls" string="send check" type="object"/> -->
                     <button name="button_registrations" attrs="{'invisible': [('stages','=', 'done')]}" string="Convert To Registration" class="oe_highlight" type="object" />
-                    <!-- <button name="button_contact" string="Create number" class="oe_highlight" type="object"/> -->
                     <field name ="stages" widget="statusbar" style="display:none !important"/>
-                    <!-- <field name='date'/> -->
                 </header>
                 <sheet>
                         <div class="row" attrs="{'invisible': [('stages','=', 'done')]}">
-
+                            
                             <div class="col-4">
-                                <div><field name ="types_app" widget="radio"  options="{'horizontal': true}"/></div>
+                                <div><field name ="types_app" widget="radio"  options="{'horizontal': true}"/>
+                                    <field name ="reg_type" widget="radio"  options="{'horizontal': true}"/></div>
                                 <div><field name ="patient_selection" widget="radio"  options="{'horizontal': true}"/></div>
                             </div>
                             <div class="col-6">
@@ -33,8 +27,6 @@
                                     </div>
                                     <div class="col-6">
                                     </div>
-                                    <!-- <div class="col-2">
-                                    </div> -->
                                 </div>
                                 <field name = "patient_id"  style="height:70%;width:50%" options="{'no_create':True,'no_create_edit':True,'no_open': True}" attrs="{'invisible': [('patient_selection','=', 'new')]}"/> 
                           </div>
@@ -48,29 +40,43 @@
                     <group attrs="{'invisible': [('patient_selection','!=', 'new')]}">
                         <group>
                             <field name = "patient_id" options="{'no_create':True,'no_create_edit':True,'no_open': True}"/> 
-                            <!-- <field name= "patient_name"/> -->
                             <field name= "gender"/>
-                            <field name= "age"/>
-                            <label for="phone_number" string="Contact Number" />
-                            <div class="o_address_format">
-                                <field name="phone_number" style="width: 30%;margin-right: 10px;" attrs="{'readonly': [('stages','=', 'done')]}" />
-                                 <field name = "whatsapp_check" style="width: 10%;border-left-width: 10px;margin-right: 0px;"/>
-                                 <strong><label for="contact_number"  style="font-weight: bold !important;color: #333;" string="Whats App "/></strong>
-                                 <field name="contact_number"  style="width: 30%;" attrs="{'readonly': [('stages','=', 'done')],'invisible': [('whatsapp_check','=', True)]} " />
-                             </div> 
-                            <field name= "region"/>
-                            <field name= "treatment_for" required='1' options="{'no_create_edit':True,'no_open': True}"/>
-                            <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
-                            </group>
-                        <group>
+                        <label for="date_of_birth" string="Date of Birth" />
+                        <div class="o_address_format">
+                        <field name="date_of_birth" style="width: 45%;margin-right: 10px;"/>
+                        <strong><label for="age" style="font-weight: bold !important;color: #333;" string="Age "/></strong>
+                        <field name="age" style="width: 48%;" />
+                        </div> 
+                        <label for="phone_number" string="Contact Number" />
+                        <div class="o_address_format">
+                        <field name="phone_number" style="width: 45%;margin-right: 10px;" attrs="{'readonly': [('stages','=', 'done')]}" />
+                        <field name = "whatsapp_check" style="width: 5%;border-left-width: 10px;margin-right: 0px;"/>
+                        <strong><label for="contact_number" style="font-weight: bold !important;color: #333;" string="Whats App "/></strong>
+                        <field name="contact_number" style="width: 35%;" attrs="{'readonly': [('stages','=', 'done')],'invisible': [('whatsapp_check','=', True)]} " />
+                        </div> 
+                        <field name="address" placeholder="Street Address"/>
 
-                            <field name="dates" widget="date"/>
-                            <field name="doctor_id"  attrs="{'invisible': [('dates','=', False)]}"  options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" />
-                                <field name="appointment_from" attrs="{'invisible': [('doctor_id','=', False)]}"/>
-                                <field name ="appoinment_through" attrs="{'invisible': [('appointment_from','=', False)]}" widget="radio"  options="{'horizontal': true}"/>
-                                <field name ="fees"/>
-                                <field name ="appoinment_by"/>
-                                <field name="feedback" widget='many2many_tags'/>
+                        <label for="region" string=" " /> 
+                        <div class="o_address_format">
+                        <field name="region" class="o_address_state" placeholder="City" style="width: 45%;" options="{'no_create':True,'no_create_edit':True,'no_open': True}"/>
+                        <field name="pin_code" class="o_address_state" style="width: 45%;" placeholder="Pin Code" options="{'no_create':True,'no_create_edit':True,'no_open': True}"/>
+                        </div>
+                        <label for="state_id" string=" " /> 
+                        <div class="o_address_format">
+                        <field name="state_id" placeholder="State" class="o_address_city" options="{'no_create':True,'no_create_edit':True,'no_open': True}" style="width: 45%;"/>
+                        <field name="country" class="o_address_state" placeholder="Country" style="width: 45%;" options="{'no_create':True,'no_create_edit':True,'no_open': True}"/>
+                        </div>
+                        <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                        </group>
+                        <group>
+                        <field name="dates" widget="date" string='Appointment Date'/>
+                        <field name= "treatment_for" required='1' options="{'no_create_edit':True,'no_open': True}"/>
+                        <field name="doctor_id" attrs="{'invisible': [('dates','=', False)]}" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" />
+                        <field name="appointment_from" attrs="{'invisible': [('doctor_id','=', False)]}"/>
+                        <field name ="appoinment_through" attrs="{'invisible': [('appointment_from','=', False)]}" widget="radio" options="{'horizontal': true}"/>
+                        <field name ="fees"/>
+                        <field name ="appoinment_by"/>
+                        <field name="feedback" widget='many2many_tags'/>
 
                         </group>
                         </group>
@@ -91,7 +97,6 @@
                                 </div> 
                                 <field name= "region" attrs="{'invisible': [('patient_id','=', False)]}"/>
                                 <field name= "treatment_for" attrs="{'invisible': [('patient_id','=', False)]}"/>
-                                <!-- <field name ="patient_signs_symptoms" widget="many2many_tags"/> -->
                                 <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}" attrs="{'invisible': [('patient_id','=', False)]}"/>
                                   
                                 </group>

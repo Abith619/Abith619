@@ -57,7 +57,7 @@
             </thead>
             </table>
             </t>
-            <footer>
+            <!-- <footer>
                 <div t-attf-class="footer o_standard_footer; text-center;" style='text-center; border-top: 2px solid black;'>
             <p id="footer">
                 <b><h6 style = 'padding-right:5px;'>Chennai : (Branch)</h6></b></p>
@@ -65,7 +65,7 @@
                 Chrompet, Chennai-600094<br></br>
                 Cell : 9566 99022<br></br></p>
                 </div>
-            </footer>
+            </footer> -->
             </t>
             </t>
             </t>

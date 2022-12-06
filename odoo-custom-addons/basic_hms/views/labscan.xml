@@ -27,6 +27,8 @@
                                 <field name ="range" invisible='1'/>
                                 <field name ="test_range" invisible='1'/>
                                 <field name ="company_id" invisible='1'/>
+                                <field name ="doctor_id" invisible='1'/>
+
     <div class='row'>
 
 <!-- colum1 -->
@@ -127,6 +129,11 @@
         </div>
     </div>
     </sheet>
+    <div class="oe_chatter">
+        <!-- <field name="message_follower_ids" widget="mail_followers" string="mail"/> -->
+        <field name="message_ids" widget="mail_thread" string= "Mail"/>
+        <field name="activity_ids" widget="mail_activity"/>
+    </div>
         </form>
         </field>
         </record>
@@ -150,7 +157,7 @@
                         <field name ="request" />
                         <field name ="ebook_id" />
                         <field name ="patient_id" />
-                        <!-- <field name ="date" /> -->
+                        <field name ="doctor_id" />
                         <field name ="write_date" />
                         <field name ="range" />
                         <field name ="test_range" />
@@ -172,7 +179,7 @@
             <field name="patient_id"/>
             <field name="write_date"/>
         <!-- <filter string="Doctor" name="doctor" domain="[('doctor', '!=', '')]"/> -->
-            <!-- <filter string="Doctor" name="doctor" context="{'group_by': 'doctor'}"/> -->
+            <filter string="Doctor" name="doctor_id" context="{'group_by': 'doctor_id'}"/>
             <filter string="Branch" name="company_id" context="{'group_by': 'company_id'}"/>
             <filter string="Today" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
             <filter string="Yesterday" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>

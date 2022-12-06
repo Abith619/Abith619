@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<odoo>
-		<menuitem id="partner_ledger_report_menu" name="Partner Ledger Report" parent="account.menu_finance_reports"
-              action="action_partner_ledger_wizard_form" sequence="8"/>
-        
-        <menuitem id="account_ledger_report_menu" name="Account Ledger Report" parent="account.menu_finance_reports"
-              action="action_account_ledger_wizard_form" sequence="9"/>
-</odoo>

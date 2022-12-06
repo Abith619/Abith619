@@ -35,9 +35,11 @@ class PatientBills(models.Model):
     billed_amount = fields.Float(string='Total Amount',compute='onchan_func_gst',store=True)
     total_tree=fields.Float(compute='total_func_rec',string ='total tree',store=True)
     billed_by=fields.Many2one('res.users',string='Billed By',default=lambda self: self.env.user,readonly='1')
-    patient_activity = fields.Selection([('wait',"Doctor Assigned"),('doc','Diet Assigned'),
-                                         ('lab','Lab Assigned'),('pres','Prescription'),('scan','Scan Assigned'),
-                                         ('bill',"Pharmacy Bill Assigned"),('completed',"Completed")],default='wait')
+    patient_activity = fields.Selection([('wait',"Waiting"),('doctor',"Doctor Assigned"),('doc','Diet Assigned'),
+                                         ('lab','Lab Bill Assigned'),('pres','Pharmacy Bill Assigned'),('scan','Scan Bill Assigned'),
+                                         ('labs','Lab Test Completed'),('scans','Scan Test Completed'),
+                                         ('bill',"Pharmacy Bill Assigned"),('discontinued','Discontinued'),('completed',"Completed")],default='wait',track_visibility='onchange')
+    
     discounted = fields.Float(string='Discount',readonly=False)
     discounted_total = fields.Float(string='Total With Discount', readonly=True)
     payment_type = fields.Selection([('cash','Cash'),('card','Card'),('upi','Upi')], string='Payment Type')
@@ -51,7 +53,7 @@ class PatientBills(models.Model):
     total_ip_scan_bill = fields.Float(string='Scan Amount', compute='func_scan_patient')  
     total_ip_tab_bill = fields.Float(string='Medicine Amount')  
     reg_due = fields.Float(string='Registration Due', compute='reg_dues')
-    total_due_amt = fields.Float(string='Total Due Amount',compute='due_cal_fun')
+    
     amount_paid = fields.Float(string='Amount Paid', compute='due_calculate')
     therapy_charge = fields.Float(string='Therapy Charges', compute='therapy_chage_ap')
     total_paid = fields.Float(string='Total Paid')
@@ -71,6 +73,151 @@ class PatientBills(models.Model):
     total_med_tax = fields.Float(string='IP Total',compute='new_med_calc')
     sub_total = fields.Float(string='Sub Total', compute='sub_totals')
     
+    sex = fields.Selection([('m', 'Male'),('f', 'Female')], string ="Sex",required= True)
+    contact_no = fields.Char(string="Contact No", required= True)
+    total_due_amt = fields.Float(string='Total Due Amount', compute='due_cal_fun')
+    mrd_charge = fields.Float(string='MRD Charge')
+    
+    @api.depends('paid_status','billed_amount','total_paid','total_due_amt')
+    def due_cal_fun(self):
+        for rec in self:
+            if rec.paid_status == False:
+                rec.total_due_amt = (rec.billed_amount - rec.total_paid)
+            if rec.paid_status == True:
+                rec.total_due_amt = 0.00
+    
+    @api.onchange('paid_status')
+    def medicine_bill(self):
+        if self.pres_bill:
+            if self.paid_status == True:
+                self.med_cancell = 'Completed'
+    
+    @api.constrains('paid_status')
+    def paid_not(self):
+        if self.paid_status == True:
+            self.total_bal = 0.00
+            self.total_due_amt = 0.00
+            self.total_paid = self.billed_amount
+            self.patient_activity = 'completed'
+            
+            orm = self.env['medical.patient'].search([('patient_id','=',self.patient_name.id)])
+            orm.write({'patient_activity':'completed'})
+            orm1 = self.env['medical.doctor'].search([('patient','=',self.patient_name.id)])
+            orm1.write({'patient_activity':'completed'})
+            orm_3 = self.env['res.partner'].search([('name', '=', self.patient_name.name)])
+            orm_3.write({'patient_activity':'completed'})  
+            
+            med_assign = self.env['medical.prescription.order'].search([('patient_id','=',self.patient_name.id)])
+            med_assign.write({'patient_activity' : 'completed'})
+            
+            orm = self.env['account.payment'].search([('partner_id','=',self.patient_name.id)])
+            types = []
+            
+            for i in self.reception_bills:
+                vals={
+                    'name':i.name,
+                    'bill_amount':i.bill_amount,
+                    'date':i.date,
+                }
+                types.append((0,0,vals))
+            for i in self.lab_bill:
+                lab={
+                    'name':i.name,
+                    'bill_amount':i.bill_amount,
+                    'date':i.date,
+                }
+                types.append((0,0,lab))
+            for i in self.scan_bill:
+                scan={
+                    'name':i.name,
+                    'bill_amount':i.bill_amount,
+                    'date':i.date,
+                }
+                types.append((0,0,scan))
+            for i in self.pres_bill:
+                pres={
+                    'name':i.medicine_name.name,
+                    'bill_amount':i.pre_amount,
+                    'date':i.date,
+                }
+                types.append((0,0,pres))
+            for i in self.inpatient_lab:
+                in_lab={
+                    'name':i.name,
+                    'bill_amount':i.bill_amount,
+                    'date':i.date,
+                }
+                types.append((0,0,in_lab))
+            for i in self.inpatient_scan:
+                in_scan={
+                    'name':i.name,
+                    'bill_amount':i.bill_amount,
+                    'date':i.date,
+                    }
+                types.append((0,0,in_scan))
+            for i in self.inpatient_tablet:
+                in_tab={
+                    'name':i.medicine_name.name,
+                    'bill_amount':i.pre_amount,
+                    'date':i.date,
+                }
+                types.append((0,0,in_tab))
+            for i in self.ip_therapy:
+                in_therapy={
+                    'name':i.therapy,
+                    'bill_amount':i.amount,
+                    'date':i.write_date,
+                }
+                types.append((0,0,in_therapy))
+            context= {
+                    'partner_id':self.patient_name.id,
+                    'bill_no':self.id,
+                    'payment_type':'inbound',
+                    'doctor_id':self.doctor_id.id,
+                    'amount':self.billed_amount,
+                    'bill_lines':types,
+                    'reg_bill':self.total2,
+                    'lab_bill':self.total,
+                    'scan_bill':self.total_scan,
+                    'pres_bill':self.gst_total_tax,
+                    'therapy_bill':self.therapy_charge,
+                    'bed_bill':self.bed_charge,
+                    'file_charges':self.file_charges,
+                    }
+            orm_move = self.env['account.move'].search([('line_ids.partner_id','=',self.patient_name.id)])
+            acc_move = orm_move.line_ids
+            # raise ValidationError(acc_move)
+            if orm:
+                orm.write(context)
+                acc_move.update({'tax_ids':self.pres_bill.gst_tax.id})
+            else:
+                orm.create(context)
+                acc_move.update({'tax_ids':self.pres_bill.gst_tax.id})
+            
+    def med_cancell_fun(self):
+        self.med_cancell = 'cancell'
+        self.total1 = 0.00
+        self.total_tax = 0.00
+        self.gst_total_tax = 0.00
+        self.mrd_charge = 0.00
+        self.pres_bill = [(5,0,0)]
+        self.patient_activity = 'discontinued'
+        orm = self.env['medical.patient'].search([('patient_id', '=', self.patient_name.id)])
+        orm.write({'patient_activity':'discontinued'})
+        doc = self.env['medical.doctor'].search([('patient', '=', self.patient_name.id)])
+        doc.write({'patient_activity':'discontinued'})
+        orm_3 = self.env['res.partner'].search([('name', '=', self.patient_name.name)])
+        orm_3.write({'patient_activity':'discontinued'})
+        
+        med_cancel = self.env['medical.prescription.order'].search([('patient_id','=',self.patient_name.id)])
+        med_cancel.write({'patient_activity' : 'discontinued'})
+        
+    
+    @api.depends('total_paid','billed_amount')
+    def total_due_fun(self):
+        for i in self:
+            i.total_bal = (i.billed_amount) - (i.total_paid)
+                
     @api.depends('sub_total','total2','total_ip_lab_bill','total_ip_scan_bill','total1','therapy_charge','bed_charge','file_charges')
     def sub_totals(self):
         for rec in self:
@@ -130,14 +277,7 @@ class PatientBills(models.Model):
             if i.med_package == '6':
                 i.total1 = (i.total1 * 6)
     
-    def med_cancell_fun(self):
-        self.med_cancell = 'cancell'
-        
-        orm = self.env['medical.patient'].search([('patient_id', '=', self.patient_name.id)])
-        orm.write({'med_cancell':'cancell'})
-        
-        doc = self.env['medical.doctor'].search([('patient', '=', self.patient_name.id)])
-        doc.write({'med_cancell':'cancell'})
+    
 
     
     @api.onchange('med_amt_paid')
@@ -145,10 +285,7 @@ class PatientBills(models.Model):
         for i in self:
             i.med_amt_due = (i.gst_total_tax - i.med_amt_paid)
     
-    @api.depends('total_paid','total_due_amt')
-    def total_due_fun(self):
-        for i in self:
-            i.total_bal = (i.total_due_amt - i.total_paid)
+    
     
     @api.depends('ip_therapy')
     def therapy_chage_ap(self):
@@ -172,8 +309,6 @@ class PatientBills(models.Model):
             # raise ValidationError(k.due_rec)
             i.total_amount = sum(dues)
     
-    
-
     @api.depends('reception_bills')
     def reg_dues(self):
         dues=[]
@@ -191,25 +326,22 @@ class PatientBills(models.Model):
                     rec.total_tax = ((rec.discounted_total / 100) * (percentage.amount))
             rec.discounted_total = (rec.total1 - rec.discounted)
             
-    @api.depends('discounted','med_package','total1','discounted_total','billed_amount','file_charges','bed_charge','therapy_charge','total_tax','total2','total_ip_scan_bill','total_ip_lab_bill','gst_total_tax')
+    @api.depends('mrd_charge','discounted','med_package','total1','discounted_total','billed_amount','file_charges','bed_charge','therapy_charge','total_tax','total2','total_ip_scan_bill','total_ip_lab_bill','gst_total_tax')
+    # @api.onchange('pres_bill')
     def depend_fun_gst(self):
         for rec in self:
             for tax_id in rec.pres_bill:
                 for k in tax_id.gst_tax:
                     tax = k.amount
+                    # raise ValidationError(tax)
                     rec.discounted_total = (rec.total1 - rec.discounted)
                     rec.total_tax = ((rec.discounted_total / 100) * tax)
             rec.discounted_total = (rec.total1 - rec.discounted)
             rec.gst_total_tax = (rec.discounted_total)+(rec.total_tax)
             a =(rec.total2 + rec.total_ip_scan_bill + rec.total_ip_lab_bill + rec.file_charges)
-            j = (rec.gst_total_tax + rec.bed_charge + rec.therapy_charge)
+            j = (rec.gst_total_tax + rec.bed_charge + rec.therapy_charge + rec.mrd_charge)
             rec.billed_amount = (a+j)
             
-    @api.depends('reg_due','total_ip_lab_bill','total_ip_scan_bill','bed_charge','gst_total_tax','therapy_charge')
-    def due_cal_fun(self):
-        for rec in self:
-            rec.total_due_amt = (rec.reg_due + rec.gst_total_tax + rec.therapy_charge + rec.file_charges) + (rec.total_ip_lab_bill + rec.total_ip_scan_bill + rec.bed_charge)
-    
     @api.model
     def _default_gst(self):
         company_id = self.env.company.id
@@ -289,7 +421,6 @@ class PatientBills(models.Model):
             orm.write(context)   
         else:    
             orm.create(context)
-         
      
     def create(self, vals):
         obj = super(PatientBills, self).create(vals)
@@ -297,13 +428,6 @@ class PatientBills(models.Model):
             number = self.env['ir.sequence'].get('bill.sequence') or '/'
             obj.write({'bill_no': number})
         return obj
-
-    @api.onchange('paid_status')
-    def paid_not(self):
-        if self.paid_status == True:
-            self.total_amount = 0.00
-            orm = self.env['medical.patient'].search([('patient_id','=',self.patient_name.id)])
-            orm.write({'patient_activity':'completed'})
 
     @api.depends('inpatient_lab')
     def onchan_func_lab_ip(self):
@@ -328,7 +452,6 @@ class PatientBills(models.Model):
         for k in self.inpatient_tablet:
             sums.append(k.pre_amount)
         self.total_ip_tab = sum(sums)
-
 
     @api.depends('reception_bills')
     def total_func_rec(self):
@@ -391,7 +514,6 @@ class IpTherapyBill(models.Model):
     time = fields.Char(string='Time')
     therapy = fields.Char(string='Therapy')
     amount = fields.Float(string='Amount')
-    
     
 
 class InPatientLines(models.Model):
@@ -513,6 +635,14 @@ class Billingpayment(models.Model):
 
     bill_lines = fields.One2many('account.bills.lines','bill',string='Patient Bills')
     bill_no = fields.Many2one('patient.bills',string="Bill No")
+    doctor_id = fields.Many2one('res.partner',domain=[('is_doctor','=',True)],string='Doctor Name')
+    reg_bill = fields.Float(string='Registration Amount')
+    lab_bill = fields.Float(string='Lab Amount')
+    scan_bill = fields.Float(string='Scan Amount')
+    pres_bill = fields.Float(string='Prescription Amount')
+    therapy_bill = fields.Float(string='Therapy Amount')
+    bed_bill = fields.Float(string='Bed Charges')
+    file_charges = fields.Float(string='File Charges')
 
     @api.onchange('bill_no')
     def onchange_bill(self):

@@ -13,14 +13,18 @@
                     <group>
                         <group>
                         <field name ="ebook_id"/>
+                        <field name="bill_no" />
                             <field name ="patient_name"/>
                             <field name ="date_date"/> 
-                            <field name= "doctor_id" invisible='1'/>
                             <field name= "billed_by"/>
                             <field name= "med_package"/>
                             <field name= "discount_by"/>
                             <field name= "discount_reason"/>
                         </group>
+                        <field name ="sex" invisible='1'/>
+                        <field name ="med_cancell" invisible='1'/>
+                        <field name ="contact_no" invisible='1'/>
+                        <field name ="patient_activity" invisible='1'/>
                         <group>
                         <field name ="journal_id"/>
                             <field name ="insurance"/>
@@ -28,6 +32,7 @@
                             <field name="payment_type"/>
                             <field name="payment_id"/>
                         <field name= 'company_id' options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                        <field name= "doctor_id" invisible='0'/>
                         <field name='total_bal' string='Due Amount' force_save='1'/>
                         <field name="paid_status"/>
                         </group>
@@ -113,7 +118,8 @@
             <field name='discounted' force_save='1' string="Discount :"/> 
             <field name='discounted_total' force_save='1' readonly='1'/>
                 <field name='total_tax' readonly='1' string="Tax Amount:" />  
-                <field name='gst_total_tax' readonly='1' force_save='1' string="Medicine Amount With Tax "/> </group> 
+                <field name='gst_total_tax' readonly='1' force_save='1' string="Medicine Amount With Tax "/>
+                <field name='mrd_charge' readonly='1' string="MRD Charges :" />   </group> 
 <group>      <field name='total2' readonly='1' force_save='1' string="Registration Fees : "/> 
     <field name='total_ip_lab_bill' readonly='1' force_save='1'  string="Lab Amount :" /> 
     <field name='total_ip_scan_bill' readonly='1' force_save='1' string="Scan Amount :" /> </group>
@@ -275,6 +281,7 @@
                             <field name="write_date"/>
                             <field name="med_cancell"/>
                             <field name="paid_status"/>
+                            <field name="patient_activity" widget="badge" decoration-danger="patient_activity == 'discontinued'" decoration-warning="patient_activity in ('wait', 'bill')" decoration-success="patient_activity in ('completed', 'scans', 'labs', 'pres')"/>
                         </tree>
                     </field>
                 </record>
@@ -302,4 +309,38 @@
             <menuitem id="menu_Cashier" name="Cashier" parent= "hospital_menu_bill" 
             action="account.action_account_payments"/> 
 
+            <record id="account_payment_tree_views" model="ir.ui.view">
+                <field name="name">account.payment.tree.view</field>
+                <field name="model">account.payment</field>
+                <field name="inherit_id" ref="account.view_account_payment_tree" />
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='name']" position="replace">
+                        <field name="bill_no" />
+                    </xpath>
+                </field>
+            </record>
+
+            <record id="account_payment_form_views" model="ir.ui.view">
+                <field name="name">account.payment.form.view</field>
+                <field name="model">account.payment</field>
+                <field name="inherit_id" ref="account.view_account_payment_form" />
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='journal_id']" position="before">
+                        <field name="doctor_id" />
+                    </xpath>
+                    <xpath expr="//group[@name='group3']" position="after">
+                        <group><field name="reg_bill" />
+                            <field name="lab_bill" />
+                            <field name="scan_bill" />
+                            <field name="therapy_bill" />
+                            </group>
+                        <group>
+                            <field name="pres_bill" />
+                            <field name="bed_bill" />
+                            <field name="file_charges" />
+                        </group>
+                    </xpath>
+                    
+                </field>
+            </record>
     </odoo>

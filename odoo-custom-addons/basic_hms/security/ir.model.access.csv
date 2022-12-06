@@ -437,3 +437,4 @@ access_lab_menu,lab.menu,model_lab_menu,base.group_user,1,1,1,1
 access_scan_menu,scan.menu,model_scan_menu,base.group_user,1,1,1,1
 
 access_bill_ip_therapy,bill.ip.therapy,model_bill_ip_therapy,base.group_user,1,1,1,1
+access_therapy_ebook,therapy.ebook,model_therapy_ebook,base.group_user,1,1,1,1

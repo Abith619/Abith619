@@ -35,6 +35,19 @@ class Prescribediet(models.Model):
     diet_line7 = fields.One2many('assign.diet.four','name',string="Diet Advisied")
     diet_line8 = fields.One2many('assign.diet.seven.one','name',string="Diet Advisied")
     diet_line9 = fields.One2many('assign.diet.five','name',string="Diet Advisied")
+    
+    @api.constrains('name')
+    def write_lab(self):
+        orm_e = self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
+        orm_e.write({'patient_activity' : 'doc'})
+        
+        orm = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id)])
+        orm.write({'patient_activity' : 'doc'})
+        
+        orm = self.env['res.partner'].search([('name','=',self.patient_id.name)])
+        orm.update({
+            'patient_activity':'doc',
+        })
 
     @api.onchange('name')
     def onchange_task(self):

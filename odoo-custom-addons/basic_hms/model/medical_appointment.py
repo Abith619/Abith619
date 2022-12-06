@@ -4,11 +4,14 @@
 from ast import Pass
 from odoo import api, fields, models, _
 #from datetime import datetime, date
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from odoo.exceptions import UserError
 import datetime
 from dateutil.relativedelta import relativedelta
 from odoo.exceptions import  ValidationError
+import qrcode
+import base64
+from io import BytesIO
 
 
 
@@ -83,37 +86,77 @@ class medical_appointment(models.Model):
 	feedback = fields.Many2many('medical.feedback', string="How you came to know about Daisy Health Care(P)LTD.")
 
 	types_app = fields.Selection([('Tele','Telecaller'),('web','Website')], string='', default='Tele')
+	pin_code = fields.Char(string="Pin Code")
+	state_id=fields.Many2one('res.country.state',string="State",domain="[('country_id', '=', country)]")
+	country=fields.Many2one('res.country',string="Country")
+	reg_type=fields.Selection([('dir',"Direct"),('on',"Online")],string="Registration Type")
+	online_type = fields.Selection([('app',"Appointment"),('rev',"Review"),('package','Package'),('stop',"Stopped"),('cam','Camp')], string='Online Type')
+	direct_type = fields.Selection([('app',"Appointment"),('rev',"Review"),('package','Package'),('stop',"Stopped"),('cam','Camp')], string='Direct Type')
+	date_of_birth = fields.Date(string="Date of Birth")
+	address = fields.Char(string="Address")
+	qr_code = fields.Binary("QR Code", attachment=True, compute='generate_qr_code')
 	
+	
+	def generate_qr_code(self):
+		# for rec in self:
+		p_details={
+			'Website':'https://dev.daisy.mo.vc/appointment',
+			# 'qr_type':'qr',
+		}
+		qr = qrcode.QRCode(
+			version=1,
+			error_correction=qrcode.constants.ERROR_CORRECT_H,
+			box_size=10,
+			border=4,
+		)
+		qr.add_data(p_details)
+		qr.make(fit=True)
+		img = qr.make_image()
+		temp = BytesIO()
+		img.save(temp, format="PNG")
+		qr_image = base64.b64encode(temp.getvalue())
+		self.qr_code = qr_image
+            
+	@api.onchange('date_of_birth')
+	def onchange_age(self):
+		for rec in self:
+			if rec.date_of_birth:
+				d1 = rec.date_of_birth
+				d2 = date.today()
+				rd = relativedelta(d2, d1)
+				rec.age = str(rd.years) + "y" +" "+ str(rd.months) + "m" +" "+ str(rd.days) + "d"
+			else:
+				rec.age = "Age"
+    
+	mobile = fields.Char(required=True,readonly=True)
+	message = fields.Char(string="message", required=True, default='Hi')
+
 	def send_msg(self):
-		if self.whatsapp_check == True:
-			return {
-					'type': 'ir.actions.act_window',
-					'name': 'Whatsapp Message',
-					'res_model': 'whatsapp.wizard',
-					'target': 'new',
-					'view_mode': 'form',
-					'view_type': 'form',
-					'context': {'default_user_id': self.patient_id.id,
-					'default_mobile':self.phone_number,
-					'default_message':"Hi "+self.patient_id.name+",\n\nYour Appointment is fixed with "+self.doctor_id.name+"\nFeedback : https://www.mouthshut.com/product-reviews/Daisy-Hospital-Chromepet-Chennai-reviews-925999566"
-					},
-					}
-		else:
-			return {
-				'type': 'ir.actions.act_window',
-				'name': 'Whatsapp Message',
-				'res_model': 'whatsapp.wizard',
-				'target': 'new',
-				'view_mode': 'form',
-				'view_type': 'form',
-				'context': {'default_user_id': self.patient_id.id,
-				'default_mobile':self.contact_number,
-				'default_message':"Hi "+self.patient_id.name+",\n\nYour Appointment is fixed with "+self.doctor_id.name+"\nFeedback : https://www.mouthshut.com/product-reviews/Daisy-Hospital-Chromepet-Chennai-reviews-925999566"
-				},
-				}
-
-
-
+		report_template_id = self.env.ref('basic_hms.report_print_patient_qr_code')._render_qweb_pdf(self.id)
+		data_record = base64.b64encode(report_template_id[0])
+		ir_values = {
+			'name': "Customer Report",
+			'type': 'binary',
+			'datas': data_record,
+			'store_fname': data_record,
+			'mimetype': 'application/x-pdf',
+			}
+		data_id = self.env['ir.attachment'].create(ir_values)
+		# raise ValidationError(self.contact_number)
+		return {
+			'name': "Whatsapp Message",
+      		'type': 'ir.actions.act_window',
+        	'view_mode': 'form',
+        	'res_model': 'whatsapp.wizard',
+            'target': 'new',
+            'context': {
+			'default_user_id':self.patient_id.id,
+			'default_mobile':self.contact_number,
+			'default_message':'Hi, {}! Your Appointment Slot for {} has been Booked at {} , {} \n Thank You !'.format(self.patient_id.name,self.doctor_id.name,self.dates,self.appointment_from),
+			'default_attachment_id':[(6, 0, [data_id.id])]
+			}
+        }
+        
 	@api.onchange('appoinment_through')
 	def fee_change(self):
 		if self.appoinment_through =='onl':
@@ -121,31 +164,30 @@ class medical_appointment(models.Model):
 		else:
 			self.fees=float(150)
 
-    		
-	@api.onchange('dates','doctor_id')
-	def roll(self):
-		date_today=self.dates
-		today=datetime.datetime.now().date()
-		if date_today != False:
-			if date_today < today:
-				raise ValidationError("Date should be greater than today's date")
-		vals=self.env['medical.appointment'].search_count([('dates','=',date_today),('doctor_id','=',self.doctor_id.id)])
-		if vals >= 20:
-			raise ValidationError("Appointment Slots are full")
+	# @api.onchange('dates','doctor_id')
+	# def roll(self):
+	# 	date_today=self.dates
+	# 	today=datetime.datetime.now().date()
+	# 	if date_today != False:
+	# 		if date_today < today:
+	# 			raise ValidationError("Date should be greater than today's date")
+	# 	vals=self.env['medical.appointment'].search_count([('dates','=',date_today),('doctor_id','=',self.doctor_id.id)])
+	# 	if vals >= 20:
+	# 		raise ValidationError("Appointment Slots are full")
 
-	@api.depends('appointment_from')
-	def date_appointment(self):
-		l1 = []
+	# @api.depends('appointment_from')
+	# def date_appointment(self):
+	# 	l1 = []
 
-		all_slots = ['09:00 Am - 10:00 Am','10:00 Am - 11:00 Am','11:00 Am - 12:00 Pm',"12:00 Pm - 01:00 Pm","02:00 Pm - 03:00 Pm","03:00 Pm - 04:00 Pm","04:00 Pm - 05:00 Pm","05:00 Pm - 06:00 Pm","06:00 Pm - 07:00 Pm"]
-		value=self.env['medical.appointment'].search([('dates','=',self.dates),('doctor_id','=',self.doctor_id.id),('appointment_from','=',self.appointment_from)])
-		if len(value) >= 3:
-			empty=self.env['medical.appointment'].search([('dates','=',self.dates),('doctor_id','=',self.doctor_id.id)])
-			for i in empty:
-				slots = i.appointment_from
-				l1.append(slots)
-				booked_slots = [i for i in all_slots if i not in l1]
-				raise ValidationError("Please Select from Available Slots: {}".format(booked_slots))
+	# 	all_slots = ['09:00 Am - 10:00 Am','10:00 Am - 11:00 Am','11:00 Am - 12:00 Pm',"12:00 Pm - 01:00 Pm","02:00 Pm - 03:00 Pm","03:00 Pm - 04:00 Pm","04:00 Pm - 05:00 Pm","05:00 Pm - 06:00 Pm","06:00 Pm - 07:00 Pm"]
+	# 	value=self.env['medical.appointment'].search([('dates','=',self.dates),('doctor_id','=',self.doctor_id.id),('appointment_from','=',self.appointment_from)])
+	# 	if len(value) >= 3:
+	# 		empty=self.env['medical.appointment'].search([('dates','=',self.dates),('doctor_id','=',self.doctor_id.id)])
+	# 		for i in empty:
+	# 			slots = i.appointment_from
+	# 			l1.append(slots)
+	# 			booked_slots = [i for i in all_slots if i not in l1]
+	# 			raise ValidationError("Please Select from Available Slots: {}".format(booked_slots))
 
 
 

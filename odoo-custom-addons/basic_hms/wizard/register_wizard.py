@@ -8,7 +8,7 @@ class Registerwizard(models.TransientModel):
     _name = 'register.wizard'
 
     patient_selection= fields.Selection([('new',"New Patient"),('exi',"Existing patient")],required=True,default='new')
-    doctors = fields.Many2one('res.partner',domain=[('is_doctor','=',True)],string='Doctor')
+    doctors = fields.Many2one('res.partner',domain=[('is_doctor','=',True)],string='Doctor',required=True)
     patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string="Patient Name", required= True)
     sex = fields.Selection([('m', 'Male'),('f', 'Female')], string ="Sex",required= True)
     age = fields.Char(string="Age",store=True)
@@ -46,6 +46,7 @@ class Registerwizard(models.TransientModel):
     amt_paid = fields.Float(string='Amount Paid')
     
     no_fees = fields.Boolean(string='No Consulting Fees')
+    # patient_activity = 
     
     @api.onchange('amt_paid')
     def fees_due(self):
@@ -75,9 +76,16 @@ class Registerwizard(models.TransientModel):
             'amount':self.fees
         })
         
+        orm = self.env['res.partner'].search([('name','=',self.patient_id.name)])
+        orm.update({
+            'patient_activity':'doctor',
+            'doctor_reg':self.doctors
+        })
+        
         record = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id )])
         record.update({
                 'payment':self.fees,
+                'patient_activity':'doctor'
             })
         payment_count = self.env['medical.doctor'].search_count([('patient', '=', self.patient_id.id)])
         if self.patient_selection == 'new':
@@ -137,6 +145,8 @@ class Registerwizard(models.TransientModel):
         bill_lines.append((0,0,bills))
         bill_create=self.env['patient.bills'].create({
             'patient_name':self.patient_id.id,
+            'sex':self.sex,
+            'contact_no':self.contact_no,
             'doctor_id':self.doctors.id,
             'payment_type':self.pay_mode,
             'payment_id':self.upi_pay,
@@ -148,8 +158,12 @@ class Registerwizard(models.TransientModel):
             'file_charges':'200',
         })
 
-
-
+        orm_reg = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id)])
+        
+        orm_reg.write({
+                'online_type':'rev',
+                'direct_type':'rev',
+                })
 
 
         

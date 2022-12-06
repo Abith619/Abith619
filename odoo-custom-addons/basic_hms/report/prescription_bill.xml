@@ -17,29 +17,42 @@
         <field name="dpi">90</field>
     </record>
 
-    <!-- <template id="remove_odoo.web_layout" inherit_id="web.layout">
-        <xpath expr="//title" position="replace">Daisy Report</xpath>
-     </template> -->
+    <template id="web_layout" inherit_id="web.layout">
+        <xpath expr="//title" position="replace">Abith</xpath>
+     </template>
      
     <template id="basic_hms.prescription_bils_report" name="Diet Plan">
         <t t-call="web.external_layout">
             <t t-call="web.html_container">
                <t t-foreach="docs" t-as="o">
+
+            <style>
+                .flex-parent {
+                    display: flex;
+
+                  }
+                .flex-container {
+                    display: flex;
+                    
+                  }
+                  
+
+            </style>
                    <t >
                     <td style="border: 0px;width: 50%;">
                         <div class="header_tag">
-                            <h4 class="text-center heading_text_cor"><strong>Prescription</strong></h4>
+                            <h4 class="text-center heading_text_cor"><strong>Medicine Bill </strong></h4>
                             </div>
                         <div  >
-                        <div class='float-left'>
-                            <p><strong>SL NO :</strong><span t-field="o.ebook_id"/></p> 
-                    <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p></div>
-                    
-                <div class="float-right" >
-                    <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p>
-                    <p><strong>Payment Type :</strong><span t-field="o.payment_type"/></p>
-                    <!-- <p><strong>Payment Type :</strong><span t-field="o.payment_id"/></p> -->
-                </div>
+                            <div class='float-left'>
+                                <p><strong>SL NO :</strong><span t-field="o.ebook_id"/></p> 
+                                <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p>
+                                <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p></div>
+                            <div class="float-right" >
+                                <p><strong>Gender :</strong><span t-field="o.sex"/></p>
+                                <p><strong>Contact Number :</strong><span t-field="o.contact_no"/></p>
+                                <p><strong>Payment Type :</strong><span t-field="o.payment_type"/></p>
+                    </div>
             </div>
                     </td>
                     
@@ -47,23 +60,20 @@
                    <table class="table table-bordered" style="border: 1px solid black;">
                     <thead>
                         <tr>
-                        <th style="border: 1px solid black;">Prescription ID</th>
-                        <th style="border: 1px solid black;"> Name  </th>
-                        <th style="border: 1px solid black;"> Date  </th>
-                        <th style="border: 1px solid black;"> Taxes</th>
-                        <th style="border: 1px solid black;"> Bill Amount </th>
+                        
+                        <th style="border: 1px solid black;"> Prescription ID  </th>
+                        <th style="border: 1px solid black;"> Particulars  </th>
+                        <th style="border: 1px solid black;"> GST %</th>
+                        <th style="border: 1px solid black;"> Rate </th>
                         </tr>
                     </thead>
                     <tbody>
                      <tr t-foreach='docs.pres_bill' t-as='lines'>
-                        <td style="border: 1px solid black;">
-                         <span t-field="lines.prescription_id"/>
-                       </td>
                        <td style="border: 1px solid black;">
-                        <span t-field="lines.medicine_name"/>
+                        <span t-field="lines.prescription_id"/>
                         </td>
                         <td style="border: 1px solid black;">
-                        <span t-field="lines.date"/>
+                        <span t-field="lines.medicine_name"/>
                         </td>
                         <td style="border: 1px solid black;">
                             <span t-field="lines.gst_tax"/>
@@ -74,7 +84,10 @@
                        </tr>
                     </tbody>
                     </table>
-                    <th>
+                    </t>
+                  
+                    <div class = "flex-parent">
+                        <th>
                         <table class="table table-sm" id="box" style="width:36.5%; float:right;margin-left: 0px; border: 1px solid black;">
                             <tr class="border-black o_subtotal" style="font-size: 15px; ">
                                 <td><strong>Medicine Amount</strong></td>
@@ -84,7 +97,7 @@
                             </tr>
                             <tr class="border-black o_subtotal" style="font-size: 15px; ">
                             <t>
-                                <td>GST 5%</td>
+                                <td><strong>GST 5%</strong></td>
                                     <td class="text-right">
                                     <strong><span t-esc="o.total_tax_med" class="fa fa-inr"/></strong>
                                     </td>
@@ -98,10 +111,34 @@
                             </tr>
                         </table>
                         </th>
-                </t>
+                        <br></br>
+                        <t t-if="o.med_amt_paid">
+                        <strong>Amount Paid :</strong>
+                        <span t-field="o.med_amt_paid"/></t>
+                        <br></br><br></br>
+                        <t t-if="o.med_amt_due">
+                        <strong>Amount Due :</strong>
+                        <span t-field="o.med_amt_due"/></t>
+                    </div>	
+                   <br></br>
+                     <div class='row'>
+                        <div class='col-9'> 
+                            <br></br>  
+                            <h5><strong>Terms and Condition</strong></h5>
+                            <h6>1.Subject to Tirupur jurisdiction</h6>
+                            <h6>2.Medicines once purchased are not Refundable</h6>  
+                        </div> 
+                        <div class='col-3'>
+                            <h6><strong>DAISY HOSPITAL</strong></h6>
+                            <br></br><br></br>
+                            <h6 style="text-align: center;"><strong> Authorised Signatory </strong></h6>
+                        </div>
+                </div>
             </t>
         </t>
     </t>
-</template>
+        </template>
  </data>
 </odoo>
+               
+            

@@ -68,6 +68,7 @@ class CT_Guided_Intervention(models.Model):
 class Scan_test(models.Model):
     _name = 'scan.test'
     _rec_name = 'request'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char('Scan Test')
     patient_id = fields.Many2one('res.partner', string='Patient')
@@ -87,29 +88,34 @@ class Scan_test(models.Model):
     ct_angiogram = fields.Many2many('ct.angiogram', string='CT Angiogram')
     ultra_sound_test = fields.Many2many('ultra.sound.studies', string='Ultrasound Test')
     ct_guided_intervention = fields.Many2many('ct.guided.intervention', string='CT Guided Intervention')
-    patient_activity = fields.Selection([('wait',"Doctor Assigned"),('doc','Diet Assigned'),
-                                         ('lab','Lab Assigned'),('pres','Prescription'),('scan','Scan Assigned'),
-                                         ('labs','Lab Completed'),('scans','Scan Completed'),
-                                         ('bill',"Pharmacy Bill Assigned"),('completed',"Completed")],default='wait')
+    patient_activity = fields.Selection([('wait',"Waiting"),('doctor',"Doctor Assigned"),('doc','Diet Assigned'),
+                                         ('lab','Lab Bill Assigned'),('pres','Pharmacy Bill Assigned'),('scan','Scan Bill Assigned'),
+                                         ('labs','Lab Test Completed'),('scans','Scan Test Completed'),
+                                         ('bill',"Pharmacy Bill Assigned"),('discontinued','Discontinued'),('completed',"Completed")],default='wait',track_visibility='onchange')
     num_days = fields.Selection([('e','ebook'),('1','Day1'),('2','Day2'),('3','Day3'),('4','Day4'),('5','Day5'),
                                 ('6','Day6'),('7','Day7'),('8','Day8'),('9','Day9'),('10','Day10')])
+    doctor_id = fields.Many2one('res.partner', string='Doctor Name',domain=[('is_doctor','=',True)])
 
     @api.constrains('patient_id')
     def write_lab(self):
         orm_e = self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
         orm_e.write({'patient_activity' : 'scan'})
         
+        scan_assign = self.env['patient.bills'].search([('patient_name','=',self.patient_id.id)])
+        scan_assign.write({'patient_activity' : 'scan'})
+        
         orm = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id)])
         orm.write({'patient_activity' : 'scan'})
         
+        orm = self.env['res.partner'].search([('name','=',self.patient_id.name)])
+        orm.update({
+            'patient_activity':'scan',
+        })
         self.patient_activity = 'scan'
     
     def document_button(self):
-        self.patient_activity = 'scans'
-        orm = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id)])
-        orm.write({'patient_activity':'scans'})
-        orm1 = self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
-        orm1.write({'patient_activity':'scans'})
+        # self.patient_activity = 'scans'
+        
         return{
             'name': "Document Upload",
             'domain':[('name', '=', self.patient_id.name)],
@@ -329,6 +335,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -349,6 +356,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -369,6 +377,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -389,6 +398,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -409,6 +419,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -429,6 +440,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -449,6 +461,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -469,6 +482,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -500,6 +514,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -520,6 +535,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -540,6 +556,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -560,6 +577,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -580,6 +598,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -600,6 +619,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -620,6 +640,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -640,6 +661,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -671,6 +693,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -691,6 +714,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -705,12 +729,14 @@ class Scan_test(models.Model):
                 'date':datetime.now(),
                 'scan_id':result.id,
                 'name':rec.name,
+                
                 }
                 scan_doc.append((0,0,valuee))
                 values={
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -731,6 +757,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -751,6 +778,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -771,6 +799,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -791,6 +820,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -811,6 +841,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -842,6 +873,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -862,6 +894,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -882,6 +915,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -902,6 +936,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -922,6 +957,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -942,6 +978,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -962,6 +999,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -982,6 +1020,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1013,6 +1052,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1033,6 +1073,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1053,6 +1094,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1073,6 +1115,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1093,6 +1136,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1113,6 +1157,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1133,6 +1178,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1153,6 +1199,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1184,6 +1231,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1204,6 +1252,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1224,6 +1273,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1244,6 +1294,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1264,6 +1315,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1284,6 +1336,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1304,6 +1357,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1324,6 +1378,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1355,6 +1410,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1375,6 +1431,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1395,6 +1452,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1415,6 +1473,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1435,6 +1494,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1455,6 +1515,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1475,6 +1536,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1495,6 +1557,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1526,6 +1589,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1546,6 +1610,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1566,6 +1631,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1586,6 +1652,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1606,6 +1673,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1626,6 +1694,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1646,6 +1715,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1666,6 +1736,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1697,6 +1768,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1717,6 +1789,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1737,6 +1810,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1757,6 +1831,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1777,6 +1852,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1797,6 +1873,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1817,6 +1894,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1837,6 +1915,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1868,6 +1947,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1888,6 +1968,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1908,6 +1989,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1928,6 +2010,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1948,6 +2031,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1968,6 +2052,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -1988,6 +2073,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,
@@ -2008,6 +2094,7 @@ class Scan_test(models.Model):
                     'date':datetime.now(),
                     'scan_id':result.id,
                     'name':rec.name,
+                    'range_normal':rec.range,
                     }
                 valuez={
                 'name': rec.name,

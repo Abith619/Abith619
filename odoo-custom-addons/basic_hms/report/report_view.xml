@@ -3,11 +3,35 @@
         <!-- QWeb Reports -->
 
         <report
+            id="report_print_EBook_tamil_diet"
+            model="medical.doctor"
+            report_type="qweb-pdf"
+            string="Tamil Diet"
+            name="basic_hms.tamil_diet_report"
+            file="basic_hms.tamil_diet"
+        />
+        <report
+            id="report_print_prescriptions_ebook"
+            model="medical.prescription.order"
+            report_type="qweb-pdf"
+            string="Ebook"
+            name="basic_hms.ebook_doctor_report_med"
+            file="basic_hms.med_ebook"
+            />
+        <report
+            id="report_print_EBook_file"
+            model="res.partner"
+            report_type="qweb-pdf"
+            string="EBook"
+            name="basic_hms.ebook_file_report"
+            file="basic_hms.file_room"
+        />
+        <report
             id="report_print_prescriptions"
             model="medical.prescription.order"
             report_type="qweb-pdf"
             string="Prescription"
-            name="basic_hms.prescription_demo_report"
+            name="basic_hms.prescription_demo_report_template"
             file="basic_hms.prescription_demo_report"
             />
 
@@ -27,7 +51,9 @@
             string="Registration"
             name="basic_hms.registration_bils_report"
             file="basic_hms.prescription_demo_report" 
-            paperformat = "basic_hms.paperformat_reigstration" />
+            paperformat = "basic_hms.paperformat_reigstration"
+            
+            />
             
         
         <report
@@ -97,14 +123,7 @@
             file="basic_hms.diet_doctor_report"
         />
 
-        <report
-            id="report_print_EBook_file"
-            model="res.partner"
-            report_type="qweb-pdf"
-            string="EBook"
-            name="basic_hms.ebook_file_report"
-            file="basic_hms.file_room"
-        />
+        
         
         <report
             id="report_print_EBook"

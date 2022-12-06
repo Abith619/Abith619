@@ -21,7 +21,7 @@
                     <field name="patient_id" />
                     <field name="write_date" />
                     <field name="doctor_id" />
-
+                    <field name="patient_activity" widget="badge" decoration-danger="patient_activity == 'discontinued'" decoration-warning="patient_activity in ('wait', 'bill')" decoration-success="patient_activity in ('completed', 'scans', 'labs', 'pres')"/>
                 </tree>
             </field>
         </record>
@@ -50,7 +50,7 @@
                                     <field name="height"/>
                                     <field name="weight"/>
                                     <field name="prescribed_by" invisible='1'/>
-                                                        
+                                    <field name ='ebook_print' invisible='1'/>            
                             </group>
                             <group>
                                 <field name="name" readonly="1" />
@@ -106,6 +106,11 @@
                         </div>
 
                     </sheet>
+                    <div class="oe_chatter">
+                        <!-- <field name="message_follower_ids" widget="mail_followers" string="mail"/> -->
+                        <field name="message_ids" widget="mail_thread" string= "Mail"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                    </div>
                 </form>
 
             </field>

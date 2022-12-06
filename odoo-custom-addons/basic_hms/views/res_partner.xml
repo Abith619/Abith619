@@ -120,6 +120,8 @@
                 <field name ="user_name" attrs="{'invisible': [('roles_selection','=', 'patient')]}"/>
                 <field name ="password" password="True" attrs="{'invisible': [('roles_selection','=', 'patient')]}"/>
                 <field name ="treatment_for" attrs="{'invisible': [('roles_selection','!=', 'patient')]}"/>
+                <field name="patient_activity" invisible='1'/>
+                <field name="doctor_reg" invisible='1'/>
             </field>
             
             <field name="vat" position="after">
@@ -127,6 +129,7 @@
                 <field name ="whatsapp" widget="phone"/>
                 <field name ="mobile" string='Recovery Number' widget="phone" attrs="{'invisible': [('roles_selection','=', 'reception')]}"/>
                 <field name ="company_id" attrs="{'invisible': [('roles_selection','=', 'reception')]}"/>
+                <field name ="gst_num" attrs="{'invisible': ['|',('roles_selection','!=', 'vendor'),('is_vendor','=',True)]}"/>
                 <field name ='ebook_print' invisible='1'/>
             </field>
             <notebook >
@@ -140,6 +143,7 @@
                             <field name="lab_scan" />
                             <field name="is_telecaller" />
                             <field name="is_billing" />
+                            <field name="is_vendor" />
                         </group>
 
                         <field name="document_type">
@@ -153,7 +157,7 @@
                 </notebook>
             </field>
         </record>
-
+        
         <record id="res_partner_tree_views" model="ir.ui.view">
             <field name="name">res.partner.tree.view</field>
             <field name="model">res.partner</field>
@@ -163,8 +167,8 @@
                 <xpath expr="//field[@name='user_id']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
-                    <xpath expr="//field[@name='activity_ids']" position="attributes">
-                    <attribute name="invisible">1</attribute>
+                    <xpath expr="//field[@name='activity_ids']" position="replace">
+                        <field name ="doctor_reg" />
                 </xpath>
                 
                 <xpath expr="//field[@name='email']" position="attributes">
@@ -182,8 +186,8 @@
                 <xpath expr="//field[@name='category_id']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
-                <xpath expr="//field[@name='company_id']" position="attributes">
-                    <attribute name="invisible">1</attribute>
+                <xpath expr="//field[@name='company_id']" position="replace">
+                    <field name="patient_activity" widget="badge" decoration-danger="patient_activity == 'discontinued'" decoration-warning="patient_activity in ('wait', 'bill')" decoration-success="patient_activity in ('completed', 'scans', 'labs', 'pres')"/>
                 </xpath>
             </field>
         </record>
@@ -195,7 +199,7 @@
                 <tree string="Documents" >
                     <field name="name" />
                      <field name="attach_types"/>
-                  <!--  <field name="document_detail" /> -->
+                   <field name="write_date"/>
                 </tree>
             </field>
         </record>
@@ -218,6 +222,7 @@
                     <tree string='Documents' editable='bottom'>
                             <field name='attach_types'/>
                             <field name='attachment' widget='many2many_binary'/>
+                            <field name="write_date"/>
                     </tree>
                         </field>
                     </page>
@@ -235,31 +240,37 @@
     <field name="inherit_id" ref="base.view_res_partner_filter"/>
     <field name="arch" type="xml">
     <filter name="salesperson" position="replace">
-        <filter string="Doctor" name="is_doctor" domain="[('is_doctor', '=', True)]"/>
+        <filter string="Doctor" name="is_doctor" domain="['|',('roles_selection', '=', 'doctor'),('is_doctor', '=', True)]"/>
     </filter>
 
     <filter name="type_company" position="replace">
-        <filter string="Patient" name="is_patient" domain="[('is_patient', '=', True)]"/>
+        <filter string="Patient" name="is_patient" domain="['|',('roles_selection', '=', 'patient'),('is_patient', '=', True)]"/>
+        <filter string="Doctor" name="is_doctor" context="{'group_by': 'is_doctor'}"/>
+        <filter string="Today" name="create_date" separator="1" domain="[('create_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
+            <filter string="Yesterday" name="create_date" separator="1" domain="[('create_date','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+            <filter string="Tomorrow" name="create_date" separator="1" domain="[('create_date','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+            <filter string="Next Month" name="create_date" separator="1" domain="[('create_date','&gt;=',(datetime.date.today()+relativedelta(days=31)).strftime('%Y-%m-%d'))]"/>
+            <filter string="Past Month" name="create_date" separator="1" domain="[('create_date','&lt;=',(datetime.date.today()-relativedelta(months=1)).strftime('%Y-%m-%d'))]"/>
     </filter>
 
     <filter name="type_person" position="replace">
-        <filter string="Receptionist" name="roles_selection" domain="[('roles_selection', '=', 'reception')]"/>
+        <filter string="Receptionist" name="roles_selection" domain="['|',('roles_selection', '=', 'reception'),('is_reception', '=', True)]"/>
     </filter>
 
     <filter name="group_company" position="replace">
-        <filter string="Pharmacy" name="roles_selection" domain="[('roles_selection', '=', 'pharmacy')]"/>
+        <filter string="Pharmacy" name="roles_selection" domain="['|',('roles_selection', '=', 'pharmacy'),('is_pharmacy', '=', True)]"/>
     </filter>
 
     <filter name="group_country" position="after">
-        <filter string="Billing" name="roles_selection" domain="[('roles_selection', '=', 'billing')]"/>
+        <filter string="Billing" name="roles_selection" domain="['|',('roles_selection', '=', 'billing'),('is_billing', '=', True)]"/>
     </filter>
 
     <filter name="inactive" position="replace">
-        <filter string="Telecaller" name="roles_selection" domain="[('roles_selection', '=', 'telecaller')]"/>
+        <filter string="Telecaller" name="roles_selection" domain="['|',('roles_selection', '=', 'telecaller'),('is_telecaller', '=', True)]"/>
     </filter>
      
     <filter name="group_country" position="replace">
-        <filter string="Lab / Scan" name="roles_selection" domain="[('roles_selection', '=', 'lab')]"/>
+        <filter string="Lab / Scan" name="roles_selection" domain="['|',('roles_selection', '=', 'lab'),('lab_scan', '=', True)]"/>
     </filter>
 
     </field>

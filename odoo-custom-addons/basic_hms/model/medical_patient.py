@@ -11,8 +11,6 @@ import qrcode
 import base64
 from io import BytesIO
 
-
-
 class medical_patient(models.Model):
     
     _name = 'medical.patient'
@@ -302,7 +300,7 @@ class medical_patient(models.Model):
     contact_number=fields.Char(string="Whatsapp Number")
     date1 = fields.Datetime(string="Date", default=fields.Datetime.now())
     fess = fields.Float(string="Consultation Fee",default=150)
-    doctors = fields.Many2one('res.partner',string="Doctor Allocation",required= True,domain=[('is_doctor','=',True)], track_visibility='onchange')
+    doctors = fields.Many2one('res.partner',string="Doctor Allocation",domain=[('is_doctor','=',True)], track_visibility='onchange')
     height = fields.Float(string="Height in Cms")
     weight = fields.Float(string="Weight in Kgs")
     occupation = fields.Char(string="Occupation")
@@ -335,10 +333,10 @@ class medical_patient(models.Model):
 
     company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.patient'))
     patient_waiting = fields.Char(string="Waiting Time",compute='waiting')
-    patient_activity = fields.Selection([('wait',"Doctor Assigned"),('doc','Diet Assigned'),
-                                         ('lab','Lab Assigned'),('pres','Prescription'),('scan','Scan Assigned'),
-                                         ('labs','Lab Completed'),('scans','Scan Completed'),
-                                         ('bill',"Pharmacy Bill Assigned"),('discontinued','Discontinued'),('completed',"Completed")],default='wait')
+    patient_activity = fields.Selection([('wait',"Waiting"),('doctor',"Doctor Assigned"),('doc','Diet Assigned'),
+                                         ('lab','Lab Bill Assigned'),('pres','Pharmacy Bill Assigned'),('scan','Scan Bill Assigned'),
+                                         ('labs','Lab Test Completed'),('scans','Scan Test Completed'),
+                                         ('bill',"Pharmacy Bill Assigned"),('discontinued','Discontinued'),('completed',"Completed")],default='wait', track_visibility='onchange')
     status_report = fields.Selection([('file','File'),('consult','Consultation'),('br','BR')])
     file_num = fields.Char(string='File ID')
     qr_code = fields.Binary("QR Code", attachment=True, compute='generate_qr_code')
@@ -353,6 +351,8 @@ class medical_patient(models.Model):
     direct_type = fields.Selection([('app',"Appointment"),('rev',"Review"),('package','Package'),('stop',"Stopped"),('cam','Camp')], string='Direct Type')
     consulting_fees = fields.Boolean()
     
+    
+    
     def no_fees(self):
         self.consulting_fees = True
 
@@ -361,7 +361,7 @@ class medical_patient(models.Model):
         if self.whatsapp_check == True:
             self.contact_number = self.contact_no
 
-
+    qr_type = fields.Selection([('n',''),('qr','QR Scan')], string='QR')
     
     def generate_qr_code(self):
         for rec in self:
@@ -382,9 +382,6 @@ class medical_patient(models.Model):
             img.save(temp, format="PNG")
             qr_image = base64.b64encode(temp.getvalue())
             self.qr_code = qr_image
-
-
-    
 
     @api.depends('write_date')
     def waiting(self):
@@ -453,8 +450,7 @@ class medical_patient(models.Model):
     ('tv','Tv Program'),('magazine','Magazine'),('camp','Camp'),('youtube','Youtube'),('others','Others')],
     string='How you came to know about Daisy Health Care (p) Ltd.,?')
     signatures=fields.Char(string="Signature")
-    data_value = fields.Many2many('medical.feedback', string="How you came to know about Daisy Health Care(P)LTD.")
-    
+    data_value = fields.Many2one('medical.feedback', string="How you came to know about Daisy Health Care(P)LTD.")
 
     fix_appoinment=fields.One2many('fix.appointment','fix',string="Appoinment Slot")
     dates= fields.Date(string="Date")
@@ -462,8 +458,6 @@ class medical_patient(models.Model):
     ('12:00 Pm - 01:00 Pm','12:00 Pm - 01:00 Pm'),('02:00 Pm - 03:00 Pm','02:00 Pm - 03:00 Pm'),('03:00 Pm - 04:00 Pm','03:00 Pm - 04:00 Pm'),('04:00 Pm - 05:00 Pm','04:00 Pm - 05:00 Pm'),
     ('05:00 Pm - 06:00 Pm','05:00 Pm - 06:00 Pm'),('06:00 Pm - 07:00 Pm','06:00 Pm - 07:00 Pm')],string='Appointment Slot')
     payment = fields.Float(string="Payments", track_visibility='onchange')
-
-
     
 
     @api.model

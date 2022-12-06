@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<template id="basic_hms.tamil_diet_report">
+     <t t-call="web.external_layout">
+     <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <!-- <t t-raw="translate_doc(o, doc_model, 'lang', 'basic_hms.ebook_doctor_report_diet')"/> -->
+            <!-- <t t-call="basic_hms.ebook_doctor_report_diet" t-lang="o.patient.lang"/> -->
+            <style>
+                .footer_section{
+                }
+                .border{
+                    border-collapse: collapse;
+                }
+                .heading_text_cor{
+                    color:#000;
+                    font-weight:600;
+                    }
+            </style>
+                <t >
+                <h2 >Patient Details</h2>
+                <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
+                <div>
+                <td style="border: 0px;width: 50%;">
+                    <p><strong>Name :</strong><span t-field="o.patient"/></p>
+                    <p><b>ID Number :</b> <span t-field="o.serial_number"/></p>
+                </td>
+                <div>
+                <td style="border: 0px;width: 50%;">
+            <img t-att-src="'data:image/png;base64,%s' % to_text(o.qr_code)" style="height:100px;width:100px;float:center;"/>
+                </td>
+                </div>
+                </div>
+                </table>
+            <t t-if="docs.diet_fields.diet_for.diet_line">
+                <div class="header_tag">
+     <h4 class="text-center heading_text_cor">Diet காலை</h4>
+     </div>
+                 <table class="table table-bordered" style="border: 1px solid black;">
+                     <thead>
+                         <tr>
+                         <th style="border: 1px solid black;">Time</th>
+                         <th style="border: 1px solid black;"> Food </th>
+                         <th style="border: 1px solid black;"> Fruit Diet </th>
+                         <th style="border: 1px solid black;"> Veg Diet </th>
+                         <th style="border: 1px solid black;"> Protein Diet </th>
+                         <th style="border: 1px solid black;"> Quantity </th>
+                         <th style="border: 1px solid black;"> Exercise </th>
+                         <th style="border: 1px solid black;"> Notes </th>
+                         </tr>
+                     </thead>
+                     <tbody>
+
+                        <p></p>
+
+                     <tr t-foreach='docs.diet_fields.diet_for.diet_line' t-as='line'>
+                        <td style="border: 1px solid black;">
+                             <span t-field="line.wakeup1"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                        <span t-field="line.food"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                        <span t-field="line.fruit_diet"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                         <span t-field="line.veg_diet"/>
+                         </td>
+                         <td style="border: 1px solid black;">
+                         <span t-field="line.protein_diet"/>
+                         </td>
+                         <td style="border: 1px solid black;">
+                         <span t-field="line.quantity"/>
+                         </td>
+                         <td style="border: 1px solid black;">
+                         <span t-field="line.exercise1"/>
+                         </td>
+                         <td style="border: 1px solid black;">
+                             <span t-field="line.note"/>
+                         </td>
+                         </tr>
+                     </tbody>
+                     </table>
+                     </t>
+                </t>
+        </t>
+    </t>
+</t>
+</template>
+</odoo>

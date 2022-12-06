@@ -9,10 +9,8 @@ import pytz
 from datetime import datetime, timedelta
 from odoo.exceptions import  ValidationError
 
-
 class res_partner(models.Model):
     _inherit = 'res.partner'
-
 
     # gender= fields.Char()
     designation = fields.Char(string='Designation')
@@ -59,7 +57,7 @@ class res_partner(models.Model):
     is_billing = fields.Boolean(string='Billing')
     is_telecaller = fields.Boolean(string='Telecaller')
     roles_selection=fields.Selection([('manager','Manager'),('reception','Reception'),('doctor','Doctor'),('pharmacy','Pharmacy'),
-    ('billing','Billing'),('lab','Lab & Scan'),('telecaller','Telecaller'),('patient','Patient')],string='Roles')
+    ('billing','Billing'),('lab','Lab & Scan'),('telecaller','Telecaller'),('patient','Patient'),('vendor','Vendor')],string='Roles')
     ebook_print=fields.Many2one('medical.doctor', string='Ebook',compute='orm_ebook')
     
     experience = fields.Char(string='Experience')
@@ -67,12 +65,20 @@ class res_partner(models.Model):
     treatment_for=fields.Many2one('medical.pathology',string="Treatment For")
     abroad_addr = fields.Char(string='Abroad Address')
     
+    patient_activity = fields.Selection([('wait',"Waiting"),('doctor',"Doctor Assigned"),('doc','Diet Assigned'),
+                                         ('lab','Lab Bill Assigned'),('pres','Pharmacy Bill Assigned'),('scan','Scan Bill Assigned'),
+                                         ('labs','Lab Test Completed'),('scans','Scan Test Completed'),
+                                         ('bill',"Pharmacy Bill Assigned"),('discontinued','Discontinued'),('completed',"Completed")],default='wait',track_visibility='onchange')
+    doctor_reg = fields.Many2one('res.partner', string='Doctor', domain=[('is_doctor','=',True)])
+    gst_num = fields.Char(string='GST NO :')
+    is_vendor = fields.Boolean(string='Vendor')
+    
     def orm_ebook(self):
         orm=self.env['medical.doctor'].search([('patient','=',self.name)])
         self.ebook_print = orm
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-    @api.depends('roles_selection')
+    @api.constrains('roles_selection')
     def onchange_is_patient(self):
         if self.roles_selection == 'patient':
             self.is_patient = True
@@ -102,6 +108,10 @@ class res_partner(models.Model):
             self.is_billing = True
         else:
             self.is_billing = False
+        if self.roles_selection == 'vendor':
+            self.is_vendor = True
+        else:
+            self.is_vendor = False
 
 #      QR Code
 
@@ -174,7 +184,7 @@ class res_partner(models.Model):
     'type': 'ir.actions.act_window',
     }
 
-    
+
     def doctor_report(self):
         for res in self :
             doctor_report_appointment1 = self.env['medical.doctor'].search_count([('doctor', '=', res.name)])
@@ -310,6 +320,40 @@ class document_type_upload(models.Model):
     attach_types = fields.Selection([('voice','Voice Recording'),('Video','Video'),('ebook','Ebook'),('photo','Photo'),('green','Green Document'),('gov','Gov ID'),
         ('original','Original'),('lab','Lab Document'),('scan','Scan Document')],string='Attachment Type')
     
+    @api.constrains('document_line')
+    def pat_stat(self):
+        if self.attach_types == 'lab':
+            orm_1 = self.env['lab.scan.form'].search([('patient_id','=',self.name)])
+            orm_1.write({'patient_activity':'labs'})
+            
+            orm = self.env['medical.patient'].search([('patient_id','=',self.name)])
+            orm.write({'patient_activity':'labs'})
+            
+            orm1 = self.env['medical.doctor'].search([('patient','=',self.name)])
+            orm1.write({'patient_activity':'labs'})
+            
+            orm_3 = self.env['res.partner'].search([('name','=',self.name)])
+            orm_3.write({'patient_activity':'labs'})
+            
+            orm_4 = self.env['patient.bills'].search([('patient_name','=',self.name)])
+            orm_4.write({'patient_activity':'labs'})
+            
+        if self.attach_types == 'scan':
+            orm_2 = self.env['scan.test'].search([('patient_id','=',self.name)])
+            orm_2.write({'patient_activity':'scans'})
+            
+            orm = self.env['medical.patient'].search([('patient_id','=',self.name)])
+            orm.write({'patient_activity':'scans'})
+            
+            orm1 = self.env['medical.doctor'].search([('patient','=',self.name)])
+            orm1.write({'patient_activity':'scans'})
+            
+            orm_3 = self.env['res.partner'].search([('name','=',self.name)])
+            orm_3.update({'patient_activity':'scans'})
+        
+            orm_4 = self.env['patient.bills'].search([('patient_name','=',self.name)])
+            orm_4.write({'patient_activity':'scans'})
+        
     @api.model
     def create(self, vals):
         result = super(document_type_upload,self).create(vals)

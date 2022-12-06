@@ -80,6 +80,5 @@ from. import labscan_form
 from. import scan_test
 from. import file_room
 from. import discharge
-from . import ivr
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:s

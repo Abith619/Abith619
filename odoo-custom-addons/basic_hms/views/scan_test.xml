@@ -300,6 +300,7 @@
                             <field name ="request" invisible='1'/>
                     <field name ="num_days" invisible='1'/>
         <field name ="name" invisible='1'/>
+        <field name ="doctor_id" invisible='1'/>
                                 <field name ="patient_id" invisible='1'/>
                                 <field name ="price" invisible='1'/>
                                 <field name ="range" invisible='1'/>
@@ -351,6 +352,11 @@
             </div>
         </div>
             </sheet>
+            <div class="oe_chatter">
+                <!-- <field name="message_follower_ids" widget="mail_followers" string="mail"/> -->
+                <field name="message_ids" widget="mail_thread" string= "Mail"/>
+                <field name="activity_ids" widget="mail_activity"/>
+            </div>
             </form>
             </field>
         </record>
@@ -376,8 +382,8 @@
                         <field name ="ebook_id" />
                         <field name ="patient_id" />
                         <field name="write_date"/>
+                        <field name ="doctor_id" />
                         <field name="patient_activity" readonly="1" widget="badge" decoration-danger="patient_activity == 'discontinued'" decoration-warning="patient_activity in ('wait', 'bill')" decoration-success="patient_activity in ('completed', 'scans', 'labs', 'pres')"/>
-                        <!-- <field name ="company_id" invisible='1'/> -->
                     </tree>
                 </field>
             </record>

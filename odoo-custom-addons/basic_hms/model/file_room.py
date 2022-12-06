@@ -611,6 +611,7 @@ class InPatientDept(models.Model):
                 'default_patient_id': self.patient_id.id,
                 'default_prescription_date': datetime.now(),
                 'default_num_days': '1',
+                # 'medicine_name':self.medicine_name,
                 },
                 'target': 'new'
             }
@@ -791,6 +792,17 @@ class DietOne(models.Model):
     patient_id = fields.Many2one('res.partner', string='Patient Name')
     diet_id = fields.Many2one('prescribe.diet',string='Diet')
     
+    names=fields.Many2one('prescribe.diet')
+
+    wakeup1=fields.Char(string="Time")
+    food=fields.Text(string="Food")
+    fruit_diet=fields.Many2many('set.fruits',string="Fruit Diet",readonly=False)
+    veg_diet=fields.Many2many('set.veg',string="Veg Diet")
+    protein_diet=fields.Many2many('set.protein',string="Protein Diet")
+    quantity=fields.Char(string="Quantity")
+    exercise1=fields.Char(string="Exercise")
+    note=fields.Char('Notes')
+    
 class DietOnet(models.Model):
     _name = 'diet.line.in'
     
@@ -801,6 +813,17 @@ class DietOnet(models.Model):
     name = fields.Many2one('in.patient',string='Name')
     patient_id = fields.Many2one('res.partner', string='Patient Name')
     diet_id = fields.Many2one('prescribe.diet',string='Diet')
+    
+    names=fields.Many2one('prescribe.diet')
+
+    wakeup1=fields.Char(string="Time")
+    food=fields.Text(string="Food")
+    fruit_diet=fields.Many2many('set.fruits',string="Fruit Diet",readonly=False)
+    veg_diet=fields.Many2many('set.veg',string="Veg Diet")
+    protein_diet=fields.Many2many('set.protein',string="Protein Diet")
+    quantity=fields.Char(string="Quantity")
+    exercise1=fields.Char(string="Exercise")
+    note=fields.Char('Notes')
     
 class SisterRound(models.Model):
     _name='sister.round'
@@ -819,6 +842,8 @@ class SisterRound(models.Model):
     digestion = fields.Char(string='Digestion')
     pain = fields.Char(string='Pain')
     notes = fields.Char(string='Notes')
+    
+    
 
 class TherapyIP(models.Model):
     _name = 'ip.therapy'
@@ -1357,6 +1382,17 @@ class Dietline(models.Model):
     name = fields.Many2one('in.patient',string='Name')
     patient_id = fields.Many2one('res.partner', string='Patient Name')
     
+    names=fields.Many2one('prescribe.diet')
+
+    wakeup1=fields.Char(string="Time")
+    food=fields.Text(string="Food")
+    fruit_diet=fields.Many2many('set.fruits',string="Fruit Diet",readonly=False)
+    veg_diet=fields.Many2many('set.veg',string="Veg Diet")
+    protein_diet=fields.Many2many('set.protein',string="Protein Diet")
+    quantity=fields.Char(string="Quantity")
+    exercise1=fields.Char(string="Exercise")
+    note=fields.Char('Notes')
+    
     @api.onchange('patient_id')
     def write(self,vals):
         result = super(Dietline, self).create(vals)
@@ -1382,6 +1418,17 @@ class Dietlinetwo(models.Model):
     name=fields.Many2one('in.patient',string='Name')
     patient_id = fields.Many2one('res.partner', string='Patient Name')
     
+    names=fields.Many2one('prescribe.diet')
+
+    wakeup1=fields.Char(string="Time")
+    food=fields.Text(string="Food")
+    fruit_diet=fields.Many2many('set.fruits',string="Fruit Diet",readonly=False)
+    veg_diet=fields.Many2many('set.veg',string="Veg Diet")
+    protein_diet=fields.Many2many('set.protein',string="Protein Diet")
+    quantity=fields.Char(string="Quantity")
+    exercise1=fields.Char(string="Exercise")
+    note=fields.Char('Notes')
+    
 class Dietlinethree(models.Model):
     _name = 'diet.line.three'
     
@@ -1390,6 +1437,17 @@ class Dietlinethree(models.Model):
     diet_seq = fields.Many2one('prescribe.diet',string='Diet S.No')
     dates=fields.Datetime(string='Date')
     name=fields.Many2one('in.patient',string='Name')
+    
+    names=fields.Many2one('prescribe.diet')
+
+    wakeup1=fields.Char(string="Time")
+    food=fields.Text(string="Food")
+    fruit_diet=fields.Many2many('set.fruits',string="Fruit Diet",readonly=False)
+    veg_diet=fields.Many2many('set.veg',string="Veg Diet")
+    protein_diet=fields.Many2many('set.protein',string="Protein Diet")
+    quantity=fields.Char(string="Quantity")
+    exercise1=fields.Char(string="Exercise")
+    note=fields.Char('Notes')
     
 class Dietlinefour(models.Model):
     _name = 'diet.line.four'
@@ -1400,6 +1458,17 @@ class Dietlinefour(models.Model):
     dates=fields.Datetime(string='Date')
     name=fields.Many2one('in.patient',string='Name')
     
+    names=fields.Many2one('prescribe.diet')
+
+    wakeup1=fields.Char(string="Time")
+    food=fields.Text(string="Food")
+    fruit_diet=fields.Many2many('set.fruits',string="Fruit Diet",readonly=False)
+    veg_diet=fields.Many2many('set.veg',string="Veg Diet")
+    protein_diet=fields.Many2many('set.protein',string="Protein Diet")
+    quantity=fields.Char(string="Quantity")
+    exercise1=fields.Char(string="Exercise")
+    note=fields.Char('Notes')
+    
 class Dietlinefive(models.Model):
     _name = 'diet.line.five'
     
@@ -1408,6 +1477,17 @@ class Dietlinefive(models.Model):
     diet_seq = fields.Many2one('prescribe.diet',string='Diet S.No')
     dates=fields.Datetime(string='Date')
     name=fields.Many2one('in.patient',string='Name')
+    
+    names=fields.Many2one('prescribe.diet')
+
+    wakeup1=fields.Char(string="Time")
+    food=fields.Text(string="Food")
+    fruit_diet=fields.Many2many('set.fruits',string="Fruit Diet",readonly=False)
+    veg_diet=fields.Many2many('set.veg',string="Veg Diet")
+    protein_diet=fields.Many2many('set.protein',string="Protein Diet")
+    quantity=fields.Char(string="Quantity")
+    exercise1=fields.Char(string="Exercise")
+    note=fields.Char('Notes')
     
 class Dietlinesix(models.Model):
     _name = 'diet.line.six'
@@ -1418,6 +1498,17 @@ class Dietlinesix(models.Model):
     dates=fields.Datetime(string='Date')
     name=fields.Many2one('in.patient',string='Name')
     
+    names=fields.Many2one('prescribe.diet')
+
+    wakeup1=fields.Char(string="Time")
+    food=fields.Text(string="Food")
+    fruit_diet=fields.Many2many('set.fruits',string="Fruit Diet",readonly=False)
+    veg_diet=fields.Many2many('set.veg',string="Veg Diet")
+    protein_diet=fields.Many2many('set.protein',string="Protein Diet")
+    quantity=fields.Char(string="Quantity")
+    exercise1=fields.Char(string="Exercise")
+    note=fields.Char('Notes')
+    
 class Dietlineseven(models.Model):
     _name = 'diet.line.seven'
     
@@ -1426,6 +1517,17 @@ class Dietlineseven(models.Model):
     diet_seq = fields.Many2one('prescribe.diet',string='Diet S.No')
     dates=fields.Datetime(string='Date')
     name=fields.Many2one('in.patient',string='Name')
+    
+    names=fields.Many2one('prescribe.diet')
+
+    wakeup1=fields.Char(string="Time")
+    food=fields.Text(string="Food")
+    fruit_diet=fields.Many2many('set.fruits',string="Fruit Diet",readonly=False)
+    veg_diet=fields.Many2many('set.veg',string="Veg Diet")
+    protein_diet=fields.Many2many('set.protein',string="Protein Diet")
+    quantity=fields.Char(string="Quantity")
+    exercise1=fields.Char(string="Exercise")
+    note=fields.Char('Notes')
     
 class Dietlineeight(models.Model):
     _name = 'diet.line.eight'
@@ -1436,6 +1538,17 @@ class Dietlineeight(models.Model):
     dates=fields.Datetime(string='Date')
     name=fields.Many2one('in.patient',string='Name')
     
+    names=fields.Many2one('prescribe.diet')
+
+    wakeup1=fields.Char(string="Time")
+    food=fields.Text(string="Food")
+    fruit_diet=fields.Many2many('set.fruits',string="Fruit Diet",readonly=False)
+    veg_diet=fields.Many2many('set.veg',string="Veg Diet")
+    protein_diet=fields.Many2many('set.protein',string="Protein Diet")
+    quantity=fields.Char(string="Quantity")
+    exercise1=fields.Char(string="Exercise")
+    note=fields.Char('Notes')
+    
 class Dietlinenine(models.Model):
     _name = 'diet.line.nine'
     
@@ -1444,6 +1557,17 @@ class Dietlinenine(models.Model):
     diet_seq = fields.Many2one('prescribe.diet',string='Diet S.No')
     dates=fields.Datetime(string='Date')
     name=fields.Many2one('in.patient',string='Name')
+    
+    names=fields.Many2one('prescribe.diet')
+
+    wakeup1=fields.Char(string="Time")
+    food=fields.Text(string="Food")
+    fruit_diet=fields.Many2many('set.fruits',string="Fruit Diet",readonly=False)
+    veg_diet=fields.Many2many('set.veg',string="Veg Diet")
+    protein_diet=fields.Many2many('set.protein',string="Protein Diet")
+    quantity=fields.Char(string="Quantity")
+    exercise1=fields.Char(string="Exercise")
+    note=fields.Char('Notes')
     
 class MedicineLineOne(models.Model):
     _name = 'medicine.line.one'
@@ -1458,6 +1582,41 @@ class MedicineLineOne(models.Model):
     delivery_option= fields.Selection([('dir','Direct'),('on',"Online")],string="Delivery Option")
     delivery_mode = fields.Selection([('domestic','Domestic'),('international',"International")],string='Courier Mode')
     
+    medicine_name = fields.Many2one('product.product',string='Medicine Name',readonly='1')
+    all_day=fields.Char(string="Dose")
+    prescribed_quantity = fields.Float(string="Prescribed Quantity")
+    units= fields.Many2one('uom.uom',string="units")
+    bf_af = fields.Selection([('before','Before Food'),('after','After Food')])
+    anupana = fields.Char(string="Notes")
+    days1= fields.Integer('Days')
+    price = fields.Float(string="Price/unit",related='medicine_name.lst_price')
+    total_price = fields.Float(string="Total Price")
+    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('in.patient'))
+
+    @api.onchange('prescribed_quantity','medicine_name')
+    def compute_price(self):
+        val=self.price*self.prescribed_quantity
+        self.total_price=val
+
+    @api.onchange('medicine_name')
+    def prescribe_medicine(self):
+        rec= self.env['product.product'].search([('id', '=', self.medicine_name.id)])
+        for res in rec.medicine_details:
+            self.all_day=res.all_day
+            self.units = res.units
+            self.anupana = res.anupana
+            
+    sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
+
+    @api.depends('ip_name.medicine_line_two', 'ip_name.medicine_line_two.prescription_alot')
+    def _sequence_ref(self):
+        for line in self:
+            no = 0
+            line.sequence_ref = no
+            for l in line.ip_name.medicine_line_two:
+                no += 1
+                l.sequence_ref = no
+    
 class MedicineLinetwo(models.Model):
     _name = 'medicine.line.two'
     
@@ -1470,6 +1629,41 @@ class MedicineLinetwo(models.Model):
     date = fields.Datetime(string="Date of Prescription")
     delivery_option= fields.Selection([('dir','Direct'),('on',"Online")],string="Delivery Option")
     delivery_mode = fields.Selection([('domestic','Domestic'),('international',"International")],string='Courier Mode')
+    
+    medicine_name = fields.Many2one('product.product',string='Medicine Name',readonly='1')
+    all_day=fields.Char(string="Dose")
+    prescribed_quantity = fields.Float(string="Prescribed Quantity")
+    units= fields.Many2one('uom.uom',string="units")
+    bf_af = fields.Selection([('before','Before Food'),('after','After Food')])
+    anupana = fields.Char(string="Notes")
+    days1= fields.Integer('Days')
+    price = fields.Float(string="Price/unit",related='medicine_name.lst_price')
+    total_price = fields.Float(string="Total Price")
+    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('in.patient'))
+
+    @api.onchange('prescribed_quantity','medicine_name')
+    def compute_price(self):
+        val=self.price*self.prescribed_quantity
+        self.total_price=val
+
+    @api.onchange('medicine_name')
+    def prescribe_medicine(self):
+        rec= self.env['product.product'].search([('id', '=', self.medicine_name.id)])
+        for res in rec.medicine_details:
+            self.all_day=res.all_day
+            self.units = res.units
+            self.anupana = res.anupana
+            
+    sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
+
+    @api.depends('ip_name.medicine_line_three', 'ip_name.medicine_line_three.prescription_alot')
+    def _sequence_ref(self):
+        for line in self:
+            no = 0
+            line.sequence_ref = no
+            for l in line.ip_name.medicine_line_three:
+                no += 1
+                l.sequence_ref = no
     
 class MedicineLinethree(models.Model):
     _name = 'medicine.line.three'
@@ -1484,6 +1678,41 @@ class MedicineLinethree(models.Model):
     delivery_option= fields.Selection([('dir','Direct'),('on',"Online")],string="Delivery Option")
     delivery_mode = fields.Selection([('domestic','Domestic'),('international',"International")],string='Courier Mode')
     
+    medicine_name = fields.Many2one('product.product',string='Medicine Name',readonly='1')
+    all_day=fields.Char(string="Dose")
+    prescribed_quantity = fields.Float(string="Prescribed Quantity")
+    units= fields.Many2one('uom.uom',string="units")
+    bf_af = fields.Selection([('before','Before Food'),('after','After Food')])
+    anupana = fields.Char(string="Notes")
+    days1= fields.Integer('Days')
+    price = fields.Float(string="Price/unit",related='medicine_name.lst_price')
+    total_price = fields.Float(string="Total Price")
+    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('in.patient'))
+
+    @api.onchange('prescribed_quantity','medicine_name')
+    def compute_price(self):
+        val=self.price*self.prescribed_quantity
+        self.total_price=val
+
+    @api.onchange('medicine_name')
+    def prescribe_medicine(self):
+        rec= self.env['product.product'].search([('id', '=', self.medicine_name.id)])
+        for res in rec.medicine_details:
+            self.all_day=res.all_day
+            self.units = res.units
+            self.anupana = res.anupana
+            
+    sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
+
+    @api.depends('ip_name.medicine_line_four', 'ip_name.medicine_line_four.prescription_alot')
+    def _sequence_ref(self):
+        for line in self:
+            no = 0
+            line.sequence_ref = no
+            for l in line.ip_name.medicine_line_four:
+                no += 1
+                l.sequence_ref = no
+    
 class MedicineLinefour(models.Model):
     _name = 'medicine.line.four'
     
@@ -1496,6 +1725,41 @@ class MedicineLinefour(models.Model):
     date = fields.Datetime(string="Date of Prescription")
     delivery_option= fields.Selection([('dir','Direct'),('on',"Online")],string="Delivery Option")
     delivery_mode = fields.Selection([('domestic','Domestic'),('international',"International")],string='Courier Mode')
+    
+    medicine_name = fields.Many2one('product.product',string='Medicine Name',readonly='1')
+    all_day=fields.Char(string="Dose")
+    prescribed_quantity = fields.Float(string="Prescribed Quantity")
+    units= fields.Many2one('uom.uom',string="units")
+    bf_af = fields.Selection([('before','Before Food'),('after','After Food')])
+    anupana = fields.Char(string="Notes")
+    days1= fields.Integer('Days')
+    price = fields.Float(string="Price/unit",related='medicine_name.lst_price')
+    total_price = fields.Float(string="Total Price")
+    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('in.patient'))
+
+    @api.onchange('prescribed_quantity','medicine_name')
+    def compute_price(self):
+        val=self.price*self.prescribed_quantity
+        self.total_price=val
+
+    @api.onchange('medicine_name')
+    def prescribe_medicine(self):
+        rec= self.env['product.product'].search([('id', '=', self.medicine_name.id)])
+        for res in rec.medicine_details:
+            self.all_day=res.all_day
+            self.units = res.units
+            self.anupana = res.anupana
+            
+    sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
+
+    @api.depends('ip_name.medicine_line_five', 'ip_name.medicine_line_five.prescription_alot')
+    def _sequence_ref(self):
+        for line in self:
+            no = 0
+            line.sequence_ref = no
+            for l in line.ip_name.medicine_line_five:
+                no += 1
+                l.sequence_ref = no
     
 class MedicineLinefive(models.Model):
     _name = 'medicine.line.five'
@@ -1510,6 +1774,41 @@ class MedicineLinefive(models.Model):
     delivery_option= fields.Selection([('dir','Direct'),('on',"Online")],string="Delivery Option")
     delivery_mode = fields.Selection([('domestic','Domestic'),('international',"International")],string='Courier Mode')
     
+    medicine_name = fields.Many2one('product.product',string='Medicine Name',readonly='1')
+    all_day=fields.Char(string="Dose")
+    prescribed_quantity = fields.Float(string="Prescribed Quantity")
+    units= fields.Many2one('uom.uom',string="units")
+    bf_af = fields.Selection([('before','Before Food'),('after','After Food')])
+    anupana = fields.Char(string="Notes")
+    days1= fields.Integer('Days')
+    price = fields.Float(string="Price/unit",related='medicine_name.lst_price')
+    total_price = fields.Float(string="Total Price")
+    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('in.patient'))
+
+    @api.onchange('prescribed_quantity','medicine_name')
+    def compute_price(self):
+        val=self.price*self.prescribed_quantity
+        self.total_price=val
+
+    @api.onchange('medicine_name')
+    def prescribe_medicine(self):
+        rec= self.env['product.product'].search([('id', '=', self.medicine_name.id)])
+        for res in rec.medicine_details:
+            self.all_day=res.all_day
+            self.units = res.units
+            self.anupana = res.anupana
+            
+    sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
+
+    @api.depends('ip_name.medicine_line_six', 'ip_name.medicine_line_six.prescription_alot')
+    def _sequence_ref(self):
+        for line in self:
+            no = 0
+            line.sequence_ref = no
+            for l in line.ip_name.medicine_line_six:
+                no += 1
+                l.sequence_ref = no
+    
 class MedicineLinesix(models.Model):
     _name = 'medicine.line.six'
     
@@ -1522,6 +1821,41 @@ class MedicineLinesix(models.Model):
     date = fields.Datetime(string="Date of Prescription")
     delivery_option= fields.Selection([('dir','Direct'),('on',"Online")],string="Delivery Option")
     delivery_mode = fields.Selection([('domestic','Domestic'),('international',"International")],string='Courier Mode')
+    
+    medicine_name = fields.Many2one('product.product',string='Medicine Name',readonly='1')
+    all_day=fields.Char(string="Dose")
+    prescribed_quantity = fields.Float(string="Prescribed Quantity")
+    units= fields.Many2one('uom.uom',string="units")
+    bf_af = fields.Selection([('before','Before Food'),('after','After Food')])
+    anupana = fields.Char(string="Notes")
+    days1= fields.Integer('Days')
+    price = fields.Float(string="Price/unit",related='medicine_name.lst_price')
+    total_price = fields.Float(string="Total Price")
+    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('in.patient'))
+
+    @api.onchange('prescribed_quantity','medicine_name')
+    def compute_price(self):
+        val=self.price*self.prescribed_quantity
+        self.total_price=val
+
+    @api.onchange('medicine_name')
+    def prescribe_medicine(self):
+        rec= self.env['product.product'].search([('id', '=', self.medicine_name.id)])
+        for res in rec.medicine_details:
+            self.all_day=res.all_day
+            self.units = res.units
+            self.anupana = res.anupana
+            
+    sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
+
+    @api.depends('ip_name.medicine_line_seven', 'ip_name.medicine_line_seven.prescription_alot')
+    def _sequence_ref(self):
+        for line in self:
+            no = 0
+            line.sequence_ref = no
+            for l in line.ip_name.medicine_line_seven:
+                no += 1
+                l.sequence_ref = no
     
 class MedicineLineseven(models.Model):
     _name = 'medicine.line.seven'
@@ -1536,6 +1870,41 @@ class MedicineLineseven(models.Model):
     delivery_option= fields.Selection([('dir','Direct'),('on',"Online")],string="Delivery Option")
     delivery_mode = fields.Selection([('domestic','Domestic'),('international',"International")],string='Courier Mode')
     
+    medicine_name = fields.Many2one('product.product',string='Medicine Name',readonly='1')
+    all_day=fields.Char(string="Dose")
+    prescribed_quantity = fields.Float(string="Prescribed Quantity")
+    units= fields.Many2one('uom.uom',string="units")
+    bf_af = fields.Selection([('before','Before Food'),('after','After Food')])
+    anupana = fields.Char(string="Notes")
+    days1= fields.Integer('Days')
+    price = fields.Float(string="Price/unit",related='medicine_name.lst_price')
+    total_price = fields.Float(string="Total Price")
+    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('in.patient'))
+
+    @api.onchange('prescribed_quantity','medicine_name')
+    def compute_price(self):
+        val=self.price*self.prescribed_quantity
+        self.total_price=val
+
+    @api.onchange('medicine_name')
+    def prescribe_medicine(self):
+        rec= self.env['product.product'].search([('id', '=', self.medicine_name.id)])
+        for res in rec.medicine_details:
+            self.all_day=res.all_day
+            self.units = res.units
+            self.anupana = res.anupana
+            
+    sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
+
+    @api.depends('ip_name.medicine_line_eight', 'ip_name.medicine_line_eight.prescription_alot')
+    def _sequence_ref(self):
+        for line in self:
+            no = 0
+            line.sequence_ref = no
+            for l in line.ip_name.medicine_line_eight:
+                no += 1
+                l.sequence_ref = no
+    
 class MedicineLineeight(models.Model):
     _name = 'medicine.line.eight'
     
@@ -1549,6 +1918,41 @@ class MedicineLineeight(models.Model):
     delivery_option= fields.Selection([('dir','Direct'),('on',"Online")],string="Delivery Option")
     delivery_mode = fields.Selection([('domestic','Domestic'),('international',"International")],string='Courier Mode')
     
+    medicine_name = fields.Many2one('product.product',string='Medicine Name',readonly='1')
+    all_day=fields.Char(string="Dose")
+    prescribed_quantity = fields.Float(string="Prescribed Quantity")
+    units= fields.Many2one('uom.uom',string="units")
+    bf_af = fields.Selection([('before','Before Food'),('after','After Food')])
+    anupana = fields.Char(string="Notes")
+    days1= fields.Integer('Days')
+    price = fields.Float(string="Price/unit",related='medicine_name.lst_price')
+    total_price = fields.Float(string="Total Price")
+    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('in.patient'))
+
+    @api.onchange('prescribed_quantity','medicine_name')
+    def compute_price(self):
+        val=self.price*self.prescribed_quantity
+        self.total_price=val
+
+    @api.onchange('medicine_name')
+    def prescribe_medicine(self):
+        rec= self.env['product.product'].search([('id', '=', self.medicine_name.id)])
+        for res in rec.medicine_details:
+            self.all_day=res.all_day
+            self.units = res.units
+            self.anupana = res.anupana
+            
+    sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
+
+    @api.depends('ip_name.medicine_line_nine', 'ip_name.medicine_line_nine.prescription_alot')
+    def _sequence_ref(self):
+        for line in self:
+            no = 0
+            line.sequence_ref = no
+            for l in line.ip_name.medicine_line_nine:
+                no += 1
+                l.sequence_ref = no
+    
 class MedicineLinenine(models.Model):
     _name = 'medicine.line.nine'
     
@@ -1561,6 +1965,41 @@ class MedicineLinenine(models.Model):
     date = fields.Datetime(string="Date of Prescription")
     delivery_option= fields.Selection([('dir','Direct'),('on',"Online")],string="Delivery Option")
     delivery_mode = fields.Selection([('domestic','Domestic'),('international',"International")],string='Courier Mode')
+    
+    medicine_name = fields.Many2one('product.product',string='Medicine Name',readonly='1')
+    all_day=fields.Char(string="Dose")
+    prescribed_quantity = fields.Float(string="Prescribed Quantity")
+    units= fields.Many2one('uom.uom',string="units")
+    bf_af = fields.Selection([('before','Before Food'),('after','After Food')])
+    anupana = fields.Char(string="Notes")
+    days1= fields.Integer('Days')
+    price = fields.Float(string="Price/unit",related='medicine_name.lst_price')
+    total_price = fields.Float(string="Total Price")
+    company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('in.patient'))
+
+    @api.onchange('prescribed_quantity','medicine_name')
+    def compute_price(self):
+        val=self.price*self.prescribed_quantity
+        self.total_price=val
+
+    @api.onchange('medicine_name')
+    def prescribe_medicine(self):
+        rec= self.env['product.product'].search([('id', '=', self.medicine_name.id)])
+        for res in rec.medicine_details:
+            self.all_day=res.all_day
+            self.units = res.units
+            self.anupana = res.anupana
+            
+    sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
+
+    @api.depends('ip_name.medicine_line_ten', 'ip_name.medicine_line_ten.prescription_alot')
+    def _sequence_ref(self):
+        for line in self:
+            no = 0
+            line.sequence_ref = no
+            for l in line.ip_name.medicine_line_ten:
+                no += 1
+                l.sequence_ref = no
     
 class LabLineOne(models.Model):
     _name = 'lab.line.one'

@@ -159,8 +159,12 @@
         <field name="groups_id" eval="[(6,0,[ref('basic_hms.file_room_access')])]"/>
     </record>
 
-    <!-- <record id="make_invisible" model="res.groups">
-        <field name="name">Invisible</field>
-    </record> -->
+    <!-- <record id="apps_access" model="res.groups">
+        <field name="name">Apps</field>
+    </record>
+    <record model="ir.ui.menu" id="base.menu_management">
+        <field name="groups_id" eval="[(6,0,[ref('basic_hms.apps_access')])]"/>
+    </record>
+     -->
 
 </odoo>

@@ -1,3 +1,0 @@
-id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
-odoo_infrastructure_client_auth_access,odoo_infrastructure_client_auth_model,model_odoo_infrastructure_client_auth,base.group_system,1,1,1,1
-yodoo_client_auth_log_access,yodoo_client_auth_log,model_yodoo_client_auth_log,base.group_system,1,1,0,1

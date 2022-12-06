@@ -14,10 +14,8 @@
 
     "depends": ["base", "sale_management", "stock", "account","mail",'website'],
     "data": [
-        
         'views/assets.xml',
         'views/test_view.xml',
-        
         'views/labscan.xml',
         'views/file_room.xml',
         'views/discharge.xml',
@@ -119,6 +117,8 @@
         'views/product_product.xml',
         'report/reg_barcode.xml',
         'report/file_room.xml',
+        'report/med_ebook.xml',
+        'report/tamil_diet.xml',
         'report/file_barcode.xml',
         'report/patient_ebook_format.xml',
         'report/appointment_qrcode.xml',

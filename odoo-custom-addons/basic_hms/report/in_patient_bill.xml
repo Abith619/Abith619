@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <odoo>
     <template id = "basic_hms.in_patient_bills" >
         <t t-call="web.external_layout">

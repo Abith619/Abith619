@@ -211,9 +211,11 @@ class Immunology_test(models.Model):
 class LabsScansd(models.Model):
     _name='lab.scan.form'
     _rec_name = 'request'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     request = fields.Char('ID Number', readonly = True)
     patient_id = fields.Many2one('res.partner', string='Patient Name')
+    doctor_id = fields.Many2one('res.partner', string='Doctor Name',domain=[('is_doctor','=',True)])
     name = fields.Char(string='Name')
     ip_name = fields.Many2one('in.patient',string='Ip Name')
     price = fields.Integer(string='Price')
@@ -222,10 +224,10 @@ class LabsScansd(models.Model):
     date= fields.Datetime(string="Date of Lab/Scan")
     write_date=fields.Date(string='Date')
     ebook_id = fields.Char(string='Patient ID')
-    patient_activity = fields.Selection([('wait',"Doctor Assigned"),('doc','Diet Assigned'),
-                                         ('lab','Lab Assigned'),('pres','Prescription'),('scan','Scan Assigned'),
-                                         ('labs','Lab Completed'),('scans','Scan Completed'),
-                                         ('bill',"Pharmacy Bill Assigned"),('completed',"Completed")],default='wait')
+    patient_activity = fields.Selection([('wait',"Waiting"),('doctor',"Doctor Assigned"),('doc','Diet Assigned'),
+                                         ('lab','Lab Bill Assigned'),('pres','Pharmacy Bill Assigned'),('scan','Scan Bill Assigned'),
+                                         ('labs','Lab Test Completed'),('scans','Scan Test Completed'),
+                                         ('bill',"Pharmacy Bill Assigned"),('discontinued','Discontinued'),('completed',"Completed")],default='wait', track_visibility='onchange')
     # appoinment_by=fields.Many2one('res.users',string='Appointment By',default=lambda self: self.env.user,readonly='1')
 
     company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.doctor'))
@@ -270,24 +272,33 @@ class LabsScansd(models.Model):
         orm_e = self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
         orm_e.write({'patient_activity' : 'lab'})
         
+        lab_assign = self.env['patient.bills'].search([('patient_name','=',self.patient_id.id)])
+        lab_assign.write({'patient_activity' : 'lab'})
+        
+        
+        
         orm = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id)])
         orm.write({'patient_activity' : 'lab'})
+        
+        orm = self.env['res.partner'].search([('name','=',self.patient_id.name)])
+        orm.update({
+            'patient_activity':'lab',  
+        })
         
         self.patient_activity = 'lab'
 
     def document_button(self):
-        self.patient_activity = 'labs'
-        orm = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id)])
-        orm.write({'patient_activity':'labs'})
-        orm1 = self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
-        orm1.write({'patient_activity':'labs'})
+        # self.patient_activity = 'labs'
+        # orm = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id)])
+        # orm.write({'patient_activity':'labs'})
+        # orm1 = self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
+        # orm1.write({'patient_activity':'labs'})
         
         lines=[]
         # docs_line = self.env['document.type.line'].search([('name','=',self.patient_id.id)])
         # for i in docs_line:
         valuee={
             'attach_types':'lab',
-            
         }
         lines.append(valuee)
         return{
@@ -327,7 +338,7 @@ class LabsScansd(models.Model):
     def create(self, vals):
         vals['request'] = self.env['ir.sequence'].next_by_code('lab.scan.form') or 'LAB'
         result = super(LabsScansd, self).create(vals)
-        if result.num_days == 'e' :
+        if result.num_days == 'e':
             orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
             labscan = self.env['lab.menu']
             lab_test = self.env['medical.doctor'].search([('patient','=',result.patient_id.id)])
@@ -351,7 +362,8 @@ class LabsScansd(models.Model):
                     'date':datetime.now(),
                     'lab_type':result.id,
                     'name':rec.name,
-                    'range_normal':rec.range
+                    'range_normal':rec.range,
+                    
                 }
                 lab_lines.append((0,0,valuee))
             for rec in result.hemo_coag1:
@@ -3894,7 +3906,6 @@ class LabsScansd(models.Model):
                 
             lab_in.write({'lab_line_ten':lines})
             orm.write({'inpatient_lab':bill_lines})
-       
 
         return result
     

@@ -51,6 +51,8 @@ class medical_prescription_line(models.Model):
     price = fields.Float(string="Price/unit",related='medicine_name.lst_price')
     total_price = fields.Float(string="Total Price")
     all_day=fields.Char(string="Dose")
+    
+    
 
     @api.onchange('prescribed_quantity','medicine_name')
     def compute_price(self):
@@ -59,7 +61,6 @@ class medical_prescription_line(models.Model):
 
     bf_af=fields.Selection([('before','Before Food'),('after','After Food')])
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
     @api.onchange('medicine_name')
     def prescribe_medicine(self):

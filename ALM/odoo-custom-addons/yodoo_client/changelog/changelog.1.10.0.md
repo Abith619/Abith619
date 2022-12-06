@@ -1,5 +1,0 @@
-- Refactored postprocessing after database restore.
-- Improve UI/UX of module view:
-    - search by author and license
-    - group by license and status
-    - added bulk action to uninstall selected modules
