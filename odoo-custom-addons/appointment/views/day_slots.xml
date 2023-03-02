@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+         
+                <record id="view_detase_tree" model="ir.ui.view">
+                    <field name="name">day.slot.data</field>
+                    <field name="model">day.slot</field>
+                    <field name="priority" eval="8" />
+                    <field name="arch" type="xml">
+                        <tree string="dayslot" >
+                            <field name="doctor_name" />
+
+                            <field name="date_time" />
+                            <field name="work_shift" />
+                            <field name="consultation_time" />
+                            <field name="seven_days" />
+                            <field name="appointment_time_detail"/>
+                            <field name="time_available" />
+                             <field name="payment_time_status" />
+                              <field name="day_vals" />
+                              <field name="payment_timer"/>
+                              <field name="payment_status"/>
+                              <field name="time_stamp"/>
+
+
+
+
+
+                        </tree>
+                    </field>
+                </record>
+                <record id="view_detas_form" model="ir.ui.view">
+                    <field name="name">details details</field>
+                    <field name="model">day.slot</field>
+                    <field name="priority" eval="8" />
+                    <field name="arch" type="xml">
+                        <form string="dayslot">
+                            <sheet>
+                                <group>
+                                    <field name="doctor_name" />
+                                  
+                                    <field name="date_time" />
+                                    <field name="work_shift" />
+                                    
+                                    <field name="seven_days" />
+                                    <field name="consultation_time" />
+                                    <field name="appointment_time_detail" />
+                                    <field name="time_available" />
+                                    <field name="payment_time_status" />
+                                      <field name="payment_timer"></field>
+                                    <field name="day_vals" />
+                                      <field name="payment_status"/>
+                                        <field name="time_stamp"/>
+                                    
+
+                          
+
+                                </group>
+                              
+                            </sheet>
+                        </form>
+                    </field>
+                </record>
+            
+
+        <record model="ir.actions.act_window" id="action_view_lab_details">
+            <field name="name">Day Slots</field>
+                <field name="res_model">day.slot</field>
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>
+                <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">Create slt details
+                    </p>
+                </field>
+            </record>
+                    <menuitem id = 'menu_lab_slot' name = 'Day Slots'  parent= "appointment_time_slots" action="action_view_lab_details" />
+                  
+                        </data>
+                    </odoo>

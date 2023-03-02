@@ -45,7 +45,7 @@
             </field>
         </record>
 
-    <menuitem id="all_pickings_in" name="Transfers" parent="main_menu_hospital_management" action="action_view_transfers" />
+    <menuitem id="all_pickings" name="Transfers" parent="main_menu_hospital_management" sequence="6" action="action_view_transfers" />
 
 </odoo>
       

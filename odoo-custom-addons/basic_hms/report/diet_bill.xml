@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<data>
+
+    <template id="basic_hms.diet_bils_report" name="Diet Plan">
+        <t t-call="web.external_layout">
+            <t t-call="web.html_container">
+               <t t-foreach="docs" t-as="o">
+                   <t >
+                        <div class="header_tag">
+        <h4 class="text-center heading_text_cor"><strong>Diet Bill</strong></h4>
+        </div>
+        <t t-set="name_age_sex" t-value="o.name_age_sex.upper()" />
+                    <t t-set="doctor_id" t-value="o.doctor_id.name.upper()" />
+        <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
+            <td style="border: 0px;width: 50%;">
+                <div  >
+                <div class='float-left'>
+                    <p><strong>SL NO :</strong><span t-field="o.ebook_id"/></p> 
+                    <p><strong>Bill Date :</strong><span t-field="o.paid_date"/></p>
+                    <p><strong>Patient Name :</strong><span t-esc="name_age_sex"/></p></div>
+                <div class="float-right" >
+                    <p><strong>Doctor :</strong><span t-esc="doctor_id"/></p>
+                    <p><strong>Contact Number :</strong><span t-field="o.contact_no"/></p>
+                    <p><strong>Payment Type :</strong><span t-field="o.payment_type"/></p>
+        </div>
+    </div>
+            </td>
+            
+            </table>
+
+                <table class="table table-bordered" style="border: 1px solid black;">
+        <thead>
+            <tr>
+            <th style="border: 1px solid black;">Type of Bill</th>
+            <th style="border: 1px solid black;"> Bill Amount </th>
+            </tr>
+        </thead>
+        <tbody>
+        <th style="border: 1px solid black;">Diet Bill</th>
+        <td style="border: 1px solid black;">
+        <span t-field="o.diet_charges"/>
+        </td>
+        </tbody>
+        </table>
+        <table class="table table-sm" id="box" style="width:23%; float:right;margin-left: 0px; border: 1px solid black;">
+            <tr class="border-black o_subtotal" style="font-size: 15px; ">
+            <td style="background-color:white;color:#black;font-size: 15px;"><strong>Total</strong></td>
+                <td style="background-color:white;color:#black;font-size: 15px;" class="text-right">
+                    <b><strong><span t-field="o.diet_charges" class="fa fa-inr"/></strong></b>
+                </td>
+            </tr>
+        </table>
+         <br></br>
+                     <div style='text-align:right'>
+                            <h6><strong>DAISY HOSPITAL</strong></h6>
+                            <br></br><br></br>
+                            <h6 ><strong> Authorised Signatory </strong></h6>
+                        </div>
+                        
+                        <div style='page-break-before: always;'> 
+                            <br></br><br></br>  
+                            <h5 style='text-align:center'><strong>Terms and Conditions</strong></h5>
+                            <h6>* Subject to Chennai jurisdiction</h6>
+                            <h6>* Please read the below Information before Consultation</h6>
+                            <h6>* Medicines once purchased are not Refundable</h6>
+                            <h6>* For Emergency Purpose please go to any nearby Hospital without any Delay</h6>
+                            <h6>* If patients suffer from Feaver, Accidents or Acute Pain in any parts of the body please go to the nearby hospitals, there is no need to call Us.</h6>
+                            <h6>* If there is no Co-Operation with the Patient, The Doctor has the Right to stop the Medications Halfway</h6>
+                            <h6>* The Patient must follow the Diet Chart, Exercise, Lifestyle Changes and Medicines as prescribed by the Doctor</h6>
+                            <h6>* Do not call to the Hospital's number before 11am and after 5pm, The calls will be answered between 11am-5pm only</h6>
+                            <h6>* Basic Rules that must be followed :</h6>
+                            <h7>1. 1 Hour Workout</h7>
+                            <h7>2.Good Hydration</h7>
+                            <h7>3.Good Sleep Cycle</h7>
+                            <h7>4.Dinings before 7:30pm</h7>
+                            <h7>5.Stress free Mind</h7>
+                            <h6>* If you're getting Medicines through Courier an opening video must be sent to the Hospital number to ensure the Damage and return policy.No Video - No Return OR Refund</h6>
+                            <h6>* Our plans are medically designed, sustainable and result Oriented, yet we do not gurantee result as Results depends on an Individual's body Metabolism and level of sickness maintained while following the lifestyle changes.</h6>
+                            <h6>* AYUSH Medicines Results are Based on mental health, Physical and Lifestyle changes, if one is not ready to the above change we suggest you not take the Treatment.</h6>
+                            <h6>* Medicines, Diet and Lifestyle Changes should not be shared on any social media platform as it is personalised only for the patient.</h6>
+                            <br></br>
+                            <h5 style='text-align:center'><strong>* For Contact +91-9962655588 *</strong></h5>
+                        </div> 
+
+
+            </t>
+        </t>
+        </t>
+    </t>
+</template>
+ </data>
+</odoo>

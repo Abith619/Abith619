@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_users_form_click2call_inherit" model="ir.ui.view">
+        <field name="name">res.users.form.click2call.inherit</field>
+        <field name="model">res.users</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_users_form" />
+        <field name="arch" type="xml">
+            <field name="tz" position="after">
+                <field name="premium_extension" />
+            </field>
+        </field>
+    </record>
+
+    <record id="res_users_form_view_simple_modif_click2call" model="ir.ui.view">
+        <field name="name">res.users.preferences.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tz']" position="after">
+                <field name="premium_extension" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

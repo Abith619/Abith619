@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+         
+                <record id="view_appointmenttime_tree" model="ir.ui.view">
+                    <field name="name">appointment.time.data</field>
+                    <field name="model">appointment.time</field>
+                    <field name="priority" eval="8" />
+                    <field name="arch" type="xml">
+                        <tree string="appointment" >
+
+                            <field name="doctor_id"/>
+                            <field name="ava_timing"/>
+                            <field name="shifts"/>
+                            <field name="consultation_differ"/>
+                            <field name="appointment_time" widget="many2many_tags"/>
+                         
+                        </tree>
+                    </field>
+                </record>
+                <record id="view_time_form" model="ir.ui.view">
+                    <field name="name">appointment</field>
+                    <field name="model">appointment.time</field>
+                    <field name="priority" eval="8" />
+                    <field name="arch" type="xml">
+                        <form string="appointment">
+                            <sheet>
+                                <group>
+                                  
+                            <field name="doctor_id"/>
+                            <field name="start_time"/>
+                            <field name="end_time"/>
+
+                            <field name="ava_timing"/>
+                            <field name="shifts"/>
+                            <field name="consultation_differ"/>
+                            <field name="appointment_time" widget="many2many_tags"/>
+
+                      
+                          
+
+                                </group>
+                              
+                            </sheet>
+                        </form>
+                    </field>
+                </record>
+            
+
+        <record model="ir.actions.act_window" id="action_view_time_sublevel">            
+            <field name="name">Monthly Slots</field>         
+                <field name="res_model">appointment.time</field>           
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>            
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">Create symptoms
+                    </p>             
+                </field>        
+            </record>
+
+             <!-- <menuitem id = 'menu_appointtimetimelevel' name = 'Time Slots'  parent= "main_Patient_odoo_menu"  /> -->
+        <menuitem id = 'menu_appointtimetimelevel_detail' name = 'Monthly S lots'  parent= "appointment_time_slots" action="action_view_time_sublevel" />
+                  
+                        </data>
+                    </odoo>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+         
+                <record id="view_manyt_many_tree" model="ir.ui.view">
+                    <field name="name">many_times</field>
+                    <field name="model">many.times</field>
+                    <field name="priority" eval="8" />
+                    <field name="arch" type="xml">
+                        <tree string="speacialization" >
+
+                            <field name="times_data"/> 
+                                <field name="miniutes_differ"/>
+                                <field name="float_time" />
+                                 <field name="status" />
+
+                         
+                        </tree>
+                    </field>
+                </record>
+                <record id="view_manyappointment_form" model="ir.ui.view">
+                    <field name="name">many times</field>
+                    <field name="model">many.times</field>
+                    <field name="priority" eval="8" />
+                    <field name="arch" type="xml">
+                        <form string="department">
+                            <sheet>
+                                <group>
+                                  
+            <field name="times_data"/>
+                <field name="miniutes_differ"/>
+                <field name="float_time" />
+                 <field name="status" />
+
+
+                                </group>
+                              
+                            </sheet>
+                        </form>
+                    </field>
+                </record>
+            
+
+        <record model="ir.actions.act_window" id="action_view_manyappointmentdata">            
+            <field name="name">Minutes</field>         
+                <field name="res_model">many.times</field>           
+                <!-- <field name="view_type">form</field>             -->
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>            
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">Create Minutes 
+                    </p>             
+                </field>        
+            </record>
+
+                    <menuitem id = 'appointment_time_slots' name = 'Appointment'  />
+
+                    <menuitem id = 'menu_manyappointmentdata' name = 'Minutes' parent="appointment_time_slots" action="action_view_manyappointmentdata" />
+                  
+                        </data>
+                    </odoo>

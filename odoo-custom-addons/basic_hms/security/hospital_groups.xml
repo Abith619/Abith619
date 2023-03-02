@@ -102,13 +102,13 @@
         <field name="groups_id" eval="[(6,0,[ref('basic_hms.accounting_access')])]"/>
     </record>
 
-    <record id="expense_access" model="res.groups">
+    <!-- <record id="expense_access" model="res.groups">
         <field name="name">Expense</field>
     </record>
 
     <record model="ir.ui.menu" id="hr_expense.menu_hr_expense_root">
         <field name="groups_id" eval="[(6,0,[ref('basic_hms.expense_access')])]"/>
-    </record>
+    </record> -->
 
     <record id="sale_access" model="res.groups">
         <field name="name">Sale</field>
@@ -118,30 +118,38 @@
         <field name="groups_id" eval="[(6,0,[ref('basic_hms.sale_access')])]"/>
     </record>
 
-    <record id="purchase_access" model="res.groups">
+    <!-- <record id="purchase_access" model="res.groups">
         <field name="name">Purchase</field>
     </record>
 
     <record model="ir.ui.menu" id="purchase.menu_purchase_root">
         <field name="groups_id" eval="[(6,0,[ref('basic_hms.purchase_access')])]"/>
-    </record>
+    </record> -->
 
-    <record id="employee_access" model="res.groups">
+    <!-- <record id="employee_access" model="res.groups">
         <field name="name">Employee</field>
     </record>
 
     <record model="ir.ui.menu" id="hr.menu_hr_root">
         <field name="groups_id" eval="[(6,0,[ref('basic_hms.employee_access')])]"/>
-    </record>
+    </record> -->
     
     <record id="out_transfer_access" model="res.groups">
         <field name="name">Transfers</field>
     </record>
 
-    <record model="ir.ui.menu" id="all_pickings_in">
+    <record model="ir.ui.menu" id="all_pickings">
         <field name="groups_id" eval="[(6,0,[ref('basic_hms.out_transfer_access')])]"/>
     </record>
 
+    <record id="file_room_acces" model="res.groups">
+        <field name="name">File Room</field>
+    </record>
+
+    <record model="ir.ui.menu" id="menu_contact_patientss1">
+        <field name="groups_id" eval="[(6,0,[ref('basic_hms.file_room_acces')])]"/>
+    </record>
+    
     <record id="in_patient_access" model="res.groups">
         <field name="name">In Patient</field>
     </record>
@@ -151,20 +159,20 @@
         <!-- <field name="domain">[('company_id', 'in', company_ids)]</field> -->
     </record>
 
-    <record id="file_room_access" model="res.groups">
-        <field name="name">File Room</field>
+    
+    <record id="lab_detail_access" model="res.groups">
+            <field name="name">Lab Details</field>
+        </record>
+    <record model="ir.ui.menu" id="menu_lab_details">
+        <field name="groups_id" eval="[(6,0,[ref('basic_hms.lab_detail_access')])]"/>
     </record>
 
-    <record model="ir.ui.menu" id="menu_contact_patientss1">
-        <field name="groups_id" eval="[(6,0,[ref('basic_hms.file_room_access')])]"/>
+    <record id="organic_detail_access" model="res.groups">
+            <field name="name">Organic</field>
+        </record>
+    <record model="ir.ui.menu" id="menu_organic_product">
+        <field name="groups_id" eval="[(6,0,[ref('basic_hms.organic_detail_access')])]"/>
     </record>
 
-    <!-- <record id="apps_access" model="res.groups">
-        <field name="name">Apps</field>
-    </record>
-    <record model="ir.ui.menu" id="base.menu_management">
-        <field name="groups_id" eval="[(6,0,[ref('basic_hms.apps_access')])]"/>
-    </record>
-     -->
 
 </odoo>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<template id="basic_hms.tamil_diet_report_phar">
+     <t t-call="web.external_layout">
+     <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <style>
+            @font-face {
+                font-family: 'Lohit Tamil';
+                src: url('/basic_hms/static/src/font/Lohit_Tamil.ttf') format('truetype');
+                }
+            </style>
+                <t t-set="name_age_sex" t-value="o.ebook_print.name_age_sex.upper()" />
+        <t t-set="doctor" t-value="o.ebook_print.doctor.name.upper()" />
+                <t>
+                <div style="font-family: 'Lohit Tamil'; font-size: 14pt;">
+                <h2 class="text-center heading_text_cor">Patient Details</h2>
+                <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
+                <div class="row">
+                <div class="col-6">
+                    <div><p><strong>Name :</strong><span t-esc="name_age_sex"/></p>
+                <p><b>ID Number :</b> <span t-field="o.ebook_print.serial_number"/></p></div>
+                </div>
+                <div class="col-6">
+                    <p><strong>Doctor :</strong><span t-esc="doctor"/></p>
+                </div>
+            </div>
+                </table>
+            <t t-if="docs.ebook_print.diet_fields">
+                <div class="header_tag">
+     <h4 class="text-center heading_text_cor">Diet </h4>
+     </div>
+                 <table class="table table-bordered" style="border: 1px solid black;">
+                     <thead>
+                         <tr>
+                         <th style="border: 1px solid black;">Time</th>
+                         <th style="border: 1px solid black;"> Food </th>
+                         <th style="border: 1px solid black;"> Fruit Diet </th>
+                         <th style="border: 1px solid black;"> Veg Diet </th>
+                         <th style="border: 1px solid black;"> Protein Diet </th>
+                         <th style="border: 1px solid black;"> Quantity </th>
+                         <th style="border: 1px solid black;"> Exercise </th>
+                         <th style="border: 1px solid black;"> Notes </th>
+                         </tr>
+                     </thead>
+                     <tbody>
+
+                        <p></p>
+
+                     <tr t-foreach='docs.ebook_print.diet_fields.diet_for.diet_line' t-as='line'>
+                        <td style="border: 1px solid black;">
+                             <span t-field="line.wakeup1"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                        <span t-field="line.food"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                        <span t-field="line.fruit_diet"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                         <span t-field="line.veg_diet"/>
+                         </td>
+                         <td style="border: 1px solid black;">
+                         <span t-field="line.protein_diet"/>
+                         </td>
+                         <td style="border: 1px solid black;">
+                         <span t-field="line.quantity"/>
+                         </td>
+                         <td style="border: 1px solid black;">
+                         <span t-field="line.exercise1"/>
+                         </td>
+                         <td style="border: 1px solid black;">
+                             <span t-field="line.note"/>
+                         </td>
+                         </tr>
+                     </tbody>
+                     </table>
+                     
+                     </t>
+                     </div>
+                </t>
+        </t>
+    </t>
+</t>
+</template>
+</odoo>

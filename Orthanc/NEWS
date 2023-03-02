@@ -1,0 +1,119 @@
+Pending changes in the mainline
+===============================
+
+
+Version 2.7 (2020-12-10)
+========================
+
+* Support of dynamic linking against the system-wide Orthanc framework library
+* Upgrade to Orthanc framework 1.8.1
+
+
+Version 2.6 (2020-05-26)
+========================
+
+* Move the GDCM decoder out of the Orthanc Web viewer plugin as a
+  separate plugin: https://book.orthanc-server.com/plugins/gdcm.html
+* Performance: Replaced "OrthancPluginRegisterRestCallback" by
+  "OrthancPluginRegisterRestCallbackNoLock"
+* Authorization tokens passed as url search params in Orthanc Explorer
+  are now transmitted to the viewer and included as headers in every
+  HTTP request to the Rest API easing the usage of the Authorization
+  plugin
+* Upgrade to Orthanc framework 1.7.0
+
+
+Version 2.5 (2019-02-27)
+========================
+
+* Upgrade to GDCM 2.8.8 for static builds
+* Upgrade to Orthanc framework 1.5.5
+
+
+Version 2.4 (2018-04-23)
+========================
+
+* Disable pinch zoom on mobile devices
+* Fix download of DICOM instance from the toolbox
+* Fix for Osimis issue WVB-319: Some images are not loading in US_MF
+* Support of rendering RGB48 lookup tables (palette), if Orthanc SDK >= 1.3.1
+* Support of OpenBSD
+* Support of Linux Standard Base
+* Resort to Orthanc framework 1.3.2
+* Upgrade to GDCM 2.8.4 for static builds
+
+
+Version 2.3 (2017-07-19)
+========================
+
+* Upgrade to Cornerstone 0.11.0
+* Performance warning if runtime debug assertions are turned on
+* Fix issue 44 (Bad interpretation of photometric interpretation MONOCHROME1)
+
+
+Version 2.2 (2016-06-28)
+========================
+
+* Option "EnableGdcm" to replace the built-in decoder of Orthanc with GDCM
+* Option "RestrictTransferSyntaxes" saying which transfer syntaxes should be decoded with GDCM
+* Fixed rendering of 16bpp images if values are < 0 or >= 32768
+* Decoding of JPEG2000 lossless images with YBR_RCT photometric interpretation
+
+
+Version 2.1 (2015-12-10)
+========================
+
+* Automatic clearing of the cache if change in the version of Orthanc or of the plugin
+
+
+Version 2.0 (2015-12-02)
+========================
+
+=> Minimum SDK version: 0.9.5 <=
+
+* The GDCM decoder replaces the built-in Orthanc decoder inside Orthanc Explorer
+* Support of multi-frame images
+* Upgrade to Cornerstone 0.8.4
+
+
+Version 1.3 (2015-11-27)
+========================
+
+=> Minimum SDK version: 0.9.4 <=
+
+* Support of images encoded using LUT (lookup tables)
+* Use Orthanc's primitives for PNG and JPEG
+* Fix for old versions of jQuery
+* Fix possible deadlock with other plugins in OnChangeCallback()
+* Upgrade to GDCM 2.6.0 for static builds
+* Upgrade to Boost 1.59.0 for static builds
+
+
+Version 1.2 (2015-08-02)
+========================
+
+=> Minimum SDK version: 0.9.1 <=
+
+* Update to Boost 1.58.0 for static and Windows builds
+* Inject version information into Windows binaries
+* Support of OS X
+
+
+Version 1.1 (2015-07-03)
+========================
+
+* Support of Visual Studio 2008
+* Support of FreeBSD
+* Fix issue 29 (support of photometric interpretation YBR_FULL_422)
+
+
+Version 1.0 (2015-02-27)
+========================
+
+* Configuration options
+
+
+2015-02-25
+==========
+
+* Initial release

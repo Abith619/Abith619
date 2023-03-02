@@ -129,13 +129,13 @@
                             </table>
                         </t>
 
-                        <t t-if="docs.diet_line">
+                        <t t-if="docs.diet_id_diet.diet_line">
             <div class="header_tag">
         <h4 class="text-center heading_text_cor">Diet</h4>
         </div>
         <table class="table table-bordered" style="border: 1px solid black;">
             <thead>
-                <tr>
+                <tr >
                 <th style="border: 1px solid black;">Time</th>
                 <th style="border: 1px solid black;"> Food </th>
                 <th style="border: 1px solid black;"> Fruit Diet </th>
@@ -147,7 +147,7 @@
                 </tr>
             </thead>
     <tbody>
-        <tr t-foreach='docs.diet_line' t-as='line'>
+        <tr t-foreach='docs.diet_id_diet.diet_line' t-as='line'>
             <td style="border: 1px solid black;">
                <span t-field="line.wakeup1"/>
             </td>
@@ -164,13 +164,13 @@
             <span t-field="line.protein_diet"/>
                 </td>
                 <td style="border: 1px solid black;">
-            <span t-field="line.quantity"/>
+                <span t-field="line.quantity"/>
                 </td>
                 <td style="border: 1px solid black;">
-            <span t-field="line.exercise1"/>
+                <span t-field="line.exercise1"/>
                 </td>
                 <td style="border: 1px solid black;">
-            <span t-field="line.note"/>
+                    <span t-field="line.note"/>
                 </td>
                 </tr>
             </tbody>
@@ -221,34 +221,28 @@
                         <tr>
                         <th style="border: 1px solid black;">Scan Test ID</th>
                         <th style="border: 1px solid black;">Test Name </th>
-                        <th style="border: 1px solid black;">Tested Range </th>
-                        <th style="border: 1px solid black;">Normal Range </th>
+                       
                         <th style="border: 1px solid black;">Date </th>
                         </tr>
                     </thead>
                     <tbody>
                             <tr t-foreach='docs.scan_line' t-as='line'>
                         <td style="border: 1px solid black;">
-                            <span t-field="line.scan_id"/>
+                        <span t-field="line.scan_id"/>
                         </td>
                         <td style="border: 1px solid black;">
-                            <span t-field="line.name"/>
+                        <span t-field="line.name"/>
                         </td>
-                        <td style="border: 1px solid black;">
-                            <span t-field="line.range_test"/>
-                        </td>
-                        <td style="border: 1px solid black;">
-                            <span t-field="line.range_normal"/>
-                        </td>
+                        
                         <td style="border: 1px solid black;">
                             <span t-field="line.date"/>
-                        </td>
-                            </tr>
+                            </td>
+                        </tr>
                     </tbody>
                     </table>
                 </t>
 
-                <t t-if="docs.medicine_line">
+                <t t-if="docs.medicine_line.prescription_alot.prescription_line_ids">
 
                     <div class="header_tag">
                         <h4 class="text-center heading_text_cor">Medicine</h4>
@@ -257,36 +251,32 @@
                         <thead>
                             <tr>
                                 <th style="border: 1px solid black;">Medicine Name</th>
-                                <th style="border: 1px solid black;">Quantity</th>
                                 <th style="border: 1px solid black;">Dose</th>
                                 <th style="border: 1px solid black;">Unit</th>
                                 <th style="border: 1px solid black;">Notes</th>
                                 <th style="border: 1px solid black;">Before/After Food</th>
                                 <th style="border: 1px solid black;">Days</th>
-                            </tr>
-                        </thead>
+                                </tr>
+                            </thead>
                             <tbody>
-                                <tr t-foreach='docs.medicine_line' t-as='line'>
+                                <tr t-foreach='docs.medicine_line.prescription_alot.prescription_line_ids' t-as='line'>
                                 <td style="border: 1px solid black;">
-                                    <span t-field="line.medicine_name"/>
+                                <span t-field="line.medicine_name"/>
                                 </td>
                                 <td style="border: 1px solid black;">
-                                    <span t-field="line.prescribed_quantity"/>
+                                <span t-field="line.all_day"/>
                                 </td>
                                 <td style="border: 1px solid black;">
-                                    <span t-field="line.all_day"/>
-                                </td>
-                                <td style="border: 1px solid black;">
-                                    <span t-field="line.units"/>
+                                <span t-field="line.units"/>
                                 </td> 
                                 <td style="border: 1px solid black;">
-                                    <span t-field="line.anupana"/>
+                                <span t-field="line.anupana"/>
                                 </td> 
                                 <td style="border: 1px solid black;">
-                                    <span t-field="line.bf_af"/>
+                                <span t-field="line.bf_af"/>
                                 </td>
                                 <td style="border: 1px solid black;">
-                                    <span t-field="line.days1"/>
+                                <span t-field="line.days1"/>
                                 </td>     
                             </tr>
                         </tbody>
@@ -377,7 +367,7 @@
                                         </table>
                                     </t>
             
-                                    <t t-if="docs.diet_line_two">
+                                    <t t-if="docs.diet_line_two.diet_for.diet_line">
                         <div class="header_tag">
                     <h4 class="text-center heading_text_cor">Diet</h4>
                     </div>
@@ -395,7 +385,7 @@
                             </tr>
                         </thead>
                 <tbody>
-                    <tr t-foreach='docs.diet_line_two' t-as='line'>
+                    <tr t-foreach='docs.diet_line_two.diet_for.diet_line' t-as='line'>
                         <td style="border: 1px solid black;">
                            <span t-field="line.wakeup1"/>
                         </td>
@@ -469,8 +459,7 @@
                                     <tr>
                                     <th style="border: 1px solid black;">Scan Test ID</th>
                                     <th style="border: 1px solid black;">Test Name </th>
-                                    <th style="border: 1px solid black;">Tested Range </th>
-                                    <th style="border: 1px solid black;">Normal Range </th>
+                                   
                                     <th style="border: 1px solid black;">Date </th>
                                     </tr>
                                 </thead>
@@ -482,12 +471,7 @@
                                     <td style="border: 1px solid black;">
                                     <span t-field="line.name"/>
                                     </td>
-                                    <td style="border: 1px solid black;">
-                                        <span t-field="line.range_test"/>
-                                    </td>
-                                    <td style="border: 1px solid black;">
-                                        <span t-field="line.range_normal"/>
-                                    </td>
+                                    
                                     <td style="border: 1px solid black;">
                                         <span t-field="line.date"/>
                                         </td>
@@ -496,7 +480,7 @@
                                 </table>
                             </t>
             
-                            <t t-if="docs.medicine_line_two">
+                            <t t-if="docs.medicine_line_two.prescription_alot.prescription_line_ids">
             
                                 <div class="header_tag">
                                     <h4 class="text-center heading_text_cor">Medicine</h4>
@@ -505,7 +489,6 @@
                                     <thead>
                                         <tr>
                                             <th style="border: 1px solid black;">Medicine Name</th>
-                                            <th style="border: 1px solid black;">Quantity</th>
                                             <th style="border: 1px solid black;">Dose</th>
                                             <th style="border: 1px solid black;">Unit</th>
                                             <th style="border: 1px solid black;">Notes</th>
@@ -514,24 +497,21 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr t-foreach='docs.medicine_line_two' t-as='line'>
+                                            <tr t-foreach='docs.medicine_line_two.prescription_alot.prescription_line_ids' t-as='line'>
                                             <td style="border: 1px solid black;">
-                                                <span t-field="line.medicine_name"/>
+                                            <span t-field="line.medicine_name"/>
                                             </td>
                                             <td style="border: 1px solid black;">
-                                                <span t-field="line.prescribed_quantity"/>
+                                            <span t-field="line.all_day"/>
                                             </td>
                                             <td style="border: 1px solid black;">
-                                                <span t-field="line.all_day"/>
-                                            </td>
-                                            <td style="border: 1px solid black;">
-                                                <span t-field="line.units"/>
+                                            <span t-field="line.units"/>
                                             </td> 
                                             <td style="border: 1px solid black;">
-                                                <span t-field="line.anupana"/>
+                                            <span t-field="line.anupana"/>
                                             </td> 
                                             <td style="border: 1px solid black;">
-                                                <span t-field="line.bf_af"/>
+                                            <span t-field="line.bf_af"/>
                                             </td>
                                             <td style="border: 1px solid black;">
                                             <span t-field="line.days1"/>
@@ -625,7 +605,7 @@
                                         </table>
                                     </t>
             
-                                    <t t-if="docs.diet_line_three">
+                                    <t t-if="docs.diet_line_three.diet_for.diet_line">
                         <div class="header_tag">
                     <h4 class="text-center heading_text_cor">Diet</h4>
                     </div>
@@ -643,7 +623,7 @@
                             </tr>
                         </thead>
                 <tbody>
-                    <tr t-foreach='docs.diet_line_three' t-as='line'>
+                    <tr t-foreach='docs.diet_line_three.diet_for.diet_line' t-as='line'>
                         <td style="border: 1px solid black;">
                            <span t-field="line.wakeup1"/>
                         </td>
@@ -717,34 +697,28 @@
                                     <tr>
                                     <th style="border: 1px solid black;">Scan Test ID</th>
                                     <th style="border: 1px solid black;">Test Name </th>
-                                    <th style="border: 1px solid black;">Tested Range </th>
-                                    <th style="border: 1px solid black;">Normal Range </th>
+                                   
                                     <th style="border: 1px solid black;">Date </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                         <tr t-foreach='docs.scan_line_three' t-as='line'>
                                     <td style="border: 1px solid black;">
-                                        <span t-field="line.scan_id"/>
+                                    <span t-field="line.scan_id"/>
                                     </td>
                                     <td style="border: 1px solid black;">
-                                        <span t-field="line.name"/>
+                                    <span t-field="line.name"/>
                                     </td>
-                                    <td style="border: 1px solid black;">
-                                        <span t-field="line.range_test"/>
-                                    </td>
-                                    <td style="border: 1px solid black;">
-                                        <span t-field="line.range_normal"/>
-                                    </td>
+                                    
                                     <td style="border: 1px solid black;">
                                         <span t-field="line.date"/>
-                                    </td>
+                                        </td>
                                     </tr>
                                 </tbody>
                                 </table>
                             </t>
             
-                            <t t-if="docs.medicine_line_three">
+                            <t t-if="docs.medicine_line_three.prescription_alot.prescription_line_ids">
             
                                 <div class="header_tag">
                                     <h4 class="text-center heading_text_cor">Medicine</h4>
@@ -753,7 +727,6 @@
                                     <thead>
                                         <tr>
                                             <th style="border: 1px solid black;">Medicine Name</th>
-                                            <th style="border: 1px solid black;">Quantity</th>
                                             <th style="border: 1px solid black;">Dose</th>
                                             <th style="border: 1px solid black;">Unit</th>
                                             <th style="border: 1px solid black;">Notes</th>
@@ -762,27 +735,24 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr t-foreach='docs.medicine_line_three' t-as='line'>
+                                            <tr t-foreach='docs.medicine_line_three.prescription_alot.prescription_line_ids' t-as='line'>
                                             <td style="border: 1px solid black;">
-                                                <span t-field="line.medicine_name"/>
+                                            <span t-field="line.medicine_name"/>
                                             </td>
                                             <td style="border: 1px solid black;">
-                                                <span t-field="line.all_day"/>
+                                            <span t-field="line.all_day"/>
                                             </td>
                                             <td style="border: 1px solid black;">
-                                                <span t-field="line.prescribed_quantity"/>
-                                            </td>
-                                            <td style="border: 1px solid black;">
-                                                <span t-field="line.units"/>
+                                            <span t-field="line.units"/>
                                             </td> 
                                             <td style="border: 1px solid black;">
-                                                <span t-field="line.anupana"/>
+                                            <span t-field="line.anupana"/>
                                             </td> 
                                             <td style="border: 1px solid black;">
-                                                <span t-field="line.bf_af"/>
+                                            <span t-field="line.bf_af"/>
                                             </td>
                                             <td style="border: 1px solid black;">
-                                                <span t-field="line.days1"/>
+                                            <span t-field="line.days1"/>
                                             </td>     
                                         </tr>
                                     </tbody>
@@ -873,7 +843,7 @@
                                         </table>
                                     </t>
             
-                                    <t t-if="docs.diet_line_four">
+                                    <t t-if="docs.diet_line_four.diet_for.diet_line">
                         <div class="header_tag">
                     <h4 class="text-center heading_text_cor">Diet</h4>
                     </div>
@@ -891,7 +861,7 @@
                             </tr>
                         </thead>
                 <tbody>
-                    <tr t-foreach='docs.diet_line_four' t-as='line'>
+                    <tr t-foreach='docs.diet_line_four.diet_for.diet_line' t-as='line'>
                         <td style="border: 1px solid black;">
                            <span t-field="line.wakeup1"/>
                         </td>
@@ -965,34 +935,28 @@
                                     <tr>
                                     <th style="border: 1px solid black;">Scan Test ID</th>
                                     <th style="border: 1px solid black;">Test Name </th>
-                                    <th style="border: 1px solid black;">Tested Range </th>
-                                    <th style="border: 1px solid black;">Normal Range </th>
+                                   
                                     <th style="border: 1px solid black;">Date </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                         <tr t-foreach='docs.scan_line_four' t-as='line'>
                                     <td style="border: 1px solid black;">
-                                        <span t-field="line.scan_id"/>
+                                    <span t-field="line.scan_id"/>
                                     </td>
                                     <td style="border: 1px solid black;">
-                                        <span t-field="line.name"/>
+                                    <span t-field="line.name"/>
                                     </td>
-                                    <td style="border: 1px solid black;">
-                                        <span t-field="line.range_test"/>
-                                    </td>
-                                    <td style="border: 1px solid black;">
-                                        <span t-field="line.range_normal"/>
-                                    </td>
+                                    
                                     <td style="border: 1px solid black;">
                                         <span t-field="line.date"/>
-                                    </td>
+                                        </td>
                                     </tr>
                                 </tbody>
                                 </table>
                             </t>
             
-                            <t t-if="docs.medicine_line_four">
+                            <t t-if="docs.medicine_line_four.prescription_alot.prescription_line_ids">
             
                                 <div class="header_tag">
                                     <h4 class="text-center heading_text_cor">Medicine</h4>
@@ -1001,7 +965,6 @@
                                     <thead>
                                         <tr>
                                             <th style="border: 1px solid black;">Medicine Name</th>
-                                            <th style="border: 1px solid black;">Quantity</th>
                                             <th style="border: 1px solid black;">Dose</th>
                                             <th style="border: 1px solid black;">Unit</th>
                                             <th style="border: 1px solid black;">Notes</th>
@@ -1010,12 +973,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr t-foreach='docs.medicine_line_four' t-as='line'>
+                                            <tr t-foreach='docs.medicine_line_four.prescription_alot.prescription_line_ids' t-as='line'>
                                             <td style="border: 1px solid black;">
                                             <span t-field="line.medicine_name"/>
-                                            </td>
-                                            <td style="border: 1px solid black;">
-                                                <span t-field="line.prescribed_quantity"/>
                                             </td>
                                             <td style="border: 1px solid black;">
                                             <span t-field="line.all_day"/>
@@ -1121,7 +1081,7 @@
                                         </table>
                                     </t>
             
-                                    <t t-if="docs.diet_line_five">
+                                    <t t-if="docs.diet_line_five.diet_for.diet_line">
                         <div class="header_tag">
                     <h4 class="text-center heading_text_cor">Diet</h4>
                     </div>
@@ -1139,7 +1099,7 @@
                             </tr>
                         </thead>
                 <tbody>
-                    <tr t-foreach='docs.diet_line_five' t-as='line'>
+                    <tr t-foreach='docs.diet_line_five.diet_for.diet_line' t-as='line'>
                         <td style="border: 1px solid black;">
                            <span t-field="line.wakeup1"/>
                         </td>
@@ -1213,25 +1173,19 @@
                                     <tr>
                                     <th style="border: 1px solid black;">Scan Test ID</th>
                                     <th style="border: 1px solid black;">Test Name </th>
-                                    <th style="border: 1px solid black;">Tested Range </th>
-                                    <th style="border: 1px solid black;">Normal Range </th>
+                                   
                                     <th style="border: 1px solid black;">Date </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                         <tr t-foreach='docs.scan_line_five' t-as='line'>
                                     <td style="border: 1px solid black;">
-                                        <span t-field="line.scan_id"/>
+                                    <span t-field="line.scan_id"/>
                                     </td>
                                     <td style="border: 1px solid black;">
-                                        <span t-field="line.name"/>
+                                    <span t-field="line.name"/>
                                     </td>
-                                    <td style="border: 1px solid black;">
-                                        <span t-field="line.range_test"/>
-                                    </td>
-                                    <td style="border: 1px solid black;">
-                                        <span t-field="line.range_normal"/>
-                                    </td>
+                                    
                                     <td style="border: 1px solid black;">
                                         <span t-field="line.date"/>
                                         </td>
@@ -1240,7 +1194,7 @@
                                 </table>
                             </t>
             
-                            <t t-if="docs.medicine_line_five">
+                            <t t-if="docs.medicine_line_five.prescription_alot.prescription_line_ids">
             
                                 <div class="header_tag">
                                     <h4 class="text-center heading_text_cor">Medicine</h4>
@@ -1249,7 +1203,6 @@
                                     <thead>
                                         <tr>
                                             <th style="border: 1px solid black;">Medicine Name</th>
-                                            <th style="border: 1px solid black;">Quantity</th>
                                             <th style="border: 1px solid black;">Dose</th>
                                             <th style="border: 1px solid black;">Unit</th>
                                             <th style="border: 1px solid black;">Notes</th>
@@ -1258,12 +1211,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr t-foreach='docs.medicine_line_five' t-as='line'>
+                                            <tr t-foreach='docs.medicine_line_five.prescription_alot.prescription_line_ids' t-as='line'>
                                             <td style="border: 1px solid black;">
                                             <span t-field="line.medicine_name"/>
-                                            </td>
-                                            <td style="border: 1px solid black;">
-                                                <span t-field="line.prescribed_quantity"/>
                                             </td>
                                             <td style="border: 1px solid black;">
                                             <span t-field="line.all_day"/>
@@ -1368,7 +1318,7 @@
                                         </table>
                                     </t>
             
-                                    <t t-if="docs.diet_line_six">
+                                    <t t-if="docs.diet_line_six.diet_for.diet_line">
                         <div class="header_tag">
                     <h4 class="text-center heading_text_cor">Diet</h4>
                     </div>
@@ -1386,7 +1336,7 @@
                             </tr>
                         </thead>
                 <tbody>
-                    <tr t-foreach='docs.diet_line_six' t-as='line'>
+                    <tr t-foreach='docs.diet_line_six.diet_for.diet_line' t-as='line'>
                         <td style="border: 1px solid black;">
                            <span t-field="line.wakeup1"/>
                         </td>
@@ -1460,8 +1410,7 @@
                                     <tr>
                                     <th style="border: 1px solid black;">Scan Test ID</th>
                                     <th style="border: 1px solid black;">Test Name </th>
-                                    <th style="border: 1px solid black;">Tested Range </th>
-                                    <th style="border: 1px solid black;">Normal Range </th>
+                                   
                                     <th style="border: 1px solid black;">Date </th>
                                     </tr>
                                 </thead>
@@ -1473,12 +1422,7 @@
                                     <td style="border: 1px solid black;">
                                     <span t-field="line.name"/>
                                     </td>
-                                    <td style="border: 1px solid black;">
-                                        <span t-field="line.range_test"/>
-                                    </td>
-                                    <td style="border: 1px solid black;">
-                                        <span t-field="line.range_normal"/>
-                                    </td>
+                                    
                                     <td style="border: 1px solid black;">
                                         <span t-field="line.date"/>
                                         </td>
@@ -1487,7 +1431,7 @@
                                 </table>
                             </t>
             
-                            <t t-if="docs.medicine_line_six">
+                            <t t-if="docs.medicine_line_six.prescription_alot.prescription_line_ids">
             
                                 <div class="header_tag">
                                     <h4 class="text-center heading_text_cor">Medicine</h4>
@@ -1496,7 +1440,6 @@
                                     <thead>
                                         <tr>
                                             <th style="border: 1px solid black;">Medicine Name</th>
-                                            <th style="border: 1px solid black;">Quantity</th>
                                             <th style="border: 1px solid black;">Dose</th>
                                             <th style="border: 1px solid black;">Unit</th>
                                             <th style="border: 1px solid black;">Notes</th>
@@ -1505,12 +1448,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr t-foreach='docs.medicine_line_six' t-as='line'>
+                                            <tr t-foreach='docs.medicine_line_six.prescription_alot.prescription_line_ids' t-as='line'>
                                             <td style="border: 1px solid black;">
                                             <span t-field="line.medicine_name"/>
-                                            </td>
-                                            <td style="border: 1px solid black;">
-                                                <span t-field="line.prescribed_quantity"/>
                                             </td>
                                             <td style="border: 1px solid black;">
                                             <span t-field="line.all_day"/>
@@ -1616,7 +1556,7 @@
                                         </table>
                                     </t>
             
-                                    <t t-if="docs.diet_line_seven">
+                                    <t t-if="docs.diet_line_seven.diet_for.diet_line">
                         <div class="header_tag">
                     <h4 class="text-center heading_text_cor">Diet</h4>
                     </div>
@@ -1634,7 +1574,7 @@
                             </tr>
                         </thead>
                 <tbody>
-                    <tr t-foreach='docs.diet_line_seven' t-as='line'>
+                    <tr t-foreach='docs.diet_line_seven.diet_for.diet_line' t-as='line'>
                         <td style="border: 1px solid black;">
                            <span t-field="line.wakeup1"/>
                         </td>
@@ -1708,8 +1648,7 @@
                                     <tr>
                                     <th style="border: 1px solid black;">Scan Test ID</th>
                                     <th style="border: 1px solid black;">Test Name </th>
-                                    <th style="border: 1px solid black;">Tested Range </th>
-                                    <th style="border: 1px solid black;">Normal Range </th>
+                                   
                                     <th style="border: 1px solid black;">Date </th>
                                     </tr>
                                 </thead>
@@ -1721,12 +1660,7 @@
                                     <td style="border: 1px solid black;">
                                     <span t-field="line.name"/>
                                     </td>
-                                    <td style="border: 1px solid black;">
-                                        <span t-field="line.range_test"/>
-                                    </td>
-                                    <td style="border: 1px solid black;">
-                                        <span t-field="line.range_normal"/>
-                                    </td>
+                                    
                                     <td style="border: 1px solid black;">
                                         <span t-field="line.date"/>
                                         </td>
@@ -1735,7 +1669,7 @@
                                 </table>
                             </t>
             
-                            <t t-if="docs.medicine_line_seven">
+                            <t t-if="docs.medicine_line_seven.prescription_alot.prescription_line_ids">
             
                                 <div class="header_tag">
                                     <h4 class="text-center heading_text_cor">Medicine</h4>
@@ -1744,7 +1678,6 @@
                                     <thead>
                                         <tr>
                                             <th style="border: 1px solid black;">Medicine Name</th>
-                                            <th style="border: 1px solid black;">Quantity</th>
                                             <th style="border: 1px solid black;">Dose</th>
                                             <th style="border: 1px solid black;">Unit</th>
                                             <th style="border: 1px solid black;">Notes</th>
@@ -1753,12 +1686,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr t-foreach='docs.medicine_line_seven' t-as='line'>
+                                            <tr t-foreach='docs.medicine_line_seven.prescription_alot.prescription_line_ids' t-as='line'>
                                             <td style="border: 1px solid black;">
                                             <span t-field="line.medicine_name"/>
-                                            </td>
-                                            <td style="border: 1px solid black;">
-                                                <span t-field="line.prescribed_quantity"/>
                                             </td>
                                             <td style="border: 1px solid black;">
                                             <span t-field="line.all_day"/>
@@ -1864,7 +1794,7 @@
                                         </table>
                                     </t>
             
-                                    <t t-if="docs.diet_line_eight">
+                                    <t t-if="docs.diet_line_eight.diet_for.diet_line">
                         <div class="header_tag">
                     <h4 class="text-center heading_text_cor">Diet</h4>
                     </div>
@@ -1882,7 +1812,7 @@
                             </tr>
                         </thead>
                 <tbody>
-                    <tr t-foreach='docs.diet_line_eight' t-as='line'>
+                    <tr t-foreach='docs.diet_line_eight.diet_for.diet_line' t-as='line'>
                         <td style="border: 1px solid black;">
                            <span t-field="line.wakeup1"/>
                         </td>
@@ -1956,8 +1886,7 @@
                                     <tr>
                                     <th style="border: 1px solid black;">Scan Test ID</th>
                                     <th style="border: 1px solid black;">Test Name </th>
-                                    <th style="border: 1px solid black;">Tested Range </th>
-                                    <th style="border: 1px solid black;">Normal Range </th>
+                                   
                                     <th style="border: 1px solid black;">Date </th>
                                     </tr>
                                 </thead>
@@ -1969,12 +1898,7 @@
                                     <td style="border: 1px solid black;">
                                     <span t-field="line.name"/>
                                     </td>
-                                    <td style="border: 1px solid black;">
-                                        <span t-field="line.range_test"/>
-                                        </td>
-                                        <td style="border: 1px solid black;">
-                                        <span t-field="line.range_normal"/>
-                                        </td>
+                                    
                                     <td style="border: 1px solid black;">
                                         <span t-field="line.date"/>
                                         </td>
@@ -1983,7 +1907,7 @@
                                 </table>
                             </t>
             
-                            <t t-if="docs.medicine_line_eight">
+                            <t t-if="docs.medicine_line_eight.prescription_alot.prescription_line_ids">
             
                                 <div class="header_tag">
                                     <h4 class="text-center heading_text_cor">Medicine</h4>
@@ -1992,7 +1916,6 @@
                                     <thead>
                                         <tr>
                                             <th style="border: 1px solid black;">Medicine Name</th>
-                                            <th style="border: 1px solid black;">Quantity</th>
                                             <th style="border: 1px solid black;">Dose</th>
                                             <th style="border: 1px solid black;">Unit</th>
                                             <th style="border: 1px solid black;">Notes</th>
@@ -2001,12 +1924,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr t-foreach='docs.medicine_line_eight' t-as='line'>
+                                            <tr t-foreach='docs.medicine_line_eight.prescription_alot.prescription_line_ids' t-as='line'>
                                             <td style="border: 1px solid black;">
                                             <span t-field="line.medicine_name"/>
-                                            </td>
-                                            <td style="border: 1px solid black;">
-                                                <span t-field="line.prescribed_quantity"/>
                                             </td>
                                             <td style="border: 1px solid black;">
                                             <span t-field="line.all_day"/>
@@ -2029,7 +1949,7 @@
                                 </t>
 
                                 <t t-if="docs.sister_line_nine">
-                                    <h3 class="text-left heading_text_cor">DAY 9</h3>
+                                <h3 class="text-left heading_text_cor">DAY 9</h3>
                                 </t>
                     <t t-if="docs.sister_line_nine">
                         <div class="header_tag">
@@ -2112,7 +2032,7 @@
                                         </table>
                                     </t>
             
-                                    <t t-if="docs.diet_line_nine">
+                                    <t t-if="docs.diet_line_nine.diet_for.diet_line">
                         <div class="header_tag">
                     <h4 class="text-center heading_text_cor">Diet</h4>
                     </div>
@@ -2130,7 +2050,7 @@
                             </tr>
                         </thead>
                 <tbody>
-                    <tr t-foreach='docs.diet_line_nine' t-as='line'>
+                    <tr t-foreach='docs.diet_line_nine.diet_for.diet_line' t-as='line'>
                         <td style="border: 1px solid black;">
                            <span t-field="line.wakeup1"/>
                         </td>
@@ -2147,14 +2067,14 @@
                         <span t-field="line.protein_diet"/>
                             </td>
                             <td style="border: 1px solid black;">
-                        <span t-field="line.quantity"/>
+                            <span t-field="line.quantity"/>
                             </td>
                             <td style="border: 1px solid black;">
-                        <span t-field="line.exercise1"/>
+                            <span t-field="line.exercise1"/>
                             </td>
-                        <td style="border: 1px solid black;">
-                            <span t-field="line.note"/>
-                        </td>
+                            <td style="border: 1px solid black;">
+                                <span t-field="line.note"/>
+                            </td>
                             </tr>
                         </tbody>
                         </table>
@@ -2204,8 +2124,7 @@
                                     <tr>
                                     <th style="border: 1px solid black;">Scan Test ID</th>
                                     <th style="border: 1px solid black;">Test Name </th>
-                                    <th style="border: 1px solid black;">Tested Range </th>
-                                    <th style="border: 1px solid black;">Normal Range </th>
+                                   
                                     <th style="border: 1px solid black;">Date </th>
                                     </tr>
                                 </thead>
@@ -2217,12 +2136,7 @@
                                     <td style="border: 1px solid black;">
                                     <span t-field="line.name"/>
                                     </td>
-                                    <td style="border: 1px solid black;">
-                                        <span t-field="line.range_test"/>
-                                    </td>
-                                    <td style="border: 1px solid black;">
-                                        <span t-field="line.range_normal"/>
-                                    </td>
+                                    
                                     <td style="border: 1px solid black;">
                                         <span t-field="line.date"/>
                                         </td>
@@ -2231,7 +2145,7 @@
                                 </table>
                             </t>
             
-                            <t t-if="docs.medicine_line_nine">
+                            <t t-if="docs.medicine_line_nine.prescription_alot.prescription_line_ids">
             
                                 <div class="header_tag">
                                     <h4 class="text-center heading_text_cor">Medicine</h4>
@@ -2240,7 +2154,6 @@
                                     <thead>
                                         <tr>
                                             <th style="border: 1px solid black;">Medicine Name</th>
-                                            <th style="border: 1px solid black;">Quantity</th>
                                             <th style="border: 1px solid black;">Dose</th>
                                             <th style="border: 1px solid black;">Unit</th>
                                             <th style="border: 1px solid black;">Notes</th>
@@ -2252,9 +2165,6 @@
                                             <tr t-foreach='docs.medicine_line_nine.prescription_alot.prescription_line_ids' t-as='line'>
                                             <td style="border: 1px solid black;">
                                             <span t-field="line.medicine_name"/>
-                                            </td>
-                                            <td style="border: 1px solid black;">
-                                                <span t-field="line.prescribed_quantity"/>
                                             </td>
                                             <td style="border: 1px solid black;">
                                             <span t-field="line.all_day"/>
@@ -2360,7 +2270,7 @@
                                         </table>
                                     </t>
             
-                                    <t t-if="docs.diet_line_ten">
+                                    <t t-if="docs.diet_line_ten.diet_for.diet_line">
                         <div class="header_tag">
                     <h4 class="text-center heading_text_cor">Diet</h4>
                     </div>
@@ -2378,7 +2288,7 @@
                             </tr>
                         </thead>
                 <tbody>
-                    <tr t-foreach='docs.diet_line_ten' t-as='line'>
+                    <tr t-foreach='docs.diet_line_ten.diet_for.diet_line' t-as='line'>
                         <td style="border: 1px solid black;">
                            <span t-field="line.wakeup1"/>
                         </td>
@@ -2452,8 +2362,7 @@
                                     <tr>
                                     <th style="border: 1px solid black;">Scan Test ID</th>
                                     <th style="border: 1px solid black;">Test Name </th>
-                                    <th style="border: 1px solid black;">Tested Range </th>
-                                    <th style="border: 1px solid black;">Normal Range </th>
+                                   
                                     <th style="border: 1px solid black;">Date </th>
                                     </tr>
                                 </thead>
@@ -2465,12 +2374,7 @@
                                     <td style="border: 1px solid black;">
                                     <span t-field="line.name"/>
                                     </td>
-                                    <td style="border: 1px solid black;">
-                                        <span t-field="line.range_test"/>
-                                        </td>
-                                        <td style="border: 1px solid black;">
-                                        <span t-field="line.range_normal"/>
-                                        </td>
+                                    
                                     <td style="border: 1px solid black;">
                                         <span t-field="line.date"/>
                                         </td>
@@ -2479,7 +2383,7 @@
                                 </table>
                             </t>
             
-                            <t t-if="docs.medicine_line_ten">
+                            <t t-if="docs.medicine_line_ten.prescription_alot.prescription_line_ids">
             
                                 <div class="header_tag">
                                     <h4 class="text-center heading_text_cor">Medicine</h4>
@@ -2488,7 +2392,6 @@
                                     <thead>
                                         <tr>
                                             <th style="border: 1px solid black;">Medicine Name</th>
-                                            <th style="border: 1px solid black;">Quantity</th>
                                             <th style="border: 1px solid black;">Dose</th>
                                             <th style="border: 1px solid black;">Unit</th>
                                             <th style="border: 1px solid black;">Notes</th>
@@ -2497,12 +2400,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr t-foreach='docs.medicine_line_ten' t-as='line'>
+                                            <tr t-foreach='docs.medicine_line_ten.prescription_alot.prescription_line_ids' t-as='line'>
                                             <td style="border: 1px solid black;">
                                             <span t-field="line.medicine_name"/>
-                                            </td>
-                                            <td style="border: 1px solid black;">
-                                                <span t-field="line.prescribed_quantity"/>
                                             </td>
                                             <td style="border: 1px solid black;">
                                             <span t-field="line.all_day"/>

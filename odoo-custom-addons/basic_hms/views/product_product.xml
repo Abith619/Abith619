@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <record id="action_organic_product_med" model="ir.actions.act_window">
+        <field name="name">Medicines</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.product</field>
+        <field name="binding_view_types">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_medicine','=',1)]</field>
+    </record>
 
-    <menuitem id="menus_pharmacy"  name ="Pharmacy" action="stock.stock_product_normal_action"
+    <menuitem id="menus_pharmacy"  name ="Pharmacy" action="action_organic_product_med"
         parent="main_menu_hospital_management" sequence="5" />
 
 

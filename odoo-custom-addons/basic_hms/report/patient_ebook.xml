@@ -2,81 +2,110 @@
 <odoo>
 
     <data>
-    
+    <record id="paperformat_reigstration_Paper" model="report.paperformat">
+        <field name="name">Registration Paper</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">210</field>
+        <field name="page_width">140</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">10</field>
+        <field name="dpi">130</field>
+    </record>
+
         <template id="basic_hms.registration_patient_report">
             <t t-call="web.external_layout">
-     <t t-call="web.html_container">
-        <t t-foreach="docs" t-as="o">
+            <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
         <style>
-             .flex-parent {
+            .flex-parent {
                 display: flex;
             }
-            #tab1{
-                width:150% !important;
-                padding:5px;
-             } 
-            #tab2{
-                width:50% !important;
-                padding:5px;
-             } 
-            .table-data {
-                height: 200px !important;
-            }
-            #div {
-                display: flex;
-                align-items: flex-end;
-              }
+            @font-face {
+                font-family: 'Lohit Tamil';
+                src: url('/basic_hms/static/src/font/Lohit_Tamil.ttf') format('truetype');
+                }
         </style>
             <t >
-            <table border="0" class="table table-bordered" id='tab2' style="border: 0px;margin-top: 50px;">
-                <td style="border: 0px;width: 50%;">
-                    <p><b>Patient ID : </b><span t-field="o.name"/></p>
-                    <p><b>Registration Date : </b><span t-field="o.dates"/></p>
-                </td>
-                <div style="border: 0px;width: 50%;" id='div'>
-                    <img t-att-src="'data:image/png;base64,%s' % to_text(o.qr_code)" style="height:100px;width:100px;float:center;"/>
-                </div>
-            </table>
-
-            <table  class="table-data" id='tab1' style="border: 1px solid black;">
-            <thead>
+            <div style="font-family: 'Lohit Tamil'; font-size: 14pt;">
+            <t t-set="name_age_sex" t-value="o.name_age_sex.upper()" />
+                    <t t-set="doctors" t-value="o.doctors.name.upper()" />
+            <div class="header_tag">
+            <h2 class="text-center heading_text_cor">Registration Details</h2>
+            </div>
             <tr>
+            <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
+                    <div>
+            <td style="border: 0px;width: 50%;">
+                <p><b>Patient ID : </b><span t-field="o.name"/></p>
+                <p><b>Registration Date : </b><span t-field="o.dates"/></p>
+                <p><b>Doctor : </b><span t-esc="doctors"/></p>
+            </td>
+        <div>
+            <td style="border: 0px;width: 50%;">
+        <img t-att-src="'data:image/png;base64,%s' % to_text(o.qr_code)" style="height:100px;width:100px;float:center;"/>
+            </td>
+                </div>
+            </div>
+        </table>
+            </tr>
+            <table border="4" class="table table-bordered" style="border: 1px solid black;">
+            <thead>
+            <tr style="height:40px">
             <td style="border: 1px solid black;" >
-                <p><b>Name : </b> <span t-field="o.patient_id"/></p>
-                <p><b>Gender : </b> <span t-field="o.sex"/></p>
-                <!-- <p><b>Martial Status : </b> <span t-field="o.marital_status"/></p> -->
-                <!-- <p><b>DOB : </b> <span t-field="o.date_of_birth"/></p> -->
-                <p><b>Age : </b> <span t-field="o.age"/></p>
-                <p><b> Contact Number : </b> <span t-field="o.contact_no"/></p>
-                <p><b> Whatsapp Number : </b> <span t-field="o.contact_number"/></p>
-                <!-- <p><b>Height : </b> <span t-field="o.height"/></p>
-                <p><b>Weight : </b> <span t-field="o.weight"/></p>
-                <p><b>BMI : </b> <span t-field="o.bmi_value"/></p>
-                <p><b>Doctor Allocation: </b> <span t-field="o.doctors"/></p>
-                <p><b> Appointment Time : </b> <span t-field="o.appointment_from"/></p> -->
+              <p><b>Name : </b> <span t-field="o.name_age_sex"/></p>
+            <p><b> Contact Number : </b> <span t-field="o.contact_no"/></p>
+            <p><b> Whatsapp Number : </b> <span t-field="o.contact_number"/></p>
             </td>
             <td style="border: 1px solid black;">
+                <p><b> Doctor :</b> <span t-field="o.doctors"/></p>              
                 <p><b> Address : </b> <span t-field="o.address"/></p>
                 <p><b> State : </b> <span t-field="o.state"/></p>
-                <p><b> Country : </b> <span t-field="o.country"/></p>
-                <!-- <p><b> Occupation : </b> <span t-field="o.occupation"/></p>
-                <p><b> Experience : </b> <span t-field="o.designation"/></p>
-                <p><b> Father / Husband Name : </b> <span t-field="o.name_father"/></p>
-                <p><b> Father's Occupation : </b> <span t-field="o.father_occupation"/></p> -->
             </td>
             </tr>
             </thead>
             </table>
-          
-            <!-- <div style="border: 0px;width: 100%; ">
+            <div style="border: 0px;width: 100%; ">
                 <p style="text-align: right;"><strong>Fees :  </strong><i class="fa fa-inr"/><span t-field="o.fees"/></p>
                 <p style="text-align: left;"><strong>Feedback :  </strong><span t-field="o.data_value"/></p>
-            </div> -->
-            </t>
-            </t>
-            </t>
-            </t>
-        </template>
+            </div>
+            <div style='page-break-before: always;'> 
+                    <br></br> <br></br><br></br> 
+                        <h5 style='text-align:center'><strong>Terms and Conditions</strong></h5>
+                        <br></br>
+                <div class='row'>
+                <div class='col-6'>
+                    <strong>
+                    <h6>* Medicines once given will not be taken back or exchanged.</h6>
+                    <h6>* For Emergency Purpose please go to any nearby Hospital without any Delay</h6>
+                    <h6>* Calls are answered only between 11AM - 5PM.The call's will be recorded for our hospital purposes..</h6>
+                    <h6>* If you are receiving the medicines by courier, an opening video should be sent to the hospital's number to confirm the damage and return policy</h6>
+                    <h6>* Medicines, Diet and Lifestyle Changes should not be shared on any social media platform as it is personalized only for the patient.</h6>
+                    <h6>* The Patient must follow the Diet Chart, Exercise, Lifestyle Changes and Medicines as prescribed by the Doctor for good results.</h6>
+                    </strong></div>
+                    <div class='col-6'><strong>
+                        <h6>* ஒருமுறை கொடுத்த மருந்துகள் திரும்பப் பெறப்படாது அல்லது மாற்றப்படாது.</h6>
+                        <h6>* அவசரத் தேவைகளுக்கு, தாமதமின்றி அருகில் உள்ள மருத்துவமனைக்குச் செல்லவும். காலை 11 மணி முதல் மாலை 5 மணி வரை மட்டுமே அழைப்புகளுக்கு பதிலளிக்கப்படும். எங்கள் மருத்துவமனை நோக்கங்களுக்காக அழைப்புகள் பதிவு செய்யப்படும்.</h6>
+                        <h6>* நீங்கள் கூரியர் மூலம் மருந்துகளைப் பெறுகிறீர்கள் என்றால், சேதம் மற்றும் ரிட்டர்ன் பாலிசியை உறுதிப்படுத்த மருத்துவமனை எண்ணுக்கு ஒரு தொடக்க வீடியோ அனுப்பப்பட வேண்டும்.</h6>
+                        <h6>* மருந்துகள், உணவுமுறை மற்றும் வாழ்க்கை முறை மாற்றங்கள் நோயாளிக்கு மட்டும் தனிப்பயனாக்கப்படுவதால் எந்த சமூக ஊடக தளத்திலும் பகிரப்படக்கூடாது.</h6>
+                        <h6>* மருத்துவர் பரிந்துரைக்கும் உணவு முறை, உடற்பயிற்சி, வாழ்க்கை முறை மாற்றங்கள் மற்றும் மருந்துகளை நோயாளி கண்டிப்பாக பின்பற்ற வேண்டும்.</h6>
+                    </strong></div>
+                    </div>
+                <br></br>
+                <h5 style='text-align:center'><strong>* For Contact +91-9962655588 *</strong></h5>
+            </div>
+            </div>
+            <!-- </div> -->
+        </t>
+    </t>
+    </t>
+    </t>
+    </template>
     
     </data>
     

@@ -10,7 +10,6 @@ class medical_prescription_line(models.Model):
 
     name = fields.Many2one('medical.prescription.order','Prescription ID',ondelete='cascade')
     medicament_id = fields.Many2one('medical.medicament','Medicament')
-    ip_name = fields.Many2one('in.patient',string='In-Patient')
     indication = fields.Char('Indication')
     allow_substitution = fields.Boolean('Allow Substitution')
     form = fields.Char('Form')
@@ -35,7 +34,7 @@ class medical_prescription_line(models.Model):
     company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.prescription.order'))
 
     # names = fields.Many2one('medical.prescription.order','Prescription ID')
-    prescribed_quantity = fields.Float(string="Prescribed Quantity")
+    prescribed_quantity = fields.Float(string="Prescribed Quantity", default=1)
     medicine_name = fields.Many2one('product.product',string='Medicine Name')
     quantity = fields.Float(related='medicine_name.qty_available', string="Quantity Available")
     morning= fields.Float('Morning')
@@ -44,7 +43,7 @@ class medical_prescription_line(models.Model):
     night= fields.Float('Night')
     before_after = fields.Selection([('bf',"Before Food"),('af',"After food")],'Before Food')
     comment= fields.Char('Comment')
-    days1= fields.Integer('Days')
+    days1= fields.Integer('Days', default=30)
     units= fields.Many2one('uom.uom',string="units")
     potency = fields.Char(string="Potency")
     anupana = fields.Char(string="Notes")
@@ -61,6 +60,7 @@ class medical_prescription_line(models.Model):
 
     bf_af=fields.Selection([('before','Before Food'),('after','After Food')])
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
     @api.onchange('medicine_name')
     def prescribe_medicine(self):
@@ -69,25 +69,14 @@ class medical_prescription_line(models.Model):
             self.all_day=res.all_day
             self.units = res.units
             self.anupana = res.anupana
+        if self.name.num_days == 'e':
+            for i in self:
+                i.write({
+                    'bf_af':'before',
+                    # 'check':True
+                })
+
     sequence_ref = fields.Integer('SL.NO', compute="_sequence_ref")
-    
-    # @api.constrains('medicine_name')
-    # def write_list(self):
-    #     # orm = self.env['patient.bills'].search([('patient_name','=',self.patient_id.id)])
-    #     orm_update = self.env['prescription.bills'].search([('prescription_id', '=', self.name.name)])
-    #     # raise ValidationError(orm_update)
-    #     billing_lines=[]
-    #     for i in self.name:
-    #         billing_value = {
-    #             'date':i.write_date,
-    #             'medicine_name':self.medicine_name.id,
-    #             'prescription_id':i.name,
-    #             'pre_amount':i.total,
-    #             'delivery_mode':i.courier_option,
-    #         }
-    #         billing_lines.append(0,0,0,billing_value)
-    #         orm_update.update(billing_lines)
-    #         # orm.write({'pres_bill':billing_lines})
 
     @api.depends('name.prescription_line_ids', 'name.prescription_line_ids.medicine_name')
     def _sequence_ref(self):

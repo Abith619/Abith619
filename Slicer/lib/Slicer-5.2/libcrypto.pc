@@ -1,0 +1,12 @@
+prefix=/work/Stable/Slicer-0-build/OpenSSL
+exec_prefix=${prefix}
+libdir=/work/Stable/Slicer-0-build/OpenSSL
+includedir=${prefix}/include
+enginesdir=${libdir}/engines-1.1
+
+Name: OpenSSL-libcrypto
+Description: OpenSSL cryptography library
+Version: 1.1.1g
+Libs: -L${libdir} -lcrypto
+Libs.private: -lz -ldl -pthread 
+Cflags: -I${includedir}

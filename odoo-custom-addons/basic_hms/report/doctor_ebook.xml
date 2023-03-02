@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+<record id="paperformat_ebook_Paper" model="report.paperformat">
+        <field name="name">Ebook Paper</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">297</field>
+        <field name="page_width">210</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">20</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
 <template id="basic_hms.ebook_doctor_report">
      <t t-call="web.external_layout">
      <t t-call="web.html_container">
@@ -15,52 +31,33 @@
                 font-weight:600;
                 }
         </style>
-            <t>
-            <h2 >Patient Details</h2>
-            <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-right: 150px;">
-                <!-- <div class="row">
-                    <div class="col-4">
-            <td style="border: 0px;width: 50%;">
-                <p><strong>Name :</strong><span t-field="o.patient"/></p>
-                <p><b>ID Number :</b> <span t-field="o.serial_number"/></p>
-            </td></div>
-            <div class="col-6">
-            </div>
-            <div class="col-2">
-            <td style="border: 0px;width: 50%;">
-        <img t-att-src="'data:image/png;base64,%s' % to_text(o.qr_code)" style="height:100px;width:100px;float:center;"/>
-            </td>
-            </div>
-            </div> -->
 
-            <div class="row">
-                <div class="col-4">
-                    <div><p><strong>Name :</strong><span t-field="o.patient"/></p>
+        <t t-set="name_age_sex" t-value="o.name_age_sex.upper()" />
+        <t t-set="doctor" t-value="o.doctor.name.upper()" />
+            <t >
+            <h4 class="text-center heading_text_cor">Patient Details</h4>
+                <!-- <div class="row"> -->
+                <div class=" float-left" >
+                    <div><p><strong>Name :</strong><span t-esc="name_age_sex"/></p>
                 <p><b>ID Number :</b> <span t-field="o.serial_number"/></p></div>
-                    
                 </div>
-                <div class="col-6">
+                <div class=" float-right">
+                    <p><strong>Doctor :</strong><span t-esc="doctor"/></p>
+                    <p><b>Date :</b> <span t-field="o.date_rec"/></p>
                 </div>
-                <div class="col-2">
-                    <label style="float:center;" for="qr_code" string="Qr Code" />
-                    <field name="qr_code" widget='image' class="oe_avatar" style="float:left;" force_save='1' readonly="1"/>
-                </div>
-            </div>
-
-            </table>
-        <table border="4" class="table table-bordered" style="border: 1px solid black;">
+            <!-- <div class="col-4">
+            <img t-att-src="'data:image/png;base64,%s' % to_text(o.qr_code)" style="height:100px;width:100px;float:center;"/>
+                </div> -->
+            <!-- </div> -->
+            <table border="4" class="table table-bordered" style="border: 1px solid black;">
             <thead>
             <tr style="height:40px">
             <td style="border: 1px solid black;" >
-                <p><b>Gender :</b> <span t-field="o.sex"/></p>
-                <p><b>Martial Status :</b> <span t-field="o.marital_status"/></p>
-                <p><b>Age :</b> <span t-field="o.age"/></p>
                 <p><b>Height :</b> <span t-field="o.height"/></p>
                 <p><b>Weight :</b> <span t-field="o.weight"/></p>
                 <p><b>BP :</b> <span t-field="o.bp"/></p>
                 <p><b>BMI :</b> <span t-field="o.bmi_value"/></p>
                 <p><b>Branch :</b> <span t-field="o.company_id"/></p>
-                <!-- <p><b> Symptoms :</b> <span t-field="o.sign_symptoms"/></p> -->
             </td>
             <td style="border: 1px solid black;">
                 <p><b> Doctor :</b> <span t-field="o.doctor"/></p>
@@ -69,123 +66,42 @@
                 <p><b> Address :</b> <span t-field="o.address"/></p>
                 <p><b> Father / Husband Name :</b> <span t-field="o.name_father"/></p>
                 <p><b> Occupation :</b> <span t-field="o.occupation"/></p>
-                <p><b> Habits :</b> <span t-field="o.patient_habits"/></p>
             </td>
             </tr>
             </thead>
             </table>
-            
-        <!--    <div class="header_tag">
-         <h4 class="text-center heading_text_cor">Present Complaints</h4>
+            <t t-if="docs.currents_ailments">
+            <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Present Complaints</h4>
         </div>
             <table class="table table-bordered" style="border: 1px solid black;">
                 <thead>
                     <tr>
+                    <th style="border: 1px solid black;"> Review.no </th>
                     <th style="border: 1px solid black;">Complaints</th>
                     <th style="border: 1px solid black;"> Duration </th>
                     <th style="border: 1px solid black;"> Signs / Symptoms </th>
                     </tr>
                 </thead>
                 <tbody>
-                        <tr t-foreach='docs.currents_ailments' t-as='line'>
+                    <tr t-foreach='docs.currents_ailments' t-as='line'>
                     <td style="border: 1px solid black;">
-                    <span t-field="line.patient_currents_ailments"/>
+                        <span t-field="line.review_rec"/>
                     </td>
                     <td style="border: 1px solid black;">
-                    <span t-field="line.duration"/>
+                        <span t-field="line.patient_currents_ailments"/>
                     </td>
                     <td style="border: 1px solid black;">
-                    <span t-field="line.patient_signs_symptoms"/>
+                        <span t-field="line.duration"/>
+                    </td>
+                    <td style="border: 1px solid black;">
+                        <span t-field="line.patient_signs_symptoms"/>
                     </td>
                     </tr>
                 </tbody>
                 </table>
-                <div class="header_tag">
-        <h4 class="text-center heading_text_cor">Past Complaints</h4>
-        </div>
-                <table class="table table-bordered" style="border: 1px solid black;">
-                <thead>
-                    <tr>
-                    <th style="border: 1px solid black;">Past Complaints</th>
-                    <th style="border: 1px solid black;">Notes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                        <tr t-foreach='docs.pervious_medication' t-as='line'>
-                    <td style="border: 1px solid black;">
-                    <span t-field="line.diseases_for"/>
-                    </td>
-                    <td style="border: 1px solid black;">
-                    <span t-field="line.medicine"/>
-                    </td>
-                    </tr>
-                </tbody>
-                </table> -->
-                <t t-if="docs.lab_test_line">
-                     <div class="header_tag">
-        <h4 class="text-center heading_text_cor">Lab Test</h4>
-        </div>
-                    <table class="table table-bordered" style="border: 1px solid black;">
-                <thead>
-                    <tr>
-                    <th style="border: 1px solid black;">Lab Test ID</th>
-                    <th style="border: 1px solid black;">Test Name </th>
-                    <th style="border: 1px solid black;">Tested Range </th>
-                    <th style="border: 1px solid black;">Normal Range </th>
-                    <th style="border: 1px solid black;">Date </th>
-                    </tr>
-                </thead>
-                <tbody>
-                        <tr t-foreach='docs.lab_test_line' t-as='line'>
-                    <td style="border: 1px solid black;">
-                    <span t-field="line.lab_type"/>
-                    </td>
-                    <td style="border: 1px solid black;">
-                    <span t-field="line.name"/>
-                    </td>
-                    <td style="border: 1px solid black;">
-                    <span t-field="line.range_test"/>
-                    </td>
-                    <td style="border: 1px solid black;">
-                    <span t-field="line.range_normal"/>
-                    </td>
-                    <td style="border: 1px solid black;">
-                        <span t-field="line.date"/>
-                        </td>
-                    </tr>
-                </tbody>
-                </table> 
-                </t>
-                <t t-if="docs.scan_test">
-                <div class="header_tag">
-        <h4 class="text-center heading_text_cor">Scan details</h4>
-        </div>
-                <table class="table table-bordered" style="border: 1px solid black;">
-                    <thead>
-                        <tr>
-                        <th style="border: 1px solid black;">Scan Test ID</th>
-                        <th style="border: 1px solid black;">Test Name </th>
-                       
-                        <th style="border: 1px solid black;">Date </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                            <tr t-foreach='docs.scan_test' t-as='line'>
-                        <td style="border: 1px solid black;">
-                        <span t-field="line.scan_id"/>
-                        </td>
-                        <td style="border: 1px solid black;">
-                        <span t-field="line.name"/>
-                        </td>
-                        
-                        <td style="border: 1px solid black;">
-                            <span t-field="line.date"/>
-                            </td>
-                        </tr>
-                    </tbody>
-                    </table> 
-                    </t>
-                    <t t-if="docs.medicine_id.prescription_line_ids">
+              </t>
+              <t t-if="docs.medicine_id.prescription_line_ids">
                 <div class="header_tag">
         <h4 class="text-center heading_text_cor">Medicine</h4>
         </div>
@@ -193,6 +109,7 @@
                 <table class="table table-bordered" style="border: 1px solid black;">
                     <thead>
                         <tr>
+                            <th style="border: 1px solid black;">Review.no</th>
                             <th style="border: 1px solid black;">Medicine Name</th>
                             <th style="border: 1px solid black;">Dose</th>
                             <th style="border: 1px solid black;">Unit</th>
@@ -203,6 +120,10 @@
                         </thead>
                         <tbody>
                             <tr t-foreach='docs.medicine_id.prescription_line_ids' t-as='line'>
+                            <tr t-foreach='docs.prescription_patient' t-as='lines'>
+                            <td style="border: 1px solid black;">
+                                <span t-field="lines.review_rec"/>
+                            </td>
                             <td style="border: 1px solid black;">
                             <span t-field="line.medicine_name"/>
                             </td>
@@ -222,17 +143,20 @@
                             <span t-field="line.days1"/>
                             </td>     
                         </tr>
+                        </tr>
                     </tbody>
                     </table>
                     </t>
+                
+                <t t-if="docs.diet_id.diet_line">
                 <div style="page-break-before:always">
-                <t t-if="docs.diet_fields.diet_for.diet_line">
                    <div class="header_tag">
         <h4 class="text-center heading_text_cor">Diet</h4>
         </div>
                     <table class="table table-bordered" style="border: 1px solid black;">
                         <thead>
                             <tr>
+                            <th style="border: 1px solid black;">Review.no</th>
                             <th style="border: 1px solid black;">Time</th>
                             <th style="border: 1px solid black;"> Food </th>
                             <th style="border: 1px solid black;"> Fruit Diet </th>
@@ -244,10 +168,13 @@
                             </tr>
                         </thead>
                         <tbody>
-
-                        <tr t-foreach='docs.diet_fields.diet_for.diet_line' t-as='line'>
+                             <tr t-foreach='docs.diet_id.diet_line' t-as='line'>
+                             <tr t-foreach='docs.diet_fields' t-as='lines'>
+                             <td style="border: 1px solid black;">
+                                <span t-field="lines.review_rec"/>
+                            </td>
                            <td style="border: 1px solid black;">
-                                <span t-field="line.wakeup1"/>
+                           <span t-field="line.wakeup1"/>
                            </td>
                            <td style="border: 1px solid black;">
                            <span t-field="line.food"/>
@@ -271,8 +198,10 @@
                                 <span t-field="line.note"/>
                             </td>
                             </tr>
+                            </tr>
                         </tbody>
                         </table>
+                        </div>
                         </t>
                         <table class="table table-bordered" style="border: 1px solid black;">
                             <thead>
@@ -283,8 +212,8 @@
                                 </td>
                             </tr>
                         </table>
-                    </div>
-                <t t-if="docs.image_work">
+                    
+                    <t t-if="docs.image_work">
                     <div style="page-break-before:always">
                         <div class="header_tag">
                         <h4 class="text-center heading_text_cor">Exercise</h4>
@@ -301,12 +230,37 @@
                         </br>
                         </tr>
                         </div>
-                    </t>
+                        </t>
+                    <!-- </div> -->
                         <div class="footer">
                         <div class="float-right">
                             <p><b>Doctor's Signature </b></p>
                         </div>
                         </div>
+                        <div style='page-break-before: always;'> 
+                    <br></br> <br></br><br></br> 
+                    <div class='row'>
+                    <div class='col-5'>
+                <h5 style='text-align:center'><strong>Terms and Conditions</strong></h5>
+                    <h6>* Medicines once given will not be taken back or exchanged.</h6>
+                    <h6>* For Emergency Purpose please go to any nearby Hospital without any Delay</h6>
+                    <h6>* Calls are answered only between 11AM - 5PM.The call's will be recorded for our hospital purposes..</h6>
+                    <h6>* If you are receiving the medicines by courier, an opening video should be sent to the hospital's number to confirm the damage and return policy</h6>
+                    <h6>* Medicines, Diet and Lifestyle Changes should not be shared on any social media platform as it is personalized only for the patient.</h6>
+                    <h6>* The Patient must follow the Diet Chart, Exercise, Lifestyle Changes and Medicines as prescribed by the Doctor for good results.</h6>
+                    </div>
+                
+                   <div class='col-5'>
+                        <h6>* ஒருமுறை கொடுத்த மருந்துகள் திரும்பப் பெறப்படாது அல்லது மாற்றப்படாது.</h6>
+                        <h6>* அவசரத் தேவைகளுக்கு, தாமதமின்றி அருகில் உள்ள மருத்துவமனைக்குச் செல்லவும். காலை 11 மணி முதல் மாலை 5 மணி வரை மட்டுமே அழைப்புகளுக்கு பதிலளிக்கப்படும். எங்கள் மருத்துவமனை நோக்கங்களுக்காக அழைப்புகள் பதிவு செய்யப்படும்.</h6>
+                        <h6>* நீங்கள் கூரியர் மூலம் மருந்துகளைப் பெறுகிறீர்கள் என்றால், சேதம் மற்றும் ரிட்டர்ன் பாலிசியை உறுதிப்படுத்த மருத்துவமனை எண்ணுக்கு ஒரு தொடக்க வீடியோ அனுப்பப்பட வேண்டும்.</h6>
+                        <h6>* மருந்துகள், உணவுமுறை மற்றும் வாழ்க்கை முறை மாற்றங்கள் நோயாளிக்கு மட்டும் தனிப்பயனாக்கப்படுவதால் எந்த சமூக ஊடக தளத்திலும் பகிரப்படக்கூடாது.</h6>
+                        <h6>* மருத்துவர் பரிந்துரைக்கும் உணவு முறை, உடற்பயிற்சி, வாழ்க்கை முறை மாற்றங்கள் மற்றும் மருந்துகளை நோயாளி கண்டிப்பாக பின்பற்ற வேண்டும்.</h6>
+                    </div>
+                </div>
+                <br></br><br></br>
+                <h5 style='text-align:center'><strong>* For Contact +91-9962655588 *</strong></h5>
+            </div>
                     </t>
             </t>
         </t>

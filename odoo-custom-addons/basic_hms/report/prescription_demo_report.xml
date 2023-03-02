@@ -12,29 +12,22 @@
 							<strong>PRESCRIPTION REPORT</strong>
 						</h3>
 					<br/>
-					
-                            <td style="border: 1px solid black;" class="text-left"><strong>Name :</strong>
-                                <span style="border: 0px ;" t-field="doc.patient_id"/>
+						<t t-set="name_age_sex" t-value="doc.name_age_sex.upper()" />
+        				<t t-set="doctor_id" t-value="doc.doctor_id.name.upper()" />
+                             <td style="border: 1px solid black;" class="text-left"><strong>Name :</strong>
+                                <span style="border: 0px ;" t-esc="name_age_sex"/>
 							</td> 
-						
-							<td style="border: 1px solid black;" class="text-left"><strong>Age </strong>
-                                <span style="border: 0px ;" t-field="doc.age"/>
-                            </td>
 							<td style="border: 1px solid black;" class="text-left"><strong>Weight </strong>
                                 <span style="border: 0px ;" t-field="doc.weight"/>
                             </td>
                             <td style="border: 1px solid black;" class="text-left"><strong>Patient Code </strong>
                                 <span style="border: 0px ;" t-field="doc.name"/>
                             </td>
-							<td style="border: 1px solid black;" class="text-left"><strong> sex </strong>
-                                <span style="border: 0px ;" t-field="doc.sex"/>
+							<td style="border: 1px solid black;" class="text-left"><strong> Doctor </strong>
+                                <span style="border: 0px ;" t-esc="doctor_id"/>
                             </td>
-
-                            <!-- <td style="border: 1px solid black;" class="text-left"><strong> BP </strong>
-                                <span style="border: 0px ;" t-field="doc.bp"/>
-                            </td> -->
 							<td style="border: 1px solid black;" class="text-left"><strong>Prescription Date : </strong>
-                                <span style="border: 0px ;" t-field="doc.prescription_date"/>
+                                <span style="border: 0px ;" t-field="doc.write_date"/>
                             </td>
                         </tr> 
                         </table>
@@ -110,6 +103,8 @@
 				<div class="text-center mb32">
 					<strong>Medicines once purchased cannot be Taken back or Refunded</strong>
 				</div>
+	  <p>For any Doubts, Enquiries Contact, CHENNAI : 9566990022, Erode : 9176114400, Thirunelveli : 9176990088</p>
+
 
 			</t>
         </template>

@@ -1,0 +1,17 @@
+Possible combinations returned by the plugin:
+
+Compression | Color | Depth (bpp) | Colorspace | Stretched
+------------+-------+-------------+------------+-----------
+Deflate     | False | 16          | int16_t    | Never
+JPEG        | False | 8           | uint8_t    | Possible
+Deflate     | True  | 8           | RGB24      | Never
+JPEG        | True  | 8           | RGB24      | Never
+
+
+In the viewer, grayscale images are always converted to int16_t.
+
+
+
+Note for Cornerstone < 0.7.1: 1 must be added to "maxPixelValue", as
+the range [minPixelValue, maxPixelValue[ is taken into consideration
+by Cornerstone (i.e. "maxPixelValue" is not inclusive).

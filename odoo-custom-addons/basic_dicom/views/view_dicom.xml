@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dicom_form_view" model="ir.ui.view">
+        <field name="name">medical.dicom.form.view</field>
+        <field name="model">dicom.view</field>
+        <field name="arch" type="xml">
+            <form string="Dicom">
+                <sheet> 
+                    <field name="report_name" placeholder="Enter Report Name" style='width:30%;'/>
+                    <div class='row'>
+                    <div class='col-6'>
+                        <field name="upload_dcm" placeholder="Upload Report" widget='many2many_binary' /></div>
+                    <div class='col-6'>
+                        <button name="open_dicom_viewer" type="object" string="View in Dicom" class="oe_highlight" /></div>
+                    </div>
+                    <iframe name="iframe" src="http://localhost:3000/" width="100%" height="900"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_dicom_report" model="ir.actions.act_window">
+        <field name="name">Dicom Viewer</field>
+            <field name="res_model">dicom.view</field>
+                <field name="binding_view_types">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menus_medical_dicom"  name ="Hospital" sequence="1" />
+
+    <menuitem id="menus_medical_dicom_viewer"  name ="Viewer" action="action_dicom_report"
+                            parent="menus_medical_dicom" sequence="2" />
+
+    <record id="action_open_dicom_viewer" model="ir.actions.act_window">
+        <field name="name">Dicom Viewer</field>
+            <field name="res_model">dicom.viewer.wizard</field>
+                <field name="view_mode">form</field>
+                    <field name="target">new</field>
+                <field name="context">{'default_dicom_viewer_id':active_id}</field>
+        <field name="type">ir.actions.act_window</field>
+    </record>
+</odoo>

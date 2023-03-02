@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+         
+                <record id="view_qualification_tree" model="ir.ui.view">
+                    <field name="name">consultation</field>
+                    <field name="model">consultation.hour</field>
+                    <field name="priority" eval="8" />
+                    <field name="arch" type="xml">
+                        <tree string="speacialization" >
+
+                            <field name="consultation_hour" />
+
+
+
+                        </tree>
+                    </field>
+                </record>
+                <record id="view_qualification_form" model="ir.ui.view">
+                    <field name="name">consultation</field>
+                    <field name="model">consultation.hour</field>
+                    <field name="priority" eval="8" />
+                    <field name="arch" type="xml">
+                        <form string="department">
+                            <sheet>
+                                <group>
+
+                                    <field name="consultation_hour"  />
+
+
+
+
+                                </group>
+                              
+                            </sheet>
+                        </form>
+                    </field>
+                </record>
+            
+
+        <record model="ir.actions.act_window" id="action_view_consultation">
+            <field name="name">Consultation Hour</field>
+                <field name="res_model">consultation.hour</field>
+                <!-- <field name="view_type">form</field>             -->
+                <field name="view_mode">tree,form</field>
+                <field name="domain">[]</field>
+                <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">Create Consultation details
+                    </p>
+                </field>
+            </record>
+
+                    <menuitem id = 'menu_consultation' name = 'Consultation Hour'  parent= "appointment_time_slots" action="action_view_consultation" />
+
+                        </data>
+                    </odoo>

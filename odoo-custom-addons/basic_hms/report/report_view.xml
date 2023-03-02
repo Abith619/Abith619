@@ -3,13 +3,61 @@
         <!-- QWeb Reports -->
 
         <report
+            id="report_print_organic_prescription"
+            model="account.move"
+            report_type="qweb-pdf"
+            string="Prescription"
+            name="basic_hms.organic_prescription_bils_report"
+            file="basic_hms.account_invoice"
+            paperformat = 'basic_hms.paperformat_prescription'
+            print_report_name = "('Organic Bill - %s' % (object.name))"
+        />
+
+
+        <report
             id="report_print_EBook_tamil_diet"
             model="medical.doctor"
             report_type="qweb-pdf"
             string="Tamil Diet"
             name="basic_hms.tamil_diet_report"
             file="basic_hms.tamil_diet"
+            print_report_name = "('Tamil Diet - %s' % (object.serial_number))"
         />
+
+
+        <report
+            id="report_print_diet_bill"
+            model="patient.bills"
+            report_type="qweb-pdf"
+            string="Diet"
+            name="basic_hms.diet_bils_report"
+            file="basic_hms.diet_bill"
+            paperformat = "basic_hms.paperformat_reigstration"
+            print_report_name = "('Diet Bill - %s' % (object.ebook_id))"
+        />
+
+        <report
+            id="report_print_prescription_tamil_diet"
+            model="medical.prescription.order"
+            report_type="qweb-pdf"
+            string="Tamil Diet"
+            name="basic_hms.tamil_diet_report_phar"
+            file="basic_hms.phar_tamil_diet"
+            print_report_name = "('Tamil Diet - %s' % (object.name))"
+        /> 
+
+
+        <report
+            id="report_print_prescriptions"
+            model="medical.prescription.order"
+            report_type="qweb-pdf"
+            string="Prescription"
+            name="basic_hms.prescription_demo_report"
+            file="basic_hms.prescription_demo_report"
+            print_report_name = "('Prescription - %s' % (object.name))"
+            
+            />
+
         <report
             id="report_print_prescriptions_ebook"
             model="medical.prescription.order"
@@ -17,22 +65,8 @@
             string="Ebook"
             name="basic_hms.ebook_doctor_report_med"
             file="basic_hms.med_ebook"
-            />
-        <report
-            id="report_print_EBook_file"
-            model="res.partner"
-            report_type="qweb-pdf"
-            string="EBook"
-            name="basic_hms.ebook_file_report"
-            file="basic_hms.file_room"
-        />
-        <report
-            id="report_print_prescriptions"
-            model="medical.prescription.order"
-            report_type="qweb-pdf"
-            string="Prescription"
-            name="basic_hms.prescription_demo_report_template"
-            file="basic_hms.prescription_demo_report"
+            print_report_name = "('Prescription - %s' % (object.name))"
+            paperformat="basic_hms.paperformat_bill_reports"
             />
 
         <report
@@ -42,6 +76,18 @@
             string="QR Code"
             name="basic_hms.appointment_patient_qrcode"
             file="basic_hms.appointment_qrcode"
+            print_report_name = "('QR Code')"
+        />
+
+
+        <report
+            id="in_discharge_registration"
+            model="discharge.summary"
+            report_type="qweb-pdf"
+            string="Discharge Details"
+            name="basic_hms.discharge_report"
+            file="basic_hms.discharge"
+            print_report_name = "('Discharge - %s' % (object.name))"
         />
 
         <report
@@ -50,35 +96,9 @@
             report_type="qweb-pdf"
             string="Registration"
             name="basic_hms.registration_bils_report"
-            file="basic_hms.prescription_demo_report" 
+            file="basic_hms.prescription_demo_report"
             paperformat = "basic_hms.paperformat_reigstration"
-            
-            />
-            
-        
-        <report
-            id="in_patient_registration"
-            model="in.patient"
-            report_type="qweb-pdf"
-            string="In Patient Registration"
-            name="basic_hms.in_patient_report"
-            file="basic_hms.in_patient"
-        />
-        <report
-            id="in_patient_registration_bills"
-            model="patient.bills"
-            report_type="qweb-pdf"
-            string="In Patient Registration"
-            name="basic_hms.in_patient_bills"
-            file="basic_hms.in_patient_bill"
-        />
-        <report
-            id="in_discharge_registration"
-            model="discharge.summary"
-            report_type="qweb-pdf"
-            string="Discharge Details"
-            name="basic_hms.discharge_report"
-            file="basic_hms.discharge"
+            print_report_name = "('Registration Bill - %s' % (object.ebook_id))"
         />
 
         <report
@@ -89,6 +109,7 @@
             name="basic_hms.lab_bils_report"
             file="basic_hms.prescription_demo_report"
             paperformat = "basic_hms.paperformat_lab"
+            print_report_name = "('LAB Bill - %s' % (object.ebook_id))"
         />
 
         <report
@@ -99,6 +120,7 @@
             name="basic_hms.scan_bils_report"
             file="basic_hms.prescription_demo_report"
             paperformat = "basic_hms.paperformat_scan"
+            print_report_name = "('SCAN Bill - %s' % (object.ebook_id))"
         />
 
         <report
@@ -108,11 +130,9 @@
             string="Prescription"
             name="basic_hms.prescription_bils_report"
             file="basic_hms.prescription_demo_report"
-            paperformat = "basic_hms.paperformat_prescription"
-            
-            />
-            <!-- print_report_name = "(Daisy Report +'.pdf')" -->
-        
+            paperformat = 'basic_hms.paperformat_prescription'
+            print_report_name = "('Prescription Bill - %s' % (object.ebook_id))"
+        />
 
         <report
             id="report_diet_print_diet"
@@ -121,10 +141,11 @@
             string="Diet"
             name="basic_hms.diet_doctor_report"
             file="basic_hms.diet_doctor_report"
-        />
+            print_report_name = "('Diet - %s' % (object.name))"
+            paperformat = "basic_hms.paperformat_bill_reports"
+            />
 
-        
-        
+            
         <report
             id="report_print_EBook"
             model="medical.doctor"
@@ -132,15 +153,40 @@
             string="EBook"
             name="basic_hms.ebook_doctor_report"
             file="basic_hms.doctor_ebook"
-        />
+            print_report_name = "('EBook - %s' % (object.serial_number))"
+            paperformat = "basic_hms.paperformat_ebook_Paper"
+            />
 
         <report
+            id="report_print_patient"
+            model="medical.patient"
+            report_type="qweb-pdf"
+            string="Patient Registration"
+            name="basic_hms.registration_patient_report"
+            file="basic_hms.patient_registration"
+            print_report_name = "('Registration - %s' % (object.name))"
+            paperformat = "basic_hms.paperformat_reigstration"
+            />
+
+            <report
+            id="report_print_patient_code"
+            model="medical.patient"
+            report_type="qweb-pdf"
+            string="Barcode"
+            name="basic_hms.registration_patient_barcode"
+            file="basic_hms.patient_registration_code"
+            print_report_name = "('Barcode')"
+            />
+
+      <report
             id="report_print_EBook_lab"
             model="medical.doctor"
             report_type="qweb-pdf"
             string="Lab"
             name="basic_hms.ebook_doctor_report_lab"
             file="basic_hms.doctor_ebook_lab"
+            print_report_name = "('Lab - %s' % (object.serial_number))"
+            paperformat = "basic_hms.paperformat_reigstration"
         />
         
         <report
@@ -150,6 +196,8 @@
             string="Scan"
             name="basic_hms.ebook_doctor_report_scan"
             file="basic_hms.doctor_ebook_scan"
+            print_report_name = "('Scan - %s' % (object.serial_number))"
+            paperformat = "basic_hms.paperformat_reigstration"
         />
 
         <report
@@ -159,43 +207,37 @@
             string="Exercise"
             name="basic_hms.ebook_doctor_report_exercise"
             file="basic_hms.doctor_ebook_exercise"
+            print_report_name = "('Exercise - %s' % (object.serial_number))"
+            paperformat = "basic_hms.paperformat_ebook_Paper"
         />
 
         <report
-            id="report_print_EBook_diet"
-            model="medical.doctor"
+            id="report_print_EBook_file"
+            model="res.partner"
             report_type="qweb-pdf"
-            string="Diet"
-            name="basic_hms.ebook_doctor_report_diet"
-            file="basic_hms.doctor_ebook_diet"
+            string="EBook"
+            name="basic_hms.ebook_file_report"
+            file="basic_hms.file_room"
+            print_report_name = "('EBook - %s' % (object.ebook_print.serial_number))"
+            
+        />
+        <report
+            id="in_patient_registration"
+            model="in.patient"
+            report_type="qweb-pdf"
+            string="In Patient Registration"
+            name="basic_hms.in_patient_report"
+            file="basic_hms.in_patient"
         />
 
         <report
-            id="report_print_EBook_pres"
-            model="medical.doctor"
+            id="in_patient_registration_bills"
+            model="patient.bills"
             report_type="qweb-pdf"
-            string="Prescription"
-            name="basic_hms.ebook_doctor_report_pres"
-            file="basic_hms.doctor_ebook_pres"
-        />
-
-        <report
-            id="report_print_patient"
-            model="medical.patient"
-            report_type="qweb-pdf"
-            string="Patient Registration"
-            name="basic_hms.registration_patient_report"
-            file="basic_hms.patient_registration"
-            paperformat="basic_hms.paper_custom_format"
-        />
-
-        <report
-            id="report_print_patient_code"
-            model="medical.patient"
-            report_type="qweb-pdf"
-            string="Barcode"
-            name="basic_hms.registration_patient_barcode"
-            file="basic_hms.patient_registration_code"
+            string="In Patient Registration"
+            name="basic_hms.in_patient_bills"
+            file="basic_hms.in_patient_bill"
+            print_report_name = "('In Patient Bill - %s' % (object.ebook_id))"
         />
 
         <report
@@ -205,6 +247,30 @@
             string="Barcode"
             name="basic_hms.file_patient_barcode"
             file="basic_hms.patient_file_code"
+            print_report_name = "('Barcode')"
+        />
+
+
+        <report
+            id="report_print_EBook_diet"
+            model="medical.doctor"
+            report_type="qweb-pdf"
+            string="Diet"
+            name="basic_hms.ebook_doctor_report_diet"
+            file="basic_hms.doctor_ebook_diet"
+            print_report_name = "('Diet - %s' % (object.serial_number))"
+            paperformat = "basic_hms.paperformat_ebook_Paper"
+        />
+
+        <report
+            id="report_print_EBook_pres"
+            model="medical.doctor"
+            report_type="qweb-pdf"
+            string="Prescription"
+            name="basic_hms.ebook_doctor_report_pres"
+            file="basic_hms.doctor_ebook_pres"
+            print_report_name = "('Prescription - %s' % (object.serial_number))"
+             paperformat="basic_hms.paperformat_reigstration"
         />
 
         <!-- <report
@@ -260,7 +326,10 @@
             string="Bill"
             name="basic_hms.subcontract_warehouseout"
             file="basic_hms.doctor_bill"
+            print_report_name = "('Bill - %s' % (object.ebook_id))"
+            paperformat="basic_hms.paperformat_ebook_Paper"
         />
+        
         <report
             id="report_print_diet"
             model="set.diets"

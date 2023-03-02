@@ -1,0 +1,90 @@
+        SUMMARY OF THE HDF5 CONFIGURATION
+        =================================
+
+General Information:
+-------------------
+                   HDF5 Version: 1.12.1
+                  Configured on: 2022-11-24
+                  Configured by: Ninja
+                    Host system: Linux-3.10.0-514.6.1.el7.x86_64
+              Uname information: Linux
+                       Byte sex: little-endian
+             Installation point: /usr/local
+
+Compiling Options:
+------------------
+                     Build Mode: Release
+              Debugging Symbols: OFF
+                        Asserts: OFF
+                      Profiling: OFF
+             Optimization Level: OFF
+
+Linking Options:
+----------------
+                      Libraries: 
+  Statically Linked Executables: OFF
+                        LDFLAGS:  
+                     H5_LDFLAGS: 
+                     AM_LDFLAGS: 
+                Extra libraries: m;dl
+                       Archiver: /opt/rh/devtoolset-7/root/usr/bin/ar
+                         Ranlib: /opt/rh/devtoolset-7/root/usr/bin/ranlib
+
+Languages:
+----------
+                              C: YES
+                     C Compiler: /opt/rh/devtoolset-7/root/usr/bin/gcc 7.3.1
+                       CPPFLAGS: 
+                    H5_CPPFLAGS: 
+                    AM_CPPFLAGS: 
+                         CFLAGS:   -std=c99  -Wno-uninitialized -Wno-unused-parameter -Wall -Wcast-align -Wdisabled-optimization -Wextra -Wformat=2 -Winvalid-pch -Wno-format-nonliteral -Wpointer-arith -Wshadow -Wunused -Wwrite-strings -funit-at-a-time -Wno-strict-overflow  -w -fstdarg-opt -fmessage-length=0
+                      H5_CFLAGS: -Wall;-Wcast-qual;-Wconversion;-Wextra;-Wfloat-equal;-Wformat=2;-Winit-self;-Winvalid-pch;-Wmissing-include-dirs;-Wno-c++-compat;-Wno-format-nonliteral;-Wshadow;-Wundef;-Wwrite-strings;-pedantic
+                      AM_CFLAGS: 
+               Shared C Library: YES
+               Static C Library: NO
+
+                        Fortran: 
+               Fortran Compiler:  
+                  Fortran Flags: 
+               H5 Fortran Flags: 
+               AM Fortran Flags: 
+         Shared Fortran Library: YES
+         Static Fortran Library: NO
+
+                            C++: ON
+                   C++ Compiler: /opt/rh/devtoolset-7/root/usr/bin/g++ 7.3.1
+                      C++ Flags:     -Wall -Wcast-align -Wdisabled-optimization -Wextra -Wformat=2 -Winvalid-pch -Wno-format-nonliteral -Wpointer-arith -Wshadow -Wunused -Wwrite-strings -funit-at-a-time -Wno-strict-overflow -Wno-deprecated -Wno-invalid-offsetof -Woverloaded-virtual -Wstrict-null-sentinel  -w -fstdarg-opt -fmessage-length=0
+                   H5 C++ Flags: -Wall;-Wcast-qual;-Wconversion;-Wctor-dtor-privacy;-Weffc++;-Wextra;-Wfloat-equal;-Wformat=2;-Winit-self;-Winvalid-pch;-Wmissing-include-dirs;-Wno-format-nonliteral;-Wnon-virtual-dtor;-Wold-style-cast;-Woverloaded-virtual;-Wreorder;-Wshadow;-Wsign-promo;-Wundef;-Wwrite-strings;-pedantic
+                   AM C++ Flags: 
+             Shared C++ Library: YES
+             Static C++ Library: NO
+
+                            JAVA: 
+                 JAVA Compiler:  
+
+Features:
+---------
+                   Parallel HDF5: OFF
+Parallel Filtered Dataset Writes: 
+              Large Parallel I/O: 
+              High-level library: ON
+                Build HDF5 Tests: OFF
+                Build HDF5 Tools: 
+                    Threadsafety: OFF (recursive RW locks: OFF) 
+             Default API mapping: v112
+  With deprecated public symbols: OFF
+          I/O filters (external):  DEFLATE
+                             MPE: 
+                      Direct VFD: 
+                      Mirror VFD: 
+              (Read-Only) S3 VFD: 
+            (Read-Only) HDFS VFD: 
+                         dmalloc: 
+  Packages w/ extra debug output: 
+                     API Tracing: OFF
+            Using memory checker: OFF
+ Memory allocation sanity checks: OFF
+          Function Stack Tracing: OFF
+                Use file locking: best-effort
+       Strict File Format Checks: OFF
+    Optimization Instrumentation: OFF

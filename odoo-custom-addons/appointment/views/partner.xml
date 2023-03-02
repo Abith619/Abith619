@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="res_partner_inherit_form_health_center_views" model="ir.ui.view">
+        <field name="name">res.partner.inherit.form.health.center.view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+                <xpath expr="//page[@name='internal_notes']" position="after">
+                    <page string='Appointment'>
+                        <field name="mainvalue_ids">
+                            <tree editable="bottom">
+                                <field name="doctor_id" invisible="1"/>
+                                <field name="doctor_detail" invisible="1" />
+                                <field name="ava_timing" />
+                                <field name="shifts"/>
+                                <field name="consultation_differ"/>
+                                <field name="start_time"/>
+                                <field name="end_time"/>
+                                <field name="appointment_time" widget="many2many_tags"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//page[@name='internal_notes']" position="after">
+                    <page  string="Monthly Appointment">
+                        <field name="monthly_appointment">
+                            <tree editable="bottom">
+                                <field name="date_time"/>
+                                <field name="seven_days" />
+                                <field name="work_shift"/>
+                                <field name="consultation_time"/>
+                                <field name="appointment_time_detail"/>
+                                <field name="time_available" />
+                                <field name="status" />
+                                <field name="time_stamp" />
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+        </field>
+    </record>
+</odoo>

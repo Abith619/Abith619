@@ -12,6 +12,7 @@
                     <field name="patient_ids" invisible='1'/>
                     <field name="patient_id" invisible='1'/>
                     <field name="serial_number" invisible='0'/>
+                    <field name="diet_seq" invisible='1'/>
                     <field name="num_days" invisible='1'/>
                     <notebook>
                         <page string="Diet List">

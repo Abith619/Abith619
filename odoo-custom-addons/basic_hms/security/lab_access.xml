@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<record model="ir.module.category" id="module_category_user_doctor_lab">
+    <field name="name">Doctor lab Access</field>
+    <field name="description">See Only his Records</field>
+    </record>
+
+    <record id="group_lab_pat" model="res.groups">
+        <field name="name">ONE Doctor</field>
+        <field name="category_id" ref="basic_hms.module_category_user_doctor_lab"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record  model="ir.rule" id="prescriptiondoc_record_rules">
+        <field name="name">Prescription User company</field>
+        <field name="model_id" ref="model_medical_prescription_order"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record  model="ir.rule" id="scandoc_record_rule">
+        <field name="name">Scan User company</field>
+        <field name="model_id" ref="model_scan_test"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record  model="ir.rule" id="billing_record_rule">
+        <field name="name">Billing User company</field>
+        <field name="model_id" ref="model_patient_bills"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record  model="ir.rule" id="in_patient_record_rule">
+        <field name="name">In-Patient User company</field>
+        <field name="model_id" ref="model_in_patient"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record  model="ir.rule" id="discharge_record_rule">
+        <field name="name">Discharge User company</field>
+        <field name="model_id" ref="model_discharge_summary"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record  model="ir.rule" id="receptiondoc_record_rule">
+        <field name="name">Reception User company</field>
+        <field name="model_id" ref="model_medical_patient"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>

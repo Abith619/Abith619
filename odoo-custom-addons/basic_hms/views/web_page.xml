@@ -1,31 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <odoo>
    <data>
     <template id="appointment_page" name="Create Appointment"> 
     <t t-call="website.layout">
         <style>
-            datalist {
-                display: none;
-              }
             </style>
-            <script>
-                $(document).ready(function () {
-                    $('select').selectize({
-                        sortField: 'text'
-                    });
-                });
-            </script>
         <div id="wrap">
             <div class="oe_structure">
                 <div class="container"> 
-        <h1 style="text-align:center;"><strong>Appointment Form</strong></h1>                  
+        <h1 style="text-align:center;"><strong>Appointment Form</strong></h1>
             <form role="form" action="/website/page1" method="POST"  class="s_website_form" 
                     enctype="multipart/form-data">
                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
-                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous"/>
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
                         <input type="radio" id="qr_type" name="qr_type" value="qr" hidden='hidden'/>
                         
@@ -51,25 +40,25 @@
                         </div>
                         <div class="form-group">
                             <label for="patient_id" class="control-label"><strong>Patient Name</strong></label>
-                            <input type="text" id="patient_id" name="patient_id" class="form-control" required='1'/> 
+                            <input type="text" id="patient_id" name="patient_id" class="form-control" /> 
                         </div>
                         <div class="row" >
                             <div class="col-6">
                                 <label for="age" class="control-label"><strong>Age :</strong></label>
-                                    <input type="text" id="age" name="age" class="form-control" minlength='1' maxlength='3'/>  
+                                    <input type="text" id="age" name="age" class="form-control" minlength='2' maxlength='3'/>
                             </div>
                             <div class="col-6">
                                 <label for="sex" class="control-label"><strong>Sex</strong></label>
                                 <select  class="form-control" name="sex">
                                     <option value="m">Male</option>
                                     <option value="f">Female</option>
-                                </select>   
+                                </select>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
                                     <label for="height" class="control-label"><strong>Height in Cms</strong></label>
-                                    <input type="text" name="height" id="height" class="form-control" minlength='2' maxlength='3'
+                                    <input type="text" name="height" id="height" class="form-control" minlength='3' maxlength='3'
                                 t-att-value="height" />
                             </div>
                             <div class="col-6">
@@ -91,31 +80,28 @@
                             </div>
                             <div class="col-6">
                                 <label for="date_of_birth" class="control-label"><strong>DOB :</strong></label>
-                                    <input type="date" id="date_of_birth" name="date_of_birth" class="form-control" required='1'/>  
+                                    <input type="date" id="date_of_birth" name="date_of_birth" class="form-control" required=''/>
                             </div >
+                            
                         </div>
                         <div class="row"> 
                         <div class="col-6">
                             <label for="dates" class="control-label"><strong>Appointment Date:</strong></label>
-                                <input type="date" class="form-control" id="dates" name="dates" t-att-value='datetime.date.today()' required='1'/>
-                            </div>
+                                <input type="date" class="form-control" id="dates" name="dates" t-att-value='datetime.date.today()'/>
+                        </div>
                         <div class="col-6">
                             <label for="treatment_for" class="control-label"><strong>Treatment For</strong></label>
-                                <!-- <input name="treatment_for" type='search' list="treatment" class="form-control link-style" >
-                                    <datalist id="treatment"> -->
-                                        <select type='search' name="treatment_for" class="form-control link-style">
+                                <select name="treatment_for" class="form-control link-style">
                                     <t t-foreach="many_treat" t-as="connect_treat">
                                         <option t-esc="connect_treat.name" t-att-value="connect_treat.id"/>
                                     </t>
                                 </select>
-                                <!-- </datalist>
-                                </input> -->
                         </div></div>
                         <div class="row">
                             <div class="col-6">
                                     <label for="contact_no" class="control-label"><strong>Contact Number</strong></label>
                                     <input type="text" name="contact_no" id="contact_no" class="form-control" pattern="[1-9]{1}[0-9]{9}"
-                                    required='1'    t-att-value="contact_no" />
+                                t-att-value="contact_no" />
                             </div>
                             <div class="col-6">
                                 <label for="contact_number" class="control-label"><strong>Whatsapp Number</strong></label>
@@ -125,66 +111,56 @@
                         </div>
                         <div class="form-group">
                             <label for="address" class="control-label"><strong>Address</strong></label>
-                            <input type="textarea" id="address" name="address" class="form-control" required='1'/> 
-                        </div>
+                                <input type="textarea" id="address" name="address" class="form-control" /> 
+                            </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="country" class="control-label"><strong>Country</strong></label>
+                                    <select name="country" class="form-control link-style" placeholder="Country">
+                                        <t t-foreach="many2one_country" t-as="connect_country">
+                                            <option t-esc="connect_country.name" t-att-value="connect_country.id" 
+                                            t-if="connect_country.id == 104" t-att-selected="selected"/>
+                                        </t>
+                                    </select>
+                                </div>
+                            <div class="col-6">
+                                <label for="state" class="control-label"><strong>State</strong></label>
+                                    <select name="state" class="form-control link-style">
+                                        <t t-foreach="many2one_state" t-as="connect_state">
+                                            <option t-esc="connect_state.name" t-att-value="connect_state.id" />
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
                         <div class="row">
                             <div class="col-6">
                                 <label for="city" class="control-label"><strong>City</strong></label>
-                                <input type='search' name="city" list="city_list" class="form-control link-style" >
-                                    <datalist id="city_list">
                                     <select name="city" class="form-control link-style">
                                         <t t-foreach="many2one_area" t-as="connect_area">
-                                            <option t-esc="connect_area.name" t-att-value="connect_area.name"/>
+                                            <option t-esc="connect_area.name" t-att-value="connect_area.id"/>
                                         </t>
                                     </select>
-                                </datalist>
-                            </input>
-                            </div>
+                                </div>
                             <div class="col-6">
                                 <label for="pin_code" class="control-label"><strong>Pincode</strong></label>
-                                <input type="textarea" id="pin_code" name="pin_code" class="form-control" /> 
+                                    <input type="textarea" id="pin_code" name="pin_code" class="form-control" /> 
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <label for="state" class="control-label"><strong>State</strong></label>
-                                <input name="state" list="state_list" class="form-control link-style" >
-                                    <datalist id="state_list">
-                                    <select name="state" class="form-control link-style">
-                                        <t t-foreach="many2one_state" t-as="connect_state">
-                                            <option t-esc="connect_state.name" t-att-value="connect_state.name"/>
-                                        </t>
-                                    </select>
-                                </datalist>
-                                </input>
-                            </div>
-                            <div class="col-6">
-                                <label for="country" class="control-label"><strong>Country</strong></label>
-                                <input name="country" list="country_list" class="form-control link-style" >
-                                    <datalist id="country_list">
-                                    <select name="country" class="form-control link-style" placeholder="Country">
-                                        <t t-foreach="many2one_country" t-as="connect_country">
-                                            <option t-esc="connect_country.name" t-att-value="connect_country.name"/>
-                                        </t>
-                                    </select>
-                                    </datalist>
-                                </input>
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <label for="data_value" class="control-label"><strong>How Do You Know US</strong></label>
-                                <select name="data_value" class="form-control link-style" placeholder="Feedback" >
+                                <select name="data_value" class="form-control link-style" placeholder="Feedback">
                                     <t t-foreach="many2many_feedback" t-as="connect_feedback">
                                         <option t-esc="connect_feedback.name" t-att-value="connect_feedback.id"/>
                                     </t>
                                 </select>
                             </div>
-                        <div class="clearfix oe_login_buttons">  
-                            <button type="submit" style='text-align:center;' class="btn btn-primary pull-center">Submit</button>
+                        
+                        <div class="clearfix oe_login_buttons">
+                            <button type="submit" class="btn btn-primary pull-center">Submit</button>
                         </div>
-                            </form>   
+                            </form>
                     </div>
-                </div>       
+                </div>
             </div>
         </t>
     </template>
@@ -200,19 +176,21 @@
                 <t t-call="website.layout">
                     <div id="wrap">
                         <div class="container">
-                            <h1>Thank You :)</h1>
+                            <h1>Thank You !</h1>
                                 <div class="row">
                                     <div class="col-lg-8">
                                         <div class="alert alert-success" role="status"> 
                                             <p>
-                                                Your Appointment has been successfully registered,we will get back to you soon,,,<br></br></p>
-                                            <p>
+                                                Your Appointment has been successfully registered,we will get back to you soon,,,
+                                            </p>
+                                             <p>
                             Please Note your Token No:<input type="text" for='token' id="token" name="token" class="form-control" t-att-value='token' readonly='1'/>
                                     </p>
+
                                         </div>
                                     </div>
                                 </div> 
-                        </div>              
+                        </div>
                     </div>
                 </t>
             </t>

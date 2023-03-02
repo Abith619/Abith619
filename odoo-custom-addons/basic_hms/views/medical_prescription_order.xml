@@ -21,8 +21,9 @@
                     <field name="patient_id" />
                     <field name="write_date" />
                     <field name="doctor_id" />
-                    <field name="patient_activity" widget="badge" decoration-danger="patient_activity == 'discontinued'" decoration-warning="patient_activity in ('wait', 'bill')" decoration-success="patient_activity in ('completed', 'scans', 'labs', 'pres')"/>
-                </tree>
+                    <field name="patient_activity" readonly="1" widget="badge" decoration-danger="patient_activity in ('doctor','doc','lab','scan','pres', 'bill')" 
+                    decoration-warning="patient_activity in ('discontinued', 'wait')" decoration-success="patient_activity in ('completed', 'scans', 'labs')"/>
+                                       </tree>
             </field>
         </record>
 
@@ -35,10 +36,7 @@
                         <field name ='stages' widget="statusbar" style="display:none !important" />
                         <!-- <button name="prescription_report" type="object"
                             string="Print Prescription" class="oe_highlight" /> -->
-                        <!-- <button
-                            name="%(action_create_prescription_invoice1)d"
-                            type="action" string="Create Invoice" class="oe_highlight" /> -->
-
+                        <button name="med_cancell_fun" type="object" string="Done Purchase" class="oe_highlight"/>
                     </header>
                     <sheet>
                         <group string="Patient and Doctor Information" attrs="{'invisible': [('stages',  '=', 'draft')]}">
@@ -50,11 +48,12 @@
                                     <field name="height"/>
                                     <field name="weight"/>
                                     <field name="prescribed_by" invisible='1'/>
-                                    <field name ='ebook_print' invisible='1'/>            
+                                                        
                             </group>
                             <group>
                                 <field name="name" readonly="1" />
                                 <field name="user_id" />
+                                 <field name="name_age_sex" invisible='1'/>
                                 <field name="doctor_id" required="1" options="{'no_create_edit':True}"/>
                                 <field name="prescription_date"
                                 required="1" />
@@ -69,7 +68,7 @@
                         <group>
                         <group>
                         <field name ="treatments_for" widget="many2many_checkboxes" options="{'horizontal': true}"/>
-                        <field name="num_days" invisible='0'/>
+                        <field name="num_days" invisible='1'/>
                     </group>
                     <group>
                         <field name= "delivery_option" widget="radio" options="{'horizontal': true}"/>
@@ -78,15 +77,15 @@
                         </group>
 
                         <notebook>
-                            <page string="Prescription Details">
+                              <page string="Prescription Details">
                                 <field name = 'prescription_line_ids'>
                                     <tree string="Medical History" editable="bottom" >
                                         <field name ="sequence_ref"/>
-                                        <field name ="medicine_name" options="{'no_create_edit':True}"/>
+                                        <field name ="medicine_name" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
                                         <field name="all_day"/>
                                         <field name="prescribed_quantity" string='Quantity'/>
                                         <field name ="units" string='Units'/>
-                                        <field name="company_id" invisible='1'/>
+                                        <field name="company_id"/>
                                         <field name="bf_af" string='BF / AF'/>
                                         <field name ="anupana"/>
                                         <field name ="days1"/>
@@ -95,6 +94,7 @@
                                     </tree>
                                 </field>
                             </page>
+
                         </notebook>
                         <div class="row">
                             <div class ="col-md-10">      
@@ -106,11 +106,6 @@
                         </div>
 
                     </sheet>
-                    <div class="oe_chatter">
-                        <!-- <field name="message_follower_ids" widget="mail_followers" string="mail"/> -->
-                        <field name="message_ids" widget="mail_thread" string= "Mail"/>
-                        <field name="activity_ids" widget="mail_activity"/>
-                    </div>
                 </form>
 
             </field>
@@ -133,7 +128,7 @@
                 <!-- <filter string="Doctor" name="doctor" domain="[('doctor', '!=', '')]"/> -->
                     <filter string="Doctor" name="doctor_id" context="{'group_by': 'doctor_id'}"/>
                     <filter string="Branch" name="company_id" context="{'group_by': 'company_id'}"/>
-                    <filter string="Today" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
+            <filter string="Today" name="write_date_id" separator="1" domain="[('write_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
                     <filter string="Yesterday" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
                     <filter string="Tomorrow" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
                     
@@ -155,7 +150,7 @@
             <field name="view_mode">tree,form,pivot,graph</field>
             <field name="search_view_id" ref="medical_prescription_order_search_view" />
             <field name="domain">[]</field>
-            <field name="context">{}</field>
+            <field name="context">{'search_default_write_date_id': 1}</field>
         </record>
 
 

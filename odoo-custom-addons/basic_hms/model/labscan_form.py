@@ -13,6 +13,7 @@ class manylabs(models.Model):
     date= fields.Datetime(string="Date of Lab/Scan")
     range = fields.Char(string='Range')
 
+    
 class manylabs_data(models.Model):
     _name = 'lab.many.data'
 
@@ -254,6 +255,28 @@ class LabsScansd(models.Model):
     lab_hiv = fields.Many2many('lab.hospital.test.data',string='Hepatitis Panel')
     lab_hepatis = fields.Many2many('lab.hospital.test.form',string='X-Ray Digital')
     lab_immune_test = fields.Many2many('immunology.test',string='Immunology')
+
+    select_all = fields.Boolean(string='Hematology')
+    select_urine = fields.Boolean(string='Urine')
+    select_stool = fields.Boolean(string='Stool Analysys')
+    select_semen = fields.Boolean(string='Semen')
+    select_chemistry = fields.Boolean(string='Bio Chemistry')
+    select_liver = fields.Boolean(string='Liver')
+    select_enzymes = fields.Boolean(string='Enzymes')
+    select_lipid = fields.Boolean(string='Lipid')
+    select_lipoproteins = fields.Boolean(string='lipo proteins')
+    select_endocrynology = fields.Boolean(string='ENDOCRINOLOGY')
+    select_immunology = fields.Boolean(string='Immunology')
+    select_tumour = fields.Boolean(string='Tumour Makers')
+    select_drug = fields.Boolean(string='Drug Assays')
+    select_master = fields.Boolean(string='Master Health Check-up')
+    select_torch = fields.Boolean(string='Serology Torch')
+    select_lepto = fields.Boolean(string='Leptospirosis')
+    select_hiv = fields.Boolean(string='HIV TEST')
+    select_hepatis = fields.Boolean(string='Hepatitis Panel')
+    select_xray = fields.Boolean(string='X-Ray Digital')
+    select_serology = fields.Boolean(string='SEROLOGY')
+
     
     def send_msg(self):
         return {'type': 'ir.actions.act_window',
@@ -268,17 +291,26 @@ class LabsScansd(models.Model):
                 }}
         
     @api.constrains('patient_id')
+    # @api.onchange('patient_id')
     def write_lab(self):
         orm_e = self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
         orm_e.write({'patient_activity' : 'lab'})
         
-        lab_assign = self.env['patient.bills'].search([('patient_name','=',self.patient_id.id)])
-        lab_assign.write({'patient_activity' : 'lab'})
-        
-        
-        
+        orm_count = self.env['patient.bills'].search_count([('patient_name','=',self.patient_id.id)])
+        if orm_count > 1:
+            lab_assign = self.env['patient.bills'].search([('patient_name','=',self.patient_id.id)])[-1]
+            lab_assign.write({
+                'patient_activity' : 'lab',
+                'lab_date':datetime.now(),
+            })
+        else:
+            lab_assign = self.env['patient.bills'].search([('patient_name','=',self.patient_id.id)])
+            lab_assign.write({'patient_activity' : 'lab',
+            'lab_date':datetime.now(),
+            })
         orm = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id)])
-        orm.write({'patient_activity' : 'lab'})
+        orm.write({
+            'patient_activity' : 'lab'})
         
         orm = self.env['res.partner'].search([('name','=',self.patient_id.name)])
         orm.update({
@@ -288,15 +320,7 @@ class LabsScansd(models.Model):
         self.patient_activity = 'lab'
 
     def document_button(self):
-        # self.patient_activity = 'labs'
-        # orm = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id)])
-        # orm.write({'patient_activity':'labs'})
-        # orm1 = self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
-        # orm1.write({'patient_activity':'labs'})
-        
         lines=[]
-        # docs_line = self.env['document.type.line'].search([('name','=',self.patient_id.id)])
-        # for i in docs_line:
         valuee={
             'attach_types':'lab',
         }
@@ -311,7 +335,6 @@ class LabsScansd(models.Model):
             'context': {
             'default_name': self.patient_id.name,
             'default_attach_types':'lab',
-            
             },
             'target': 'new'
         }
@@ -338,3574 +361,9861 @@ class LabsScansd(models.Model):
     def create(self, vals):
         vals['request'] = self.env['ir.sequence'].next_by_code('lab.scan.form') or 'LAB'
         result = super(LabsScansd, self).create(vals)
+
+        hemo_coag12 = self.env['lab.many'].search([])
+        hemo_coag1 = self.env['lab.many.data'].search([])
+        hemo_coag2 = self.env['lab.many.form'].search([])
+        lab_test_hos = self.env['lab.test.form'].search([])
+        lab_test_hos_data = self.env['lab.test.data.form'].search([])
+        lab_test_hos_form = self.env['lab.test.data.form.many'].search([])
+        lab_liver = self.env['lab.test.data.form.many.data'].search([])
+        lab_enzymes = self.env['lab.test.data.form.many.form'].search([])
+        lab_lipid = self.env['lab.test.data.form.many.form.many'].search([])
+        lab_protein = self.env['lab.test.hospital.data'].search([])
+        lab_checkup = self.env['immunology.test'].search([])
+        lab_endocrinology = self.env['lab.test.hospital.form.many'].search([])
+        lab_immunology = self.env['lab.test.hospital.form.many.data'].search([])
+        lab_tumour = self.env['lab.test.hospital'].search([])
+        lab_drug = self.env['lab.test.hospital.form.many.form'].search([])
+        lab_serology = self.env['lab.test.hospital.form.many.form.data'].search([])
+        lab_leptospirosis = self.env['lab.hospital.test'].search([])
+        lab_hiv = self.env['lab.hospital.test.data'].search([])
+        lab_hepatis = self.env['lab.hospital.test.form'].search([])
+        lab_immune_test = self.env['lab.test.hospital.form.many.form'].search([])
+
         if result.num_days == 'e':
             orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
             labscan = self.env['lab.menu']
             lab_test = self.env['medical.doctor'].search([('patient','=',result.patient_id.id)])
             lines=[]
             lab_lines=[]
-            for rec in result.hemo_coag12:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range,
-                    
-                }
-                lab_lines.append((0,0,valuee))
-            for rec in result.hemo_coag1:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            for rec in result.hemo_coag2:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            for rec in result.lab_test_hos:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            for rec in result.lab_test_hos_data:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            for rec in result.lab_test_hos_form:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            for rec in result.lab_enzymes:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            for rec in result.lab_lipid:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            for rec in result.lab_protein:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            for rec in result.lab_checkup:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            for rec in result.lab_endocrinology:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            for rec in result.lab_immunology:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            for rec in result.lab_tumour:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            for rec in result.lab_drug:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            for rec in result.lab_serology:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            for rec in result.lab_leptospirosis:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            for rec in result.lab_hiv:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            for rec in result.lab_hepatis:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            for rec in result.lab_immune_test:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            for rec in result.lab_liver:
-                valuez={
-                    'name': rec.name,
-                    'date':datetime.now(),
-                    'bill_amount': rec.price
-                }
-                lines.append((0, 0, valuez))
-                values={
-                    'patient_id':result.patient_id.id,
-                    'ebook_id':result.ebook_id,
-                    'range':rec.range,
-                    'test_name':rec.name
-                }
-                labscan.create(values)
-                valuee={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                }
-                lab_lines.append((0,0,valuee))
-                
-            orm.write({'lab_bill':lines})
+            if result.select_all == True:
+                for j in hemo_coag12:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag12:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range,
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_urine == True:
+                for j in hemo_coag1:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag1:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_stool == True:
+                for j in hemo_coag2:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag2:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_semen == True:
+                for j in lab_test_hos:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_chemistry == True:
+                for j in lab_test_hos_data:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_form:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_liver == True:
+                for j in lab_test_hos_form:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_enzymes:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_enzymes == True:
+                for j in lab_liver:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_lipid:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipid == True:
+                for j in lab_enzymes:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_protein:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipoproteins == True:
+                # raise ValidationError(lab_protein)
+                for j in lab_lipid:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_checkup:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_endocrynology == True:
+                for j in lab_protein:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_liver:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+                # raise ValidationError(count)
+            if result.select_immunology == True:
+                for j in lab_checkup:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_endocrinology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_tumour == True:
+                for j in lab_endocrinology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immunology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_drug == True:
+                for j in lab_immunology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_tumour:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_master == True:
+                for j in lab_tumour:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_drug:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_torch == True:
+                for j in lab_drug:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_serology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lepto == True:
+                for j in lab_serology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_leptospirosis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hiv == True:
+                for j in lab_leptospirosis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hiv:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hepatis == True:
+                for j in lab_hiv:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hepatis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_xray == True:
+                for j in lab_hepatis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immune_test:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            # raise ValidationError(lab_lines)
+            
+            if result.select_serology == True:
+                for j in lab_immune_test:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_data:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            orm.write({'lab_bill':lines,
+            'lab_date':datetime.now(),})
             lab_test.write({'lab_test_line':lab_lines})
         
         if result.num_days == '1':
+            labscan = self.env['lab.menu']
             orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
             lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
             lines=[]
-            bill_lines=[]
-            for rec in result.hemo_coag12:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
+            lab_lines=[]
+            if result.select_all == True:
+                for j in hemo_coag12:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
                     }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
                     }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag12:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range,
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_urine == True:
+                for j in hemo_coag1:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag1:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_stool == True:
+                for j in hemo_coag2:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag2:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_semen == True:
+                for j in lab_test_hos:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_chemistry == True:
+                for j in lab_test_hos_data:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_form:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_liver == True:
+                for j in lab_test_hos_form:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_enzymes:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_enzymes == True:
+                for j in lab_liver:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_lipid:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipid == True:
+                for j in lab_enzymes:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_protein:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipoproteins == True:
+                # raise ValidationError(lab_protein)
+                for j in lab_lipid:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_checkup:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_endocrynology == True:
+                for j in lab_protein:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_liver:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+                # raise ValidationError(count)
+            if result.select_immunology == True:
+                for j in lab_checkup:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_endocrinology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_tumour == True:
+                for j in lab_endocrinology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immunology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_drug == True:
+                for j in lab_immunology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_tumour:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_master == True:
+                for j in lab_tumour:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_drug:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_torch == True:
+                for j in lab_drug:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_serology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lepto == True:
+                for j in lab_serology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_leptospirosis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hiv == True:
+                for j in lab_leptospirosis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hiv:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hepatis == True:
+                for j in lab_hiv:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hepatis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_xray == True:
+                for j in lab_hepatis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immune_test:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            # raise ValidationError(lab_lines)
+            
+            if result.select_serology == True:
+                for j in lab_immune_test:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_data:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
                 
-            for rec in result.hemo_coag1:
-                bill_lines=[]
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.hemo_coag2:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_data:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_form:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_enzymes:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_lipid:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_protein:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_checkup:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_endocrinology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immunology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_tumour:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_drug:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_serology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_leptospirosis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hiv:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hepatis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immune_test:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_liver:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-                
-            lab_in.write({'lab_line':lines})
-            orm.write({'inpatient_lab':bill_lines})
+            orm.write({'inpatient_lab':lines})
+            lab_in.write({'lab_line':lab_lines})
             
         elif result.num_days == '2':
+            labscan = self.env['lab.menu']
             orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
             lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
             lines=[]
-            bill_lines=[]
-            for rec in result.hemo_coag12:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
+            lab_lines=[]
+            if result.select_all == True:
+                for j in hemo_coag12:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
                     }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
                     }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag12:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range,
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_urine == True:
+                for j in hemo_coag1:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag1:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_stool == True:
+                for j in hemo_coag2:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag2:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_semen == True:
+                for j in lab_test_hos:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_chemistry == True:
+                for j in lab_test_hos_data:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_form:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_liver == True:
+                for j in lab_test_hos_form:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_enzymes:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_enzymes == True:
+                for j in lab_liver:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_lipid:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipid == True:
+                for j in lab_enzymes:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_protein:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipoproteins == True:
+                # raise ValidationError(lab_protein)
+                for j in lab_lipid:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_checkup:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_endocrynology == True:
+                for j in lab_protein:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_liver:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+                # raise ValidationError(count)
+            if result.select_immunology == True:
+                for j in lab_checkup:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_endocrinology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_tumour == True:
+                for j in lab_endocrinology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immunology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_drug == True:
+                for j in lab_immunology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_tumour:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_master == True:
+                for j in lab_tumour:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_drug:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_torch == True:
+                for j in lab_drug:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_serology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lepto == True:
+                for j in lab_serology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_leptospirosis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hiv == True:
+                for j in lab_leptospirosis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hiv:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hepatis == True:
+                for j in lab_hiv:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hepatis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_xray == True:
+                for j in lab_hepatis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immune_test:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            # raise ValidationError(lab_lines)
+            
+            if result.select_serology == True:
+                for j in lab_immune_test:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_data:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
                 
-            for rec in result.hemo_coag1:
-                bill_lines=[]
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.hemo_coag2:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_data:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_form:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_enzymes:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_lipid:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_protein:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_checkup:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_endocrinology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immunology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_tumour:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_drug:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_serology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_leptospirosis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hiv:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hepatis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immune_test:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_liver:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-                
-            lab_in.write({'lab_line_two':lines})
-            orm.write({'inpatient_lab':bill_lines})
+            orm.write({'inpatient_lab':lines})
+            lab_in.write({'lab_line_two':lab_lines})
             
         elif result.num_days == '3':
+            labscan = self.env['lab.menu']
             orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
             lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
             lines=[]
-            bill_lines=[]
-            for rec in result.hemo_coag12:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
+            lab_lines=[]
+            if result.select_all == True:
+                for j in hemo_coag12:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
                     }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
                     }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag12:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range,
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_urine == True:
+                for j in hemo_coag1:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag1:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_stool == True:
+                for j in hemo_coag2:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag2:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_semen == True:
+                for j in lab_test_hos:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_chemistry == True:
+                for j in lab_test_hos_data:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_form:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_liver == True:
+                for j in lab_test_hos_form:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_enzymes:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_enzymes == True:
+                for j in lab_liver:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_lipid:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipid == True:
+                for j in lab_enzymes:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_protein:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipoproteins == True:
+                # raise ValidationError(lab_protein)
+                for j in lab_lipid:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_checkup:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_endocrynology == True:
+                for j in lab_protein:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_liver:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+                # raise ValidationError(count)
+            if result.select_immunology == True:
+                for j in lab_checkup:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_endocrinology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_tumour == True:
+                for j in lab_endocrinology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immunology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_drug == True:
+                for j in lab_immunology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_tumour:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_master == True:
+                for j in lab_tumour:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_drug:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_torch == True:
+                for j in lab_drug:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_serology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lepto == True:
+                for j in lab_serology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_leptospirosis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hiv == True:
+                for j in lab_leptospirosis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hiv:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hepatis == True:
+                for j in lab_hiv:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hepatis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_xray == True:
+                for j in lab_hepatis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immune_test:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            # raise ValidationError(lab_lines)
+            
+            if result.select_serology == True:
+                for j in lab_immune_test:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_data:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
                 
-            for rec in result.hemo_coag1:
-                bill_lines=[]
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.hemo_coag2:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_data:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_form:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_enzymes:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_lipid:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_protein:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_checkup:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_endocrinology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immunology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_tumour:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_drug:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_serology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_leptospirosis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hiv:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hepatis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immune_test:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_liver:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-                
-            lab_in.write({'lab_line_three':lines})
-            orm.write({'inpatient_lab':bill_lines})
+            orm.write({'inpatient_lab':lines})
+            lab_in.write({'lab_line_three':lab_lines})
             
         elif result.num_days == '4':
+            labscan = self.env['lab.menu']
             orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
             lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
             lines=[]
-            bill_lines=[]
-            for rec in result.hemo_coag12:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
+            lab_lines=[]
+            if result.select_all == True:
+                for j in hemo_coag12:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
                     }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
                     }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag12:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range,
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_urine == True:
+                for j in hemo_coag1:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag1:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_stool == True:
+                for j in hemo_coag2:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag2:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_semen == True:
+                for j in lab_test_hos:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_chemistry == True:
+                for j in lab_test_hos_data:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_form:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_liver == True:
+                for j in lab_test_hos_form:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_enzymes:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_enzymes == True:
+                for j in lab_liver:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_lipid:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipid == True:
+                for j in lab_enzymes:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_protein:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipoproteins == True:
+                # raise ValidationError(lab_protein)
+                for j in lab_lipid:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_checkup:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_endocrynology == True:
+                for j in lab_protein:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_liver:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+                # raise ValidationError(count)
+            if result.select_immunology == True:
+                for j in lab_checkup:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_endocrinology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_tumour == True:
+                for j in lab_endocrinology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immunology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_drug == True:
+                for j in lab_immunology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_tumour:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_master == True:
+                for j in lab_tumour:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_drug:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_torch == True:
+                for j in lab_drug:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_serology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lepto == True:
+                for j in lab_serology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_leptospirosis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hiv == True:
+                for j in lab_leptospirosis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hiv:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hepatis == True:
+                for j in lab_hiv:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hepatis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_xray == True:
+                for j in lab_hepatis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immune_test:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            # raise ValidationError(lab_lines)
+            
+            if result.select_serology == True:
+                for j in lab_immune_test:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_data:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
                 
-            for rec in result.hemo_coag1:
-                bill_lines=[]
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.hemo_coag2:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_data:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_form:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_enzymes:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_lipid:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_protein:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_checkup:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_endocrinology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immunology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_tumour:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_drug:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_serology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_leptospirosis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hiv:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hepatis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immune_test:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_liver:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-                
-            lab_in.write({'lab_line_four':lines})
-            orm.write({'inpatient_lab':bill_lines})
+            orm.write({'inpatient_lab':lines})
+            lab_in.write({'lab_line_four':lab_lines})
             
         elif result.num_days == '5':
+            labscan = self.env['lab.menu']
             orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
             lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
             lines=[]
-            bill_lines=[]
-            for rec in result.hemo_coag12:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
+            lab_lines=[]
+            if result.select_all == True:
+                for j in hemo_coag12:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
                     }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
                     }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag12:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range,
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_urine == True:
+                for j in hemo_coag1:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag1:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_stool == True:
+                for j in hemo_coag2:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag2:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_semen == True:
+                for j in lab_test_hos:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_chemistry == True:
+                for j in lab_test_hos_data:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_form:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_liver == True:
+                for j in lab_test_hos_form:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_enzymes:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_enzymes == True:
+                for j in lab_liver:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_lipid:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipid == True:
+                for j in lab_enzymes:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_protein:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipoproteins == True:
+                # raise ValidationError(lab_protein)
+                for j in lab_lipid:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_checkup:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_endocrynology == True:
+                for j in lab_protein:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_liver:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+                # raise ValidationError(count)
+            if result.select_immunology == True:
+                for j in lab_checkup:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_endocrinology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_tumour == True:
+                for j in lab_endocrinology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immunology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_drug == True:
+                for j in lab_immunology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_tumour:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_master == True:
+                for j in lab_tumour:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_drug:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_torch == True:
+                for j in lab_drug:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_serology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lepto == True:
+                for j in lab_serology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_leptospirosis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hiv == True:
+                for j in lab_leptospirosis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hiv:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hepatis == True:
+                for j in lab_hiv:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hepatis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_xray == True:
+                for j in lab_hepatis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immune_test:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            # raise ValidationError(lab_lines)
+            
+            if result.select_serology == True:
+                for j in lab_immune_test:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_data:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
                 
-            for rec in result.hemo_coag1:
-                bill_lines=[]
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.hemo_coag2:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_data:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_form:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_enzymes:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_lipid:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_protein:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_checkup:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_endocrinology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immunology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_tumour:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_drug:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_serology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_leptospirosis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hiv:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hepatis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immune_test:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_liver:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-                
-            lab_in.write({'lab_line_five':lines})
-            orm.write({'inpatient_lab':bill_lines})
+            orm.write({'inpatient_lab':lines})
+            lab_in.write({'lab_line_five':lab_lines})
             
         elif result.num_days == '6':
+            labscan = self.env['lab.menu']
             orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
             lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
             lines=[]
-            bill_lines=[]
-            for rec in result.hemo_coag12:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
+            lab_lines=[]
+            if result.select_all == True:
+                for j in hemo_coag12:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
                     }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
                     }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag12:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range,
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_urine == True:
+                for j in hemo_coag1:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag1:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_stool == True:
+                for j in hemo_coag2:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag2:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_semen == True:
+                for j in lab_test_hos:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_chemistry == True:
+                for j in lab_test_hos_data:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_form:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_liver == True:
+                for j in lab_test_hos_form:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_enzymes:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_enzymes == True:
+                for j in lab_liver:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_lipid:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipid == True:
+                for j in lab_enzymes:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_protein:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipoproteins == True:
+                # raise ValidationError(lab_protein)
+                for j in lab_lipid:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_checkup:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_endocrynology == True:
+                for j in lab_protein:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_liver:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+                # raise ValidationError(count)
+            if result.select_immunology == True:
+                for j in lab_checkup:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_endocrinology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_tumour == True:
+                for j in lab_endocrinology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immunology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_drug == True:
+                for j in lab_immunology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_tumour:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_master == True:
+                for j in lab_tumour:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_drug:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_torch == True:
+                for j in lab_drug:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_serology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lepto == True:
+                for j in lab_serology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_leptospirosis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hiv == True:
+                for j in lab_leptospirosis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hiv:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hepatis == True:
+                for j in lab_hiv:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hepatis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_xray == True:
+                for j in lab_hepatis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immune_test:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            # raise ValidationError(lab_lines)
+            
+            if result.select_serology == True:
+                for j in lab_immune_test:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_data:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
                 
-            for rec in result.hemo_coag1:
-                bill_lines=[]
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.hemo_coag2:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_data:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_form:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_enzymes:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_lipid:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_protein:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_checkup:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_endocrinology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immunology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_tumour:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_drug:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_serology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_leptospirosis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hiv:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hepatis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immune_test:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_liver:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-                
-            lab_in.write({'lab_line_six':lines})
-            orm.write({'inpatient_lab':bill_lines})
+            orm.write({'inpatient_lab':lines})
+            lab_in.write({'lab_line_six':lab_lines})
             
         elif result.num_days == '7':
+            labscan = self.env['lab.menu']
             orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
             lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
             lines=[]
-            bill_lines=[]
-            for rec in result.hemo_coag12:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
+            lab_lines=[]
+            if result.select_all == True:
+                for j in hemo_coag12:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
                     }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
                     }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag12:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range,
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_urine == True:
+                for j in hemo_coag1:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag1:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_stool == True:
+                for j in hemo_coag2:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag2:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_semen == True:
+                for j in lab_test_hos:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_chemistry == True:
+                for j in lab_test_hos_data:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_form:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_liver == True:
+                for j in lab_test_hos_form:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_enzymes:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_enzymes == True:
+                for j in lab_liver:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_lipid:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipid == True:
+                for j in lab_enzymes:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_protein:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipoproteins == True:
+                # raise ValidationError(lab_protein)
+                for j in lab_lipid:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_checkup:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_endocrynology == True:
+                for j in lab_protein:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_liver:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+                # raise ValidationError(count)
+            if result.select_immunology == True:
+                for j in lab_checkup:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_endocrinology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_tumour == True:
+                for j in lab_endocrinology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immunology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_drug == True:
+                for j in lab_immunology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_tumour:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_master == True:
+                for j in lab_tumour:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_drug:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_torch == True:
+                for j in lab_drug:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_serology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lepto == True:
+                for j in lab_serology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_leptospirosis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hiv == True:
+                for j in lab_leptospirosis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hiv:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hepatis == True:
+                for j in lab_hiv:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hepatis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_xray == True:
+                for j in lab_hepatis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immune_test:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            # raise ValidationError(lab_lines)
+            
+            if result.select_serology == True:
+                for j in lab_immune_test:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_data:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
                 
-            for rec in result.hemo_coag1:
-                bill_lines=[]
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.hemo_coag2:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_data:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_form:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_enzymes:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_lipid:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_protein:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_checkup:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_endocrinology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immunology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_tumour:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_drug:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_serology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_leptospirosis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hiv:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hepatis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immune_test:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_liver:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-                
-            lab_in.write({'lab_line_seven':lines})
-            orm.write({'inpatient_lab':bill_lines})
+            orm.write({'inpatient_lab':lines})
+            lab_in.write({'lab_line_seven':lab_lines})
             
         elif result.num_days == '8':
+            labscan = self.env['lab.menu']
             orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
             lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
             lines=[]
-            bill_lines=[]
-            for rec in result.hemo_coag12:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
+            lab_lines=[]
+            if result.select_all == True:
+                for j in hemo_coag12:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
                     }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
                     }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag12:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range,
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_urine == True:
+                for j in hemo_coag1:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag1:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_stool == True:
+                for j in hemo_coag2:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag2:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_semen == True:
+                for j in lab_test_hos:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_chemistry == True:
+                for j in lab_test_hos_data:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_form:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_liver == True:
+                for j in lab_test_hos_form:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_enzymes:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_enzymes == True:
+                for j in lab_liver:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_lipid:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipid == True:
+                for j in lab_enzymes:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_protein:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipoproteins == True:
+                # raise ValidationError(lab_protein)
+                for j in lab_lipid:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_checkup:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_endocrynology == True:
+                for j in lab_protein:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_liver:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+                # raise ValidationError(count)
+            if result.select_immunology == True:
+                for j in lab_checkup:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_endocrinology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_tumour == True:
+                for j in lab_endocrinology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immunology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_drug == True:
+                for j in lab_immunology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_tumour:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_master == True:
+                for j in lab_tumour:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_drug:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_torch == True:
+                for j in lab_drug:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_serology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lepto == True:
+                for j in lab_serology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_leptospirosis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hiv == True:
+                for j in lab_leptospirosis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hiv:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hepatis == True:
+                for j in lab_hiv:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hepatis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_xray == True:
+                for j in lab_hepatis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immune_test:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            # raise ValidationError(lab_lines)
+            
+            if result.select_serology == True:
+                for j in lab_immune_test:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_data:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
                 
-            for rec in result.hemo_coag1:
-                bill_lines=[]
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.hemo_coag2:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_data:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_form:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_enzymes:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_lipid:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_protein:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_checkup:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_endocrinology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immunology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_tumour:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_drug:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_serology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_leptospirosis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hiv:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hepatis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immune_test:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_liver:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-                
-            lab_in.write({'lab_line_eight':lines})
-            orm.write({'inpatient_lab':bill_lines})
+            orm.write({'inpatient_lab':lines})
+            lab_in.write({'lab_line_eight':lab_lines})
             
         elif result.num_days == '9':
+            labscan = self.env['lab.menu']
             orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
             lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
             lines=[]
-            bill_lines=[]
-            for rec in result.hemo_coag12:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
+            lab_lines=[]
+            if result.select_all == True:
+                for j in hemo_coag12:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
                     }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
                     }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag12:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range,
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_urine == True:
+                for j in hemo_coag1:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag1:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_stool == True:
+                for j in hemo_coag2:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag2:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_semen == True:
+                for j in lab_test_hos:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_chemistry == True:
+                for j in lab_test_hos_data:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_form:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_liver == True:
+                for j in lab_test_hos_form:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_enzymes:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_enzymes == True:
+                for j in lab_liver:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_lipid:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipid == True:
+                for j in lab_enzymes:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_protein:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipoproteins == True:
+                # raise ValidationError(lab_protein)
+                for j in lab_lipid:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_checkup:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_endocrynology == True:
+                for j in lab_protein:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_liver:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+                # raise ValidationError(count)
+            if result.select_immunology == True:
+                for j in lab_checkup:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_endocrinology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_tumour == True:
+                for j in lab_endocrinology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immunology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_drug == True:
+                for j in lab_immunology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_tumour:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_master == True:
+                for j in lab_tumour:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_drug:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_torch == True:
+                for j in lab_drug:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_serology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lepto == True:
+                for j in lab_serology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_leptospirosis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hiv == True:
+                for j in lab_leptospirosis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hiv:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hepatis == True:
+                for j in lab_hiv:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hepatis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_xray == True:
+                for j in lab_hepatis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immune_test:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            # raise ValidationError(lab_lines)
+            
+            if result.select_serology == True:
+                for j in lab_immune_test:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_data:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
                 
-            for rec in result.hemo_coag1:
-                bill_lines=[]
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.hemo_coag2:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_data:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_form:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_enzymes:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_lipid:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_protein:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_checkup:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_endocrinology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immunology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_tumour:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_drug:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_serology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_leptospirosis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hiv:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hepatis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immune_test:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_liver:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-                
-            lab_in.write({'lab_line_nine':lines})
-            orm.write({'inpatient_lab':bill_lines})
+            orm.write({'inpatient_lab':lines})
+            lab_in.write({'lab_line_nine':lab_lines})
             
         elif result.num_days == '10':
+            labscan = self.env['lab.menu']
             orm = self.env['patient.bills'].search([('patient_name','=',result.patient_id.id)],order='id desc', limit=1)
             lab_in = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
             lines=[]
-            bill_lines=[]
-            for rec in result.hemo_coag12:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
+            lab_lines=[]
+            if result.select_all == True:
+                for j in hemo_coag12:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
                     }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
                     }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag12:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range,
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_urine == True:
+                for j in hemo_coag1:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag1:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_stool == True:
+                for j in hemo_coag2:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.hemo_coag2:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_semen == True:
+                for j in lab_test_hos:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_chemistry == True:
+                for j in lab_test_hos_data:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_form:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_liver == True:
+                for j in lab_test_hos_form:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_enzymes:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_enzymes == True:
+                for j in lab_liver:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_lipid:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipid == True:
+                for j in lab_enzymes:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_protein:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lipoproteins == True:
+                # raise ValidationError(lab_protein)
+                for j in lab_lipid:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_checkup:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_endocrynology == True:
+                for j in lab_protein:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_liver:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+                # raise ValidationError(count)
+            if result.select_immunology == True:
+                for j in lab_checkup:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_endocrinology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_tumour == True:
+                for j in lab_endocrinology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immunology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_drug == True:
+                for j in lab_immunology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_tumour:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_master == True:
+                for j in lab_tumour:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_drug:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_torch == True:
+                for j in lab_drug:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_serology:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_lepto == True:
+                for j in lab_serology:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_leptospirosis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hiv == True:
+                for j in lab_leptospirosis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hiv:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_hepatis == True:
+                for j in lab_hiv:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_hepatis:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            if result.select_xray == True:
+                for j in lab_hepatis:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_immune_test:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
+            # raise ValidationError(lab_lines)
+            
+            if result.select_serology == True:
+                for j in lab_immune_test:
+                    values = {
+                            'name': j.name,
+                            'date':datetime.now(),
+                            'bill_amount': j.price
+                        }
+                    lines.append((0,0,values))
+                    lab_value={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':j.range,
+                        'test_name':j.name
+                    }
+                    labscan.create(lab_value)
+                    ebook={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':j.name,
+                        'range_normal':j.range,
+                    }
+                    lab_lines.append((0,0,ebook))
+            else:
+                for rec in result.lab_test_hos_data:
+                    valuez={
+                        'name': rec.name,
+                        'date':datetime.now(),
+                        'bill_amount': rec.price
+                    }
+                    lines.append((0, 0, valuez))
+                    values={
+                        'patient_id':result.patient_id.id,
+                        'ebook_id':result.ebook_id,
+                        'range':rec.range,
+                        'test_name':rec.name
+                    }
+                    labscan.create(values)
+                    valuee={
+                        'date':datetime.now(),
+                        'lab_type':result.id,
+                        'name':rec.name,
+                        'range_normal':rec.range
+                    }
+                    lab_lines.append((0,0,valuee))
                 
-            for rec in result.hemo_coag1:
-                bill_lines=[]
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.hemo_coag2:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_data:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_test_hos_form:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_enzymes:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_lipid:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_protein:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_checkup:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_endocrinology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immunology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_tumour:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_drug:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_serology:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_leptospirosis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hiv:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_hepatis:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_immune_test:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-            for rec in result.lab_liver:
-                values={
-                    'date':datetime.now(),
-                    'lab_type':result.id,
-                    'name':rec.name,
-                    'range_normal':rec.range
-                    
-                    }
-                vals = {
-                    'date':datetime.now(),
-                    'name':rec.name,
-                    'bill_amount':rec.price,
-                    # '':,
-                    }
-                bill_lines.append((0,0,vals))
-                lines.append((0,0,values))
-                
-            lab_in.write({'lab_line_ten':lines})
-            orm.write({'inpatient_lab':bill_lines})
+            orm.write({'inpatient_lab':lines})
+            lab_in.write({'lab_line_ten':lab_lines})
 
         return result
     

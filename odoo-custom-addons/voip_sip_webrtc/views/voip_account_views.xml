@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="voip_account_view_form" model="ir.ui.view">
+        <field name="name">voip.account view form</field>
+        <field name="model">voip.account</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="uac_register" type="object" string="Send SIP Register"/>
+                    <!--<button name="uac_deregister" type="object" string="Remove SIP Registration"/>-->
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="address" invisible="True"/>
+                        <field name="username"/>
+                        <field name="domain"/>
+                        <field name="password" password="True"/>
+                        <field name="voip_display_name"/>
+                        <field name="auth_username"/>
+                        <field name="outbound_proxy"/>
+                        <field name="port"/>
+                        <field name="call_dialog_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="voip_account_view_tree" model="ir.ui.view">
+        <field name="name">voip.account view tree</field>
+        <field name="model">voip.account</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="address"/>
+                <field name="outbound_proxy"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="voip_account_action" model="ir.actions.act_window">
+        <field name="name">VOIP Accounts</field>
+        <field name="res_model">voip.account</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>
+                No SIP Accounts
+            </p>
+        </field>
+    </record>
+
+</odoo>

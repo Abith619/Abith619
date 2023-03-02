@@ -1,0 +1,14 @@
+prefix=/usr/local
+bindir=${prefix}/bin
+mandir=${prefix}/
+docdir=${prefix}/
+libdir=${prefix}/./lib/Slicer-5.2
+includedir=${prefix}/include/ITK-5.3/gdcmopenjpeg
+
+Name: openjp2
+Description: JPEG2000 library (Part 1 and 2)
+URL: http://www.openjpeg.org/
+Version: 2.3.0
+Libs: -L${libdir} -lopenjp2
+Libs.private: -lm
+Cflags: -I${includedir}

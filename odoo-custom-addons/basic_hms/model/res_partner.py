@@ -9,8 +9,10 @@ import pytz
 from datetime import datetime, timedelta
 from odoo.exceptions import  ValidationError
 
+
 class res_partner(models.Model):
     _inherit = 'res.partner'
+
 
     # gender= fields.Char()
     designation = fields.Char(string='Designation')
@@ -57,9 +59,8 @@ class res_partner(models.Model):
     is_billing = fields.Boolean(string='Billing')
     is_telecaller = fields.Boolean(string='Telecaller')
     roles_selection=fields.Selection([('manager','Manager'),('reception','Reception'),('doctor','Doctor'),('pharmacy','Pharmacy'),
-    ('billing','Billing'),('lab','Lab & Scan'),('telecaller','Telecaller'),('patient','Patient'),('vendor','Vendor')],string='Roles')
+    ('billing','Billing'),('lab','Lab & Scan'),('telecaller','Telecaller'),('patient','Patient')],string='Roles')
     ebook_print=fields.Many2one('medical.doctor', string='Ebook',compute='orm_ebook')
-    
     experience = fields.Char(string='Experience')
     marital_status = fields.Selection([('s','Single'),('m','Married'),('w','Widowed'),('d','Divorced'),('x','Seperated')],string='Marital Status')
     treatment_for=fields.Many2one('medical.pathology',string="Treatment For")
@@ -68,14 +69,22 @@ class res_partner(models.Model):
     patient_activity = fields.Selection([('wait',"Waiting"),('doctor',"Doctor Assigned"),('doc','Diet Assigned'),
                                          ('lab','Lab Bill Assigned'),('pres','Pharmacy Bill Assigned'),('scan','Scan Bill Assigned'),
                                          ('labs','Lab Test Completed'),('scans','Scan Test Completed'),
-                                         ('bill',"Pharmacy Bill Assigned"),('discontinued','Discontinued'),('completed',"Completed")],default='wait',track_visibility='onchange')
-    doctor_reg = fields.Many2one('res.partner', string='Doctor', domain=[('is_doctor','=',True)])
+                                         ('bill',"Pharmacy Bill Assigned"),('discontinued','Discontinued'),('completed',"Completed")],default='wait')
     gst_num = fields.Char(string='GST NO :')
     is_vendor = fields.Boolean(string='Vendor')
+    file_num = fields.Char(string='File Number')
+
     
     def orm_ebook(self):
         orm=self.env['medical.doctor'].search([('patient','=',self.name)])
         self.ebook_print = orm
+
+    # @api.model
+    # def create(self, vals):
+    #     vals['serial_number'] = self.env['ir.sequence'].next_by_code('res.partner') or 'RES'
+    #     res = super(res_partner, self).create(vals)
+    #     return res
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
     @api.constrains('roles_selection')
@@ -112,6 +121,7 @@ class res_partner(models.Model):
             self.is_vendor = True
         else:
             self.is_vendor = False
+
 
 #      QR Code
 
@@ -151,6 +161,11 @@ class res_partner(models.Model):
         return self._search(args, limit=limit, access_rights_uid=name_get_uid)
     
     
+    # def name_get(self):
+    #     result = []
+    #     for rec in self:
+    #         result.append((rec.id, '%s - %s' % (rec.name,rec.mobile)))
+    #     return result
     def appointment_count(self):
         for res in self :
             count_appointment1 = self.env['medical.appointment'].search_count([('patient_id', '=', res.name)])
@@ -171,7 +186,6 @@ class res_partner(models.Model):
         for res in self :
             doctor_count_appointment1 = self.env['medical.doctor'].search_count([('patient', '=', res.name)])
             self.doctor_count_appointment= doctor_count_appointment1
-            
     doctor_count_appointment=fields.Integer(compute='doctor_count',string="Doctor Visit")
 
     def doctor_count_button(self):
@@ -184,8 +198,11 @@ class res_partner(models.Model):
     'type': 'ir.actions.act_window',
     }
 
-
+    
+    
     def doctor_report(self):
+        
+        
         for res in self :
             doctor_report_appointment1 = self.env['medical.doctor'].search_count([('doctor', '=', res.name)])
             self.doctor_report_appointment= doctor_report_appointment1
@@ -233,7 +250,7 @@ class res_partner(models.Model):
     'view_type': 'form',
     'type': 'ir.actions.act_window',
     }
-        
+
     def scan_count(self):
         for res in self :
             scan_count_appointment1 = self.env['scan.test'].search_count([('patient_id', '=', res.name)])
@@ -242,13 +259,14 @@ class res_partner(models.Model):
 
     def scan_count_button(self):
         return {
-    'name': "Scan Test",
-    'domain':[('patient_id', '=', self.name)],
-    'view_mode': 'tree,form',
-    'res_model': 'scan.test',
-    'view_type': 'form',
-    'type': 'ir.actions.act_window',
-    }
+            'name': "Scan Test",
+            'domain':[('patient_id', '=', self.name)],
+            'view_mode': 'tree,form',
+            'res_model': 'scan.test',
+            'view_type': 'form',
+            'type': 'ir.actions.act_window',
+        }
+
 
     def billing_count(self):
         for res in self :
@@ -284,7 +302,18 @@ class res_partner(models.Model):
     'context': {
         'default_name': self.name,
         },
+
     }
+class account_organic(models.Model):
+    _inherit = 'account.move'
+
+    product_id = fields.Many2one('product.product', domain=[('is_organic','=',True)])
+    gst_total = fields.Float(string='GST', compute='gst_amount')
+
+    @api.depends('amount_total','amount_untaxed')
+    def gst_amount(self):
+        
+        self.gst_total = (self.amount_total - self.amount_untaxed)
 
 class MedicineMaster(models.Model):
     _inherit='product.product'
@@ -292,7 +321,7 @@ class MedicineMaster(models.Model):
     is_medicine=fields.Boolean(string="Medicine")
     medicine_details = fields.One2many('medicine.line','med',string="Medicine Details")
     company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('product.product'))
-
+    is_organic = fields.Boolean(string="Organic")
 
 class medicine_dose(models.Model):
     _name = 'medicine.line'
@@ -306,6 +335,7 @@ class medicine_dose(models.Model):
     units= fields.Many2one('uom.uom',string="units")
     potency = fields.Char(string="Potency")
     anupana = fields.Char(string="Notes")
+    bf_af=fields.Selection([('before','Before Food'),('after','After Food')])
 
 class document_type_upload(models.Model):
     _name = 'document.type.line'
@@ -319,6 +349,7 @@ class document_type_upload(models.Model):
     document_line = fields.One2many('document.add.line','Documents',string='Document Lines')
     attach_types = fields.Selection([('voice','Voice Recording'),('Video','Video'),('ebook','Ebook'),('photo','Photo'),('green','Green Document'),('gov','Gov ID'),
         ('original','Original'),('lab','Lab Document'),('scan','Scan Document')],string='Attachment Type')
+
     
     @api.constrains('document_line')
     def pat_stat(self):
@@ -353,7 +384,8 @@ class document_type_upload(models.Model):
         
             orm_4 = self.env['patient.bills'].search([('patient_name','=',self.name)])
             orm_4.write({'patient_activity':'scans'})
-        
+
+
     @api.model
     def create(self, vals):
         result = super(document_type_upload,self).create(vals)
@@ -369,17 +401,20 @@ class document_type_upload(models.Model):
             
         orm_i.write({'documents':lines})
         return result
+
+
     
 class documentAddLine(models.Model):
     _name = 'document.add.line'
     
     Documents = fields.Many2one('document.type.line',string='Document')
     name = fields.Char(string='Patient Document')
-    patient_id = fields.Many2one('res.partner',string='Name')
     attachment = fields.Many2many('ir.attachment',string='Attach')
     attach_types = fields.Selection([('voice','Voice Recording'),('Video','Video'),('photo','Photo'),('green','Green Document'),('gov','Gov ID'),
         ('original','Original'),('lab','Lab Document'),('scan','Scan Document')])
-    
+
+    date_write = fields.Date(string='Date')
+
 class ir_sequence_master(models.Model):
     _inherit = 'ir.sequence'
 

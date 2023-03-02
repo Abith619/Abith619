@@ -1,0 +1,29 @@
+Generic GNU/Linux (static linking)
+==================================
+
+# mkdir Build
+# cd Build
+# cmake .. -DCMAKE_BUILD_TYPE=Debug -DSTATIC_BUILD=ON
+# make
+
+
+Debian Sid (dynamic linking)
+============================
+
+# sudo apt-get install build-essential unzip cmake libjpeg-dev \
+                       uuid-dev libgtest-dev libpng-dev libsqlite3-dev \
+                       zlib1g-dev libboost-all-dev libjsoncpp-dev 
+
+# mkdir Build
+# cd Build
+# cmake .. -DCMAKE_BUILD_TYPE=Debug -DUSE_GOOGLE_TEST_DEBIAN_PACKAGE=ON -DSTANDALONE_BUILD=ON -DUSE_SYSTEM_ORTHANC_SDK=OFF
+# make
+
+
+Cross-compiling for Windows from GNU/Linux using MinGW
+======================================================
+
+# mkdir Build
+# cd Build
+# cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=`pwd`/../Orthanc/Resources/MinGWToolchain.cmake
+# make

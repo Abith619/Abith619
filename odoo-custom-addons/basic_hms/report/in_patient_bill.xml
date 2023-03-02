@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <odoo>
     <template id = "basic_hms.in_patient_bills" >
         <t t-call="web.external_layout">
@@ -26,11 +27,15 @@
                 <td style="border: 0px;width: 50%;">
                     <div  >
                     <div class='float-left'>
-                        
+                        <t t-if='o.ebook_id'>
+                                    <p><strong>SL NO :</strong><span t-field="o.ebook_id"/></p> </t>
+                                <t t-if='not o.ebook_id'>
+                                    <p><strong>SL NO :</strong><span t-field="o.bill_no"/></p> </t>
                 <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p>
-                <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p></div>
+                </div>
                 
             <div class="float-right" >
+            <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p>
                 <p><strong>Payment Type :</strong><span t-field="o.payment_type"/></p>
                 <!-- <p><strong>Payment ID :</strong><span t-field="o.payment_id"/></p> -->
             </div>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<data>
+    
+    <template id="basic_hms.organic_prescription_bils_report" name="Diet Plan">
+        <t t-call="web.external_layout">
+            <t t-call="web.html_container">
+               <t t-foreach="docs" t-as="o">
+            <style>
+                .flex-parent {
+                    display: flex;
+                  }
+                .flex-container {
+                    display: flex;
+                  }
+            </style>
+        <t >
+        <td style="border: 0px;width: 50%;">
+            <div class="header_tag">
+                <h4 class="text-center heading_text_cor"><strong>Organic Bill</strong></h4>
+                </div>
+            <div >
+                <div class='float-left'>
+                <t t-set="name" t-value="o.name.upper()" />
+                <t t-set="name_pat" t-value="o.partner_id.name.upper()" />
+                        <p><strong>SL NO :</strong><span t-esc="name"/></p>
+                        <p><strong>Name :</strong><span t-esc="name_pat"/></p>
+                        <p><strong>Contact :</strong><span t-field="o.contact_num"/></p>
+                    </div>
+                <div class="float-right" >
+                    <p><strong>Bill Date :</strong><span t-field="o.invoice_date_due"/></p>
+                    <p><strong>Payment Type :</strong><span t-field="o.payment_types"/></p>
+                    </div>
+            </div>
+                    </td>
+                   <table class="table table-bordered" style="border: 1px solid black;">
+                    <thead>
+                        <tr>
+                        <th style="border: 1px solid black;"> Description  </th>
+                        <th style="border: 1px solid black;">Unit Price</th>
+                        <th style="border: 1px solid black;"> Quantity</th>
+                        <th style="border: 1px solid black;"> Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                     <tr t-foreach='docs.invoice_line_ids' t-as='lines'>
+                        <td style="border: 1px solid black;">
+                            <span t-field="lines.name"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <span t-field="lines.price_unit"/>
+                          </td>
+                        <td style="border: 1px solid black;">
+                            <span t-field="lines.quantity"/>
+                        </td>
+                       <td style="border: 1px solid black;">
+                            <span t-field="lines.price_subtotal"/>
+                        </td>
+                       </tr>
+                    </tbody>
+                    </table>
+                    </t>
+                    <div class="clearfix ">
+                        <div id="total" class="row " >
+                            <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
+                                <table class="table table-sm float-right" style="page-break-inside: avoid; width:60%;">
+                                    <tr class="border-black o_subtotal" style="">
+                                        <td><strong>Subtotal</strong></td>
+                                        <td class="text-right">
+                                            <span t-field="o.amount_untaxed"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-black o_subtotal">
+                                        <td><strong>GST 12%</strong></td>
+                                        <td class="text-right">
+                                            <span class="text-nowrap" t-field="o.gst_total"/>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-black o_total">
+                                        <td><strong>Total</strong></td>
+                                        <td class="text-right">
+                                            <span class="text-nowrap" t-field="o.amount_total"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                        
+            </t>
+        </t>
+    </t>
+        </template>
+ </data>
+</odoo>
+               
+            

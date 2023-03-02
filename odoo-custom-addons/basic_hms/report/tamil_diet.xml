@@ -4,37 +4,31 @@
      <t t-call="web.external_layout">
      <t t-call="web.html_container">
         <t t-foreach="docs" t-as="o">
-            <!-- <t t-raw="translate_doc(o, doc_model, 'lang', 'basic_hms.ebook_doctor_report_diet')"/> -->
-            <!-- <t t-call="basic_hms.ebook_doctor_report_diet" t-lang="o.patient.lang"/> -->
             <style>
-                .footer_section{
+            @font-face {
+                font-family: 'Lohit Tamil';
+                src: url('/basic_hms/static/src/font/Lohit_Tamil.ttf') format('truetype');
                 }
-                .border{
-                    border-collapse: collapse;
-                }
-                .heading_text_cor{
-                    color:#000;
-                    font-weight:600;
-                    }
             </style>
-                <t >
-                <h2 >Patient Details</h2>
+                <t t-set="name_age_sex" t-value="o.name_age_sex.upper()" />
+        <t t-set="doctor" t-value="o.doctor.name.upper()" />
+                <t>
+                <div style="font-family: 'Lohit Tamil'; font-size: 14pt;">
+                <h2 class="text-center heading_text_cor">Patient Details</h2>
                 <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
-                <div>
-                <td style="border: 0px;width: 50%;">
-                    <p><strong>Name :</strong><span t-field="o.patient"/></p>
-                    <p><b>ID Number :</b> <span t-field="o.serial_number"/></p>
-                </td>
-                <div>
-                <td style="border: 0px;width: 50%;">
-            <img t-att-src="'data:image/png;base64,%s' % to_text(o.qr_code)" style="height:100px;width:100px;float:center;"/>
-                </td>
+                <div class="row">
+                <div class="col-6">
+                    <div><p><strong>Name :</strong><span t-esc="name_age_sex"/></p>
+                <p><b>ID Number :</b> <span t-field="o.serial_number"/></p></div>
                 </div>
+                <div class="col-6">
+                    <p><strong>Doctor :</strong><span t-esc="doctor"/></p>
                 </div>
+            </div>
                 </table>
             <t t-if="docs.diet_fields.diet_for.diet_line">
                 <div class="header_tag">
-     <h4 class="text-center heading_text_cor">Diet காலை</h4>
+     <h4 class="text-center heading_text_cor">Diet </h4>
      </div>
                  <table class="table table-bordered" style="border: 1px solid black;">
                      <thead>
@@ -81,7 +75,9 @@
                          </tr>
                      </tbody>
                      </table>
+                     
                      </t>
+                     </div>
                 </t>
         </t>
     </t>

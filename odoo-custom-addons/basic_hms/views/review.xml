@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<record id="current_ailments_tree_view" model="ir.ui.view">
+        <field name="name">current.ailments.tree.view</field>
+        <field name="model">current.ailments</field>
+        <field name="arch" type="xml">
+            <tree string="Ailments">
+                <field name="review_rec" />
+                <field name="patient_currents_ailments" />
+                <field name="patient_signs_symptoms" widget='many2many_tags'/>
+                <field name="write_date_id" />
+            </tree>
+        </field>
+    </record>
+
+    
+    <record id="partner_kanban_view_ailments" model="ir.ui.view">
+        <field name="name">current.ailments.kanban.view</field>
+        <field name="model">current.ailments</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" style='width:500px;height:500px'>
+                    <field name="review_rec"/>
+                    <field name="patient_currents_ailments" />
+                    <field name="patient_signs_symptoms" />
+                <templates>
+            <t t-name="kanban-box" style='width:700px;height:700px'>
+                <div t-attf-class="oe_kanban_content oe_kanban_global_click" >
+                    <div style='text-align:center;'>
+                        <strong class="o_kanban_record_title">
+                        <span><field name="review_rec" /></span>
+                        </strong>
+                    </div>
+                    <div class='row'>
+                        <div class='col-6'>
+                        <span class="o_kanban_record_title" >
+                            <field name="patient_currents_ailments" style='color:red;'/>
+                        </span></div>
+                        <div class="col-6" style='text-align:right;'>
+                            <strong><field name="duration" /></strong>
+                        </div>
+                    </div>
+                    <br></br>
+                    <div style='width:300px;'>
+                        <field name="patient_signs_symptoms" widget='many2many_tags' style='font-size: 22px !important;'/>
+                    </div>
+                    <div class="o_kanban_record_bottom">
+                        <div class="col" style='text-align:right;'>
+                            <strong><field name="write_date_id" /></strong>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+
+    <record model="ir.actions.act_window" id="action_view_doctor_ailments">            
+        <field name="name">Ailments</field>         
+        <field name="res_model">current.ailments</field>                 
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="domain">[]</field>  
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Current Ailments
+            </p>
+        </field>        
+    </record>
+
+    <record id="ailments_form" model="ir.ui.view">
+        <field name="name">Ailments Form</field>
+        <field name="model">current.ailments</field>
+        <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <form string="Ailments Form">
+                    <header>
+                    </header>
+                    <sheet>
+                        <div class="row">
+                            <div class="col-6" >
+                    <group>
+                            <field name ="review_rec" />
+                        </group></div>
+                        <div class="col-6" >
+                            <group style="float:right;">
+                            <field name ="patient_currents_ailments"/>
+                            <field name ="write_date_id" string='Date'/>
+                        </group> </div>
+                        </div>
+                        <div>
+                    <group >
+                        <div class ='row'>    
+                            <label for = 'patient_signs_symptoms' />  
+                            <field name ="patient_signs_symptoms" widget='many2many_tags'/>
+                        </div>
+                    </group></div>
+                </sheet>
+            </form>
+            </field>
+        </record>
+
+
+</odoo>

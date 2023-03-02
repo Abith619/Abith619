@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="voip_backend_assets" name="VOIP Client Assets" inherit_id="web.assets_backend">
+       <xpath expr="." position="inside">
+           <script type="text/javascript" src="/voip_sip_webrtc/static/src/js/notification.js"></script>
+           <script type="text/javascript" src="/voip_sip_webrtc/static/src/js/voip_system_tray.js"></script>
+           <link rel="stylesheet" href="/voip_sip_webrtc/static/src/css/notification.css"/>
+       </xpath>
+    </template>
+
+    <template id="voip_window" name="Voip Window">
+        <video id="remoteVideo" autoplay="autoplay" style="height:100%;width:100%;"/>
+        <video id="localVideo" autoplay="autoplay" muted="muted" style="display:none;"/>
+    </template>
+
+</odoo>

@@ -297,21 +297,22 @@
                 <field name ="scan_recs" widget="statinfo" />
             </button>
                 </div>
+                             <field name ="num_days" invisible='1'/>
                             <field name ="request" invisible='1'/>
-                    <field name ="num_days" invisible='1'/>
         <field name ="name" invisible='1'/>
-        <field name ="doctor_id" invisible='1'/>
                                 <field name ="patient_id" invisible='1'/>
                                 <field name ="price" invisible='1'/>
                                 <field name ="range" invisible='1'/>
                                 <field name ="company_id" invisible='1'/>
-                <div class="row">
+               <div class="row">
             <div class='col-3'>
-        <label for="mri_test" class='labtestcls' string='1.5 M.R.I STUDY'/>
+            <field name = 'select_mri'/>
+        <label for="select_mri" class='labtestcls' string='1.5 M.R.I STUDY'/>
             <div class=''>
                 <field name = 'mri_test' widget='many2many_checkboxes' />
-            </div>
-        <label for="doppler_test" class='labtestcls' string='DOPPLER STUDIES'/>
+            </div><br></br>
+            <field name = 'select_doppler'/>
+        <label for="select_doppler" class='labtestcls' string='DOPPLER STUDIES'/>
             <div class=''>
                 <field name = 'doppler_test' widget='many2many_checkboxes'/>
             </div>
@@ -319,44 +320,46 @@
         </div>
 
             <div class="col-3">
-        <label for="other_test" class='labtestcls' string='OTHER STUDIES'/>
+            <field name = 'select_other'/>
+        <label for="select_other" class='labtestcls' string='OTHER STUDIES'/>
             <div class=''>
                 <field name = 'other_test' widget='many2many_checkboxes' />
-            </div>
-        <label for="ct_angiogram" class='labtestcls' string='C.T ANGIOGRAM'/>
+            </div><br></br>
+            <field name = 'select_angio'/>
+        <label for="select_angio" class='labtestcls' string='C.T ANGIOGRAM'/>
             <div class=''>
                 <field name = 'ct_angiogram' widget='many2many_checkboxes'/>
-            </div>
-        <label for="ultra_sound_test" class='labtestcls' string='ULTRASOUND STUDY'/>
+            </div><br></br>
+            <field name = 'select_us'/>
+        <label for="select_us" class='labtestcls' string='ULTRASOUND STUDY'/>
             <div class=''>
                 <field name = 'ultra_sound_test' widget='many2many_checkboxes' />
             </div>
         </div>
 
-        <div class="col-3">
-        <label for="robotic_clinical_test" class='labtestcls' string='FULLY ROBITIC CLINICAL LAB'/>
+        <div class="col-3"><br></br>
+        <field name = 'select_robotic'/>
+        <label for="select_robotic" class='labtestcls' string='ROBITIC CLINICAL LAB'/>
             <div class=''>
                 <field name = 'robotic_clinical_test' widget='many2many_checkboxes' />
             </div>
         
         </div>
         <div class="col-3">
-        <label for="ct_test" class='labtestcls' string='C.T STUDY'/>
+        <field name = 'select_ct_study'/>
+        <label for="select_ct_study" class='labtestcls' string='C.T STUDY'/>
             <div class=''>
                 <field name = 'ct_test' widget='many2many_checkboxes'/>
-            </div>
-        <label for="ct_guided_intervention" class='labtestcls' string='C.T GUIDED INTERVENTION'/>
+            </div><br></br>
+            <field name = 'select_ct_intervention'/>
+        <label for="select_ct_intervention" class='labtestcls' string='C.T GUIDED INTERVENTION'/>
         <div class=''>
             <field name = 'ct_guided_intervention' widget='many2many_checkboxes'/>
         </div>
             </div>
         </div>
             </sheet>
-            <div class="oe_chatter">
-                <!-- <field name="message_follower_ids" widget="mail_followers" string="mail"/> -->
-                <field name="message_ids" widget="mail_thread" string= "Mail"/>
-                <field name="activity_ids" widget="mail_activity"/>
-            </div>
+
             </form>
             </field>
         </record>
@@ -365,7 +368,8 @@
                 <field name="res_model">scan.test</field>           
                 <!-- <field name="view_type">form</field>-->
                 <field name="view_mode">tree,form,pivot,graph</field>
-                <field name="domain">[]</field>            
+                <field name="domain">[]</field>    
+                <field name="context">{'search_default_write_date_id': 1}</field>        
                 <field name="help" type="html">                
                     <p class="oe_view_nocontent_create">Scan Test
                     </p>            
@@ -382,8 +386,8 @@
                         <field name ="ebook_id" />
                         <field name ="patient_id" />
                         <field name="write_date"/>
-                        <field name ="doctor_id" />
-                        <field name="patient_activity" readonly="1" widget="badge" decoration-danger="patient_activity == 'discontinued'" decoration-warning="patient_activity in ('wait', 'bill')" decoration-success="patient_activity in ('completed', 'scans', 'labs', 'pres')"/>
+<field name="patient_activity" readonly="1" widget="badge" decoration-danger="patient_activity in ('doctor','doc','lab','scan','pres', 'bill')" 
+                    decoration-warning="patient_activity in ('discontinued', 'wait')" decoration-success="patient_activity in ('completed', 'scans', 'labs')"/>
                     </tree>
                 </field>
             </record>
@@ -401,7 +405,7 @@
                     <!-- <filter string="Doctor" name="doctor" domain="[('doctor', '!=', '')]"/> -->
                         <!-- <filter string="Doctor" name="doctor" context="{'group_by': 'doctor'}"/> -->
                         <filter string="Branch" name="company_id" context="{'group_by': 'company_id'}"/>
-                        <filter string="Today" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
+                         <filter string="Today" name="write_date_id" separator="1" domain="[('write_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
                         <filter string="Yesterday" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
                         <filter string="Tomorrow" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
                         

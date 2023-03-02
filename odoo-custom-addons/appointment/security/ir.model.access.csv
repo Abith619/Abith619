@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_many_times,access.many.times,model_many_times,base.group_user,1,1,1,1
+
+access_day_slot,access.day.slot,model_day_slot,base.group_user,1,1,1,1
+
+access_appointment_time,access.appointment.time,model_appointment_time,base.group_user,1,1,1,1
+
+access_consultation_hour,access.consultation.hour,model_consultation_hour,base.group_user,1,1,1,1
+

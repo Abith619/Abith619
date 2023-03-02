@@ -4,14 +4,11 @@
 from ast import Pass
 from odoo import api, fields, models, _
 #from datetime import datetime, date
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta
 from odoo.exceptions import UserError
 import datetime
 from dateutil.relativedelta import relativedelta
 from odoo.exceptions import  ValidationError
-import qrcode
-import base64
-from io import BytesIO
 
 
 
@@ -33,9 +30,7 @@ class medical_appointment(models.Model):
 			('outpatient', 'Outpatient'),
 			('inpatient', 'Inpatient'),
 		], 'Patient status', sort=False,default='outpatient')
- 
-	# patient_name = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string='Patient Name',required=True)
-	patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string='Patient Name')
+	patient_id = fields.Many2one('res.partner',domain=[('is_patient','=',True)],string='Patient Name',required=True)
 	urgency_level = fields.Selection([
 			('a', 'Normal'),
 			('b', 'Urgent'),
@@ -43,7 +38,7 @@ class medical_appointment(models.Model):
 		], 'Urgency Level', sort=False,default="b")
 	appointment_date = fields.Datetime('Appointment Date')
 	appointment_end = fields.Datetime('Appointment End')
-	doctor_id = fields.Many2one('res.partner',domain=[('is_doctor','=',True)],string='Doctor')
+	doctor_id = fields.Many2one('res.partner',domain=[('is_doctor','=',True)],string='Doctor',required=True)
 	no_invoice = fields.Boolean(string='Bill exempt',default=True)
 	validity_status = fields.Selection([
 			('invoice', 'Bill'),
@@ -85,84 +80,52 @@ class medical_appointment(models.Model):
 	company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.prescription.order'))
 	feedback = fields.Many2many('medical.feedback', string="How you came to know about Daisy Health Care(P)LTD.")
 
-	types_app = fields.Selection([('Tele','Telecaller'),('web','Website')], string='', default='Tele')
-	pin_code = fields.Char(string="Pin Code")
-	state_id=fields.Many2one('res.country.state',string="State",domain="[('country_id', '=', country)]")
-	country=fields.Many2one('res.country',string="Country")
-	reg_type=fields.Selection([('dir',"Direct"),('on',"Online")],string="Registration Type")
-	online_type = fields.Selection([('app',"Appointment"),('rev',"Review"),('package','Package'),('stop',"Stopped"),('cam','Camp')], string='Online Type')
-	direct_type = fields.Selection([('app',"Appointment"),('rev',"Review"),('package','Package'),('stop',"Stopped"),('cam','Camp')], string='Direct Type')
-	date_of_birth = fields.Date(string="Date of Birth")
-	address = fields.Char(string="Address")
-	qr_code = fields.Binary("QR Code", attachment=True, compute='generate_qr_code')
-	
-	
-	def generate_qr_code(self):
-		# for rec in self:
-		p_details={
-			'Website':'https://dev.daisy.mo.vc/appointment',
-			# 'qr_type':'qr',
-		}
-		qr = qrcode.QRCode(
-			version=1,
-			error_correction=qrcode.constants.ERROR_CORRECT_H,
-			box_size=10,
-			border=4,
-		)
-		qr.add_data(p_details)
-		qr.make(fit=True)
-		img = qr.make_image()
-		temp = BytesIO()
-		img.save(temp, format="PNG")
-		qr_image = base64.b64encode(temp.getvalue())
-		self.qr_code = qr_image
-            
-	@api.onchange('date_of_birth')
-	def onchange_age(self):
-		for rec in self:
-			if rec.date_of_birth:
-				d1 = rec.date_of_birth
-				d2 = date.today()
-				rd = relativedelta(d2, d1)
-				rec.age = str(rd.years) + "y" +" "+ str(rd.months) + "m" +" "+ str(rd.days) + "d"
-			else:
-				rec.age = "Age"
-    
-	mobile = fields.Char(required=True,readonly=True)
-	message = fields.Char(string="message", required=True, default='Hi')
+	types_app = fields.Selection([('Tele','Telecaller'),('web','Website')], string='')
 
+
+	# @api.onchange("patient_selection")
+    # def new_change(self):
+    #     if patient_selection == 'new':
+    #         return {'domain':{'patient_id':rage:('id','in',None)]}}
+	
 	def send_msg(self):
-		report_template_id = self.env.ref('basic_hms.report_print_patient_qr_code')._render_qweb_pdf(self.id)
-		data_record = base64.b64encode(report_template_id[0])
-		ir_values = {
-			'name': "Customer Report",
-			'type': 'binary',
-			'datas': data_record,
-			'store_fname': data_record,
-			'mimetype': 'application/x-pdf',
-			}
-		data_id = self.env['ir.attachment'].create(ir_values)
-		# raise ValidationError(self.contact_number)
-		return {
-			'name': "Whatsapp Message",
-      		'type': 'ir.actions.act_window',
-        	'view_mode': 'form',
-        	'res_model': 'whatsapp.wizard',
-            'target': 'new',
-            'context': {
-			'default_user_id':self.patient_id.id,
-			'default_mobile':self.contact_number,
-			'default_message':'Hi, {}! Your Appointment Slot for {} has been Booked at {} , {} \n Thank You !'.format(self.patient_id.name,self.doctor_id.name,self.dates,self.appointment_from),
-			'default_attachment_id':[(6, 0, [data_id.id])]
-			}
-        }
-        
+		if self.whatsapp_check == True:
+			return {
+					'type': 'ir.actions.act_window',
+					'name': 'Whatsapp Message',
+					'res_model': 'whatsapp.wizard',
+					'target': 'new',
+					'view_mode': 'form',
+					'view_type': 'form',
+					'context': {'default_user_id': self.patient_id.id,
+					'default_mobile':self.phone_number,
+					'default_message':"Hi "+self.patient_id.name+",\n\nYour Appointment is fixed with "+self.doctor_id.name+"\nFeedback : https://www.mouthshut.com/product-reviews/Daisy-Hospital-Chromepet-Chennai-reviews-925999566"
+					},
+					}
+		else:
+			return {
+				'type': 'ir.actions.act_window',
+				'name': 'Whatsapp Message',
+				'res_model': 'whatsapp.wizard',
+				'target': 'new',
+				'view_mode': 'form',
+				'view_type': 'form',
+				'context': {'default_user_id': self.patient_id.id,
+				'default_mobile':self.contact_number,
+				'default_message':"Hi "+self.patient_id.name+",\n\nYour Appointment is fixed with "+self.doctor_id.name+"\nFeedback : https://www.mouthshut.com/product-reviews/Daisy-Hospital-Chromepet-Chennai-reviews-925999566"
+				},
+				}
+
+
+
 	@api.onchange('appoinment_through')
 	def fee_change(self):
 		if self.appoinment_through =='onl':
 			self.fees=float(500)
 		else:
 			self.fees=float(150)
+
+    		
 
 	# @api.onchange('dates','doctor_id')
 	# def roll(self):
@@ -175,7 +138,7 @@ class medical_appointment(models.Model):
 	# 	if vals >= 20:
 	# 		raise ValidationError("Appointment Slots are full")
 
-	# @api.depends('appointment_from')
+	# @api.onchange('appointment_from')
 	# def date_appointment(self):
 	# 	l1 = []
 
@@ -188,8 +151,6 @@ class medical_appointment(models.Model):
 	# 			l1.append(slots)
 	# 			booked_slots = [i for i in all_slots if i not in l1]
 	# 			raise ValidationError("Please Select from Available Slots: {}".format(booked_slots))
-
-
 
 	@api.model
 	def create(self, vals):
@@ -212,11 +173,12 @@ class medical_appointment(models.Model):
         'res_model': 'medical.patient',
 		'context': {
 				'default_patient_id':self.patient_id.id,
-				'default_reg_type':'on',
 				'default_sex':self.gender,
 				'default_contact_no':self.phone_number,
+				# 'default_patient_signs_symptoms':self.patient_signs_symptoms.id,
 				'default_contact_number':self.contact_number,
 				'default_doctors':self.doctor_id.id,
+				# 'default_related_field':self.name,
 				'default_dates':datetime.datetime.now(),
 				'default_appointment_from':self.appointment_from,
 				'default_treatment':self.treatment_for.id,
@@ -226,16 +188,20 @@ class medical_appointment(models.Model):
 				'default_reg_type':'app',
 				'default_stages':'on',
 				'default_treatment_for':self.treatment_for.id,
+				# 'default_patient_movement':datetime.now()
             },
 		}		
 		val = self.env['res.partner'].search([], order='id desc', limit=1)
 		val.write({
 			'name':self.patient_id.name,
-			# 'name':self.patient_name,
 			'mobile':self.phone_number,
 			'patient_gender':self.gender,
 			'is_patient':'True',
 			})
+		
+		# res=self.env['medical.patient'].search([('related_field','=',self.name)])
+		# for symptom in res.patient_signs_symptoms:
+		# 	res.update({'patient_signs_symptoms':symptom.id})
 		return ces
 
 	@api.onchange('patient_id')
@@ -249,6 +215,7 @@ class medical_appointment(models.Model):
 	def number_swap(self):
 		if self.whatsapp_check == True:
 			self.contact_number= self.phone_number
+
 
 
 	@api.onchange('duration')

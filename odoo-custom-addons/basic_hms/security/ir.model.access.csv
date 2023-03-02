@@ -344,8 +344,8 @@ access_file_room,medical.group.file.room,model_file_room,base.group_user,1,1,1,1
 
 access_assign_workout,medical.group.assign.workout,model_assign_workout,base.group_user,1,1,1,1
 
-ebook_pat_doc,medical.doctor,model_medical_doctor,basic_hms.group_ebook_pat,1,1,1,1
-ebook_pat_doc,medical.doctor,model_medical_doctor,base.group_user,1,1,1,1
+ebook_pat_doccc,medical.doctor,model_medical_doctor,basic_hms.group_ebook_pat,1,1,1,1
+ebook_pat_docs,medical.doctor,model_medical_doctor,base.group_user,1,1,1,1
 
 access_document_add_line,document.add.line,model_document_add_line,base.group_user,1,1,1,1
 access_in_patient,in.patient,model_in_patient,base.group_user,1,1,1,1
@@ -437,4 +437,3 @@ access_lab_menu,lab.menu,model_lab_menu,base.group_user,1,1,1,1
 access_scan_menu,scan.menu,model_scan_menu,base.group_user,1,1,1,1
 
 access_bill_ip_therapy,bill.ip.therapy,model_bill_ip_therapy,base.group_user,1,1,1,1
-access_therapy_ebook,therapy.ebook,model_therapy_ebook,base.group_user,1,1,1,1

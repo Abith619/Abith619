@@ -18,9 +18,8 @@
     <field name="name">Registration Information</field>
     <field name="res_model">patient.document</field>
     <field name="binding_view_types">form</field>
-    <field name="view_mode">tree,form</field>
+    <field name="view_mode">tree</field>
 </record>
 
-<menuitem id="menu_pat_doc" name="Patient Document" parent= "main_menu_configartion" action="action_document_patient"/>
 
 </odoo>

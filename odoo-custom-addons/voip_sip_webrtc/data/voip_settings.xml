@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="default_inactivity_time" model="ir.default">
+        <field name="model">voip.settings</field>
+        <field name="name">set</field>
+        <field name="field">inactivity_time</field>
+        <field name="value">10</field>
+    </record>
+
+        <function id="default_ring_duration"
+            model="ir.default" name="set"
+            eval="('voip.settings', 'ring_duration', 30)"/>
+
+        <function id="default_ringtone"
+            model="ir.default" name="set"
+            eval="('voip.settings', 'ringtone_id', ref('old_school') )"/>
+
+        <function id="default_codec_id"
+            model="ir.default" name="set"
+            eval="('voip.settings', 'codec_id', ref('pcmu') )"/>
+
+    <!-- </data> -->
+</odoo>

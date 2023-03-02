@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="voip_settings_view_form" model="ir.ui.view">
+        <field name="name">voip.settings.view.form</field>
+        <field name="model">voip.settings</field>
+        <field name="arch" type="xml">
+            <form class="oe_form_configuration">
+                <header>
+                    <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                    <button string="Cancel" type="object" name="cancel" class="oe_link"/>
+                </header>
+                <h2>Webrtc Settings</h2>
+                <group>
+                    <!--<field name="inactivity_time"/>-->
+                    <field name="ringtone_id"/>
+                    <field name="ring_duration"/>
+                </group>
+                <h2>SIP Settings</h2>
+                <group>
+                    <field name="server_ip"/>
+                    <button type="object" name="find_outgoing_ip" string="Find Outgoing Local IP"/>
+                    <field name="codec_id"/>
+                    <field name="record_calls"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="voip_settings_action" model="ir.actions.act_window">
+        <field name="name">VOIP Settings</field>
+	<field name="res_model">voip.settings</field>
+	<field name="view_mode">form</field>
+	<field name="target">inline</field>
+    </record>
+
+</odoo>

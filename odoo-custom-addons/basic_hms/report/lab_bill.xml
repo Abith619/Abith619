@@ -2,36 +2,41 @@
 <odoo>
 <data>
     <record id="paperformat_lab" model="report.paperformat">
-        <field name="name">Custom Paper</field>
-        <field name="default" eval="True"/>
-        <field name="format">custom</field>
-        <field name="page_height">120</field>
-        <field name="page_width">260</field>
-        <field name="orientation">Portrait</field>
-        <field name="margin_top">15</field>
-        <field name="margin_bottom">0</field>
-        <field name="margin_left">0</field>
-        <field name="margin_right">0</field>
-        <field name="header_line" eval="False" />
-        <field name="header_spacing">25</field>
-        <field name="dpi">90</field>
+        <field name="name">A5 Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">210</field>
+            <field name="page_width">148</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">5</field>
+            <field name="dpi">130</field>
     </record>
     <template id="basic_hms.lab_bils_report" name="Diet Plan">
         <t t-call="web.external_layout">
             <t t-call="web.html_container">
                <t t-foreach="docs" t-as="o">
                    <t >
+                   <t t-set="name_age_sex" t-value="o.name_age_sex.upper()" />
+                    <t t-set="doctor_id" t-value="o.doctor_id.name.upper()" />
                     <td style="border: 0px;width: 50%;">
                         <div class="header_tag">
                             <h4 class="text-center heading_text_cor"><strong>Lab Test</strong></h4>
                             </div>
                         <div  >
                             <div class='float-left'>
-                                <p><strong>SL NO :</strong><span t-field="o.ebook_id"/></p> 
-                                <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p>
-                                <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p></div>
+                                <t t-if='o.ebook_id'>
+                                    <p><strong>SL NO :</strong><span t-field="o.ebook_id"/></p> </t>
+                                <t t-if='not o.ebook_id'>
+                                    <p><strong>SL NO :</strong><span t-field="o.bill_no"/></p> </t> 
+                                <p><strong>Bill Date :</strong><span t-field="o.lab_date"/></p>
+                                <p><strong>Patient Name :</strong><span t-esc="name_age_sex"/></p></div>
                             <div class="float-right" >
-                                <p><strong>Gender :</strong><span t-field="o.sex"/></p>
+                                <p><strong>Doctor :</strong><span t-esc="doctor_id"/></p>
                                 <p><strong>Contact Number :</strong><span t-field="o.contact_no"/></p>
                                 <p><strong>Payment Type :</strong><span t-field="o.payment_type"/></p>
                     </div>
@@ -52,17 +57,12 @@
                     <tbody>
                          <tr t-foreach='docs.lab_bill' t-as='line'>
                        <td style="border: 1px solid black;">
-                       <span t-field="line.name"/>
+                            <span t-field="line.name"/>
                        </td>
-                       <!-- <td style="border: 1px solid black;">
-                       <span t-field="line.date"/>
-                       </td> -->
-                    
                        <td style="border: 1px solid black;">
-                        <span t-field="line.bill_amount"/>
+                            <span t-field="line.bill_amount"/>
                         </td>
                         </tr>
-                      
                     </tbody>
                     </table>
                     <table class="table table-sm" id="box" style="width:28%; float:right;margin-left: 0px; border: 1px solid black;">
@@ -73,11 +73,16 @@
                             </td>
                         </tr>
                     </table>
+                     <br></br><br></br><br></br>
+                     <div style='text-align:right'>
+                        <h6><strong>DAISY HOSPITAL</strong></h6>
+                        <br></br><br></br>
+                        <h6 ><strong> Authorised Signatory </strong></h6>
+                    </div>
                 </t>
             </t>
         </t>
     </t>
-   
 </template>
  </data>
 </odoo>

@@ -8,8 +8,9 @@
                 <form string="Patient">
                     
                     <header>   
-                        <button name="assign_button" type="object" string="Payment" class="oe_highlight"/>
+                        <button name="assign_button" type="object" string="Paid" class="oe_highlight"/>
                         <button name="no_fees" type="object" string="No Consulting Fees" class="oe_highlight"/>
+                
                         <field name ="stages" widget="statusbar" style="display:none !important"/>
 
                     </header>
@@ -19,28 +20,32 @@
                                 <field name ="payment" widget="statinfo"/>
                             </button>
                 </div>  
-                <!-- <field name="name"/> 
-                qr_type -->
+
                 <field name="name"/> 
-                <div class="row">
-                    <div class="col-6">
-                    </div>
-                    <div class="col-2">
-                        <div><label style="float:center;" for="qr_code" string="Qr Code" /></div>
-                        <field name="qr_code" widget='image' class="oe_avatar" style="float:left;" force_save='1' readonly="1"/>
-                    </div>
-                </div>        
+              <div class="row">
+                <div class="col-4">
+                <div><label style="float:center;" for="patient_photo" string="Photo" /></div>
+                    <field name="patient_photo" widget='image' style="width:50%;"/>
+                </div>
+                <div class="col-6">
+                </div>
+                <div class="col-2">
+                    <div><label style="float:center;" for="qr_code" string="Qr Code" /></div>
+                    <field name="qr_code" widget='image' class="oe_avatar" style="float:left;width:50%;" force_save='1' readonly="1"/>
+                </div>
+            </div>
+                                     
                             <group>
                                 <group class="col-5"> 
-                                    <field name ="reg_type" widget="radio" options="{'horizontal': true}" />
+                                    <field name ="reg_type" widget="radio" options="{'horizontal': true}"/>
                                     <field name ="online_type" widget="radio" options="{'horizontal': true}" attrs="{'invisible': [('reg_type','!=', 'on')]}"/>
                                     <field name ="direct_type" widget="radio" options="{'horizontal': true}" attrs="{'invisible': [('reg_type','!=', 'dir')]}"/>
                                     <field name='review_type' widget="radio" options="{'horizontal': true}" attrs="{'invisible': [('online_type','!=', 'rev'),('direct_type','!=', 'rev')]}"/>
                                 </group>
-
-                            <group  >
+                             <group  >
                                  <field name="qr_type" widget="radio" options="{'horizontal': true}" invisible='1'/>
                         </group>
+
                         </group>
                         <group>
                             <div class="row">
@@ -55,7 +60,7 @@
                                 <field name="marital_status" />
                                 <label for="date_of_birth" string="DOB" />
                                 <div class="o_address_format">
-                                    <field name="date_of_birth" class="o_address_city" placeholder="dd-mm-yyyy" data-date-format="DD-MM-YYYY"/>
+                                    <field name="date_of_birth" class="o_address_city" placeholder="dd-mm-yyyy" />
                                     <label for="age" style="font-weight: bold !important;color: #333;"  font-family= "Franklin Gothic Medium" />
                                     <field name="age" class="o_address_state" readonly='0' style="width: 45%;"/>
                                 </div>
@@ -70,6 +75,7 @@
                                 
                                 <field name ="bmi_value" />
                                 <field name="patient_activity" invisible='1'/>
+                                <field name="name_age_sex" invisible='1'/>
                             </group>
 
                              <group>
@@ -84,7 +90,7 @@
                                 </div> 
                                 <field name="address"/>
 
-                                <label for="city" string=" " />
+                                <label for="city" string=" " />  
                                 <div class="o_address_format">
                                 <field name="city" class="o_address_state" placeholder="City"  style="width: 45%;" options="{'no_create':True,'no_create_edit':True,'no_open': True}"/>
                                 <field name="pin_code" class="o_address_state" style="width: 45%;" placeholder="Pin Code" options="{'no_create':True,'no_create_edit':True,'no_open': True}"/>
@@ -92,7 +98,7 @@
                             </div>
                             <label for="state" string=" " />    
                                 <div class="o_address_format">
-                                    <field name="state" placeholder="State" class="o_address_city" style="width: 45%;"/>
+                                    <field name="state" placeholder="State" class="o_address_city" options="{'no_create':True,'no_create_edit':True,'no_open': True}" style="width: 45%;"/>
                                     <field name="country" class="o_address_state" placeholder="Country"  style="width: 45%;" options="{'no_create':True,'no_create_edit':True,'no_open': True}"/>
                                 </div>
                             <field name="abroad_addr"/>
@@ -124,8 +130,9 @@
                                 <field name="duration_ailmenmts" string="Duration of Ailment" invisible='1'/>
                                 
                                 <field name ="doctors" attrs="{'readonly': [('stages','=', 'done')]}" options="{'no_create': True, 'no_create_edit':True}" />
-                                    <field name="dates" widget="date" attrs="{'invisible': [('doctors','=', False)]}" class="o_address_city" />
-
+                                    <field name="dates" widget="date" attrs="{'invisible': [('doctors','=', False)]}" class="o_address_city" invisible='0'/>
+                                    <field name="appoint_times"  attrs="{'invisible': [('doctors','=', False)]}"  />
+                                    <field name="days_slot"  attrs="{'invisible': [('doctors','=', False)]}"  />
                                     <field name="appointment_from" attrs="{'invisible': [('dates','=', False)]}" class="o_address_state"/>
                                     <field name= 'treatment_for' />
                                     <!-- <field name ="patient_signs_symptoms" widget="many2many_tags"/> -->
@@ -158,11 +165,10 @@
 
                     <field name='fees' string='Fees'/>
                     <field name ="appoinment_by"/>
-                    <field name = 'data_value' />
+                    <field name = 'data_value' widget="many2many_tags" options="{'no_create':True,'no_create_edit':True,'no_open': True}"/>
                  </group>
                    <group>
                     <field name ="status_report" invisible='1'/>
-                    <field name ="consulting_fees" invisible='1'/>
                 </group>
                 </group>
                 <!-- <label for = 'adoption_agreement' style="font-size: 25px !important;font-weight: 600;padding-left: 550px;" string ="Adoption Agreement"/>
@@ -184,7 +190,9 @@
                                 <field name="message_ids" widget="mail_thread" string= "Mail"/>
                                 <field name="activity_ids" widget="mail_activity"/>
                             </div>
+
                 </form>
+
             </field>
         </record>
 <!--Search View-->
@@ -194,7 +202,7 @@
     <field name="model">medical.patient</field>
     <field name="type">search</field>
     <field name="arch" type="xml">
-        <search string="EBook">
+        <search string="EBook"> 
             <field name="name"/>
             <field name="contact_no"/>
             <field name="patient_id"/>
@@ -206,15 +214,15 @@
             <filter string="Consultation Cases" name="status_report" separator="1" domain="[('status_report','=','consult')]"  />
 
             <filter string="QR Scan" name="qr_type" separator="1" domain="[('qr_type','=','qr')]"  />
-            <filter string="Registration Type" name="reg_type" domain="['|',('reg_type','=','on'),('reg_type','=','dir')]" context="{'group_by': 'create_date:month'}" />
+            <filter string="Registration Type" name="reg_type" domain="[('reg_type','=','rev')]" context="{'group_by': 'create_date:month'}" />
             <filter string="Camp" name="reg_type" separator="1" domain="['|',('online_type','=','cam'),('direct_type','=','cam')]"/>
             <filter string="Medicine Package" name="reg_type" separator="1" domain="['|',('online_type','=','package'),('direct_type','=','package')]"/>
             <filter string="Online" name="reg_type" separator="1" domain="[('reg_type','=','on')]"/>
-            <filter string="Review Cases" name="reg_type" separator="1" domain="['|',('online_type','=','rev'),('direct_type','=','rev')]" />
+            <filter string="Review Cases" name="reg_type" separator="1" domain="['|',('online_type','=','rev'),('direct_type','=','rev')]"/>
             <filter string="Blood Report" name="reg_type" separator="1" domain="[('status_report','=','br')]"/>
             <filter string="Stopped Cases" name="reg_type" separator="1" domain="['|',('online_type','=','stop'),('direct_type','=','stop')]"/>
             <filter string="Appointment" name="reg_type" separator="1" domain="['|',('online_type','=','app'),('direct_type','=','app')]"/>
-            <filter string="Today" name="dates" separator="1" domain="[('dates','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
+            <filter string="Today" name="today_dates" separator="1" domain="[('dates','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
             <filter string="Yesterday" name="dates" separator="1" domain="[('dates','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
             <filter string="Tomorrow" name="dates" separator="1" domain="[('dates','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
             <filter string="Next Month" name="dates" separator="1" domain="[('dates','&gt;=',(datetime.date.today()+relativedelta(days=31)).strftime('%Y-%m-%d'))]"/>
@@ -222,6 +230,7 @@
         </search>
     </field>
 </record>
+
 
 
         <record id="medical_patients_tree_view" model="ir.ui.view">
@@ -237,14 +246,15 @@
                     <field name="doctors" readonly="1"/>
                     <field name="dates" readonly="1"/>
                     <field name="contact_no" readonly="1"/>
-                    <field name="status_report"/>
-                    <field name="patient_activity" readonly="1" widget="badge" decoration-danger="patient_activity == 'discontinued'" decoration-warning="patient_activity in ('wait', 'bill')" decoration-success="patient_activity in ('completed', 'scans', 'labs', 'pres')"/>
-                    <!-- <field name="payment_state" widget="badge" decoration-danger="payment_state == 'not_paid'" decoration-warning="payment_state in ('partial', 'in_payment')" decoration-success="payment_state in ('paid', 'reversed')" attrs="{'invisible': [('payment_state', 'in', ('invoicing_legacy'))]}"/> -->
-
-                    <!-- <field name="data_value"/> -->
-                </tree>
+                    <field name="direct_type" readonly="1"/>
+                    <!-- <field name="status_report"/> -->
+<field name="patient_activity" readonly="1" widget="badge" decoration-danger="patient_activity in ('doctor','doc','lab','scan','pres', 'bill')" 
+                    decoration-warning="patient_activity in ('discontinued', 'wait')" decoration-success="patient_activity in ('completed', 'scans', 'labs')"/>                </tree>
             </field>
         </record>
+
+
+
 
     <record id="medical_patient_pivot_view" model="ir.ui.view">
         <field name="name">medical.appointment.view.pivot</field>
@@ -286,6 +296,7 @@
         <field name="res_model">medical.patient</field>
         <field name="binding_view_types">form</field>
         <field name="view_mode">tree,form,pivot,graph,calendar</field>
+        <field name="context">{'search_default_today_dates': 1}</field>
     </record>
 
 
@@ -295,6 +306,7 @@
         <!-- <act_window id="action_view_lab_id" name="Lab Reports"
             res_model="medical.lab" binding_model="medical.patient"
             view_mode="tree,form" domain="[('patient_id', '=', active_id)]" />
+
         <act_window id="action_psc_id" name="PSC"
             res_model="medical.patient.psc" binding_model="medical.patient"
             view_mode="tree,form" domain="[('patient_id', '=', active_id)]" /> -->

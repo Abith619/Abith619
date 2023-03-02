@@ -1,6 +1,5 @@
 from odoo import api, fields, models
 import datetime
-from odoo.exceptions import ValidationError
 
 class Prescribediet(models.Model):
     _name = 'prescribe.diet'
@@ -20,10 +19,10 @@ class Prescribediet(models.Model):
     protein_diet=fields.Many2many('set.protein',string="Protein Diet")
     diet_seq = fields.Many2one('prescribe.diet',string='Diet S.No')
     disclaimer = fields.Char(string='')
-    num_days = fields.Selection([('1','Day1'),('2','Day2'),('3','Day3'),('4','Day4'),('5','Day5'),
-                                ('6','Day6'),('7','Day7'),('8','Day8'),('9','Day9'),('10','Day10')])
     serial_number = fields.Char(string="Patient ID", readonly=True,copy=False,required=True, default='ID')
     patient_ids=fields.Char(string="Patient",default=lambda self: self.env['medical.doctor'].browse(self.env['medical.doctor']._context.get("patient.id")))
+    num_days = fields.Selection([('1','Day1'),('2','Day2'),('3','Day3'),('4','Day4'),('5','Day5'),
+                                ('6','Day6'),('7','Day7'),('8','Day8'),('9','Day9'),('10','Day10')])
     
     diet_line = fields.One2many('assign.diet.lines','names',string="Diet Advisied")
     diet_line1 = fields.One2many('assign.diet.six','name',string="Diet Advisied")
@@ -49,6 +48,7 @@ class Prescribediet(models.Model):
             'patient_activity':'doc',
         })
 
+
     @api.onchange('name')
     def onchange_task(self):
         for rec in self:
@@ -67,11 +67,12 @@ class Prescribediet(models.Model):
                 lines.append((0,0,val))
             rec.diet_line=lines
             rec.disclaimer=self.name.disclaimer
-           
+
     @api.model
     def create(self, vals):
         vals['serial_number'] = self.env['ir.sequence'].next_by_code('prescribe.diet') or 'DT'
         result = super(Prescribediet, self).create(vals)
+
         if result.num_days == '1':
             diet_pages = self.env['in.patient'].search([('patient_id','=',result.patient_id.id)])
             diet_day_append=[]
@@ -187,6 +188,8 @@ class Prescribediet(models.Model):
         diet_page.write({'diet_fields':diet_lines,
             'diet_id':result.id})
         return result
+
+
 
 
 class PrescribeDietAssign(models.Model):

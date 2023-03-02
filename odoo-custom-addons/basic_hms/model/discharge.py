@@ -13,7 +13,7 @@ class DischargeSummary(models.Model):
     name = fields.Char(string='Name')
     patient_id = fields.Many2one('res.partner', string='Patient Name',
                                  domain=[('is_patient','=',True)], required=True)
-    chief_complaint = fields.Many2many('medical.pathology',string='Chief Complaints')
+    chief_complaint = fields.Many2one('medical.pathology',string='Chief Complaints')
     associated_complaint = fields.Char(string='Associated Complaints')
     history_complaint = fields.Char(string='History of Present Illness')
     treat_history = fields.Char(string='Treatment History')

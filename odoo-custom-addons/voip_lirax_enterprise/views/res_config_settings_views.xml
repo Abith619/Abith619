@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.inherit.onsip</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="voip.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <label for="module_voip" position="replace">
+                <label for="" string="LiraX (VoIP)"/>
+            </label>
+            <label for="pbx_ip" position="replace"/>
+            <field name="pbx_ip" position="replace"/>
+            <xpath expr="//div[hasclass('content-group')]/div[hasclass('row')][1]" position="replace"/>
+        </field>
+    </record>
+
+</odoo>

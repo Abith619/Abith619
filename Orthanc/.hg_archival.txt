@@ -1,0 +1,6 @@
+repo: 02f7a0400a911dee22d2e761b21b6cab67ede076
+node: d308adc963d5292e350830af2ec1a2e5cdecb6ff
+branch: OrthancWebViewer-2.7
+latesttag: null
+latesttagdistance: 271
+changessincelatesttag: 280

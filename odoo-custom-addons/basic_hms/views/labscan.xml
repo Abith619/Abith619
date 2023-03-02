@@ -12,7 +12,6 @@
 
         <sheet>
         <button class="oe_highlight" name="document_button"  type="object" string='Upload Result'/>
-        <button name="send_msg" type="object" string="Whatsapp" class="oe_highlight"/>
         <div class="oe_button_box" name="button_box">     
         <button class="oe_stat_button" name="lab_button"  type="object" icon="fa-clipboard">
             <field name ="lab_recs" widget="statinfo" />
@@ -27,113 +26,125 @@
                                 <field name ="range" invisible='1'/>
                                 <field name ="test_range" invisible='1'/>
                                 <field name ="company_id" invisible='1'/>
-                                <field name ="doctor_id" invisible='1'/>
-
     <div class='row'>
 
 <!-- colum1 -->
     <div class='col-3'>
-        <label for="hemo_coag12" string="HAEMATOLOGY" class='labtestcls'/>
+        <field name = 'select_all'/>
+        <label for="select_all" string="HAEMATOLOGY" class='labtestcls' />
         <div class=''>
-            <field name = 'hemo_coag12' widget='many2many_checkboxes' />
-        </div>
-            <label for="hemo_coag1" string="URINE" class='labtestcls'/>
+            <field name = 'hemo_coag12' widget='many2many_checkboxes' attrs="{'readonly': [('select_all','=', True)]}"/>
+        </div><br></br>
+        <field name = 'select_urine'/>
+            <label for="select_urine" string="URINE" class='labtestcls'/>
         <div class=''>
-            <field name = 'hemo_coag1' widget='many2many_checkboxes' />
-        </div>
-        <label for="hemo_coag2" string="Stool Analysis" class='labtestcls'/>
+            <field name = 'hemo_coag1' widget='many2many_checkboxes' attrs="{'readonly': [('select_urine','=', True)]}"/>
+        </div><br></br>
+        <field name = 'select_stool'/>
+        <label for="select_stool" string="Stool Analysis" class='labtestcls'/>
         <div class=''>
-            <field name = 'hemo_coag2' widget='many2many_checkboxes' />
-        </div>
-        <label for="lab_test_hos" string="SEMEN" class='labtestcls'/>
+            <field name = 'hemo_coag2' widget='many2many_checkboxes' attrs="{'readonly': [('select_stool','=', True)]}"/>
+        </div><br></br>
+        <field name = 'select_semen'/>
+        <label for="select_semen" string="SEMEN" class='labtestcls'/>
         <div class=''>
-            <field name = 'lab_test_hos' widget='many2many_checkboxes' />
+            <field name = 'lab_test_hos' widget='many2many_checkboxes' attrs="{'readonly': [('select_semen','=', True)]}"/>
         </div>
         
     </div>
 <!-- column2 -->
         <div class= 'col-3'>
-        <label for="lab_test_hos_form" string="BIOCHEMISTRY" class='labtestcls'/>
+        <field name = 'select_chemistry'/>
+        <label for="select_chemistry" string="BIOCHEMISTRY" class='labtestcls'/>
         <div class="">
-            <field name = 'lab_test_hos_form' widget='many2many_checkboxes'/>
-        </div>
-        <label for="lab_enzymes" string="LIVER FUNCTION" class='labtestcls'/>
+            <field name = 'lab_test_hos_form' widget='many2many_checkboxes' attrs="{'readonly': [('select_chemistry','=', True)]}"/>
+        </div><br></br>
+        <field name = 'select_liver'/>
+        <label for="select_liver" string="LIVER FUNCTION" class='labtestcls'/>
         <div class=''>
-            <field name = 'lab_enzymes' widget='many2many_checkboxes' />
-        </div>
-        <label for="lab_lipid" string="Enzymes" class='labtestcls'/>
+            <field name = 'lab_enzymes' widget='many2many_checkboxes' attrs="{'readonly': [('select_liver','=', True)]}"/>
+        </div><br></br>
+        <field name = 'select_enzymes'/>
+        <label for="select_enzymes" string="Enzymes" class='labtestcls'/>
         <div class=''>
-            <field name = 'lab_lipid' widget='many2many_checkboxes' />
-        </div>
-        <label for="lab_protein" string="Lipid Profile" class='labtestcls'/>
+            <field name = 'lab_lipid' widget='many2many_checkboxes' attrs="{'readonly': [('select_enzymes','=', True)]}"/>
+        </div><br></br>
+        <field name = 'select_lipid'/>
+        <label for="select_lipid" string="Lipid Profile" class='labtestcls'/>
         <div class=''>
-            <field name = 'lab_protein' widget='many2many_checkboxes' />
+            <field name = 'lab_protein' widget='many2many_checkboxes' attrs="{'readonly': [('select_lipid','=', True)]}"/>
         </div>
-        <label for="lab_checkup" string="Lipoproteins" class='labtestcls'/>
-        <div class=''>
-            <field name = 'lab_checkup' widget='many2many_checkboxes' />
-        </div>
-        
         </div>
 
 <!-- column3 -->
         <div class= 'col-3'>
-        <label for="lab_endocrinology" string="ENDOCRINOLOGY" class='labtestcls'/>
+        <field name = 'select_lipoproteins'/>
+        <label for="select_lipoproteins" string="Lipoproteins" class='labtestcls'/>
+        <div class=''>
+            <field name = 'lab_checkup' widget='many2many_checkboxes' attrs="{'readonly': [('select_lipoproteins','=', True)]}"/>
+        </div><br></br>
+        <field name = 'select_endocrynology'/>
+        <label for="select_endocrynology" string="ENDOCRINOLOGY" class='labtestcls'/>
         <div class="">
-            <field name = 'lab_endocrinology' widget='many2many_checkboxes'/>
-        </div>
-        <label for="lab_immune_test" string="Immunology" class='labtestcls'/>
+            <field name = 'lab_liver' widget='many2many_checkboxes' attrs="{'readonly': [('select_endocrynology','=', True)]}"/>
+        </div><br></br>
+        <field name = 'select_immunology'/>
+        <label for="select_immunology" string="Immunology" class='labtestcls'/>
         <div class=''>
-            <field name = 'lab_immune_test' widget='many2many_checkboxes' />
-        </div>
-        <label for="lab_immunology" string="Tumour Makers" class='labtestcls'/>
+            <field name = 'lab_immune_test' widget='many2many_checkboxes' attrs="{'readonly': [('select_immunology','=', True)]}"/>
+        </div><br></br>
+        <field name = 'select_tumour'/>
+        <label for="select_tumour" string="Tumour Makers" class='labtestcls'/>
         <div class=''>
-            <field name = 'lab_immunology' widget='many2many_checkboxes' />
-        </div>
-        <label for="lab_tumour" string="Drug Assays" class='labtestcls'/>
+            <field name = 'lab_immunology' widget='many2many_checkboxes' attrs="{'readonly': [('select_tumour','=', True)]}"/>
+        </div><br></br>
+        <field name = 'select_drug'/>
+        <label for="select_drug" string="Drug Assays" class='labtestcls'/>
         <div class=''>
-            <field name = 'lab_tumour' widget='many2many_checkboxes' />
-        </div>
-        <label for="lab_liver" string="Master Health Check-up" class='labtestcls'/>
+            <field name = 'lab_tumour' widget='many2many_checkboxes' attrs="{'readonly': [('select_drug','=', True)]}"/>
+        </div><br></br>
+        <field name = 'select_master'/>
+        <label for="select_master" string="Master Health Check-up" class='labtestcls'/>
         <div class=''>
-            <field name = 'lab_liver' widget='many2many_checkboxes' />
+            <field name = 'lab_endocrinology' widget='many2many_checkboxes' attrs="{'readonly': [('select_master','=', True)]}"/>
         </div>
         </div>
 
 <!-- column4 -->
-<div class= 'col-3'>
-        <label for="lab_drug" string="Serology Torch" class='labtestcls'/>
+    <div class= 'col-3'>
+        <field name = 'select_torch'/>
+        <label for="select_torch" string="Serology Torch" class='labtestcls'/>
         <div class="">
-            <field name = 'lab_drug' widget='many2many_checkboxes'/>
-        </div>
-        <label for="lab_serology" string="Leptospirosis" class='labtestcls'/>
+            <field name = 'lab_drug' widget='many2many_checkboxes' attrs="{'readonly': [('select_torch','=', True)]}"/>
+        </div><br></br>
+        <field name = 'select_lepto'/>
+        <label for="select_lepto" string="Leptospirosis" class='labtestcls'/>
         <div class=''>
-            <field name = 'lab_serology' widget='many2many_checkboxes' />
-        </div>
-        <label for="lab_leptospirosis" string="HIV TEST" class='labtestcls'/>
+            <field name = 'lab_serology' widget='many2many_checkboxes' attrs="{'readonly': [('select_lepto','=', True)]}"/>
+        </div><br></br>
+        <field name = 'select_hiv'/>
+        <label for="select_hiv" string="HIV TEST" class='labtestcls'/>
         <div class=''>
-            <field name = 'lab_leptospirosis' widget='many2many_checkboxes' />
-        </div>
-        <label for="lab_hiv" string="Hepatitis Panel" class='labtestcls'/>
+            <field name = 'lab_leptospirosis' widget='many2many_checkboxes' attrs="{'readonly': [('select_hiv','=', True)]}"/>
+        </div><br></br>
+        <field name = 'select_hepatis'/>
+        <label for="select_hepatis" string="Hepatitis Panel" class='labtestcls'/>
         <div class=''>
-            <field name = 'lab_hiv' widget='many2many_checkboxes' />
-        </div>
-        <label for="lab_hepatis" string="X-Ray Digital" class='labtestcls'/>
+            <field name = 'lab_hiv' widget='many2many_checkboxes' attrs="{'readonly': [('select_hepatis','=', True)]}"/>
+        </div><br></br>
+        <field name = 'select_xray'/>
+        <label for="select_xray" string="X-Ray Digital" class='labtestcls'/>
         <div class=''>
-            <field name = 'lab_hepatis' widget='many2many_checkboxes' />
-        </div>
-        <label for="lab_test_hos_data" string="SEROLOGY" class='labtestcls'/>
+            <field name = 'lab_hepatis' widget='many2many_checkboxes' attrs="{'readonly': [('select_xray','=', True)]}"/>
+        </div><br></br>
+        <field name = 'select_serology'/>
+        <label for="select_serology" string="SEROLOGY" class='labtestcls'/>
         <div class=''>
-            <field name = 'lab_test_hos_data' widget='many2many_checkboxes' />
+            <field name = 'lab_test_hos_data' widget='many2many_checkboxes' attrs="{'readonly': [('select_serology','=', True)]}"/>
         </div>
         </div>
     </div>
     </sheet>
-    <div class="oe_chatter">
-        <!-- <field name="message_follower_ids" widget="mail_followers" string="mail"/> -->
-        <field name="message_ids" widget="mail_thread" string= "Mail"/>
-        <field name="activity_ids" widget="mail_activity"/>
-    </div>
         </form>
         </field>
         </record>
@@ -141,7 +152,8 @@
             <field name="name">Lab Test</field>         
                 <field name="res_model">lab.scan.form</field>           
                 <field name="view_mode">tree,form,pivot,graph</field>
-                <field name="domain">[]</field>            
+                <field name="domain">[]</field>  
+                <field name="context">{'search_default_write_date_id': 1}</field>           
                 <field name="help" type="html">                
                     <p class="oe_view_nocontent_create">Lab Test
                     </p>            
@@ -157,12 +169,13 @@
                         <field name ="request" />
                         <field name ="ebook_id" />
                         <field name ="patient_id" />
-                        <field name ="doctor_id" />
+                        <!-- <field name ="date" /> -->
                         <field name ="write_date" />
                         <field name ="range" />
                         <field name ="test_range" />
-                        <field name="patient_activity" readonly="1" widget="badge" decoration-danger="patient_activity == 'discontinued'" decoration-warning="patient_activity in ('wait', 'bill')" decoration-success="patient_activity in ('completed', 'scans', 'labs', 'pres')"/>
-                    </tree>
+                    <field name="patient_activity" readonly="1" widget="badge" decoration-danger="patient_activity in ('doctor','doc','lab','scan','pres', 'bill')" 
+                    decoration-warning="patient_activity in ('discontinued', 'wait')" decoration-success="patient_activity in ('completed', 'scans', 'labs')"/>   
+                                        </tree>
                 </field>
             </record>
 
@@ -179,9 +192,9 @@
             <field name="patient_id"/>
             <field name="write_date"/>
         <!-- <filter string="Doctor" name="doctor" domain="[('doctor', '!=', '')]"/> -->
-            <filter string="Doctor" name="doctor_id" context="{'group_by': 'doctor_id'}"/>
+            <!-- <filter string="Doctor" name="doctor" context="{'group_by': 'doctor'}"/> -->
             <filter string="Branch" name="company_id" context="{'group_by': 'company_id'}"/>
-            <filter string="Today" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
+            <filter string="Today" name="write_date_id" separator="1" domain="[('write_date','=',(datetime.date.today().strftime('%Y-%m-%d')))]"/>
             <filter string="Yesterday" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()-relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
             <!-- <filter string="Tomorrow" name="write_date" separator="1" domain="[('write_date','=',(datetime.date.today()+relativedelta(days=1)).strftime('%Y-%m-%d'))]"/> -->
             
@@ -570,7 +583,7 @@
             </record>
             <menuitem id="lab_many_data_health" name="Full CheckUp" parent= "main_menu_configartion" action="lab_many_data_form_full_checkup"/>
 
-     <record id="lab_many_data_form1015" model="ir.ui.view">
+     <record id="lab_many_data_form10" model="ir.ui.view">
             <field name="name">Endocrinology Blood</field>
             <field name="model">lab.test.hospital.data</field>
             <field name="priority" eval="8" />
@@ -602,7 +615,7 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_form10" name="Endocrinology" parent= "main_menu_configartion" action="lab_many_data_form_endocrinology"/>
+            <menuitem id="lab_many_data_form101" name="Endocrinology" parent= "main_menu_configartion" action="lab_many_data_form_endocrinology"/>
 
         <record id="lab_many_immune" model="ir.ui.view">
             <field name="name">Immunology Blood</field>
@@ -810,7 +823,7 @@
             </record>
             <menuitem id="lab_many_16" name="HIV TEST" parent= "main_menu_configartion" action="lab_many_data_form_hiv"/>
 
-    <record id="lab_many_data_form1775" model="ir.ui.view">
+    <record id="lab_many_data_form1713" model="ir.ui.view">
             <field name="name">Hepatitis Panel</field>
             <field name="model">lab.hospital.test.data</field>
             <field name="priority" eval="8" />
@@ -843,7 +856,7 @@
                     </p>            
                 </field>        
             </record>
-            <menuitem id="lab_many_data_form1772" name="Hepatitis Panel" parent= "main_menu_configartion" action="lab_many_data_form_hepatitis"/>
+            <menuitem id="lab_many_data_form17" name="Hepatitis Panel" parent= "main_menu_configartion" action="lab_many_data_form_hepatitis"/>
 
         <record id="lab_many_data_form318" model="ir.ui.view">
             <field name="name">X-Ray Digital</field>

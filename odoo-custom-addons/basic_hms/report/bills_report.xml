@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+<record id="paperformat_bill_reports" model="report.paperformat">
+        <field name="name">A4</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">5</field>
+        <field name="dpi">90</field>
+    </record>
+
+
     <template id = "subcontract_warehouseout" >
         <t t-call="web.external_layout">
             <t t-call="web.html_container">
@@ -14,31 +32,39 @@
                            color:#000;
                            font-weight:600;
                           }
+                        @font-face {
+                            font-family: 'Lohit Tamil';
+                            src: url('/basic_hms/static/src/font/Lohit_Tamil.ttf') format('truetype');
+                        }
                     </style>
-                    <div class="header">
-                        <title>Abith</title>
-              </div>
-                    
-                  <xpath expr="//div[@class='header_tag']" position="repalce">
-                    
-                <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;">
+                    <t >
+                    <div style="font-family: 'Lohit Tamil'; font-size: 14pt;">
+                    <t t-set="name_age_sex" t-value="o.name_age_sex.upper()" />
+                    <t t-set="doctor_id" t-value="o.doctor_id.name.upper()" />
+                  <!-- <xpath expr="//div[@class='header_tag']" position="repalce"> -->
+                  <div class="header_tag">
+                <!-- <table border="0" class="table table-sm table-bordered" style="border: 0px;margin-top: 50px;"> -->
                 <td style="border: 0px;width: 50%;">
-                    <div  >
-                    
-                            <div class='float-left'>
-                                <p><strong>SL NO :</strong><span t-field="o.ebook_id"/></p> 
-                                <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p>
-                                <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p></div>
-                            <div class="float-right" >
-                                <p><strong>Gender :</strong><span t-field="o.sex"/></p>
-                                <p><strong>Contact Number :</strong><span t-field="o.contact_no"/></p>
-                                <p><strong>Payment Type :</strong><span t-field="o.payment_type"/></p>
+                    <div>
+                <div class='float-left'>
+                    <t t-if='o.ebook_id'>
+                        <p><strong>SL NO :</strong><span t-field="o.ebook_id"/></p> </t>
+                    <t t-if='not o.ebook_id'>
+                        <p><strong>SL NO :</strong><span t-field="o.bill_no"/></p> </t> 
+                    <p><strong>Bill Date :</strong><span t-field="o.paid_date"/></p>
+                    <p><strong>Patient Name :</strong><span t-esc="name_age_sex"/></p>
+                    </div>
+                <div class="float-right" >
+                    <p><strong>Doctor :</strong><span t-esc="doctor_id"/></p>
+                    <p><strong>Contact Number :</strong><span t-field="o.contact_no"/></p>
+                    <p><strong>Payment Type :</strong><span t-field="o.payment_type"/></p>
                     </div>
         </div>
                 </td>
                 
-                </table>
-                        </xpath>
+                <!-- </table> -->
+                </div>
+                        <!-- </xpath> -->
         
         <div class="header_tag">
         <h4 class="text-center heading_text_cor">Registration</h4>
@@ -154,37 +180,34 @@
             </table>
             </t>
             <br></br>
-        <t t-if="docs.pres_bill" style='page-break-before: always;'>
-            <div style='page-break-before: always;'>
+        <t t-if="docs.pres_bill" >
+            
             <div class="header_tag">
             <h4 class="text-center heading_text_cor">Prescription</h4>
             </div>
     <table class="table table-bordered" style="border: 1px solid black;">
     <thead>
         <tr>
-        <th style="border: 1px solid black;">Prescription ID</th>
+        <!-- <th style="border: 1px solid black;">Prescription ID</th> -->
         <th style="border: 1px solid black;"> Name  </th>
-        <th style="border: 1px solid black;"> Date  </th>
+        <th style="border: 1px solid black;"> Quantity</th>
         <th style="border: 1px solid black;"> Bill Amount </th>
-        <th style="border: 1px solid black;"> Taxes</th>
+        <th style="border: 1px solid black;"> Total </th>
         </tr>
     </thead>
     <tbody>
         <tr t-foreach='docs.pres_bill' t-as='lines'>
         <td style="border: 1px solid black;">
-            <span t-field="lines.prescription_id"/>
-        </td>
-        <td style="border: 1px solid black;">
         <span t-field="lines.medicine_name"/>
         </td>
         <td style="border: 1px solid black;">
-        <span t-field="lines.date"/>
+        <span t-field="lines.prescribed_quantity"/>
         </td>
         <td style="border: 1px solid black;">
             <span t-field="lines.pre_amount"/>
         </td>
         <td style="border: 1px solid black;">
-            <span t-field="lines.gst_tax"/>
+            <span t-field="lines.sub_total"/>
         </td>
         </tr>
     </tbody>
@@ -193,25 +216,25 @@
         <tr class="border-black o_subtotal" style="font-size: 15px; ">
             <td><strong>Medicine Amount</strong></td>
             <td class="text-right">
-        <strong><span t-field="o.total12" class="fa fa-inr"/></strong>
+        <strong><span t-field="o.total1" class="fa fa-inr"/></strong>
             </td>
         </tr>
         <tr class="border-black o_subtotal" style="font-size: 15px; ">
         <t>
-            <td>GST 5%</td>
+            <td>GST 12%</td>
                 <td class="text-right">
-                <strong><span t-esc="o.total_tax_med" class="fa fa-inr"/></strong>
+                <strong><span t-esc="o.total_tax" class="fa fa-inr"/></strong>
                 </td>
             </t>
         </tr>
         <tr class="border-black o_subtotal" style="font-size: 15px;">
         <td style="background-color:white;color:#black;font-size: 15px;"><strong>Total</strong></td>
             <td style="background-color:white;color:#black;font-size: 15px;" class="text-right">
-                <b><strong><span t-field="o.total_med_tax" class="fa fa-inr"/></strong></b>
+                <b><strong><span t-field="o.gst_total_tax" class="fa fa-inr"/></strong></b>
             </td>
         </tr>
     </table>
-</div>
+
     </t>
 <br></br>
 <br></br>
@@ -230,7 +253,7 @@
                     <tr>
                     
                     <th style="border: 1px solid black;"> Test Name </th>
-                    <th style="border: 1px solid black;"> Date </th>
+                    <!-- <th style="border: 1px solid black;"> Date </th> -->
 
                     <th style="border: 1px solid black;"> Bill Amount </th>
                     
@@ -241,9 +264,9 @@
                     <td style="border: 1px solid black;">
                     <span t-field="line.name"/>
                     </td>
-                    <td style="border: 1px solid black;">
+                    <!-- <td style="border: 1px solid black;">
                     <span t-field="line.date"/>
-                    </td>
+                    </td> -->
                 
                     <td style="border: 1px solid black;">
                     <span t-field="line.bill_amount"/>
@@ -269,7 +292,7 @@
                 <thead>
                     <tr>
                     <th style="border: 1px solid black;"> Test Name </th>
-                    <th style="border: 1px solid black;"> Date </th>
+                    <!-- <th style="border: 1px solid black;"> Date </th> -->
 
                     <th style="border: 1px solid black;"> Bill Amount </th>
                     </tr>
@@ -279,9 +302,9 @@
                 <td style="border: 1px solid black;">
                     <span t-field="line.name"/>
                     </td>
-                <td style="border: 1px solid black;">
+                <!-- <td style="border: 1px solid black;">
                     <span t-field="line.date"/>
-                    </td>
+                    </td> -->
                 <td style="border: 1px solid black;">
                     <span t-field="line.bill_amount"/>
                     </td>
@@ -298,7 +321,7 @@
                 </table>
                 </t>
 <br></br>
-    <t t-if="docs.inpatient_tablet" style='page-break-before: always;'>
+    <t t-if="docs.inpatient_tablet" >
         <div style='page-break-before: always;'>
         <div class="header_tag">
             <h4 class="text-center heading_text_cor">Prescription</h4>
@@ -342,7 +365,7 @@
                 </tr>
                 <tr class="border-black o_subtotal" style="font-size: 15px; ">
                 <t>
-                    <td>GST 5%</td>
+                    <td>GST 12%</td>
                         <td class="text-right">
                         <strong><span t-esc="o.total_tax_ip" class="fa fa-inr"/></strong>
                         </td>
@@ -461,7 +484,7 @@
                 <table class="table table-sm" id="box" style="width:33%; float:right;margin-left: 0px; border: 1px solid black;">
                     <tr class="border-black o_subtotal" style="font-size: 15px; ">
                     <t>
-                        <td>GST 5%</td>
+                        <td>GST 12%</td>
                             <td class="text-right">
                             <strong><span t-esc="o.total_tax" class="fa fa-inr"/></strong>
                             </td>
@@ -475,7 +498,39 @@
                     </tr>
                 </table>
                 </th>
-            
-        </t></t></t>
+            <br></br><br></br><br></br>
+                     <div style='text-align:right'>
+                            <h6><strong>DAISY HOSPITAL</strong></h6>
+                            <br></br><br></br>
+                            <h6 ><strong> Authorised Signatory </strong></h6>
+                        </div>
+                        <div style='page-break-before: always;'> 
+                    <br></br> <br></br><br></br> 
+                        <h5 style='text-align:center'><strong>Terms and Conditions</strong></h5>
+                        <br></br>
+                <div class='row'>
+                <div class='col-6'>
+                    <strong>
+                    <h6>* Medicines once given will not be taken back or exchanged.</h6>
+                    <h6>* For Emergency Purpose please go to any nearby Hospital without any Delay</h6>
+                    <h6>* Calls are answered only between 11AM - 5PM.The call's will be recorded for our hospital purposes..</h6>
+                    <h6>* If you are receiving the medicines by courier, an opening video should be sent to the hospital's number to confirm the damage and return policy</h6>
+                    <h6>* Medicines, Diet and Lifestyle Changes should not be shared on any social media platform as it is personalized only for the patient.</h6>
+                    <h6>* The Patient must follow the Diet Chart, Exercise, Lifestyle Changes and Medicines as prescribed by the Doctor for good results.</h6>
+                    </strong></div>
+                    <div class='col-6'>
+                    <strong>
+                        <h6>* ஒருமுறை கொடுத்த மருந்துகள் திரும்பப் பெறப்படாது அல்லது மாற்றப்படாது.</h6>
+                        <h6>* அவசரத் தேவைகளுக்கு, தாமதமின்றி அருகில் உள்ள மருத்துவமனைக்குச் செல்லவும். காலை 11 மணி முதல் மாலை 5 மணி வரை மட்டுமே அழைப்புகளுக்கு பதிலளிக்கப்படும். எங்கள் மருத்துவமனை நோக்கங்களுக்காக அழைப்புகள் பதிவு செய்யப்படும்.</h6>
+                        <h6>* நீங்கள் கூரியர் மூலம் மருந்துகளைப் பெறுகிறீர்கள் என்றால், சேதம் மற்றும் ரிட்டர்ன் பாலிசியை உறுதிப்படுத்த மருத்துவமனை எண்ணுக்கு ஒரு தொடக்க வீடியோ அனுப்பப்பட வேண்டும்.</h6>
+                        <h6>* மருந்துகள், உணவுமுறை மற்றும் வாழ்க்கை முறை மாற்றங்கள் நோயாளிக்கு மட்டும் தனிப்பயனாக்கப்படுவதால் எந்த சமூக ஊடக தளத்திலும் பகிரப்படக்கூடாது.</h6>
+                        <h6>* மருத்துவர் பரிந்துரைக்கும் உணவு முறை, உடற்பயிற்சி, வாழ்க்கை முறை மாற்றங்கள் மற்றும் மருந்துகளை நோயாளி கண்டிப்பாக பின்பற்ற வேண்டும்.</h6>
+                    </strong></div>
+                </div>
+                <br></br>
+                <h5 style='text-align:center'><strong>* For Contact +91-9962655588 *</strong></h5>
+            </div>
+        </div>
+        </t></t></t></t>
     </template>
 </odoo>

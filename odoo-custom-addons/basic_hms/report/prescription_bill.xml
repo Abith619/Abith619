@@ -2,24 +2,24 @@
 <odoo>
 <data>
     <record id="paperformat_prescription" model="report.paperformat">
-        <field name="name">Custom Paper</field>
-        <field name="default" eval="True"/>
-        <field name="format">custom</field>
-        <field name="page_height">170</field>
-        <field name="page_width">260</field>
-        <field name="orientation">Portrait</field>
-        <field name="margin_top">15</field>
-        <field name="margin_bottom">0</field>
-        <field name="margin_left">0</field>
-        <field name="margin_right">0</field>
-        <field name="header_line" eval="False" />
-        <field name="header_spacing">20</field>
-        <field name="dpi">90</field>
+        <field name="name">A5 Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">210</field>
+            <field name="page_width">148</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">5</field>
+            <field name="dpi">130</field>
     </record>
 
-    <template id="web_layout" inherit_id="web.layout">
-        <xpath expr="//title" position="replace">Abith</xpath>
-     </template>
+    <!-- <template id="remove_odoo.web_layout" inherit_id="web.layout">
+        <xpath expr="//title" position="replace">Daisy Report</xpath>
+     </template> -->
      
     <template id="basic_hms.prescription_bils_report" name="Diet Plan">
         <t t-call="web.external_layout">
@@ -33,55 +33,61 @@
                   }
                 .flex-container {
                     display: flex;
-                    
                   }
-                  
-
+                @font-face {
+                    font-family: 'Lohit Tamil';
+                    src: url('/basic_hms/static/src/font/Lohit_Tamil.ttf') format('truetype');
+                }
             </style>
+                <div style="font-family: 'Lohit Tamil'; font-size: 14pt;">
                    <t >
+                   <t t-set="name_age_sex" t-value="o.name_age_sex.upper()" />
+                    <t t-set="doctor_id" t-value="o.doctor_id.name.upper()" />
                     <td style="border: 0px;width: 50%;">
                         <div class="header_tag">
                             <h4 class="text-center heading_text_cor"><strong>Medicine Bill </strong></h4>
                             </div>
-                        <div  >
-                            <div class='float-left'>
-                                <p><strong>SL NO :</strong><span t-field="o.ebook_id"/></p> 
-                                <p><strong>Bill Date :</strong><span t-field="o.date_date"/></p>
-                                <p><strong>Patient Name :</strong><span t-field="o.patient_name"/></p></div>
-                            <div class="float-right" >
-                                <p><strong>Gender :</strong><span t-field="o.sex"/></p>
-                                <p><strong>Contact Number :</strong><span t-field="o.contact_no"/></p>
-                                <p><strong>Payment Type :</strong><span t-field="o.payment_type"/></p>
+                        <div>
+                <div class='float-left'>
+                    <t t-if='o.ebook_id'>
+                        <p><strong>SL NO :</strong><span t-field="o.ebook_id"/></p> </t>
+                    <t t-if='not o.ebook_id'>
+                        <p><strong>SL NO :</strong><span t-field="o.bill_no"/></p> </t> 
+                    <p><strong>Bill Date :</strong><span t-field="o.paid_date"/></p>
+                    <p><strong>Patient Name :</strong><span t-esc="name_age_sex"/></p>
                     </div>
-            </div>
+                <div class="float-right" >
+                    <p><strong>Doctor :</strong><span t-esc="doctor_id"/></p>
+                    <p><strong>Contact Number :</strong><span t-field="o.contact_no"/></p>
+                    <p><strong>Payment Type :</strong><span t-field="o.payment_type"/></p>
+                    </div>
+        </div>
                     </td>
-                    
-
                    <table class="table table-bordered" style="border: 1px solid black;">
                     <thead>
                         <tr>
-                        
-                        <th style="border: 1px solid black;"> Prescription ID  </th>
-                        <th style="border: 1px solid black;"> Particulars  </th>
-                        <th style="border: 1px solid black;"> GST %</th>
-                        <th style="border: 1px solid black;"> Rate </th>
+                        <!-- <th style="border: 1px solid black;">Prescription ID</th> -->
+                        <th style="border: 1px solid black;"> Name  </th>
+                        <th style="border: 1px solid black;"> Quantity</th>
+                        <th style="border: 1px solid black;"> Bill Amount </th>
+                        <th style="border: 1px solid black;"> Total </th>
                         </tr>
                     </thead>
                     <tbody>
-                     <tr t-foreach='docs.pres_bill' t-as='lines'>
-                       <td style="border: 1px solid black;">
-                        <span t-field="lines.prescription_id"/>
-                        </td>
+                        <tr t-foreach='docs.pres_bill' t-as='lines'>
                         <td style="border: 1px solid black;">
                         <span t-field="lines.medicine_name"/>
                         </td>
                         <td style="border: 1px solid black;">
-                            <span t-field="lines.gst_tax"/>
-                          </td>
+                        <span t-field="lines.prescribed_quantity"/>
+                        </td>
                         <td style="border: 1px solid black;">
-                         <span t-field="lines.pre_amount"/>
-                       </td>
-                       </tr>
+                            <span t-field="lines.pre_amount"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <span t-field="lines.sub_total"/>
+                        </td>
+                        </tr>
                     </tbody>
                     </table>
                     </t>
@@ -92,25 +98,26 @@
                             <tr class="border-black o_subtotal" style="font-size: 15px; ">
                                 <td><strong>Medicine Amount</strong></td>
                                 <td class="text-right">
-                            <strong><span t-field="o.total12" class="fa fa-inr"/></strong>
+                            <strong><span t-field="o.total1" class="fa fa-inr"/></strong>
                                 </td>
                             </tr>
                             <tr class="border-black o_subtotal" style="font-size: 15px; ">
                             <t>
-                                <td><strong>GST 5%</strong></td>
+                                <td><strong>GST 12%</strong></td>
                                     <td class="text-right">
-                                    <strong><span t-esc="o.total_tax_med" class="fa fa-inr"/></strong>
+                                    <strong><span t-esc="o.total_tax" class="fa fa-inr"/></strong>
                                     </td>
                                 </t>
                             </tr>
                             <tr class="border-black o_subtotal" style="font-size: 15px;">
                             <td style="background-color:white;color:#black;font-size: 15px;"><strong>Total</strong></td>
                                 <td style="background-color:white;color:#black;font-size: 15px;" class="text-right">
-                                    <b><strong><span t-field="o.total_med_tax" class="fa fa-inr"/></strong></b>
+                                    <b><strong><span t-field="o.gst_total_tax" class="fa fa-inr"/></strong></b>
                                 </td>
                             </tr>
                         </table>
                         </th>
+                    
                         <br></br>
                         <t t-if="o.med_amt_paid">
                         <strong>Amount Paid :</strong>
@@ -120,20 +127,41 @@
                         <strong>Amount Due :</strong>
                         <span t-field="o.med_amt_due"/></t>
                     </div>	
-                   <br></br>
-                     <div class='row'>
-                        <div class='col-9'> 
-                            <br></br>  
-                            <h5><strong>Terms and Condition</strong></h5>
-                            <h6>1.Subject to Tirupur jurisdiction</h6>
-                            <h6>2.Medicines once purchased are not Refundable</h6>  
-                        </div> 
-                        <div class='col-3'>
+                   <br></br><br></br>
+                     <div style='text-align:right'>
                             <h6><strong>DAISY HOSPITAL</strong></h6>
                             <br></br><br></br>
-                            <h6 style="text-align: center;"><strong> Authorised Signatory </strong></h6>
+                            <h6 ><strong> Authorised Signatory </strong></h6>
                         </div>
+                        <br></br>
+                <div style='page-break-before: always;'> 
+                    <br></br> <br></br><br></br> 
+                    <h5 style='text-align:center'><strong>Terms and Conditions</strong></h5>
+                    <br></br>
+                <div class='row'>
+                <div class='col-6'>
+                    <strong>
+                    <h6>* Medicines once given will not be taken back or exchanged.</h6>
+                    <h6>* For Emergency Purpose please go to any nearby Hospital without any Delay</h6>
+                    <h6>* Calls are answered only between 11AM - 5PM.The call's will be recorded for our hospital purposes..</h6>
+                    <h6>* If you are receiving the medicines by courier, an opening video should be sent to the hospital's number to confirm the damage and return policy</h6>
+                    <h6>* Medicines, Diet and Lifestyle Changes should not be shared on any social media platform as it is personalized only for the patient.</h6>
+                    <h6>* The Patient must follow the Diet Chart, Exercise, Lifestyle Changes and Medicines as prescribed by the Doctor for good results.</h6>
+                    </strong></div>
+                
+                    <div class='col-6'><strong>
+                        <h6>* ஒருமுறை கொடுத்த மருந்துகள் திரும்பப் பெறப்படாது அல்லது மாற்றப்படாது.</h6>
+                        <h6>* அவசரத் தேவைகளுக்கு, தாமதமின்றி அருகில் உள்ள மருத்துவமனைக்குச் செல்லவும். காலை 11 மணி முதல் மாலை 5 மணி வரை மட்டுமே அழைப்புகளுக்கு பதிலளிக்கப்படும். எங்கள் மருத்துவமனை நோக்கங்களுக்காக அழைப்புகள் பதிவு செய்யப்படும்.</h6>
+                        <h6>* நீங்கள் கூரியர் மூலம் மருந்துகளைப் பெறுகிறீர்கள் என்றால், சேதம் மற்றும் ரிட்டர்ன் பாலிசியை உறுதிப்படுத்த மருத்துவமனை எண்ணுக்கு ஒரு தொடக்க வீடியோ அனுப்பப்பட வேண்டும்.</h6>
+                        <h6>* மருந்துகள், உணவுமுறை மற்றும் வாழ்க்கை முறை மாற்றங்கள் நோயாளிக்கு மட்டும் தனிப்பயனாக்கப்படுவதால் எந்த சமூக ஊடக தளத்திலும் பகிரப்படக்கூடாது.</h6>
+                        <h6>* மருத்துவர் பரிந்துரைக்கும் உணவு முறை, உடற்பயிற்சி, வாழ்க்கை முறை மாற்றங்கள் மற்றும் மருந்துகளை நோயாளி கண்டிப்பாக பின்பற்ற வேண்டும்.</h6>
+                    </strong></div>
                 </div>
+                <br></br>
+                <h5 style='text-align:center'><strong>* For Contact +91-9962655588 *</strong></h5>
+            </div>
+
+                </div>  
             </t>
         </t>
     </t>

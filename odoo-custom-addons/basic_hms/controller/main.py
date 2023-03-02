@@ -12,9 +12,9 @@ class employee(Home):
         many2one_connect = request.env['res.partner'].sudo().search([('is_doctor','=',True)])
         many2one_patient = request.env['res.partner'].sudo().search([('is_patient','=',True)])
         many_treat = request.env['medical.pathology'].sudo().search([])
+        many2one_country = request.env['res.country'].sudo().search([])
+        many2one_state = request.env['res.country.state'].sudo().search([('country_id','=',104)])
         many2one_area = request.env['res.city'].sudo().search([])
-        many2one_state = request.env['res.country.state'].sudo().search([('name','=','Tamil Nadu')])
-        many2one_country = request.env['res.country'].sudo().search([('name','=','India')])
         many2many_feedback = request.env['medical.feedback'].sudo().search([])
         return http.request.render('basic_hms.appointment_page',{'many2one_connect':many2one_connect,
                                                                  'many2one_area':many2one_area,
@@ -22,12 +22,11 @@ class employee(Home):
                                                                  'many_treat' : many_treat,
                                                                  'many2one_state':many2one_state,
                                                                  'many2one_country' : many2one_country,
-                                                                 'many2many_feedback':many2many_feedback,
+                                                                 'many2many_feedback':many2many_feedback
                                                                  })
         
     @http.route('/website/page1',type="http",auth="public",website=True)
     def create(self,**kw):
-        
         patient_name = kw.get('patient_id')
         phone_number = kw.get('contact_no')
         contact_number = kw.get('contact_number')
@@ -39,7 +38,6 @@ class employee(Home):
         country_id = kw.get('country')
         dob_contact = kw.get('date_of_birth')
         marital_status = kw.get('marital_status')
-        country = request.env['res.country'].sudo().search([('name','=',country_id)])
         
         var = {
             'name' : patient_name,
@@ -51,7 +49,8 @@ class employee(Home):
             'city':city,
             'state_id':state,
             'zip':zip_id,
-            'country_id':country.id,
+            'country_id':int(country_id),
+            
             'dob_contact':dob_contact,
         }
         
@@ -76,11 +75,6 @@ class employee(Home):
         height = kw.get('height')
         weight = kw.get('weight')
         data_value = request.httprequest.form.getlist('data_value')
-        orm = request.env['medical.pathology'].sudo().search([(('name','=',treat))])
-        orm_area = request.env['res.city'].sudo().search([('name','=',area)])
-        orm_state = request.env['res.country.state'].sudo().search([('name','=',state_id)])
-        orm_country = request.env['res.country'].sudo().search([('name','=',country)])
-        create_treat = request.env['medical.pathology'].sudo().create({'name':treat})
         
         vals = {
             'patient_id' : sub_own,
@@ -90,10 +84,9 @@ class employee(Home):
             'date_of_birth':dob_date,
             'address':address,
             'pin_code':pin_code,
-            # 'city':int(area),
-            'city':orm_area.id,
-            'state':orm_state.id,
-            'country':orm_country.id,
+            'city':int(area),
+            'state':state_id,
+            'country':int(country),
             'treatment_for': treat,
             'contact_no':contact,
             'contact_number':whatsapp,
@@ -109,5 +102,4 @@ class employee(Home):
         
         create = request.env['medical.patient'].sudo().create(vals)
         token = create.name
-        return request.render('basic_hms.applied_thanks',{'token':token,})
-        
+        return request.render('basic_hms.applied_thanks',{'token':token})

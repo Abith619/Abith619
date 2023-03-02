@@ -7,7 +7,6 @@ from odoo.exceptions import  ValidationError
 
 class medical_prescription_order(models.Model):
     _name = "medical.prescription.order"
-    _inherit = ['mail.thread', 'mail.activity.mixin']
     
     company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company']._company_default_get('medical.patient.lab.test'))
     name = fields.Char('Prescription ID')
@@ -43,19 +42,61 @@ class medical_prescription_order(models.Model):
     bf_af=fields.Selection([('before','Before Food'),('after','After Food')],string='BF - AF')
     delivery_option= fields.Selection([('dir','Direct'),('on',"Online")],string="Delivery Option",default='dir')
     courier_option = fields.Selection([('domestic','Domestic'),('international',"International")],string='Courier')
+    # company_id=fields.Many2one('res.company',string='Branch',readonly=True,default=lambda self: self.env['res.company'].browse(self.env['res.company']._company_default_get('medical.prescription.order')))
     num_days = fields.Selection([('ed','edit'),('e','ebook'),('1','Day1'),('2','Day2'),('3','Day3'),('4','Day4'),('5','Day5'),
                                 ('6','Day6'),('7','Day7'),('8','Day8'),('9','Day9'),('10','Day10')])
-    
     patient_activity = fields.Selection([('wait',"Waiting"),('doctor',"Doctor Assigned"),('doc','Diet Assigned'),
                                          ('lab','Lab Bill Assigned'),('pres','Pharmacy Bill Assigned'),('scan','Scan Bill Assigned'),
                                          ('labs','Lab Test Completed'),('scans','Scan Test Completed'),
-                                         ('bill',"Pharmacy Bill Assigned"),('discontinued','Discontinued'),('completed',"Completed")],default='wait',track_visibility='onchange')
-    
+                                         ('bill',"Pharmacy Bill Assigned"),('discontinued','Discontinued'),('completed',"Completed")],default='wait')
     ebook_print=fields.Many2one('medical.doctor', string='Ebook',compute='orm_ebook')
     def orm_ebook(self):
         orm=self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
         self.ebook_print = orm
+        
     
+    name_age_sex = fields.Char(string='Patient Name', compute='concatinate_name_age')
+    def concatinate_name_age(self):
+        if self.age:
+            ages = self.age.split()[0]
+        else:
+            ages = self.age
+        var = dict(self._fields['sex'].selection).get(self.sex)
+        self.name_age_sex = '{} /{}/{}'.format(self.patient_id.name,ages,var)
+
+    
+    
+    def done_med_out(self):
+        orm = self.env['product.product'].search([('name','=',self.prescription_line_ids.medicine_name.name)])
+
+    @api.onchange('patient_id')
+    def update_details(self):
+        orm = self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
+        self.update({
+            'age':orm.age,
+            'sex':orm.sex,
+            'height':orm.height,
+            'weight':orm.weight,
+            'doctor_id':orm.doctor,
+        })
+        
+    def med_cancell_fun(self):
+        orm1 = self.env['patient.bills'].search([('patient_name','=',self.patient_id.id)]).write({
+            'pres_bill' : [(5,0,0)],
+            'patient_activity':'discontinued',
+        })
+        self.patient_activity = 'discontinued'
+        orm = self.env['medical.patient'].search([('patient_id', '=', self.patient_id.id)])
+        orm.write({'patient_activity':'discontinued'})
+        doc = self.env['medical.doctor'].search([('patient', '=', self.patient_id.id)])
+        doc.write({'patient_activity':'discontinued'})
+        orm_3 = self.env['res.partner'].search([('name', '=', self.patient_id.name)])
+        orm_3.write({'patient_activity':'discontinued'})
+
+
+
+    
+
     @api.onchange('prescription_line_ids')
     def onchan_func(self):
         sums = []
@@ -63,7 +104,7 @@ class medical_prescription_order(models.Model):
             for k in i.prescription_line_ids:
                 sums.append(k.total_price)
             i.total = sum(sums)
-            
+
     @api.constrains('patient_id')
     def write_lab(self):
         orm_e = self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
@@ -75,12 +116,19 @@ class medical_prescription_order(models.Model):
         orm = self.env['res.partner'].search([('name','=',self.patient_id.name)])
         orm.update({'patient_activity':'pres'})
         
-        med_assign = self.env['patient.bills'].search([('patient_name','=',self.patient_id.id)])
-        med_assign.write({'patient_activity' : 'pres'})
+        orm_count = self.env['patient.bills'].search_count([('patient_name','=',self.patient_id.id)])
+        if orm_count > 1:
+            med_assign = self.env['patient.bills'].search([('patient_name','=',self.patient_id.id)])[-1]
+            med_assign.write({'patient_activity' : 'pres',
+            'pres_date':datetime.now()})
+        else:
+            med_assign = self.env['patient.bills'].search([('patient_name','=',self.patient_id.id)])
+            med_assign.write({'patient_activity' : 'pres',
+            'pres_date':datetime.now()})
         
         self.patient_activity = 'pres'
-        
-    
+
+
     @api.constrains('prescription_line_ids')
     def write_med(self):
         orm = self.env['patient.bills'].search([('pres_bill.prescription_id','=',self.name)])
@@ -95,12 +143,28 @@ class medical_prescription_order(models.Model):
                 'delivery_mode':self.courier_option,
             }
             billing_lines.append((0,0,billing_value))
-        orm.write({'pres_bill':billing_lines})
-    
+        orm.write({'pres_bill':billing_lines,
+        'pres_date':datetime.now()})
+
+
+
     @api.model
     def create(self , vals):
-        vals['name'] = self.env['ir.sequence'].next_by_code('medical.prescription.order') or '/'
+        vals['name'] = self.env['ir.sequence'].next_by_code('medical.prescription.order') or '/'   
         res = super(medical_prescription_order, self).create(vals)
+        orm = self.env['medical.doctor'].search([('patient','=',res.patient_id.id)])
+        lines=[]
+        value={
+            'prescription_alot':res.id,
+            'date':datetime.now(),
+            'patient_name':res.patient_id.id,
+            'delivery_option':res.delivery_option,
+            'delivery_mode':res.courier_option,
+            }
+        lines.append((0,0,value))
+        orm.write({'prescription_patient':lines,
+                    'medicine_id':res.id})
+
         if res.num_days == 'e':
             billing = self.env['patient.bills'].search([('patient_name','=',res.patient_id.id)], order='id desc', limit=1)
             for rec in billing:
@@ -111,25 +175,15 @@ class medical_prescription_order(models.Model):
                         'medicine_name':rez.medicine_name.id,
                         'prescription_id':res.name,
                         'pre_amount':res.total,
-                        'delivery_mode':res.courier_option, 
+                        'units':rez.units.id,
+                        'prescribed_quantity':rez.prescribed_quantity,
+                        'delivery_mode':res.courier_option,                
                             }
                     billing_lines.append((0,0,billing_value))
                 rec.write({'pres_bill':billing_lines,
-                           'mrd_charge':250})
+                           'mrd_charge':250,
+                           'pres_date':datetime.now()})
                 
-            orm = self.env['medical.doctor'].search([('patient','=',res.patient_id.id)])
-            lines=[]
-            value={
-                'prescription_alot':res.id,
-                'date':datetime.now(),
-                'patient_name':res.patient_id.id,
-                'delivery_option':res.delivery_option,
-                'delivery_mode':res.courier_option,
-                }
-            lines.append((0,0,value))
-            orm.write({'prescription_patient':lines,
-                    'medicine_id':res.id})
-
         if res.num_days == '1':
             billing = self.env['patient.bills'].search([('patient_name','=',res.patient_id.id)], order='id desc', limit=1)
             orm_id = self.env['in.patient'].search([('patient_id','=',res.patient_id.id)])
@@ -151,16 +205,10 @@ class medical_prescription_order(models.Model):
                 'prescription_alot':res.id,
                 'date':datetime.now(),
                 'patient_name':res.patient_id.id,
-                'medicine_name':res.prescription_line_ids.medicine_name.id,
-                'all_day':res.prescription_line_ids.all_day,
-                'prescribed_quantity':res.prescription_line_ids.prescribed_quantity,
-                'units':res.prescription_line_ids.units.id,
-                'bf_af':res.prescription_line_ids.bf_af,
-                'anupana':res.prescription_line_ids.anupana,
-                'days1':res.prescription_line_ids.days1,
                 }
             lines.append((0,0,value))
             orm_id.write({'medicine_line':lines})
+            
             
             
         elif res.num_days == '2':
@@ -183,13 +231,6 @@ class medical_prescription_order(models.Model):
                 'prescription_alot':res.id,
                 'date':datetime.now(),
                 'patient_name':res.patient_id.id,
-                'medicine_name':res.prescription_line_ids.medicine_name.id,
-                'all_day':res.prescription_line_ids.all_day,
-                'prescribed_quantity':res.prescription_line_ids.prescribed_quantity,
-                'units':res.prescription_line_ids.units.id,
-                'bf_af':res.prescription_line_ids.bf_af,
-                'anupana':res.prescription_line_ids.anupana,
-                'days1':res.prescription_line_ids.days1,
                 }
             lines.append((0,0,value))
             orm_id.write({'medicine_line_two':lines})
@@ -214,13 +255,6 @@ class medical_prescription_order(models.Model):
                 'prescription_alot':res.id,
                 'date':datetime.now(),
                 'patient_name':res.patient_id.id,
-                'medicine_name':res.prescription_line_ids.medicine_name.id,
-                'all_day':res.prescription_line_ids.all_day,
-                'prescribed_quantity':res.prescription_line_ids.prescribed_quantity,
-                'units':res.prescription_line_ids.units.id,
-                'bf_af':res.prescription_line_ids.bf_af,
-                'anupana':res.prescription_line_ids.anupana,
-                'days1':res.prescription_line_ids.days1,
                 }
             lines.append((0,0,value))
             orm_id.write({'medicine_line_three':lines})
@@ -245,13 +279,6 @@ class medical_prescription_order(models.Model):
                 'prescription_alot':res.id,
                 'date':datetime.now(),
                 'patient_name':res.patient_id.id,
-                'medicine_name':res.prescription_line_ids.medicine_name.id,
-                'all_day':res.prescription_line_ids.all_day,
-                'prescribed_quantity':res.prescription_line_ids.prescribed_quantity,
-                'units':res.prescription_line_ids.units.id,
-                'bf_af':res.prescription_line_ids.bf_af,
-                'anupana':res.prescription_line_ids.anupana,
-                'days1':res.prescription_line_ids.days1,
                 }
             lines.append((0,0,value))
             orm_id.write({'medicine_line_four':lines})
@@ -276,13 +303,6 @@ class medical_prescription_order(models.Model):
                 'prescription_alot':res.id,
                 'date':datetime.now(),
                 'patient_name':res.patient_id.id,
-                'medicine_name':res.prescription_line_ids.medicine_name.id,
-                'all_day':res.prescription_line_ids.all_day,
-                'prescribed_quantity':res.prescription_line_ids.prescribed_quantity,
-                'units':res.prescription_line_ids.units.id,
-                'bf_af':res.prescription_line_ids.bf_af,
-                'anupana':res.prescription_line_ids.anupana,
-                'days1':res.prescription_line_ids.days1,
                 }
             lines.append((0,0,value))
             orm_id.write({'medicine_line_five':lines})
@@ -307,13 +327,6 @@ class medical_prescription_order(models.Model):
                 'prescription_alot':res.id,
                 'date':datetime.now(),
                 'patient_name':res.patient_id.id,
-                'medicine_name':res.prescription_line_ids.medicine_name.id,
-                'all_day':res.prescription_line_ids.all_day,
-                'prescribed_quantity':res.prescription_line_ids.prescribed_quantity,
-                'units':res.prescription_line_ids.units.id,
-                'bf_af':res.prescription_line_ids.bf_af,
-                'anupana':res.prescription_line_ids.anupana,
-                'days1':res.prescription_line_ids.days1,
                 }
             lines.append((0,0,value))
             orm_id.write({'medicine_line_six':lines})
@@ -338,13 +351,6 @@ class medical_prescription_order(models.Model):
                 'prescription_alot':res.id,
                 'date':datetime.now(),
                 'patient_name':res.patient_id.id,
-                'medicine_name':res.prescription_line_ids.medicine_name.id,
-                'all_day':res.prescription_line_ids.all_day,
-                'prescribed_quantity':res.prescription_line_ids.prescribed_quantity,
-                'units':res.prescription_line_ids.units.id,
-                'bf_af':res.prescription_line_ids.bf_af,
-                'anupana':res.prescription_line_ids.anupana,
-                'days1':res.prescription_line_ids.days1,
                 }
             lines.append((0,0,value))
             orm_id.write({'medicine_line_seven':lines})
@@ -369,13 +375,6 @@ class medical_prescription_order(models.Model):
                 'prescription_alot':res.id,
                 'date':datetime.now(),
                 'patient_name':res.patient_id.id,
-                'medicine_name':res.prescription_line_ids.medicine_name.id,
-                'all_day':res.prescription_line_ids.all_day,
-                'prescribed_quantity':res.prescription_line_ids.prescribed_quantity,
-                'units':res.prescription_line_ids.units.id,
-                'bf_af':res.prescription_line_ids.bf_af,
-                'anupana':res.prescription_line_ids.anupana,
-                'days1':res.prescription_line_ids.days1,
                 }
             lines.append((0,0,value))
             orm_id.write({'medicine_line_eight':lines})
@@ -400,13 +399,6 @@ class medical_prescription_order(models.Model):
                 'prescription_alot':res.id,
                 'date':datetime.now(),
                 'patient_name':res.patient_id.id,
-                'medicine_name':res.prescription_line_ids.medicine_name.id,
-                'all_day':res.prescription_line_ids.all_day,
-                'prescribed_quantity':res.prescription_line_ids.prescribed_quantity,
-                'units':res.prescription_line_ids.units.id,
-                'bf_af':res.prescription_line_ids.bf_af,
-                'anupana':res.prescription_line_ids.anupana,
-                'days1':res.prescription_line_ids.days1,
                 }
             lines.append((0,0,value))
             orm_id.write({'medicine_line_nine':lines})
@@ -431,17 +423,13 @@ class medical_prescription_order(models.Model):
                 'prescription_alot':res.id,
                 'date':datetime.now(),
                 'patient_name':res.patient_id.id,
-                'medicine_name':res.prescription_line_ids.medicine_name.id,
-                'all_day':res.prescription_line_ids.all_day,
-                'prescribed_quantity':res.prescription_line_ids.prescribed_quantity,
-                'units':res.prescription_line_ids.units.id,
-                'bf_af':res.prescription_line_ids.bf_af,
-                'anupana':res.prescription_line_ids.anupana,
-                'days1':res.prescription_line_ids.days1,
                 }
             lines.append((0,0,value))
             orm_id.write({'medicine_line_ten':lines})
         
+        
+        
+
         picking_list=[]
         for rec in res.prescription_line_ids:
             for data in rec:
@@ -472,6 +460,7 @@ class medical_prescription_order(models.Model):
 
         picking_orm = self.env['stock.picking'].create(picking_data)
         return res
+
 
 
     @api.model

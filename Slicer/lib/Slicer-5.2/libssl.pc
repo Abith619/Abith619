@@ -1,0 +1,11 @@
+prefix=/work/Stable/Slicer-0-build/OpenSSL
+exec_prefix=${prefix}
+libdir=/work/Stable/Slicer-0-build/OpenSSL
+includedir=${prefix}/include
+
+Name: OpenSSL-libssl
+Description: Secure Sockets Layer and cryptography libraries
+Version: 1.1.1g
+Requires.private: libcrypto
+Libs: -L${libdir} -lssl
+Cflags: -I${includedir}

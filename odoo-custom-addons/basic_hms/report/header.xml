@@ -3,7 +3,8 @@
 	<template id = "external_layout_boxed_inherits" inherit_id = "web.external_layout_boxed">
 		<xpath expr="//span[@t-field='company.partner_id']" position="replace">
            <div class="row">
-           <div class="col-md-6" style="width:100%;font-weight:300px;">
+           
+           <div class="col-md-6" style="width:70%;font-weight:300px;">
             <div style = "text-align: center;">
                 <h6 style="text-align: center;">
             <span class="company_address" t-field="company.partner_id"/><br></br>
@@ -23,3 +24,4 @@
 		</xpath>
     </template>
 </odoo>
+

@@ -18,14 +18,14 @@
 
         
 
-        <record id="medical_appointment_code_sequence_2" model="ir.sequence">
+        <!-- <record id="medical_appointment_code_sequence_2" model="ir.sequence">
             <field name="name">Appointment</field>
             <field name="code">medical.appointment</field>
             <field name="prefix">CHE/%(month_text)s/</field>
             <field name="padding">3</field>
-            <!-- <field name='date_format'>%y</field> -->
+            <field name='date_format'>%y</field>
             <field name="company_id" eval="2"/>
-        </record>
+        </record> -->
 
         <!-- <record id="medical_appointmenterode_code_sequence_2" model="ir.sequence">
             <field name="name">Appointment</field>
@@ -60,13 +60,13 @@
             <field name="company_id" eval="1"/>
         </record>
 
-        <record id="partner_registration_sequence" model="ir.sequence">
+        <!-- <record id="partner_registration_sequence" model="ir.sequence">
             <field name="name">Partner Seq</field>
             <field name="code">res.partner</field>
             <field name="prefix">CHE/%(month_text)s/</field>
             <field name="padding">3</field>
             <field name="company_id" eval="2"/>
-        </record>
+        </record> -->
 
         <record id="patient_registration_sequence" model="ir.sequence">
             <field name="name">Patient Seq</field>
@@ -76,13 +76,13 @@
             <field name="company_id" eval="1"/>
         </record>
 
-        <record id="patient_registration_sequence_company" model="ir.sequence">
+        <!-- <record id="patient_registration_sequence_company" model="ir.sequence">
             <field name="name">Patient Seq</field>
             <field name="code">medical.patient</field>
             <field name="prefix">CHE/%(month_text)s/</field>
             <field name="padding">3</field>
             <field name="company_id" eval="2"/>
-        </record>
+        </record> -->
 
         <!-- <record id="patient_registrationerode_sequence_company" model="ir.sequence">
             <field name="name">Patient Seq</field>
@@ -92,13 +92,13 @@
             <field name="company_id" eval="17"/>
         </record> -->
 
-        <record id="medical_doctor_code_sequence" model="ir.sequence">
+        <!-- <record id="medical_doctor_code_sequence" model="ir.sequence">
             <field name="name">Ebook</field>
             <field name="code">medical.doctor</field>
             <field name="prefix">CHE/%(month_text)s/</field>
             <field name="padding">4</field>
             <field name="company_id" eval="2"/>
-        </record>
+        </record> -->
         
         <record id="medical_doctor_code_sequence_company" model="ir.sequence">
             <field name="name">Ebook</field>
@@ -132,13 +132,13 @@
             <field name="company_id" eval="17"/>
         </record> -->
 
-        <record id="medical_diet_code_seq" model="ir.sequence">
+        <!-- <record id="medical_diet_code_seq" model="ir.sequence">
             <field name="name">Diet</field>
             <field name="code">prescribe.diet</field>
             <field name="prefix">CHE/%(month_text)s/</field>
             <field name="padding">4</field>
             <field name="company_id" eval="2"/>
-        </record>
+        </record> -->
 
         <record id="prescription_order_sequence" model="ir.sequence">
             <field name="name">Prescriptions</field>
@@ -156,13 +156,13 @@
             <field name="company_id" eval="17"/>
         </record> -->
 
-        <record id="prescription_order_sequence_company" model="ir.sequence">
+        <!-- <record id="prescription_order_sequence_company" model="ir.sequence">
             <field name="name">Prescriptions</field>
             <field name="code">medical.prescription.order</field>
             <field name="prefix">CHE/%(month_text)s/</field>
             <field name="padding">6</field>
             <field name="company_id" eval="2"/>
-        </record>
+        </record> -->
 
         <record id="medical_lab_test_sequence" model="ir.sequence">
             <field name="name">Scan Test</field>
@@ -180,13 +180,13 @@
             <field name="company_id" eval="17"/>
         </record> -->
 
-        <record id="medical_lab_test_sequence_company" model="ir.sequence">
+        <!-- <record id="medical_lab_test_sequence_company" model="ir.sequence">
             <field name="name">Scan Test</field>
             <field name="code">scan.test</field>
             <field name="prefix">CHE/%(month_text)s/</field>
             <field name="padding">3</field>
             <field name="company_id" eval="2"/>
-        </record>
+        </record> -->
 
         <record id="lab_test_sequence" model="ir.sequence">
             <field name="name">Lab Test</field>
@@ -204,13 +204,13 @@
             <field name="company_id" eval="17"/>
         </record> -->
 
-        <record id="lab_test_sequence_company" model="ir.sequence">
+        <!-- <record id="lab_test_sequence_company" model="ir.sequence">
             <field name="name">Lab Test</field>
             <field name="code">lab.scan.form</field>
             <field name="prefix">CHE/%(month_text)s/</field>
             <field name="padding">3</field>
             <field name="company_id" eval="2"/>
-        </record>
+        </record> -->
 
         <record id="new_born_sequence" model="ir.sequence">
             <field name="name">New Born</field>
@@ -261,7 +261,7 @@
             <field name="padding">4</field>
         </record>
 
-        <record id="bill_sequence_id" model="ir.sequence">
+        <!-- <record id="bill_sequence_id" model="ir.sequence">
             <field name="name">bill_sequence</field>
             <field name="code">bill.sequence</field>
             <field name="active">TRUE</field>
@@ -270,7 +270,7 @@
             <field name="number_next">1</field>
             <field name="number_increment">1</field>
             <field name="company_id" eval="2"/>
-         </record>
+         </record> -->
 
          <record id="bill_sequence_id_company" model="ir.sequence">
             <field name="name">bill_sequence</field>

@@ -15,7 +15,7 @@
                 </a>
 			</div>
 			<div class="sidebar_logo">
-				<img src="/web/binary/company_logo" class="logo_img"/>
+				<img src="/basic_hms/static/description/icon.png" class="logo_img"/>
 			</div>
             <!-- <h6 class="sidebar_head">MENU</h6> -->
             <ul class="sidebar_menu">
@@ -59,8 +59,7 @@
 
 		<div class="o_sub_menu_content">
 			<t t-foreach="widget.getApps()" t-as="app" >
-			<t t-if="app.name == 'Discuss' or app.name == 'Dashboards'  or app.name == 'Calendar' or app.name == 'Contacts' or app.name == 'Settings'">			
-		
+			<t t-if="app.name == 'Discuss' or app.name == 'Dashboards'  or app.name == 'Calendar' or app.name == 'Contacts' or app.name == 'Settings'">
 			</t>
 			<t t-else="">
 				<li>
@@ -79,7 +78,6 @@
 			</t>
 	    </div>
 		</div>
-		
     </t>
 
 </templates>

@@ -33,34 +33,18 @@ class Registerwizard(models.TransientModel):
     doctor_changes=fields.Boolean(string="Change",readonly=True)
     designation = fields.Char(string="Designation")
     ebook_id = fields.Char(string='Patient ID')
-    reg_type=fields.Selection([('dir',"Direct"),('on',"Online"),('app',"Appointment"),('rev',"Review"),('package','Package'),('stop',"Stopped"),('cam','Camp')],string="Registration Type")
+    reg_type=fields.Selection([('dir',"Direct"),('on',"Online"),('app',"Appointment"),('rev',"Review"),('stop',"Stopped"),('cam','Camp')],string="Registration Type")
     # patient_id = fields.Many2one('')
 
     insurance = fields.Boolean(string="Insurance if any")
     type_of_insurance= fields.Text(string='Insurance Details')
-    
-    pay_mode = fields.Selection([('cash','Cash'),('card','Card'),('upi','Upi')], string='Payment Mode', default='cash')
-    upi_pay = fields.Char(string='UPI')
-    card_pay = fields.Char(string='Card Payment')
     due_amount = fields.Float(string='Due Amount')
     amt_paid = fields.Float(string='Amount Paid')
-    
-    no_fees = fields.Boolean(string='No Consulting Fees')
-    # patient_activity = 
-    
+
     @api.onchange('amt_paid')
     def fees_due(self):
         self.due_amount = (self.fees - self.amt_paid)
-        
-    @api.onchange('payment_status')
-    def paid_status(self):
-        if self.payment_status == True:
-            self.amt_paid = self.fees
-            
-    @api.onchange('doctors')
-    def doc_change_orm(self):
-        orm = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id)])
-        orm.write(({'doctors':self.doctors}))
+
 
     @api.onchange('doctors')
     def doctor_change(self):
@@ -68,6 +52,12 @@ class Registerwizard(models.TransientModel):
             self.doctor_changes= True
         else:
             self.doctor_changes= False
+
+    @api.onchange('doctors')
+    def doc_change_orm(self):
+        orm = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id)])
+        orm.write(({'doctors':self.doctors}))
+
 
     def save(self):
         create_payment=self.env['register.payment'].create({
@@ -79,9 +69,8 @@ class Registerwizard(models.TransientModel):
         orm = self.env['res.partner'].search([('name','=',self.patient_id.name)])
         orm.update({
             'patient_activity':'doctor',
-            'doctor_reg':self.doctors
         })
-        
+
         record = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id )])
         record.update({
                 'payment':self.fees,
@@ -94,7 +83,6 @@ class Registerwizard(models.TransientModel):
                 '                                                                                                                                                                                                            '
                 ' Please select - Existing Patient')
             else:
-
                 lines=[]
                 val={
                 'patient_currents_ailments':self.treatment.id,
@@ -117,21 +105,33 @@ class Registerwizard(models.TransientModel):
                     'height':self.height,
                     'weight':self.weight,
                     'bmi_value':self.bmi_value,
-                    'reg_type':self.reg_type,
+                    'date_rec':datetime.now(),
                     'opnumber':self.name,
                     'currents_ailments':lines,
                     'designation':self.designation,
                     'patient_status':True,
-                    'adoption_details':'',
+                    'patient_activity':'doctor',
                     'stages':'done',
+                    'pat_status':'new',
+                    'image1':record.patient_photo,
                     })
 
         elif self.patient_selection == 'exi':
+            
+            record = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id )])
+            # raise ValidationError(record.patient_photo)
+            record.update({
+                'payment':self.fees,
+                'patient_activity':'doctor'
+            })
             val = self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
             val.write({
                 'doctor':self.doctors.id,
                 'patient_status':True,
-                'reg_type':self.reg_type,
+                'patient_activity':'doctor',
+                'pat_status':'review',
+                'date_rec':datetime.now(),
+                'image1':record.patient_photo,
                 })
         orm_id=self.env['medical.doctor'].search([('patient','=',self.patient_id.id)])
         bill_lines=[]
@@ -139,8 +139,8 @@ class Registerwizard(models.TransientModel):
             'name':'Registration Payment',
             'date':datetime.now(),
             'bill_amount':self.fees,
-            'due_rec':self.due_amount,
-            'payment_status':self.payment_status
+            'payment_status':self.payment_status,
+            # 'patient_activity':'doctor'
         }
         bill_lines.append((0,0,bills))
         bill_create=self.env['patient.bills'].create({
@@ -148,15 +148,17 @@ class Registerwizard(models.TransientModel):
             'sex':self.sex,
             'contact_no':self.contact_no,
             'doctor_id':self.doctors.id,
-            'payment_type':self.pay_mode,
-            'payment_id':self.upi_pay,
-            'payment_id':self.card_pay,
             'reception_bills':bill_lines,
             'insurance':self.insurance,
             'ebook_id':orm_id.serial_number,
             'type_of_insurance':self.type_of_insurance,
-            'file_charges':'200',
+            # 'file_charges':'200',
+            'patient_activity':'doctor',
+            'age':self.age,
+            'reg_date':datetime.now(),
+
         })
+
 
         orm_reg = self.env['medical.patient'].search([('patient_id','=',self.patient_id.id)])
         
@@ -164,6 +166,7 @@ class Registerwizard(models.TransientModel):
                 'online_type':'rev',
                 'direct_type':'rev',
                 })
+
 
 
         

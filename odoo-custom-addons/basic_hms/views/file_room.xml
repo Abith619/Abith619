@@ -115,17 +115,11 @@
                             </field>
                         </page>
                     <page string='Diet'>
-                        <!-- <button name="diet_for" type="object" string="Personalized Diet" class="oe_highlight" /> -->
+                        <button name="diet_for" type="object" string="Personalized Diet" class="oe_highlight" />
                         <field name = 'diet_line'>
                             <tree string="Diet" editable="bottom" >
-                                <field name ="wakeup1"/>
-                                <field name ="food"/>
-                                <field name ="fruit_diet" widget='many2many_tags'/>
-                                <field name ="veg_diet" widget='many2many_tags'/>
-                                <field name ="protein_diet" widget='many2many_tags'/>
-                                <field name ="quantity"/>
-                                <field name ="exercise1"/>
-                                <field name ="note"/>
+                                <field name="diet_for"/>
+                                <field name="dates"/>
                             </tree>
                         </field>
                     </page>
@@ -133,20 +127,9 @@
                         <button name="prescription_button" type="object" string="Create Prescription" class="oe_highlight"/>
                         <field name = 'medicine_line'>
                             <tree string="Prescription" editable="bottom" >
-                                <field name ="sequence_ref"/>
-                                <field name="prescription_alot"/>
-                                <field name ="medicine_name" options="{'no_create_edit':True}"/>
-                                <field name="all_day"/>
-                                <field name="prescribed_quantity" string='Quantity'/>
-                                <field name ="units" string='Units'/>
-                                <field name="company_id" invisible='1'/>
-                                <field name="bf_af" string='BF / AF'/>
-                                <field name ="anupana"/>
-                                <field name ="days1"/>
-                                <field name ="price" invisible="1"/>
-                                <field name ="total_price" invisible="1"/>
-                                <field name="date"/>
-                            </tree>
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
                         </field>
                     </page>
                     <page string='TPR Chart'>
@@ -192,8 +175,6 @@
                             <tree string="Scan History" editable="bottom" >
                                 <field name="scan_id" string='Test ID'/>
                                 <field name="name"/>
-                                <field name="range_test"/>
-                                <field name="range_normal"/>
                                 <field name="date"/>
                             </tree>
                         </field>
@@ -236,14 +217,8 @@
                         <button name="diet_one" type="object" string="Personalized Diet" class="oe_highlight" />
                         <field name = 'diet_line_two'>
                             <tree string="Diet" editable="bottom" >
-                                <field name ="wakeup1"/>
-                                    <field name ="food"/>
-                                    <field name ="fruit_diet" widget='many2many_tags'/>
-                                    <field name ="veg_diet" widget='many2many_tags'/>
-                                    <field name ="protein_diet" widget='many2many_tags'/>
-                                    <field name ="quantity"/>
-                                    <field name ="exercise1"/>
-                                    <field name ="note"/>
+                                <field name="diet_for"/>
+                                <field name="dates"/>
                             </tree>
                         </field>
                     </page>
@@ -251,20 +226,9 @@
                         <button name="prescription_one" type="object" string="Create Prescription" class="oe_highlight"/>
                         <field name = 'medicine_line_two'>
                             <tree string="Prescription" editable="bottom" >
-                                <field name ="sequence_ref"/>
-                                <field name="prescription_alot"/>
-                                <field name ="medicine_name" options="{'no_create_edit':True}"/>
-                                <field name="all_day"/>
-                                <field name="prescribed_quantity" string='Quantity'/>
-                                <field name ="units" string='Units'/>
-                                <field name="company_id" invisible='1'/>
-                                <field name="bf_af" string='BF / AF'/>
-                                <field name ="anupana"/>
-                                <field name ="days1"/>
-                                <field name ="price" invisible="1"/>
-                                <field name ="total_price" invisible="1"/>
-                                <field name="date"/>
-                            </tree>
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
                         </field>
                     </page>
                     <page string='TPR Chart'>
@@ -311,8 +275,6 @@
                             <tree string="Scan History" editable="bottom" >
                                 <field name="scan_id" string='Test ID'/>
                                 <field name="name"/>
-                                <field name="range_test"/>
-                                <field name="range_normal"/>
                                 <field name="date"/>
                             </tree>
                         </field>
@@ -356,14 +318,8 @@
                         <button name="diet_two" type="object" string="Personalized Diet" class="oe_highlight" />
                         <field name = 'diet_line_three'>
                             <tree string="Diet" editable="bottom" >
-                                <field name ="wakeup1"/>
-                                    <field name ="food"/>
-                                    <field name ="fruit_diet" widget='many2many_tags'/>
-                                    <field name ="veg_diet" widget='many2many_tags'/>
-                                    <field name ="protein_diet" widget='many2many_tags'/>
-                                    <field name ="quantity"/>
-                                    <field name ="exercise1"/>
-                                    <field name ="note"/>
+                                <field name="diet_for"/>
+                                <field name="dates"/>
                             </tree>
                         </field>
                     </page>
@@ -371,20 +327,9 @@
                         <button name="prescription_two" type="object" string="Create Prescription" class="oe_highlight"/>
                         <field name = 'medicine_line_three'>
                             <tree string="Prescription" editable="bottom" >
-                                <field name ="sequence_ref"/>
-                                <field name="prescription_alot"/>
-                                <field name ="medicine_name" options="{'no_create_edit':True}"/>
-                                <field name="all_day"/>
-                                <field name="prescribed_quantity" string='Quantity'/>
-                                <field name ="units" string='Units'/>
-                                <field name="company_id" invisible='1'/>
-                                <field name="bf_af" string='BF / AF'/>
-                                <field name ="anupana"/>
-                                <field name ="days1"/>
-                                <field name ="price" invisible="1"/>
-                                <field name ="total_price" invisible="1"/>
-                                <field name="date"/>
-                            </tree>
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
                         </field>
                     </page>
                     <page string='TPR Chart'>
@@ -431,8 +376,6 @@
                             <tree string="Scan History" editable="bottom" >
                                 <field name="scan_id" string='Test ID'/>
                                 <field name="name"/>
-                                <field name="range_test"/>
-                                <field name="range_normal"/>
                                 <field name="date"/>
                             </tree>
                         </field>
@@ -476,14 +419,8 @@
                         <button name="diet_three" type="object" string="Personalized Diet" class="oe_highlight" />
                         <field name = 'diet_line_four'>
                             <tree string="Diet" editable="bottom" >
-                                <field name ="wakeup1"/>
-                                    <field name ="food"/>
-                                    <field name ="fruit_diet" widget='many2many_tags'/>
-                                    <field name ="veg_diet" widget='many2many_tags'/>
-                                    <field name ="protein_diet" widget='many2many_tags'/>
-                                    <field name ="quantity"/>
-                                    <field name ="exercise1"/>
-                                    <field name ="note"/>
+                                <field name="diet_for"/>
+                                <field name="dates"/>
                             </tree>
                         </field>
                     </page>
@@ -491,20 +428,9 @@
                         <button name="prescription_three" type="object" string="Create Prescription" class="oe_highlight"/>
                         <field name = 'medicine_line_four'>
                             <tree string="Prescription" editable="bottom" >
-                                <field name ="sequence_ref"/>
-                                <field name="prescription_alot"/>
-                                <field name ="medicine_name" options="{'no_create_edit':True}"/>
-                                <field name="all_day"/>
-                                <field name="prescribed_quantity" string='Quantity'/>
-                                <field name ="units" string='Units'/>
-                                <field name="company_id" invisible='1'/>
-                                <field name="bf_af" string='BF / AF'/>
-                                <field name ="anupana"/>
-                                <field name ="days1"/>
-                                <field name ="price" invisible="1"/>
-                                <field name ="total_price" invisible="1"/>
-                                <field name="date"/>
-                            </tree>
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
                         </field>
                     </page>
                     <page string='TPR Chart'>
@@ -550,8 +476,6 @@
                             <tree string="Scan History" editable="bottom" >
                                 <field name="scan_id" string='Test ID'/>
                                 <field name="name"/>
-                                <field name="range_test"/>
-                                <field name="range_normal"/>
                                 <field name="date"/>
                             </tree>
                         </field>
@@ -595,14 +519,8 @@
                         <button name="diet_four" type="object" string="Personalized Diet" class="oe_highlight" />
                         <field name = 'diet_line_five'>
                             <tree string="Diet" editable="bottom" >
-                                <field name ="wakeup1"/>
-                                <field name ="food"/>
-                                <field name ="fruit_diet" widget='many2many_tags'/>
-                                <field name ="veg_diet" widget='many2many_tags'/>
-                                <field name ="protein_diet" widget='many2many_tags'/>
-                                <field name ="quantity"/>
-                                <field name ="exercise1"/>
-                                <field name ="note"/>
+                                <field name="diet_for"/>
+                                <field name="dates"/>
                             </tree>
                         </field>
                     </page>
@@ -610,20 +528,9 @@
                         <button name="prescription_four" type="object" string="Create Prescription" class="oe_highlight"/>
                         <field name = 'medicine_line_five'>
                             <tree string="Prescription" editable="bottom" >
-                                <field name ="sequence_ref"/>
-                                <field name="prescription_alot"/>
-                                <field name ="medicine_name" options="{'no_create_edit':True}"/>
-                                <field name="all_day"/>
-                                <field name="prescribed_quantity" string='Quantity'/>
-                                <field name ="units" string='Units'/>
-                                <field name="company_id" invisible='1'/>
-                                <field name="bf_af" string='BF / AF'/>
-                                <field name ="anupana"/>
-                                <field name ="days1"/>
-                                <field name ="price" invisible="1"/>
-                                <field name ="total_price" invisible="1"/>
-                                <field name="date"/>
-                            </tree>
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
                         </field>
                     </page>
                     <page string='TPR Chart'>
@@ -669,8 +576,6 @@
                             <tree string="Scan History" editable="bottom" >
                                 <field name="scan_id" string='Test ID'/>
                                 <field name="name"/>
-                                <field name="range_test"/>
-                                <field name="range_normal"/>
                                 <field name="date"/>
                             </tree>
                         </field>
@@ -714,14 +619,8 @@
                         <button name="diet_five" type="object" string="Personalized Diet" class="oe_highlight" />
                         <field name = 'diet_line_six'>
                             <tree string="Diet" editable="bottom" >
-                                <field name ="wakeup1"/>
-                                <field name ="food"/>
-                                <field name ="fruit_diet" widget='many2many_tags'/>
-                                <field name ="veg_diet" widget='many2many_tags'/>
-                                <field name ="protein_diet" widget='many2many_tags'/>
-                                <field name ="quantity"/>
-                                <field name ="exercise1"/>
-                                <field name ="note"/>
+                                <field name="diet_for"/>
+                                <field name="dates"/>
                             </tree>
                         </field>
                     </page>
@@ -729,20 +628,9 @@
                         <button name="prescription_five" type="object" string="Create Prescription" class="oe_highlight"/>
                         <field name = 'medicine_line_six'>
                             <tree string="Prescription" editable="bottom" >
-                                <field name ="sequence_ref"/>
-                                <field name="prescription_alot"/>
-                                <field name ="medicine_name" options="{'no_create_edit':True}"/>
-                                <field name="all_day"/>
-                                <field name="prescribed_quantity" string='Quantity'/>
-                                <field name ="units" string='Units'/>
-                                <field name="company_id" invisible='1'/>
-                                <field name="bf_af" string='BF / AF'/>
-                                <field name ="anupana"/>
-                                <field name ="days1"/>
-                                <field name ="price" invisible="1"/>
-                                <field name ="total_price" invisible="1"/>
-                                <field name="date"/>
-                            </tree>
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
                         </field>
                     </page>
                     <page string='TPR Chart'>
@@ -789,8 +677,6 @@
                             <tree string="Scan History" editable="bottom" >
                                 <field name="scan_id" string='Test ID'/>
                                 <field name="name"/>
-                                <field name="range_test"/>
-                                <field name="range_normal"/>
                                 <field name="date"/>
                             </tree>
                         </field>
@@ -834,14 +720,8 @@
                         <button name="diet_six" type="object" string="Personalized Diet" class="oe_highlight" />
                         <field name = 'diet_line_seven'>
                             <tree string="Diet" editable="bottom" >
-                                <field name ="wakeup1"/>
-                                    <field name ="food"/>
-                                    <field name ="fruit_diet" widget='many2many_tags'/>
-                                    <field name ="veg_diet" widget='many2many_tags'/>
-                                    <field name ="protein_diet" widget='many2many_tags'/>
-                                    <field name ="quantity"/>
-                                    <field name ="exercise1"/>
-                                    <field name ="note"/>
+                                <field name="diet_for"/>
+                                <field name="dates"/>
                             </tree>
                         </field>
                     </page>
@@ -849,20 +729,9 @@
                         <button name="prescription_six" type="object" string="Create Prescription" class="oe_highlight"/>
                         <field name = 'medicine_line_seven'>
                             <tree string="Prescription" editable="bottom" >
-                                <field name ="sequence_ref"/>
-                                <field name="prescription_alot"/>
-                                <field name ="medicine_name" options="{'no_create_edit':True}"/>
-                                <field name="all_day"/>
-                                <field name="prescribed_quantity" string='Quantity'/>
-                                <field name ="units" string='Units'/>
-                                <field name="company_id" invisible='1'/>
-                                <field name="bf_af" string='BF / AF'/>
-                                <field name ="anupana"/>
-                                <field name ="days1"/>
-                                <field name ="price" invisible="1"/>
-                                <field name ="total_price" invisible="1"/>
-                                <field name="date"/>
-                            </tree>
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
                         </field>
                     </page>
                     <page string='TPR Chart'>
@@ -908,8 +777,6 @@
                             <tree string="Scan History" editable="bottom" >
                                 <field name="scan_id" string='Test ID'/>
                                 <field name="name"/>
-                                <field name="range_test"/>
-                                <field name="range_normal"/>
                                 <field name="date"/>
                             </tree>
                         </field>
@@ -953,14 +820,8 @@
                         <button name="diet_seven" type="object" string="Personalized Diet" class="oe_highlight" />
                         <field name = 'diet_line_eight'>
                             <tree string="Diet" editable="bottom" >
-                                <field name ="wakeup1"/>
-                                    <field name ="food"/>
-                                    <field name ="fruit_diet" widget='many2many_tags'/>
-                                    <field name ="veg_diet" widget='many2many_tags'/>
-                                    <field name ="protein_diet" widget='many2many_tags'/>
-                                    <field name ="quantity"/>
-                                    <field name ="exercise1"/>
-                                    <field name ="note"/>
+                                <field name="diet_for"/>
+                                <field name="dates"/>
                             </tree>
                         </field>
                     </page>
@@ -968,20 +829,9 @@
                         <button name="prescription_seven" type="object" string="Create Prescription" class="oe_highlight"/>
                         <field name = 'medicine_line_eight'>
                             <tree string="Prescription" editable="bottom" >
-                                <field name ="sequence_ref"/>
-                                <field name="prescription_alot"/>
-                                <field name ="medicine_name" options="{'no_create_edit':True}"/>
-                                <field name="all_day"/>
-                                <field name="prescribed_quantity" string='Quantity'/>
-                                <field name ="units" string='Units'/>
-                                <field name="company_id" invisible='1'/>
-                                <field name="bf_af" string='BF / AF'/>
-                                <field name ="anupana"/>
-                                <field name ="days1"/>
-                                <field name ="price" invisible="1"/>
-                                <field name ="total_price" invisible="1"/>
-                                <field name="date"/>
-                            </tree>
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
                         </field>
                     </page>
                     <page string='TPR Chart'>
@@ -1027,8 +877,6 @@
                             <tree string="Scan History" editable="bottom" >
                                 <field name="scan_id" string='Test ID'/>
                                 <field name="name"/>
-                                <field name="range_test"/>
-                                <field name="range_normal"/>
                                 <field name="date"/>
                             </tree>
                         </field>
@@ -1072,14 +920,8 @@
                         <button name="diet_eight" type="object" string="Personalized Diet" class="oe_highlight" />
                         <field name = 'diet_line_nine'>
                             <tree string="Diet" editable="bottom" >
-                                <field name ="wakeup1"/>
-                                    <field name ="food"/>
-                                    <field name ="fruit_diet" widget='many2many_tags'/>
-                                    <field name ="veg_diet" widget='many2many_tags'/>
-                                    <field name ="protein_diet" widget='many2many_tags'/>
-                                    <field name ="quantity"/>
-                                    <field name ="exercise1"/>
-                                    <field name ="note"/>
+                                <field name="diet_for"/>
+                                <field name="dates"/>
                             </tree>
                         </field>
                     </page>
@@ -1087,20 +929,9 @@
                         <button name="prescription_eight" type="object" string="Create Prescription" class="oe_highlight"/>
                         <field name = 'medicine_line_nine'>
                             <tree string="Prescription" editable="bottom" >
-                                <field name ="sequence_ref"/>
-                                <field name="prescription_alot"/>
-                                <field name ="medicine_name" options="{'no_create_edit':True}"/>
-                                <field name="all_day"/>
-                                <field name="prescribed_quantity" string='Quantity'/>
-                                <field name ="units" string='Units'/>
-                                <field name="company_id" invisible='1'/>
-                                <field name="bf_af" string='BF / AF'/>
-                                <field name ="anupana"/>
-                                <field name ="days1"/>
-                                <field name ="price" invisible="1"/>
-                                <field name ="total_price" invisible="1"/>
-                                <field name="date"/>
-                            </tree>
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
                         </field>
                     </page>
                     <page string='TPR Chart'>
@@ -1146,8 +977,6 @@
                             <tree string="Scan History" editable="bottom" >
                                 <field name="scan_id" string='Test ID'/>
                                 <field name="name"/>
-                                <field name="range_test"/>
-                                <field name="range_normal"/>
                                 <field name="date"/>
                             </tree>
                         </field>
@@ -1191,14 +1020,8 @@
                         <button name="diet_nine" type="object" string="Personalized Diet" class="oe_highlight" />
                         <field name = 'diet_line_ten'>
                             <tree string="Diet" editable="bottom" >
-                                <field name ="wakeup1"/>
-                                    <field name ="food"/>
-                                    <field name ="fruit_diet" widget='many2many_tags'/>
-                                    <field name ="veg_diet" widget='many2many_tags'/>
-                                    <field name ="protein_diet" widget='many2many_tags'/>
-                                    <field name ="quantity"/>
-                                    <field name ="exercise1"/>
-                                    <field name ="note"/>
+                                <field name="diet_for"/>
+                                <field name="dates"/>
                             </tree>
                         </field>
                     </page>
@@ -1206,20 +1029,9 @@
                         <button name="prescription_nine" type="object" string="Create Prescription" class="oe_highlight"/>
                         <field name = 'medicine_line_ten'>
                             <tree string="Prescription" editable="bottom" >
-                                <field name ="sequence_ref"/>
-                                <field name="prescription_alot"/>
-                                <field name ="medicine_name" options="{'no_create_edit':True}"/>
-                                <field name="all_day"/>
-                                <field name="prescribed_quantity" string='Quantity'/>
-                                <field name ="units" string='Units'/>
-                                <field name="company_id" invisible='1'/>
-                                <field name="bf_af" string='BF / AF'/>
-                                <field name ="anupana"/>
-                                <field name ="days1"/>
-                                <field name ="price" invisible="1"/>
-                                <field name ="total_price" invisible="1"/>
-                                <field name="date"/>
-                            </tree>
+                            <field name="prescription_alot"/>
+                            <field name="date"/>
+                                </tree>
                         </field>
                     </page>
                     <page string='TPR Chart'>
@@ -1265,8 +1077,6 @@
                             <tree string="Scan History" editable="bottom" >
                                 <field name="scan_id" string='Test ID'/>
                                 <field name="name"/>
-                                <field name="range_test"/>
-                                <field name="range_normal"/>
                                 <field name="date"/>
                             </tree>
                         </field>
