@@ -1,2 +1,2 @@
-pyjwt==1.6.4
+pyjwt==2.4.0
 simplejson==3.17.5
