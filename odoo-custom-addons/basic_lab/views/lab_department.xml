@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="clinic_management_form" model="ir.ui.view">
+        <field name="name">Lab Clinic</field>
+        <field name="model">lab.clinic</field>
+        <field name="priority" eval="8" />
+        <field name="arch" type="xml">
+            <form string="Lab Clinic">
+                <header>
+                    <field name ="approved_status" widget="statusbar" attrs="{'invisible': [('approved_status','=', 'not')]}" readonly='1'/>
+                    <button name="approved_status_change" type="object" string="Approve" class="oe_highlight" attrs="{'invisible': [('approved_status','in', ['dispach','approved'])]}"/>
+                </header>
+                <sheet>
+                    <div class='row'>
+                        <div class='col-2'>
+                            <field name='patient_photo' widget='image' style="width:50%;"/>
+                        </div> </div>
+                    <div class='row'>
+                        <div class='col-6'>
+                            <group>
+                                <field name='patient_id'/>
+                                <field name="sex" />
+                                    <label for="contact_num" string="Contact Number" />
+                                        <div class="o_address_format">
+                                            <field name="contact_num" style="width: 30%;margin-right: 10px;" />
+                                            <field name = "whatsapp_check" style="width: 10%;border-left-width: 10px;margin-right: 0px;" widget='toggle_button'/>
+                                            <strong><label for="contact_number"  style="font-weight: bold !important;color: #333;" string="Whats App " attrs="{'invisible': [('whatsapp_check','=', True)]} "/></strong>
+                                            <field name="contact_number"  style="width: 30%;" attrs="{'invisible': [('whatsapp_check','=', True)]} " />
+                                    </div>
+                                <field name="date_of_birth" />
+                                <field name="age" />
+                                <field name="name_age_sex" string='' invisible='1'/>
+                                <field name="height" />
+                                <field name="weight" />
+                                <field name="blood_type" />
+                                <field name="rh" />
+                                <field name="physician_id" />
+                            </group>
+                        </div>
+                        <div class='col-6'>
+                            <group>
+                                <field name="reg_id" />
+                                <field name="last_visit" />
+                                <field name="reg_date" invisible='1'/>
+                                <field name="order_date" />
+                                <field name="ref_num" />
+                                <field name="ref_date" invisible='1'/>
+                                <field name="order_from" />
+                                <field name="order_status"/>
+                                <field name="priority"/>
+                                <field name="tech_id"/>
+                            </group>
+                        </div>
+                    </div>
+                    <notebook>
+                        <page string='Test Details'>
+                            <field name="lab_line">
+                                <tree string="Test Details" editable="bottom" >
+                                    <field name="test_name" required='1'/>
+                                    <field name="lab_category" required='1'/>
+                                    <field name="sample_collected" style='text-align:center;' readonly='1'/>
+                                    <field name="sample_date" readonly='1'/>
+                                    <field name="sample_num" readonly='1'/>
+                                    <field name="barcode" widget='image' style="width: 150px;" readonly='1'/>
+                                    <field name="received" invisible='1'/>
+                                    <field name="related_id" invisible='1'/>
+                                    <button class="oe_highlight" name ="add_sample" type="object" string='Sample'/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string='Report Details'>
+                            <field name="report_line">
+                                <tree string="Report Details" editable="bottom" >
+                                    <field name="test_name" required='1'/>
+                                    <field name="res_value" />
+                                    <field name="unit"/>
+                                    <field name="normal_range"/>
+                                    <field name='ext_lab'/>
+                                    <field name="comments" />
+                                    <field name="related_id" invisible='1'/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_clinic_management_tree" model="ir.ui.view">
+        <field name="name">Clinic Management</field>
+        <field name="model">lab.clinic</field>
+        <field name="arch" type="xml">
+            <tree string="Clinic Management">
+                <field name="patient_id"/>
+                <field name="ref_num"/>
+                <field name="order_date"/>
+                <field name="ref_date" invisible='1'/>
+                <field name="order_status" />
+                <field name="priority" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="clinic_action">            
+        <field name="name">Clinic Management</field>         
+            <field name="res_model">lab.clinic</field>           
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="domain">[]</field>  
+            <field name="context"></field>           
+        <field name="help" type="html">                
+            <p class="oe_view_nocontent_create">Clinic Details</p>            
+        </field>        
+    </record>
+
+    <record id="queue_management_form" model="ir.ui.view">
+        <field name="name">Lab Queue</field>
+        <field name="model">queue.management</field>
+        <field name="priority" eval="8" />
+        <field name="arch" type="xml">
+            <form string="Lab Queue">
+                <sheet>
+                    <div class='row'>
+                        <div class='col-5'>
+                            <group>
+                                <field name='name' />
+                                <field name='patient_id'/>
+                                <field name='sex'/>
+                                <field name="sex_age"/>
+                                <field name="patient_type" />
+                            </group>
+                        </div>
+                        <div class='col-6'>
+                            <group>
+                                <field name="patient_activity"/>
+                                <field name="start_date"/>
+                                <field name="approval"/>
+                                <field name="dispached"/>
+                                <field name="sample_test"/>
+                            </group>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_queue_management_tree" model="ir.ui.view">
+        <field name="name">Queue Management</field>
+        <field name="model">queue.management</field>
+        <field name="arch" type="xml">
+            <tree string="Queue Management">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="sex_age"/>
+                <field name="patient_activity"/>
+                <field name="start_date"/>
+                <field name="approval" invisible='1'/>
+                <field name="patient_type" />
+                <field name="sample_test" invisible='1'/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="queue_action">            
+        <field name="name">Queue Management</field>         
+            <field name="res_model">queue.management</field>           
+            <field name="view_mode">tree,pivot,graph</field>
+            <field name="domain">[]</field>  
+            <field name="context"></field>           
+        <field name="help" type="html">                
+            <p class="oe_view_nocontent_create">Queue Details</p>            
+        </field>        
+    </record>
+
+    <record id="view_patients_queue_filter_management" model="ir.ui.view">
+        <field name="name">Queue Management</field>
+        <field name="model">queue.management</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="Queue"> 
+                <field name="name"/>
+                <field name="sample_test"/>
+                <field name="patient_id"/>
+                <filter string="Today" name="start_date" separator="1" domain="[('start_date', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),
+                    ('start_date', '&lt;=',datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]"/>
+                <filter string="New" name="patient_type" domain="[('patient_type','=','new')]"/>
+                <filter string="Waiting" name="patient_activity" domain="[('dispached','=',False)]"/>
+                <filter string="Today New" name="start_date" separator="1" domain="[('start_date', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),
+                    ('start_date', '&lt;=',datetime.datetime.now().strftime('%Y-%m-%d 23:23:59')),('patient_type','=','new')]" />
+                <filter string="Approved" name="approval" separator="1" domain="[('approval','=',True)]"/>
+                <filter string="Waiting for Approval" name="approval" separator="1" domain="[('approval','=',False)]"/>
+                <filter string="Sample Collected" name="sample_test" separator="1" domain="[('sample_test','=',True)]"/>
+                <filter string="Checked Out" name="patient_activity" domain="[('dispached','=',True)]"/>
+            </search>
+        </field>
+    </record>
+            <menuitem id='lab_clinic_menu' name='Lab' />
+                <menuitem id="menu_lab_clinic" name="Lab Clinic" parent="lab_clinic_menu" sequence= "2" action="clinic_action"/>
+                <menuitem id="menu_lab_queue" name="Queue Details" parent="lab_clinic_menu" sequence= "3" action="queue_action"/>
+    
+    <record id="sample_management_form_lab" model="ir.ui.view">
+        <field name="name">Sample Upload</field>
+        <field name="model">sample.lab</field>
+        <field name="priority" eval="8" />
+        <field name="arch" type="xml">
+            <form string="Sample Upload">
+                <sheet>
+                    <div class='row'>
+                        <div class='col-5'>
+                            <group>
+                                <field name='name' />
+                                <field name='patient_id'/>
+                                <field name='test_name'/>
+                            </group>
+                        </div>
+                        <div class='col-6'>
+                            <group>
+                                <field name="sample_barcode" widget='image'/>
+                            </group>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="sample_lab_action">            
+        <field name="name">Sample Upload</field>         
+            <field name="res_model">sample.lab</field>           
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="domain">[]</field>  
+            <field name="context"></field>           
+        <field name="help" type="html">                
+            <p class="oe_view_nocontent_create">Sample Upload</p>            
+        </field>        
+    </record>
+
+    <record id="lab_master_management_form" model="ir.ui.view">
+        <field name="name">Lab Master</field>
+        <field name="model">lab.master</field>
+        <field name="priority" eval="8" />
+        <field name="arch" type="xml">
+            <form string="Lab Master">
+                <sheet>
+                    <div class='row'>
+                        <div class='col-5'>
+                            <group>
+                                <field name='test_name' />
+                                <field name='dept_name'/>
+                                <field name="unit"/>
+                                <field name="test_type"/>
+                            </group>
+                        </div>
+                        <div class='col-6'>
+                            <group>
+                                <field name="normal_range" />
+                                <field name='test_amount'/>
+                                <field name='gst' widget='many2many_tags'/>
+                            </group>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_lab_master_management_tree" model="ir.ui.view">
+        <field name="name">Lab Master</field>
+        <field name="model">lab.master</field>
+        <field name="arch" type="xml">
+            <tree string="Lab Master">
+                <field name="test_type"/>
+                <field name='test_name' />
+                <field name='dept_name'/>
+                <field name="unit"/>
+                <field name="normal_range" />
+                <field name='test_amount'/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="lab_master_action">            
+        <field name="name">Lab Master</field>         
+            <field name="res_model">lab.master</field>           
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="domain">[]</field>  
+            <field name="context"></field>           
+        <field name="help" type="html">                
+            <p class="oe_view_nocontent_create">Lab Master</p>            
+        </field>        
+    </record>
+
+    <record id="department_management_form" model="ir.ui.view">
+        <field name="name">Lab Department Masters</field>
+        <field name="model">lab.department.masters</field>
+        <field name="priority" eval="8" />
+        <field name="arch" type="xml">
+            <form string="Lab Department Masters">
+                <sheet>
+                    <div class='row'>
+                        <div class='col-5'>
+                            <group>
+                                <field name='dept_name' />
+                            </group>
+                        </div>
+                        <div class='col-6'>
+                            <group>
+                            </group>
+                        </div>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_department_management_tree" model="ir.ui.view">
+        <field name="name">Lab Department Masters</field>
+        <field name="model">lab.department.masters</field>
+        <field name="arch" type="xml">
+            <tree string="Lab Department Masters">
+                <field name="dept_name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="lab_department_action">            
+        <field name="name">Lab Department Masters</field>         
+            <field name="res_model">lab.department.masters</field>           
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="domain">[]</field>  
+            <field name="context"></field>           
+        <field name="help" type="html">                
+            <p class="oe_view_nocontent_create">Lab Department Masters</p>            
+        </field>        
+    </record>
+
+    <menuitem id='menu_masters' name='Others' parent='lab_clinic_menu'/>
+    <menuitem id="menu_lab_masterss" name="Lab Test Masters" sequence= "1" parent='menu_masters' action='lab_master_action'/>
+    <menuitem id="menu_lab_department_masters_list" name="Lab Department Masters" sequence= "2" parent='menu_masters' action='lab_department_action'/>
+    
+    </data>
+</odoo>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <odoo>
+<data>
+        <template id="lab_bills_report" name="Lab Report">
+            <t t-call="web.external_layout">
+                <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t >
+                    <t t-set="name_age_sex" t-value="o.name_age_sex.upper()" />
+                        <td style="border: 0px;width: 50%;">
+                            <div class="header_tag">
+                                <h4 class="text-center heading_text_cor"><strong>Lab Bill</strong></h4>
+                                </div>
+                            <div>
+                                <div class='float-left'>
+                                    <p><strong>SL NO  :</strong><span t-field="o.ref_num"/></p>
+                                    <p><strong>Patient Name  : </strong><span t-esc="name_age_sex"/></p>
+                                        <p><strong>Contact Number  :</strong><span t-field="o.contact_num"/></p>
+                                    </div>
+                                <div class="float-right" >
+                                    <p><strong>Bill Date  :</strong><span t-field="o.order_date"/></p>
+                                    <p><strong>Payment Type  :</strong><span t-field="o.payment_type"/></p>
+                                </div>
+                            </div> 
+                        </td>
+                        <table class="table table-bordered" style="border: 1px solid black;">
+                            <thead>
+                                <tr>
+                                    <th style="border: 1px solid black;"> Test Name </th>
+                                    <th style="border: 1px solid black;"> Department </th>
+                                    <th style="border: 1px solid black;"> Test Amount </th>
+                                    <th style="border: 1px solid black;"> Discount </th>
+                                    <th style="border: 1px solid black;"> GST </th>
+                                    <th style="border: 1px solid black;"> Bill Amount </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach='docs.bill_lines' t-as='line'>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.test_name"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.dept_name"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.test_amount"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.disc_amount"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.gst_percent"/>
+                                    </td>
+                                    <td style="border: 1px solid black;">
+                                        <span t-field="line.total_amount"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-sm" id="box" style="width:33%; float:right;margin-left: 0px; border: 1px solid black;">
+                            <tr class="border-black o_subtotal" style="font-size: 15px;">
+                                <td>Sub Total :</td>
+                                <td class="text-right">
+                            <strong><span t-field="o.sub_total" class="fa fa-inr"/></strong>
+                                </td>
+                            </tr>
+                            <tr class="border-black o_subtotal" style="font-size: 15px; ">
+                            <t>
+                                <td>Total Tax :</td>
+                                    <td class="text-right">
+                                    <strong><span t-esc="o.total_tax" class="fa fa-inr"/></strong>
+                                    </td>
+                                </t>
+                            </tr>
+                            <tr class="border-black o_subtotal" style="font-size: 15px;">
+                            <td style="background-color:white;color:#black;font-size: 15px;"><strong>Grand Total :</strong></td>
+                                <td style="background-color:white;color:#black;font-size: 15px;" class="text-right">
+                                    <b><strong><span t-field="o.grand_total" class="fa fa-inr"/></strong></b>
+                                </td>
+                            </tr>
+                        </table>
+                            <br></br><br></br><br></br><br></br><br></br>
+                            <div style='text-align:right'>
+                                <h6><strong style="padding-right:30px;">Lab Authority,   </strong></h6>
+                                <br></br><br></br>
+                                <h6 ><strong> Authorised Signatory </strong></h6>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

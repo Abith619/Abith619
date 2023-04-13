@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_map_project_requirements" model="ir.ui.view">
+            <field name="name">Mind Map</field>
+            <field name="model">mindmap.diagram</field>
+            <field name="arch" type="xml">
+                <tree string="Mind Map">
+                    <field name="name" />
+                    <field name="uml_diagram"/>
+                </tree>
+            </field>
+        </record>
+    
+        <record id="view_map_project_requirements_form" model="ir.ui.view">
+            <field name="name">Mind Map</field>
+            <field name="model">mindmap.diagram</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <form string="Mind Map">
+                    <header>
+                        
+                        </header>
+                    <sheet>
+                        <div class='row'>
+                            <div class='col-2'>
+
+                            </div> </div>
+                        <div class='row'>
+                            <div class='col-6'>
+                                <group>
+                                    <field name='name'/>
+                                </group>
+                            </div>
+                            <div class='col-6'>
+                                <group>
+                                    <field name="uml_diagram" widget='image'/>
+                                </group>
+                            </div>
+                        </div>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    
+        <record model="ir.actions.act_window" id="view_map_project_requirements_action">            
+            <field name="name">Mind Map</field>         
+                <field name="res_model">mindmap.diagram</field>           
+                <field name="view_mode">tree,form</field>
+                <field name="help" type="html">                
+                    <p class="oe_view_nocontent_create">Project Requirements</p>            
+            </field>        
+        </record>
+
+        <record id="view_prompt_tree_view" model="ir.ui.view">
+            <field name="name">Requirement</field>
+            <field name="model">dynamic.prompt</field>
+            <field name="arch" type="xml">
+                <tree string="Prompt Masters">
+                    <field name="description" />
+                    <field name="content" />
+                    <field name="select_type"/>
+                </tree>
+            </field>
+        </record>
+    
+        <record id="view_prompt_form_view" model="ir.ui.view">
+            <field name="name">Requiements Masters</field>
+            <field name="model">dynamic.prompt</field>
+            <field name="arch" type="xml">
+                <form string="Prompt Masters">
+                    <sheet>
+                        <group>
+                            <field name="record_name" invisible='1'/>
+                            <group>
+                                <field name="select_type" />
+                                <field name="model"/>
+                                <field name="prompt_input" invisible='1'/>
+                                <field name="description" attrs="{'invisible': [('select_type','!=', 'requirements')]}"/>
+                                <field name="role" invisible='1'/>
+                                <field name="content" attrs="{'invisible': [('select_type','!=', 'roles')]}"/>
+                                <field name="api_key"/>
+                            </group>
+                            <group>
+                                <field name="temperature"/>
+                                <field name="max_tokens"/>
+                                <field name="top_p"/>
+                                <field name="frequency_penalty"/>
+                                <field name="presence_penalty"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    
+        <record model="ir.actions.act_window" id="view_map_actions_prompt">            
+            <field name="name">Prompt Masters</field>         
+                <field name="res_model">dynamic.prompt</field>           
+                <field name="view_mode">tree,form</field>
+                <field name="help" type="html">                
+                    <p class="o_view_nocontent_smiling_face">Create The New Record</p>            
+            </field>        
+        </record>
+    
+        <menuitem id="prompt_masters_menu_items" name="Prompt Masters" action="view_map_actions_prompt" parent='menu_module_require'/>
+    
+        <menuitem id="menu_module_mind_map" name="Mind Map"  sequence= "3" action="view_map_project_requirements_action" parent='menu_module_require'/>
+    </data>
+</odoo>

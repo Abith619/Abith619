@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="view_clinic_billing_management_trdreesol" model="ir.ui.view">
+        <field name="name">Billing</field>
+        <field name="model">lab.bills.name</field>
+        <field name="arch" type="xml">
+            <tree string="Billing">
+                <field name="ref_num" />
+                <field name="patient_id"/>
+                <field name="sex" />
+                <field name="contact_num"/>
+                <field name="priority" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="clinic_billing_management_fodrtrmols" model="ir.ui.view">
+        <field name="name">Billing</field>
+        <field name="model">lab.bills.name</field>
+        <field name="priority" eval="8" />
+        <field name="arch" type="xml">
+            <form string="Billing">
+                <header>
+                    <field name ="stages" widget="statusbar" attrs="{'invisible': [('stages','=', 'wait')]}" readonly='1'/>
+                    <button name="dispach" type="object" string="Dispach" class="oe_highlight" attrs="{'invisible': [('stages','=', 'dis')]}"/>
+                    </header>
+                <sheet>
+                    <div class='row'>
+                        <div class='col-2'>
+                            <field name='patient_photo' widget='image' style="width:50%;"/>
+                        </div> </div>
+                    <div class='row'>
+                        <div class='col-6'>
+                            <group>
+                                <field name='patient_id'/>
+                                <field name="sex" />
+                                    <label for="contact_num" string="Contact Number" />
+                                        <div class="o_address_format">
+                                            <field name="contact_num" style="width: 30%;margin-right: 10px;" />
+                                            <field name = "whatsapp_check" style="width: 10%;border-left-width: 10px;margin-right: 0px;"/>
+                                            <strong><label for="contact_number"  style="font-weight: bold !important;color: #333;" string="Whats App "/></strong>
+                                            <field name="contact_number"  style="width: 30%;" attrs="{'invisible': [('whatsapp_check','=', True)]} " />
+                                        </div>
+                                    <field name="blood_type" />
+                                <field name="rh" />
+                                <field name="physician_id" />
+                            </group>
+                        </div>
+                        <div class='col-6'>
+                            <group>
+                                <field name="ref_num" />
+                                <field name="name_age_sex"/>
+                                <field name="order_date"/>
+                                <field name="order_status"/>
+                                <field name="payment_type"/>
+                                <field name="priority"/>
+                                <field name="tech_id"/>
+                            </group>
+                        </div>
+                    </div>
+                    <notebook>
+                        <page string='Test Details'>
+                            <field name="bill_lines">
+                                <tree string="Bill Details" editable="bottom">
+                                    <field name="test_name" />
+                                    <field name="dept_name"/>
+                                    <field name="test_amount" />
+                                    <field name="disc_amount"/>
+                                    <field name="gst_percent" widget='many2many_tags'/>
+                                    <field name="total_amount" />
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right" colspan="2" style='width: 30%;'>
+                                <field name="sub_total"  widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                <field name="total_tax"  widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="grand_total" />
+                                </div>
+                                <field name="grand_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+
+    <record model="ir.actions.act_window" id="billing_acxchtion">            
+        <field name="name">Billing</field>         
+            <field name="res_model">lab.bills.name</field>           
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">                
+                <p class="oe_view_nocontent_create">Billing Records</p>            
+        </field>        
+    </record>
+
+    <menuitem id="menu_lab_billing" name="Billing" parent="lab_clinic_menu" sequence= "3" action="billing_acxchtion"/>
+
+    </data>
+</odoo>

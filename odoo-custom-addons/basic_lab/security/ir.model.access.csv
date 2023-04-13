@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_queue_managements,queue.managements,model_queue_management,base.group_user,1,1,1,1
+access_sample_labs,sample.labs,model_sample_lab,base.group_user,1,1,1,1  
+
+access_lab_clinics,lab.clinics,model_lab_clinic,base.group_user,1,1,1,1
+access_lab_departments,lab.departments,model_lab_department,base.group_user,1,1,1,1 
+access_lab_processings,lab.processings,model_lab_processing,base.group_user,1,1,1,1 
+
+access_lab_masters,lab.masters,model_lab_master,base.group_user,1,1,1,1
+access_lab_department_masterss,lab.department.masterss,model_lab_department_masters,base.group_user,1,1,1,1
+
+access_lab_billss,lab.bills.names,model_lab_bills_name,base.group_user,1,1,1,1
+access_lab_bill_liness,lab.bill.liness,model_lab_bill_lines,base.group_user,1,1,1,1

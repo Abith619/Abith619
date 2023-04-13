@@ -1,0 +1,43 @@
+<odoo>
+    <record model="ir.ui.view" id="gpt_prompt_from_view">
+        <field name="name">prompt Form View</field>
+        <field name="model">gpt.prompt</field>
+        <field name="arch" type="xml">
+            <form string="prompt">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="token" />
+                            <field name="question" />
+                        </group>
+                        <group>
+                            <field name="prompt" />
+                            <!-- <field name="prompt2" /> -->
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gpt_prompt_tree" model="ir.ui.view">
+        <field name="name">prompt Tree View</field>
+        <field name="model">gpt.prompt</field>
+        <field name="arch" type="xml">
+                <tree string="prompt"  >
+                    <field name="token" />
+                    <field name="question" />
+                </tree>
+        </field>
+    </record>
+    <record id="action_prompt" model="ir.actions.act_window">
+        <field name="name">prompt</field>
+        <field name="res_model">gpt.prompt</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <menuitem id="submenu_gpt_prompt" name="Prompt" parent="menu_module_require" action="action_prompt"/>
+    
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="generate_bot_wizard" model="ir.ui.view">
+            <field name="name">create.bot.wizard.form</field>
+            <field name="model">create.bot</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <form string="Create Bot">
+                    <group>
+                        <field name="bott" widget="radio"/>
+                        <field name="related_id" invisible='1'/>
+                        <field name="select_relate" invisible='1'/>
+                </group>
+                    <footer>
+                        <button name="save" type="object" string='Generate' class="oe_highlight"/> 
+                        <button string="Cancel" type="object" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<!-- <record id="paperformat_ebook_Paper" model="report.paperformat">
+        <field name="name">Ebook Paper</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">297</field>
+        <field name="page_width">210</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">20</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record> -->
+
+<template id="basic_lab.lab_tests_report123">
+     <t t-call="web.external_layout">
+     <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+        <style>
+            .footer_section{
+                }
+            .border{
+                border-collapse: collapse;
+                    }
+            .heading_text_cor{
+                color:#000;
+                font-weight:600;
+                    }
+        </style>
+
+        <t t-set="name_age_sex" t-value="o.name_age_sex.upper()" />
+        <t t-if="o.physician_id">
+            <t t-set="physician" t-value="o.physician_id.name.upper()" />
+        </t>
+        <t t-if="o.tech_id">
+            <t t-set="technician" t-value="o.tech_id.name.upper()" />
+        </t>
+            <t >
+            <h4 class="text-center heading_text_cor">Report Details</h4>
+                 <div class=" float-left" >
+                    <div><p><strong>Name :</strong><span t-esc="name_age_sex"/></p>
+                    <p><b>ID Number :</b> <span t-field="o.reg_id"/></p></div>
+                </div>
+                <div class=" float-right">
+                    <p><strong>Physician :</strong><span t-esc="physician"/></p>
+                    <p><strong>Technician :</strong><span t-esc="technician"/></p>
+                    <p><b>Date :</b> <span t-field="o.order_date"/></p>
+                </div>
+        
+            <table border="4" class="table table-bordered" style="border: 1px solid black;">
+                <thead>
+                    <tr style="height:40px">
+                        <td style="border: 1px solid black;" >
+                            <p><b>Height :</b> <span t-field="o.height"/></p>
+                            <p><b>Weight :</b> <span t-field="o.weight"/></p>
+                            <p><b>Blood :</b> <span t-field="o.blood_type"/><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]><b>Type :</b> <span t-field="o.rh"/></p>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <p><b> Contact Number :</b> <span t-field="o.contact_num"/></p>
+                            <p><b> Age :</b> <span t-field="o.age"/></p>
+                        </td>
+                    </tr>
+                </thead>
+            </table>
+            <t t-if="docs.report_line">
+            <div class="header_tag">
+        <h4 class="text-center heading_text_cor">Report Details</h4>
+        </div>
+            <table class="table table-bordered" style="border: 1px solid black;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid black;">Test Name</th>
+                        <th style="border: 1px solid black;"> Result Value </th>
+                        <th style="border: 1px solid black;"> Unit </th>
+                        <th style="border: 1px solid black;"> Normal Range </th>
+                        <th style="border: 1px solid black;"> External Lab </th>
+                        <th style="border: 1px solid black;"> Comments </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach='docs.report_line' t-as='line'>
+                        
+                        <td style="border: 1px solid black;">
+                            <span t-field="line.test_name"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <span t-field="line.res_value"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <span t-field="line.unit"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <span t-field="line.normal_range"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <span t-field="line.ext_lab"/>
+                        </td>
+                        <td style="border: 1px solid black;">
+                            <span t-field="line.comments"/>
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+              </t>
+                <div class="footer">
+                    <div class="float-right">
+                        <p><b>Authorized Signature </b></p>
+                    </div>
+                    </div>
+                </t> 
+            </t>
+        </t>
+    </t>
+</template>
+</odoo>
