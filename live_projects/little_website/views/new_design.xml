@@ -1,0 +1,236 @@
+<t name="Homepage" t-name="website.homepage">
+    <t t-call="website.layout">
+        <t t-set="pageName" t-value="'homepage'"/>
+            <div id="wrap" class="oe_structure oe_empty">
+            
+    
+    <section class="s_carousel_wrapper" data-vxml="001" data-snippet="s_carousel" data-name="Carousel" style="">
+        <div class="s_carousel carousel slide s_carousel_rounded" data-bs-interval="10000" id="myCarousel1693400436720" style="background-image: none;">
+            
+            <ol class="carousel-indicators o_we_no_overlay">
+                <li data-bs-slide-to="0" data-bs-target="#myCarousel1693400436720" class="active" aria-current="true"/>
+                <li data-bs-slide-to="1" data-bs-target="#myCarousel1693400436720"/>
+                <li data-bs-slide-to="2" data-bs-target="#myCarousel1693400436720"/>
+            </ol>
+            
+            
+            <div class="carousel-inner" style="height:500px;">
+                
+                <div class="carousel-item o_colored_level pt8 pb0 o_bg_img_opt_repeat parallax active" style="background-image: none;" data-name="Slide" data-scroll-background-ratio="1.5"><span class="s_parallax_bg oe_img_bg o_bg_img_center" data-original-id="326915" data-original-src="/web/image/326915-325a4760/Pastel%20Pink%20Donut%20with%20Sun%20and%20Leaf%20Illustration%20Begin%20Each%20Day%20with%20a%20Donut%20Facebook%20Cover%20%281%29.png" data-mimetype="image/png" data-resize-width="1024" style="background-image: url(&quot;/web/image/370753-4e42b113/Pastel%20Pink%20Donut%20with%20Sun%20and%20Leaf%20Illustration%20Begin%20Each%20Day%20with%20a%20Donut%20Facebook%20Cover%20%281%29.png&quot;); top: -97.95px; bottom: -97.95px; transform: translateY(-19px); background-position: 100% 45.7787%;"/>
+                    <div class="oe_unremovable container-fluid">
+                        
+                    </div>
+                </div>
+                
+                <div class="carousel-item pt96 pb96 o_colored_level oe_img_bg o_bg_img_center" style="background-image: url(&quot;/web/image/326918-57f2098f/Pastel%20Pink%20Donut%20with%20Sun%20and%20Leaf%20Illustration%20Begin%20Each%20Day%20with%20a%20Donut%20Facebook%20Cover%20%282%29.png&quot;);" data-name="Slide" data-original-id="326917" data-original-src="/web/image/326917-7f7bd803/Pastel%20Pink%20Donut%20with%20Sun%20and%20Leaf%20Illustration%20Begin%20Each%20Day%20with%20a%20Donut%20Facebook%20Cover%20%282%29.png" data-mimetype="image/png" data-resize-width="1640">
+                    <div class="container oe_unremovable">
+                        
+                    </div>
+                </div>
+                
+                <div class="carousel-item pt128 pb128 o_colored_level oe_img_bg o_bg_img_center" style="background-image: url(&quot;/web/image/370754-8fb65737/Desktop%20-%202%20%286%29.png&quot;);" data-name="Slide" data-original-id="370726" data-original-src="/web/image/370726-be6deb65/Desktop%20-%202%20%286%29.png" data-mimetype="image/png" data-resize-width="1920">
+                    
+                        <div class="row content o_grid_mode" style="" data-row-count="-Infinity">
+    
+
+                        
+                        
+                    </div>
+                </div>
+                
+            </div>
+            
+            <a class="carousel-control-prev o_not_editable o_we_no_overlay" data-bs-slide="prev" role="img" aria-label="Previous" title="Previous" href="#myCarousel1693400436720">
+                <span class="carousel-control-prev-icon"/>
+                <span class="visually-hidden o_default_snippet_text">Previous</span>
+            </a>
+            <a class="carousel-control-next o_not_editable o_we_no_overlay" data-bs-slide="next" role="img" aria-label="Next" title="Next" href="#myCarousel1693400436720">
+                <span class="carousel-control-next-icon"/>
+                <span class="visually-hidden o_default_snippet_text">Next</span>
+            </a>
+        </div>
+    </section>
+    <section class="s_title pt40 o_colored_level o_cc o_cc3 pb8" data-vcss="001" data-snippet="s_title" data-name="Title" style="background-color: rgb(225, 237, 233); background-image: none;">
+        <div class="container s_allow_columns">
+            <h2 style="text-align: center;">
+        <font class="text-black"><strong><span style="font-size: 48px;">Top&amp;nbsp;Categories</span></strong></font></h2><p style="text-align: center;"><font class="text-black"><span style="font-size: 18px;">​"we are happy to introduce our vareity of products"</span></font></p>
+        </div>
+        <div class="col-6 mx-auto row" style="justify-items: center;">
+          <div class="col-6 mx-auto row d-lg-block d-none o_snippet_mobile_invisible">
+              <button class="btn me-md-2" type="button" style="border-width: 3px !important;border-color: rgb(187, 163, 112) !important;background-color: white;">
+                <strong style="font-size: x-large;">Newest Products</strong></button></div>
+            <div class="col-6 row d-lg-block d-none o_snippet_mobile_invisible" style="" data-invisible="1"><button class="btn me-md-2" type="button" style="border-width: 3px !important;border-color: rgb(187, 163, 112) !important;background-color: white;">
+                <strong style="font-size: x-large;">Popular Products</strong></button></div>
+        </div>
+    </section>
+    <section class="s_three_columns o_colored_level o_cc o_cc3 pt16 o_half_screen_height pb64" data-vcss="001" data-snippet="s_three_columns" data-name="Columns" style="background-color: rgb(225, 237, 233); background-image: none;">
+        <div class="container">
+            <div class="row d-flex align-items-stretch">
+                <div class="col-lg-4 s_col_no_bgcolor pt16 pb0 o_anim_pulse o_animate o_animate_both_scroll" style="--wanim-intensity: 52;">
+                    <img src="/web/image/28446-81a56a4d/MicrosoftTeams-image%20%286%29.png" alt="" class="position-relative img-fluid figure-img shadow-lg w-100 img o_we_custom_image mx-auto d-block img-thumbnail shadow" style="height: 50vh; object-fit: cover; z-index: 2; border-top-right-radius: 30px; border-top-left-radius: 30px;" data-original-id="28444" data-original-src="/web/image/28444-65b1634f/MicrosoftTeams-image%20%286%29.png" data-mimetype="image/png" data-resize-width="962" loading="eager" data-bs-original-title="" title="" aria-describedby="tooltip214678"/>
+        <div class="card-wrapper shadow-lg position-relative p-4 bg-white mt-n4" style="text-align: center;z-index:1;background-color: #F7F2EC !important; border-bottom-left-radius: 30px;border-bottom-right-radius: 30px;">
+            <p class="card-title mt-4"><strong><span style="font-size: 24px;">Soft Toys</span></strong></p><p class="card-title mt-4">Lorem ipsum is simple dummy text of the printing and Typesetting</p></div></div>
+            <div class="col-lg-4 s_col_no_bgcolor pt16 pb16 o_animate o_animate_both_scroll o_anim_pulse" style="">
+                    <img src="/web/image/28449-8ebc02db/MicrosoftTeams-image%20%285%29.png" alt="" class="position-relative img-fluid figure-img shadow-lg w-100 img o_we_custom_image shadow img-thumbnail" style="height: 50vh; object-fit: cover; z-index: 2; padding: 0px; border-top-right-radius: 30px; border-top-left-radius: 30px;" data-original-id="28441" data-original-src="/web/image/28441-922a18f3/MicrosoftTeams-image%20%285%29.png" data-mimetype="image/png" data-resize-width="962" loading="eager" data-bs-original-title="" title="" aria-describedby="tooltip177049"/>
+        <div class="card-wrapper shadow-lg position-relative p-4 bg-white mt-n4" style="text-align: center;z-index:1;background-color: #F7F2EC !important;border-bottom-left-radius: 30px;border-bottom-right-radius: 30px;">
+            <p class="card-title mt-4"><strong><span style="font-size: 24px;">Play Outside</span></strong></p><p class="card-title mt-4">Lorem ipsum is simple dummy text&amp;nbsp;of the printing and Typesetting<br/></p></div></div>
+             <div class="col-lg-4 s_col_no_bgcolor pt16 pb16 o_animate o_anim_pulse o_animate_both_scroll" style="">
+                    <img src="/web/image/28448-271e505a/MicrosoftTeams-image%20%287%29.png" alt="" class="position-relative d-block img-fluid figure-img shadow-lg w-100 img o_we_custom_image img-thumbnail shadow" style="height: 50vh; object-fit: cover; z-index: 2; border-top-right-radius: 30px; border-top-left-radius: 30px;" data-original-id="28442" data-original-src="/web/image/28442-82fc3996/MicrosoftTeams-image%20%287%29.png" data-mimetype="image/png" data-resize-width="962" loading="eager" data-bs-original-title="" title="" aria-describedby="tooltip342376"/>
+        <div class="card-wrapper shadow-lg position-relative p-4 bg-white mt-n4" style="text-align: center;z-index:1;background-color: #F7F2EC !important; border-bottom-left-radius: 30px;border-bottom-right-radius: 30px;">
+            <p class="card-title mt-4"><strong><span style="font-size: 24px;">School Bags</span></strong></p><p class="card-title mt-4">Lorem ipsum is simple dummy text of the printing and Typesetting</p>
+        </div></div>
+            </div>
+        </div>
+    </section>
+    
+    
+    <section data-snippet="s_dynamic_snippet_products" class="s_dynamic_snippet_products s_dynamic o_colored_level pt4 s_product_product_view_detail pb0 o_half_screen_height o_dynamic_empty" data-name="Products" style="background-color: rgb(247, 242, 236); background-image: none;" data-product-category-id="current" data-number-of-records="15" data-filter-id="3" data-template-key="website_sale.dynamic_filter_template_product_product_view_detail" data-carousel-interval="5000" data-number-of-elements="3" data-force-minimum-max-limit-to16="3">
+        <div style="text-align: center;">
+        <button class="btn me-md-2" type="button" style="width: 45%;margin-top:-2.5%;border-width: 3px !important;border-color: rgb(187, 163, 112) !important;background-color: white;">
+                <strong style="font-size: x-large;">Soft Toys</strong></button></div>
+            <div class="o_not_editable container" style="margin-top: 3%;">
+              <div class="css_non_editable_mode_hidden">
+                <div class="missing_option_warning alert alert-info rounded-0 fade show d-none d-print-none o_default_snippet_text">
+                  Your Dynamic Snippet will be displayed here... This message is displayed because you did not provide both a filter and a template to use.<br/>
+                </div>
+              </div>
+              <div class="dynamic_snippet_template"/>
+            </div>
+            <div style="text-align: center;">
+        <button class="btn me-md-2" type="button" style="width: 45%;margin: 2%;border-width: 3px !important;border-color: rgb(187, 163, 112) !important;background-color: white;">
+                <strong style="font-size: x-large;">Play Outside</strong></button></div>
+            
+            <div class="o_not_editable container" style="margin-top: 3%;">
+              <div class="css_non_editable_mode_hidden">
+                <div class="missing_option_warning alert alert-info rounded-0 fade show d-none d-print-none o_default_snippet_text">
+                  Your Dynamic Snippet will be displayed here... This message is displayed because you did not provide both a filter and a template to use.<br/>
+                </div>
+              </div>
+              <div class="dynamic_snippet_template"/>
+            </div>
+            <div style="text-align: center;">
+        <button class="btn me-md-2" type="button" style="width: 45%;margin: 2%;border-width: 3px !important;border-color: rgb(187, 163, 112) !important;background-color: white;">
+                <strong style="font-size: x-large;">School Bags</strong></button></div>
+            
+            <div class="o_not_editable container" style="margin-top: 3%;">
+              <div class="css_non_editable_mode_hidden">
+                <div class="missing_option_warning alert alert-info rounded-0 fade show d-none d-print-none o_default_snippet_text">
+                  Your Dynamic Snippet will be displayed here... This message is displayed because you did not provide both a filter and a template to use.<br/>
+                </div>
+              </div>
+              <div class="dynamic_snippet_template"/>
+            </div>
+          </section>
+        <section class="s_title pt40 pb40 o_colored_level o_cc o_cc3" data-vcss="001" data-snippet="s_title" data-name="Title" style="background-color: rgb(225, 237, 233); background-image: none;">
+        <div class="s_allow_columns container">
+            <h1 style="text-align: center;">&amp;nbsp;<font class="text-black">Here's What we can do for you</font></h1>
+            <div class="o_text_columns"><div class="row">
+                <div class="col-lg-4 o_colored_level rounded pt0 pb0 o_animate o_anim_pulse o_animate_both_scroll" style="border-radius: 5px !important; border-color: rgb(187, 163, 112) !important;"><p style="text-align: center;"><br/></p>
+                <div class="s_card card bg-white w-100" data-snippet="s_card" data-name="Card" style="align-items: center;padding:3%;border-width: 3px !important; border-color: rgb(187, 163, 112) !important;border-radius: 20px;">
+        <h4 class="card-header" style="background-color: white !important;"><span class="fa fa-truck fa-2x rounded-circle mx-auto d-block shadow" data-bs-original-title="" title="" aria-describedby="tooltip58203"/></h4>
+        <p class="card-text"><strong><span style="font-size: 24px;">Safe Shipments</span></strong></p><p class="card-text"><span style="font-size: 14px;">Free Delivery from </span><span style="color: rgb(17, 17, 17); font-style: normal; font-weight: 400; background-color: rgb(255, 255, 255); font-size: 14px;">€</span><span style="font-size: 14px;">45 in BE/NL</span></p></div></div>
+        <div class="col-lg-4 o_colored_level rounded o_animate o_anim_pulse o_animate_both_scroll" style="border-radius: 10px !important;"><p>&amp;nbsp; &amp;nbsp;</p>
+        <div class="s_card card bg-white w-100" data-snippet="s_card" data-name="Card" style="align-items: center;padding:3%;border-width: 3px !important; border-color: rgb(187, 163, 112) !important;border-radius: 20px;">
+        <h4 class="card-header" style="background-color: white !important;"><span class="fa fa-gift rounded-circle fa-2x mx-auto d-block shadow" data-bs-original-title="" title="" aria-describedby="tooltip756801" style=""/></h4>
+        
+            <p class="card-text"><span style="font-size: 24px;"><strong>Quality Products</strong></span></p><p class="card-text"><span style="font-size: 14px;">Gift Packaging</span></p></div></div><div class="col-lg-4 o_colored_level rounded o_animate o_anim_pulse o_animate_both_scroll" style="border-radius: 5px !important;"><p>&amp;nbsp; &amp;nbsp;</p>
+    <div class="s_card card bg-white w-100" data-snippet="s_card" data-name="Card" style="align-items: center;border-width: 3px !important; border-color: rgb(187, 163, 112) !important;border-radius: 20px;padding:3%;">
+        <h4 class="card-header" style="background-color: white !important;"><span class="fa fa-rocket fa-2x mx-auto d-block rounded-circle shadow" data-bs-original-title="" title="" aria-describedby="tooltip58203"/></h4>
+            <p class="card-text"><span style="font-size: 24px;"><strong>Excellent Service</strong></span></p><p class="card-text" style="text-align: center;"><span style="font-size: 14px;">Ordered Before 12th, Shipped the same day</span></p></div></div></div></div>
+        </div>
+    </section>
+    
+    <div id="wrap mobile-image" class="oe_structure oe_empty" data-editor-message-default="true" data-editor-message="DRAG BUILDING BLOCKS HERE" style="width: 100%; min-width: 55vw;">
+          <section data-snippet="s_dynamic_snippet_products" class="s_dynamic_snippet_products s_dynamic o_colored_level pt4 pb0 s_product_product_horizontal_card o_half_screen_height o_dynamic_empty" data-name="Products" style="background-color: rgb(247, 242, 236); background-image: none;" data-product-category-id="current" data-number-of-records="12" data-filter-id="1" data-template-key="website_sale.dynamic_filter_template_product_product_horizontal_card" data-carousel-interval="5000" data-number-of-elements="3" data-force-minimum-max-limit-to16="1" data-number-of-elements-small-devices="1" data-extra-classes="o_carousel_multiple_rows" data-row-per-slide="2" data-arrow-position="bottom">
+            <div style="margin-top: -2.5%;text-align: center;">
+        <button class="btn me-md-2" type="button" style="width: fit-content;;border-width: 3px !important;border-color: rgb(187, 163, 112) !important;background-color: white;">
+                <strong style="font-size: x-large;">Recomended Products</strong></button></div>
+            <div class="o_not_editable container" style="margin-top: 3%;">
+              <div class="css_non_editable_mode_hidden">
+                <div class="missing_option_warning alert alert-info rounded-0 fade show d-none d-print-none o_default_snippet_text">
+                  Your Dynamic Snippet will be displayed here... This message is displayed because you did not provide both a filter and a template to use.<br/>
+                </div>
+              </div>
+              <div class="dynamic_snippet_template"/>
+            
+            
+            
+            
+            </div>
+           
+          </section>
+        </div>
+        
+    
+    <section class="s_three_columns pb56 o_colored_level o_cc o_cc3 pt0" data-vcss="001" data-snippet="s_three_columns" data-name="Columns" style="background-color: rgb(247, 242, 236); background-image: none;">
+        <div style="text-align: center;">
+        <button class="btn btn-lg" type="button" style="margin: 5%;width: 45%;border-width: 3px !important;border-color: rgb(187, 163, 112) !important;background-color: white;">
+                <strong style="font-size: x-large;">Blogs</strong></button></div>
+        <div class="container">
+            <div class="row d-flex align-items-stretch">
+                
+                <div class="col-lg-6 o_colored_level border rounded" style="background-color: rgb(247, 242, 236); border-width: 5px !important; border-color: rgb(187, 163, 110) !important; border-radius: 30px !important;">
+                    <img src="/web/image/285509-6d538e39/Image%20%285%29.png" alt="" class="position-relative d-block img-fluid figure-img rounded shadow-lg w-100 img o_we_custom_image" style="height: 50vh; object-fit: cover; z-index: 2; transform: translateX(-0.2%) translateY(2.4%); animation-play-state: paused; transition: none 0s ease 0s;" data-original-id="282863" data-original-src="/web/image/282863-c1484cf9/Image%20%285%29.png" data-mimetype="image/png" data-resize-width="1920" data-bs-original-title="" title="" aria-describedby="tooltip677974" loading="lazy"/>
+                    
+        <div class="card-wrapper shadow-lg position-relative p-4 bg-white rounded-3 mt-n4" style="z-index:1;">
+            <h4 class="card-title mt-4">Paris</h4>
+            <p class="o_default_snippet_text">Paris' monument-lined boulevards, museums, classical bistros and boutiques are enhanced by a new wave of multimedia galleries, creative wine bars..</p><p class="o_default_snippet_text">Our vision is to make travel planning stress free and make travel more fun. No matter the type of trip you have in mind, we have the resources and expertise necessary to create the perfect trip<br/></p>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        
+        
+            <div class="row align-items-center border h-50" style="margin-left:0px;border: 1px solid #B69F6B !important;border-radius: 20px;border-width: 5px !important;">
+                
+                <div class="col-lg-6 pb16 o_colored_level pt16">
+                    <img src="/web_editor/shape/theme_aviato/s_image_text.svg?c1=%23DD7E43" class="img img-fluid w-75 mx-auto d-block" alt="" loading="lazy" data-bs-original-title="" title="" aria-describedby="tooltip485977" style="animation-play-state: paused; transition: none 0s ease 0s;"/>
+                </div>
+                <div class="col-lg-6 o_colored_level pb0 pt0" style="">
+                    <p>
+        <span style="font-size: 16px;"><strong><font class="text-black">Itinerary Planning</font></strong></span>
+    </p>
+                    <p>
+        <font class="text-black">Our vision is to make travel planning stress free and make travel more fun. No matter the type of trip you have in mind, we have the resources and expertise necessary to create the perfect trip</font>
+    </p>
+                    <p><br/></p>
+        
+    </div>
+            </div>
+        
+    <div class="row align-items-center border pt-3 h-50" style="margin-left:0px;border: 1px solid #B69F6B !important;border-radius: 20px;border-width: 5px !important;">
+                <div class="col-lg-6 ">
+                    <img src="/web_editor/shape/theme_aviato/s_image_text.svg?c1=%23DD7E43" class="img img-fluid w-75 mx-auto d-block" alt="" loading="lazy" data-bs-original-title="" title="" aria-describedby="tooltip485977" style="animation-play-state: paused; transition: none 0s ease 0s;"/>
+                </div>
+                <div class="col-lg-6 ">
+                    <p>
+        <span style="font-size: 16px;"><strong><font class="text-black">Itinerary Planning</font></strong></span>
+    </p>
+                    <p>
+        <font class="text-black">Our vision is to make travel planning stress free and make travel more fun. No matter the type of trip you have in mind, we have the resources and expertise necessary to create the perfect trip</font>
+    </p>
+                    <p><br/></p>
+    </div>
+            </div>
+                
+                </div>
+                
+                
+            </div>
+        </div>
+    </section>
+    
+    
+    
+        <section data-snippet="s_blog_posts" class="s_blog_posts s_dynamic_snippet_blog_posts s_blog_post_big_picture s_dynamic pt32 pb32 o_colored_level s_blog_posts_effect_marley o_dynamic_empty" data-name="Blog Posts" style="background-color: rgb(247, 242, 236);" data-filter-by-blog-id="-1" data-number-of-records="16" data-filter-id="7" data-template-key="website_blog.dynamic_filter_template_blog_post_big_picture" data-number-of-elements="3">
+            <div class="container o_not_editable">
+                <div class="css_non_editable_mode_hidden">
+                    <div class="missing_option_warning alert alert-info rounded-0 fade show d-none d-print-none o_default_snippet_text">
+                        Your Dynamic Snippet will be displayed here... This message is displayed because you did not provided both a filter and a template to use.<br/>
+                    </div>
+                </div>
+                <div class="dynamic_snippet_template"/>
+            </div>
+        </section></div>
+        </t>
+    </t>
+</t>

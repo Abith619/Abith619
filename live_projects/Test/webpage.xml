@@ -1,0 +1,192 @@
+<t name="Homepage" t-name="website.homepage">
+    <t t-call="website.layout">
+        <t t-set="pageName" t-value="'homepage'"/>
+        <div id="wrap" class="oe_structure oe_empty">
+            <section class="s_title o_colored_level pb0 pt16" data-vcss="001" data-snippet="s_title" data-name="Title" style="">
+                <div class="container s_allow_columns">
+                    <div id="topnav">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-xl-8 col-12 text-left o_colored_level">
+                                    <div class="row">
+                                        <div class="usp o_colored_level o_cc o_cc5">
+                                            <div class="list-usp">
+                                                <div class="no-carousel">
+                                                    <div class="item-usp align-top usp-inline"/>
+                                                    <i class="fa fa-rocket"/> 
+                                                    <span>Ordered before 12h, shipped the same day</span>
+                                                    <i class="fa fa-gift"/>
+                                                    <span>Gift packaging</span>
+                                                    <i class="fa fa-truck"/>
+                                                    <span>Free delivery from €45 in BE/NL</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div id="global" class="col-xl-4 col-12 text-right o_colored_level o_cc o_cc5">
+                                        <a href="https://www.littlethingz.be/en/service/" title="Customer service">
+                                            <strong>Customer service</strong>
+                                        </a>
+                                        <a href="https://www.littlethingz.be/en/blogs/news/" title="Blog">Blog</a>
+                                    
+                                        <ul class="list-unstyled p-0 m-0">
+                                            <li class="item lang">
+                                                <a href="" onclick="return false;" title="English" class="dropdown-toggle language language-en" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <strong>en</strong>
+                                                    <span class="flag"/>
+                                                </a>
+                                                <ul class="dropdown-menu list-unstyled p-0 m-0" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-75px, 25px, 0px);">
+                                                    <li class="lang">
+                                                        <a href="https://www.littlethingz.be/nl/" title="Nederlands" class="dropdown-item language language-nl">
+             Nederlands             
+                                                            <span class="flag"/>
+                                                        </a>
+                                                    </li>
+                                                    <li class="lang">
+                                                        <a href="https://www.littlethingz.be/de/" title="Deutsch" class="dropdown-item language language-de">
+             Deutsch             
+                                                            <span class="flag"/>
+                                                        </a>
+                                                    </li>
+                                                    <li class="lang">
+                                                        <a href="https://www.littlethingz.be/en/" title="English" class="dropdown-item language language-en">
+             English             
+                                                            <span class="flag"/>
+                                                        </a>
+                                                    </li>
+                                                    <li class="lang">
+                                                        <a href="https://www.littlethingz.be/fr/" title="Français" class="dropdown-item language language-fr">
+             Français             
+                                                            <span class="flag"/>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    
+                                    
+                                        <ul class="list-unstyled">
+                                            <li class="curr">
+                                                <a href="" onclick="" title="eur" class="dropdown-toggle currency currency-EUR" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <strong>€</strong>
+                                                </a>
+                                                <ul class="dropdown-menu list-unstyled p-0 m-0" aria-labelledby="currencyDropdown">
+                                                    <li class="curr">
+                                                        <a href="https://www.littlethingz.be/en/session/currency/gbp/" title="gbp" class="dropdown-item language language-GBP">
+                    £ - gbp
+                  </a>
+                                                    </li>
+                                                    <li class="curr">
+                                                        <a href="https://www.littlethingz.be/en/session/currency/usd/" title="usd" class="dropdown-item language language-USD">
+                    $ - usd
+                  </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form method="get" data-snippet="s_searchbar_input" class="o_searchbar_form s_searchbar_input" action="/website/search" data-name="Search">
+                        <div role="search" class="input-group ">
+                            <input type="search" name="search" class="search-query form-control oe_search_box None" placeholder="Search..." data-search-type="all" data-limit="5" data-display-image="true" data-display-description="true" data-display-extra-link="true" data-display-detail="true" data-order-by="name asc" autocomplete="off"/>
+                            <button type="submit" aria-label="Search" title="Search" class="btn oe_search_button btn-primary">
+                                <i class="oi oi-search"/>
+                            </button>
+                        </div>
+                        <input name="order" type="hidden" class="o_search_order_by" value="name asc"/>
+                    </form>
+                    <h1 style="text-align: center;">
+                        <font style="font-size: 62px;">BaBy Products</font>
+                        <br/>
+                    </h1>
+                </div>
+            </section>
+            <section class="s_image_gallery o_slideshow s_image_gallery_show_indicators s_image_gallery_indicators_rounded o_colored_level pt0" data-vcss="001" data-columns="3" style="height: 500px; overflow: hidden; background-image: none;" data-snippet="s_image_gallery" data-name="Image Gallery">
+                <div class="container">
+                    <div id="slideshow_1686133028580" class="carousel slide" data-bs-ride="carousel" data-bs-interval="0" style="margin: 0 12px;">
+                        <div class="carousel-inner" style="padding: 0;">
+                            <div class="carousel-item" style="">
+                                <img class="img img-fluid d-block" src="/web/image/website.library_image_08" data-name="Image" data-index="0" loading="lazy" data-original-id="422" data-original-src="/web/image/422-002f9d4e/website.library_image_08" data-mimetype="image/jpeg" style=""/>
+                            </div>
+                            <div class="carousel-item" style="">
+                                <img class="img img-fluid d-block" src="/web/image/website.library_image_03" data-name="Image" data-index="1" loading="lazy" data-original-id="416" data-original-src="/web/image/416-2ee5672a/website.library_image_03" data-mimetype="image/jpeg" style=""/>
+                            </div>
+                            <div class="carousel-item active" style="">
+                                <img class="img img-fluid d-block" src="/web/image/website.library_image_02" data-name="Image" data-index="2" loading="lazy" data-original-id="423" data-original-src="/web/image/423-fbf6d101/website.library_image_02" data-mimetype="image/jpeg" style=""/>
+                            </div>
+                        </div>
+                        <form method="get" data-snippet="s_searchbar_input" class="o_searchbar_form s_searchbar_input" action="/website/search" data-name="Search">
+                            <div role="search" class="input-group ">
+                                <input type="search" name="search" class="search-query form-control oe_search_box None" placeholder="Search..." data-search-type="all" data-limit="5" data-display-image="true" data-display-description="true" data-display-extra-link="true" data-display-detail="true" data-order-by="name asc" autocomplete="off"/>
+                                <button type="submit" aria-label="Search" title="Search" class="btn oe_search_button btn-primary">
+                                    <i class="oi oi-search"/>
+                                </button>
+                            </div>
+                            <input name="order" type="hidden" class="o_search_order_by" value="name asc"/>
+                        </form>
+                        <form method="get" data-snippet="s_searchbar_input" class="o_searchbar_form s_searchbar_input" action="/website/search" data-name="Search">
+                            <div role="search" class="input-group ">
+                                <input type="search" name="search" class="search-query form-control oe_search_box None" placeholder="Search..." data-search-type="all" data-limit="5" data-display-image="true" data-display-description="true" data-display-extra-link="true" data-display-detail="true" data-order-by="name asc" autocomplete="off"/>
+                                <button type="submit" aria-label="Search" title="Search" class="btn oe_search_button btn-primary">
+                                    <i class="oi oi-search"/>
+                                </button>
+                            </div>
+                            <input name="order" type="hidden" class="o_search_order_by" value="name asc"/>
+                        </form>
+                        <form method="get" data-snippet="s_searchbar_input" class="o_searchbar_form s_searchbar_input" action="/website/search" data-name="Search">
+                            <div role="search" class="input-group ">
+                                <input type="search" name="search" class="search-query form-control oe_search_box None" placeholder="Search..." data-search-type="all" data-limit="5" data-display-image="true" data-display-description="true" data-display-extra-link="true" data-display-detail="true" data-order-by="name asc" autocomplete="off"/>
+                                <button type="submit" aria-label="Search" title="Search" class="btn oe_search_button btn-primary">
+                                    <i class="oi oi-search"/>
+                                </button>
+                            </div>
+                            <input name="order" type="hidden" class="o_search_order_by" value="name asc"/>
+                        </form>
+                        <ul class="carousel-indicators"><li class="o_indicators_left text-center d-none" aria-label="Previous" title="Previous">
+                                <i class="oi oi-chevron-left"/>
+                            </li>
+                            
+                            <li data-bs-target="#slideshow_1686133028580" data-bs-slide-to="0" style="background-image: url(/web/image/website.library_image_08)"/>
+                            <li data-bs-target="#slideshow_1686133028580" data-bs-slide-to="1" style="background-image: url(/web/image/website.library_image_03)"/>
+                            <li data-bs-target="#slideshow_1686133028580" data-bs-slide-to="2" style="background-image: url(/web/image/website.library_image_02)" class="active" aria-current="true"/>
+                            
+                        <li class="o_indicators_right text-center d-none" aria-label="Next" title="Next">
+                                <i class="oi oi-chevron-right"/>
+                            </li></ul>
+                        <a class="carousel-control-prev o_we_no_overlay o_not_editable" href="#slideshow_1686133028580" data-bs-slide="prev" aria-label="Previous" title="Previous">
+                            <span class="oi oi-chevron-left fa-2x text-white"/>
+                            <span class="visually-hidden o_default_snippet_text">Previous</span>
+                        </a>
+                        <a class="carousel-control-next o_we_no_overlay o_not_editable" href="#slideshow_1686133028580" data-bs-slide="next" aria-label="Next" title="Next">
+                            <span class="oi oi-chevron-right fa-2x text-white"/>
+                            <span class="visually-hidden o_default_snippet_text">Next</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            <section class="s_image_gallery o_spc-small o_masonry pt24 pb24 o_colored_level" data-vcss="001" data-columns="3" style="overflow: hidden; background-image: none;" data-snippet="s_images_wall" data-name="Images Wall">
+                <div class="container">
+                    <div class="row s_nb_column_fixed">
+                        <div class="o_masonry_col o_snippet_not_selectable col-lg-4">
+                            <img class="img img-fluid d-block" src="/web/image/website.library_image_03" data-index="0" data-name="Image" loading="lazy" data-original-id="416" data-original-src="/web/image/416-2ee5672a/website.library_image_03" data-mimetype="image/jpeg" style=""/>
+                            <img class="img img-fluid d-block" src="/web/image/website.library_image_10" data-index="3" data-name="Image" loading="lazy" data-original-id="417" data-original-src="/web/image/417-c4e2672b/website.library_image_10" data-mimetype="image/jpeg" style=""/>
+                        </div>
+                        <div class="o_masonry_col o_snippet_not_selectable col-lg-4">
+                            <img class="img img-fluid d-block" src="/web/image/website.library_image_13" data-index="1" data-name="Image" loading="lazy" data-original-id="418" data-original-src="/web/image/418-737c0307/website.library_image_13" data-mimetype="image/jpeg" style=""/>
+                            <img class="img img-fluid d-block" src="/web/image/website.library_image_05" data-index="4" data-name="Image" loading="lazy" data-original-id="419" data-original-src="/web/image/419-970ad817/website.library_image_05" data-mimetype="image/jpeg" style=""/>
+                        </div>
+                        <div class="o_masonry_col o_snippet_not_selectable col-lg-4">
+                            <img class="img img-fluid d-block" src="/web/image/website.library_image_14" data-index="2" data-name="Image" loading="lazy" data-original-id="420" data-original-src="/web/image/420-4397bf1f/website.library_image_14" data-mimetype="image/jpeg" style=""/>
+                            <img class="img img-fluid d-block" src="/web/image/website.library_image_16" data-index="5" data-name="Image" loading="lazy" data-original-id="421" data-original-src="/web/image/421-a1f37cd8/website.library_image_16" data-mimetype="image/jpeg" style=""/>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </t>
+</t>

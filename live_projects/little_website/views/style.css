@@ -1,0 +1,18 @@
+.burger{
+    display: none;
+}
+
+@media(max-width:1200px ){
+    .cart-inner{margin-left: 30%;
+        background-color: none !important;
+    }
+}
+.card {
+    border-radius: 20px;
+}
+@media(max-width:767px ) {
+    
+    .toprow{
+    display: none !important;
+}
+  }
