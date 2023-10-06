@@ -13,7 +13,7 @@ SPIDER_MODULES = ["scrap.spiders"]
 NEWSPIDER_MODULE = "scrap.spiders"
 
 # Use the Scrapy core ImagesPipeline
-ITEM_PIPELINES = {'scrapy.pipelines.images.ImagesPipeline': 1}
+ITEM_PIPELINES = {'scrap.pipelines.customImagePipeline': 1}
 IMAGES_STORE = 'Downloads'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent

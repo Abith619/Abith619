@@ -10,6 +10,7 @@ class DatafetchSpider(scrapy.Spider):
 
     def parse(self, response):
         image_urls = response.css('.owl-carousel img::attr(src), img::attr(src)').extract()
+        title = response.css('h1').extract()
         
         item = ScrapItem()
 
