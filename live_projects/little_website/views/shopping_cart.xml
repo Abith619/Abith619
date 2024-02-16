@@ -1,0 +1,124 @@
+<t name="Shopping Cart" t-name="website_sale.cart">
+        <style>
+          .shop-row {
+            margin-bottom: -2.5% !important;
+          }
+          .btn, a.btn{
+              border-color: #520052;
+              border-radius-left:8px;
+          }
+          .dropdown-item.active, .dropdown-item:active {
+            color: black !important;
+          }
+          .btn{
+          <!--border-radius: 0px !important;-->
+          border-radius-left:8px;
+          
+          }
+          
+          .btn-link, .fa-minus, .fa-plus {
+        
+          color: #520052 !important;
+          
+          }
+           
+          .btn, a.btn:hover {
+            border-color: #520052 !important;
+          }
+          #cart_products .js_quantity.form-control.quantity{
+	            border-left:1px solid !important; 
+          }
+          #img{
+            border-top-left-radius: 20px !important;
+            border-bottom-left-radius: 20px !important;
+          }
+          @media (max-width: 730px) { 
+            #button-media{
+            display: grid !important;
+            justify-content: center !important;
+            }
+            .btn{
+            width:100%;
+          }
+           #gift-media{
+            width:170px !important;
+            margin-left:-1.5 rem !important;
+           }
+           .oe_search_button{
+            width: auto;
+          }
+          }
+          
+        </style>
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container oe_website_sale py-2">
+                    <div class="row">
+                        <div class="col-12">
+                            <t t-call="website_sale.wizard_checkout">
+                                <t t-set="step" t-value="10"/>
+                            </t>
+                        </div>
+                        <div class="col-12 col-xl-8 oe_cart">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div t-if="abandoned_proceed or access_token" class="mt8 mb8 alert alert-info" role="alert">
+                                        <t t-if="abandoned_proceed">
+                                            <p>Your previous cart has already been completed.</p>
+                                            <p t-if="website_sale_order">Please proceed your current cart.</p>
+                                        </t>
+                                        <t t-if="access_token">
+                                            <p>This is your current cart.</p>
+                                            <p>
+                                                <strong>
+                                                    <a t-attf-href="/shop/cart/?access_token=#{access_token}&amp;revive=squash">Click here</a>
+                                                </strong> if you want to restore your previous cart. Your current cart will be replaced with your previous cart.
+                                            </p>
+                                            <p>
+                                                <strong>
+                                                    <a t-attf-href="/shop/cart/?access_token=#{access_token}&amp;revive=merge">Click here</a>
+                                                </strong> if you want to merge your previous cart into current cart.
+                                            </p>
+                                        </t>
+                                    </div>
+                                    <t t-call="website_sale.cart_lines"/>
+                                    <div class="clearfix"/>
+                                    <div class="d-xl-none mb-2" id="o_cart_summary">
+                                        <t t-call="website_sale.short_cart_summary"/>
+                                    </div>
+                                    <div class="d-flex justify-content-between" id="button-media">
+                                        <div>
+                                            <a role="button" href="/shop" class="btn btn-secondary mb32" style="background-color: #520052 !important;border: 1px solid #520052 !important;border-radius: 10px;font-size: 18px;">
+                                                <span class="fa fa-chevron-left"/>
+                                                <span>Continue<span class="d-none d-md-inline"> Shopping</span></span>
+                                            </a>
+                                        </div>
+                                        <t t-set="redirect_to_sign_in" t-value="website.account_on_checkout == 'mandatory' and website.is_public_user()"/>
+                                        <t t-set="redirect_url" t-value="'/web/login?redirect=/shop/checkout' if redirect_to_sign_in else '/shop/checkout?express=1'"/>
+                                        <div class="d-flex flex-column" t-if="website_sale_order and website_sale_order.website_order_line">
+                                            <a style="background-color: #520052!important;border: 1px solid #520052 !important;border-radius: 10px;font-size: 18px;" class="btn btn-primary float-end" role="button" t-attf-href="{{redirect_url}}">
+                                                <t t-if="redirect_to_sign_in">
+                                                    <span>Sign In</span>
+                                                    <span class="fa fa-sign-in"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <span>Process Checkout</span>
+                                                    <span class="fa fa-chevron-right"/>
+                                                </t>
+                                            </a>
+                                            <t t-call="payment.express_checkout"/>
+                                        </div>
+                                    </div>
+                                    <div class="oe_structure" id="oe_structure_website_sale_cart_1"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-none d-xl-block col-xl-4" id="o_cart_summary">
+                            <t t-call="website_sale.short_cart_summary"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="oe_structure" id="oe_structure_website_sale_cart_2"/>
+            </div>
+        </t>
+    </t>
