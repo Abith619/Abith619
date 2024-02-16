@@ -1,0 +1,139 @@
+<t t-name="website_sale.custom_hamburger_menu_head" name="Custom Template Header Hambuger Full" active="False">
+
+  <style>
+    
+    
+    @media (max-width: 768px){
+      .custom-form-control{
+        width: 100%;
+        margin-top: 0px !important;
+      }
+      .mobile-position{
+      position: absolute !important;
+    }
+    span button, .align-middle{
+      color: black !important;
+    }
+    .lang-dropdown-custom{
+        inset: 50px auto auto auto !important;
+    }
+      .dropdown-menu.show, .show.o_dropdown_menu {
+        inset: auto auto auto auto;
+        position: relative;
+        display: inline-table !important;
+        }
+    }
+    .navbar #top_menu.o_menu_loading {
+      opacity: 1 !important;
+    }
+    .custom-hamburger-menu{
+      inset: 70px auto auto 0px;
+      position: relative;
+    }
+    .custom_user_menu_toggle{
+      position: absolute;
+    }
+    .custom-wish{
+      margin-top: 0px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+    }
+  </style>
+  
+  <t t-call="website.navbar">
+    <t t-set="_navbar_expand_class" t-value="''"/>
+      <div id="top_menu_container" class="container" style="margin-bottom: 5%; padding-right: 0px; padding-left: 0px;">
+        <t t-call="website.placeholder_header_brand"/>
+        
+        <div style="display: contents; text-align: center; ">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="navigation Menus">
+            <span class="navbar-toggler-icon"/>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav" id="navbarNav" role="menu" style="nav navbar-nav flex-grow-1">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" aria-current="page" href="/shop/category/new-1322" role="menu-item">New</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/shop/category/toys-1323">Toys</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/shop/category/my-room-1324">Room</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="shop/category/baby-and-kids-clothing-fashion-accessories-1375">Fashion</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/shop/category/on-the-move-1326">Travel</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/shop/category/dinner-set-1328">Dining</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/shop/category/back-to-school-1330">School</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/shop/category/offers-1331">Offers</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row mx-auto" style="width: 100%; margin-bottom: 7%;">
+      <form method="get" data-snippet="s_searchbar_input" class="o_searchbar_form o_wait_lazy_js s_searchbar_input" action="/website/search" data-name="Search" style="padding: 0;">
+        <div role="search" class="input-group ">
+            <input type="search" name="search" class="custom-form-control search-bar search-query form-control oe_search_box None" placeholder="Search..." data-search-type="all" data-limit="5" data-display-image="true" data-display-description="true" data-display-extra-link="true" data-display-detail="true" data-order-by="name asc" style="    border-top-left-radius: 20px !important;     border-bottom-left-radius: 20px !important;"/>
+            <button type="submit" aria-label="Search" title="Search" class="btn oe_search_button search-button" style="background-color: #0098ED !important;">
+              <i class="oi oi-search" style="color: #FBFBFB;"/>
+            </button>
+            <input name="order" type="hidden" class="o_search_order_by " value="name asc"/>
+        </div>
+      </form>
+    </div>
+      <div class="row align-items-start justify-content-between">
+          <t t-call="portal.placeholder_user_sign_in">
+            <li t-nocache="Profile session and user group can change unrelated to parent caches." t-nocache-_item_class="_item_class" t-nocache-_link_class="_link_class" groups="base.group_public" t-attf-class="#{_item_class} o_no_autohide_item">
+              <t t-set="_item_class" t-value="'nav-item'"/>
+              <t t-set="_link_class" t-valuef="o_navlink_background_hover d-flex align-items-center h-100 rounded-0 border-0 o_border_contrast custom-signin-class"/>
+            </li>
+          </t>
+          <t t-call="portal.user_dropdown">
+            <t t-nocache="Each user is different regardless of the page visited." t-nocache-_avatar="_avatar" t-nocache-_icon="_icon" t-nocache-_icon_class="_icon_class" t-nocache-_user_name="_user_name" t-nocache-_user_name_class="_user_name_class" t-nocache-_item_class="_item_class" t-nocache-_link_class="_link_class" t-nocache-_dropdown_menu_class="_dropdown_menu_class">
+              <t t-set="is_connected" t-value="not user_id._is_public()"/>
+              <t t-set="_user_name" t-value="true"/>
+              <t t-set="_user_name_class" t-valuef="medium"/>
+              <t t-set="_item_class" t-value="'nav-item dropdown'"/>
+              <t t-set="_link_class" t-value="'custom-nav-link'"/>
+              <t t-set="_dropdown_menu_class" t-value="'dropdown-menu-end'"/>
+              <t t-set="_icon" t-value="true"/>
+              <t t-set="_icon_class" t-valuef="fa-stack"/></t>
+          </t>
+          
+        <t t-call="website_sale_wishlist.header_wishlist_link">
+          <t t-set="wishcount" t-value="len(request.env['product.wishlist'].current() or request.env['product.wishlist'])"/>
+          <t t-set="show_wishes" t-value="True"/>
+          <t t-set="_item_class" t-value="'nav-item me-lg-3'"/>
+          <t t-set="_link_class" t-value="'nav-link'"/>
+        </t>
+       <t t-call="website_sale.header_cart_link">
+          <t t-nocache="The number of products is dynamic, this rendering cannot be cached." t-nocache-_icon="_icon" t-nocache-_text="_text" t-nocache-_item_class="_item_class" t-nocache-_link_class="_link_class">
+            <t t-set="website_sale_cart_quantity" t-value="request.session['website_sale_cart_quantity'] if 'website_sale_cart_quantity' in request.session else website.sale_get_order().cart_quantity or 0"/>
+            <t t-set="show_cart" t-value="true"/>
+            <t t-set="_text" t-value="false"/>
+          </t>
+        </t>
+    </div>
+    <span style="margin-left: auto !important; ">
+      <t t-set="active_lang" t-value="list(filter(lambda lg : lg[0] == lang, languages))[0]"/>
+      <t t-set="language_selector_visible" t-value="len(languages) &gt; 1"/>
+      <t id="header_language_selector_call" t-call="website.language_selector">
+          <t t-set="_div_classes" t-value="(_div_classes or '') + ' dropdown'"/>
+          <t t-set="no_text" t-value="False"/>
+        <t t-set="flags" t-value="False"/>
+        <t t-call="website.language_selector_add_language">
+          <t t-set="dropdown" t-value="False"/>
+        </t>
+      </t>
+    </span>
+  </t>
+</t>
