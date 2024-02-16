@@ -1,0 +1,67 @@
+<t name="Address on payment" t-name="website_sale.address_on_payment">
+    <style>
+        .billing {
+            border-radius: 10px;
+            padding: 1%;
+            border: 1px solid #E1E1E1;
+            margin-left:15px;
+        }
+        .Shipping {
+          padding:1%;
+          border: 1px solid #E1E1E1;
+          margin-left:15px;
+        }
+        .mt4 {
+          background-color:#F3F3F3 !important;
+          padding:2%;
+          margin-top: 4% !important;
+          border: 1px solid #E1E1E1;
+        }
+        <!--p{-->
+        <!--    color: #520052;-->
+        <!--    margin-bottom: auto;-->
+        <!--    }-->
+        p { 
+            margin-bottom: 0;
+            margin-top:1%;
+            margin-left:0% !important;
+            font-size:20px;
+            color:#520052;
+             padding:2%;
+        }
+        .address-inline {
+            font-weight:100;
+            font-size:16px;
+        }
+        #address_on_payment {
+           display: grid;
+        }
+        <!--span {-->
+        <!--   border:1px solid black;-->
+        <!--}-->
+    </style>
+        <div class="card">
+            <div class="card-body" id="shipping_and_billing">
+                <a class="float-end no-decoration" href="/shop/checkout" style="margin-top:3%;"><i class="fa fa-edit"/> Edit</a>
+                <t t-set="same_shipping" t-value="bool(order.partner_shipping_id==order.partner_id or only_services)"/>
+                <div>
+                    <div>
+                        <p style="margin-bottom: 1%; font-weight:bolder;">Billing Address <t t-if="same_shipping and not only_services"> &amp; Shipping</t> </p>
+                    </div>
+                    <div class="billing">
+                        <!--<p>Billing Address :<br/><t t-if="same_shipping and not only_services"> &amp; Shipping</t> </p>-->
+                        <!--<input type="hidden" name="order.partner_id" t-att-value="order.partner_id"/>-->
+                        <span t-esc="order.partner_id" t-options="dict(widget='contact', fields=['address'], no_marker=True, separator=', ')" class="address-inline"/>
+                    </div>
+                    <div>
+                         <p class="mt-4" style="font-weight:bolder;">Shipping Address<br/></p>
+                    </div>
+                    <div t-if="not same_shipping and not only_services" groups="account.group_delivery_invoice_address" class="Shipping mt-2" style="border-radius:10px;">
+                        <!--<p>Shipping Address : <br/></p>-->
+                        
+                        <span t-esc="order.partner_shipping_id" t-options="dict(widget='contact', fields=['address'], no_marker=True, separator=', ')" class="address-inline"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
