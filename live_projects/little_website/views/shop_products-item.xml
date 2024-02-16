@@ -1,0 +1,62 @@
+<t name="Products item" t-name="website_sale.products_item">
+    <style>
+        .oe_product_image_img_wrapper img {
+            object-fit: contain !important;
+          }
+          .o_wsale_products_page{
+            background-color: white !important;
+          }
+    </style>
+  <form action="/shop/cart/update" method="post" class="oe_product_cart h-100 d-flex" t-att-data-publish="product.website_published and 'on' or 'off'" itemscope="itemscope" itemtype="http://schema.org/Product" style="border:none;">
+    <t t-set="product_href" t-value="keep(product.website_url, page=(pager['page']['num'] if pager['page']['num']&gt;1 else None))"/>
+    <t t-set="image_type" t-value="product._get_suitable_image_size(ppr, td_product['x'], td_product['y'])"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-xwfbx0VuLT4R7Jbgn5jkbyYN9uBg6g/YmFEFiO3QpWiUuvtDHpL0aGIIv4WUUZvf" crossorigin="anonymous"/>
+     <div class="oe_product_image position-relative " style=" border-top-left-radius: 20px; border-top-right-radius: 20px;">
+          <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" t-nocache="The csrf token must always be up to date."/>
+          <a t-att-href="product_href" class="oe_product_image_link d-block h-100 position-relative" itemprop="url" contenteditable="false">
+              <t t-set="image_holder" t-value="product._get_image_holder()"/>
+              <span t-field="image_holder.image_1920" t-options="{'widget': 'image', 'preview_image': image_type, 'itemprop': 'image', 'class': 'h-100 w-100 position-absolute'}" class="oe_product_image_img_wrapper d-flex h-100 justify-content-center align-items-center position-absolute" style="object-fit: fill;"/>
+                <t t-set="bg_color" t-value="td_product['ribbon']['bg_color'] or ''"/>
+                <t t-set="text_color" t-value="td_product['ribbon']['text_color']"/>
+                <t t-set="bg_class" t-value="td_product['ribbon']['html_class']"/>
+              <span t-attf-class="o_ribbon o_not_editable #{bg_class}" t-attf-style="#{text_color and ('color: %s; ' % text_color)}#{bg_color and 'background-color:' + bg_color}" t-field="product.website_ribbon_id.html"/>
+          </a>
+      </div>
+      <div class="o_wsale_product_information position-relative d-flex flex-column flex-grow-1 flex-shrink-1" style=" border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">
+        <div class="o_wsale_product_information_text flex-grow-1">
+          <h6 class="o_wsale_products_item_title mb-2" style="text-align: center; font-size: 14px; font-weight: 400;">
+            <span itemprop="name" t-field="product.x_studio_brand" style="color:#0098ED;"/>
+          </h6>
+            <h6 class="o_wsale_products_item_title mb-2 h-auto" style=" text-align: center; font-size: 1rem; font-weight: 400;">
+              <a class="text-primary text-decoration-none" itemprop="name" t-att-href="product_href" t-att-content="product.name" t-field="product.name" style="color: black !important; "/>
+              <a t-if="not product.website_published" role="button" t-att-href="product_href" class="btn btn-sm btn-danger" title="This product is unpublished.">
+                Unpublished
+              </a>
+          </h6>
+        </div>
+          <div class="o_wsale_product_sub d-flex justify-content-evenly align-items-center pb-1">
+              <t t-set="template_price_vals" t-value="get_product_prices(product)"/>
+              <div class="o_wsale_product_btn"/>
+              <div class="product_price" itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" style="width:100%; display: block; margin-right: 10%; margin-left: 10%; text-align: end;">
+                <t t-if="'base_price' in template_price_vals and (template_price_vals['base_price'] &gt; template_price_vals['price_reduce'])">
+                  <!--<del t-attf-class="text-muted me-1 h6 mb-0  oe_currency_value" style="white-space: nowrap;">-->
+                  <!--  <em class="small" t-esc="website.currency_id.symbol"/>-->
+                  <!--  <em class="small" t-esc="template_price_vals['base_price']"/>-->
+                  <!--</del>-->
+                  <del t-attf-class="text-muted me-1 h6 mb-0 wishlist_xpath" style="white-space: nowrap;">
+                    <em class="small" t-esc="template_price_vals['base_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                </del>
+                </t>
+                <span class="h6 mb-0" t-if="template_price_vals['price_reduce'] or not website.prevent_zero_price_sale" t-esc="template_price_vals['price_reduce']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                <span class="h6 mb-0" t-else="" t-field="website.prevent_zero_price_sale_text"/>
+                <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>
+                  <span itemprop="price" style="display:none;" t-esc="template_price_vals['price_reduce']"/>
+            </div>
+            
+          </div>
+          <div class="row mx-auto ">
+              <div class="o_wsale_product_btn_cart o_wsale_product_btn" style="display: contents;"/>
+            </div>
+      </div>
+  </form>
+</t>
