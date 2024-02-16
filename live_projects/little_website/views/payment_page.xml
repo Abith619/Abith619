@@ -1,0 +1,247 @@
+<t name="Payment" t-name="website_sale.payment">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Shop - Select Payment Provider</t>
+            <t t-set="no_footer" t-value="1"/>
+            <style>
+              .dropdown-item.active, .dropdown-item:active {
+                  color: black !important;
+                }
+                .o_accept_tc_button{
+                    margin-top: auto !important;
+                    margin-bottom: auto !important;
+                }
+                #delivery_carrier{
+                    font-size:20px;
+                    padding-left:2%;
+                    }
+                .card &gt; .list-group:last-child {
+                    margin-left: 3%;
+                    width: 94%;
+                    border-radius: 0 !important;
+                }
+                .o_payment_form {
+                   margin-top: 0% !important;
+                }
+                .content {
+                   width:94%;
+                   margin-left:3%;
+                   padding:2%;
+                   border:1px solid #E1E1E1;
+                   background-color:#F3F3F3;
+                }
+                .o_payment_form .card-body:not(:first-child) {
+                    background-color: #F3F3F3 !important;
+                }
+                h6 {
+                   font-size:16px;                   
+                }
+                h5 {
+                   /*margin-left:5% !important;*/                   
+                   font-size:20px;
+                   color:#520052;
+                   pdding:2%;
+                }
+                .mb24 {
+                   /*margin-left:5%;*/
+                }
+                .any-order{
+                width: 70%; border:1px solid;
+                }
+                /***************/
+                #payment_method button[name="o_payment_submit_button"]{
+	                background-color: #520052 !important;
+                    border: 1px solid #520052 !important;
+                    border-radius: 10px !important;
+                    font-size: 23px;
+                    height: 45px;
+                    width: 240px;
+                }
+                .btn.btn-primary.a-submit{
+        		    border:none;
+        	    }
+                /*****************/
+                @media (max-width: 430px) {
+                .card-body{
+                display: grid;
+                }
+                .payment_icon_list{
+                padding-top:10px;
+                }
+                .any-order{
+                width: 100%; border:1px solid;
+                }
+                .btn-primary{
+                padding: 0px;
+                margin-top: 8px;
+                }
+                .btn-secondary{
+                font-size: 15px !important;
+                }
+            }
+            a.js_subscribe_btn.o_submit.btn.btn-custom.d-none{
+					    display:inline !important;
+			}
+			a.js_subscribed_btn.o_submit.btn.btn-custom{
+			    display:none !important;
+			}
+			.o_payment_form .btn.btn-secondary{
+			    background-color: #520052 !important;
+			}
+			#delivery_carrier h3.mb24{
+			    padding-left:2%;
+			    font-size: 25px;
+                margin-top: 20px;
+                color: #520052;
+			}
+			#delivery_method .text-bg-secondary{
+			    background-color: #520052 !important;
+			}
+			#delivery_2063, #delivery_2064{
+			    margin-top: 30px;
+			}
+			#payment_method button[name="o_payment_submit_button"] {
+			    font-size: 17px !important;
+                height: 42px !important;
+                width: 205px !important;
+			}
+			/*************************************/
+			#delivery_method{
+			    text-align: left !important;
+			}
+			#delivery_method .list-group li{
+			    display: block !important;
+			}
+			#delivery_method #delivery_2063, #delivery_2064{
+			    margin-top: 0px !important;
+			}
+			.o_accept_tc_button {
+                margin-top: 20px !important;
+                margin-bottom: 20px !important;
+            }
+            #payment_method .o_accept_tc_button #checkbox_tc{
+                margin-top:8px;
+            }
+            #delivery_method .o_delivery_carrier_select .text-bg-secondary.o_wsale_delivery_badge_price.mx-auto{
+	            margin-top: 4px;
+            }
+            /*
+            #delivery_method ul.list-group li.o_delivery_carrier_select:nth-child(1){
+	            border-top-left-radius: 15px;
+                border-top-right-radius: 15px;
+            }
+            #delivery_method ul.list-group li.o_delivery_carrier_select:nth-child(3){
+	            border-bottom-left-radius: 15px;
+                border-bottom-right-radius: 15px;
+            }
+            */
+            #delivery_method ul.list-group li.o_delivery_carrier_select{
+	            border-radius: 15px;
+            }
+			/*************************************/
+            </style>
+
+            <div id="wrap">
+                <div class="container oe_website_sale py-2">
+                    <div class="row">
+                        <div class="col-12">
+                            <t t-call="website_sale.wizard_checkout">
+                                <t t-set="step" t-value="40"/>
+                            </t>
+                        </div>
+                        <div class="col-12" t-if="errors">
+                            <t t-foreach="errors" t-as="error">
+                                <div class="alert alert-danger" t-if="error" role="alert">
+                                    <h4>
+                                      <t t-esc="error[0]"/>
+                                    </h4>
+                                    <t t-esc="error[1]"/>
+                                </div>
+                            </t>
+                        </div>
+                        <div class="col-12 col-xl-auto order-xl-2" style="margin-top:2.5%;">
+                            <t t-call="website_sale.cart_summary"/>
+                        </div>
+                        <div class="col-12 col-xl order-xl-1 oe_cart">
+                            <div id="address_on_payment">
+                                <t t-call="website_sale.address_on_payment"/>
+                            </div>
+
+                            <div class="oe_structure clearfix " id="oe_structure_website_sale_payment_1"/>
+
+                            <t t-if="website_sale_order.amount_total">
+                                <div t-if="providers or tokens" id="payment_method" class="mt-4" style=" margin-right: 7%; margin-left: 7%;">
+                                    <h5 class="" style="margin-left:5% !important; font-weight: bolder; border-radius: 20px;">Payments Details</h5>
+                                    <div style="margin-left: 5%; margin-right: 3%;">
+                                        <t t-call="payment.checkout">
+                                            <t t-set="footer_template_id" t-value="'website_sale.payment_footer'"/>
+                                            <t t-set="submit_button_label">Complete Order</t>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div t-else="" class="alert alert-warning">
+                                    <strong>No suitable payment option could be found.</strong><br/>
+                                    If you believe that it is an error, please contact the website administrator.
+                                </div>
+                            </t>
+
+                            <div t-if="not providers" class="mt-2">
+                                <a role="button" class="btn-link" groups="base.group_system" t-attf-href="/web#action=#{payment_action_id}">
+                                        <i class="fa fa-arrow-right"/> Add payment providers
+                                </a>
+                            </div>
+                            <div class="js_payment mt-3" t-if="not website_sale_order.amount_total" id="payment_method" name="o_website_sale_free_cart">
+                                <form name="o_wsale_confirm_order" target="_self" action="/shop/payment/validate" method="post">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" t-nocache="The csrf token must always be up to date."/>
+                                    <t t-call="website_sale.payment_footer">
+                                        <t t-set="submit_button_label">Confirm Order</t>
+                                    </t>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="oe_structure" id="oe_structure_website_sale_payment_2"/>
+            </div>
+            <!--<section class="s_text_image o_colored_level pb0 pt24" data-snippet="s_image_text" data-name="Image - Text" style="background-color: rgb(247, 247, 247); background-image: none;">-->
+            <!--    <div class="container-fluid">-->
+            <!--        <div class="row align-items-stretch">-->
+            <!--            <div class="col-lg-6 pt16 pb16 o_colored_level">-->
+            <!--                <img src="/web/image/393130-4f573869/newsletter.jpg" alt="" class="img img-fluid mx-auto w-75 o_we_custom_image" style="width: 100% !important;height:100% !important;" data-original-id="404492" data-original-src="/web/image/404492-29a2c230/Pattern-fill-e6196479c19b693162a49d4575073dd7.jpg" data-mimetype="image/jpeg" data-resize-width="1920" loading="lazy" data-bs-original-title="" title="" aria-describedby="tooltip688715" data-quality="100"/>-->
+            <!--            </div>-->
+            <!--            <div class="pt16 pb16 col-lg-4 o_colored_level" style="">-->
+            <!--                <h6 class="any-order">-->
+            <!--                    <span style="font-size: 24px;">-->
+            <!--                        <span class="fa fa-gift" data-bs-original-title="" title="" aria-describedby="tooltip321598"/><strong>&amp;nbsp;</strong></span><strong>-->
+            <!--                    </strong><span style="font-size: 18px;"><strong>Get -10% on any order</strong></span>-->
+            <!--                </h6>-->
+            <!--                <h5>-->
+            <!--                    <br/>-->
+            <!--                </h5>-->
+            <!--                <h5>-->
+            <!--                    <strong><span style="font-size: 24px;">On your first purchase</span>-->
+            <!--                    </strong>-->
+            <!--                </h5>-->
+            <!--                <h5>-->
+            <!--                    <strong>-->
+            <!--                        <span style="font-size: 24px;">by subscribing</span>-->
+            <!--                    </strong>-->
+            <!--                </h5>-->
+            <!--                <p>-->
+            <!--                    <br/>-->
+            <!--                </p>-->
+            <!--                <div class="s_newsletter_subscribe_form s_newsletter_list js_subscribe" data-vxml="001" data-list-id="1" data-name="Newsletter" data-snippet="s_newsletter_subscribe_form">-->
+            <!--                    <div class="input-group" style="&#10;    border-bottom: 1px solid black;&#10;">-->
+            <!--                        <input type="email" name="email" class="js_subscribe_value form-control" placeholder="your email..." style="&#10;    /* border-bottom: 2px solid black; */&#10;     border: none; &#10; background-color: white;"/>-->
+            <!--                        <a role="button" href="#" class="js_subscribe_btn o_submit btn btn-custom" data-bs-original-title="" title="" style="border: none;border-width: 0px;border-style: solid;">Send -&amp;gt;</a>-->
+            <!--                        <a role="button" href="#" class="js_subscribed_btn o_submit btn btn-custom d-none" disabled="disabled" data-bs-original-title="" title="" style="border-width: 1px; border-style: solid;">Send</a>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                <p>-->
+            <!--                    <br/>-->
+            <!--                </p>-->
+            <!--            </div>-->
+            <!--        </div>-->
+            <!--    </div>-->
+            <!--</section>-->
+        </t>
+    </t>
