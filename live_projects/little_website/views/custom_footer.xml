@@ -1,0 +1,307 @@
+<data inherit_id="website.layout" name="Contact" active="False">
+    <xpath expr="//div[@id='footer']" position="replace">
+      <style>
+      #footer{
+      background-color:white !important;
+      }
+        
+    	.footer-menu-heading{
+			  color:#868686;
+		  }
+		  ul.footer-menu{
+			  padding-left:0px;
+		  }
+		  ul.footer-menu li{
+			  list-style:none;
+			  <!--line-height: 2.5em;-->
+			  line-height:30px;
+			  font-size: 16px;
+			  font-weight:500;
+			  display: block !important;
+		  }
+		  .contact-info{
+			  font-size: 16px;
+		  }
+		  .footer-menu a{			
+			  color:#000000;
+			  text-decoration:none;
+		  }
+		  .footer-menu a:hover{
+			  color:#fe0000;
+		  }
+		  .fa-icon{
+			  font-size:24px;
+			  color:#520052d6;
+		  }
+		  .fa-icon-2{
+			  font-size:30px;
+			  color:#520052d6;
+			  padding-right:10px;
+		  }
+		  .fa-icon-3{
+			  font-size:25px;
+			  color:#ffffff;
+			  padding-right:10px;
+		  }
+		  .contact-info,.follow-us{
+			  margin-top:12px;
+		  }
+		  .heading-1{
+			  color:#fe0000;
+			  font-size: 21px !important;
+        padding-top: 1rem !important;
+		  }
+		  .footer-links{
+			  margin-top:20px;
+			  font-size:15px;
+			  color:#000000;
+		  }
+		  .footer-links a{
+			  color:#000000;
+			  text-decoration:none;
+			  margin:0px 5px 0px 5px;
+		  }
+		  .footer-links a:hover{
+			  color:#fe0000;
+		  }
+		  .payment-icons{
+			  margin-top:20px;
+			  display: flex;
+			  margin-bottom:20px;
+		  }
+		  .payment-icons img{
+			  width:40px;
+			  margin-right:20px;
+		  }
+		  .lan-links{
+			  margin-top:5px;
+			  font-size:15px;
+			  color:#d0ceced1;
+		  }
+		  .lan-links a{
+			  color:#921692;
+			  text-decoration:none;
+			  margin:0px 5px 0px 5px;
+		  }
+		  .lan-links a:hover{
+			  color:#fe0000;
+		  }
+		  .links-1{
+			  display: flex;
+		  }
+		  .links-1 img{
+			  margin-right:25px;
+		  }
+		  .links-1 a{
+			  margin-right:10px;
+			  font-size:15px;
+			  color:#000000;
+			  text-decoration:none;
+		  }
+		  .links-1 a:hover{
+			  color:#fe0000;
+		  }
+		  .copy-right-text{
+			  color:#8a8a8a;
+			  font-size:15px;
+			  margin-bottom:25px;
+		  }
+		  .vertical-icon{
+			  color:#d0ceced1;
+		  }
+		  .adrs-line-1{
+			  padding-left:22px;
+		  }
+		  .adrs-line-2{
+			  padding-left:24px;
+		  }
+		  .footer-1{
+			  height: 3rem;
+			  color:#ffffff;
+			  padding-top: 8px;
+			  font-size: 16px;
+		  }
+		  @media (max-width:992px){
+			  .fluid-container.footer-1{
+				  height: 120px !important;
+			  }
+		  }
+		  @media (max-width:767px){
+		    .logo-mobile{
+		        display:inline !important;
+		    }
+		    .logo-desktop{
+		        display:none;
+		    }
+		    .toys.bd-highlight{
+		        background-color: unset !important;
+		    }
+		    .centered.centered-section-1 {
+                margin-left: 15% !important;
+            }
+            /*******************/
+            .oe_website_login_container .s_newsletter_subscribe_form .js_subscribe_value.form-control{
+                margin-top:0px !important;
+            }
+            /********************/
+		  }
+		  @media (min-width:768px){
+		    .logo-desktop{
+		        padding-top:80px;
+		    }
+		    .payment-icons {
+                margin-top: 2px;
+            }
+            img.footer-logo-img{
+                height:auto;
+                margin-left: 30px;
+            }
+		  }
+		  /**************************************/
+		   .s_newsletter_subscribe_form .mailsub.js_subscribe_btn.o_submit{
+	            height:auto !important;
+	            margin-top: 0px !important;
+            }
+            .oe_website_login_container .s_newsletter_subscribe_form .js_subscribe_value.form-control{
+	            border-top-left-radius: 20px !important;
+                border-bottom-left-radius: 20px !important;
+	            border: 1px solid #CED4DA !important;
+	            height: unset !important;
+            }
+            .oe_website_login_container .s_newsletter_subscribe_form .mailsub.js_subscribe_btn.o_submit{
+	            margin-left: -8px !important;
+	            z-index: 9999;
+            }
+             /**************************************/
+  </style>
+        <div id="footer" class="oe_structure oe_structure_solo" t-ignore="true" t-if="not no_footer" style="margin-top: 40px ">
+      <section class="s_text_block pb16 pt0" data-snippet="s_text_block" data-name="Text" style="background-image: none; margin-top:-2.5em !important;">
+        <div class="fluid-container footer-1" style="background-color:#520052; height: 3rem;">
+        		<div class="container">
+        			<div class="row ">
+						<div class="col-md-5"><i class="fa fa-truck fa-icon-3"/><span style="font-size: 16px; color: white;"> Free Shipping from € 45 onwards in BE/NL</span></div>
+						<div class="col-md">&amp;nbsp;</div>
+						<div class="col-md-4"><i class="fa fa-gift fa-icon-3"/><span style="font-size: 16px; color: white;"> Gift wrapping available </span></div>
+        			</div>
+        		</div>
+        	</div>
+        	<div class="container">    
+        		<div class="row">		
+        			<div class="col-md-9 o_colored_level">
+        				<div class="row">
+        					<div class="col-md-4 col-6 o_colored_level pt56">
+        						<div class="footer-menu-heading"><h4><font class="text-600"><span style="font-size: 18px;">Quick Links</span></font></h4></div><font class="text-o-color-5">
+        						</font><ul class="footer-menu"><font class="text-o-color-5">
+        							</font><li><a href="/comingsoon" data-bs-original-title="" title=""><font class="text-black">FAQ</font></a></li>			
+        							<li><a href="/comingsoon" data-bs-original-title="" title=""><font class="text-black">Appointment</font></a></li>
+        							<li><a href="/comingsoon" data-bs-original-title="" title=""><font class="text-black">Gift Cards</font></a></li>
+        							<li><a href="/privacypolicy" data-bs-original-title="" title=""><font class="text-black">Policies</font></a></li>
+        							<li><a href="/helpdesk" data-bs-original-title="" title=""><font class="text-black">Helpdesk</font></a></li>
+        						</ul>
+        					</div>
+        					<div class="col-md-4 col-6 o_colored_level pt56">
+        						<div class="footer-menu-heading"><h4><span style="font-size: 18px;">Little Thingz</span></h4></div>
+        						<ul class="footer-menu">
+        							<li><a href="/about-us" data-bs-original-title="" title=""><font class="text-black">About Us</font></a></li>			
+        							<li><a href="/comingsoon" data-bs-original-title="" title=""><font class="text-black">Promises</font></a></li>
+        							<li><a href="/shop/category/brand-1332" data-bs-original-title="" title=""><font class="text-black">Brands</font></a></li>
+        							<li><a href="/comingsoon" data-bs-original-title="" title=""><font class="text-black">Best Sellers</font></a></li>
+        							<li><a href="/comingsoon" data-bs-original-title="" title=""><font class="text-black">Careers</font></a></li>
+        							
+        						</ul>
+        					</div>
+        					<div class="col-md-4 col-6 o_colored_level pt56">
+        						<div class="footer-menu-heading"><h4><span style="font-size: 18px;">Resources</span></h4></div>
+        						<ul class="footer-menu">
+        							<li><a href="/blog" data-bs-original-title="" title=""><font class="text-black">Blogs</font></a></li>
+        							<li><a href="/comingsoon" data-bs-original-title="" title=""><font class="text-black">Freebies</font></a></li>
+        										
+        							<li><a href="/comingsoon" data-bs-original-title="" title=""><font class="text-black">Checklists</font></a></li>
+        						</ul>
+        					</div>
+        					<div style="display:none;" class="col-md-4 col-6 logo-mobile o_colored_level pt56">
+        					    <p class="mb-2"><a href="https://www.littlethingz.com/home"><img src="/web/image/412727-537236c9/logo.png" alt="" class="img-fluid img o_we_custom_image me-auto float-start" style="min-height: 1px; animation-play-state: paused; transition: none 0s ease 0s; transform: translateX(-33.9%) translateY(-31.8%) scaleX(0.43) scaleY(0.41);" data-original-id="412726" data-original-src="/web/image/412726-fdcb075b/logo.png" data-mimetype="image/png" data-resize-width="644" loading="lazy" data-bs-original-title="" title="" aria-describedby="tooltip589997"/></a><br/></p>
+        					</div>
+        				</div>
+        				<div class="row logo-desktop">
+        					<div class="col-md-12 o_colored_level" style="height: 11.6rem !important;">
+								<p class="mb-2"><a href="https://www.littlethingz.com/home"><img src="/web/image/412727-537236c9/logo.png" alt="" class="img-fluid img o_we_custom_image me-auto float-start footer-logo-img" style="min-height: 1px; animation-play-state: paused; transition: none 0s ease 0s; transform: translateX(-33.9%) translateY(-31.8%) scaleX(0.43) scaleY(0.41); width: 50% !important;" data-original-id="412726" data-original-src="/web/image/412726-fdcb075b/logo.png" data-mimetype="image/png" data-resize-width="644" loading="lazy" data-bs-original-title="" title="" aria-describedby="tooltip589997"/></a><br/></p>
+							</div>
+        				</div><br/>
+        				<div class="row">
+        					<div class="col-md-12 o_colored_level">
+        						<div class="footer-links">
+        							<b>Policies</b>:<span class="vertical-icon"> 
+        							<a href="/terms-and-conditions" data-bs-original-title="" title=""><font class="text-black">General</font></a> |
+        							<a href="/privacypolicy" data-bs-original-title="" title=""><font class="text-black">Privacy</font></a> |
+        							<a href="/cookies-policy" data-bs-original-title="" title=""><font class="text-black">Cookies</font></a> |
+        							<a href="/paymentmethods" data-bs-original-title="" title=""><font class="text-black">Payments</font></a> |
+        							<a href="/returns" data-bs-original-title="" title=""><font class="text-black">Returns</font></a> |
+        							<a href="/shippingandreturns" data-bs-original-title="" title=""><font class="text-black">Shipping</font></a> |
+        							<a href="/comingsoon" data-bs-original-title="" title=""><font class="text-black">Disclaimer</font></a></span>
+        						</div>
+        					</div>
+        				</div><br/><br/>
+        				<div class="row">
+        					<div class="col-md-12 o_colored_level">
+        						<div class="payment-icons">
+        							<img src="/web/image/412734-ff4b1ce9/paypal%20%281%29%201.png" alt="" class="img-responsive img img-fluid o_we_custom_image" data-original-id="412729" data-original-src="/web/image/412729-7edd8a7f/paypal%20%281%29%201.png" data-mimetype="image/png" data-resize-width="40" loading="lazy"/>
+        							<img src="/web/image/412735-12478cba/visa%20%281%29.png" alt="" class="img-responsive img img-fluid o_we_custom_image" data-original-id="412730" data-original-src="/web/image/412730-a60c28e3/visa%20%281%29.png" data-mimetype="image/png" data-resize-width="40" loading="lazy"/>
+        							<img src="/web/image/412736-7009b2d8/card.png" alt="" class="img-responsive img img-fluid o_we_custom_image" data-original-id="412731" data-original-src="/web/image/412731-ce044c9b/card.png" data-mimetype="image/png" data-resize-width="40" loading="lazy"/>
+        							<img src="/web/image/412737-9b194d79/ideal.png" alt="" class="img-responsive img img-fluid o_we_custom_image" data-original-id="412732" data-original-src="/web/image/412732-e07945ee/ideal.png" data-mimetype="image/png" data-resize-width="40" loading="lazy"/>
+        							<img src="/web/image/412738-0e3367b7/american-express.png" alt="" class="img-responsive img img-fluid o_we_custom_image" data-original-id="412733" data-original-src="/web/image/412733-07fd4172/american-express.png" data-mimetype="image/png" data-resize-width="40" loading="lazy"/>
+        						</div>
+        					</div>
+        				</div>
+        			</div>
+        			<div class="col-md-3 o_colored_level">
+        				<div class="row">
+        					<div class="col-md-12 o_colored_level pt56">
+        						<div class="footer-menu-heading"><h4><span style="font-size: 18px;">Contact</span></h4></div>
+        						<div class="contact-info"><i class="fa fa-phone fa-icon"/> &amp;nbsp;<font class="text-black">+32 (0)11 397 398</font><br/><br/>
+        						<i class="fa fa-envelope fa-icon"/> <font class="text-black">&amp;nbsp;helpdesk@littlethingz.com</font><br/><br/>
+        						<i class="fa fa-map-marker fa-icon"/> <font class="text-black">&amp;nbsp;Heuveneindeweg 121</font><br/><font class="text-black">
+        						<span class="adrs-line-1">3520 Zonhoven</span></font><br/><font class="text-black">
+        						</font><span class="adrs-line-2"><font class="text-black">BE 0798.708.193</font></span></div>
+        					</div>
+        				</div><br/><br/>
+        				<div class="row">
+        					<div class="col-md-12 o_colored_level">
+        						<div class="footer-menu-heading"><h4><span style="font-size: 18px;">Follow Us</span></h4></div>
+        						<div class="follow-us">
+        							<a href="https://www.instagram.com/littlethingz2/"><i class="fa fa-instagram fa-icon-2" data-bs-original-title="" title="" aria-describedby="tooltip293647"/></a>
+        							<a href="https://www.facebook.com/littlethingz2"><i class="fa fa-facebook fa-icon-2" data-bs-original-title="" title="" aria-describedby="tooltip115848"/></a>
+        							<a href="https://twitter.com/Littlethingz2"><i class="fa fa-twitter fa-icon-2" data-bs-original-title="" title="" aria-describedby="tooltip854478"/></a>
+        							<a href="#"><i class="fa fa-youtube-play fa-icon-2"/></a>
+        							<a href="https://www.pinterest.com/LittleThingz2/"><i class="fa fa-pinterest fa-icon-2" data-bs-original-title="" title="" aria-describedby="tooltip404817"/></a>
+        						</div>
+        						<h4 class="heading-1"><font style="color: rgb(255, 0, 0);">#LoveLittleThingz</font></h4>
+        						<p>Post your videos Pictures  <br/> Tagging us and stand a chance <br/> to win goodies!</p>
+        					</div>
+        				</div><br/><br/>
+        				<div class="row">
+        					<div class="col-md-12 o_colored_level">
+        						<div class="lan-links">
+        							<a href="/home" data-bs-original-title="" title=""><font class="text-black">EN</font></a> | <a href="/nl_BE/home" data-bs-original-title="" title=""><font class="text-black">NL</font></a> | <a href="/fr/home" data-bs-original-title="" title=""><font class="text-black">FR</font></a> | <a href="/de/home" data-bs-original-title="" title=""><font class="text-black">DE</font></a>
+        						</div>
+        					</div>
+        				</div><br/><br/>
+        				<div class="row">
+        					<div class="col-md-12 o_colored_level">
+        						<div class="links-1">
+        							<a href="https://www.toh.group/"><img src="/web/image/534452-96ce9548/Logo.jpg" alt="" class="img-responsive img img-fluid o_we_custom_image o_we_image_cropped" style="transform: translateX(-2.8%) translateY(-33.9%) scaleX(0.88) scaleY(0.69); animation-play-state: paused; transition: none 0s ease 0s; width: 50% !important;" data-original-id="412728" data-original-src="/web/image/412728-61cd8463/Logo.jpg" data-mimetype="image/jpeg" data-resize-width="256" loading="lazy" data-bs-original-title="" title="" aria-describedby="tooltip196674" data-quality="100"/></a>
+        																</div>
+        					</div>
+        				</div>
+        			</div>
+        		</div>
+        		
+        		
+        		
+        		
+        		
+        	</div>
+        </section>
+        </div>
+    </xpath>
+</data>
