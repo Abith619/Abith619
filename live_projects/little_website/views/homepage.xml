@@ -1,0 +1,1158 @@
+<t t-name="website_sale.home-page">
+  <t t-call="website.layout">
+      <t t-set="pageName" t-value="'Homepage'"/>
+      <style>
+        <!--.card-title{-->
+        <!--  color : #161616 !important;-->
+        <!--}-->
+      .subscribe {
+         width: fit-content;
+         margin-left: 23%;
+         position: relative;
+         bottom: 50%;
+        }
+      .carousel-control-prev {
+         position: absolute;
+         width: 10rem !important;
+         left: 1%;
+      }
+      .carousel-control-next {
+        position: absolute;
+         width: 10rem !important;
+         right: 0;
+      }
+        .mx-auto {
+            margin-right: 0px !important;
+            margin-left: 0px !important;
+        }
+          blockquote {
+            padding: 0rem;
+            margin: 2rem !important;
+          }
+          .category-shop{
+            font-weight: 600;
+            font-size: 18px;
+          }
+          .explore-category{
+            color: #520052;
+            font-weight: 500;
+            font-size: 18px;
+          }
+          .gold-star {
+            
+              color: gold;
+          }
+          .o_record_cover_image {
+              border-radius: 20px !important; 
+          }
+          .img-radius-custom{
+              border-radius:20px !important;
+          }
+          .border-top-custom{
+              border-bottom-left-radius: 20px !important;
+              border-bottom-right-radius: 20px !important;
+          }
+          .border-bottom-custom{
+              border-bottom-left-radius: 20px !important;
+              border-bottom-right-radius: 20px !important;
+          }
+          .line {
+              font-family: 'Nunito' !important;
+              text-decoration-style: line;
+          }
+          .img {
+               border-radius: 0 !important;
+          }
+          .img.o_img_product_square {
+               border-radius: 0 !important;
+               height: 75vh !important;
+          }
+          
+          .s_dynamic .card-img-top{
+             border-radius: 0 !importent;
+          }
+          .s_dynamic .card-img-top {
+              border-radius: 0 !importent;
+          }
+          .card-wrapper {
+            border: 1px solid #C0C0C0;
+          }
+          .card-body {
+              background-color: #FBFBFB !important;
+          }
+          .content {
+             width:92%;
+          }
+          .conten {
+             width:90%;
+             margin-left: 5%;
+          }
+          .img-thumbnail {
+             padding: 0rem;
+          }
+          .shop {
+             width:104%;
+             
+          }
+          .popular {
+             width:101%;
+             margin-left:0px;
+          }
+          h5 {
+             padding: 2%;
+          }
+          .carousel-item {
+             width:95%;
+             margin-left:40px;
+          }
+          .s_dynamic .card-img-top {
+              border: 1px solid #E1E1E1;
+              border-radius: 0 !important;
+          }
+          .overflow-hidden {
+           border: 1px solid #E1E1E1;
+              border-radius: 0 !important;
+          }
+          .text-center {
+              background-color:#FBFBFB;
+              margin-top: 0 !important;
+          }
+          .special {
+             width:100%;
+             margin-left:15px;
+          }
+          .toys {
+              border-radius: 20px;
+              margin: 1rem;
+              background-color: #fff;
+              height: 12% !important;
+          }
+          .test1 {
+              background-color: #F3F3F3;
+              
+          }
+          .test2 {
+              background-color: #F3F3F3;
+          }
+          a {
+            color: #520052 !important;
+          }
+         .img-thumb {
+             border: 1px solid #fff;
+             background-color: #ffffff;
+             box-shadow: #fffff;
+         }
+
+         .figure-img {
+                  margin-bottom: 0rem;
+              }
+
+          @media(max-width:416px) {
+            .review-title{
+              font-size: 0.9rem !important;
+            }
+            .review-description{
+              font-size: 0.6rem !important;
+            }
+
+            .content{
+              height:90% !important;
+              width:100% !important;
+            }
+            
+            .row{
+                /*width:100% !important;*/
+            }
+          }
+          
+          @media (max-width: 576px) {
+            .container-fluid{
+                margin-left: auto !important;
+                margin-right: auto !important;  
+            }
+            /*
+            .mobile-news-font{
+                font-size: 10px !important;
+            }
+            */
+            .mobile-brands{
+                width: 80% !important;
+            }
+            span{
+                font-size: 15px !important;
+            }
+              .col-lg-3 {
+                  flex: 0 0 50%; 
+                  max-width: 50%;
+              }
+            .carousel-control-prev {
+                width: 4rem !important;
+                left: 1% !important;
+            }
+            .carousel-control-next {
+                width: 4rem !important;
+                right: 1% !important;
+            }
+              blockquote span{
+                font-size: 25px !important;
+              }
+            .carousel-item{
+                width: 100% !important;
+            }
+              .shop{
+                margin-left: auto !important;
+                margin-right: auto !important;
+              }
+              .col-sm-2,
+              .col-lg-2 {
+                  flex: 0 0 33.33333%; 
+                  max-width: 33.33333%;
+              }
+              .content {
+                  margin-left: 0px !important;
+              }
+              .card-body {
+                  padding: 0rem 0rem;
+                  text-align: center;
+              }
+              .popular-img{
+                  height: 5vh;
+                  width: 10% !important;
+              }
+              .popular-txt {
+                  font-size: 30px !important;
+                  font-style: normal;
+              }
+              .popular {
+                  height: 30vh !important;
+                  margin-left: 0;
+              }
+              .mt-n4 {
+                  margin-top: 0rem !important;
+              }
+              .figure-img {
+                  margin-bottom: 0rem;
+                  
+              }
+              .popular-content{
+                  margin-left: 3% !important;
+              }
+              .shop-font{
+                  font-size: 25px !important;
+                  font-family: 'Nunito' !important;
+              }
+              .new-product{
+                  padding-bottom: 0px !important;
+                  padding-top: 0px !important;
+              }
+              .new-product-t{
+                  height: 15vh !important;
+                  width: 5% !important;
+              }
+              .new-product-font{
+                  font-size:25px !important;
+              }
+              .carousel-inner{
+                  padding-right: 25% !important;
+              }
+              .special-offers-img{
+                  height: 30vh !important;
+              }
+              .special-text{
+                  padding:0px !important;
+              }
+              .news-letter{
+                  display: flow;
+                  text-align: center;
+              }
+              .test1{
+                  display: grid !important;
+              }
+              .test2{
+                  display: grid !important;
+              }
+              .grid-products{
+                  text-align:center;
+              }
+              .insta-logo{
+                  width: 15% !important;
+              }
+              .toys {
+                  margin-right: 0rem !important;
+                  margin-left: 0rem !important;
+                  margin: 0px;
+                  border-radius: 20px;
+                  background-color: #fff;
+                  height: 12% !important;
+              }
+              .s_nb_column_fixed{
+                margin-right: auto !important;
+                margin-left: auto !important;
+              }
+          }
+          
+           @media (max-width: 377px) {
+              .popular {
+                  height: 20vh !important;
+                  margin-left: 0;
+              }
+              .popular-img{
+                  height: 4vh;
+                  width: 10% !important;
+              }
+              .popular-txt {
+                  font-size: 25px !important;
+                  font-style: normal;
+              }
+              .figure-img {
+                  margin-bottom: 0rem;
+                  
+              }
+              .mt-n4 {
+                  margin-top: 0rem !important;
+              }
+              .popular-text-font{
+                  font-size:15px;
+              }
+              .shop-font{
+                  font-size: 25px !important;
+                  font-family: 'Nunito' !important;
+              }
+              .new-product-t{
+                  height: 10vh !important;
+                  width: 5% !important;
+              }
+              .new-product-font{
+                  font-size:25px !important;
+              }
+              .carousel-inner{
+                  padding-right: 25% !important;
+              }
+              .special-offers-img{
+                  height: 30vh !important;
+              }
+              .special-text{
+                  padding:0px !important;
+              }
+              .news-letter{
+                  display: flow;
+                  text-align: center;
+              }
+              .test1{
+                  display: grid !important;
+              }
+              .test2{
+                  display: grid !important;
+              }
+              .grid-products{
+                  text-align:center;
+              }
+              .insta-logo{
+                  width: 15% !important;
+              }
+              .toys {
+                  
+                  margin: 0px;
+                  border-radius: 20px;
+                  background-color: #fff;
+                  height: 12% !important;
+              }
+          }
+          @media (max-width: 2400px) {
+              .popular-product-height{
+                  height:60vh;
+              }
+          }
+          @media (max-width: 1030px) {
+              .subscribe {
+                   margin-left: 3% !important;
+              }
+          }
+          @media (max-width: 767px) {
+            .subscribe.centered.centered-section-1 {
+                margin-left: 3% !important;
+             }
+            <!--.row.d-flex.align-items-stretch {-->
+            <!--     display : grid !important;-->
+            <!--}-->
+            <!--.row.d-flex.o_grid_mode {-->
+            <!--     display : grid !important;-->
+            <!--}-->
+            
+           }
+          <!--  @media (max-width: 760px) {-->
+          <!--     .align-items-stretch.shopbyageli {-->
+          <!--          display : grid !important;-->
+          <!--      }-->
+          <!--  }-->
+          @media (max-width: 576px) {
+          .row.d-flex.align-items-stretch {
+                 display : flex !important;
+            }
+            .row.d-flex.o_grid_mode {
+                 display : flex !important;
+            }
+              .col-lg-3 {
+                  flex: 0 0 50%; 
+                  max-width: 50%;
+              }
+              .col-sm-2,
+              .col-lg-2 {
+                  flex: 0 0 33.33333%; 
+                  max-width: 33.33333%;
+              }
+              .content {
+                  margin-left: 0px !important;
+              }
+              .card-body {
+                  padding: 0rem 0rem;
+                  text-align: center;
+              }
+              
+              .popular-img{
+                  height: 5vh;
+                  width: 10% !important;
+              }
+              .popular-txt {
+                  font-size: 30px !important;
+                  font-style: normal;
+              }
+              .popular {
+                  height: 30vh !important;
+                  margin-left: 0;
+              }
+              .mt-n4 {
+                  margin-top: 0rem !important;
+              }
+              .figure-img {
+                  margin-bottom: 0rem;
+                  
+              }
+              .popular-content{
+                  margin-left: 3% !important;
+              }
+              .shop-font{
+                  font-size: 25px !important;
+                  font-family: 'Nunito' !important;
+              }
+              .new-product{
+                  padding-bottom: 0px !important;
+                  padding-top: 0px !important;
+              }
+              .new-product-t{
+                  height: 15vh !important;
+                  width: 5% !important;
+              }
+              .new-product-font{
+                  font-size:25px !important;
+              }
+              .carousel-inner{
+                  padding-right: 25% !important;
+              }
+              .special-offers-img{
+                  height: 30vh !important;
+              }
+              .special-text{
+                  padding:0px !important;
+              }
+              .news-letter{
+                  display: flow;
+                  text-align: center;
+              }
+              .test1{
+                  display: grid !important;
+              }
+              .test2{
+                  display: grid !important;
+              }
+              .grid-products{
+                  text-align:center;
+              }
+              .insta-logo{
+                  width: 15% !important;
+              }
+              .toys {
+                  
+                  margin: 0px;
+                  border-radius: 20px;
+                  background-color: #fff;
+                  height: 12% !important;
+              }
+   
+          }
+         /****************************/
+         .review-description{
+            min-height:110px;
+         }
+         @media (max-width: 992px){
+            .fluid-container.footer-1 {
+                height: 6rem !important;
+            }
+            <!--.row.d-flex.align-items-stretch {-->
+            <!--     display : grid !important;-->
+            <!--}-->
+            <!--.row.d-flex.o_grid_mode {-->
+            <!--     display : grid !important;-->
+            <!--}-->
+            
+        }    
+        
+        @media (max-width: 430px){
+         .container-fluidstyle {
+           margin-left: 1rem !important;
+        }
+            
+        }   
+        
+        @media (min-width: 430px) and (max-width: 7680px){
+         .container-fluidstyle {
+           margin-left: 2rem !important;
+           
+        }
+            
+        }   
+        
+        .container-fluidstyle {
+           width: 92.5%;
+           margin-left: 4rem;
+           margin-right: 3rem;
+        }
+        .o_carousel_product_card .o_carousel_product_card_body .fw-bold{
+            font-size: 25px !important;
+        }
+        .o_carousel_product_card .o_carousel_product_card_body .js_add_cart.ms-auto svg{
+            width:50px !important;
+            height:40px !important;
+        }
+        /*
+        @media (min-width:2560px) and (max-width: 2560px){
+            section.s_title.o_colored_level:nth-child(8){
+                margin-top: 270px;
+            }
+        }*/
+        @media (min-width:2560px){
+            section.s_title.o_colored_level:nth-child(8){
+                margin-top: 16%;
+            }
+        }
+         /****************************/
+      </style>
+      <div id="wrap" class="oe_structure oe_empty">
+        <t t-set="user_lang" t-value="request.context.get('lang')"/>
+        <t t-if="user_lang == 'en_US'">
+            <section class="s_image_gallery o_colored_level pb0 bg-white o_spc-none pt0 o_masonry" data-vcss="001" data-columns="1" style="overflow: hidden; background-image: none;" data-snippet="s_images_wall" data-name="Images Wall">
+        				  <div class="container-fluid" style="position: relative; text-align: center;"><div class="row s_nb_column_fixed"><div class="o_masonry_col o_snippet_not_selectable col-lg-12">
+        					  <img src="/web/image/647598-00d586ce/MicrosoftTeams-image%20%284%29.png" alt="" class="img img-fluid d-block o_we_custom_image" data-original-id="647554" data-original-src="/web/image/647554-c7bc9cf4/MicrosoftTeams-image%20%284%29.png" data-mimetype="image/png" data-resize-width="1920" loading="lazy" data-bs-original-title="" title="" aria-describedby="tooltip950088"/>
+        				  </div></div></div>
+        			  </section>
+        </t>
+ 
+        <t t-if="user_lang == 'en_IN'">
+        	  <section class="s_image_gallery o_colored_level pb0 bg-white o_spc-none pt0 o_masonry" data-vcss="001" data-columns="1" style="overflow: hidden; background-image: none;" data-snippet="s_images_wall" data-name="Images Wall">
+        				  <div class="container-fluid" style="position: relative; text-align: center;"><div class="row s_nb_column_fixed"><div class="o_masonry_col o_snippet_not_selectable col-lg-12">
+        					  <img src="/web/image/647555-b74c2c86/MicrosoftTeams-image%20%284%29.png" alt="" class="img img-fluid d-block o_we_custom_image" data-original-id="647554" data-original-src="/web/image/647554-c7bc9cf4/MicrosoftTeams-image%20%284%29.png" data-mimetype="image/png" data-resize-width="1231"/>
+        				  </div></div></div>
+        			  </section>
+        </t>
+        
+        <t t-if="user_lang == 'nl_BE'">
+        	  <section class="s_image_gallery o_colored_level pb0 bg-white o_spc-none pt0 o_masonry" data-vcss="001" data-columns="1" style="overflow: hidden; background-image: none;" data-snippet="s_images_wall" data-name="Images Wall">
+        				  <div class="container-fluid" style="position: relative; text-align: center;"><div class="row s_nb_column_fixed"><div class="o_masonry_col o_snippet_not_selectable col-lg-12">
+        					  <img src="/web/image/647591-afb997f3/MicrosoftTeams-image%20%283%29.png" alt="" class="img img-fluid d-block o_we_custom_image" data-original-id="647553" data-original-src="/web/image/647553-787242c1/MicrosoftTeams-image%20%283%29.png" data-mimetype="image/png" data-resize-width="1185"/>
+        				  </div></div></div>
+        			  </section>
+        </t>
+      		
+        <!--<section class="s_image_gallery o_colored_level pb0 bg-white o_spc-none pt0 o_masonry" data-vcss="001" data-columns="1" style="overflow: hidden; background-image: none;" data-snippet="s_images_wall" data-name="Images Wall">-->
+        <!--      <div class="container-fluid" style="position: relative; text-align: center;"><div class="row s_nb_column_fixed"><div class="o_masonry_col o_snippet_not_selectable col-lg-12">-->
+        <!--          <img src="/web/image/534281-0554351a/Frame%2033653.jpg" alt="" class="img img-fluid d-block o_we_custom_image" data-original-id="389271" data-original-src="/web/image/389271-13e73c9b/Frame%2033653.jpg" data-mimetype="image/jpeg" data-resize-width="1920" loading="lazy" data-bs-original-title="" title="" aria-describedby="tooltip614903" data-quality="100"/>-->
+        <!--      </div></div></div>-->
+        <!--  </section>-->
+          
+          <section class="s_title o_colored_level pb0 pt0" data-vcss="001" data-snippet="s_title" data-name="Title" style="background-color: rgb(255, 255, 255);">
+              <div class="s_allow_columns container">
+                  <blockquote style="text-align: center; border-color: #FBFBFB;" class="shop-font">
+                          <span style="font-size: 32px; font-style: normal;font-family: 'Nunito';"><font style="color: rgb(82, 0, 82);"><strong>Shop by Age</strong></font></span>
+                          
+                  </blockquote>
+              </div>
+          </section>
+          <section class="s_three_columns o_colored_level pt0 pb0 o_cc o_cc1" data-vcss="001" data-snippet="s_three_columns" data-name="Columns" style="background-color: #FBFBFB; background-image: none;">
+              <div class="container-fluidstyle">
+                  <div class="row d-flex align-items-stretch" data-row-count="6">
+                      <div class="s_col_no_bgcolor o_grid_item g-col-lg-2 g-height-6 col-lg-2" style="grid-area: 1 / 1 / 7 / 3; z-index: 1;">
+                          <div class="card text-bg-white h-100 rounded" style="border-width: 0px !important; border-radius: 20px !important;">
+                              <img src="/web/image/389292-1189fe22/Frame%204293%20%281%29.png" alt="" class="card-img-top img img-fluid o_we_custom_image" style="border-radius: 20px !important;" data-original-id="389285" data-original-src="/web/image/389285-5ac8fb39/Frame%204293%20%281%29.png" data-mimetype="image/png" data-resize-width="962" loading="lazy"/>
+                              <div class="card-body">
+                                  <h4 style="text-align: center;">
+                                      <font style="color: rgb(82, 0, 82);"><span style="font-size: 18px;">&amp;nbsp;</span><a href="/shop/category/age-2-3-1756" data-bs-original-title="" title=""><span style="color: rgb(82, 0, 82); font-size: 18px;">2 - 3</span><span style="color: #520052;font-size: 18px;"><strong>&amp;nbsp;</strong></span><span style="font-size: 24px;"><strong>​</strong></span></a></font>
+                                  </h4>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="s_col_no_bgcolor o_grid_item g-col-lg-2 g-height-6 col-lg-2" style="grid-area: 1 / 3 / 7 / 5; z-index: 2;">
+                          <div class="card text-bg-white h-100 rounded bg-white-75" style="border-width: 0px !important; border-radius: 20px !important;">
+                              <img src="/web/image/389294-003a795f/Frame%204293%20%285%29.png" alt="" class="card-img-top img img-fluid o_we_custom_image" style="border-radius: 20px !important;" data-original-id="389286" data-original-src="/web/image/389286-8081c0f0/Frame%204293%20%285%29.png" data-mimetype="image/png" data-resize-width="962" loading="lazy"/>
+                              <div class="card-body">
+                                  <h4 style="text-align: center;">
+                                      <font style="color: rgb(82, 0, 82);"><a href="/shop/category/age-4-5-1758" data-bs-original-title="" title=""><font style="color: rgb(82, 0, 82);"><span style="font-size: 18px; font-weight: normal;">4 - 5</span><span style="font-size: 18px;">&amp;nbsp;</span></font></a><span style="font-size: 16px;"><a href="#" data-bs-original-title="" title=""><br/></a></span></font><br/>
+                                  </h4>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="s_col_no_bgcolor o_grid_item g-col-lg-2 g-height-6 col-lg-2" style="grid-area: 1 / 5 / 7 / 7; z-index: 3;">
+                          <div class="card text-bg-white h-100 rounded bg-white-50" style="border-width: 0px !important; border-radius: 20px !important;">
+                              <img src="/web/image/389293-ab43e6b0/Frame%204293%20%286%29.png" alt="" class="card-img-top img img-fluid o_we_custom_image" style="border-radius: 20px !important;" data-original-id="389287" data-original-src="/web/image/389287-f1cdc2a5/Frame%204293%20%286%29.png" data-mimetype="image/png" data-resize-width="962" loading="lazy"/>
+                              <div class="card-body">
+                                  <h4 class="card-title" style="text-align: center;">
+                                      <font style="color: rgb(82, 0, 82);"><span style="font-size: 18px;">&amp;nbsp;</span><a href="/shop/category/age-6-7-1760" data-bs-original-title="" title=""><span style="font-size: 18px;">6 - 7&amp;nbsp;</span></a></font><br/>
+                                  </h4>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="s_col_no_bgcolor o_grid_item g-col-lg-2 g-height-6 col-lg-2" style="grid-area: 1 / 7 / 7 / 9; z-index: 4;">
+                          <div class="card text-bg-white h-100 rounded bg-white-50" style="border-width: 0px !important; border-radius: 20px !important;">
+                              <img src="/web/image/389295-a9476c17/Frame%204293%20%283%29.png" alt="" class="card-img-top img img-fluid o_we_custom_image" style="border-radius: 20px !important;" data-original-id="389288" data-original-src="/web/image/389288-f38cbfdf/Frame%204293%20%283%29.png" data-mimetype="image/png" data-resize-width="962" loading="lazy"/>
+                              <div class="card-body">
+                                  <h4 style="text-align: center;">
+                                      <font style="color: rgb(82, 0, 82);"><a href="/shop/category/age-8-9-1762" data-bs-original-title="" title=""><span style="font-size: 18px;">8 - 9&amp;nbsp;</span></a></font>
+                                  </h4>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="s_col_no_bgcolor o_grid_item g-col-lg-2 g-height-6 col-lg-2" style="grid-area: 1 / 9 / 7 / 11; z-index: 5;">
+                          <div class="card text-bg-white h-100 rounded bg-white-25" style="border-width: 0px !important; border-radius: 20px !important;">
+                              <img src="/web/image/389296-45957046/Frame%204293%20%287%29.png" alt="" class="card-img-top img img-fluid o_we_custom_image" style="border-radius: 20px !important;" data-original-id="389289" data-original-src="/web/image/389289-d3a531cc/Frame%204293%20%287%29.png" data-mimetype="image/png" data-resize-width="962" loading="lazy"/>
+                              <div class="card-body">
+                                  <h4 class="card-title" style="text-align: center;">
+                                      <font style="color: rgb(82, 0, 82);"><a href="/shop/category/age-10-11-1764" data-bs-original-title="" title=""><span style="font-size: 18px;">10 - 11 &amp;nbsp;</span></a></font><br/>
+                                  </h4>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="s_col_no_bgcolor o_grid_item g-height-6 g-col-lg-2 col-lg-2" style="grid-area: 1 / 11 / 7 / 13; z-index: 6;">
+                          <div class="card text-bg-white h-100 rounded" style="border-width: 0px !important; border-radius: 20px !important; background-color: rgba(251, 251, 251, 0.01);">
+                              <img src="/web/image/389291-d8744ed4/Frame%204293%20%284%29.png" alt="" class="card-img-top img img-fluid o_we_custom_image" style="border-radius: 20px !important;" data-original-id="389290" data-original-src="/web/image/389290-2fb97018/Frame%204293%20%284%29.png" data-mimetype="image/png" data-resize-width="962" loading="lazy"/>
+                              <div class="card-body">
+                                  <h4 class="card-title" style="text-align: center;">
+                                      <font style="color: rgb(82, 0, 82);"><span style="font-size: 17px;">&amp;nbsp;</span><a href="/shop/category/age-12-13-1766" data-bs-original-title="" title=""><span style="font-size: 18px;">12 - 13</span></a></font><br/>
+                                  </h4>
+                                  <p class="card-text" style="text-align: center;"><br/></p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </section>
+          <section class="s_title o_colored_level pb0 pt0" data-vcss="001" data-snippet="s_title" data-name="Title" style="background-color: rgb(255, 255, 255); background-image: none;">
+              <div class="s_allow_columns container">
+                  <blockquote style="text-align: center; border-color: #FBFBFB;" class="shop-font">
+                          <span style="font-size: 32px; font-style: normal;font-family: 'Nunito';"><font style="color: rgb(82, 0, 82);"><strong>New Collection</strong></font></span>
+                          
+                  </blockquote>
+              </div>
+          </section>
+      <section data-snippet="s_dynamic_snippet_products" class="s_dynamic_snippet_products s_dynamic o_colored_level s_product_product_add_to_cart s_product_product_borderless_1 o_dynamic_empty" data-name="Products" style="background-color: #FFFFFF; background-image: none; " data-product-category-id="1322" data-number-of-records="16" data-filter-id="1" data-template-key="website_sale.dynamic_filter_template_product_product_add_to_cart" data-carousel-interval="5000" data-force-minimum-max-limit-to16="1">
+          <div class="o_not_editable container-fluid" contenteditable="false">
+              <div class="css_non_editable_mode_hidden">
+                  <div class="missing_option_warning alert alert-info rounded-0 fade show d-none d-print-none o_default_snippet_text">
+                      Your Dynamic Snippet will be displayed here... This message is displayed because you did not provided both a filter and a template to use.<br/>
+                  </div>
+              </div>
+              <div class="dynamic_snippet_template"/>
+          </div>
+      </section>
+          <section class="s_title o_colored_level pb0 pt0" data-vcss="001" data-snippet="s_title" data-name="Title" style="background-color: rgb(255, 255, 255); background-image: none;">
+              <div class="s_allow_columns container">
+                  <blockquote style="text-align: center; border-color: #FBFBFB;" class="shop-font">
+                        <span style="font-size: 32px; font-style: normal;"><font style="color: rgb(82, 0, 82);"><strong>Popular Categories</strong></font></span>
+                  </blockquote>
+              </div>
+          </section>
+          <section class="s_three_columns o_colored_level o_cc o_cc3 pt0 pb72 popular-product-height" data-vcss="001" data-snippet="s_three_columns" data-name="Columns" style="background-color: white; background-image: none; ">
+              <div class="popular-content container-fluid" style="margin-left: 4rem; width:92%;">
+                  <div class="row d-flex o_grid_mode" data-row-count="8">
+                      <div class="s_col_no_bgcolor o_grid_item g-col-lg-3 g-height-8 col-lg-3" style="z-index: 4; grid-area: 1 / 1 / 9 / 4;">
+                          <a data-bs-original-title="" title="" href="/shop/category/dinner-set-baby-bottle-1414">
+                          <img src="/web/image/389301-f4f06715/P-1%20%289%29.png" alt="" class="popular position-relative d-block img-fluid figure-img w-100 img o_we_custom_image" style="height: 40vh; z-index: 2; object-fit: cover !important; border-top-right-radius: 20px !important; border-top-left-radius: 20px !important;" data-original-id="389297" data-original-src="/web/image/389297-842d9387/P-1%20%289%29.png" data-mimetype="image/png" data-resize-width="962" loading="lazy"/>
+                          <div class="card-wrapper position-relative bg-white mt-n4 border-bottom-custom" style="z-index:1; padding-top: 8% !important;padding-left: 0px !important; padding-bottom: 1% !important; background-color: #F3F3F3 !important;">
+                              <h5 class="popular-text-font" style="text-align: center; margin-bottom: 0.75rem; margin-top: 0.75rem;">
+                                  <font style="color: rgb(82, 0, 82);"><span style="font-size: 18px;">Bottles&amp;nbsp;</span></font>
+                              </h5>
+                          </div></a>
+                      </div>
+
+                      <div class="s_col_no_bgcolor o_grid_item g-col-lg-3 g-height-8 col-lg-3" style="z-index: 1; grid-area: 1 / 4 / 9 / 7;" href="https://limgro-staging-9757487.dev.odoo.com/shop/category/toys-soft-toys-1346">
+                        
+                      <a href="/shop/category/toys-soft-toys-1346" data-bs-original-title="" title=""><img src="/web/image/389302-46dd33bb/P-1%20%286%29.png" alt="" class="popular position-relative d-block img-fluid figure-img w-100 img o_we_custom_image" style="height: 40vh; z-index: 2; object-fit: cover !important; border-top-right-radius: 20px !important; border-top-left-radius: 20px !important;" data-original-id="389298" data-original-src="/web/image/389298-1bf10872/P-1%20%286%29.png" data-mimetype="image/png" data-resize-width="962" loading="lazy" data-bs-original-title="" title="" aria-describedby="tooltip325933"/></a>
+                          <div class="card-wrapper position-relative bg-white mt-n4 border-bottom-custom" style="z-index:1; padding-top: 8% !important;padding-left: 0px !important; padding-bottom: 1% !important; background-color: #F3F3F3 !important;">
+                              <h5 style="text-align: center; margin-bottom: 0.75rem; margin-top: 0.75rem;" class="popular-text-font">
+                                  <span style="font-size: 18px;"><font style="color: rgb(82, 0, 82);"><a href="/shop/category/toys-soft-toys-1346">Soft Toys</a>&amp;nbsp;</font></span><br/>
+                              </h5>
+                          </div>
+                      </div>
+                          
+                      <div class="s_col_no_bgcolor o_grid_item g-col-lg-3 g-height-8 col-lg-3" style="z-index: 2; grid-area: 1 / 7 / 9 / 10;">
+                          <a href="/shop/category/terug-naar-school-boekentas-vanaf-6-jaar-1432" data-bs-original-title="" title="">
+                          <img src="/web/image/389303-c40b392d/P-1%20%287%29.png" alt="" class="popular position-relative d-block img-fluid figure-img w-100 img o_we_custom_image" style="height: 40vh; z-index: 2; object-fit: cover !important; border-top-right-radius: 20px !important; border-top-left-radius: 20px !important;" data-original-id="389299" data-original-src="/web/image/389299-f5843bc6/P-1%20%287%29.png" data-mimetype="image/png" data-resize-width="962" loading="lazy" data-bs-original-title="" title="" aria-describedby="tooltip338722"/>
+                          <div class="card-wrapper position-relative bg-white mt-n4 border-bottom-custom" style="z-index:1; padding-top: 8% !important;padding-left: 0px !important; padding-bottom: 1% !important; background-color: #F3F3F3 !important;">
+                              <h5 class="popular-text-font" style="text-align: center; margin-bottom: 0.75rem; margin-top: 0.75rem;">
+                                  <span style="font-size: 18px;"><font style="color: rgb(82, 0, 82);">Bags&amp;nbsp;</font></span><br/>
+                              </h5>
+                          </div></a>
+                      </div>
+                      
+                  
+                      <div class="s_col_no_bgcolor o_grid_item g-height-8 g-col-lg-3 col-lg-3" style="z-index: 3; grid-area: 1 / 10 / 9 / 13;">
+                          <a href="/shop/category/speelgoed-legpuzzels-1349" data-bs-original-title="" title="">
+                              <img src="/web/image/389304-988edb5a/P-1%20%288%29.png" alt="" class="popular position-relative d-block img-fluid figure-img w-100 img o_we_custom_image" style="height: 40vh; z-index: 2; object-fit: cover !important; border-top-right-radius: 20px !important; border-top-left-radius: 20px !important;" data-original-id="389300" data-original-src="/web/image/389300-6e533790/P-1%20%288%29.png" data-mimetype="image/png" data-resize-width="962" loading="lazy"/>
+                          <div class="card-wrapper position-relative bg-white mt-n4 border-bottom-custom" style="z-index:1; padding-top: 8% !important;padding-left: 0px !important; padding-bottom: 1% !important; background-color: #F3F3F3 !important;">
+                              <h5 class="popular-text-font" style="text-align: center; margin-bottom: 0.75rem; margin-top: 0.75rem;">
+                                  <span style="font-size: 18px;"><font style="color: rgb(82, 0, 82);">Puzzles &amp;amp; Blocks&amp;nbsp;</font></span><br/>
+                              </h5>
+                          </div></a>
+                      </div>
+                  </div>
+              </div>
+          </section>
+          
+          <section class="s_title o_colored_level pt0 pb0" data-vcss="001" data-snippet="s_title" data-name="Title" style="background-color: rgb(243, 243, 243); background-image: none;">
+              <div class="s_allow_columns container">
+                  <blockquote style="text-align: center;border-color: #F3F3F3; margin: 0rem; padding: 0px;margin-top:5px !important;margin-bottom:5px !important;">
+                      <font style="font-size: 62px; color: rgb(82, 0, 82);" class="o_default_snippet_text new-product-font">
+                          <span style="font-size: 48px;">
+                              </span><span style="font-size: 35px; font-style: normal;" class="new-product-font"><strong>Shop by Category</strong></span><span style="font-size: 48px;">
+                          </span>
+                      </font>
+                      <font style="font-size: 62px;" class="o_default_snippet_text"><span style="font-style: normal;">​</span></font>
+                      <br/>
+                  </blockquote>
+              </div>
+          </section>
+    <section style="background-color: rgb(243, 243, 243); background-image: none;" class="o_colored_level">
+        <div class="container-fluid" style="margin-left: 2rem; width: 96%;">  
+          <div class="test1 d-flex bd-highlight">
+              <div class="toys p-2 flex-fill bd-highlight">
+                  <div class="container">
+                      <div class="row">
+                          <h5 class="grid-products" style="text-align: center;">&amp;nbsp;<font style="color: rgb(82, 0, 82);"><span class="category-shop">My room</span></font><br/>
+                          </h5>
+                      </div>
+                      <div class="row">
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389318-e6614325/r1.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389305" data-original-src="/web/image/389305-c7593c82/r1.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389317-1d0a844a/r2.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389306" data-original-src="/web/image/389306-a2c14211/r2.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                          <div class="w-100"/>
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389320-348d42c4/r3.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389307" data-original-src="/web/image/389307-1dfa02ff/r3.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389322-269bb301/r4.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389308" data-original-src="/web/image/389308-c6166af6/r4.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <h6 style="text-align: right;">
+                              <font style="color: rgb(255, 96, 13);"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><a href="/shop/category/my-room-1324" data-bs-original-title="" title=""><font style="color: rgb(255, 96, 13);"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span class="explore-category">Explore &amp;gt;</span></font></font></font></a></font></font></font>
+                          </h6>
+                      </div>
+                  </div>
+              </div>
+              <div class="toys p-2 flex-fill bd-highlight">
+                  <div class="container">
+                      <div class="row">
+                          <h5 class="grid-products" style="text-align: center;"><font style="color: rgb(82, 0, 82);"><span class="category-shop">Travel</span></font><br/></h5>
+                      </div>
+                      <div class="row">
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389319-734058a5/r1%20%281%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389309" data-original-src="/web/image/389309-c405f4dc/r1%20%281%29.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389321-43698a45/r2%20%281%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389310" data-original-src="/web/image/389310-b2984794/r2%20%281%29.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                          <div class="w-100"/>
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389328-6920ea9e/r3%20%281%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389311" data-original-src="/web/image/389311-7c1a77d6/r3%20%281%29.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389323-bffc6af5/r4%20%281%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389312" data-original-src="/web/image/389312-c6df6033/r4%20%281%29.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <h6 style="text-align: right;">
+                              <font style="color: rgb(255, 96, 13);"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><a href="/shop/category/on-the-move-1326" data-bs-original-title="" title=""><font style="color: rgb(255, 96, 13);"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span class="explore-category">Explore &amp;gt;</span></font></font></font></a></font></font></font>
+                          </h6>
+                      </div>
+                  </div>
+              </div>
+              <div class="toys p-2 flex-fill bd-highlight">
+                  <div class="container">
+                      <div class="row">
+                          <h5 class="grid-products" style="text-align: center;"><font style="color: rgb(82, 0, 82);"><span class="category-shop">Kids Fashion</span></font><br/></h5>
+                      </div>
+                      <div class="row">
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389324-666e1a2e/r1%20%282%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389313" data-original-src="/web/image/389313-7cc7ca10/r1%20%282%29.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389325-875f05ed/r2%20%282%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389314" data-original-src="/web/image/389314-fa561dc1/r2%20%282%29.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                          <div class="w-100"/>
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389326-81ba69a8/r3%20%282%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389315" data-original-src="/web/image/389315-cf60cfb8/r3%20%282%29.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389327-e933b9c0/r4%20%282%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389316" data-original-src="/web/image/389316-0e746413/r4%20%282%29.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <h6 style="text-align: right;">
+                              <font style="color: rgb(255, 96, 13);"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><a href="/shop/category/baby-and-kids-clothing-fashion-accessories-1375" data-bs-original-title="" title=""><font style="color: rgb(255, 96, 13);"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span class="explore-category">Explore &amp;gt;</span></font></font></font></a></font></font></font>
+                          </h6>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="test2 d-flex bd-highlight">
+              <div class="toys p-2 flex-fill bd-highlight">
+                  <div class="container">
+                      <div class="row">
+                          <h5 class="grid-products" style="text-align: center;">
+                              <span class="category-shop"><font style="color: rgb(82, 0, 82);">Dining</font></span>
+                          <br/></h5>
+                      </div>
+                      <div class="row">
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389342-cde8b24e/r1%20%283%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389329" data-original-src="/web/image/389329-afc9e000/r1%20%283%29.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389341-be2dcbef/r2%20%283%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389330" data-original-src="/web/image/389330-d8d94547/r2%20%283%29.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                          <div class="w-100"/>
+                          <div class="col p-2 pb0 o_colored_level">
+                              <h5>
+                                  <img src="/web/image/389344-61607efa/r3%20%283%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389331" data-original-src="/web/image/389331-ac269234/r3%20%283%29.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                              </h5>
+                          </div>
+                          <div class="col p-2 pb0 o_colored_level">
+                              <h5>
+                                  <img src="/web/image/389343-e3499c88/r4%20%283%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389332" data-original-src="/web/image/389332-80f0c3da/r4%20%283%29.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                              </h5>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <h6 style="text-align: right;">
+                              <font style="color: rgb(255, 96, 13);"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><a href="/shop/category/dinner-set-1328" data-bs-original-title="" title=""><font style="color: rgb(255, 96, 13);"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span class="explore-category">Explore &amp;gt;</span></font></font></font></a></font></font></font>
+                          </h6>
+                      </div>
+                  </div>
+              </div>
+              <div class="toys p-2 flex-fill bd-highlight">
+                  <div class="container">
+                      <div class="row">
+                          <h5 class="grid-products" style="text-align: center;"><font style="color: rgb(82, 0, 82);"><span class="category-shop">Toys</span></font><br/></h5>
+                      </div>
+                      <div class="row">
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389346-5473efea/r1%20%284%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389333" data-original-src="/web/image/389333-afe7c8e1/r1%20%284%29.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389345-a8d4be2f/r2%20%284%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389334" data-original-src="/web/image/389334-98a56eee/r2%20%284%29.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                          <div class="w-100"/>
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389348-1279ff96/r3%20%284%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389335" data-original-src="/web/image/389335-5673085c/r3%20%284%29.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389347-c9f376da/r4%20%284%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389336" data-original-src="/web/image/389336-add4fd7e/r4%20%284%29.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <h6 style="text-align: right;">
+                              <font style="color: rgb(255, 96, 13);"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><a href="/shop/category/toys-1323" data-bs-original-title="" title=""><font style="color: rgb(255, 96, 13);"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span class="explore-category">Explore &amp;gt;</span></font></font></font></a></font></font></font>
+                          </h6>
+                      </div>
+                  </div>
+              </div>
+              <div class="toys p-2 flex-fill bd-highlight">
+                  <div class="container">
+                      <div class="row">
+                          <h5 class="grid-products" style="text-align: center;"><font style="color: rgb(82, 0, 82);"><span class="category-shop">Outdoor</span></font><br/></h5>
+                      </div>
+                      <div class="row">
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/446552-1fdb5095/download.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="446551" data-original-src="/web/image/446551-8aa477cc/download.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389350-1aea4ef9/r2%20%285%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389338" data-original-src="/web/image/389338-4bcf6257/r2%20%285%29.png" data-mimetype="image/png" data-resize-width="690" data-bs-original-title="" title="" aria-describedby="tooltip689406" loading="lazy"/>
+                          </div>
+                          <div class="w-100"/>
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389349-67bb4d4e/r3%20%285%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389339" data-original-src="/web/image/389339-f00f39d1/r3%20%285%29.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                          <div class="col p-2 o_colored_level">
+                              <img src="/web/image/389351-21950468/r4%20%285%29.png" alt="" class="img-thumb img-fluid o_we_custom_image img-radius-custom img" data-original-id="389340" data-original-src="/web/image/389340-9f01e936/r4%20%285%29.png" data-mimetype="image/png" data-resize-width="690" loading="lazy"/>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <h6 style="text-align: right;">
+                              <font style="color: rgb(255, 96, 13);"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><a href="/shop/category/toys-play-outside-1347" data-bs-original-title="" title=""><font style="color: rgb(255, 96, 13);"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span class="explore-category">Explore &amp;gt;</span></font></font></font></a></font></font></font>
+                          </h6>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </section>
+          <section class="s_image_gallery o_colored_level o_masonry pb0 o_spc-none pt0" data-vcss="001" data-columns="1" style="overflow: hidden; background-image: none;background-color: #F3F3F3;padding-top: 3% !important;" data-snippet="s_images_wall" data-name="Images Wall">
+              <div class="container-fluid">
+                  <div class="row s_nb_column_fixed">
+                      <div class="o_masonry_col o_snippet_not_selectable col-lg-12">
+                          <img src="/web/image/412725-636b2bec/Bannner%20%281%29.jpg" alt="" class="img img-fluid d-block o_we_custom_image" data-original-id="389283" data-original-src="/web/image/389283-2752dbc2/Bannner%20%281%29.jpg" data-mimetype="image/jpeg" data-resize-width="1920" data-quality="100" loading="lazy"/>
+                      </div>
+                  </div>
+              </div>
+          </section>
+
+  <section class="s_title o_colored_level pb0 pt0" data-vcss="001" data-snippet="s_title" data-name="Title" style="background-color: rgb(255, 255, 255); background-image: none;">
+              <div class="s_allow_columns container">
+                <blockquote style="text-align: center; border-color: #FBFBFB;" class="shop-font">
+                  <span style="font-size: 32px; font-style: normal;"><font style="color: rgb(82, 0, 82);"><strong>Special Offers</strong></font></span>
+                </blockquote>
+              </div>
+          </section>
+          <section data-snippet="s_dynamic_snippet_products" class="s_dynamic_snippet_products s_dynamic o_colored_level pb48 pt0 s_product_product_add_to_cart o_dynamic_empty" data-name="Products" style="background-image: none;" data-product-category-id="all" data-number-of-records="16" data-filter-id="1" data-template-key="website_sale.dynamic_filter_template_product_product_add_to_cart" data-carousel-interval="5000" data-force-minimum-max-limit-to16="1" data-product-tag-ids="[{&quot;id&quot;:2,&quot;name&quot;:&quot;offers&quot;,&quot;display_name&quot;:&quot;offers&quot;}]">
+            
+          <div class="o_not_editable container-fluid" contenteditable="false">
+              <div class="css_non_editable_mode_hidden">
+                  <div class="missing_option_warning alert alert-info rounded-0 fade show d-none d-print-none o_default_snippet_text">
+                      Your Dynamic Snippet will be displayed here... This message is displayed because you did not provided both a filter and a template to use.<br/>
+                  </div>
+              </div>
+              <div class="dynamic_snippet_template"/>
+          </div>
+      </section>
+          
+          
+          
+      <section class="s_title o_colored_level pt0 pb0" data-vcss="001" data-snippet="s_title" data-name="Title" style="background-color: rgb(243, 243, 243); background-image: none;">
+              <div class="s_allow_columns container">
+                  <blockquote style="text-align: center;border-color: #F3F3F3;margin-top:5px !important;margin-bottom:-10px !important;">
+                      <font style="font-size: 62px; color: rgb(82, 0, 82);" class="new-product-font">
+                          <span style="font-size: 48px;">
+                              </span><span style="font-size: 35px; font-style: normal;" class="new-product-font"><strong>Read our Blogs</strong></span><span style="font-size: 48px;">
+                          </span>
+                      </font>
+                      <font style="font-size: 62px;" class="o_default_snippet_text"><span style="font-style: normal;">​</span></font>
+                      <br/>
+                  </blockquote>
+              </div>
+          </section>
+      <section data-snippet="s_blog_posts" class="s_blog_posts s_dynamic_snippet_blog_posts s_blog_posts_effect_marley s_dynamic o_colored_level s_blog_post_card pt0 o_dynamic_empty" data-name="Blog Posts" style="background-color: rgb(243, 243, 243);" data-filter-by-blog-id="-1" data-number-of-records="4" data-filter-id="7" data-template-key="website_blog.dynamic_filter_template_blog_post_card" data-number-of-elements="4" data-force-minimum-max-limit-to16="1">
+          <div class="o_not_editable container-fluid" style="width:93%;">
+              <div class="css_non_editable_mode_hidden">
+                  <div class="missing_option_warning alert alert-info rounded-0 fade show d-none d-print-none o_default_snippet_text">
+                      Your Dynamic Snippet will be displayed here... This message is displayed because you did not provided both a filter and a template to use.<br/>
+                  </div>
+              </div>
+              <div class="dynamic_snippet_template"/>
+          </div>
+      </section>
+      
+          <section class="s_title o_colored_level pb0 pt0" data-vcss="001" data-snippet="s_title" data-name="Title" style="background-color: rgb(255, 255, 255); background-image: none;">
+              <div class="s_allow_columns container">
+                  <blockquote style="text-align: center; border-color: #FBFBFB;" class="shop-font">
+                      <span style="font-size: 32px; font-style: normal;"><font style="color: rgb(82, 0, 82);"><strong>Shop by Brand</strong></font></span>
+                  </blockquote>
+              </div>
+          </section>
+          
+          <section class="s_references o_colored_level pt0 pb0" data-snippet="s_references" data-name="References" style="background-color: rgb(255, 255, 255); background-image: none;">
+              <div class="mobile-brands container-fluid" style="width: 92%;margin-left: 4rem;">
+                  
+                  <div class="row shop-by-brand-web" style="padding-bottom: 2rem;">
+                          <div class="col-6 col-sm-2 col-lg-2 o_colored_level" style="padding: 0px;">
+                         <a href="https://www.littlethingz.com/shop/category/brand-maileg-1648" data-bs-original-title="" title=""> 
+                         <img src="/web/image/389358-6b65551d/Rectangle%20347.png" alt="" class="img img-fluid mx-auto o_we_custom_image" style="width: 100% !important;" data-original-id="389353" data-original-src="/web/image/389353-797b360e/Rectangle%20347.png" data-mimetype="image/png" data-resize-width="800" loading="lazy" data-bs-original-title="" title="" aria-describedby="tooltip997826"/></a>
+                      </div>
+                      <div class="col-6 col-sm-2 col-lg-2 o_colored_level" style="padding: 0px;">
+                          <a href="https://www.littlethingz.com/shop/category/brand-stapelstein-1691" data-bs-original-title="" title="">
+                          <img src="/web/image/389359-7b2091a6/Rectangle%20343.png" alt="" class="img img-fluid mx-auto o_we_custom_image" data-original-id="389354" data-original-src="/web/image/389354-77ad81ca/Rectangle%20343.png" data-mimetype="image/png" data-resize-width="800" loading="lazy" data-bs-original-title="" title="" aria-describedby="tooltip995598"/></a>
+                      </div>
+                      <div class="col-6 col-sm-2 col-lg-2 o_colored_level" style=" padding: 0px;">
+                          <a href="https://www.littlethingz.com/shop/category/brand-connetix-tiles-1712" data-bs-original-title="" title="">
+                          <img src="/web/image/389363-b03cc8f2/Rectangle%20344.png" alt="" class="img img-fluid mx-auto o_we_custom_image" data-original-id="389355" data-original-src="/web/image/389355-7815fef0/Rectangle%20344.png" data-mimetype="image/png" data-resize-width="800" loading="lazy" data-bs-original-title="" title="" aria-describedby="tooltip541231"/></a>
+                      </div>
+                      <div class="col-6 col-sm-2 col-lg-2 o_colored_level" style="padding: 0px;">
+                          <a href="https://www.littlethingz.com/shop/category/brand-timio-1708" data-bs-original-title="" title="">
+                          <img src="/web/image/389361-49134694/Rectangle%20345.png" alt="" class="img img-fluid mx-auto o_we_custom_image" data-original-id="389356" data-original-src="/web/image/389356-e93ac23a/Rectangle%20345.png" data-mimetype="image/png" data-resize-width="800" loading="lazy" data-bs-original-title="" title="" aria-describedby="tooltip780758"/></a>
+                      </div>
+                      <div class="col-6 col-sm-2 col-lg-2 o_colored_level" style=" padding: 0px;">
+                          <a href="https://www.littlethingz.com/shop/category/brand-done-by-deer-1562" data-bs-original-title="" title="">
+                          <img src="/web/image/389360-2e38d70b/Rectangle%20346.png" alt="" class="img img-fluid mx-auto o_we_custom_image" style="width: 100% !important;" data-original-id="389357" data-original-src="/web/image/389357-35cd5f2a/Rectangle%20346.png" data-mimetype="image/png" data-resize-width="799" loading="lazy" data-bs-original-title="" title="" aria-describedby="tooltip419646"/></a>
+                      </div>
+                      <div class="col-6 col-sm-2 col-lg-2 o_colored_level pb0 pt0">
+                          <a href="/shop/category/brand-bibs-1551" data-bs-original-title="" title="">
+                          <img src="/web/image/646579-660a6318/image%20%285%29.png" alt="" class="img img-fluid o_we_custom_image mx-auto d-block" style="width: 100% !important;" data-original-id="646578" data-original-src="/web/image/646578-df1d068f/image%20%285%29.png" data-mimetype="image/png" data-resize-width="244" loading="lazy"/></a>
+                      </div>
+                        <div class="o_colored_level pt16">
+                            <p style="text-align: center;"><a href="/brands"><strong><span style="font-size: 18px;">All Brands</span></strong></a></p>
+                        </div>   
+                    </div>
+                  
+                  <div class="row shop-by-brand-mobile" style="padding-bottom: 3rem;display:none;">
+                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 col-xs-6 o_colored_level" style="padding: 0px;">
+                         <a href="https://www.littlethingz.com/shop/category/brand-maileg-1648" data-bs-original-title="" title=""> 
+                         <img src="/web/image/389358-6b65551d/Rectangle%20347.png" alt="" class="img img-fluid mx-auto o_we_custom_image" style="width: 100% !important;" data-original-id="389353" data-original-src="/web/image/389353-797b360e/Rectangle%20347.png" data-mimetype="image/png" data-resize-width="800"/></a>
+                      </div>
+                      
+                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 col-xs-6 o_colored_level" style=" padding: 0px;">
+                          <a href="https://www.littlethingz.com/shop/category/brand-stapelstein-1691" data-bs-original-title="" title="">
+                          <img src="/web/image/389359-7b2091a6/Rectangle%20343.png" alt="" class="img img-fluid mx-auto o_we_custom_image" data-original-id="389354" data-original-src="/web/image/389354-77ad81ca/Rectangle%20343.png" data-mimetype="image/png" data-resize-width="800"/></a>
+                      </div>
+                  </div> 
+                  <div class="row shop-by-brand-mobile" style="padding-bottom: 3rem;display:none;">     
+                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 col-xs-6 o_colored_level" style=" padding: 0px;">
+                          <a href="https://www.littlethingz.com/shop/category/brand-connetix-tiles-1712" data-bs-original-title="" title="">
+                         <img src="/web/image/389363-b03cc8f2/Rectangle%20344.png" alt="" class="img img-fluid mx-auto o_we_custom_image" data-original-id="389355" data-original-src="/web/image/389355-7815fef0/Rectangle%20344.png" data-mimetype="image/png" data-resize-width="800"/></a>
+                      </div>
+                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 col-xs-6 o_colored_level" style=" padding: 0px;">
+                          <a href="https://www.littlethingz.com/shop/category/brand-timio-1708" data-bs-original-title="" title="">
+                         <img src="/web/image/389361-49134694/Rectangle%20345.png" alt="" class="img img-fluid mx-auto o_we_custom_image" data-original-id="389356" data-original-src="/web/image/389356-e93ac23a/Rectangle%20345.png" data-mimetype="image/png" data-resize-width="800"/></a>
+                      </div>
+                   </div>   
+                   <div class="row shop-by-brand-mobile" style="padding-bottom: 3rem;display:none;">   
+                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 col-xs-6 o_colored_level" style=" padding: 0px;">
+                          <a href="https://www.littlethingz.com/shop/category/brand-done-by-deer-1562" data-bs-original-title="" title="">
+                          <img src="/web/image/389360-2e38d70b/Rectangle%20346.png" alt="" class="img img-fluid mx-auto o_we_custom_image" style="width: 100% !important;" data-original-id="389357" data-original-src="/web/image/389357-35cd5f2a/Rectangle%20346.png" data-mimetype="image/png" data-resize-width="799"/></a>
+                      </div>
+                      <div class="col-6 col-md-6 col-sm-6 col-lg-6 col-xs-6 o_colored_level pb0 pt4">
+                          <a href="/shop/category/brand-bibs-1551" data-bs-original-title="" title="">
+                          <img src="/web/image/646579-660a6318/image%20%285%29.png" alt="" class="img img-fluid o_we_custom_image mx-auto d-block" data-original-id="646578" data-original-src="/web/image/646578-df1d068f/image%20%285%29.png" data-mimetype="image/png" data-resize-width="244"/></a>
+                      </div>
+                   </div>
+                  
+                  
+                  
+              </div>
+          </section>
+          
+          <section class="s_title o_colored_level pt0 pb0" data-vcss="001" data-snippet="s_title" data-name="Title" style="background-color: rgb(243, 243, 243); background-image: none;">
+              <div class="s_allow_columns container">
+                  <blockquote style="text-align: center;border-color: #F3F3F3;margin-top:5px !important;margin-bottom:20px !important;">
+                      <font style="font-size: 62px; color: rgb(82, 0, 82);" class="new-product-font">
+                          <span style="font-size: 48px;">
+                              </span><span style="font-size: 35px; font-style: normal;" class="new-product-font"><strong>Reviews</strong></span><span style="font-size: 48px;">
+                          </span>
+                      </font>
+                      <font style="font-size: 62px;" class="o_default_snippet_text"><span style="font-style: normal;">​</span></font>
+                      <br/>
+                  </blockquote>
+              </div>
+          </section>
+<section class="s_references o_colored_level pt0 pb1" data-snippet="s_references" data-name="References" style="background-color: rgb(243, 243, 243); background-image: none;">
+  <div class="container-fluid" style="margin-left: 3rem;width: 95%;">
+      <div class="row" style="margin-bottom: 5%;">
+          <div class="col-6 col-xs-12 col-sm-6 col-lg-3 o_colored_level">
+              <div class="content content-bx-1" style="text-align:center;border-radius: 20px;background-color: white;height: 90%;">
+                <div>
+                  <img src="/web/image/389367-d43b9c16/Mask%20group%20%281%29.png" alt="" class="img img-fluid o_we_custom_image" style="padding-top: 10%; width: 25% !important; margin-right: auto !important;" data-original-id="389364" data-original-src="/web/image/389364-f4af1317/Mask%20group%20%281%29.png" data-mimetype="image/png" data-resize-width="80" loading="lazy"/>
+                </div>
+                <div>
+                  <a href="#" data-bs-original-title="" title=""> 
+                    <h5 class="review-title">Jerina Seys</h5>
+                    <p class="review-description" style="text-wrap: balance;">Zeer vlotte afhandeling van de bestelling.Pluspunten: uitgebreid aanbod en snelle levering!</p>
+                </a>
+                </div>
+                
+              <div class="d-flex align-items-start" style="justify-content: space-evenly; min-height:10vh; margin-top:3%;">
+                  <i class="fa fa-star gold-star"/>
+                  <i class="fa fa-star gold-star"/>
+                  <i class="fa fa-star gold-star"/>
+                  <i class="fa fa-star gold-star"/>
+                  <i class="fa fa-star gold-star"/>
+              </div>
+          </div>
+      </div>
+      
+          <div class="col-6 col-xs-12 col-sm-6 col-lg-3 o_colored_level">
+              <div class="content content-bx-1" style="text-align:center;border-radius: 20px;background-color: white; height: 90%;">
+              <a href="#" data-bs-original-title="" title=""> 
+                  <img src="/web/image/389367-d43b9c16/Mask%20group%20%281%29.png" alt="" class="img img-fluid o_we_custom_image" style="padding-top: 10%; width: 25% !important;" data-original-id="389364" data-original-src="/web/image/389364-f4af1317/Mask%20group%20%281%29.png" data-mimetype="image/png" data-resize-width="80" loading="lazy"/>
+                  <br/>
+                  <h5 class="review-title">Jacquelinedp</h5>
+                  <p class="review-description" style="text-wrap: balance;">Zeer vlotte afhandeling van de bestelling.Pluspunten: uitgebreid aanbod en snelle levering!</p>
+              </a>
+              <div class="d-flex align-items-start" style="justify-content: space-evenly; min-height:10vh; margin-top:3%;">
+                  <i class="fa fa-star gold-star"/>
+                  <i class="fa fa-star gold-star"/>
+                  <i class="fa fa-star gold-star"/>
+                  <i class="fa fa-star gold-star"/>
+                  <i class="fa fa-star gold-star"/>
+              </div>
+          </div>
+          </div>
+          <div class="col-6 col-xs-12 col-sm-6 col-lg-3 o_colored_level">
+              <div class="content content-bx-1" style="text-align:center;border-radius: 20px;background-color: white; height: 90%;">
+              <a href="#" data-bs-original-title="" title=""> 
+                  <img src="/web/image/389367-d43b9c16/Mask%20group%20%281%29.png" alt="" class="img img-fluid o_we_custom_image" style="padding-top: 10%; width: 25% !important;" data-original-id="389364" data-original-src="/web/image/389364-f4af1317/Mask%20group%20%281%29.png" data-mimetype="image/png" data-resize-width="80" loading="lazy"/>
+                  <br/>
+                  <h5 class="review-title">Hei</h5>
+                  <p class="review-description" style="text-wrap: balance;">Zeer vlotte afhandeling van de bestelling.Pluspunten: uitgebreid aanbod en snelle levering!
+mooie Maileg-collectie! Snelle en perfecte levering!</p>
+              </a>
+              <div class="d-flex align-items-start" style="justify-content: space-evenly; min-height:12vh; margin-top:3%;">
+                  <i class="fa fa-star gold-star"/>
+                  <i class="fa fa-star gold-star"/>
+                  <i class="fa fa-star gold-star"/>
+                  <i class="fa fa-star gold-star"/>
+                  <i class="fa fa-star gold-star"/>
+              </div>
+          </div>
+          </div>
+          <div class="col-6 col-xs-12 col-sm-6 col-lg-3 o_colored_level">
+              <div class="content content-bx-1" style="text-align:center;border-radius: 20px;background-color: white; height: 90%;">
+              <a href="#" data-bs-original-title="" title=""> 
+                  <img src="/web/image/389367-d43b9c16/Mask%20group%20%281%29.png" alt="" class="img img-fluid o_we_custom_image" style="padding-top: 10%; width: 25% !important;" data-original-id="389364" data-original-src="/web/image/389364-f4af1317/Mask%20group%20%281%29.png" data-mimetype="image/png" data-resize-width="80" loading="lazy"/>
+                  <br/>
+                  <h5 class="review-title">Stefanie</h5>
+                  <p class="review-description" style="text-wrap: balance;">Zeer vlotte afhandeling van de bestelling.Pluspunten: uitgebreid aanbod en snelle levering!
+mooie Maileg-collectie! Snelle en perfecte levering!
+</p>
+              </a>
+              <div class="d-flex align-items-start" style="justify-content: space-evenly; min-height:12vh; margin-top:3%;">
+                  <i class="fa fa-star gold-star"/>
+                  <i class="fa fa-star gold-star"/>
+                  <i class="fa fa-star gold-star"/>
+                  <i class="fa fa-star gold-star"/>
+                  <i class="fa fa-star gold-star"/>
+              </div>
+          </div>
+          </div>
+
+          </div>
+          </div>
+      </section>
+
+<section class="s_image_gallery o_colored_level pb0 o_spc-none pt0 o_masonry" data-vcss="001" data-columns="1" style="overflow: hidden; background-color: white !important; background-image: none;background-color: #F3F3F3;" data-snippet="s_images_wall" data-name="Images Wall">
+              <div class="container-fluid" style="position: relative;text-align: center;"><div class="row s_nb_column_fixed">
+              <div class="o_masonry_col o_snippet_not_selectable col-lg-12 newsletter-section-1" style="margin-bottom: -10%;"><img src="/web/image/389270-9b9e910d/newsletter.jpg" alt="" class="img img-fluid d-block o_we_custom_image" data-original-id="389268" data-original-src="/web/image/389268-501ffa34/newsletter.jpg" data-mimetype="image/jpeg" data-resize-width="1920" data-quality="100" loading="lazy"/>
+              
+              <div class="centered centered-section-1 subscribe">
+                          <div class="centered centered-section-2 mobile-news-font" style="font-size: 25px; font-weight: bold; "> Subscribe to our newsletter </div>
+                          <div class="centered centered-section-3 mobile-news-font" style="font-size: 18px; font-weight: 500; text-align: left !important; "> Get a 10% discount on your first order  </div>
+                          <div class="s_newsletter_subscribe_form mobile-news-font s_newsletter_list js_subscribe" data-vxml="001" data-list-id="1" data-name="Newsletter" data-snippet="s_newsletter_subscribe_form">
+                              <div class="input-group" style="&#10;  width: 75%; margin-right: auto;margin-top: 7%;">
+                                  <input type="email" name="email" class="js_subscribe_value form-control " placeholder="your email..." style="&#10; border-top-left-radius: 20px; border-bottom-left-radius: 20px; &#10; background-color: #F3F3F3;"/>
+                                  <a role="button" href="#" class="js_subscribe_btn o_submit btn btn-custom" data-bs-original-title="" title="" style="border: none; border-width: 0px; border-style: solid; padding-left:0px !important; border-bottom-right-radius: 15px; border-top-right-radius: 15px; background-color: #FF0000;"><i class="fa fa-envelope" style=" margin-left: 45%; font-size: 22px; color: white;"/></a>
+                                  <a role="button" href="#" class="js_subscribed_btn o_submit btn btn-custom d-none" disabled="disabled" data-bs-original-title="" title="" style="border-width: 1px; border-style: solid;">Send</a>
+                              </div>
+                          </div>
+                      </div>
+              </div></div></div>
+          </section>
+      </div>
+  </t>
+</t>
