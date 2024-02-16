@@ -1,32 +1,146 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <template id="web.login_layout" name="Login Layout">
-        <t t-call="web.frontend_layout">
-            <t t-set="html_data" t-value="{'style': 'height: 100%;'}"/>
-            <t t-set="body_classname" t-value="'bg-100'"/>
-            <t t-set="no_header" t-value="True"/>
-            <t t-set="no_footer" t-value="True"/>
+<t name="Login" t-name="web.login">
+  <t t-call="web.login_layout">
+      <style>
+        .dropdown-item.active, .dropdown-item:active {
+          color: black !important;
+        }
+           .subscribe {
+             width: fit-content;
+             margin-left: 23%;
+             position: relative;
+             bottom: 50%;
+            }
+          .email {
+                <!--border: 1px solid #6c757d6b;-->
+                border-radius: 6px!important;
+                background-color: #F3F3F3 !important;
+                width: 387px;
+                height: 42px;
+                font-size: 18px;
+                font-weight: 600;
+          }
+          .signbtn {
+                margin-left: 50px;
+                width: 293px;
+                height: 45px;
+                border-radius: 16px !important;
+                background-color: #520052 !important;
+                border: none;
+                font-size: 18px;
+          }
+          .form-control:focus {
+                border-color: #dee2e6 !important;
+                background-color: #dee2e6 !important;
+                
+           }
+               
+          .btn:hover {
+            background-color: #520052 !important;
+            }
+         #mDiv{
+         background-color:white !important;
+         }
+          .justify-content-between{
+              display: none !important;
+          }
+          <!--.form-control{-->
+          <!--    width: 387px;-->
+          <!--}-->
+          @media (max-width: 430px) {
+                .email {
+                   width: 300px;
+                }
+                .login-s{
+                    width: 100% !important;
+                }
+                #login-s{
+                    width: 100% !important;
+                }
+                .form-control{
+                    width: 100% !important;
+                }
+                .an-account{
+                <!--width:155% !important;-->
+                text-align: left !important;
+                }
+                .btn-success{
+                width:67% !important;
+                }
+                
+            }
+             @media (max-width: 1030px) {
+              .subscribe {
+                   margin-left: 3% !important;
+              }
+          }
+          @media (max-width: 767px) {
+            .subscribe.centered.centered-section-1 {
+                margin-left: 3% !important;
+             }
+           }
+      </style>
+      <form class="oe_login_form" role="form" t-attf-action="/web/login" method="post" onsubmit="this.action = '/web/login' + location.hash" style="width: 129%;">
+          <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+          <h2 class="login-s" style="text-align:center;font-size: 36px;width: 129%;color:#520052; font-weight:800;">Login</h2><br/>
+          <div class="mb-3" t-if="databases and len(databases) &gt; 1">
+              <label for="db" class="col-form-label">Database</label>y
+              <div t-attf-class="input-group {{'input-group-sm' if form_small else ''}}">
+                  <input type="text" name="db" t-att-value="request.db" id="db" t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required" readonly="readonly"/>
+                  <a role="button" href="/web/database/selector" class="btn btn-secondary">Select <i class="fa fa-database" role="img" aria-label="Database" title="Database"/></a>
+              </div>
+          </div>
 
-            <div class="container py-5">
-                <div t-attf-class="card border-0 mx-auto bg-100 {{login_card_classes}} o_database_list"
-                     style="max-width: 300px;">
-                    <div class="card-body">
-                        <div t-attf-class="text-center pb-3 border-bottom {{'mb-3' if form_small else 'mb-4'}}">
-                            <img t-attf-src="/web/binary/company_logo{{ '?dbname='+db if db else '' }}" alt="Logo"
-                                 style="max-height:120px; max-width: 100%; width:auto"/>
-                        </div>
-                        <t t-raw="0"/>
-                        <div class="text-center small mt-4 pt-3 border-top" t-if="not disable_footer">
-                            <t t-if="not disable_database_manager">
-                                <!-- <a class="border-right pr-2 mr-1" href="/web/database/manager">Manage Databases</a> -->
-                            </t>
-                            <!-- <a href="https://www.odoo.com?utm_source=db&amp;utm_medium=auth" target="_blank">Powered by
-                                <span>Odoo</span>
-                            </a> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </t>
-    </template>
-</odoo>
+          <div class="mb-3 field-login email">
+              <!--<label for="login" class="form-label">Email</label>-->
+              <input type="text" placeholder="Email" name="login" t-att-value="login" id="login" t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required" autofocus="autofocus" autocapitalize="off" style=""/>
+          </div>
+
+          <div class="mb-3 email">
+              <!--<label for="password" class="form-label">Password</label>-->
+              <input type="password" placeholder="Password" name="password" id="password" t-attf-class="form-control #{'form-control-sm' if form_small else ''}" required="required" autocomplete="current-password" t-att-autofocus="'autofocus' if login else None" maxlength="4096" style=""/>
+          </div>
+
+          <p class="alert alert-danger" t-if="error" role="alert">
+              <t t-esc="error"/>
+          </p>
+          <p class="alert alert-success" t-if="message" role="status">
+              <t t-esc="message"/>
+          </p>
+          <div id="login-s" t-attf-class="clearfix oe_login_buttons text-center gap-1 d-grid mb-1 {{'pt-2' if form_small else 'pt-3'}}" style="justify-content: center;width:130%;">
+              <button type="submit" class="btn btn-lg btn-success rounded-0 signbtn" style="">Sign in</button>
+              <div class="login-s" style="text-align: center !important; width: 100%; padding-top: 1%">
+                  <a href="/web/reset_password?" style="color: black;font-size: 16px;font-weight:400;">
+                      Forgot password&amp;#63 🤔</a>
+              </div>
+              <div class="an-account" style="text-align: center !important; width: 100%;margin-top:20px;">
+                 <h3 style="display: inline; font-size: 16px;color:#520052;font-weight:400;">New Customer&amp;#63; </h3>
+                 <a href="/web/signup" style=" color: #dc3545;; font-size: 16px; display: inline;font-weight:400;">
+                    Register
+                 </a>
+               </div>
+              <div class="o_login_auth"/>
+              <div><p style="text-align: center; font-size: 14px; margin-top:-3px;">Registered customers enjoy faster orders, saved addresses, order tracking, and more.</p></div>
+          </div>
+           
+         <input type="hidden" name="redirect" t-att-value="redirect"/>
+     </form>
+        
+   <section class="s_image_gallery o_colored_level pb0 o_spc-none pt0 o_masonry" data-vcss="001" data-columns="1" style="overflow: hidden; background-color: white !important; background-image: none;background-color: #F3F3F3;" data-snippet="s_images_wall" data-name="Images Wall">
+              <div class="container-fluid" style="position: relative;text-align: center;"><div class="row s_nb_column_fixed">
+              <div class="o_masonry_col o_snippet_not_selectable col-lg-12 newsletter-section-1" style="margin-bottom: -10%;"><img src="/web/image/389270-9b9e910d/newsletter.jpg" alt="" class="img img-fluid d-block o_we_custom_image" data-original-id="389268" data-original-src="/web/image/389268-501ffa34/newsletter.jpg" data-mimetype="image/jpeg" data-resize-width="1920" data-quality="100" loading="lazy"/>
+              
+              <div class="centered centered-section-1 subscribe">
+                          <div class="centered centered-section-2 mobile-news-font" style="font-size: 25px; font-weight: bold; "> Subscribe to our newsletter </div>
+                          <div class="centered centered-section-3 mobile-news-font" style="font-size: 18px; font-weight: 500; text-align: left !important; "> Get a 10% discount on your first order  </div>
+                          <div class="s_newsletter_subscribe_form mobile-news-font s_newsletter_list js_subscribe" data-vxml="001" data-list-id="1" data-name="Newsletter" data-snippet="s_newsletter_subscribe_form">
+                              <div class="input-group" style="&#10;  width: 75%; margin-right: auto;margin-top: 7%;">
+                                  <input type="email" name="email" class="js_subscribe_value form-control " placeholder="your email..." style="&#10; border-top-left-radius: 20px; border-bottom-left-radius: 20px; &#10; background-color: #F3F3F3;"/>
+                                  <a role="button" href="#" class="js_subscribe_btn o_submit btn btn-custom" data-bs-original-title="" title="" style="border: none; border-width: 0px; border-style: solid; padding-left:0px !important; border-bottom-right-radius: 15px; border-top-right-radius: 15px; background-color: #FF0000;"><i class="fa fa-envelope" style=" margin-left: 45%; font-size: 22px; color: white;"/></a>
+                                  <a role="button" href="#" class="js_subscribed_btn o_submit btn btn-custom d-none" disabled="disabled" data-bs-original-title="" title="" style="border-width: 1px; border-style: solid;">Send</a>
+                              </div>
+                          </div>
+                      </div>
+              </div></div></div>
+          </section>
+  </t>
+</t>
