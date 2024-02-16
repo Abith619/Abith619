@@ -1,0 +1,165 @@
+<t name="Wishlist Page" t-name="website_sale_wishlist.product_wishlist">
+    <t t-call="website.layout">
+      <t t-set="additional_title">Shop Wishlist</t>
+      <t t-set="user_lang" t-value="request.context.get('lang')"/>
+        <Style>
+          .dropdown-item.active, .dropdown-item:active{
+            color: #161616 !important;
+          }
+          
+      @media only screen and (max-width: 499px){
+      .oe_website_sale .td-img{
+          display:block !important;
+        }
+        
+        #cl_titlefont{
+            min-width:22vh !important;
+        }
+        .wishlist-section{
+            flex-direction:column;
+        }
+        tr{
+         border: 1px solid gray !important;
+         border-radius:30px;
+        }
+      }
+      @media (max-width: 992px){
+        .tr{
+          width: 100%;
+        }
+      }
+      @media (max-width: 2400px){
+        .img-fluid {
+          /* min-width: 100px;
+          max-width: 100px; */
+        }
+        table.table-comparator .td-img img {
+            max-height: 100%;
+        }
+        h3{
+            font-weight: 900 !important;
+            text-align: center;
+            color: #520052;
+            margin:2vh;
+        }
+        tbody {
+          display: inline-flex !important;
+          flex-direction: column !important;
+          align-items: flex-end !important;
+        }
+        
+        button .button-wish, #add_to_cart_button{
+            background-color: transparent;
+            color: #520052;
+            border: none;
+            border-radius: 1rem !important;
+            font-size: 1.1rem !important;
+        }
+        .cl_fontsize{
+            font-size: 25px !important;
+            color:#520052;
+        }
+        #cl_titlefont{
+            font-size: 18px !important;
+            color: black !important;
+            font-weight:200;
+        }
+        td{
+            margin:2rem !important;
+            border:none !important;
+            border-top-right-radius: 1.5rem !important;
+            border-bottom-right-radius: 1.5rem !important;
+        }
+        table {
+            border-collapse: separate !important;
+        }
+      }
+      /*******************************/
+      @media (min-width: 577px){
+          .wishlist-section p#cl_titlefont{
+               min-width: 123vh !important;
+          }
+      }
+      /*******************************/
+    </Style>
+
+  <script>
+    
+  </script>
+
+
+        <div id="wrap" t-if="user_lang == 'en_US' or 'nl_BE' or 'fr_FR' or 'de_DE'" class="js_sale">
+            <div class="oe_structure" id="oe_structure_website_sale_wishlist_product_wishlist_1"/>
+            <div class="container oe_website_sale pt-3">
+                <section class="container wishlist-section">
+                    <div class="row" style="--gutter-x: 0px;">
+                        <h3 style="text-align:center; font-weight:bold;">Favourite</h3>
+                        <div class="checkbox" style="text-align: center;">
+                            <label class="text-muted">
+                                <input type="checkbox" id="b2b_wish" value="1" class="mr8"/>
+                                  Add product to my cart but keep it in my wishlist
+                            </label>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped table-hover text-center table-comparator" id="o_comparelist_table">
+                        <body>
+                            <t t-foreach="wishes" t-as="wish" style="margin:2rem !important; border-radius: 30px;">
+                                <t t-set="combination_info" t-value="wish.product_id._get_combination_info_variant()"/>
+                                <tr t-att-data-wish-id="wish.id" t-att-data-product-id="wish.product_id.id" t-att-data-product-tracking-info="json.dumps(request.env['product.template'].get_google_analytics_data(combination_info))" style="margin:2rem !important;border-radius: 30px;">
+                                    <td class="td-img align-middle" style="width: auto; border-top-left-radius: 1.5rem !important; border-bottom-left-radius: 1.5rem !important; border-top-right-radius: 0rem !important; border-bottom-right-radius: 0rem !important;">
+                                        <a t-att-href="wish.product_id.website_url">
+                                            <img t-attf-src="/web/image/product.product/#{wish.product_id.id}/image_128" class="img img-fluid" style="margin: 0rem;" alt="Product image"/>
+                                        </a>
+                                    </td>
+                                    <td class="text-start align-middle oe_website_sale">
+                                        <p id="cl_titlefont">
+                                            <a style="color:#0098ED !important;" t-att-href="wish.product_id.website_url">
+                                                <t t-esc="wish.product_id.x_studio_brand"/>
+                                            </a>
+                                        </p>
+                                        <section class="d-flex justify-content-between " style="align-items: baseline;">
+                                            <p id="cl_titlefont">
+                                                <a style="color:black !important;" t-att-href="wish.product_id.website_url">
+                                                  <t t-esc="wish.product_id.display_name"/>
+                                                </a>
+                                            </p>
+                                            
+                                            <button type="button" class="btn btn-link no-decoration o_wish_rm" onclick="">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="43" height="44" viewBox="0 0 43 44" fill="none">
+                                                    <mask id="path-1-inside-1_3246_15648" fill="white">
+                                                        <path d="M12.7915 13.3242H30.5146V32.0011C30.5146 33.1057 29.6191 34.0011 28.5146 34.0011H14.7915C13.6869 34.0011 12.7915 33.1057 12.7915 32.0011V13.3242Z"/>
+                                                    </mask>
+                                                    <path d="M12.7915 13.3242H30.5146H12.7915ZM31.5146 32.0011C31.5146 33.658 30.1714 35.0011 28.5146 35.0011H14.7915C13.1346 35.0011 11.7915 33.658 11.7915 32.0011H13.7915C13.7915 32.5534 14.2392 33.0011 14.7915 33.0011H28.5146C29.0669 33.0011 29.5146 32.5534 29.5146 32.0011H31.5146ZM14.7915 35.0011C13.1346 35.0011 11.7915 33.658 11.7915 32.0011V13.3242H13.7915V32.0011C13.7915 32.5534 14.2392 33.0011 14.7915 33.0011V35.0011ZM31.5146 13.3242V32.0011C31.5146 33.658 30.1714 35.0011 28.5146 35.0011V33.0011C29.0669 33.0011 29.5146 32.5534 29.5146 32.0011V13.3242H31.5146Z" fill="#868686" mask="url(#path-1-inside-1_3246_15648)"/>
+                                                    <rect x="10.5762" y="12.2148" width="22.1538" height="1.10769" fill="#868686"/>
+                                                    <rect x="16.1146" y="10" width="11.0769" height="2.21538" fill="#868686"/>
+                                                    <line x1="17.2223" y1="11.7148" x2="26.0838" y2="11.7148" stroke="white"/>
+                                                    <line x1="18.8301" y1="16.6445" x2="18.8301" y2="29.9368" stroke="#868686"/>
+                                                    <line x1="24.3685" y1="16.6445" x2="24.3685" y2="29.9368" stroke="#868686"/>
+                                                </svg>
+                                            </button>
+                                            <div>
+                                                <button id="add_to_cart_button" t-else="" type="button" role="button" class="btn btn-secondary btn-block o_wish_add mb4 col-6"/>
+                                                <input name="product_id" t-att-value="wish.product_id.id" type="hidden"/>
+                                                <a t-if="combination_info['prevent_zero_price_sale']" t-att-href="website.contact_us_button_url" class="btn btn-primary btn_cta">Contact Us</a>
+                                            </div>
+                                        </section>
+                                        <div class="cl_fontsize o_wish_price">
+                                             <t t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.pricelist_id.currency_id}"/>
+                                            <small t-if="combination_info['base_unit_price']" class="cart_product_base_unit_price d-block text-muted" groups="website_sale.group_show_uom_price">
+                                                <t t-call="website_sale.base_unit_price"><t t-set="product" t-value="wish.product_id"/></t>
+                                            </small>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle" t-if="combination_info['prevent_zero_price_sale']">
+                                        <span t-field="website.prevent_zero_price_sale_text"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </body>
+                    </table>
+                </section>
+            </div>
+        </div>
+        <div id="wrap" t-else="" class="js_sale"/>
+    </t>
+</t>
