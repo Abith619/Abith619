@@ -1,0 +1,99 @@
+<t name="Sign up login" t-name="auth_signup.signup">
+  <style>
+    .shop-row{
+      margin-bottom: -2% !important;
+    }
+    .form-control{
+      border-top-left-radius: 20px !important;
+      border-bottom-left-radius: 20px !important;
+    }
+    .oe_search_box{
+      border-top-left-radius: 20px !important;
+      border-bottom-left-radius: 20px !important;
+    }
+    .dropdown-item.active, .dropdown-item:active {
+      color: black !important;
+    }
+    .oe_login_form, .oe_signup_form, .oe_reset_password_form {
+      max-width: max-content !important;
+      margin: 0 !important;
+    }
+    .oe_signup_form .btn.btn-primary.mx-auto{
+        border-radius: 16px !important;
+        height: 45px;
+        font-size: 16px;
+        background-color: #520052 !important;
+        border-color: #520052 !important;
+    }
+    .signup {
+       width: 20%;
+    }
+    .subscribe {
+             width: fit-content;
+             margin-left: 23%;
+             position: relative;
+             bottom: 50%;
+            }
+   @media (max-width: 430px) {
+       <!--.signup {-->
+       <!-- width: 60%;-->
+       <!--}-->
+       
+       <!--.oe_login_buttons {-->
+       <!--  width: 50% !important; -->
+       <!-- } -->
+       
+    }
+     @media (max-width: 1030px) {
+              .subscribe {
+                   margin-left: 3% !important;
+              }
+          }
+          @media (max-width: 768px) {
+            .subscribe.centered.centered-section-1 {
+                margin-left: 3% !important;
+             }
+            .mailsub {
+               margin-top:15px !important;
+            }
+           }
+
+
+  </style>
+  <t t-call="web.login_layout">
+    <form class="oe_signup_form" role="form" method="post" t-if="not message">
+      <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+        <t t-call="auth_signup.fields">
+      <t t-set="only_passwords" t-value="bool(token and not invalid_token)"/>
+      </t>
+        <p class="alert alert-danger" t-if="error" role="alert">
+      <t t-esc="error"/>
+        </p>
+      <input type="hidden" name="redirect" t-att-value="redirect"/>
+        <input type="hidden" name="token" t-att-value="token"/>
+          <div class="text-center  d-grid pt-3 signcenter">
+            <button type="submit" class="btn btn-primary mx-auto signup"> Sign up</button>
+            <a t-attf-href="/web/login?{{ keep_query() }}" class="btn btn-link btn-sm" role="button" style="font-size:16px;margin-bottom:50px;">Already have an account?</a>
+        <div class="o_login_auth"/>
+      </div>
+    </form>
+    <section class="s_image_gallery o_colored_level pb0 o_spc-none pt0 o_masonry" data-vcss="001" data-columns="1" style="overflow: hidden; background-color: white !important; background-image: none;background-color: #F3F3F3;" data-snippet="s_images_wall" data-name="Images Wall">
+              <div class="container-fluid" style="position: relative;text-align: center;"><div class="row s_nb_column_fixed">
+              <div class="o_masonry_col o_snippet_not_selectable col-lg-12 newsletter-section-1" style="margin-bottom: -10%;"><img src="/web/image/389270-9b9e910d/newsletter.jpg" alt="" class="img img-fluid d-block o_we_custom_image" data-original-id="389268" data-original-src="/web/image/389268-501ffa34/newsletter.jpg" data-mimetype="image/jpeg" data-resize-width="1920" data-quality="100" loading="lazy"/>
+              
+              <div class="centered centered-section-1 subscribe">
+                          <div class="centered centered-section-2 mobile-news-font" style="font-size: 25px; font-weight: bold; "> Subscribe to our newsletter </div>
+                          <div class="centered centered-section-3 mobile-news-font" style="font-size: 18px; font-weight: 500; text-align: left !important; "> Get a 10% discount on your first order  </div>
+                          <div class="s_newsletter_subscribe_form mobile-news-font s_newsletter_list js_subscribe" data-vxml="001" data-list-id="1" data-name="Newsletter" data-snippet="s_newsletter_subscribe_form">
+                              <div class="input-group" style="&#10;  width: 75%; margin-right: auto;margin-top: 7%;">
+                                  <input type="email" name="email" class="js_subscribe_value form-control " placeholder="your email..." style="&#10; border-top-left-radius: 20px; border-bottom-left-radius: 20px; &#10; background-color: #F3F3F3;"/>
+                                  <a role="button" href="#" class="mailsub js_subscribe_btn o_submit btn btn-custom" data-bs-original-title="" title="" style="margin-top:-5px; border: none; height:50px; border-width: 0px; border-style: solid; padding-left:0px !important; border-bottom-right-radius: 15px; border-top-right-radius: 15px; background-color: #FF0000;"><i class="fa fa-envelope" style=" margin-left: 45%; font-size: 22px; color: white;"/></a>
+                                  <a role="button" href="#" class="js_subscribed_btn o_submit btn btn-custom d-none" disabled="disabled" data-bs-original-title="" title="" style="border-width: 1px; border-style: solid;">Send</a>
+                              </div>
+                          </div>
+                      </div>
+              </div></div></div>
+          </section>
+  </t>
+  
+</t>
