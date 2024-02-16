@@ -1,0 +1,709 @@
+<t name="Product" track="1" t-name="website_sale.product">
+    <!-- Qweb variable defining the class suffix for navbar items.
+           Change accordingly to the derired visual result (eg. `primary`, `dark`...)-->
+    <!--<t t-set="navClass" t-valuef="light"/>-->
+    <t t-cache="pricelist,product">
+      <t t-set="combination" t-value="product._get_first_possible_combination()"/>
+      <t t-set="combination_info" t-value="product._get_combination_info(combination, add_qty=add_qty or 1, pricelist=pricelist)"/>
+      <t t-set="product_variant" t-value="product.env['product.product'].browse(combination_info['product_id'])"/>
+      <t t-call="website.layout">
+        <t t-set="additional_title" t-value="product.name"/>
+        <style>
+          
+            .o_sale_product_configurator_edit{
+                border-radius: 10px !important;
+            }
+          .name-hide{
+            display: none !important;
+          }
+          .shop-row{
+            margin-bottom: -3% !important;
+          }
+          .dropdown-item.active, .dropdown-item:active {
+            color: black;
+          }
+           .subscribe {
+             width: fit-content;
+             margin-left: 23%;
+             position: relative;
+             bottom: 50%;
+            }
+          .js_add_cart_json,
+          .form-control {
+            border-radius: 0;
+            background: white;
+            color:#520052;
+            border: white;
+           
+          }
+          <!--.a {-->
+          <!--   background-color:#FBFBFB !important;-->
+          <!--}-->
+          .card {
+              background-color:#FBFBFB !important;
+              border: 1px solid #E1E1E1 !important;
+              border-radius: 20px 20px 20px 20px !important;
+          }
+          h2, .h2 {
+              font-weight: 600;
+              font-size: 24px !important;              
+              <!--font-size: 3rem;-->
+          }
+          
+          .delivaryimg {
+             height: 40px;
+          }
+          .shippingcontent {
+            display: flex;
+          }
+          .productdelivary {
+            display: flex;
+            margin-top:4%
+          }
+          ul {
+              font-size: 24px !important;              
+              list-style-type: disc;
+          }
+          h3 {
+              font-weight: 600;
+              font-size: 24px !important;              
+          }
+          p {
+              font-size: 16px;              
+              margin-top: 0;
+              margin-bottom: 1rem;
+          }
+          .css_quantity input, {
+              width:100% ;
+              width: fit-content;
+              border-color: #ffffff;
+          }
+          .css_quantity .btn, {
+             <!--border-color: #ffffff;-->
+          }
+          .css_quantity input-group{
+          border-right: 0px; 
+          border-top-left-radius: 8px;
+          border-bottom-left-radius: 8px;
+          background-color: #520052;
+          }
+          .product_price {
+            margin:0px !important;
+            width: 94px;
+            height: 40px;
+            top: 364px;
+            left: 731px;
+            font-weight: bold;
+          }
+          .css_editable_mode_hidden {
+            font-weight: bold;
+            font-size: 36px;
+          }
+          .text-muted {
+            
+            font-size: 0px;
+            margin: 0 !important;
+          }
+          .bg-400 {
+            border:1px solid white;
+          }
+          .css_quantity {
+            width: auto !important;
+             border: 2px solid #520052;
+          }
+          #add_to_cart_wrap {
+            width: 400px;
+          }
+          .combi-list {
+            display: flex;
+            justify-content: space-between;
+          }
+          .combi-item {
+            margin: 15px;
+          }
+          .availability_messages {
+            display: none;
+          }
+          #o_product_terms_and_share {
+              display:none;
+          }
+          .btn-danger {
+             color: red;
+             background-color: #fff;
+             border-color: #fff;
+          }
+          .btn-success {
+              color: #00701F;
+              background-color: #FFFFFF;
+              border-color: #FFFFFF;
+              box-shadow: none;
+          }
+          .css_editable_mode_hidden {
+              font-size: 30px;
+          }
+          .ribbon-wrapper {
+              margin-top: 1%;
+              margin-bottom: 1%;
+              width: 20%;
+          }
+          .carousel-indicators {
+              justify-content: center;
+          }
+          .text-center {
+              font-size: 16px !important;
+              font-weight: 600;              
+              background-color:#FBFBFB !important;
+          }
+          .btn-success:hover {
+              color: #208637;
+              background-color: #fff;
+          }
+          .btn-danger:hover {
+              color: red;
+             background-color: #fff;
+          }
+          hr:not([size]) {
+              height:0;
+          }
+          .btn-outline-primary {
+              margin-left: 0% !important;
+              margin-top:3%;
+              border-radius: 0 !important;
+              color: #520052;
+              border: 2px solid #520052;
+          }
+          .js_product .td-qty{
+            width:144px !important;
+          }
+          .btn-outline-primary:hover {
+              
+              color: #520052;
+              background-color: #fff;
+              border-color:#520052;
+          }
+          h5 {
+             
+              font-size: 20px;
+              color: #520052;
+          }
+          #add_to_cart_wrap {
+              margin:0 !important;
+          }
+          .image-text-colour {
+               background-color:#E1E1E1;
+          }
+          <!--.fa.rounded-circle {-->
+          <!--    margin-left:5%;-->
+          <!--}-->
+          <!--.form-control quantity text-center {-->
+          <!--    background: #520052;-->
+          <!--}-->
+          .co{
+          width:80%;
+          }
+          /******************************/
+          
+          #add_to_cart, .o_we_buy_now{
+                width:50% !important;
+                background: #520052;
+                color:#ffffff;
+                border-radius: 15px !important;
+                height: 50px;
+                font-size: 20px;
+                padding-top: 10px;
+                border: none;
+          }
+          .o_we_buy_now:hover, #add_to_cart:hover {
+                color: #ffbf16 !important;
+                background-color:#520052 !important;
+                border-color: none !important;
+            }
+            .css_quantity {
+                <!--border-radius: 10px;-->
+                
+                margin-bottom: 20px !important;
+                height: 40px;
+            }
+            #product_full_description h2, 
+            #product_full_description h3{
+                margin-top: 30px !important;
+                margin-bottom: 20px !important;
+            }
+            #product_full_description ul li , #product_full_descriptions ul li{
+            line-height: 2.3em;
+            list-style-type: disclosure-closed;
+             display: list-item !important;
+             font-size:16px;
+            }
+            h2 span, h3.mb32{ 
+                font-weight: 600 !important;
+                font-size: 28px !important;
+                color: #520052 !important;
+            }
+            .btn-primary{
+                border:none;
+                font-size: 16px;
+            }
+            <!--button.o_portal_chatter_attachment_btn.btn.btn-secondary{-->
+            <!--   color: #FFFFFF !important;-->
+            <!--    background-color: #520052 !important;-->
+            <!--    border-radius: 2rem !important;-->
+            <!--    border: none;-->
+            <!--    font-size: 20px; -->
+            <!--}-->
+            .modal-footer button.btn.btn-secondary{
+	            background-color: #520052 !important;
+	            border-radius: 10px !important;
+	            font-size: 18px !important;
+	            border: none !important;
+                font-size: 16px !important;
+            }
+            @media (min-width:1200px){
+                .share-btn-1{
+                    padding-left:20px;
+                }
+            }
+          /******************************/
+          
+          
+          @media (max-width: 320px) {
+              .ribbon-wrapper {
+                  margin-top: 1%;
+                  margin-bottom: 1%;
+                  width: 30%;
+              }
+              .css_quantity {
+                  width: auto;
+                  border: 2px solid #520052;
+              }
+              .product {
+                  width:100%
+              }
+              .any-order{
+                  width: 100%; border:1px solid;
+              }
+              h6 {
+                 width:100%;
+              }
+               .shippingcontent {
+                   padding: 15px;
+                 height: min-content;
+                 display: flex;
+               }
+            }
+            
+                 @media (max-width: 770px) {
+                  .productdelivary {  
+                       display: grid;
+                       height: auto !important;
+                   }
+                  #product_detail_main{
+                      display: grid;   
+                  }
+                  .css_quantity {
+                      width: auto;
+                      border: 2px solid #520052;
+                  }
+                  .shippingcontent {
+                       padding: 15px;
+                     height: min-content;
+                     display: flex;
+                   }
+                  h3{
+                     font-size:23px;                    
+                     margin: 0px;
+                     text-align: center !important;
+                     color:#520052;
+                  }
+                  h6 {
+                     width:100%;
+                  }
+                  /****************************/ 
+                  
+                    #add_to_cart, .o_we_buy_now{
+                        width: 75% !important;
+                        font-size: 17px;
+                        height: 43px;
+                    }
+                    .css_quantity {
+                        border-radius: 10px;
+                        
+                        height: 40px;
+                    }
+                 /****************************/
+                  
+              }
+                .o_wsale_my_wish.d-none.nav-item{
+                    display:inline !important;
+                }
+                .css_quantity a.btn.btn-link.js_add_cart_json{
+	                padding: 0.3rem 1rem !important;
+                }
+                #product_detail div.row#product_detail_main{
+                    margin-top:2rem;
+                }
+                #product_details div.product_price{
+	                margin: 25px 0 17px 0 !important;
+                }
+                #product_detail_main #product_details{
+	                margin-top: -1rem !important;
+                }
+                #product_detail_main #add_to_cart{
+	                margin: 1rem 0 1rem 0;
+                }
+                #product_detail_main .o_website_rating_static{
+	                margin-top: 5px;
+                }
+                #product_detail .combi-list{
+	                margin-top: 2rem;
+                }
+       
+                #product_details .wish-list{
+	                position: relative;
+                    top: -20px;
+                }
+                #product_details .js_main_product h3.css_editable_mode_hidden{
+	                font-size: 32px !important;
+                }
+                #product_full_description ul , #product_full_descriptions ul{
+	                padding-left: 20px;
+                }
+                @media (max-width: 1030px) {
+              .subscribe {
+                   margin-left: 3% !important;
+              }
+          }
+          @media (max-width: 760px) {
+          .brandName{
+            text-align:left !important;
+          }
+            .subscribe.centered.centered-section-1 {
+                margin-left: 3% !important;
+             }
+            .mailsub {
+               margin-top:15px !important;
+            }
+             .td-img{
+              display:block !important;
+              margin-left:25% !important;
+              }
+              
+              td{
+                display: block !important;
+                width: 100% !important;
+              }
+              
+              thead{
+              display:none;
+              }
+              .in_cart {
+              display: inline-grid !important;
+              }
+           }
+           .dynamic_snippet_template svg.bi.bi-heart{
+                margin-top: 0px;
+           }
+           .dynamic_snippet_template .o_website_rating_static{
+                margin-bottom:10px;
+           }
+           .js_product.js_main_product a.o_we_buy_now{
+                display:none;
+           }
+           #product_details .o_website_rating_static i.fa.fa-star-o{
+                font-size:25px;
+           }
+           .o_carousel_product_card .o_carousel_product_card_body .fw-bold{
+                font-size: 25px !important;
+            }
+            .o_carousel_product_card .o_carousel_product_card_body .js_add_cart.ms-auto svg{
+                width:50px !important;
+                height:40px !important;
+            }
+        </style>
+  
+        <div itemscope="itemscope" itemtype="http://schema.org/Product" id="wrap" class="js_sale o_wsale_product_page">
+          <div class="oe_structure oe_empty oe_structure_not_nearest" id="oe_structure_website_sale_product_1" data-editor-message="DROP BUILDING BLOCKS HERE TO MAKE THEM AVAILABLE ACROSS ALL PRODUCTS"/>
+          <section t-attf-class="container py-4 oe_website_sale #{'discount' if combination_info['has_discounted_price'] else ''}" id="product_detail" t-att-data-view-track="view_track and '1' or '0'" t-att-data-product-tracking-info="json.dumps(request.env['product.template'].get_google_analytics_data(combination_info))">
+            <div class="row align-items-center">
+              
+              <div class="col d-flex align-items-center" style="margin-left: 1%">
+                <ol class="breadcrumb p-0 mb-2 m-lg-0">
+                  <li class="breadcrumb-item o_not_editable">
+                    <a t-att-href="keep(category=0)" style="color: #520052;font-size:16px;text-align: left; //styleName: Content/Content- bold; text-align: left;                     " class="">All Products</a>
+                  </li>
+                  <li t-if="category" class="breadcrumb-item" style="color: #520052;font-size: 16px;text-align: left; //styleName: Content/Content- bold;    text-align: left;                   ">
+                    <a t-att-href="keep('&gt;shop&gt;category&gt;%s' % slug(category), category=0)" t-field="category.name"/>
+                  </li>
+                  <li class="breadcrumb-item active" style="color: #520052;font-size: 16px; text-align: left; //styleName: Content/Content- bold;    text-align: left;                   ">
+                    <span t-field="product.name"/>
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <div class="row" id="product_detail_main" data-name="Product Page" t-att-data-image_width="website.product_page_image_width" t-att-data-image_layout="website.product_page_image_layout">
+              <t t-set="image_cols" t-value="website._get_product_page_proportions()"/>
+              <div t-attf-class="col mt-lg-6 o_wsale_product_images position-relative" t-if="website.product_page_image_width != 'none'">
+                <t t-call="website_sale.shop_product_images"/>
+              </div>
+              <div t-attf-class="col mt-md-4" id="product_details">
+                <t t-set="base_url" t-value="product.get_base_url()"/>
+                 <!--<h6 itemprop="name" style="//styleName: Content/Content- semibold;  font-size: 20px; font-weight: 600; line-height: 27px; letter-spacing: 0em; text-align: left; color:#b5b1b1;" t-field="product.categ_id.name"/>-->
+                
+                 <div class="product row">
+                    <div class="col-10">
+                         <h3 style="margin:0px;color: #0098ED !important ;font-size: 24px;font-weight: 700;    padding-left: 0% !important; padding: 3%;line-height: 27px;                   letter-spacing: 0em;                   text-align: left; //styleName: Content/Content- semibold;  font-size: 20px; font-weight: 600; line-height: 27px; letter-spacing: 0em; text-align: left;                 " class="brandName">
+                      <span itemprop="name" t-field="product.x_studio_brand"/>  
+                      
+                        <!--<span class="fa fa-share-alt rounded-circle bg-400" data-bs-original-title="" title="" aria-describedby="tooltip772964" contenteditable="false"/>-->
+                      </h3>
+                         <!--<div style="text-align:end;">-->
+                         <!--   <span class="fa fa-share-alt rounded-circle bg-400" data-bs-original-title="" title="" aria-describedby="tooltip772964" contenteditable="false"/>-->
+                         <!--</div>-->
+                    </div>
+                    <!--<div class="col-2 share-btn-1" style="text-align:left;">
+                       <button class="fa fa-share-alt rounded-circle bg-400" data-bs-original-title="" title="" aria-describedby="tooltip772964" contenteditable="false"/>
+                    </div> -->
+                    <!--<div class="col">-->
+                    <!--      <t t-if="product.x_studio_size">-->
+                    <!--          <div>Size : <t t-esc="product.x_studio_size"/></div>-->
+                    <!--      </t>-->
+                          
+                    <!--      <t t-if="product.x_studio_colour">-->
+                    <!--          <div>Colour : <t t-esc="product.x_studio_colour"/></div>-->
+                    <!--      </t>-->
+                          
+                    <!--      <t t-if="product.x_studio_letter">-->
+                    <!--          <div>Letter : <t t-esc="product.x_studio_letter"/></div>-->
+                    <!--      </t>-->
+                    <!--</div>-->
+                   
+                      <!--<div class="col-2" style="text-align:end;">-->
+                      <!--    <span class="fa fa-share-alt rounded-circle bg-400" data-bs-original-title="" title="" aria-describedby="tooltip772964" contenteditable="false"/>-->
+                      <!--</div>-->
+                </div>
+                <div class="product row">
+                    <div class="col-10">
+                         <h2 itemprop="name" t-field="product.name" style="margin:0px; font-size: 27px;font-weight: 700;                   text-align: left;margin-top: -9px;">
+                  Product Name
+                </h2>
+                    </div>
+                    <div class="col-2 wish-list" style="text-align:left">
+                       <t t-nocache="The wishlist depends on the user and must not be shared with other users. The product come from the controller.">
+                        <t t-set="product_variant" t-value="product_variant or product._create_first_product_variant()"/>
+                        <t t-set="in_wish" t-value="product_variant and product_variant._is_in_wishlist()"/>
+                          <button type="button" role="button" class="fa fa-heart-o rounded-circle bg-400 o_add_wishlist_dyn" t-att-disabled="in_wish or None" t-att-data-product-template-id="product.id" t-att-data-product-product-id="product_variant.id" data-action="o_wishlist" title="Add to wishlist"/>            
+                        </t>
+                    </div>
+                </div>
+                
+                  
+                <div class="col">
+                          <!--<t t-if="product.x_studio_size">-->
+                          <!--    <div>Size : <t t-esc="product.x_studio_size"/></div>-->
+                          <!--</t>-->
+                          
+                          <!--<t t-if="product.x_studio_colour">-->
+                          <!--    <div>Colour : <t t-esc="product.x_studio_colour"/></div>-->
+                          <!--</t>-->
+                          
+                          <!--<t t-if="product.x_studio_letter">-->
+                          <!--    <div>Letter : <t t-esc="product.x_studio_letter"/></div>-->
+                          <!--</t>-->
+                    </div>
+                   
+                <span itemprop="url" style="display: none" t-esc="base_url + product.website_url"/>
+                <span itemprop="image" style="display: none" t-esc="base_url + website.image_url(product, 'image_1920')"/>
+                <t t-if="is_view_active('website_sale.product_comment')">
+                  <a href="#o_product_page_reviews" class="o_product_page_reviews_link text-decoration-none">
+                    <t t-call="portal_rating.rating_widget_stars_static">
+                      <t t-set="rating_avg" t-value="product.rating_avg"/>
+                      <t t-set="trans_text_singular">%s review</t>
+                      <t t-set="trans_text_plural">%s reviews</t>
+                      <!--<t t-set="trans_text_singular">%s review</t>-->
+                      <t t-set="rating_count" t-value="(trans_text_plural if product.rating_count &gt; 1 else trans_text_singular) % product.rating_count"/></t>
+                  </a>
+                </t>
+  
+                <p t-field="product.description_sale" class="text-muted " placeholder="A short description that will also appear on documents."/>
+                <form t-if="product._is_add_to_cart_possible()" action="/shop/cart/update" method="POST">
+                  <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" t-nocache="The csrf token must always be up to date."/>
+                  <div class="js_product js_main_product">
+                    <div>
+                      <t t-call="website_sale.product_price"/>
+                      <small t-if="combination_info['base_unit_price']" class="text-muted o_base_unit_price_wrapper d-none" groups="website_sale.group_show_uom_price">
+                        <t t-call="website_sale.base_unit_price"/>
+                      </small>
+                    </div>
+                    <t t-placeholder="select">
+                      <input type="hidden" class="product_id" name="product_id" t-att-value="product_variant.id"/>
+                      <input type="hidden" class="product_template_id" name="product_template_id" t-att-value="product.id"/>
+                      <input t-if="product.public_categ_ids.ids" type="hidden" class="product_category_id" name="product_category_id" t-att-value="product.public_categ_ids.ids[0]"/>
+                      <input t-if="product.product_tag_ids.ids" type="hidden" class="product_tag_id" name="product_tag_id" t-att-value="product.product_tag_ids.ids[0]"/>
+                      <t t-if="combination" t-call="sale.variants">
+                        <t t-set="ul_class" t-valuef="flex-column"/>
+                        <t t-set="parent_combination" t-value="None"/></t>
+                      <t t-else="">
+                        <ul class="d-none js_add_cart_variants mb-0" t-att-data-attribute_exclusions="{'exclusions: []'}"/>
+                      </t>
+                    </t>
+                    
+    <!--                <div style="margin-top: 1%;">-->
+    <!--                         <select>-->
+    <!--  <option>A Present ? we will wrap it for You</option>-->
+    <!--</select>-->
+               
+    <!--                </div>-->
+              <!--       <t t-if="product.sudo().qty_available &lt;= 0">-->
+              <!--   <div class="ribbon-wrapper out-of-stock" style="display: inherit !important;">-->
+              <!--       <div class="ribbon btn-danger">Out of Stock</div>-->
+              <!--   </div>-->
+              <!--</t>-->
+              <!--<t t-if="product.sudo().qty_available &gt; 0">-->
+              <!--   <div class="ribbon-wrapper in-stock" style="display: inherit !important;">-->
+              <!--       <div class="ribbon btn-success">In Stock</div>-->
+              <!--   </div>-->
+              <!--</t>-->
+                    <p t-if="True" class="css_not_available_msg alert alert-warning">
+                      This combination does not exist.
+                    </p>
+                     <div id="o_wsale_cta_wrapper" class="d-flex flex-wrap align-items-center">
+                      <t t-set="hasQuantities" t-value="false"/>
+                      <t t-set="hasBuyNow" t-value="false"/>
+                      <t t-set="ctaSizeBig" t-value="not hasQuantities or not hasBuyNow"/>
+                     
+                      <div id="add_to_cart_wrap" t-attf-class="{{'d-none' if combination_info['prevent_zero_price_sale'] else 'd-inline-flex'}} align-items-center mb-2 me-auto" style="width: 500%">
+                        
+                      </div>
+                        <div class="col-12">
+                             <a style="width:auto !important;" data-animation-selector=".o_wsale_product_images" role="button" id="add_to_cart" t-attf-class="btn btn-primary js_check_product a-submit flex-grow-1 #{'btn-lg' if ctaSizeBig else ''}" href="#" class="btn btn-primary js_check_product a-submit flex-grow-1">
+                                 
+                          <i class="fa fa-shopping-cart me-2" data-bs-original-title="" title="" aria-describedby="tooltip361550"/>
+                                              Add to Cart&amp;nbsp; &amp;nbsp;&amp;nbsp;</a>
+                        </div> 
+                      <div id="product_option_block" class="d-flex flex-wrap w-50" style="    display: none !important;"/>
+                      <!--</div>-->
+                    </div>
+                    <!--<div>-->
+                    <!--  <h6 style="color: #b5b1b1;font-weight: 20px;text-align: center;margin-top: 15px;                       ">-->
+                    <!--    <span class="fa fa-calendar-o" contenteditable="false">​</span><span style="font-size: 18px;">Will you resend it on the selected date?</span>-->
+                    <!--  </h6>-->
+                    <!--</div>-->
+                    <div class="row productdelivary">
+                      <div class="col o_colored_level shippingcontent">
+                        <img src="/web/image/534435-3f05a502/Icon%20%281%29.png" alt="" class="img img-fluid o_we_custom_image delivaryimg" data-original-id="534430" data-original-src="/web/image/534430-4231dc40/Icon%20%281%29.png" data-mimetype="image/png" data-resize-width="154"/><a style="font-size: 15px;                             font-weight: 600;                             text-align: left;                             padding-left: 2%; height: max-content;                          ">FAST SERVICE
+  delivery within 1 to 2 days</a>
+                      </div>
+                      <div class="col o_colored_level shippingcontent">
+                        <img src="/web/image/534434-7c5e74f8/Group%204036.png" alt="" class="img img-fluid o_we_custom_image delivaryimg" style="height:27px" data-original-id="534431" data-original-src="/web/image/534431-7f9c37f3/Group%204036.png" data-mimetype="image/png" data-resize-width="175"/><a style="font-size: 15px;                             font-weight: 600;                             text-align: left;                             padding-left: 2%;     height: max-content;                       ">FREE SHIPPING over
+  €45 BE/NL</a>
+                      </div>
+                      <div class="col o_colored_level shippingcontent">
+                        <img src="/web/image/534433-cb27cc72/Icon.png" alt="" class="img img-fluid o_we_custom_image delivaryimg" data-original-id="534432" data-original-src="/web/image/534432-69a70e51/Icon.png" data-mimetype="image/png" data-resize-width="154"/>
+                        <a style="font-size: 15px;font-weight: 600;text-align: left;padding-left: 2%;height: max-content;">GIFT packaging available</a>
+                      </div>
+                    </div>
+                   
+                    <div id="contact_us_wrapper" t-attf-class="{{'d-flex' if combination_info['prevent_zero_price_sale'] else 'd-none'}} oe_structure oe_structure_solo #{_div_classes}">
+                      <section class="s_text_block" data-snippet="s_text_block" data-name="Text">
+                        <div class="container">
+                          <a t-att-href="website.contact_us_button_url" class="btn btn-primary btn_cta">Contact Us
+                          </a>
+                        </div>
+                      </section>
+                    </div>
+                  </div>
+                </form>
+                <p t-elif="not product.active" class="alert alert-warning">
+                  This product is no longer available.
+                </p>
+                <p t-else="" class="alert alert-warning">
+                  This product has no valid combination.
+                </p>
+                <div id="product_attributes_simple">
+                  <t t-set="single_value_attributes" t-value="product.valid_product_template_attribute_line_ids._prepare_single_value_for_display()"/>
+                  <table t-attf-class="table table-sm text-muted {{'' if single_value_attributes else 'd-none'}}">
+                    <t t-foreach="single_value_attributes" t-as="attribute">
+                      <tr>
+                        <td>
+                          <span t-field="attribute.name"/>:
+  
+                          <t t-foreach="single_value_attributes[attribute]" t-as="ptal">
+                            <span t-field="ptal.product_template_value_ids._only_active().name"/>
+                            <t t-if="not ptal_last">, </t>
+                          </t>
+                        </td>
+                      </tr>
+                    </t>
+                  </table>
+                </div>
+                <div id="o_product_terms_and_share" class="row flex-md-row align-items-md-end mb-3"/>
+              </div>
+              
+              
+            </div>
+            <!--cards-->
+            <div class="row combi-list">
+              <div class="col align-items-center" style="background-color:#F3F3F3;border-radius: 20px;">
+                <t t-set="user_lang" t-value="request.context.get('lang')"/>
+                <!--<t t-if="user_lang == 'nl_NL'">-->
+                <!--  <div itemprop="description" t-field="product.x_studio_description_for_website_nl" class="oe_structure oe_empty mt16" id="product_full_descriptions"/>-->
+                <!--</t>-->
+                <t t-if="user_lang == 'en_US'">
+                  <div itemprop="description" t-field="product.website_description" class="oe_structure oe_empty mt16" id="product_full_description"/>
+                </t>
+                <t t-if="user_lang == 'en_IN'">
+                  <div itemprop="description" t-field="product.website_description" class="oe_structure oe_empty mt16" id="product_full_description"/>
+                </t>
+                <t t-if="user_lang == 'nl_BE'">
+                  <div itemprop="description" t-field="product.x_studio_description_for_website_nl" class="oe_structure oe_empty mt16" id="product_full_descriptions"/>
+                </t>
+                <t t-if="user_lang == 'fr_FR'">
+                  <div itemprop="description" t-field="product.x_studio_description_for_website_fr" class="oe_structure oe_empty mt16" id="product_full_description"/>
+                </t>
+                <t t-if="user_lang == 'de_DE'">
+                  <div itemprop="description" t-field="product.x_studio_description_for_website_de" class="oe_structure oe_empty mt16" id="product_full_description"/>
+                </t>
+                   <div class="oe_structure oe_empty oe_structure_not_nearest mt16" id="oe_structure_website_sale_product_2" data-editor-message="DROP BUILDING BLOCKS HERE TO MAKE THEM AVAILABLE ACROSS ALL PRODUCTS"/>
+              </div>
+            </div>
+          </section>
+          <h2 style="text-align: center;"><span style="font-weight:500;font-size: 24px">Related products</span></h2>
+          
+  <section data-snippet="s_dynamic_snippet_products" class="s_dynamic_snippet_products s_dynamic o_colored_level s_product_product_add_to_cart s_product_product_borderless_1 o_dynamic_empty" data-name="Products" style="background-color: #FFFFFF; background-image: none; " data-product-category-id="1322" data-number-of-records="16" data-filter-id="1" data-template-key="website_sale.dynamic_filter_template_product_product_add_to_cart" data-carousel-interval="5000" data-force-minimum-max-limit-to16="1">
+  
+              <div class="container o_not_editable xpath-review" contenteditable="false">
+  
+                  <div class="css_non_editable_mode_hidden">
+  
+                      <div class="missing_option_warning alert alert-info rounded-0 fade show d-none d-print-none o_default_snippet_text">
+  
+                          Your Dynamic Snippet will be displayed here... This message is displayed because you did not provided both a filter and a template to use.<br/>
+                      </div>
+                  </div>
+  
+                  <div class="dynamic_snippet_template"/>
+  
+              </div>
+  
+          </section>
+<section class="s_image_gallery o_colored_level pb0 o_spc-none pt0 o_masonry" data-vcss="001" data-columns="1" style="overflow: hidden; background-color: white !important; background-image: none;background-color: #F3F3F3;" data-snippet="s_images_wall" data-name="Images Wall">
+              <div class="container-fluid" style="position: relative;text-align: center;"><div class="row s_nb_column_fixed">
+              <div class="o_masonry_col o_snippet_not_selectable col-lg-12 newsletter-section-1" style="margin-bottom: -10%;"><img src="/web/image/389270-9b9e910d/newsletter.jpg" alt="" class="img img-fluid d-block o_we_custom_image" data-original-id="389268" data-original-src="/web/image/389268-501ffa34/newsletter.jpg" data-mimetype="image/jpeg" data-resize-width="1920" data-quality="100" loading="lazy"/>
+              
+              <div class="centered centered-section-1 subscribe">
+                          <div class="centered centered-section-2 mobile-news-font" style="font-size: 25px; font-weight: bold; "> Subscribe to our newsletter </div>
+                          <div class="centered centered-section-3 mobile-news-font" style="font-size: 18px; font-weight: 500; text-align: left !important; "> Get a 10% discount on your first order  </div>
+                          <div class="s_newsletter_subscribe_form mobile-news-font s_newsletter_list js_subscribe" data-vxml="001" data-list-id="1" data-name="Newsletter" data-snippet="s_newsletter_subscribe_form">
+                              <div class="input-group" style="&#10;  width: 75%; margin-right: auto;margin-top: 7%;">
+                                  <input type="email" name="email" class="js_subscribe_value form-control " placeholder="your email..." style="&#10; border-top-left-radius: 20px; border-bottom-left-radius: 20px; &#10; background-color: #F3F3F3;"/>
+                                  <a role="button" href="#" class="mailsub js_subscribe_btn o_submit btn btn-custom" data-bs-original-title="" title="" style="margin-top:-5px; border: none; height:50px; border-width: 0px; border-style: solid; padding-left:0px !important; border-bottom-right-radius: 15px; border-top-right-radius: 15px; background-color: #FF0000;"><i class="fa fa-envelope" style=" margin-left: 45%; font-size: 22px; color: white;"/></a>
+                                  <a role="button" href="#" class="js_subscribed_btn o_submit btn btn-custom d-none" disabled="disabled" data-bs-original-title="" title="" style="border-width: 1px; border-style: solid;">Send</a>
+                              </div>
+                          </div>
+                      </div>
+              </div></div></div>
+          </section>
+        </div>
+      </t>
+    </t>
+  </t>
