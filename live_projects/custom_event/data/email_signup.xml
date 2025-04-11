@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="signup_confirmation_email_template" model="mail.template">
+            <field name="name">Signup Confirmation Email</field>
+            <field name="email_from">{{object.company_id.email}}</field>
+            <field name="email_to">{{ object.partner_id.email }}</field>
+            <field name="subject">Confirm Your Account</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="body_html">
+                <![CDATA[
+                    <p>Hello, </p><span t-esc='object.name'/>
+                    <p>Click the link below to confirm your account:</p>
+                    <p><a href="${{object.confirmation_url}}">Confirm Account</a></p>
+                    <p>Thank you!</p>
+                ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

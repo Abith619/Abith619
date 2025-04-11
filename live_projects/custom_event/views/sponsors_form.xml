@@ -1,0 +1,98 @@
+<t t-name="website.sponsors">
+    <t t-call="website.layout">
+        <style>
+            label{
+                color: white;
+                text-align: center;
+                width: 43% !important;
+            }
+        </style>
+        <div id="wrap" class="oe_structure oe_empty"><section class="s_text_block pt40 pb0 o_colored_level bg-black" data-snippet="s_text_block" data-name="Text">
+        <div class="container s_allow_columns">
+            <h1 style="text-align: center;">Sponsorship Packages</h1>
+        </div>
+    </section>
+    <section class="s_text_block pt40 pb40 o_colored_level bg-black oe_img_bg o_bg_img_center" data-snippet="s_text_block" data-name="Text" style="background-image: url(&quot;/web/image/1000-b7e597d1/red%20tire%201.webp&quot;) !important;" data-mimetype="image/webp" data-original-id="972" data-original-src="/web/image/972-b7e597d1/red%20tire%201.png" data-mimetype-before-conversion="image/png" data-resize-width="1461">
+        <div class="s_allow_columns container">
+            <h3 style="text-align: center;">Main Show Sponsorships</h3><h5 style="margin-bottom: 0px;"><strong>Title Sponsor (Exclusive) – $250,000</strong></h5><ul style="margin-bottom: 0px;"><li>Exclusive naming rights as the Title Sponsor.</li><li>Logo placement on all event materials, banners, and promotions.</li><li>Prime speaking opportunity at the opening ceremony.</li><li>VIP networking opportunities with industry leaders.<br/><br/></li></ul><h5 style="margin-bottom: 0px;"><strong>Co-Presenting Sponsor (2 max) – $100,000 each</strong></h5><ul style="margin-bottom: 0px;"><li>Recognition as a Co-Presenting Sponsor.</li><li>Logo on event signage, website, and marketing materials.</li><li>Opportunity to host a panel discussion or workshop.</li></ul><ul><li>Access to VIP networking events.</li></ul><h3 style="text-align: center;">Digital &amp;amp; Mobile Sponsorships</h3><h5 style="margin-bottom: 0px;"><strong>Event Mobile App Sponsorship – $75,000</strong></h5><ul style="margin-bottom: 0px;"><li>Exclusive sponsorship of the event mobile app.</li><li>Logo featured on the app landing page and all app communications.</li><li>Opportunity to send push notifications during the event.<br/><br/></li></ul><h5 style="margin-bottom: 0px;"><strong>Push Notification Sponsor (5 messages) – $5,000 each</strong></h5><ul style="margin-bottom: 0px;"><li>Ability to send up to 5 custom messages directly to attendees via the event app.</li><li>Boost visibility with targeted messaging.<br/><br/></li></ul><h5 style="margin-bottom: 0px;"><strong>Wi-Fi Sponsorship – $50,000</strong></h5><ul style="margin-bottom: 0px;"><li>Branding on Wi-Fi login page and signage.</li></ul><ul><li>Recognition on event materials and app.</li></ul><h3 style="text-align: center;">On-Site Branding</h3><h5 style="text-align: left; margin-bottom: 0px;"><strong>Main Entrance Banner – $50,000</strong></h5><ul style="text-align: left; margin-bottom: 0px;"><li>Prime placement of your banner at the event entrance.</li><li>High visibility to all attendees.</li></ul><h5 style="text-align: left; margin-bottom: 0px;"><strong>Registration Desk Sponsor – $30,000</strong></h5><ul style="text-align: left; margin-bottom: 0px;"><li>Branding on the registration desk.</li><li>Recognition on event materials and app.</li></ul><h5 style="text-align: left; margin-bottom: 0px;"><strong>Lanyard Sponsor – $40,000</strong></h5><ul style="text-align: left; margin-bottom: 0px;"><li>Exclusive branding on attendee lanyards.</li><li>High visibility throughout the event.</li></ul><h5 style="text-align: left; margin-bottom: 0px;"><strong>Badge/NFC Card Sponsor – $35,000</strong></h5><ul style="text-align: left; margin-bottom: 0px;"><li>Branding on all attendee badges or NFC cards.</li></ul><ul style="text-align: left;"><li>Visibility at all event access points.</li></ul></div>
+    </section>
+<section class="s_title_form pb48 o_colored_level o_cc o_cc2 bg-black pt0 s_parallax_no_overflow_hidden" data-snippet="s_title_form" data-name="Title - Form" data-scroll-background-ratio="0">
+    <h2 class="text-center"><font class="text-o-color-3">Sponsorship Registration Form<br/>`</font></h2>
+        <div class="container">
+            <p class="text-center lead"><font class="text-o-color-3">Interested in partnering with us? Fill out the form below, and our team will reach out to you promptly.</font><br/></p>
+    <section class="s_website_form pt16 pb16" data-vcss="001" data-snippet="s_website_form" data-name="Form">
+        <div class="container-fluid">
+            <form action="/website/form/" method="post" enctype="multipart/form-data" class="o_mark_required" data-mark="*" data-pre-fill="true" data-model_name="mail.mail" data-success-mode="message" data-success-page="/contactus-thank-you">
+                <div class="s_website_form_rows row s_col_no_bgcolor">
+                    <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_custom" data-type="char">
+                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                            <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="o291di1too2s">
+                                <span class="s_website_form_label_content o_default_snippet_text">Company Name</span>
+                            </label>
+                            <div class="col-sm">
+                                <input class="form-control s_website_form_input" type="text" name="company" data-fill-with="commercial_company_name" id="o291di1too2s"/>
+                            </div>
+                        </div>
+                    </div><div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_custom s_website_form_required" data-type="char">
+                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                            <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="obij2aulqyau">
+                                <span class="s_website_form_label_content o_default_snippet_text">Primary Contact Person</span>
+                            <span class="s_website_form_mark"> *</span></label>
+                            <div class="col-sm">
+                                <input class="form-control s_website_form_input" type="text" name="name" required="1" data-fill-with="name" id="obij2aulqyau"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_custom" data-type="tel">
+                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                            <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="ozp7022vqhe">
+                                <span class="s_website_form_label_content o_default_snippet_text">Phone Number</span>
+                            </label>
+                            <div class="col-sm">
+                                <input class="form-control s_website_form_input" type="tel" name="phone" data-fill-with="phone" id="ozp7022vqhe"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_model_required" data-type="email">
+                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                            <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="oub62hlfgjwf">
+                                <span class="s_website_form_label_content o_default_snippet_text">Email Address</span>
+                            <span class="s_website_form_mark"> *</span></label>
+                            <div class="col-sm">
+                                <input class="form-control s_website_form_input" type="email" name="email_from" required="" data-fill-with="email" id="oub62hlfgjwf"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_model_required s_website_form_field_hidden" data-type="char">
+                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                            <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="oqsf4m51acj">
+                                <span class="s_website_form_label_content o_default_snippet_text">Subject</span>
+                            <span class="s_website_form_mark"> *</span></label>
+                            <div class="col-sm">
+                                <input class="form-control s_website_form_input" type="text" name="subject" required="" id="oqsf4m51acj" value="Sponsorship Request"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_custom s_website_form_required s_website_form_field_hidden" data-type="text">
+                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                            <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="oyeqnysxh10b">
+                                <span class="s_website_form_label_content o_default_snippet_text">Your Question</span>
+                            <span class="s_website_form_mark"> *</span></label>
+                            <div class="col-sm">
+                                <textarea class="form-control s_website_form_input" name="description" required="1" id="oyeqnysxh10b" rows="3">I would like to Register the Sponsorship for </textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_custom s_website_form_required col-lg-11 offset-lg-1" data-type="selection" data-translated-name="Field"><label class="s_website_form_label" style="width: fit-content !important; margin-right: 25%; margin-left: 25%; margin-bottom: 2%;" for="oh1xf72mdci7"><span class="s_website_form_label_content">Select a Sponsorship Package</span><span class="s_website_form_mark">                                     *</span></label><div class="row s_col_no_resize s_col_no_bgcolor s_website_form_multiple" data-name="Sponsorship Package" data-display="horizontal"><div class="radio col-12 col-lg-4 col-md-6"><div class="form-check"><input type="radio" class="s_website_form_input form-check-input" id="oh1xf72mdci70" name="Sponsorship Package" value="Title Sponsor – $250,000" required="1" data-fill-with="undefined"/><label class="form-check-label s_website_form_check_label" for="oh1xf72mdci70" style="width: fit-content !important">Title Sponsor – $250,000</label></div></div><div class="radio col-12 col-lg-4 col-md-6"><div class="form-check"><input type="radio" class="s_website_form_input form-check-input" id="oh1xf72mdci71" name="Sponsorship Package" value="Co-Presenting Sponsor – $100,000" required="1"/><label class="form-check-label s_website_form_check_label" style="width: fit-content !important" for="oh1xf72mdci71">Co-Presenting Sponsor – $100,000</label></div></div><div class="radio col-12 col-lg-4 col-md-6"><div class="form-check"><input type="radio" class="s_website_form_input form-check-input" id="oh1xf72mdci72" name="Sponsorship Package" value="Event Mobile App Sponsorship – $75,000" required="1"/><label class="form-check-label s_website_form_check_label" for="oh1xf72mdci72" style="width: fit-content !important">Event Mobile App Sponsorship – $75,000</label></div></div><div class="radio col-12 col-lg-4 col-md-6"><div class="form-check"><input type="radio" class="s_website_form_input form-check-input" id="oh1xf72mdci73" name="Sponsorship Package" value="Push Notification Sponsor – $5,000 (per message)" required="1"/><label class="form-check-label s_website_form_check_label" for="oh1xf72mdci73" style="width: fit-content !important">Push Notification Sponsor – $5,000 (per message)</label></div></div><div class="radio col-12 col-lg-4 col-md-6"><div class="form-check"><input type="radio" class="s_website_form_input form-check-input" id="oh1xf72mdci74" name="Sponsorship Package" value="Wi-Fi Sponsorship – $50,000" required="1"/><label class="form-check-label s_website_form_check_label" for="oh1xf72mdci74" style="width: fit-content !important">Wi-Fi Sponsorship – $50,000</label></div></div><div class="radio col-12 col-lg-4 col-md-6"><div class="form-check"><input type="radio" class="s_website_form_input form-check-input" id="oh1xf72mdci75" name="Sponsorship Package" value="Main Entrance Banner – $50,000" required="1"/><label class="form-check-label s_website_form_check_label" for="oh1xf72mdci75" style="width: fit-content !important">Main Entrance Banner – $50,000</label></div></div><div class="radio col-12 col-lg-4 col-md-6"><div class="form-check"><input type="radio" class="s_website_form_input form-check-input" id="oh1xf72mdci76" name="Sponsorship Package" value="Registration Desk Sponsor – $30,000" required="1"/><label class="form-check-label s_website_form_check_label" for="oh1xf72mdci76" style="width: fit-content !important">Registration Desk Sponsor – $30,000</label></div></div><div class="radio col-12 col-lg-4 col-md-6"><div class="form-check"><input type="radio" class="s_website_form_input form-check-input" id="oh1xf72mdci77" name="Sponsorship Package" value="Lanyard Sponsor – $40,000" required="1"/><label class="form-check-label s_website_form_check_label" for="oh1xf72mdci77" style="width: fit-content !important">Lanyard Sponsor – $40,000</label></div></div><div class="radio col-12 col-lg-4 col-md-6"><div class="form-check"><input type="radio" class="s_website_form_input form-check-input" id="oh1xf72mdci78" name="Sponsorship Package" value="Badge/NFC Card Sponsor – $35,000" required="1"/><label class="form-check-label s_website_form_check_label" for="oh1xf72mdci78" style="width: fit-content !important">Badge/NFC Card Sponsor – $35,000</label></div></div></div></div><div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_dnone"><div class="row s_col_no_resize s_col_no_bgcolor"><label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px"><span class="s_website_form_label_content"/></label><div class="col-sm"><input type="hidden" class="form-control s_website_form_input" name="email_to" value="jackie@retailrebelrevolution.com"/></div></div></div><div class="mb-0 py-2 col-12 s_website_form_submit text-center s_website_form_no_submit_label" data-name="Submit Button">
+                        <div style="width: 200px;" class="s_website_form_label"/>
+                        <span id="s_website_form_result"/>
+                        <a href="#" role="button" class="btn btn-primary s_website_form_send">Submit</a>
+                    </div>
+                </div>
+            </form><div class="s_website_form_end_message d-none" style="color: white;"><div class="oe_structure"><section class="s_text_block o_colored_level rounded px-5 text-center" data-snippet="s_text_block" data-name="Text"><i class="fa fa-paper-plane fa-2x mb-3 rounded-circle text-bg-success" role="img" aria-hidden="true" title="Success"/><h1 class="fw-bolder" style="color: white;">Thank you for your Interest!</h1><p class="lead mb-0">Our team will message you back as soon as possible.</p><p class="lead">In the meantime we invite you to visit our <a href="/coming-soon">website</a>.</p></section></div></div>
+        </div>
+    </section>
+        </div>
+    </section></div>
+    </t>
+</t>

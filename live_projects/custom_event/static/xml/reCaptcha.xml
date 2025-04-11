@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <script src="https://www.google.com/recaptcha/api.js?render=6Lca6worAAAAAFnqFDFMy_2UdN1WqzEkidKgyKkj"/>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            grecaptcha.ready(function () {
+                grecaptcha.execute('6Lca6worAAAAAFnqFDFMy_2UdN1WqzEkidKgyKkj', { action: 'submit' })
+                    .then(function (token) {
+                        console.log('Google reCAPTCHA Loaded');
+                        console.log('reCAPTCHA token:', token);
+                        document.getElementById('g-recaptcha-response').value = token;
+                    })
+                    .catch(function (error) {
+                        console.error("reCAPTCHA error: ", error);
+                    });
+            });
+        });
+    </script>
+    <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response"/>
+</odoo>

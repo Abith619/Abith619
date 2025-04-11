@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<template name="website.membership-registration">
+    <t t-call="website.layout">
+        <div id="wrap" class="oe_structure oe_empty">
+            <section class="s_title_form o_cc o_cc2 pt64 o_colored_level parallax s_parallax_is_fixed s_parallax_no_overflow_hidden pb40" data-snippet="s_title_form" data-name="Title - Form" data-scroll-background-ratio="1"><span class="s_parallax_bg oe_img_bg o_bg_img_center" style="background-image: url(&quot;/web/image/1567-4ca4bc0b/Rectangle%204.webp&quot;);" data-mimetype="image/webp" data-original-id="1566" data-original-src="/web/image/1566-c64702fe/Rectangle%204.png" data-mimetype-before-conversion="image/png" data-resize-width="1920"/>
+                <div class="o_container_small" style="width: 40%;">
+                    <div class="s_card o_card_img_top card o_cc o_cc1 o_colored_level rounded" data-vxml="001" data-snippet="s_card" data-name="Card" style="border-radius: 30px !important;">
+                <div class="card-body" style="text-align: center;">
+                    <h3 class="card-title" style="text-align: center;"><strong><font class="text-o-color-1"><br/>Membership Perks</font></strong></h3>
+                    <p class="card-text" style="text-align: center;"><span style="font-size: 1.25rem;">First-Year Introductory Membership fee&amp;nbsp;</span><br/><span style="font-size: 1.25rem;">$298/ USD/Creator/mo (annually)</span><br/><span style="font-size: 1.25rem;"><strong>Members gain access to:</strong></span><br/></p><p class="card-text" style="text-align: left;"><span style="font-size: 1.25rem;">✅7.7% discount on trade show booth fees<br/>✅Exclusive access to industry research, educational resources, and expert-led webinars<br/>✅Private networking events &amp;amp; mastermind groups<br/>✅Special vendor and service provider discount<br/>✅Priority access &amp;amp; discounted rates for additional RRR events</span></p><div class="s_hr pt0 pb8" data-snippet="s_hr" data-name="Separator">
+                <hr class="mx-auto w-50"/>
+                </div>
+                    <span style="font-size: 2.5rem;"><strong>$298</strong>/membership</span><br/>
+                    <div class="s_add_to_cart" data-snippet="s_add_to_cart" data-name="Add to Cart Button">
+                        <button href="/shop/cart" class="s_add_to_cart_btn btn btn-primary js_add_cart mb-2 o_default_snippet_text" data-product-id="65" data-product-template-id="56">
+                            Discover
+                        </button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </section>
+        </div>
+    </t>
+</template>
+</odoo>

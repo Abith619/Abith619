@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <odoo>
+    <t name="Event Booth Registration" t-name="website_event_booth.event_booth_registration">
+    <t t-call="website_event_booth.event_booth_layout">
+        <t t-if="event_booths and not event.is_finished">
+            <div class="d-flex flex-wrap align-items-center justify-content-between my-3">
+                <h4 class="my-0">Get A Booth</h4>
+                <t t-call="website_event_booth.event_booth_order_progress">
+                    <t t-set="step" t-value="'STEP_BOOTH_SELECTION'"/>
+                </t>
+            </div>
+            <div class="oe_structure oe_empty o_colored_level" id="oe_structure_website_event_booth_inner_1"/>
+            <div t-attf-class="#{'col-lg-12' if available_booth_category_ids else 'col-lg-12'}">
+                <form method="post" class="form-horizontal js_website_submit_form o_wbooth_registration_form mt-1" t-attf-action="/event/#{slug(event)}/booth/register" t-att-data-event-id="event.id">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="row mb-3">
+                        <t t-foreach="event.event_booth_category_ids" t-as="booth_category">
+                            <t t-set="booth_category_unavailable" t-value="booth_category not in available_booth_category_ids"/>
+                            <t t-if="booth_category.id in [1, 2, 3]">
+                            <div t-attf-class="col-md-6 col-lg-4 mb-4 {{ (len(event.event_booth_category_ids) &gt; 3) and 'col-xxl-3' }}">
+                                <label t-attf-class="d-block h-100 #{'o_wbooth_category_unavailable overflow-hidden' if booth_category_unavailable else ''}">
+                                    <input type="radio" name="booth_category_id" t-att-value="booth_category.id" t-att-disabled="booth_category_unavailable" t-att-checked="booth_category.id == selected_booth_category_id"/>
+                                    <div class="card h-100">
+                                        <div t-field="booth_category.image_1920" class="card-img-top border-bottom" t-options="{&quot;widget&quot;: &quot;image&quot;, &quot;qweb_img_responsive&quot;: False, &quot;class&quot;: &quot;img img-fluid h-100 w-100 mw-100&quot;, &quot;style&quot;: &quot;max-height: 208px; min-height: 208px; object-fit: cover&quot;}"/>
+                                            <h5 class="o_ribbon_right text-bg-success">$4,000</h5>
+                                        <div class="card-body d-flex flex-wrap w-100 justify-content-between flex-grow-0 pb-0">
+                                            <h6 name="booth_category_name" class="card-title my-0" style="font-weight: bolder; min-height: 40px !important;" t-out="booth_category.name"/>
+                                            <div class="w-100 small" t-attf-id="o_wbooth_booth_description_#{booth_category.id}" t-field="booth_category.description" style="min-height: 40px !important;"/>
+                                            <span class="booth_category_price"/>
+                                            <p name="booth_category_x_studio_quantity_name" t-field="booth_category.quantity_details"/>
+                                        </div>
+                                        <!--<div class="d-flex" style="justify-content: space-evenly;"><h5>Only </h5>-->
+                                            <!-- <b><h5 name="booth_quantity col" t-out="booth_category.x_studio_booth_quantity"/></b><h5>Booths Remaining!</h5> -->
+                                        <!--</div>-->
+                                    </div>
+                                    <div t-if="booth_category_unavailable" class="o_ribbon_right text-bg-success">
+                                        <span class="text-nowrap">Contact Us</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </t>
+                        </t>
+                    <h5 class="my-3">Quantity</h5>
+                        <div class="o_wbooth_booths col-12 d-flex flex-wrap align-items-center gap-2" t-att-data-selected-booth-ids="selected_booth_ids or ''"/>
+                        <div class="o_wbooth_booths col-12 d-flex flex-wrap align-items-center gap-2" t-att-data-selected-booth-ids="selected_booth_ids or ''">
+                            <t t-if="selected_booth_category_id == 1">
+                                <div class="form-check">
+                                    <label for="boothSelection">Select Quantity</label>
+                                    <select id="boothSelection" name="boothSelection" class="form-control" onchange="updateAmount()">
+                                        <option value="1">1 Booth</option>
+                                        <option value="2">2 Booths</option>
+                                        <option value="3">3 Booths</option>
+                                        <option value="4">4 Booths</option>
+                                    </select>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class="form-group">
+                                    <label for="boothQuantity">Enter Quantity</label>
+                                    <input type="number" id="boothQuantity" name="boothQuantity" class="form-control" min="1" max="10" placeholder="Enter Booth Quantity" onchange="updateAmount()"/>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                    <t t-if="available_booth_category_ids">
+                        <div class="row">
+                            <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                                <h5 class="my-0">Location</h5>
+                                <div t-if="event.exhibition_map" class="ms-2 small">
+                                    <a class="text-decoration-none text-center" href="#" data-bs-toggle="modal" data-bs-target="#mapModal"><i class="fa fa-map-o me-1"/>View Plan</a>
+                                    <div role="dialog" id="mapModal" class="modal" tabindex="-1">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <div t-field="event.exhibition_map" t-options="{'widget': 'image'}" class="img img-responsive"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12 o_wbooth_booths d-flex flex-wrap align-items-center gap-2 d-none" t-att-data-selected-booth-ids="selected_booth_ids or ''"/>
+                            <div class="row">
+                                <div class="alert alert-danger col-12 o_wbooth_unavailable_booth_alert d-none" role="alert">
+                                    <i class="fa fa-exclamation-triangle"/>
+                                    <span>Sorry, several booths are now sold out. Please change your choices before validating again.</span>
+                                </div>
+                            </div>
+                            <div class="pt24 pb48" name="booth_registration_submit">
+                                <div class="d-flex align-items-center justify-content-end gap-2">
+                                    <button type="submit" class="o_wbooth_registration_submit btn btn-primary btn-block" disabled="true">
+                                        <span>Book Now<small>(s)</small></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <div t-else="" class="alert alert-info">
+                        <span>Sorry, all the booths are sold out. <a class="alert-link" href="/contactus">Contact Us</a> if you have any question.</span>
+                    </div>
+                </form>
+            </div>
+        </t>
+    </t>
+</t>
+  </odoo>

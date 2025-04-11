@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <t name="Homepage" t-name="website.homepage">
+        <t t-call="website.layout">
+            <t t-set="pageName" t-value="'homepage'"/>
+            <div id="wrap" class="oe_structure">
+                <section class="s_cover o_cc o_cc5 o_colored_level pb0 pt0 s_parallax_no_overflow_hidden parallax s_parallax_is_fixed o_full_screen_height" data-scroll-background-ratio="1" data-snippet="s_cover" data-name="Cover" style="object-fit: fill; background-position: 50% 28.5556%;"><span class="s_parallax_bg oe_img_bg o_bg_img_center" style="background-position: 0% 50.2593%; background-image: url(&quot;/web/image/1630-737e2944/Desktop%20-%207%203.webp&quot;);" data-mimetype="image/webp" data-original-id="1629" data-original-src="/web/image/1629-23c8bbf0/Desktop%20-%207%203.png" data-mimetype-before-conversion="image/png" data-resize-width="1920"/>
+
+        <div class="position-relative mx-auto" style="margin-top: auto;"><h5>
+            <a role="button" href="/membership" class="btn btn-custom text-o-color-3 btn-lg" style="border-width: 1px; border-style: solid; background-color: rgb(101, 22, 19);"><strong>Join the Revolution</strong></a>
+        </h5></div>
+    </section>
+        <section class="s_text_block o_colored_level pb32 pt32 bg-black" data-snippet="s_text_block" data-name="Text">
+            <div class="s_allow_columns container">
+                <h4 style="text-align: center;"><font class="text-o-color-3">&amp;nbsp;</font><br/><font class="text-o-color-3">Retail Rebel Revolution is an&amp;nbsp;</font><strong><font class="text-o-color-3">anti-trade show</font></strong><font class="text-o-color-3">&amp;nbsp;designed for&amp;nbsp;<strong>disruptive, rebellious, and emerging products</strong>. Unlike traditional trade shows, RRR is a&amp;nbsp;</font><strong><font class="text-o-color-3">transaction-focused</font></strong> <font class="text-o-color-3"><strong>event</strong>&amp;nbsp;where exhibitors and attendees can&amp;nbsp;<strong>sell, buy, and connect in a meaningful way</strong>.</font><font class="bg-black">​</font>
+            </h4></div>
+        </section>
+        <section class="s_text_image o_colored_level pt0 bg-black pb56" data-snippet="s_image_text" data-name="Text - Image">
+            <div class="container">
+                <div class="row o_grid_mode" data-row-count="14">
+                <div class="o_colored_level o_grid_item g-col-lg-6 o_grid_item_image g-height-13 col-lg-6" style="z-index: 1; grid-area: 2 / 1 / 15 / 7;">
+                    <img src="/web/image/991-3004de47/hh.webp" alt="" class="img img-fluid mx-auto o_we_custom_image rounded" data-mimetype="image/webp" data-original-id="979" data-original-src="/web/image/979-e9c2cf50/hh.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
+                </div>
+                    <div class="o_colored_level o_grid_item g-col-lg-6 g-height-1 col-lg-6" style="z-index: 2; grid-area: 2 / 7 / 3 / 13;">
+                        <h1 style="text-align: center;">
+                    <strong><font style="color: rgb(176, 22, 17);">Event Details</font></strong><br/></h1>
+                </div><div class="o_colored_level g-col-lg-2 o_grid_item g-height-1 col-lg-2" style="z-index: 13; grid-area: 4 / 7 / 5 / 9;">
+                    <p style="text-align: center;"><strong><font style="color: rgb(176, 22, 17);">Date</font></strong><font style="color: rgb(176, 22, 17);">:</font></p>
+                </div><div class="o_colored_level g-col-lg-4 o_grid_item g-height-1 col-lg-4" style="z-index: 14; grid-area: 4 / 9 / 5 / 13;">
+                    <p style="text-align: center;">August 27-28, 2025</p>
+                </div><div class="o_colored_level o_grid_item g-height-1 g-col-lg-2 col-lg-2" style="z-index: 12; grid-area: 5 / 7 / 6 / 9;">
+                    <p style="text-align: center;"><strong><font style="color: rgb(176, 22, 17);">Pre-Show:</font></strong></p>
+                </div><div class="o_colored_level g-col-lg-4 o_grid_item g-height-1 col-lg-4" style="z-index: 11; grid-area: 5 / 9 / 6 / 13;">
+                    <p style="text-align: center;">August 26, 2025</p>
+                </div><div class="o_colored_level o_grid_item g-col-lg-2 g-height-2 col-lg-2" style="z-index: 10; grid-area: 6 / 7 / 8 / 9;">
+                    <p style="text-align: center;"><strong><font style="color: rgb(176, 22, 17);">Party Venue</font></strong><font style="color: rgb(176, 22, 17);">:</font></p>
+                </div><div class="o_colored_level g-col-lg-4 o_grid_item g-height-2 col-lg-4" style="z-index: 9; grid-area: 6 / 9 / 8 / 13;">
+                    <p style="text-align: center;">Orange County Convention Center, Orlando, FL</p>
+                </div>
+                <div class="o_colored_level g-col-lg-4 o_grid_item g-height-1 col-lg-4" style="z-index: 5; grid-area: 9 / 9 / 10 / 13;">
+                    <p style="text-align: center;">August 28, 2025</p>
+                </div><div class="o_colored_level g-col-lg-2 g-height-2 col-lg-2 o_grid_item" style="z-index: 4; grid-area: 10 / 7 / 12 / 9;">
+                    <p style="text-align: center;"><strong><font style="color: rgb(176, 22, 17);">Mission:</font></strong></p>
+                </div><div class="o_colored_level g-col-lg-4 o_grid_item g-height-3 col-lg-4" style="z-index: 3; grid-area: 10 / 9 / 13 / 13;">
+                    <p style="text-align: center;">To challenge outdated trade show models by providing real value, networking, and&amp;nbsp;immediate ROI for brands, retailers, and investors.</p>
+                </div><div class="o_colored_level g-col-lg-4 o_grid_item g-height-1 col-lg-4" style="z-index: 7; grid-area: 8 / 9 / 9 / 13;">
+                    <p style="text-align: center;">August 26, 2025</p>
+                </div><div class="o_colored_level g-col-lg-2 o_grid_item g-height-1 col-lg-2" style="z-index: 8; grid-area: 8 / 7 / 9 / 9;">
+                    <p style="text-align: center;"><strong><font style="color: rgb(176, 22, 17);">Move-in:</font></strong></p>
+                </div></div>
+                </div>
+            </section>
+        <section class="s_three_columns o_colored_level pb0 bg-black pt0 oe_img_bg o_bg_img_center" data-vxml="001" data-vcss="001" data-snippet="s_three_columns" data-name="Columns" style="background-image: url(&quot;/web/image/995-cdeea8d3/chain.webp&quot;) !important;" data-mimetype="image/webp" data-original-id="990" data-original-src="/web/image/990-dee2c116/chain.png" data-mimetype-before-conversion="image/png" data-resize-width="1920">
+            <div class="container">
+                <div class="row d-flex align-items-stretch">
+                    <div data-name="Card" class="col-lg-4 pt16 pb0">
+                        <div class="s_card card h-100 my-0 o_colored_level rounded o_cc o_cc2" data-vxml="001" data-snippet="s_card" data-name="Card" style="border-radius: 15px !important;">
+                            <div class="card-body" style="height: 20%; ">
+                                <h4 class="card-title" style="text-align: center; text-align: center;">
+                                    <strong><font style="color: rgb(101, 22, 19);">Get a Booth<br/></font><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);"><br/>Showcase your brand, products, and services to a dynamic audience.</font></span></strong></h4><ul class="card-text" style="margin-bottom: 0px;"><li><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Gain visibility and attract potential clients.</font></span></li><li><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Network with industry leaders and decision-makers.</font></span></li></ul><ul class="card-text"><li><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Drive business growth with exclusive exhibitor benefits.&amp;nbsp;</font></span></li></ul>
+                                <a class="mb-0 btn btn-custom text-o-color-3 rounded-circle" style="border-width: 1px; border-style: solid; margin: auto; background-color: rgb(101, 22, 19);" href="/event/retail-rebel-revolution-1/booth">Register​​​</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-name="Card" class="col-lg-4 pt16 pb0">
+                        <div class="s_card card h-100 my-0 o_colored_level rounded o_cc o_cc2" data-vxml="001" data-snippet="s_card" data-name="Card" style="border-radius: 15px !important;">
+                            <div class="card-body">
+                                <h4 class="card-title" style="text-align: center;;">
+                                <strong><font style="color: rgb(101, 22, 19);">Join as an Attendee<br/><br/></font><span class="base-fs"><font style="color: rgb(101, 22, 19);">Explore, engage, and expand your knowledge with like-minded professionals.</font></span></strong></h4><ul class="card-text" style="text-align: left;"><li><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Attend insightful sessions and workshops.</font></span></li></ul><ul class="card-text"><li><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">&amp;nbsp;Connect with exhibitors and industry experts.</font></span></li><li><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">&amp;nbsp;Discover the latest trends and innovations.&amp;nbsp;</font></span><br/></li></ul>
+                                <a class="mb-0 btn btn-custom text-o-color-3 rounded-circle" style="border-width: 1px; border-style: solid; margin: auto; background-color: rgb(101, 22, 19);" href="https://retailrebelrevolution.com/event/retail-rebel-revolution-1/register">Join ​​Now​​​​</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-name="Card" class="col-lg-4 pt16 pb0">
+                        <div class="s_card card h-100 my-0 o_colored_level rounded o_cc o_cc2" data-vxml="001" data-snippet="s_card" data-name="Card" style="border-radius: 15px !important;">
+                            <div class="card-body">
+                                <h4 class="card-title" style="text-align: center;">&amp;nbsp;<strong><font style="color: rgb(101, 22, 19);">Become a Member<br/><br/></font></strong></h4><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);"><strong>Unlock premium benefits and stay ahead in the industry.</strong><br/><br/></font></span><ul><li style="text-align: left;"><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Access exclusive resources and networking events.&amp;nbsp;</font></span></li><li style="text-align: left;"><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Get early-bird discounts for future conferences.&amp;nbsp;</font></span></li><li style="text-align: left;"><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Be part of a thriving community of professionals.</font></span></li></ul>
+                                <a class="mb-0 btn btn-custom text-o-color-4 rounded-circle" style="border-width: 1px; border-style: solid; margin: auto; background-color: rgb(101, 22, 19);" href="/membership">​​​​Get Membe​​rship</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="s_text_block pt40 pb40 o_colored_level bg-black" data-snippet="s_text_block" data-name="Text">
+            <div class="s_allow_columns container-fluid">
+                <div class="row o_grid_mode" data-row-count="28"><div class="o_grid_item o_colored_level g-height-2 g-col-lg-9 col-lg-9" style="grid-area: 1 / 2 / 3 / 11; z-index: 1;"><h1 style="text-align: left;"><span class="display-3-fs">With Retail Rebel Revolution</span></h1><h6 style="text-align: left;">"More Exciting Updates Coming Soon"</h6></div><div class="o_grid_item o_grid_item_image o_colored_level g-height-3 g-col-lg-2 col-lg-2" style="grid-area: 1 / 1 / 4 / 3; z-index: 7;"><h1><img src="/web/image/993-313bcfad/632c795d4ef5e48fe2a8a3e4_hero-bg-yellow.svg.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="971" data-original-src="/web/image/971-6a1e97e8/632c795d4ef5e48fe2a8a3e4_hero-bg-yellow.svg.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/></h1></div><div class="o_grid_item o_grid_item_image o_colored_level g-col-lg-3 g-height-7 col-lg-3" style="z-index: 11; grid-area: 3 / 6 / 10 / 9;"><img src="/web/image/994-9211bf5d/eventinity.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="976" data-original-src="/web/image/976-76f9347e/eventinity.jpg" data-mimetype-before-conversion="image/jpeg" data-resize-width="NaN" loading="lazy"/></div><div class="o_grid_item o_grid_item_image o_colored_level g-col-lg-3 g-height-7 col-lg-3" style="z-index: 12; grid-area: 6 / 8 / 13 / 11;"><img src="/web/image/997-3ef49143/eventinity1.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="975" data-original-src="/web/image/975-6525ebd1/eventinity1.jpg" data-mimetype-before-conversion="image/jpeg" data-resize-width="NaN" loading="lazy"/></div><div class="o_grid_item o_grid_item_image o_colored_level g-height-3 g-col-lg-2 col-lg-2" style="z-index: 6; grid-area: 4 / 10 / 7 / 12;"><p><img src="/web/image/992-b194a05b/632af7498246e4779d327461_Cube.svg.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="978" data-original-src="/web/image/978-ab75a24c/632af7498246e4779d327461_Cube.svg.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/></p></div><div class="o_grid_item o_grid_item_image o_colored_level g-height-2 g-col-lg-3 col-lg-3" style="z-index: 13; grid-area: 10 / 5 / 12 / 8;"><img src="/web/image/998-54c821e9/632af7498246e4b22c327460_Big-star.svg.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="977" data-original-src="/web/image/977-f7f756b1/632af7498246e4b22c327460_Big-star.svg.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/></div><div class="o_grid_item o_colored_level g-col-lg-8 g-height-4 col-lg-8" style="z-index: 8; grid-area: 14 / 2 / 18 / 10;"><h1><span class="display-3-fs">EXPLORE THE ORLANDO CONVENTION CENTER</span></h1></div><div class="o_grid_item col-lg-4 g-col-lg-4 g-height-2 o_colored_level" style="z-index: 15; grid-area: 27 / 7 / 29 / 11;"><h5 style="margin-bottom: 0px;">"Explore the Orange County Convention Center. More to come!"</h5></div><div class="o_grid_item o_grid_item_image o_colored_level g-height-9 g-col-lg-4 col-lg-4 rounded" style="z-index: 10; border-radius: 20px !important; grid-area: 18 / 7 / 27 / 11;"><img src="/web/image/996-54a55a25/Rectangle%206.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="973" data-original-src="/web/image/973-b75e9690/Rectangle%206.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/></div><div class="o_grid_item o_grid_item_image o_colored_level g-height-9 g-col-lg-4 col-lg-4" style="z-index: 9; grid-area: 19 / 2 / 28 / 6;"><img src="/web/image/999-cb567c81/booth.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="988" data-original-src="/web/image/988-7d18c5ee/booth.jpg" data-mimetype-before-conversion="image/jpeg" data-resize-width="NaN" loading="lazy"/></div><div class="o_grid_item o_colored_level g-col-lg-3 rounded g-height-3 col-lg-3" style="z-index: 14; background-color: rgb(101, 22, 19); --grid-item-padding-x: 15px; --grid-item-padding-y: 25px; border-radius: 10px !important; grid-area: 22 / 5 / 25 / 8;"><h3 style="text-align: left;">Venue : 1<font style="background-color: rgb(101, 22, 19);">​</font></h3><p style="text-align: left;">Orange County Convention Center</p></div></div></div>
+        </section><section data-snippet="s_events" class="s_events s_event_upcoming_snippet s_dynamic s_dynamic_empty pt32 pb32 o_colored_level s_event_event_card o_bg_img_opt_repeat bg-black o_dynamic_snippet_empty" data-custom-template-data="{&quot;events_event_time_active&quot;:true}" data-name="Events" data-number-of-records="6" data-filter-id="2" data-template-key="website_event.dynamic_filter_template_event_event_card" data-extra-classes="g-3" data-column-classes="col-12 col-sm-6 col-lg-4 col-xxl-3" style="background-size: 100px;">
+                <section class="s_title pt40 pb40 o_colored_level bg-black o_bg_img_opt_repeat oe_img_bg o_bg_img_center" data-vcss="001" data-snippet="s_title" data-name="Title" data-mimetype="image/webp" data-original-id="972">
+                    <div class="container s_allow_columns">
+                        <h2 class="display-3-fs" style="text-align: center;">EVENT SCHEDULE</h2>
+                    </div>
+                </section>
+                <div class="container">
+                    <div class="row s_nb_column_fixed">
+                            <section data-snippet="s_blog_posts" class="s_blog_posts s_dynamic_snippet_blog_posts s_blog_post_big_picture s_blog_posts_effect_marley s_blog_posts_post_picture_size_default s_dynamic s_dynamic_empty pb32 o_colored_level bg-black oe_img_bg o_bg_img_center o_bg_img_opt_repeat o_dynamic_snippet_empty" data-custom-template-data="{&quot;blog_posts_post_author_active&quot;:false,&quot;blog_posts_post_teaser_active&quot;:true,&quot;blog_posts_post_date_active&quot;:true}" data-name="Blog Posts" data-filter-by-blog-id="-1" data-number-of-records="6" data-filter-id="10" data-template-key="website_blog.dynamic_filter_template_blog_post_big_picture" data-extra-classes="g-3" data-column-classes="col-12 col-sm-6 col-lg-4" data-original-id="972">
+                <div class="container">
+                    <div class="row s_nb_column_fixed">
+                        <section class="s_dynamic_snippet_title oe_unremovable oe_unmovable d-flex flex-column flex-md-row mb-lg-0 pb-3 pb-md-0 o_colored_level justify-content-between">
+                            <div>
+                                <p><br/></p>
+                            </div>
+                            <div>
+                            <br/></div>
+                        </section>
+                        <section class="s_dynamic_snippet_content oe_unremovable oe_unmovable o_not_editable col o_colored_level">
+                            <div class="css_non_editable_mode_hidden">
+                                <div class="missing_option_warning alert alert-info fade show d-none d-print-none rounded-0 o_default_snippet_text">
+                                    Your Dynamic Snippet will be displayed here... This message is displayed because you did not provide both a filter and a template to use.<br/>
+                                </div>
+                            </div>
+                            <div class="dynamic_snippet_template"/>
+                        </section>
+                    </div>
+                </div>
+            </section>
+    
+                    </div>
+                </div>
+            </section>
+        <section class="o_colored_level bg-black pb64 oe_img_bg o_bg_img_center" style="background-image: url(&quot;/web/image/1000-b7e597d1/red%20tire%201.webp&quot;) !important;" data-mimetype="image/webp" data-original-id="972" data-original-src="/web/image/972-b7e597d1/red%20tire%201.png" data-mimetype-before-conversion="image/png" data-resize-width="1461">
+            <div class="container">
+                <div class="row justify-content-center o_grid_mode" data-row-count="2">
+                    <div class="text-center o_grid_item g-col-lg-12 g-height-2 col-lg-12 o_colored_level" style="grid-area: 1 / 1 / 3 / 13; z-index: 1;">
+                        <h2><font class="text-o-color-3">Sponsors</font></h2>
+                    </div>
+                </div>
+                <div class="row justify-content-center text-center" data-row-count="-Infinity">
+                    <div class="col-lg-3 col-md-4 col-sm-6 p-3 o_colored_level pb0 pt48">
+                        <img src="/web/image/1001-c0bc6efb/High%20Quality%20KASH%20Tech%20logo%20%281%29%20%281%29%201.webp" alt="Sponsor KashTech" class="img img-fluid mx-auto o_we_custom_image my-auto" loading="lazy" data-mimetype="image/png" data-original-id="1937" data-original-src="/web/image/1937-4ef992d6/High%20Quality%20KASH%20Tech%20logo%20%281%29%20%281%29%201.png" data-mimetype-before-conversion="image/png" style="margin-top: 10%; transform: scaleX(0.75); animation-play-state: paused; transition: none;"/>
+                    </div><div class="col-lg-3 col-md-4 col-sm-6 p-3">
+                        <img src="/web/image/1201-4dba7257/Frame%2023.webp" alt="Sponsor 1" class="img img-fluid mx-auto o_we_custom_image" loading="lazy"/>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 p-3">
+                        <img src="/web/image/1201-4dba7257/Frame%2023.webp" alt="Sponsor 2" class="img img-fluid mx-auto o_we_custom_image" loading="lazy"/>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 p-3 o_colored_level">
+                        <img src="/web/image/1201-4dba7257/Frame%2023.webp" alt="Sponsor 3" class="img img-fluid mx-auto o_we_custom_image" loading="lazy" data-mimetype="image/png" data-original-id="2036" data-original-src="/web/image/2036-0848ef83/Frame%2023.png" data-mimetype-before-conversion="image/png"/>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 p-3 o_colored_level">
+                        <img src="/web/image/1201-4dba7257/Frame%2023.webp" alt="Sponsor 4" class="img img-fluid mx-auto o_we_custom_image" loading="lazy"/>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 p-3">
+                        <img src="/web/image/1201-4dba7257/Frame%2023.webp" alt="Sponsor 5" class="img img-fluid mx-auto o_we_custom_image" loading="lazy"/>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 p-3">
+                        <img src="/web/image/1201-4dba7257/Frame%2023.webp" alt="Sponsor 4" class="img img-fluid mx-auto o_we_custom_image" loading="lazy"/>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 p-3">
+                        <img src="/web/image/1201-4dba7257/Frame%2023.webp" alt="Sponsor 5" class="img img-fluid mx-auto o_we_custom_image" loading="lazy"/>
+                    </div>
+                </div>
+            </div>
+            <div class="container text-center">
+                <a class="btn btn-primary text-center btn-lg" href="/sponsors" style="color: white !important; background-color: rgb(101, 22, 19);">Register to Sponsor</a>
+            </div>
+        </section>
+            </div>
+        </t>
+    </t>
+</odoo>

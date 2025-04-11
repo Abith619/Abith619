@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <t name="Homepage" t-name="website.homepage">
+        <t t-call="website.layout">
+            <t t-set="pageName" t-value="'homepage'"/>
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+            <style>
+                @keyframes slideInFromRight {
+        from {
+            transform: translateX(100px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+
+    .o_grid_item_image img, .o_grid_item_image .media_iframe_video {
+      object-fit: fill !important;
+    }
+
+    .two-image{
+        position: relative;
+        bottom: 50%;
+        left: 60%;
+        border-radius: 10%;
+    }
+
+    .btn-primary{
+      --btn-padding-x: 1rem;
+      --btn-padding-y: 0.375rem;
+    }
+
+    header {
+      display: none !important;
+    }
+
+    #wrapwrap.o_header_overlay &gt; header:not(.o_header_affixed):not(.o_header_sidebar) &gt; .navbar {
+        background-color: rgba(255, 255, 255, 0.25) !important;
+      }
+      
+    label {
+      font-size: 70% !important;
+    }
+    
+    @media (min-width: 1200px) {
+        .form-select {
+            font-size: 1.1rem;
+        }
+    }
+    
+    .img-fluid {
+        width: -webkit-fill-available;
+    }
+    
+    @media (max-width: 768px) {
+      .h1-fs {
+        font-size: calc(1.5rem + 2vw);
+      }
+        #my_video {
+            width: 100vw;
+            height: 100vh;
+            object-fit: fill;
+        }
+        .flex_grid{
+              display: grid;
+        }
+        #home_button{
+          left: 0 !important;
+        }
+        .image_none, .mobile_quote{
+          display: none !important;
+        }
+        .text_left{
+          left: 0 !important;
+          top: 29% !important;
+        }
+        .modal-header {
+          background: transparent !important;
+          margin-top: 50%;
+        }
+        .modal-title{
+          color: whitesmoke !important;
+        }
+        .countdown_timer {
+          width: 100%;
+          right: 0 !important;
+        }
+        .oi {
+          width: 21%;
+          display: block;
+          color: white !important;
+        }
+        .row, .hr, .blockquote {
+            justify-content: center;
+        }
+        
+        .modal-dialog-centered {
+          justify-content: center;
+        }
+        label, .s_website_form_label_content, strong, .h2-fs{
+          display: contents;
+        }
+    }
+    
+    
+    
+    section{
+      display: contents !important;
+    }
+    
+    .modal-body {
+      overflow: visible !important;
+      }
+    
+    .modal-content .text-muted{
+      font-size: larger;
+      color: whitesmoke !important;
+    }
+    
+    .h2-fs {
+          font-size: 1.5rem;
+      }
+    
+    .s_website_form_mark{
+      display: none;
+    }
+    
+    .s_website_form_label_content .h2-fs strong em{
+      display: ruby-text;
+      font-size: smaller;
+    }
+    
+    #mute_button{
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+    
+    .s_title_form{
+      display: contents !important;
+    }
+    
+    .s_website_form_submit{
+      padding-left: 12% !important;
+    }
+    
+    .modal-header {
+      // padding-left: 19% !important;
+      padding-top: 30% !important;
+      }
+    
+    /* .registration_container{
+    
+    } */
+    
+    .s_website_form_send {
+      border: 2px solid #201e1e;
+      --btn-hover-border-color: #952828;
+      --btn-hover-bg: #00000069 !important;
+      --btn-color: #FFFFFF ;
+      --btn-bg: transparent !important;
+      }
+    
+    .modal-title {
+        color: whitesmoke;
+    }
+    
+    .modal-footer{
+      display: none;
+    }
+    
+    .modal-header .btn-close {
+        filter: invert(1);
+    }
+    
+    #form_button {
+        font-family: twinmarker;
+        font-size: xx-large;
+        color: whitesmoke;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(100px);
+        transition: transform 0.5s ease-out, opacity 0.5s ease-out, visibility 0s linear 0.5s;
+    }
+    
+    .modal-overlay {
+        display: flex;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 50%;
+        background: transparent;
+        align-items: center;
+        z-index: 1000;
+    }
+    
+    .o_cc4 {
+      background-color: transparent;
+    }
+    
+    .countdown_timer {
+        position: fixed;
+        top: 0;
+        right: 60%;
+    }
+    
+    .modal-content {
+      align-items: center;
+      background: transparent;
+      border-radius: 8px;
+      width: 80%;
+      text-align: center;
+      position: relative;
+    }
+    
+    .close-modal {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+    
+    #bottom {
+      display: none;
+    }
+    
+    #oe_neutralize_banner {
+      display: none;
+    }
+    
+            </style>
+            <div id="wrap" class="oe_structure oe_empty" style="margin-bottom: -8%;">
+                <video id="my_video" src="/web/content/434" muted="false" autoplay="true" playsinline="true" style="width: -webkit-fill-available;"/>
+            <button id="mute_button">
+                🔇
+            </button>
+                <section class="s_title_form o_cc o_cc2 pt64 pb48 o_colored_level" data-snippet="s_title_form" data-name="Title - Form" style="display: block;">
+                 <div class="modal-overlay">
+                    <div class="modal-content">
+                    <a id="form_button" href="/coming-soon" role="button" class=" o_animate o_anim_slide o_anim_from_right o_visible btn-show-form" style="opacity: 0; transform: translateX(100px); margin-top: 10%;"><h1 class="pt-20" style="color: white;">Join The Revolution</h1></a>
+                    <a id="home_button" href="/coming-soon" role="button" class="o_animate o_anim_slide o_anim_from_right o_visible " style="font-size: larger; opacity: 1; color: white; position: relative; left: 45%; top: -130px;"><strong>Visiting Website ...</strong></a>
+                </div>
+                </div>
+                <div id="registration_container" style="display: none;">
+                <section class="s_website_form pb16 o_colored_level o_cc o_cc4 o_full_screen_height" data-vcss="001" data-snippet="s_website_form" data-name="Form" style="">
+                    <div class="o_container_small">
+                        <form action="/website/form/" method="post" enctype="multipart/form-data" data-mark="*" data-pre-fill="false" data-model_name="crm.lead" data-success-mode="message" data-success-page="/contactus-thank-you" class="o_mark_required">
+                    <div class="s_website_form_rows row s_col_no_bgcolor">
+                        <div data-name="Field" class="s_website_form_field col-12 s_website_form_required" data-type="char" data-translated-name="Field"><div class="row s_col_no_resize s_col_no_bgcolor"><label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="onbagem2tzuk"><span class="s_website_form_label_content"><span class="h2-fs"><strong><em>Your Name</em></strong></span></span><span class="s_website_form_mark"><span class="h2-fs"><strong><em> *</em></strong></span></span></label><div class="col-sm"><input class="form-control s_website_form_input" type="text" name="contact_name" required="1" data-fill-with="name" id="onbagem2tzuk"/></div></div></div>
+                        <div data-name="Field" class="s_website_form_field col-12" data-type="tel" data-translated-name="Field"><div class="row s_col_no_resize s_col_no_bgcolor"><label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="oivb1xr1dwnb"><span class="s_website_form_label_content"><span class="h2-fs"><strong><em>Phone Number</em></strong></span></span></label><div class="col-sm"><input class="form-control s_website_form_input" type="tel" name="phone" data-fill-with="phone" id="oivb1xr1dwnb"/></div></div></div>
+                        <div data-name="Field" class="s_website_form_field col-12 s_website_form_required" data-type="email" data-translated-name="Field"><div class="row s_col_no_resize s_col_no_bgcolor"><label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="oubw0fphhyuh"><span class="s_website_form_label_content"><span class="h2-fs"><strong><em>Your Email</em></strong></span></span><span class="s_website_form_mark"><span class="h2-fs"><strong><em> *</em></strong></span></span></label><div class="col-sm"><input class="form-control s_website_form_input" type="email" name="email_from" required="1" data-fill-with="email" id="oubw0fphhyuh"/></div></div></div>
+                        <div data-name="Field" class="s_website_form_field col-12" data-type="many2one" data-translated-name="Field"><div class="row s_col_no_resize s_col_no_bgcolor"><label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px; padding-top: 0;" for="oofbrx2b3fi"><span class="s_website_form_label_content" style="font-size: 1.5rem;">How did you hear about Us?</span></label><div class="col-sm"><select class="form-select s_website_form_input" name="team_id" id="oofbrx2b3fi"><option id="oofbrx2b3fi0" value="7" selected="selected">Brandon Serpa</option><option id="oofbrx2b3fi1" value="6">Brandi Freilach</option>
+                        <option id="oofbrx2b3fi2" value="5">Rohan Romalackhan</option>
+                            <option id="oofbrx2b3fi3" value="4">Allison Clay</option>
+                            <option id="oofbrx2b3fi4" value="8">Others</option>
+                            </select></div></div></div>
+                        <div data-name="Field" class="s_website_form_field col-12 s_website_form_model_required s_website_form_field_hidden d-none" data-type="char" data-translated-name="Field"><div class="row s_col_no_resize s_col_no_bgcolor"><label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="ogjiu2n1vl0r"><span class="s_website_form_label_content"><span class="h2-fs"><strong><em>Subject</em></strong></span></span><span class="s_website_form_mark"><span class="h2-fs"><strong><em> *</em></strong></span></span></label><div class="col-sm"><input class="form-control s_website_form_input" type="text" name="name" required="" placeholder="" id="ogjiu2n1vl0r" data-fill-with="undefined" value="Event Registration"/>
+                        </div></div></div>
+                        <div class="mb-0 py-2 col-12 s_website_form_submit text-center s_website_form_no_submit_label" data-name="Submit Button">
+                            <div style="width: 200px;" class="s_website_form_label"/>
+                            <span id="s_website_form_result"/>
+                            <a href="#" role="button" class="btn s_website_form_send"><span class="h2-fs"><strong><em>Submit</em></strong></span></a>
+                        </div>
+                    </div>
+                </form>
+                        <div class="s_website_form_end_message d-none"><div class="oe_structure"><section class="s_text_block o_colored_level rounded px-5 text-center" data-snippet="s_text_block" data-name="Text"><i class="fa fa-paper-plane fa-2x mb-3 rounded-circle text-bg-success" role="img" aria-hidden="true" title="Success"/>
+                <h1 class="fw-bolder"><span class="h2-fs"><em>Thank you for your Interest!</em></span></h1>
+                    <p class="lead mb-0"><span class="h2-fs"><strong><em>Return here for more info!.</em></strong></span></p>
+                    </section>
+                        </div></div>
+                    </div>
+                </section>
+            </div>
+            </section>
+            <section class="s_countdown pb48 o_colored_level hide-countdown countdown_timer" style="display: block !important;" data-display="dhms" data-end-action="message_no_countdown" data-size="120" data-layout="clean" data-layout-background="none" data-progress-bar-style="none" data-progress-bar-weight="thin" data-text-color="o-color-3" data-layout-background-color="400" data-progress-bar-color="#FF0000" data-snippet="s_countdown" data-end-time="1756154657" data-name="Countdown">
+            <div class="o_container_small">
+                <div class="s_countdown_canvas_wrapper text-center d-flex justify-content-center">
+                </div>
+            </div>
+        <div class="s_countdown_end_message d-none"><div class="oe_structure"><section class="s_picture o_colored_level pt0 pb0" data-snippet="s_picture" data-name="Title - Image"><div class="o_container_small"><h2 style="text-align: center;">Mega Retail Revolution!</h2><p style="text-align: center;">As promised, we will offer 4 free tickets to our next summit.<br/>Visit our Facebook page to know if you are one of the lucky winners.</p></div></section></div></div>
+        </section>
+            </div>
+        </t>
+    </t>
+</odoo>

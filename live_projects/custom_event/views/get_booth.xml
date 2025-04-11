@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="event_booth_registration_custom" inherit_id="website_event_booth.event_booth_registration">
+        <xpath expr="//div[@name='booth_registration_submit']" position="after">
+            <h2 class="text-center text-primary">Exclusive Booth Registration</h2>
+            <t t-set="exclusive_booths" t-value="request.env['event.booth.category'].sudo().search([('id', 'in', [4, 5])])"/>
+                <t t-foreach="exclusive_booths" t-as="booth_category">
+                <div t-attf-class="col-md-6 col-lg-5 mb-4 {{ (len(event.event_booth_category_ids) &gt; 3) and 'col-xxl-3' }}">
+                    <label t-attf-class="d-block h-100 #{'o_wbooth_category_unavailable overflow-hidden' if booth_category_unavailable else ''}">
+                        <input type="radio" name="booth_category_id" t-att-value="booth_category.id" t-att-disabled="booth_category_unavailable" t-att-checked="booth_category.id == selected_booth_category_id"/>
+                        <div class="card h-100 ">
+                            <div t-field="booth_category.image_1920" class="card-img-top border-bottom" t-options="{&quot;widget&quot;: &quot;image&quot;, &quot;qweb_img_responsive&quot;: False, &quot;class&quot;: &quot;img img-fluid h-100 w-100 mw-100&quot;, &quot;style&quot;: &quot;max-height: 208px; min-height: 208px; object-fit: cover&quot;}"/>
+                            <div class="card-body d-flex flex-wrap w-100 justify-content-between flex-grow-0 pb-0">
+                                <h6 name="booth_category_name" class="card-title my-0" style="font-weight: bolder;" t-out="booth_category.name"/>
+                               <h5>$<span class="booth_category_price oe_currency_value" t-out="booth_category.price_reduce"/></h5>
+                            </div>
+                            <div class="w-100 small" t-attf-id="o_wbooth_booth_description_#{booth_category.id}" t-field="booth_category.description"/>
+                        </div>
+                        <div t-if="booth_category_unavailable" class="o_ribbon_right text-bg-success">
+                            <span class="text-nowrap">Contact Us</span>
+                        </div>
+                    </label>
+                </div>
+            </t>
+            <a class="btn btn-primary mx-auto mb-2" t-att-href="'/booth-register?event_id=' + str(event.id)" style='width: 25%;'>Contact Sales Team</a>
+        </xpath>
+    </template>
+</odoo>

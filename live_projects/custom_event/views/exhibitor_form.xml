@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<template name="Booth Registration Form" t-name="custom_event.booth_registration_form">
+       <t t-call="website.layout">
+           <t t-set="user" t-value="request.env.user"/>
+            <t t-set="partner_membership_value" t-value="user.partner_id.x_subscription_count"/>
+            <input type="hidden" id="partner_membership_value" t-att-value="partner_membership_value"/>
+           <style>
+               label{
+                    color: white;
+                    width: 35% !important;
+                    text-align: center;
+               }
+               h2{
+                color: white !important;
+               }
+           </style>
+           <div id="wrap" class="oe_structure oe_empty"><section class="s_title_form o_cc o_cc2 pt64 pb48 o_colored_level" data-snippet="s_title_form" data-name="Title - Form" style="background-color: black;">
+        <div class="container">
+            <h2 class="text-center">Request a Callback</h2>
+            <p class="text-center lead"><br/></p>
+    <section class="s_website_form pt16 pb16" data-vcss="001" data-snippet="s_website_form" data-name="Form">
+        <div class="container-fluid">
+            <form action="/website/form/" method="post" enctype="multipart/form-data" class="o_mark_required" data-mark="*" data-pre-fill="true" data-model_name="mail.mail" data-success-mode="message" data-success-page="/contactus-thank-you">
+                <div class="s_website_form_rows row s_col_no_bgcolor">
+                    <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_custom s_website_form_required" data-type="char">
+                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                            <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="obij2aulqyau">
+                                <span class="s_website_form_label_content o_default_snippet_text">Preferred Name</span>
+                                <span class="s_website_form_mark o_default_snippet_text"> *</span>
+                            </label>
+                            <div class="col-sm">
+                                <input class="form-control s_website_form_input" type="text" name="name" required="1" data-fill-with="name" id="obij2aulqyau"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_custom" data-type="char">
+                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                            <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="o291di1too2s">
+                                <span class="s_website_form_label_content o_default_snippet_text">Company Name</span>
+                            </label>
+                            <div class="col-sm">
+                                <input class="form-control s_website_form_input" type="text" name="company" data-fill-with="commercial_company_name" id="o291di1too2s"/>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_custom" data-type="tel">
+                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                            <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="ozp7022vqhe">
+                                <span class="s_website_form_label_content o_default_snippet_text">Phone</span>
+                            </label>
+                            <div class="col-sm">
+                                <input class="form-control s_website_form_input" type="tel" name="phone" data-fill-with="phone" id="ozp7022vqhe"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_model_required" data-type="email">
+                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                            <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="oub62hlfgjwf">
+                                <span class="s_website_form_label_content o_default_snippet_text">Email</span>
+                                <span class="s_website_form_mark o_default_snippet_text"> *</span>
+                            </label>
+                            <div class="col-sm">
+                                <input class="form-control s_website_form_input" type="email" name="email_from" required="" data-fill-with="email" id="oub62hlfgjwf"/>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_model_required" data-type="char">
+                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                            <label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="oqsf4m51acj">
+                                <span class="s_website_form_label_content o_default_snippet_text">Company &amp; Product Description</span>
+                                <span class="s_website_form_mark o_default_snippet_text"> *</span>
+                            </label>
+                            <div class="col-sm">
+                                <input class="form-control s_website_form_input" type="text" name="subject" required="" id="oqsf4m51acj"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_custom s_website_form_required" data-type="text" data-translated-name="Field"><div class="row s_col_no_resize s_col_no_bgcolor"><label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px" for="oj2fvq4nxia"><span class="s_website_form_label_content">Goals for this TradeShow</span><span class="s_website_form_mark">   *</span></label><div class="col-sm"><textarea class="form-control s_website_form_input" name="Your Question" required="1" placeholder="" id="oj2fvq4nxia" rows="3"/></div></div></div>
+                    <div class="row s_col_no_resize s_col_no_bgcolor">
+                        <label class="col-sm-auto s_website_form_label">
+                            <span class="s_website_form_label_content">Sales Team</span>
+                        </label>
+                        <div class="col-sm">
+                            <div class="row s_col_no_resize s_col_no_bgcolor s_website_form_multiple" data-name="Sales Team" data-display="horizontal">
+                                <t t-set="sales_teams" t-value="request.env['crm.team'].sudo().search([])"/>
+                                <t t-foreach="sales_teams" t-as="team">
+                                    <div class="radio col-12 col-lg-4 col-md-6">
+                                        <div class="form-check">
+                                            <input type="radio" class="s_website_form_input form-check-input" t-att-id="'sales_team_' + str(team.id)" name="sales_team" t-att-value="team.id"/>
+                                            <label class="form-check-label s_website_form_check_label" t-att-for="'sales_team_' + str(team.id)" style="width: max-content !important;">
+                                                <t t-out="team.name"/>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_required" data-type="many2one" data-translated-name="Field">
+                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                            <label class="col-form-label col-sm-auto s_website_form_label">
+                                <span class="s_website_form_label_content">Booth Size</span>
+                                <span class="s_website_form_mark"> *</span>
+                            </label>
+                            <div class="col-sm">
+                                <select class="form-select s_website_form_input" name="booth_category" required="">
+                                    <t t-set="booth_categories" t-value="request.env['event.booth.category'].sudo().search([('use_sponsor','=', True)])"/>
+                                    <t t-foreach="booth_categories" t-as="booth">
+                                        <option t-att-value="booth.id" t-att-selected="'selected' if booth.id == 6 else None">
+                                            <t t-out="booth.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-name="Field" class="s_website_form_field mb-3 col-12 d-none" data-type="selection" data-translated-name="Field">
+                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                            <label class="col-form-label col-sm-auto s_website_form_label">
+                                <span class="s_website_form_label_content">Is Member</span>
+                            </label>
+                            <div class="col-sm">
+                                <input type="text" class="form-control s_website_form_input" name="is_member" id="is_member_input"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_dnone"><div class="row s_col_no_resize s_col_no_bgcolor"><label class="col-form-label col-sm-auto s_website_form_label" style="width: 200px"><span class="s_website_form_label_content"/></label><div class="col-sm"><input type="hidden" class="form-control s_website_form_input" name="email_to" value="jmRebel@jmseventdesign.com"/></div></div></div><div class="mb-0 py-2 col-12 s_website_form_submit text-center s_website_form_no_submit_label" data-name="Submit Button">
+                        <div style="width: 200px;" class="s_website_form_label"/>
+                        <span id="s_website_form_result"/>
+                        <a href="#" role="button" class="btn btn-primary s_website_form_send o_default_snippet_text">Submit</a>
+                    </div>
+                </div>
+            </form><div class="s_website_form_end_message d-none"><div class="oe_structure"><section class="s_text_block o_colored_level rounded px-5 text-center" data-snippet="s_text_block"><i class="fa fa-paper-plane fa-2x mb-3 rounded-circle text-bg-success" role="img" aria-hidden="true" title="Success"/><h1 class="fw-bolder">Your Request has Forwarded to our Sales Team, Thank you!</h1><p class="lead mb-0">We will get back to You as soon as possible.</p><p class="lead">In the meantime we invite you to visit our <a href="/">website</a>.</p></section></div></div>
+        </div>
+    </section>
+        </div>
+    </section></div>
+       </t>
+   </template>
+</odoo>
