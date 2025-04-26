@@ -1,6 +1,6 @@
 {
     "name": "Chat-GPT Generation",
-    "version": "1",
+    "version": "1.0",
     "currency": 'INR',
     "summary": "Chat-GPT Generation",
     "category": "Requirement",
@@ -20,10 +20,10 @@
     ],
     'css': [],
     "author": "Abith",
-    "website": "https://www.scopex.in",
+    "website": "",
     "installable": True,
     "application": True,
     "auto_install": False,
     "images": [],
-    "live_test_url": 'https://pydicom.mo.vc/',
+    'license': 'LGPL-3',
 }

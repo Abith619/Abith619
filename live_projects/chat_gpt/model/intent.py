@@ -2,7 +2,7 @@ from odoo import fields, models, api
 from datetime import date, datetime,timedelta
 from odoo.exceptions import ValidationError, UserError
 import requests
-import openai
+from openai import OpenAI
 
 class RasaChat(models.Model):
     _name = "rasa.intent"
@@ -28,20 +28,45 @@ class RasaChat(models.Model):
     action_api =  fields.Text("API")
     
     def action_send(self):
-        openai.api_key = "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"
-        response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt="I want You to Be Act as A Rasa Bot Superviser .Create the below files for this question: What is last month's sale? for Rasa bot training..You  Must Maintain The File Structure.Use Postgresql for Db Queries And Get Partner_id from Tracker.File Structure : [*nlu.yml[Create This file structue  : nlu_startintent :[intent] example : |[10 examples]]end*stories.yml[Create This file structue  : stories_start- story: [story Title]- steps:-[steps]end],*Actions. py[Create This file structue  : Action_startClass[Classname](Action):[queris in postgresql]].].",
-        temperature=0.7,
-        max_tokens=2000,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0
+        client = OpenAI(
+            api_key=""
         )
-        k  = response['choices'][0]['text']
-        kl = k.split('end')
-        p = k = kl[0]
-        raise UserError(p)
+
+        user_message = (
+            "I want You to Be Act as A Rasa Bot Supervisor. "
+            "Create the below files for this question: What is last month's sale? for Rasa bot training. "
+            "You must maintain the file structure. Use Postgresql for DB queries and get Partner_id from Tracker. "
+            "File Structure: [*nlu.yml [Create This file structure: nlu_startintent: [intent] example: |[10 examples]] end "
+            "*stories.yml [Create This file structure: stories_start- story: [story Title]- steps:-[steps]] end "
+            "*Actions.py [Create This file structure: Action_startClass[Classname](Action): [queries in postgresql]].]"
+        )
+
+        try:
+            completion = client.chat.completions.create(
+                model="gpt-4o",  # Use "gpt-4o" for faster, cheaper, better
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant generating Rasa training data."},
+                    {"role": "user", "content": user_message},
+                ],
+                temperature=0.7,
+                max_tokens=1500,
+                top_p=1,
+                frequency_penalty=0,
+                presence_penalty=0,
+            )
+
+            k = completion.choices[0].message.content.strip()
+            # Processing output
+            if "end" in k:
+                kl = k.split("end")
+                p = kl[0]
+            else:
+                p = k  # fallback if 'end' not found
+
+            raise UserError(p)
+
+        except Exception as e:
+            raise UserError(f"OpenAI request failed: {str(e)}")
     
     # headers = {"Content-Type": "application/json", "Authorization": f"Bearer {api_key}"}
     # pdata = {

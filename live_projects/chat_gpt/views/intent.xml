@@ -37,21 +37,21 @@
     </record>
 
     <record id="rasa_intent_tree" model="ir.ui.view">
-        <field name="name">intent Tree View</field>
+        <field name="name">intent List View</field>
         <field name="model">rasa.intent</field>
         <field name="arch" type="xml">
-                <tree string="intent"  >
+                <list string="intent"  >
                     <field name="intent" />
                     <field name="story_title" />
                     <field name="action_domain" />
-                </tree>
+                </list>
         </field>
     </record>
     
     <record id="action_rasa_intent" model="ir.actions.act_window">
         <field name="name">Rasa</field>
         <field name="res_model">rasa.intent</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <menuitem id="submenu_rasa_intent" name="Intent" parent="menu_module_require" action="action_rasa_intent" sequence="2"/>
@@ -73,19 +73,19 @@
         </field>
     </record>
 
-    <record id="rasa_response_tree" model="ir.ui.view">
+    <record id="rasa_response_list" model="ir.ui.view">
         <field name="name">intent response View</field>
         <field name="model">rasa.response</field>
         <field name="arch" type="xml">
-                <tree string="Response"  >
+                <list string="Response"  >
                     <field name="user_input" />
-                </tree>
+                </list>
         </field>
     </record>
     <record id="action_rasa_response" model="ir.actions.act_window">
         <field name="name">Rasa</field>
         <field name="res_model">rasa.response</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <menuitem id="submenu_rasa_response" name="Response" parent="menu_module_require" action="action_rasa_response" sequence="1"/>

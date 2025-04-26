@@ -5,10 +5,10 @@
             <field name="name">Mind Map</field>
             <field name="model">mindmap.diagram</field>
             <field name="arch" type="xml">
-                <tree string="Mind Map">
+                <list string="Mind Map">
                     <field name="name" />
                     <field name="uml_diagram"/>
-                </tree>
+                </list>
             </field>
         </record>
     
@@ -34,7 +34,7 @@
                             </div>
                             <div class='col-6'>
                                 <group>
-                                    <field name="uml_diagram" widget='image'/>
+                                    <field name="uml_diagram"/>
                                 </group>
                             </div>
                         </div>
@@ -47,21 +47,21 @@
         <record model="ir.actions.act_window" id="view_map_project_requirements_action">            
             <field name="name">Mind Map</field>         
                 <field name="res_model">mindmap.diagram</field>           
-                <field name="view_mode">tree,form</field>
+                <field name="view_mode">list,form</field>
                 <field name="help" type="html">                
                     <p class="oe_view_nocontent_create">Project Requirements</p>            
             </field>        
         </record>
 
-        <record id="view_prompt_tree_view" model="ir.ui.view">
+        <record id="view_prompt_list_view" model="ir.ui.view">
             <field name="name">Requirement</field>
             <field name="model">dynamic.prompt</field>
             <field name="arch" type="xml">
-                <tree string="Prompt Masters">
+                <list string="Prompt Masters">
                     <field name="description" />
                     <field name="content" />
                     <field name="select_type"/>
-                </tree>
+                </list>
             </field>
         </record>
     
@@ -77,9 +77,9 @@
                                 <field name="select_type" />
                                 <field name="model"/>
                                 <field name="prompt_input" invisible='1'/>
-                                <field name="description" attrs="{'invisible': [('select_type','!=', 'requirements')]}"/>
+                                <field name="description" invisible="select_type != 'requirements'"/>
                                 <field name="role" invisible='1'/>
-                                <field name="content" attrs="{'invisible': [('select_type','!=', 'roles')]}"/>
+                                <field name="content" invisible="select_type != 'roles'"/>
                                 <field name="api_key"/>
                             </group>
                             <group>
@@ -98,7 +98,7 @@
         <record model="ir.actions.act_window" id="view_map_actions_prompt">            
             <field name="name">Prompt Masters</field>         
                 <field name="res_model">dynamic.prompt</field>           
-                <field name="view_mode">tree,form</field>
+                <field name="view_mode">list,form</field>
                 <field name="help" type="html">                
                     <p class="o_view_nocontent_smiling_face">Create The New Record</p>            
             </field>        

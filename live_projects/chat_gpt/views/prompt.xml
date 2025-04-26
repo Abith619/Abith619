@@ -24,16 +24,16 @@
         <field name="name">prompt Tree View</field>
         <field name="model">gpt.prompt</field>
         <field name="arch" type="xml">
-                <tree string="prompt"  >
+                <list string="prompt"  >
                     <field name="token" />
                     <field name="question" />
-                </tree>
+                </list>
         </field>
     </record>
     <record id="action_prompt" model="ir.actions.act_window">
         <field name="name">prompt</field>
         <field name="res_model">gpt.prompt</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
 

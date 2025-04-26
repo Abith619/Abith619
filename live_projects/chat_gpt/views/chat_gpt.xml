@@ -5,14 +5,14 @@
             <field name="name">Projects</field>
             <field name="model">chat.model</field>
             <field name="arch" type="xml">
-                <tree string="Projects">
+                <list string="Projects">
                     <field name="select_type" />
                     <field name="project_inputs" />
                     <field name="designations"/>
-                </tree>
+                </list>
             </field>
         </record>
-    
+
         <record id="view_chat_project_requirements_form" model="ir.ui.view">
             <field name="name">Projects</field>
             <field name="model">chat.model</field>
@@ -20,127 +20,138 @@
             <field name="arch" type="xml">
                 <form string="Projects">
                     <header>
-                            <button name="generate_uml_diagram" type="object" string="Flow Chart" class="oe_highlight" />
-                        </header>
+                        <button name="generate_uml_diagram" type="object" string="Flow Chart" class="oe_highlight" />
+                    </header>
                     <sheet>
-                        <group style='text-align:center;'>
+                        <group style="text-align:center;">
                             <field name="select_type"/>
                         </group>
-                        <group style='text-align:center;'>
-                            <field name='designations' attrs="{'invisible': [('select_type','!=', 'roles')]}"/>
-                            <field name='prompts' attrs="{'invisible': [('select_type','!=', 'roles')]}"/>
+                        <group style="text-align:center;">
+                            <field name="designations" invisible="select_type != 'roles'"/>
+                            <field name="prompts" invisible="select_type != 'roles'"/>
                         </group>
-                        <div class='row'>
-                            <div class='col-6'>
+
+                        <div class="row">
+                            <div class="col-6">
                                 <group>
-                                    <field name='project_inputs' attrs="{'invisible': [('select_type','!=', 'requirements')]}"/>
-                                    <field name='uml_code' widget='html' invisible='1'/>
+                                    <field name="project_inputs" invisible="select_type != 'requirements'"/>
+                                    <field name="uml_code" widget="html" invisible="1"/>
                                 </group>
                             </div>
-                            <div class='col-6'>
+                            <div class="col-6">
                                 <group>
-                                    <field name="desc_inputs" attrs="{'invisible': [('select_type','!=', 'requirements')]}"/>
+                                    <field name="desc_inputs" invisible="select_type != 'requirements'"/>
                                 </group>
                             </div>
                         </div>
+
                         <notebook>
-                            <page string='Modules' attrs="{'invisible': [('select_type','!=', 'requirements')]}">
+                            <page string="Modules" invisible="select_type != 'requirements'">
                                 <button name="generate_models" type="object" string="Generate" class="oe_highlight" />
                                 <field name="response_line">
-                                    <tree string="Module Details" editable="bottom">
-                                        <field name="select_models" widget='toggle_button'/>
-                                        <field name="modules_name" />
-                                        <field name="related_id" invisible='1'/>
-                                    </tree>
+                                    <list string="Module Details" editable="bottom">
+                                        <field name="select_models" widget="toggle_button"/>
+                                        <field name="modules_name"/>
+                                        <field name="related_id" invisible="1"/>
+                                    </list>
                                 </field>
                             </page>
-                            <page string='Roles' attrs="{'invisible': [('select_type','!=', 'roles')]}">
+
+                            <page string="Roles" invisible="select_type != 'roles'">
                                 <button name="generate_activity" type="object" string="Generate" class="oe_highlight" />
                                 <field name="roles_line">
-                                    <tree string="Roles List" editable="bottom">
-                                        <field name="select_roles" widget='toggle_button'/>
-                                        <field name="roles" />
-                                        <field name="description" />
-                                        <field name="related_id" invisible='1'/>
-                                    </tree>
+                                    <list string="Roles List" editable="bottom">
+                                        <field name="select_roles" widget="toggle_button"/>
+                                        <field name="roles"/>
+                                        <field name="description"/>
+                                        <field name="related_id" invisible="1"/>
+                                    </list>
                                 </field>
                             </page>
                         </notebook>
+
                         <notebook>
-                            <page string='Sub Models' attrs="{'invisible': [('select_type','!=', 'requirements')]}">
+                            <page string="Sub Models" invisible="select_type != 'requirements'">
                                 <button name="generate_fields" type="object" string="Generate" class="oe_highlight" />
                                 <field name="sub_model_line">
-                                    <tree string="Sub-Module" editable="bottom">
-                                        <field name="select_models" widget='toggle_button'/>
-                                        <field name="modules_name" />
-                                        <field name="model_name" />
-                                        <field name="related_id" invisible='1'/>
-                                    </tree>
+                                    <list string="Sub-Module" editable="bottom">
+                                        <field name="select_models" widget="toggle_button"/>
+                                        <field name="modules_name"/>
+                                        <field name="model_name"/>
+                                        <field name="related_id" invisible="1"/>
+                                    </list>
                                 </field>
                             </page>
-                            <page string='Activities' attrs="{'invisible': [('select_type','!=', 'roles')]}">
+
+                            <page string="Activities" invisible="select_type != 'roles'">
                                 <button name="generate_actions" type="object" string="Generate" class="oe_highlight" />
                                 <field name="activity_line">
-                                    <tree string="Activities List" editable="bottom">
-                                        <field name="select_activity" widget='toggle_button' />
-                                        <field name="roles" />
-                                        <field name="activity" />
-                                        <field name="related_id" invisible='1'/>
-                                    </tree>
+                                    <list string="Activities List" editable="bottom">
+                                        <field name="select_activity" widget="toggle_button"/>
+                                        <field name="roles"/>
+                                        <field name="activity"/>
+                                        <field name="related_id" invisible="1"/>
+                                    </list>
                                 </field>
                             </page>
                         </notebook>
+
                         <notebook>
-                            <page string='Fields' attrs="{'invisible': [('select_type','!=', 'requirements')]}">
-                                    <button name="generate_bot_1" type="object" string="Generate" class="oe_highlight" />
+                            <page string="Fields" invisible="select_type != 'requirements'">
+                                <button name="generate_bot_1" type="object" string="Generate" class="oe_highlight" />
                                 <field name="fields_line">
-                                    <tree string="Fields" editable="bottom">
-                                        <field name="select_fields" widget='toggle_button'/>
-                                        <field name="model_name" />
-                                        <field name="fields_name" />
-                                        <field name="related_id" invisible='1'/>
-                                    </tree>
+                                    <list string="Fields" editable="bottom">
+                                        <field name="select_fields" widget="toggle_button"/>
+                                        <field name="model_name"/>
+                                        <field name="fields_name"/>
+                                        <field name="related_id" invisible="1"/>
+                                    </list>
                                 </field>
                             </page>
-                            <page string='Actions' attrs="{'invisible': [('select_type','!=', 'roles')]}">
-                                    <button name="generate_bot" type="object" string="Create Bot" class="oe_highlight" />
+
+                            <page string="Actions" invisible="select_type != 'roles'">
+                                <button name="generate_bot" type="object" string="Create Bot" class="oe_highlight" />
                                 <field name="action_line">
-                                    <tree string="Actions List" editable="bottom">
-                                        <field name="select_activity" widget='toggle_button' />
-                                        <field name="activity" />
-                                        <field name="actions" />
-                                        <field name="related_id" invisible='1'/>
-                                    </tree>
+                                    <list string="Actions List" editable="bottom">
+                                        <field name="select_activity" widget="toggle_button"/>
+                                        <field name="activity"/>
+                                        <field name="actions"/>
+                                        <field name="related_id" invisible="1"/>
+                                    </list>
                                 </field>
                             </page>
-                            <field name='uml_link' invisible='1'/>
+
+                            <field name="uml_link" invisible="1"/>
                         </notebook>
-                        <div class='row'>
-                            <div class='col-6'>
+
+                        <div class="row">
+                            <div class="col-6">
                                 <group>
-                                    <field name="uml_code_char" attrs="{'invisible': [('uml_code_char','=', False)]}"/>
+                                    <field name="uml_code_char" invisible="not uml_code_char"/>
                                 </group>
                             </div>
-                            <div class='col-6'>
+                            <div class="col-6">
                                 <group>
-                                    <field name="uml_diagram" widget='image' attrs="{'invisible': [('uml_diagram','=', False)]}"/>
+                                    <field name="uml_diagram" widget="image" invisible="not uml_diagram"/>
                                 </group>
                             </div>
                         </div>
+
                     </sheet>
                 </form>
             </field>
         </record>
-    
-        <record model="ir.actions.act_window" id="view_chat_project_requirements_action">            
-            <field name="name">Projects</field>         
-                <field name="res_model">chat.model</field>           
-                <field name="view_mode">tree,form</field>
-                <field name="help" type="html">                
-                    <p class="oe_view_nocontent_create">Project Requirements</p>            
-            </field>        
+
+
+        <record model="ir.actions.act_window" id="view_chat_project_requirements_action">
+            <field name="name">Projects</field>
+                <field name="res_model">chat.model</field>
+                <field name="view_mode">list,form</field>
+                <field name="help" type="html">
+                    <p class="oe_view_nocontent_create">Project Requirements</p>
+            </field>
         </record>
-    
+
         <menuitem id="menu_module_require" name="Module Requirements"  sequence= "3" />
         <menuitem id="menu_module_require_ments" name="Requirements" parent='menu_module_require' sequence= "1" action="view_chat_project_requirements_action"/>
     </data>

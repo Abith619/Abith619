@@ -1,5 +1,5 @@
 from odoo import models, api, fields
-import openai
+from openai import OpenAI
 from odoo.exceptions import ValidationError
 import requests
 import base64
@@ -26,10 +26,10 @@ class ChatGptModel(models.Model):
     _name = 'chat.model'
     _rec_name = 'select_type'
 
-    select_type = fields.Selection([('requirements','Requirements'),('roles','Roles and Activities')], string='Select Intent', default='requirements', required='1')
+    select_type = fields.Selection([('requirements','Requirements'),('roles','Roles and Activities')], string='Select Intent', default='requirements', required=True)
 
     # Project Requirements
-    
+
     project_input = fields.Many2one('dynamic.prompt',string='Project',domain="[('select_type','=','requirements')]")
     desc_input = fields.Char(string='Project Description', related='project_input.description')
 
@@ -69,8 +69,8 @@ class ChatGptModel(models.Model):
                 'default_select_relate': 'action',
                 },
             'target': 'new'
-        }   
-    
+        }
+
     def generate_bot_1(self):
         return {
             'name': "Generate Activity",
@@ -89,17 +89,23 @@ class ChatGptModel(models.Model):
         lists=[(5,0,0)]
         for i in self.activity_line:
             if i.select_activity == True:
-                openai.api_key = self.prompts.api_key
+                client = OpenAI(
+                    api_key=self.prompts.api_key
+                )
 
-                completions = openai.Completion.create(
+                completions = client.chat.completions.create(
                     model=self.prompts.model,
-                    prompt=f"List the Actions required for {self.designations} with {i.roles} roles of {i.activity} activity, generate in bullet points only, do not generate Description",
+                    messages=[
+                        {"role": "system", "content": "You are a helpful assistant generating action lists."},
+                        {"role": "user", "content": f"List the Actions required for {self.designations} with {i.roles} roles of {i.activity} activity, generate in bullet points only, do not generate Description"},
+                    ],
                     temperature=self.prompts.temperature,
                     max_tokens=self.prompts.max_tokens,
                     top_p=self.prompts.top_p,
                     frequency_penalty=self.prompts.frequency_penalty,
                     presence_penalty=self.prompts.presence_penalty,
-                        )
+                )
+
 
                 paragraph = completions.choices[0].text.strip()
 
@@ -139,17 +145,22 @@ class ChatGptModel(models.Model):
         lists=[(5,0,0)]
         for i in self.roles_line:
             if i.select_roles == True:
-                openai.api_key = self.prompts.api_key
+                client = OpenAI(
+                    api_key=self.prompts.api_key
+                )
 
-                completions = openai.Completion.create(
+                completions = client.chat.completions.create(
                     model=self.prompts.model,
-                    prompt=f"List the activities required for {self.designations} with {i.roles} role, generate in bullet points only, do not generate Description",
+                    messages=[
+                        {"role": "system", "content": "You are a helpful assistant generating lists of activities."},
+                        {"role": "user", "content": f"List the activities required for {self.designations} with {i.roles} role, generate in bullet points only, do not generate Description"},
+                    ],
                     temperature=self.prompts.temperature,
                     max_tokens=self.prompts.max_tokens,
                     top_p=self.prompts.top_p,
                     frequency_penalty=self.prompts.frequency_penalty,
                     presence_penalty=self.prompts.presence_penalty,
-                        )
+                )
 
                 paragraph = completions.choices[0].text.strip()
 
@@ -171,7 +182,7 @@ class ChatGptModel(models.Model):
                         }
                     lists.append((0,0,data))
 
-        self.activity_line = lists    
+        self.activity_line = lists
         return {
             'name': "Generate Activity",
             'type': 'ir.actions.act_window',
@@ -189,17 +200,22 @@ class ChatGptModel(models.Model):
     def generate_roles_act(self):
         if self.prompts:
             headings = [(5,0,0)]
-            openai.api_key = self.prompts.api_key
+            client = OpenAI(
+                api_key=self.prompts.api_key
+            )
 
-            completions = openai.Completion.create(
+            completions = client.chat.completions.create(
                 model=self.prompts.model,
-                prompt=f"List the topics of {self.designations} with {self.prompts.content} as Description in Dictionery format : with Bullet Points",
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant generating dictionary-formatted bullet points."},
+                    {"role": "user", "content": f"List the topics of {self.designations} with {self.prompts.content} as Description in Dictionary format: with Bullet Points"},
+                ],
                 temperature=self.prompts.temperature,
                 max_tokens=self.prompts.max_tokens,
                 top_p=self.prompts.top_p,
                 frequency_penalty=self.prompts.frequency_penalty,
                 presence_penalty=self.prompts.presence_penalty,
-                    )
+            )
 
             paragraph = completions.choices[0].text.strip()
 
@@ -232,7 +248,7 @@ class ChatGptModel(models.Model):
         if self.project_inputs:
             modules = [f"""@startwbs \n * {self.desc_inputs.prompt_input,self.desc_inputs} \n"""]
             models = ['@endwbs']
-            
+
             for i in self.response_line:
                 if i.select_models == True:
                     modules.append('** '+i.modules_name+'\n')
@@ -252,7 +268,7 @@ class ChatGptModel(models.Model):
         elif self.designations:
             modules = [f"""@startwbs \n * {self.prompts.content,self.designations} \n"""]
             models = ['@endwbs']
-            
+
             for i in self.roles_line:
                 if i.select_roles == True:
                     modules.append('** '+i.roles+'\n')
@@ -280,18 +296,23 @@ class ChatGptModel(models.Model):
         if self.project_inputs:
             headings = [(5,0,0)]
 
-            openai.api_key = self.desc_inputs.api_key
-            
-            completions = openai.Completion.create(
+            client = OpenAI(
+                api_key=self.desc_inputs.api_key
+            )
+
+            completions = client.chat.completions.create(
                 model=self.desc_inputs.model,
-                prompt=f"List the required Models for {self.project_inputs} Project with {self.desc_inputs} as description in bullet points Only , Do not Generate Description",
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant generating model lists in bullet points without descriptions."},
+                    {"role": "user", "content": f"List the required Models for {self.project_inputs} Project with {self.desc_inputs} as description in bullet points Only, Do not Generate Description."},
+                ],
                 temperature=self.desc_inputs.temperature,
                 max_tokens=self.desc_inputs.max_tokens,
                 top_p=self.desc_inputs.top_p,
                 frequency_penalty=self.desc_inputs.frequency_penalty,
                 presence_penalty=self.desc_inputs.presence_penalty,
-                    )
-            
+            )
+
             paragraph = completions.choices[0].text.strip()
 
             pattern = r"[.\-\d\•\:]+"
@@ -303,7 +324,7 @@ class ChatGptModel(models.Model):
 
             while("" in modules):
                 modules.remove("")
-            
+
             for module in modules:
                 data = {
                     'related_id' : self.id,
@@ -313,21 +334,26 @@ class ChatGptModel(models.Model):
             self.response_line = headings
 
     def generate_models(self):
-        
+
         headings = [(5,0,0)]
         for i in self.response_line:
             if i.select_models == True:
-                openai.api_key = self.desc_inputs.api_key
+                client = OpenAI(
+                    api_key=self.desc_inputs.api_key
+                )
 
-                completions = openai.Completion.create(
+                completions = client.chat.completions.create(
                     model=self.desc_inputs.model,
-                    prompt=f"List the required Sub-Model names for {self.desc_inputs.prompt_input} Module titles in bullet points Only , Do not Generate Description",
+                    messages=[
+                        {"role": "system", "content": "You are a helpful assistant generating lists of sub-model names in bullet points only, without any descriptions."},
+                        {"role": "user", "content": f"List the required Sub-Model names for {self.desc_inputs.prompt_input} Module titles in bullet points Only. Do not Generate Description."},
+                    ],
                     temperature=self.desc_inputs.temperature,
                     max_tokens=self.desc_inputs.max_tokens,
                     top_p=self.desc_inputs.top_p,
                     frequency_penalty=self.desc_inputs.frequency_penalty,
                     presence_penalty=self.desc_inputs.presence_penalty,
-                        )
+                )
                 paragraph = completions.choices[0].text.strip()
 
                 pattern = r"[.\-\d\•\:]+"
@@ -362,27 +388,32 @@ class ChatGptModel(models.Model):
         }
 
     def generate_fields(self):
-        
+
         headings = [(5,0,0)]
         for i in self.sub_model_line:
             if i.select_models == True:
-                openai.api_key = self.desc_inputs.api_key
+                client = OpenAI(
+                    api_key=self.desc_inputs.api_key
+                )
 
-                completions = openai.Completion.create(
+                completions = client.chat.completions.create(
                     model=self.desc_inputs.model,
-                    prompt=f"List the required field names for {i.model_name} Model titles in bullet points Only , Do not Generate Description",
+                    messages=[
+                        {"role": "system", "content": "You are a helpful assistant generating field names in bullet points only, without any descriptions."},
+                        {"role": "user", "content": f"List the required field names for {i.model_name} Model titles in bullet points Only. Do not generate descriptions."},
+                    ],
                     temperature=self.desc_inputs.temperature,
                     max_tokens=self.desc_inputs.max_tokens,
                     top_p=self.desc_inputs.top_p,
                     frequency_penalty=self.desc_inputs.frequency_penalty,
                     presence_penalty=self.desc_inputs.presence_penalty,
-                        )
+                )
 
                 paragraph = completions.choices[0].text.strip()
 
                 pattern = r"[.\-\d\•\:]+"
                 sentences = re.split(pattern, paragraph)
-                
+
                 modules = []
                 for sentence in sentences:
                     modules.append(sentence.strip())
@@ -397,7 +428,7 @@ class ChatGptModel(models.Model):
                         'fields_name' : module
                     }
                     headings.append((0,0,data))
-        
+
         self.fields_line = headings
         return {
             'name': "Generate Activity",
@@ -411,7 +442,7 @@ class ChatGptModel(models.Model):
                     },
             'target': 'new'
         }
-        
+
 class ChatGptResponse(models.Model):
     _name = 'chat.response'
 
@@ -434,7 +465,7 @@ class ChatGptResponseFields(models.Model):
     fields_name = fields.Char(string='Fields')
     model_name = fields.Char(string='Sub-Models')
     select_fields = fields.Boolean(string='Select')
-    
+
 class ChatRolesGenerate(models.Model):
     _name = 'chat.roles'
 

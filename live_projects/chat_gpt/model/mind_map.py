@@ -6,7 +6,7 @@ class MindMapDiagram(models.Model):
     _rec_name = 'name'
 
     name = fields.Char(string='Name')
-    uml_diagram = fields.Binary(string='Mind Map',widget='image')
+    uml_diagram = fields.Binary(string='Mind Map')
     uml_code = f"""@startmindmap
                     * Debian
                     ** Ubuntu
@@ -26,7 +26,7 @@ class PromptDynamicGPT(models.Model):
     _name = 'dynamic.prompt'
     _rec_name = 'record_name'
 
-    select_type = fields.Selection([('requirements','Requirements'),('roles','Roles and Activities')], string='Select Intent', default='requirements', required='1')
+    select_type = fields.Selection([('requirements','Requirements'),('roles','Roles and Activities')], string='Select Intent', default='requirements', required=True)
     prompt_input = fields.Char(string='Enter a Prompt')
     description = fields.Char(string='Project Description')
     role = fields.Char(string='User Role')
