@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="event_booth_view_form_from_event_inherit_custom" model="ir.ui.view">
+            <field name="name">event.booth.view.form.inherit.website.event.booth.exhibitor.custom</field>
+            <field name="model">event.booth</field>
+            <field name="inherit_id" ref="event_booth.event_booth_view_form_from_event"/>
+            <field name="priority">5</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='contact_phone']" position="after">
+                    <field name="sales_person" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="event_booth_registration_view_form_inherit" model="ir.ui.view">
+            <field name="name">event.booth.registration.form.inherit</field>
+            <field name="model">event.booth.registration</field>
+            <field name="inherit_id" ref="event_booth_sale.event_booth_registration_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sale_order_line_id']" position="after">
+                    <field name="sales_person"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="event_booth_registration_view_tree_inherit" model="ir.ui.view">
+            <field name="name">event.booth.registration.view.list.inherit</field>
+            <field name="model">event.booth.registration</field>
+            <field name="inherit_id" ref="event_booth_sale.event_booth_registration_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sale_order_line_id']" position="after">
+                    <field name="sales_person"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -7,13 +7,71 @@
         <xpath expr="//div[hasclass('field-confirm_password')]" position="attributes">
             <attribute name="t-if">only_passwords</attribute>
         </xpath>
+
+        <xpath expr="//input[@name='login']" position="attributes">
+            <attribute name="type">email</attribute>
+        </xpath>
         <xpath expr="//div[hasclass('field-confirm_password')]" position="after">
             <div class="alert alert-danger" role="alert">
-                <t t-esc="error_message"/>
+                <t t-if="error_message" t-esc="error_message"/>
             </div>
             <div class="alert alert-success" role="alert">
-                <t t-esc="success_message"/>
+                <t t-if="success_message" t-esc="success_message"/>
             </div>
         </xpath>
     </template>
+
+    <template id="set_password_form" name="Set Password Form">
+        <t t-call="website.layout">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <h2 class="text-center mb-4">Set Your Password</h2>
+
+                    <t t-if="request.params.get('error')">
+                        <div class="alert alert-danger" role="alert">
+                            There was an error. Please try again.
+                        </div>
+                    </t>
+
+                    <form action="/web/set_password/submit" method="POST" class="o_form">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="token" t-att-value="token"/>
+
+                        <div class="form-group">
+                            <label for="password">New Password</label>
+                            <input type="password" name="password" class="form-control" required="required" placeholder="Enter your new password"/>
+                        </div>
+
+                        <div class="form-group mt-3 text-center">
+                            <button type="submit" class="btn btn-primary w-100">Set Password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="password_set_success" name="Password Set Success">
+        <t t-call="website.layout">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                    <h2 class="mb-4 text-success">Password Set Successfully</h2>
+                    <p>Your password has been created and your account is now active.</p>
+                    <a href="/web/login" class="btn btn-primary mt-3">Login here</a>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="token_invalid" name="Invalid or Expired Token">
+        <t t-call="website.layout">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                    <h2 class="mb-4 text-danger">Invalid or Expired Link</h2>
+                    <p>The link you used is either invalid or has already been used.</p>
+                </div>
+            </div>
+        </t>
+    </template>
+
 </odoo>

@@ -1,5 +1,6 @@
 from odoo.http import request, Controller, route, Response
 import json
+from xmlrpc import client
 from odoo.exceptions import ValidationError
 
 class PowerBIController(Controller):
@@ -13,7 +14,7 @@ class PowerBIController(Controller):
             'date': event.date_begin.isoformat() if event.date_begin else None
         }]
 
-        return Response(json.dumps(data), content_type='application/json', status=200 )
+        return Response(json.dumps(data), content_type='application/json', status=200)
 
     @route('/powerbi/dashboard', auth='user', website=True)
     def dashboard(self, **kwargs):

@@ -1,72 +1,50 @@
+import logging
+
 from odoo import _
-import uuid
-from odoo.http import request, route, Controller
+from odoo.http import request, route
+
 from odoo.addons.auth_signup.controllers.main import AuthSignupHome
 
-class AuthSignupConfirmation(AuthSignupHome):
-    @route('/web/signup', type='http', auth='public', website=True, sitemap=False)
+_logger = logging.getLogger(__name__)
+
+class SignupVerifyEmail(AuthSignupHome):
+    @route()
     def web_auth_signup(self, *args, **kw):
+        if request.params.get("login") and not request.params.get("password"):
+            return self.passwordless_signup()
+        return super().web_auth_signup(*args, **kw)
 
-        email = kw.get('login')
-        name = kw.get('name')
+    def passwordless_signup(self, *args, **kw):
+        values = request.params
+        qcontext = self.get_auth_signup_qcontext()
 
-        if not email or not name:
-            return request.render("auth_signup.signup", {
-                'error_message': _("Email and Name are required."),
-                'providers': [],
-            })
+        if not values.get("email"):
+            values["email"] = values.get("login")
 
-        existing_user = request.env['res.users'].sudo().search([('login', '=', email)], limit=1)
-        if existing_user:
-            return request.render("auth_signup.signup", {
-                'error_message': _("This email is already registered. Please log in."),
-                'providers': [],
-            })
+        values.pop("redirect", "")
+        values.pop("token", "")
+        values["password"] = ""
 
-        else:
-            token = str(uuid.uuid4())
-            request.session['auth_signup_token'] = token
-            portal_group = request.env.ref('base.group_portal')
-            object = request.env['res.users'].sudo().create({
-                'name': name,
-                'login': email,
-                'email': email,
-                'active': True,
-                'signup_type': token,
-                'groups_id': [(4, portal_group.id)]
-            })
+        sudo_users = request.env["res.users"].with_context(create_user=True).sudo()
+        ip = request.httprequest.headers.get('X-Forwarded-For', request.httprequest.remote_addr)
+        sudo_users.x_signup_ip = ip
 
-            template = request.env['mail.template'].browse(request.env.ref('custom_event.signup_confirmation_email_template').id)
-            if object.partner_id:
-                template.sudo().send_mail(object.id, force_send=True)
+        try:
+            with request.cr.savepoint():
+                sudo_users.signup(values, qcontext.get("token"))
+                sudo_users.reset_password(values.get("login"))
 
-            return request.render("auth_signup.signup", {
-                'success_message': _("A confirmation email has been sent to %s.") % email,
-                'providers': [],
-            })
+            qcontext["message"] = _("Please check your email to activate your account!")
+            return request.render("auth_signup.reset_password", qcontext)
 
-class PasswordSetupController(Controller):
-
-    @route('/web/set_password', type='http', auth='public', website=True)
-    def set_password_form(self, token=None, **kwargs):
-        user = request.env['res.users'].sudo().search([('signup_type', '=', token)], limit=1)
-        if not user:
-            return request.render("custom_event.token_invalid", {})
-
-        return request.render("custom_event.set_password_form", {
-            'token': token,
-            'user': user
-        })
-
-    @route('/web/set_password/submit', type='http', auth='public', methods=['POST'], website=True, csrf=True)
-    def set_password_submit(self, token=None, password=None, **kwargs):
-        user = request.env['res.users'].sudo().search([('signup_type', '=', token)], limit=1)
-        if not user or not password:
-            return request.redirect('/web/set_password?token=%s&error=1' % token)
-        if user:
-            user.sudo().write({
-            'password': password,
-        })
-            return request.render("custom_event.password_set_success", {})
-        else:
-            return request.render("custom_event.token_invalid", {})
+        except Exception as error:
+            _logger.exception("Signup error: %s", error)
+            if request.env["res.users"].sudo().search([("login", "=", values.get("login"))]):
+                qcontext["error"] = _(
+                    "Another user is already registered using this email address."
+                )
+            else:
+                qcontext["error"] = _(
+                    "Something went wrong, please try again later or contact us."
+                )
+            return request.render("auth_signup.signup", qcontext)

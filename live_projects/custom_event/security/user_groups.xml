@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <record model='res.groups' id='group_event_users'>
-            <field name='name'>Event Users</field>
+            <field name='name'>Event Manager</field>
         </record>
 
         <record model='ir.ui.menu' id='contacts.menu_contacts'>
@@ -29,15 +29,15 @@
             <field name="groups_id" eval="[(6, 0, [ref('group_event_users')])]"/>
         </record>
 
-        <record model='ir.ui.menu' id='stock.menu_stock_root'>
+        <record model='ir.ui.menu' id='accountant.menu_accounting'>
             <field name="groups_id" eval="[(6, 0, [ref('group_event_users')])]"/>
         </record>
 
         <record model='res.groups' id='group_event_manager'>
-            <field name='name'>Event Manager</field>
+            <field name='name'>Event Admin</field>
         </record>
 
-        <record model='ir.ui.menu' id='accountant.menu_accounting'>
+        <record model='ir.ui.menu' id='utm.menu_link_tracker_root'>
             <field name="groups_id" eval="[(6, 0, [ref('group_event_manager')])]"/>
         </record>
 
@@ -45,16 +45,16 @@
             <field name='name'>Admin</field>
         </record>
 
+        <record model='ir.ui.menu' id='base.menu_management'>
+            <field name="groups_id" eval="[(6, 0, [ref('group_event_admin')])]"/>
+        </record>
+
         <record model='ir.ui.menu' id='base.menu_administration'>
             <field name="groups_id" eval="[(6, 0, [ref('group_event_admin')])]"/>
         </record>
 
-        <record model='res.groups' id='group_event_developer'>
-            <field name='name'>Developer</field>
-        </record>
-
-        <record model='ir.ui.menu' id='base.menu_management'>
-            <field name="groups_id" eval="[(6, 0, [ref('group_event_developer')])]"/>
+        <record model='ir.ui.menu' id='membership.menu_association'>
+            <field name="groups_id" eval="[(6, 0, [ref('group_event_admin')])]"/>
         </record>
 
     </data>

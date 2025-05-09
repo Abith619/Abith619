@@ -1,83 +1,129 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<odoo>
 <t name="Homepage" t-name="website.homepage">
     <t t-call="website.layout">
         <t t-set="pageName" t-value="'homepage'"/>
         <div id="wrap" class="oe_structure">
-            <section class="s_cover parallax s_parallax_is_fixed o_cc o_cc5 o_colored_level pt0 pb0 o_full_screen_height" data-scroll-background-ratio="1" data-snippet="s_cover" data-name="Cover" style="&#10;    object-fit: fill;&#10;">
-    <span class="s_parallax_bg oe_img_bg o_bg_img_center" style="background-image: url(&quot;/web/image/980-2768e8af/Screenshot%202025-03-11%20164317.webp&quot;);" data-mimetype="image/webp" data-original-id="1899" data-original-src="/web/image/970-a2410fbe/Screenshot%202025-03-11%20164317.png" data-mimetype-before-conversion="image/png" data-resize-width="1919">
-    </span>
-    <div class="position-relative mx-auto" style="margin-top: auto;"><h5>
-        <a role="button" href="/membership" class="btn btn-custom text-o-color-3 btn-lg" style="border-width: 1px; border-style: solid; background-color: rgb(101, 22, 19);"><strong>Join the Revolution</strong></a>
-    </h5></div>
+            <section class="s_cover o_cc o_cc5 o_colored_level pb0 pt0 s_parallax_no_overflow_hidden parallax s_parallax_is_fixed o_full_screen_height" data-scroll-background-ratio="1" data-snippet="s_cover" data-name="Cover" style="object-fit: fill; background-position: 50% 28.5556%;">
+                <span class="s_parallax_bg oe_img_bg o_bg_img_center" style="background-image: url(&quot;/web/image/1911-e010cd04/updated_home_land.webp&quot;);" data-mimetype="image/webp" data-original-id="1906" data-original-src="/web/image/1906-015658e6/updated_home_land.png" data-mimetype-before-conversion="image/png" data-resize-width="1919" data-quality="92"/>
+
+    <div class="event-info-container" style="width: 50%; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end; text-align: end; padding: 2rem; margin-right: auto; margin-top: 10%;">
+        <div class="event-text">
+            <h3 style="margin: 0;">August 27-28, 2025</h3>
+            <h4 style="margin: 0;">Orange County Convention Center, Orlando, FL</h4>
+            <h1 style="margin: 0;"><span class="display-1-fs">Anti-tradeshow</span></h1>
+            <h1 style="margin: 0;"><span class="display-1-fs">More ROI // No BS</span></h1>
+            <p style="margin: 0;">Real Transactions. No Gatekeepers. Built for Bold Brands.</p>
+        </div>
+        <a class="home-button" href="/membership">
+            <svg xmlns="http://www.w3.org/2000/svg" width="490" height="198" viewBox="0 0 490 198" fill="none">
+                <g filter="url(#filter0_d_756_3524)">
+                    <rect x="63" y="63" width="305.079" height="72" fill="#FF3434"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M368.08 63L427.001 105.667V135H368.08V105.667V63Z" fill="#FF3434"/>
+                            <path d="M89.634 109.296H91.954C93.0097 109.296 93.5375 108.658 93.5375 107.381V86.0594H97.0727V108.044C97.0727 111.015 95.7102 112.5 92.9851 112.5H89.634V109.296ZM104.469 112.5C101.621 112.5 100.197 111.002 100.197 108.007V90.5889C100.197 87.5692 101.608 86.0594 104.432 86.0594H107.82C110.643 86.0594 112.055 87.5692 112.055 90.5889V108.007C112.055 111.002 110.631 112.5 107.783 112.5H104.469ZM105.316 109.296H107.12C108.053 109.296 108.519 108.781 108.519 107.75V90.8098C108.519 89.7787 107.992 89.2632 106.936 89.2632H105.279C104.248 89.2632 103.732 89.7787 103.732 90.8098V107.75C103.732 108.781 104.26 109.296 105.316 109.296ZM115.197 112.5V86.0594H118.733V112.5H115.197ZM129.359 98.8378V86.0594H132.894V112.5H129.359V107.234L125.566 95.1921V112.5H122.03V86.0594H125.566L129.359 98.8378ZM147.732 89.2632V112.5H144.196V89.2632H140.808V86.0594H151.119V89.2632H147.732ZM161.018 112.5V100.495H156.673V112.5H153.138V86.0594H156.673V97.2911H161.018V86.0594H164.554V112.5H161.018ZM167.882 112.5V86.0594H176.647V89.2632H171.417V97.2911H176.057V100.495H171.417V109.296H176.647V112.5H167.882ZM185.072 86.0594H191.995C194.696 86.0594 196.046 87.5692 196.046 90.5889V97.107C196.046 99.4147 195.346 100.875 193.947 101.489L196.414 112.5H193.063L190.743 101.821H188.607V112.5H185.072V86.0594ZM188.607 98.801H190.927C191.983 98.801 192.511 98.1626 192.511 96.886V91.1781C192.511 89.9015 191.983 89.2632 190.927 89.2632H188.607V98.801ZM198.99 112.5V86.0594H207.754V89.2632H202.525V97.2911H207.165V100.495H202.525V109.296H207.754V112.5H198.99ZM221.734 86.0594L217.463 112.5H213.265L208.993 86.0594H212.491L215.364 106.24L218.236 86.0594H221.734ZM227.496 112.5C224.648 112.5 223.224 111.002 223.224 108.007V90.5889C223.224 87.5692 224.636 86.0594 227.459 86.0594H230.847C233.67 86.0594 235.082 87.5692 235.082 90.5889V108.007C235.082 111.002 233.658 112.5 230.81 112.5H227.496ZM228.343 109.296H230.147C231.08 109.296 231.546 108.781 231.546 107.75V90.8098C231.546 89.7787 231.019 89.2632 229.963 89.2632H228.306C227.275 89.2632 226.759 89.7787 226.759 90.8098V107.75C226.759 108.781 227.287 109.296 228.343 109.296ZM246.621 112.5H238.224V86.0594H241.76V109.296H246.621V112.5ZM260.143 86.0594V107.492C260.143 110.831 258.719 112.5 255.871 112.5H252.888C250.065 112.5 248.654 110.818 248.654 107.455V86.0594H252.189V107.565C252.189 108.719 252.704 109.296 253.735 109.296H255.172C256.129 109.296 256.608 108.719 256.608 107.565V86.0594H260.143ZM269.104 89.2632V112.5H265.569V89.2632H262.181V86.0594H272.492V89.2632H269.104ZM274.51 112.5V86.0594H278.046V112.5H274.51ZM285.431 112.5C282.583 112.5 281.159 111.002 281.159 108.007V90.5889C281.159 87.5692 282.571 86.0594 285.394 86.0594H288.782C291.605 86.0594 293.017 87.5692 293.017 90.5889V108.007C293.017 111.002 291.593 112.5 288.745 112.5H285.431ZM286.278 109.296H288.082C289.015 109.296 289.482 108.781 289.482 107.75V90.8098C289.482 89.7787 288.954 89.2632 287.898 89.2632H286.241C285.21 89.2632 284.694 89.7787 284.694 90.8098V107.75C284.694 108.781 285.222 109.296 286.278 109.296ZM303.488 98.8378V86.0594H307.023V112.5H303.488V107.234L299.695 95.1921V112.5H296.16V86.0594H299.695L303.488 98.8378Z" fill="black"/>
+                                <path d="M353.949 87.8236L365.126 99.0001L353.949 110.177" stroke="black" stroke-width="2.7619" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M333.826 99H364.815" stroke="black" stroke-width="2.7619" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </g>
+                                            <defs>
+                                                <filter id="filter0_d_756_3524" x="0.396828" y="0.396828" width="489.206" height="197.206" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                                                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                                            <feOffset/>
+                                        <feGaussianBlur stdDeviation="31.3016"/>
+                                    <feComposite in2="hardAlpha" operator="out"/>
+                                <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 0.203922 0 0 0 0 0.203922 0 0 0 0.3 0"/>
+                            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_756_3524"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_756_3524" result="shape"/>
+                    </filter>
+                </defs>
+            </svg>
+        </a>
+    </div>
 </section>
     <section class="s_text_block o_colored_level pb32 pt32 bg-black" data-snippet="s_text_block" data-name="Text">
-        <div class="s_allow_columns container">
-            <h4 style="text-align: center;"><font class="text-o-color-3">&amp;nbsp;</font><br/><font class="text-o-color-3">Retail Rebel Revolution is an&amp;nbsp;</font><strong><font class="text-o-color-3">anti-trade show</font></strong><font class="text-o-color-3">&amp;nbsp;designed for&amp;nbsp;<strong>disruptive, rebellious, and emerging products</strong>. Unlike traditional trade shows, RRR is a&amp;nbsp;</font><strong><font class="text-o-color-3">transaction-focused</font></strong> <font class="text-o-color-3"><strong>event</strong>&amp;nbsp;where exhibitors and attendees can&amp;nbsp;<strong>sell, buy, and connect in a meaningful way</strong>.</font><font class="bg-black">​</font>
-        </h4></div>
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="367" height="316" viewbox="0 0 367 316" fill="none">
+                <g clip-path="url(#clip0_756_3230)">
+                    <g opacity="0.4">
+                        <path d="M59.2652 313.178C146.199 313.178 216.667 243.707 216.667 157.977C216.667 72.2476 146.199 2.77686 59.2652 2.77686C-27.6683 2.77686 -98.1367 72.2924 -98.1367 158.022C-98.1367 243.752 -27.6683 313.223 59.2652 313.223V313.178Z" stroke="white" stroke-miterlimit="10"/>
+                            <path d="M206.779 313.178C293.712 313.178 364.181 243.707 364.181 157.977C364.181 72.2476 293.712 2.77686 206.779 2.77686C119.845 2.77686 49.377 72.2476 49.377 157.977C49.377 243.707 119.845 313.178 206.779 313.178Z" stroke="white" stroke-miterlimit="10"/>
+                                <path d="M-98.7637 157.978H217.293" stroke="white" stroke-miterlimit="10"/>
+                                </g>
+                                    </g>
+                                <defs>
+                            <clippath id="clip0_756_3230">
+                        <rect width="367" height="316" fill="white"/>
+                    </clippath>
+                </defs>
+            </svg>
+        </div>
+        <div class="s_allow_columns container design-align" style="margin-top: -20%;">
+            <h3 class="mobile-size" style="text-align: center; position: relative;"><font class="text-o-color-3">&amp;nbsp;</font><br/><font class="text-o-color-3"><span style="font-size: 2.1875rem;">Retail Rebel Revolution is an&amp;nbsp;</span></font><strong><font class="text-o-color-3"><span style="font-size: 2.1875rem; font-weight: normal;">anti-trade show designed for </span></font></strong><font class="text-o-color-1"><span style="font-size: 2.1875rem;">disruptive, rebellious, </span></font><font class="text-o-color-3"><span style="font-size: 2.1875rem;">and </span></font><font class="text-o-color-1"><span style="font-size: 2.1875rem;">emerging</span></font><font class="text-o-color-3"><span style="font-size: 2.1875rem;"> products. Unlike traditional trade shows, RRR is a&amp;nbsp;</span></font><strong><font class="text-o-color-3"><span style="font-size: 2.1875rem; font-weight: normal;">transaction-focused</span></font></strong><span style="font-size: 2.1875rem;"> </span><font class="text-o-color-3"><span style="font-size: 2.1875rem;">event&amp;nbsp;where </span></font><font class="text-o-color-1"><span style="font-size: 2.1875rem;"> Exhibitors </span></font><font class="text-o-color-3"><span style="font-size: 2.1875rem;">and </span></font><font class="text-o-color-1"><span style="font-size: 2.1875rem;">attendees can sell, buy</span></font><font class="text-o-color-3"><span style="font-size: 2.1875rem;"> and </span></font><font class="text-o-color-1"><span style="font-size: 2.1875rem;"> connect </span></font><font class="text-o-color-3"><span style="font-size: 2.1875rem;">in a meaningful way.</span></font><font class="bg-black">​</font>
+        </h3></div>
     </section>
     <section class="s_text_image o_colored_level pt0 bg-black pb56" data-snippet="s_image_text" data-name="Text - Image">
         <div class="container">
-            <div class="row o_grid_mode" data-row-count="14">
-            <div class="o_colored_level o_grid_item g-col-lg-6 o_grid_item_image g-height-13 col-lg-6" style="z-index: 1; grid-area: 2 / 1 / 15 / 7;">
+            <div class="row o_grid_mode" data-row-count="12">
+            <div class="o_colored_level o_grid_item g-col-lg-6 o_grid_item_image g-height-11 col-lg-6" style="z-index: 1; grid-area: 2 / 1 / 13 / 7;">
                 <img src="/web/image/991-3004de47/hh.webp" alt="" class="img img-fluid mx-auto o_we_custom_image rounded" data-mimetype="image/webp" data-original-id="979" data-original-src="/web/image/979-e9c2cf50/hh.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
             </div>
                 <div class="o_colored_level o_grid_item g-col-lg-6 g-height-1 col-lg-6" style="z-index: 2; grid-area: 2 / 7 / 3 / 13;">
                     <h1 style="text-align: center;">
                 <strong><font style="color: rgb(176, 22, 17);">Event Details</font></strong><br/></h1>
-            </div><div class="o_colored_level g-col-lg-2 o_grid_item g-height-1 col-lg-2" style="z-index: 13; grid-area: 4 / 7 / 5 / 9;">
-                <p style="text-align: center;"><strong><font style="color: rgb(176, 22, 17);">Date</font></strong><font style="color: rgb(176, 22, 17);">:</font></p>
-            </div><div class="o_colored_level g-col-lg-4 o_grid_item g-height-1 col-lg-4" style="z-index: 14; grid-area: 4 / 9 / 5 / 13;">
-                <p style="text-align: center;">August 27-28, 2025</p>
-            </div><div class="o_colored_level o_grid_item g-height-1 g-col-lg-2 col-lg-2" style="z-index: 12; grid-area: 5 / 7 / 6 / 9;">
-                <p style="text-align: center;"><strong><font style="color: rgb(176, 22, 17);">Pre-Show:</font></strong></p>
-            </div><div class="o_colored_level g-col-lg-4 o_grid_item g-height-1 col-lg-4" style="z-index: 11; grid-area: 5 / 9 / 6 / 13;">
-                <p style="text-align: center;">August 26, 2025</p>
-            </div><div class="o_colored_level o_grid_item g-col-lg-2 g-height-2 col-lg-2" style="z-index: 10; grid-area: 6 / 7 / 8 / 9;">
-                <p style="text-align: center;"><strong><font style="color: rgb(176, 22, 17);">Party Venue</font></strong><font style="color: rgb(176, 22, 17);">:</font></p>
-            </div><div class="o_colored_level g-col-lg-4 o_grid_item g-height-2 col-lg-4" style="z-index: 9; grid-area: 6 / 9 / 8 / 13;">
-                <p style="text-align: center;">Orange County Convention Center, Orlando, FL</p>
             </div>
-            <div class="o_colored_level g-col-lg-4 o_grid_item g-height-1 col-lg-4" style="z-index: 5; grid-area: 9 / 9 / 10 / 13;">
-                <p style="text-align: center;">August 28, 2025</p>
-            </div><div class="o_colored_level g-col-lg-2 g-height-2 col-lg-2 o_grid_item" style="z-index: 4; grid-area: 10 / 7 / 12 / 9;">
-                <p style="text-align: center;"><strong><font style="color: rgb(176, 22, 17);">Mission:</font></strong></p>
-            </div><div class="o_colored_level g-col-lg-4 o_grid_item g-height-3 col-lg-4" style="z-index: 3; grid-area: 10 / 9 / 13 / 13;">
-                <p style="text-align: center;">To challenge outdated trade show models by providing real value, networking, and&amp;nbsp;immediate ROI for brands, retailers, and investors.</p>
-            </div><div class="o_colored_level g-col-lg-4 o_grid_item g-height-1 col-lg-4" style="z-index: 7; grid-area: 8 / 9 / 9 / 13;">
-                <p style="text-align: center;">August 26, 2025</p>
-            </div><div class="o_colored_level g-col-lg-2 o_grid_item g-height-1 col-lg-2" style="z-index: 8; grid-area: 8 / 7 / 9 / 9;">
-                <p style="text-align: center;"><strong><font style="color: rgb(176, 22, 17);">Move-in:</font></strong></p>
+            <div class="o_colored_level g-col-lg-4 o_grid_item g-height-3 col-lg-4" style="z-index: 3; grid-area: 8 / 9 / 10 / 13;">
+                <p style="text-align: left;">To challenge outdated trade show models by providing real value, networking, and&amp;nbsp;immediate ROI for brands, retailers, and investors.</p>
+            </div>
+            <div class="o_colored_level o_grid_item g-col-lg-2 g-height-2 col-lg-2" style="z-index: 10; grid-area: 5 / 7 / 7 / 9;">
+                <p class="textLeft" style="text-align: right;"><strong><font style="color: rgb(176, 22, 17);">Show Venue</font></strong><font style="color: rgb(176, 22, 17);">:</font></p>
+            </div>
+            <div class="o_colored_level g-col-lg-4 o_grid_item g-height-2 col-lg-4" style="z-index: 9; grid-area: 5 / 9 / 7 / 13;">
+                <p style="text-align: left;">Orange County Convention Center, Orlando, FL</p>
+            </div>
+        
+            <div class="o_colored_level g-col-lg-2 o_grid_item g-height-1 col-lg-2" style="z-index: 13; grid-area: 7 / 7 / 8 / 9;">
+                <p class="textLeft" style="text-align: right;"><strong><font style="color: rgb(176, 22, 17);">Date</font></strong><font style="color: rgb(176, 22, 17);">:</font></p>
+            </div>
+        
+            <div class="o_colored_level g-col-lg-4 o_grid_item g-height-1 col-lg-4" style="z-index: 14; grid-area: 7 / 9 / 8 / 13;">
+                <p style="text-align: left;">August 27-28, 2025</p>
+            </div>
+            <div class="o_colored_level g-col-lg-2 g-height-2 col-lg-2 o_grid_item" style="z-index: 4; grid-area: 8 / 7 / 10 / 9;">
+                <p class="mDnone" style="text-align: right;"><strong><font style="color: rgb(176, 22, 17);">Mission:</font></strong></p>
             </div></div>
-            </div>
-        </section>
+        </div>
+    </section>
     <section class="s_three_columns o_colored_level pb0 bg-black pt0 oe_img_bg o_bg_img_center" data-vxml="001" data-vcss="001" data-snippet="s_three_columns" data-name="Columns" style="background-image: url(&quot;/web/image/995-cdeea8d3/chain.webp&quot;) !important;" data-mimetype="image/webp" data-original-id="990" data-original-src="/web/image/990-dee2c116/chain.png" data-mimetype-before-conversion="image/png" data-resize-width="1920">
         <div class="container">
             <div class="row d-flex align-items-stretch">
-                <div data-name="Card" class="col-lg-4 pt16 pb16">
+                <div data-name="Card" class="col-lg-4 pt16 pb0">
                     <div class="s_card card h-100 my-0 o_colored_level rounded o_cc o_cc2" data-vxml="001" data-snippet="s_card" data-name="Card" style="border-radius: 15px !important;">
                         <div class="card-body" style="height: 20%; ">
                             <h4 class="card-title" style="text-align: center; text-align: center;">
-                                <strong><font style="color: rgb(101, 22, 19);">Get a Booth&amp;nbsp;</font></strong></h4><p class="card-text" style="margin-bottom: 0px; text-align: left;"><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Showcase your brand, products, and services to a dynamic audience.</font></span></p><ul class="card-text" style="margin-bottom: 0px;"><li><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Gain visibility and attract potential clients.</font></span></li><li><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Network with industry leaders and decision-makers.</font></span></li></ul><ul class="card-text"><li><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Drive business growth with exclusive exhibitor benefits.&amp;nbsp;</font></span></li></ul><p><br/></p>
+                                <strong><h4><span class="h3-fs" style="font-weight: normal;"><font style="color: rgb(101, 22, 19);">Get a Booth</font></span><span class="h4-fs" style="font-weight: normal;"><font style="color: rgb(101, 22, 19);"><br/></font></span><span style="font-size: 1.5625rem;"/><span style="font-size: 1.375rem;"/><span class="screen-font" style="font-size: 1.4375rem;"><font style="color: rgb(101, 22, 19);"><br/></font><span class="h4-fs"><font style="color: rgb(101, 22, 19);">Showcase what you offer to an audience that’s ready to buy!</font></span></span><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">
+
+</font></span></h4></strong></h4><ul class="card-text" style="margin-bottom: 0px;"><li><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Gain visibility and attract potential clients.</font></span></li><li><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Network with industry leaders and decision-makers.</font></span></li></ul><ul class="card-text"><li><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Drive business growth with exclusive exhibitor benefits.&amp;nbsp;</font></span></li></ul>
                             <a class="mb-0 btn btn-custom text-o-color-3 rounded-circle" style="border-width: 1px; border-style: solid; margin: auto; background-color: rgb(101, 22, 19);" href="/event/retail-rebel-revolution-1/booth">Register​​​</a>
                         </div>
                     </div>
                 </div>
-                <div data-name="Card" class="col-lg-4 pt16 pb16">
+                <div data-name="Card" class="col-lg-4 pt16 pb0">
                     <div class="s_card card h-100 my-0 o_colored_level rounded o_cc o_cc2" data-vxml="001" data-snippet="s_card" data-name="Card" style="border-radius: 15px !important;">
                         <div class="card-body">
-                            <h4 class="card-title" style="text-align: center;;">
-                            <strong><font style="color: rgb(101, 22, 19);">Join as an Attendee</font></strong></h4><p class="card-text" style="text-align: left;"><span style="font-size: 1.125rem;"><font style="color: rgb(101, 22, 19);">Explore, engage, and expand your knowledge with like-minded professionals.&amp;nbsp;</font></span></p><ul class="card-text"><li><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Attend insightful sessions and workshops.</font></span></li><li><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">&amp;nbsp;Connect with exhibitors and industry experts.</font></span></li><li><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">&amp;nbsp;Discover the latest trends and innovations.&amp;nbsp;</font></span><br/></li></ul>
+                            <h4 class="card-title" style="text-align: center;">
+                            <strong><h4><font style="color: rgb(101, 22, 19);"><strong>
+                        </strong></font><span style="font-size: 1.4375rem;"><font style="color: rgb(101, 22, 19);"><strong>
+                        </strong></font></span><span class="h3-fs"><font style="color: rgb(101, 22, 19);">Join as an Attendee</font></span><span style="font-size: 1.4375rem;"><font style="color: rgb(101, 22, 19);"><strong>
+
+                        </strong></font></span><font style="color: rgb(101, 22, 19);"><strong>
+
+                        </strong><br/></font><span class="h5-fs"/><span class="base-fs"><font style="color: rgb(101, 22, 19);"><br/></font></span><span class="screen-font" style="font-size: 1.5625rem;"><span class="h4-fs"><font style="color: rgb(101, 22, 19);">Swap ideas. Sharpen skills. Build WITH peers who get it.</font></span></span></h4></strong></h4><ul class="card-text"><li><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Attend insightful sessions.</font></span></li><li><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">&amp;nbsp;Connect with exhibitors and industry experts.<br/></font></span><span style="font-size: 0.9375rem;"/><span style="font-size: 0.125rem;"/></li><li><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">&amp;nbsp;Discover the latest trends and innovations.&amp;nbsp;</font></span><br/></li></ul>
                             <a class="mb-0 btn btn-custom text-o-color-3 rounded-circle" style="border-width: 1px; border-style: solid; margin: auto; background-color: rgb(101, 22, 19);" href="https://retailrebelrevolution.com/event/retail-rebel-revolution-1/register">Join ​​Now​​​​</a>
                         </div>
                     </div>
                 </div>
-                <div data-name="Card" class="col-lg-4 pt16 pb16">
+                <div data-name="Card" class="col-lg-4 pt16 pb0">
                     <div class="s_card card h-100 my-0 o_colored_level rounded o_cc o_cc2" data-vxml="001" data-snippet="s_card" data-name="Card" style="border-radius: 15px !important;">
                         <div class="card-body">
-                            <h4 class="card-title" style="text-align: center;">&amp;nbsp;<strong><font style="color: rgb(101, 22, 19);">Become a Member</font></strong></h4>
-                            <p class="card-text" style="text-align: left;">
-                                <span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Unlock premium benefits and stay ahead in the industry.</font></span></p><ul><li style="text-align: left;"><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Access exclusive resources and networking events.&amp;nbsp;</font></span></li><li style="text-align: left;"><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Get early-bird discounts for future conferences.&amp;nbsp;</font></span></li><li style="text-align: left;"><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Be part of a thriving community of professionals.</font></span></li></ul>
+                            <h4 class="card-title" style="text-align: center;">&amp;nbsp;<strong><h4><span class="h3-fs"><font style="color: rgb(101, 22, 19);">Become a Member</font></span><span style="font-size: 1.5625rem;"><font style="color: rgb(101, 22, 19);"><br/></font></span><span class="h5-fs"><font style="color: rgb(101, 22, 19);"/></span><font style="color: rgb(101, 22, 19);"><strong><br/></strong></font><span class="screen-font" style="font-size: 1.4375rem;"><span class="h4-fs"><font style="color: rgb(101, 22, 19);">Unlock premium benefits </font></span></span><span class="h4-fs"><font style="color: rgb(101, 22, 19);">and stay ahead in&amp;nbsp;the industry.</font></span></h4></strong></h4><ul><li style="text-align: left;"><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Access exclusive resources and networking events.&amp;nbsp;</font></span></li><li style="text-align: left;"><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Get early-bird discounts for future conferences.</font></span></li><li style="text-align: left;"><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Be part of a thriving community of professionals.</font></span><span class="h4-fs"/></li></ul>
                             <a class="mb-0 btn btn-custom text-o-color-4 rounded-circle" style="border-width: 1px; border-style: solid; margin: auto; background-color: rgb(101, 22, 19);" href="/membership">​​​​Get Membe​​rship</a>
                         </div>
                     </div>
@@ -85,16 +131,41 @@
             </div>
         </div>
     </section>
-    <section class="s_text_block pt40 pb40 o_colored_level bg-black" data-snippet="s_text_block" data-name="Text">
+    <section class="s_text_block pt40 o_colored_level bg-black pb8" data-snippet="s_text_block" data-name="Text">
         <div class="s_allow_columns container-fluid">
-            <div class="row o_grid_mode" data-row-count="28"><div class="o_grid_item o_colored_level g-height-2 g-col-lg-9 col-lg-9" style="grid-area: 1 / 2 / 3 / 11; z-index: 1;"><h1 style="text-align: left;"><span class="display-3-fs">With Retail Rebel Revolution</span></h1><h6 style="text-align: left;">"More Exiting Updates Coming Soon"</h6></div><div class="o_grid_item o_grid_item_image o_colored_level g-height-3 g-col-lg-2 col-lg-2" style="grid-area: 1 / 1 / 4 / 3; z-index: 7;"><h1><img src="/web/image/993-313bcfad/632c795d4ef5e48fe2a8a3e4_hero-bg-yellow.svg.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="971" data-original-src="/web/image/971-6a1e97e8/632c795d4ef5e48fe2a8a3e4_hero-bg-yellow.svg.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/></h1></div><div class="o_grid_item o_grid_item_image o_colored_level g-col-lg-3 g-height-7 col-lg-3" style="z-index: 11; grid-area: 3 / 6 / 10 / 9;"><img src="/web/image/994-9211bf5d/eventinity.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="976" data-original-src="/web/image/976-76f9347e/eventinity.jpg" data-mimetype-before-conversion="image/jpeg" data-resize-width="NaN" loading="lazy"/></div><div class="o_grid_item o_grid_item_image o_colored_level g-col-lg-3 g-height-7 col-lg-3" style="z-index: 12; grid-area: 6 / 8 / 13 / 11;"><img src="/web/image/997-3ef49143/eventinity1.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="975" data-original-src="/web/image/975-6525ebd1/eventinity1.jpg" data-mimetype-before-conversion="image/jpeg" data-resize-width="NaN" loading="lazy"/></div><div class="o_grid_item o_grid_item_image o_colored_level g-height-3 g-col-lg-2 col-lg-2" style="z-index: 6; grid-area: 4 / 10 / 7 / 12;"><p><img src="/web/image/992-b194a05b/632af7498246e4779d327461_Cube.svg.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="978" data-original-src="/web/image/978-ab75a24c/632af7498246e4779d327461_Cube.svg.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/></p></div><div class="o_grid_item o_grid_item_image o_colored_level g-height-2 g-col-lg-3 col-lg-3" style="z-index: 13; grid-area: 10 / 5 / 12 / 8;"><img src="/web/image/998-54c821e9/632af7498246e4b22c327460_Big-star.svg.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="977" data-original-src="/web/image/977-f7f756b1/632af7498246e4b22c327460_Big-star.svg.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/></div><div class="o_grid_item o_colored_level g-col-lg-8 g-height-4 col-lg-8" style="z-index: 8; grid-area: 14 / 2 / 18 / 10;"><h1><span class="display-3-fs">EXPLORE THE ORLANDO CONVENTION CENTER</span></h1></div><div class="o_grid_item col-lg-4 g-col-lg-4 g-height-2 o_colored_level" style="z-index: 15; grid-area: 27 / 7 / 29 / 11;"><h5 style="margin-bottom: 0px;">"Explore the Orange County Convention Center. More to come!"</h5></div><div class="o_grid_item o_grid_item_image o_colored_level g-height-9 g-col-lg-4 col-lg-4 rounded" style="z-index: 10; border-radius: 20px !important; grid-area: 18 / 7 / 27 / 11;"><img src="/web/image/996-54a55a25/Rectangle%206.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="973" data-original-src="/web/image/973-b75e9690/Rectangle%206.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/></div><div class="o_grid_item o_grid_item_image o_colored_level g-height-9 g-col-lg-4 col-lg-4" style="z-index: 9; grid-area: 19 / 2 / 28 / 6;"><img src="/web/image/999-cb567c81/booth.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="988" data-original-src="/web/image/988-7d18c5ee/booth.jpg" data-mimetype-before-conversion="image/jpeg" data-resize-width="NaN" loading="lazy"/></div><div class="o_grid_item o_colored_level g-col-lg-3 rounded g-height-3 col-lg-3" style="z-index: 14; background-color: rgb(101, 22, 19); --grid-item-padding-x: 15px; --grid-item-padding-y: 25px; border-radius: 10px !important; grid-area: 22 / 5 / 25 / 8;"><h3 style="text-align: left;">Venue : 1<font style="background-color: rgb(101, 22, 19);">​</font></h3><p style="text-align: left;">Orange County Convention Center</p></div></div></div>
-    </section><section class="s_title pt40 pb40 o_colored_level bg-black" data-vcss="001" data-snippet="s_title" data-name="Title">
-        <div class="container s_allow_columns">
-            <h2 class="display-3-fs" style="text-align: center;">EVENT SCHEDULE</h2>
+            <div class="row o_grid_mode" data-row-count="19">
+            <div class="o_grid_item o_grid_item_image o_colored_level g-col-lg-5 g-height-11 col-lg-5" style="z-index: 14; grid-area: 1 / 7 / 12 / 12;"><a href="https://view.publitas.com/orange-county-convention-center/occc-west-floor-plan-book/page/1" target="_blank"><img src="/web/image/1833-2bfbced2/Frame%20110.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="1832" data-original-src="/web/image/1832-c2726532/Frame%20110.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/></a></div>
+            <div class="o_grid_item o_grid_item_image o_colored_level g-height-3 g-col-lg-2 col-lg-2" style="z-index: 7; grid-area: 3 / 1 / 6 / 3;"><h1><img src="/web/image/993-313bcfad/632c795d4ef5e48fe2a8a3e4_hero-bg-yellow.svg.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="971" data-original-src="/web/image/971-6a1e97e8/632c795d4ef5e48fe2a8a3e4_hero-bg-yellow.svg.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/></h1></div>
+        <div class="o_grid_item o_colored_level g-height-4 g-col-lg-5 col-lg-5" style="z-index: 8; grid-area: 3 / 2 / 7 / 7; position: relative;">
+            <h1><span class="display-3-fs">EXPLORE THE ORLANDO CONVENTION CENTER</span></h1>
+            <div style="position: relative; width: 100%; max-width: 1000px; margin: auto;">
+                <img src="/web/image/1831-a7e5a75b/4a8e3208a953565e8c28e9086b1b9caa8a68bd55.png" alt="Video Frame" class="img img-fluid o_we_custom_image" style="width: 100%; height: auto; display: block; border-radius: 12px;" loading="lazy"/>
+
+                <video id="my_video" src="/web/content/1834" muted="false" autoplay="true" playsinline="true" loop="true" style=" position: absolute;  top: 24%;    /* Adjust depending on frame design */  left: 8%;   /* Adjust depending on frame design */   width: 84%; /* Adjust to fit inside frame */  height: 51%;  object-fit: cover;  border-radius: 8px; z-index: 2; ">
+                </video>
+            </div>
         </div>
-    </section><section data-snippet="s_events" class="s_events s_event_upcoming_snippet s_dynamic s_dynamic_empty pt32 pb32 o_colored_level s_event_event_card bg-black oe_img_bg o_bg_img_center o_bg_img_opt_repeat o_dynamic_snippet_empty" data-custom-template-data="{&quot;events_event_time_active&quot;:true}" data-name="Events" data-number-of-records="6" data-filter-id="2" data-template-key="website_event.dynamic_filter_template_event_event_card" data-extra-classes="g-3" data-column-classes="col-12 col-sm-6 col-lg-4 col-xxl-3" style="background-image: url(&quot;/web/image/1000-b7e597d1/red%20tire%201.webp&quot;) !important; background-size: 100px;" data-mimetype="image/webp" data-original-id="972" data-original-src="/web/image/972-b7e597d1/red%20tire%201.png" data-mimetype-before-conversion="image/png" data-resize-width="1461">
+            <div class="o_grid_item o_grid_item_image o_colored_level g-height-2 g-col-lg-3 col-lg-3" style="z-index: 13; grid-area: 18 / 6 / 20 / 9;"><img src="/web/image/998-54c821e9/632af7498246e4b22c327460_Big-star.svg.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="977" data-original-src="/web/image/977-f7f756b1/632af7498246e4b22c327460_Big-star.svg.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/></div>
+        <div class="o_grid_item o_colored_level g-height-2 g-col-lg-5 col-lg-5" style="z-index: 1; grid-area: 13 / 7 / 15 / 12;"><h1 style="text-align: right;"><span class="display-3-fs">More Revolutionary Updates Coming Soon...</span><br/></h1></div><div class="o_grid_item o_grid_item_image o_colored_level g-height-3 g-col-lg-2 col-lg-2" style="z-index: 6; grid-area: 10 / 10 / 13 / 12;"><p><img src="/web/image/992-b194a05b/632af7498246e4779d327461_Cube.svg.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="978" data-original-src="/web/image/978-ab75a24c/632af7498246e4779d327461_Cube.svg.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/></p></div></div></div>
+    </section>
+    <section data-snippet="s_events" class="s_events s_event_upcoming_snippet s_dynamic s_dynamic_empty pt32 pb32 o_colored_level s_event_event_card o_bg_img_opt_repeat bg-black o_dynamic_snippet_empty" data-custom-template-data="{&quot;events_event_time_active&quot;:true}" data-name="Events" data-number-of-records="6" data-filter-id="2" data-template-key="website_event.dynamic_filter_template_event_event_card" data-extra-classes="g-3" data-column-classes="col-12 col-sm-6 col-lg-4 col-xxl-3" style="background-size: 100px;">
+            <section class="s_title pt40 pb40 o_colored_level bg-black o_bg_img_opt_repeat" data-vcss="001" data-snippet="s_title" data-name="Title">
+                <div class="container s_allow_columns">
+                    <h2 class="display-3-fs" style="text-align: center;">EVENT SCHEDULE</h2>
+                </div>
+            </section>
             <div class="container">
                 <div class="row s_nb_column_fixed">
+                        <section data-snippet="s_blog_posts" class="s_blog_posts s_dynamic_snippet_blog_posts s_blog_post_big_picture s_blog_posts_effect_marley s_blog_posts_post_picture_size_default s_dynamic s_dynamic_empty pb32 o_colored_level bg-black oe_img_bg o_bg_img_center o_bg_img_opt_repeat o_dynamic_snippet_empty" data-custom-template-data="{&quot;blog_posts_post_author_active&quot;:false,&quot;blog_posts_post_teaser_active&quot;:true,&quot;blog_posts_post_date_active&quot;:true}" data-name="Blog Posts" data-filter-by-blog-id="-1" data-number-of-records="6" data-filter-id="10" data-template-key="website_blog.dynamic_filter_template_blog_post_big_picture" data-extra-classes="g-3" data-column-classes="col-12 col-sm-6 col-lg-4" data-original-id="972">
+            <div class="container">
+                <div class="row s_nb_column_fixed">
+                    <section class="s_dynamic_snippet_title oe_unremovable oe_unmovable d-flex flex-column flex-md-row mb-lg-0 pb-3 pb-md-0 o_colored_level justify-content-between">
+                        <div>
+                            <p><br/></p>
+                        </div>
+                        <div>
+                        <br/></div>
+                    </section>
                     <section class="s_dynamic_snippet_content oe_unremovable oe_unmovable o_not_editable col o_colored_level">
                         <div class="css_non_editable_mode_hidden">
                             <div class="missing_option_warning alert alert-info fade show d-none d-print-none rounded-0 o_default_snippet_text">
@@ -106,41 +177,46 @@
                 </div>
             </div>
         </section>
-<section class="o_colored_level bg-black pb64 oe_img_bg o_bg_img_center" style="background-image: url(&quot;/web/image/1000-b7e597d1/red%20tire%201.webp&quot;);" data-mimetype="image/webp" data-original-id="972" data-original-src="/web/image/972-b7e597d1/red%20tire%201.png" data-mimetype-before-conversion="image/png" data-resize-width="1461">
-    <div class="container">
-        <div class="row s_nb_column_fixed o_grid_mode" data-row-count="7">
-            <div class="o_grid_item g-height-2 o_grid_item_image o_colored_level g-col-lg-2 col-lg-2 o_cc o_cc1 rounded" style="z-index: 9; grid-area: 3 / 8 / 5 / 10; border-radius: 10px !important;">
-                <img src="/web/image/1201-4dba7257/Frame%2023.webp" alt="" class="img img-fluid mx-auto o_we_custom_image" data-mimetype="image/webp" data-original-id="1200" data-original-src="/web/image/1200-0848ef83/Frame%2023.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
+                </div>
             </div>
-            <div class="o_grid_item o_grid_item_image o_colored_level g-height-2 o_cc o_cc1 rounded g-col-lg-3 col-lg-3" style="z-index: 3; grid-area: 6 / 7 / 8 / 10; border-radius: 10px !important;">
-                <img src="/web/image/1201-4dba7257/Frame%2023.webp" alt="" class="img img-fluid mx-auto o_we_custom_image" data-mimetype="image/webp" data-original-id="1200" data-original-src="/web/image/1200-0848ef83/Frame%2023.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
+        </section>
+    <section class="o_colored_level bg-black pb64 oe_img_bg o_bg_img_center" style="background-image: url(&quot;/web/image/1000-b7e597d1/red%20tire%201.webp&quot;) !important;" data-mimetype="image/webp" data-original-id="972" data-original-src="/web/image/972-b7e597d1/red%20tire%201.png" data-mimetype-before-conversion="image/png" data-resize-width="1461">
+        <div class="container">
+            <div class="row justify-content-center o_grid_mode" data-row-count="2">
+                <div class="text-center o_grid_item g-col-lg-12 g-height-2 col-lg-12 o_colored_level" style="grid-area: 1 / 1 / 3 / 13; z-index: 1;">
+                    <h2><font class="text-o-color-3">Sponsors</font></h2>
+                </div>
             </div>
-            <div class="o_colored_level o_grid_item g-col-lg-12 g-height-2 col-lg-12" style="z-index: 2; grid-area: 1 / 1 / 3 / 13;">
-                <h2 style="text-align: center;"><font class="text-o-color-3">Sponsors</font></h2>
-            </div>
-            <div class="o_colored_level o_grid_item o_grid_item_image g-height-2 g-col-lg-2 col-lg-2 o_cc o_cc1 rounded" style="z-index: 7; border-radius: 10px !important; grid-area: 6 / 1 / 8 / 3;">
-                <img src="/web/image/1201-4dba7257/Frame%2023.webp" alt="" class="img img-fluid mx-auto o_we_custom_image" data-mimetype="image/webp" data-original-id="1200" data-original-src="/web/image/1200-0848ef83/Frame%2023.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
-            </div>
-            <div class="o_grid_item g-height-2 o_grid_item_image o_colored_level o_cc o_cc1 rounded col-lg-3 g-col-lg-2 col-lg-2" style="z-index: 1; border-radius: 10px !important; grid-area: 6 / 4 / 8 / 6;">
-                <img src="/web/image/1201-4dba7257/Frame%2023.webp" alt="" class="img img-fluid mx-auto o_we_custom_image" data-mimetype="image/webp" data-original-id="1200" data-original-src="/web/image/1200-0848ef83/Frame%2023.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
-            </div>
-            <div class="o_grid_item g-height-2 o_grid_item_image o_colored_level o_cc o_cc1 rounded g-col-lg-2 col-lg-2" style="z-index: 4; border-radius: 10px !important; grid-area: 3 / 1 / 5 / 3;">
-                <img src="/web/image/1201-4dba7257/Frame%2023.webp" alt="" class="img img-fluid mx-auto o_we_custom_image" data-mimetype="image/webp" data-original-id="1200" data-original-src="/web/image/1200-0848ef83/Frame%2023.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
-            </div>
-            <div class="o_grid_item o_grid_item_image o_colored_level g-height-2 o_cc o_cc1 rounded g-col-lg-3 col-lg-3" style="z-index: 8; border-radius: 10px !important; grid-area: 3 / 4 / 5 / 7;">
-                <img src="/web/image/1001-c0bc6efb/High%20Quality%20KASH%20Tech%20logo%20%281%29%20%281%29%201.webp" alt="" class="img img-fluid o_we_custom_image mt-2" data-mimetype="image/webp" data-original-id="989" data-original-src="/web/image/989-4ef992d6/High%20Quality%20KASH%20Tech%20logo%20%281%29%20%281%29%201.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
-            </div>
-            <div class="o_grid_item g-height-2 o_grid_item_image o_colored_level o_cc o_cc1 rounded g-col-lg-2 col-lg-2" style="z-index: 0; border-radius: 10px !important; grid-area: 3 / 11 / 5 / 13;">
-                <img src="/web/image/1201-4dba7257/Frame%2023.webp" alt="" class="img img-fluid mx-auto o_we_custom_image" data-mimetype="image/webp" data-original-id="1200" data-original-src="/web/image/1200-0848ef83/Frame%2023.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
-            </div>
-            <div class="o_grid_item g-height-2 o_grid_item_image o_colored_level o_cc o_cc1 rounded g-col-lg-2 col-lg-2" style="z-index: 5; border-radius: 10px !important; grid-area: 6 / 11 / 8 / 13;">
-                <img src="/web/image/1201-4dba7257/Frame%2023.webp" alt="" class="img img-fluid mx-auto o_we_custom_image" data-mimetype="image/webp" data-original-id="1200" data-original-src="/web/image/1200-0848ef83/Frame%2023.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
+            <div class="row justify-content-center text-center" data-row-count="-Infinity">
+                <div class="col-lg-3 col-md-4 col-sm-6 p-3 o_colored_level pb0 pt48">
+                    <img src="/web/image/1001-c0bc6efb/High%20Quality%20KASH%20Tech%20logo%20%281%29%20%281%29%201.webp" alt="Sponsor KashTech" class="img img-fluid mx-auto o_we_custom_image my-auto" loading="lazy" data-mimetype="image/png" data-original-id="1937" data-original-src="/web/image/1937-4ef992d6/High%20Quality%20KASH%20Tech%20logo%20%281%29%20%281%29%201.png" data-mimetype-before-conversion="image/png" style="margin-top: 10%; transform: scaleX(0.75); animation-play-state: paused; transition: none;"/>
+                </div><div class="col-lg-3 col-md-4 col-sm-6 p-3 o_colored_level">
+                    <img src="/web/image/1958-ada60d29/Frame%2026.webp" alt="" class="img img-fluid mx-auto o_we_custom_image" data-mimetype="image/webp" data-original-id="1957" data-original-src="/web/image/1957-abc2ddee/Frame%2026.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 p-3 o_colored_level">
+                    <img src="/web/image/1959-ada60d29/Frame%2026.webp" alt="" class="img img-fluid mx-auto o_we_custom_image" data-mimetype="image/webp" data-original-id="1957" data-original-src="/web/image/1957-abc2ddee/Frame%2026.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 p-3 o_colored_level">
+                    <img src="/web/image/1959-ada60d29/Frame%2026.webp" alt="" class="img img-fluid mx-auto o_we_custom_image" data-mimetype="image/webp" data-original-id="1957" data-original-src="/web/image/1957-abc2ddee/Frame%2026.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 p-3 o_colored_level">
+                    <img src="/web/image/1959-ada60d29/Frame%2026.webp" alt="" class="img img-fluid mx-auto o_we_custom_image" data-mimetype="image/webp" data-original-id="1957" data-original-src="/web/image/1957-abc2ddee/Frame%2026.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 p-3 o_colored_level">
+                    <img src="/web/image/1959-ada60d29/Frame%2026.webp" alt="" class="img img-fluid mx-auto o_we_custom_image" data-mimetype="image/webp" data-original-id="1957" data-original-src="/web/image/1957-abc2ddee/Frame%2026.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 p-3 o_colored_level">
+                    <img src="/web/image/1959-ada60d29/Frame%2026.webp" alt="" class="img img-fluid mx-auto o_we_custom_image" data-mimetype="image/webp" data-original-id="1957" data-original-src="/web/image/1957-abc2ddee/Frame%2026.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 p-3 o_colored_level">
+                    <img src="/web/image/1959-ada60d29/Frame%2026.webp" alt="" class="img img-fluid mx-auto o_we_custom_image" data-mimetype="image/webp" data-original-id="1957" data-original-src="/web/image/1957-abc2ddee/Frame%2026.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
+                </div>
             </div>
         </div>
-    </div>
-</section>
-
-    </div>
+        <div class="container text-center">
+            <a class="btn btn-primary text-center btn-lg" href="/sponsors" style="color: white !important; background-color: rgb(101, 22, 19);">Register to Sponsor</a>
+        </div>
+    </section>
+        </div>
     </t>
 </t>
-</odoo>

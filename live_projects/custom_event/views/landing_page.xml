@@ -241,7 +241,7 @@
     
             </style>
             <div id="wrap" class="oe_structure oe_empty" style="margin-bottom: -8%;">
-                <video id="my_video" src="/web/content/434" muted="false" autoplay="true" playsinline="true" style="width: -webkit-fill-available;"/>
+              <video id="my_video" src="/web/content/434" muted="false" autoplay="true" playsinline="true" style="position: absolute; top: 10%; left: 10%; width: 80%; height: 80%; object-fit: cover; border-radius: 8px;"/>
             <button id="mute_button">
                 🔇
             </button>

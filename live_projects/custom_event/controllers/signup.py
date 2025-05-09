@@ -1,42 +1,49 @@
-from odoo import _, http
+import logging
+
+from odoo import _
 from odoo.http import request, route
+
 from odoo.addons.auth_signup.controllers.main import AuthSignupHome
 
-class AuthSignupConfirmation(AuthSignupHome):
-    @route('/web/signup', type='http', auth="public", website=True, csrf=True, methods=['GET', 'POST'])
-    def web_auth_signup(self, **post):
+_logger = logging.getLogger(__name__)
 
-        email = post.get('login')
-        name = post.get('name')
+class SignupVerifyEmail(AuthSignupHome):
+    @route()
+    def web_auth_signup(self, *args, **kw):
+        if request.params.get("login") and not request.params.get("password"):
+            return self.passwordless_signup()
+        return super().web_auth_signup(*args, **kw)
 
-        if not email or not name:
-            return request.render("auth_signup.signup", {
-                'error_message': _("Email and Name are required."),
-                'providers': [],
-            })
+    def passwordless_signup(self, *args, **kw):
+        values = request.params
+        qcontext = self.get_auth_signup_qcontext()
 
-        existing_user = request.env['res.users'].sudo().search([('login', '=', email)], limit=1)
-        if existing_user:
-            return request.render("auth_signup.signup", {
-                'error_message': _("This email is already registered. Please log in."),
-                'providers': [],
-            })
+        if not values.get("email"):
+            values["email"] = values.get("login")
 
-        else:
-            portal_group = request.env.ref('base.group_portal')
-            object = request.env['res.users'].sudo().create({
-                'name': name,
-                'login': email,
-                'email': email,
-                'active': True,
-                'groups_id': [(4, portal_group.id)]
-            })
+        values.pop("redirect", "")
+        values.pop("token", "")
+        values["password"] = ""
 
-            template = request.env['mail.template'].browse(request.env.ref('custom_event.signup_confirmation_email_template').id)
-            if object.partner_id:
-                template.sudo().send_mail(object.id, force_send=True)
+        # Prepare user creation values
+        user_values = {
+            'name': values.get('name') or values.get('login'),
+            'login': values.get('login'),
+            'email': values.get('email'),
+            'password': values.get('password'),  # Empty string or handle as needed
+        }
 
-            return request.render("auth_signup.signup", {
-                'success_message': _("A confirmation email has been sent to %s.") % email,
-                'providers': [],
-            })
+        try:
+            sudo_users = request.env['res.users'].with_context(create_user=True).sudo()
+            user = sudo_users.create(user_values)
+
+            # Optionally track signup IP
+            ip = request.httprequest.headers.get('X-Forwarded-For', request.httprequest.remote_addr)
+            user.x_signup_ip = ip
+
+            request.env.cr.commit()  # Ensure it's saved before redirect
+            return request.redirect('/web/login')  # Or another post-signup page
+        except Exception as e:
+            _logger.exception("User creation failed: %s", str(e))
+            qcontext['error'] = _("Could not create user.")
+            return request.render('auth_signup.signup', qcontext)

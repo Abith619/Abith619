@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="embed_contact_template" name="Embedded Contact Form">
+        <t t-call="website.layout">
+            <t t-set="no_header" t-value="True"/>
+            <t t-set="no_footer" t-value="True"/>
+            <div class="container">
+                <form id="lead_form" method="POST" action="/api/bws_lead" class="o_mark_required">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="first_name">First Name *</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" required="True"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="last_name">Last Name</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="email">Email *</label>
+                            <input type="email" class="form-control" id="email" name="email" required="True"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="phone">Phone *</label>
+                            <input type="text" class="form-control" id="phone" name="phone" required="True"/>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="message">Message *</label>
+                            <textarea class="form-control" id="message" name="message"/>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary text-center">Submit</button>
+                </form>
+            </div>
+        </t>
+    </template>
+    <template id='thank_you_template' name="Thank You Page">
+        <t t-call="website.layout">
+            <t t-set="no_header" t-value="True"/>
+            <t t-set="no_footer" t-value="True"/>
+            <div id="wrap" class="oe_structure oe_empty">
+                <section class="s_text_block pt40 pb40 o_colored_level " data-snippet="s_text_block">
+                    <div class="container s_allow_columns">
+                        <div class="row">
+                            <div class="col-lg-6 offset-lg-1 text-center">
+                                <div class="d-inline-block mx-auto p-4">
+                                    <i class="fa fa-paper-plane fa-2x mb-3 rounded-circle text-bg-success" role="presentation"/>
+                                    <h1 class="fw-bolder">Thank You!</h1>
+                                    <p class="lead mb-0">Your message has been sent.</p>
+                                    <p class="lead">We will get back to you shortly.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+</odoo>

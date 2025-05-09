@@ -1,0 +1,21 @@
+<odoo>
+    <template id="booth_addons_template" name="Booth Addons Page">
+        <t t-call="website.layout">
+            <script type="text/javascript" src="/custom_event/static/js/booth_addons.js"/>
+            <div class="container mt-5 mb-5">
+                <h1>Thank You for Registering Your Booth!</h1>
+                    <p>We have received your details for event <strong><t t-esc="event.name"/></strong>.</p>
+                    <p>We’ll be in touch with further instructions.</p>
+                <a href="/" class="btn btn-primary mt-3">Return to Home</a>
+            </div>
+            <div class="text-end o_carousel_product_card">
+                <a role="button" class="btn btn-primary js_add_cart w-100" title="Add to Cart" data-product-template-id="4" data-product-id="4" style="background-color: rgb(101, 22, 19) !important;">
+                    Add to Cart
+                <span class="o_ripple_item" style="animation-duration: 350ms; width: 226px; height: 226px; top: -86px; left: 59.5px;"/></a>
+            </div>
+            <div class="text-end mt-4">
+                <a href="/shop/cart" class="btn btn-primary">Proceed to checkout</a>
+            </div>
+        </t>
+    </template>
+</odoo>

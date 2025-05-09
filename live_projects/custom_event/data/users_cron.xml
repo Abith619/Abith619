@@ -7,7 +7,7 @@
             <field name="state">code</field>
             <field name="code">model.auto_archive_orders()</field>
             <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
+            <field name="interval_type">hours</field>
             <field name="active">True</field>
         </record>
     </data>

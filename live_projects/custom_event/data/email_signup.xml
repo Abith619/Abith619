@@ -10,8 +10,9 @@
             <field name="body_html">
                 <![CDATA[
                     <p>Hello, </p><span t-esc='object.name'/>
-                    <p>Click the link below to confirm your account:</p>
-                    <p><a href="${{object.confirmation_url}}">Confirm Account</a></p>
+                    <p>Thank you for signing up. Please click the link below to complete your registration by setting your password:</p>
+                    <p><a href="/web/set_password?token=${object.signup_token}">Confirm Account</a></p>
+                    <p>If you did not initiate this request, you can safely ignore this email.</p>
                     <p>Thank you!</p>
                 ]]>
             </field>
