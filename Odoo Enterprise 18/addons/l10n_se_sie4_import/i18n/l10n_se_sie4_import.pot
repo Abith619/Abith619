@@ -1,0 +1,126 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_se_sie4_import
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-07 13:13+0000\n"
+"PO-Revision-Date: 2024-11-07 13:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_se_sie4_import
+#: model:ir.model,name:l10n_se_sie4_import.model_l10n_se_sie4_import_wizard
+msgid "Accounting SIE4 import wizard"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model_terms:ir.ui.view,arch_db:l10n_se_sie4_import.sie4_import_view_form
+msgid "Close"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__company_id
+msgid "Company"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__attachment_name
+msgid "Filename"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,help:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__import_opening_balance
+msgid ""
+"If true, all IB-0 item balances found in the file will be compared with "
+"Odoo's opening balance. If a difference is found, a new miscellaneous move "
+"with the difference will be created."
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,help:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__update_account_data
+msgid ""
+"If true, any information about account name/type found in the file will "
+"update the existing account in the company."
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#. odoo-javascript
+#: code:addons/l10n_se_sie4_import/static/src/xml/l10n_se_sie4_import_button.xml:0
+#: model_terms:ir.ui.view,arch_db:l10n_se_sie4_import.sie4_import_view_form
+#, python-format
+msgid "Import SIE 4 file"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__import_opening_balance
+msgid "Import account opening balances"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model_terms:ir.ui.view,arch_db:l10n_se_sie4_import.sie4_import_view_form
+msgid "Import your accounting data from a SIE-4 file"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model:ir.actions.act_window,name:l10n_se_sie4_import.action_open_load_sie4
+msgid "Load SIE 4 file"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model_terms:ir.ui.view,arch_db:l10n_se_sie4_import.sie4_import_view_form
+msgid "SIE 4 Import"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#. odoo-python
+#: code:addons/l10n_se_sie4_import/wizard/import_wizard.py:0
+#, python-format
+msgid "SIE opening balance move %(date)s"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model_terms:ir.ui.view,arch_db:l10n_se_sie4_import.sie4_import_view_form
+msgid "Select File"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__update_account_data
+msgid "Update Chart of Account data"
+msgstr ""

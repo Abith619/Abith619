@@ -14,8 +14,8 @@ class EventBoothInherit(models.Model):
         ('Jessica', 'Jessica Collins'), ('Bobby', 'Bobby Fulcher'), ('Joseph', 'Joseph Dunleavy'),
         ('Mont', "Mont'a McAdory"), ('Meinen', 'Jessica Meinen'), ('Marlena', 'Marlena Fineberg'),
         ('Kyle', 'Kyle Ewanic'), ('Sean', 'Sean McDonough'), ('other', 'Others')],
-        string='Sales Person', default='jackie')
-
+        string='Sales Person')
+    sales_persons : fields.Many2one = fields.Many2one('sales.person.custom', string='Sales Person')
 
 class EventRegistrationCustom(models.Model):
     _inherit = 'event.registration'
@@ -26,6 +26,7 @@ class EventRegistrationCustom(models.Model):
         ('Mont', "Mont'a McAdory"), ('Meinen', 'Jessica Meinen'), ('Marlena', 'Marlena Fineberg'),
         ('Kyle', 'Kyle Ewanic'), ('Sean', 'Sean McDonough'), ('other', 'Others')],
         string='Sales Person')
+    sales_persons : fields.Many2one = fields.Many2one('sales.person.custom', string='Sales Person')
 
 class EventBoothRegistrationCustom(models.Model):
     _inherit = 'event.booth.registration'
@@ -36,3 +37,4 @@ class EventBoothRegistrationCustom(models.Model):
         ('Mont', "Mont'a McAdory"), ('Meinen', 'Jessica Meinen'), ('Marlena', 'Marlena Fineberg'),
         ('Kyle', 'Kyle Ewanic'), ('Sean', 'Sean McDonough'), ('other', 'Others')],
         string='Sales Person')
+    sales_persons : fields.Many2one = fields.Many2one('sales.person.custom', string='Sales Person')

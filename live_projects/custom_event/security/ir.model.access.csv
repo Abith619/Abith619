@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_custom_event_event_booth_category,custom_event.event_booth_category,model_event_booth_category,base.group_user,1,1,1,1
 access_custom_user_signup,custom_event.custom_user_signup,model_custom_user_signup,base.group_user,1,1,1,1
+access_sales_person_custom,custom_event.sales_person_custom,model_sales_person_custom,base.group_user,1,1,1,1

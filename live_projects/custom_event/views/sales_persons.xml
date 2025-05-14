@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_order_form_inherit_sales_person" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.sales.person</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="sales_person"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_product_form_inherit_addons" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.addons</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='alternative_product_ids']" position="after">
+                <field name="imprint_line"/>
+                <field name="imprint_color"/>
+                <field name="personalization"/>
+                <field name="includes"/>
+                <field name="size"/>
+                <field name="booth_des"/>
+                <field name="material"/>
+            </xpath>
+        </field>
+    </record>
+
+  <record id="view_sales_person_custom_tree" model="ir.ui.view">
+    <field name="name">sales.person.custom.tree</field>
+    <field name="model">sales.person.custom</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="name"/>
+        <field name="contact_details"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="view_sales_person_custom_form" model="ir.ui.view">
+    <field name="name">sales.person.custom.form</field>
+    <field name="model">sales.person.custom</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <field name="name"/>
+            <field name="contact_details"/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_sales_person_custom" model="ir.actions.act_window">
+    <field name="name">Sales Persons</field>
+    <field name="res_model">sales.person.custom</field>
+    <field name="view_mode">list,form</field>
+  </record>
+
+    <menuitem id="menu_sales_person_custom"
+          name="Sales Persons"
+          sequence="11"
+          action="custom_event.action_sales_person_custom"
+          parent="sale.sale_order_menu"
+          active="True"/>
+</odoo>

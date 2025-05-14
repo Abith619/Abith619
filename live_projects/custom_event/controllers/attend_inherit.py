@@ -12,7 +12,7 @@ class WebsiteEvent(http.Controller):
             'name': post.get('name'),
             'email': post.get('email'),
             'phone': post.get('phone'),
-            'sales_person': sales_person,
+            'sales_persons': sales_person,
         }
 
         request.env['event.registration'].sudo().create(registration_vals)

@@ -1,0 +1,131 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_se_sie4_import
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-07 13:13+0000\n"
+"PO-Revision-Date: 2024-11-07 13:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_se_sie4_import
+#: model:ir.model,name:l10n_se_sie4_import.model_l10n_se_sie4_import_wizard
+msgid "Accounting SIE4 import wizard"
+msgstr "Importguide för SIE4-redovisning"
+
+#. module: l10n_se_sie4_import
+#: model_terms:ir.ui.view,arch_db:l10n_se_sie4_import.sie4_import_view_form
+msgid "Close"
+msgstr "Nära"
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__company_id
+msgid "Company"
+msgstr "Företag"
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__create_uid
+msgid "Created by"
+msgstr "Skapad av"
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__create_date
+msgid "Created on"
+msgstr "Skapad på"
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__display_name
+msgid "Display Name"
+msgstr "Visa namn"
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__attachment_name
+msgid "Filename"
+msgstr "Filnamn"
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,help:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__import_opening_balance
+msgid ""
+"If true, all IB-0 item balances found in the file will be compared with "
+"Odoo's opening balance. If a difference is found, a new miscellaneous move "
+"with the difference will be created."
+msgstr ""
+"Om true, kommer alla IB-0-posters saldon som finns i filen att jämföras med "
+"Odoos ingående balans. Om en skillnad hittas skapas en ny diverse rörelse "
+"med skillnaden."
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,help:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__update_account_data
+msgid ""
+"If true, any information about account name/type found in the file will "
+"update the existing account in the company."
+msgstr ""
+"Om det är sant kommer all information om kontonamn/-typ som finns i "
+"filen att uppdatera det befintliga kontot i företaget."
+
+#. module: l10n_se_sie4_import
+#. odoo-javascript
+#: code:addons/l10n_se_sie4_import/static/src/xml/l10n_se_sie4_import_button.xml:0
+#: model_terms:ir.ui.view,arch_db:l10n_se_sie4_import.sie4_import_view_form
+#, python-format
+msgid "Import SIE 4 file"
+msgstr "Importera SIE 4-fil"
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__import_opening_balance
+msgid "Import account opening balances"
+msgstr "Importera ingående saldon för konton"
+
+#. module: l10n_se_sie4_import
+#: model_terms:ir.ui.view,arch_db:l10n_se_sie4_import.sie4_import_view_form
+msgid "Import your accounting data from a SIE-4 file"
+msgstr "Importera din bokföringsdata från en SIE-4-fil"
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Senast uppdaterad av"
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__write_date
+msgid "Last Updated on"
+msgstr "Senast uppdaterad den"
+
+#. module: l10n_se_sie4_import
+#: model:ir.actions.act_window,name:l10n_se_sie4_import.action_open_load_sie4
+msgid "Load SIE 4 file"
+msgstr "Ladda SIE 4-fil"
+
+#. module: l10n_se_sie4_import
+#: model_terms:ir.ui.view,arch_db:l10n_se_sie4_import.sie4_import_view_form
+msgid "SIE 4 Import"
+msgstr "SIE 4 Import"
+
+#. module: l10n_se_sie4_import
+#. odoo-python
+#: code:addons/l10n_se_sie4_import/wizard/import_wizard.py:0
+#, python-format
+msgid "SIE opening balance move %(date)s"
+msgstr "SIE ingående balansrörelse %(date)s"
+
+#. module: l10n_se_sie4_import
+#: model_terms:ir.ui.view,arch_db:l10n_se_sie4_import.sie4_import_view_form
+msgid "Select File"
+msgstr "Välj fil"
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__update_account_data
+msgid "Update Chart of Account data"
+msgstr "Uppdatera kontoplanens data"

@@ -1,0 +1,80 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_be_intrastat_services
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-10 08:25+0000\n"
+"PO-Revision-Date: 2025-02-10 08:25+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_be_intrastat_services
+#: model:account.report.column,name:l10n_be_intrastat_services.intrastat_report_column_services_f01dgs_country_code
+#: model:account.report.column,name:l10n_be_intrastat_services.intrastat_report_column_services_f02cms_country_code
+msgid "Country"
+msgstr "Pays"
+
+#. module: l10n_be_intrastat_services
+#: model:account.report.column,name:l10n_be_intrastat_services.intrastat_report_column_services_f01dgs_value_currency
+#: model:account.report.column,name:l10n_be_intrastat_services.intrastat_report_column_services_f02cms_value_currency
+msgid "In Currency"
+msgstr "En devise"
+
+#. module: l10n_be_intrastat_services
+#: model:account.report.line,name:l10n_be_intrastat_services.intrastat_line_services_f01dgs
+#: model:account.report.line,name:l10n_be_intrastat_services.intrastat_line_services_f02cms
+msgid "Intrastat"
+msgstr "Intrastat"
+
+#. module: l10n_be_intrastat_services
+#: model:account.report,name:l10n_be_intrastat_services.intrastat_report_services_f01dgs
+msgid "Intrastat (Services F01DGS)"
+msgstr "Intrastat (Services F01DGS)"
+
+#. module: l10n_be_intrastat_services
+#: model:account.report,name:l10n_be_intrastat_services.intrastat_report_services_f02cms
+msgid "Intrastat (Services F02CMS)"
+msgstr "Intrastat (Services F02CMS)"
+
+#. module: l10n_be_intrastat_services
+#: model:account.report.column,name:l10n_be_intrastat_services.intrastat_report_column_services_f01dgs_product_origin_country
+#: model:account.report.column,name:l10n_be_intrastat_services.intrastat_report_column_services_f02cms_product_origin_country
+msgid "Origin Country"
+msgstr "Pays d'origine"
+
+#. module: l10n_be_intrastat_services
+#: model:account.report.column,name:l10n_be_intrastat_services.intrastat_report_column_services_f01dgs_partner_vat
+#: model:account.report.column,name:l10n_be_intrastat_services.intrastat_report_column_services_f02cms_partner_vat
+msgid "Partner VAT"
+msgstr "TVA du partenaire"
+
+#. module: l10n_be_intrastat_services
+#: model:account.report.column,name:l10n_be_intrastat_services.intrastat_report_column_services_f01dgs_region_code
+#: model:account.report.column,name:l10n_be_intrastat_services.intrastat_report_column_services_f02cms_region_code
+msgid "Region"
+msgstr "Région"
+
+#. module: l10n_be_intrastat_services
+#: model:account.report.column,name:l10n_be_intrastat_services.intrastat_report_column_services_f01dgs_commodity_code
+#: model:account.report.column,name:l10n_be_intrastat_services.intrastat_report_column_services_f02cms_commodity_code
+msgid "Service"
+msgstr "Service"
+
+#. module: l10n_be_intrastat_services
+#: model:account.report.column,name:l10n_be_intrastat_services.intrastat_report_column_services_f01dgs_system
+#: model:account.report.column,name:l10n_be_intrastat_services.intrastat_report_column_services_f02cms_system
+msgid "System"
+msgstr "Système"
+
+#. module: l10n_be_intrastat_services
+#: model:account.report.column,name:l10n_be_intrastat_services.intrastat_report_column_services_f01dgs_value
+#: model:account.report.column,name:l10n_be_intrastat_services.intrastat_report_column_services_f02cms_value
+msgid "Value"
+msgstr "Valeur"

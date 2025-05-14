@@ -1,0 +1,14 @@
+<odoo>
+    <template id="libro_giornale_pdf" inherit_id="account_reports.journal_report_pdf_export_main">
+        <xpath expr="//header/div[hasclass('row')]" position="before">
+            <div class="text-end">
+                <strong>Generated on:</strong> <t t-esc="time.strftime('%Y-%m-%d')"/>
+            </div>
+        </xpath>
+        <xpath expr="//t[@t-call='account_reports.company_information']" position="after">
+            <div>Tax Code: <t t-out="report.env.company.l10n_it_codice_fiscale"/></div>
+        </xpath>
+        <xpath expr="//section/div[hasclass('o_section_title')]" position="replace">
+        </xpath>
+    </template>
+</odoo>

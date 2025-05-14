@@ -1,0 +1,217 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_be_hr_payroll_partena
+# 
+# Translators:
+# Wil Odoo, 2025
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-20 10:47+0000\n"
+"PO-Revision-Date: 2025-02-12 11:36+0000\n"
+"Last-Translator: Wil Odoo, 2025\n"
+"Language-Team: Italian (https://app.transifex.com/odoo/teams/41243/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: it\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: l10n_be_hr_payroll_partena
+#: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll_partena.res_config_settings_view_form
+msgid "Allow to export Working Entries to your Social Secretariat"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model,name:l10n_be_hr_payroll_partena.model_res_company
+msgid "Companies"
+msgstr "Aziende"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__company_id
+msgid "Company"
+msgstr "Azienda"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model,name:l10n_be_hr_payroll_partena.model_res_config_settings
+msgid "Config Settings"
+msgstr "Impostazioni di configurazione"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena_employee__contract_ids
+msgid "Contract"
+msgstr "Contratto"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__create_uid
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena_employee__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__create_date
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena_employee__create_date
+msgid "Created on"
+msgstr "Data creazione"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__display_name
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena_employee__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__eligible_employee_line_ids
+msgid "Eligible Employees"
+msgstr "Dipendenti idonei"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__eligible_employee_count
+msgid "Eligible Employees Count"
+msgstr "Numero dipendenti idonei"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model,name:l10n_be_hr_payroll_partena.model_hr_employee
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena_employee__employee_id
+msgid "Employee"
+msgstr "Dipendente"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena_employee__export_id
+msgid "Export"
+msgstr "Esporta"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__export_file
+msgid "Export File"
+msgstr "Esporta file"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__export_filename
+msgid "Export Filename"
+msgstr "Esporta nome file"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model,name:l10n_be_hr_payroll_partena.model_l10n_be_hr_payroll_export_partena
+msgid "Export Payroll to Partena"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.ui.menu,name:l10n_be_hr_payroll_partena.menu_l10n_be_export_work_entries_partena
+msgid "Export Work Entries to Partena"
+msgstr "Esporta le voci lavorative in Partena"
+
+#. module: l10n_be_hr_payroll_partena
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_partena/models/hr_payroll_export_partena.py:0
+#: model:ir.actions.act_window,name:l10n_be_hr_payroll_partena.l10n_be_export_partena_action
+msgid "Export to Partena"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model,name:l10n_be_hr_payroll_partena.model_hr_work_entry_type
+msgid "HR Work Entry Type"
+msgstr "Tipo di voce lavorativa RU"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__id
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena_employee__id
+msgid "ID"
+msgstr "ID"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__write_uid
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena_employee__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__write_date
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena_employee__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: l10n_be_hr_payroll_partena
+#: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll_partena.hr_employee_form_l10n_be_hr_payroll_partena
+#: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll_partena.res_config_settings_view_form
+msgid "Partena"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_res_company__partena_code
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_res_config_settings__partena_code
+msgid "Partena Affiliation Number"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model,name:l10n_be_hr_payroll_partena.model_l10n_be_hr_payroll_export_partena_employee
+msgid "Partena Export Employee"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_res_company__partena_sequence_number
+msgid "Partena Sequence Number"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_hr_employee__partena_code
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_hr_work_entry_type__partena_code
+msgid "Partena code"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__period_start
+msgid "Period Start"
+msgstr "Inizio periodo"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__period_stop
+msgid "Period Stop"
+msgstr "Fine periodo"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__reference_month
+msgid "Reference Month"
+msgstr "Mese di riferimento"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__reference_year
+msgid "Reference Year"
+msgstr "Anno di riferimento"
+
+#. module: l10n_be_hr_payroll_partena
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_partena/models/hr_employee.py:0
+msgid "The Partena number should have 6 characters!"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_partena
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_partena/models/hr_work_entry_type.py:0
+msgid "The code should have 5 characters!"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_partena
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_partena/models/res_company.py:0
+msgid "The code should have 6 characters!"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_partena
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_partena/models/hr_payroll_export_partena.py:0
+msgid "The following employees do not have a Partena code: %(names)s"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_partena
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_partena/models/res_company.py:0
+msgid "The sequence number should be positive!"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena_employee__work_entry_ids
+msgid "Work Entry"
+msgstr "Voce lavorativa"

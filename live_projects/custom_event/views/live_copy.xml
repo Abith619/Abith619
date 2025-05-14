@@ -3,18 +3,18 @@
         <t t-set="pageName" t-value="'homepage'"/>
         <div id="wrap" class="oe_structure">
             <section class="s_cover o_cc o_cc5 o_colored_level pb0 pt0 s_parallax_no_overflow_hidden parallax s_parallax_is_fixed o_full_screen_height" data-scroll-background-ratio="1" data-snippet="s_cover" data-name="Cover" style="object-fit: fill; background-position: 50% 28.5556%;">
-                <span class="s_parallax_bg oe_img_bg o_bg_img_center" style="background-image: url(&quot;/web/image/1911-e010cd04/updated_home_land.webp&quot;);" data-mimetype="image/webp" data-original-id="1906" data-original-src="/web/image/1906-015658e6/updated_home_land.png" data-mimetype-before-conversion="image/png" data-resize-width="1919" data-quality="92"/>
+    <span class="s_parallax_bg oe_img_bg o_bg_img_center event_land_img" style="background-image: url('/web/image/1911-e010cd04/updated_home_land.webp');" data-mimetype="image/webp" data-original-id="1906" data-original-src="/web/image/1906-015658e6/updated_home_land.png" data-mimetype-before-conversion="image/png" data-resize-width="1919" data-quality="92"/>
 
     <div class="event-info-container" style="width: 50%; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end; text-align: end; padding: 2rem; margin-right: auto; margin-top: 10%;">
         <div class="event-text">
-            <h3 style="margin: 0;">August 27-28, 2025</h3>
+            <h3 style="background-color: black; margin: 0; width: fit-content; margin-left: auto;">August 27-28, 2025</h3>
             <h4 style="margin: 0;">Orange County Convention Center, Orlando, FL</h4>
             <h1 style="margin: 0;"><span class="display-1-fs">Anti-tradeshow</span></h1>
             <h1 style="margin: 0;"><span class="display-1-fs">More ROI // No BS</span></h1>
             <p style="margin: 0;">Real Transactions. No Gatekeepers. Built for Bold Brands.</p>
         </div>
         <a class="home-button" href="/membership">
-            <svg xmlns="http://www.w3.org/2000/svg" width="490" height="198" viewBox="0 0 490 198" fill="none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="490" height="198" viewbox="0 0 490 198" fill="none">
                 <g filter="url(#filter0_d_756_3524)">
                     <rect x="63" y="63" width="305.079" height="72" fill="#FF3434"/>
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M368.08 63L427.001 105.667V135H368.08V105.667V63Z" fill="#FF3434"/>
@@ -23,15 +23,15 @@
                                     <path d="M333.826 99H364.815" stroke="black" stroke-width="2.7619" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                                         </g>
                                             <defs>
-                                                <filter id="filter0_d_756_3524" x="0.396828" y="0.396828" width="489.206" height="197.206" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-                                                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                                            <feOffset/>
-                                        <feGaussianBlur stdDeviation="31.3016"/>
-                                    <feComposite in2="hardAlpha" operator="out"/>
-                                <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 0.203922 0 0 0 0 0.203922 0 0 0 0.3 0"/>
-                            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_756_3524"/>
-                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_756_3524" result="shape"/>
+                                                <filter id="filter0_d_756_3524" x="0.396828" y="0.396828" width="489.206" height="197.206" filterunits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                                    <feflood flood-opacity="0" result="BackgroundImageFix"/>
+                                                <fecolormatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                                            <feoffset/>
+                                        <fegaussianblur stddeviation="31.3016"/>
+                                    <fecomposite in2="hardAlpha" operator="out"/>
+                                <fecolormatrix type="matrix" values="0 0 0 0 1 0 0 0 0 0.203922 0 0 0 0 0.203922 0 0 0 0.3 0"/>
+                            <feblend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_756_3524"/>
+                        <feblend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_756_3524" result="shape"/>
                     </filter>
                 </defs>
             </svg>
@@ -78,11 +78,11 @@
             <div class="o_colored_level g-col-lg-4 o_grid_item g-height-2 col-lg-4" style="z-index: 9; grid-area: 5 / 9 / 7 / 13;">
                 <p style="text-align: left;">Orange County Convention Center, Orlando, FL</p>
             </div>
-        
+
             <div class="o_colored_level g-col-lg-2 o_grid_item g-height-1 col-lg-2" style="z-index: 13; grid-area: 7 / 7 / 8 / 9;">
                 <p class="textLeft" style="text-align: right;"><strong><font style="color: rgb(176, 22, 17);">Date</font></strong><font style="color: rgb(176, 22, 17);">:</font></p>
             </div>
-        
+
             <div class="o_colored_level g-col-lg-4 o_grid_item g-height-1 col-lg-4" style="z-index: 14; grid-area: 7 / 9 / 8 / 13;">
                 <p style="text-align: left;">August 27-28, 2025</p>
             </div>
@@ -123,7 +123,9 @@
                 <div data-name="Card" class="col-lg-4 pt16 pb0">
                     <div class="s_card card h-100 my-0 o_colored_level rounded o_cc o_cc2" data-vxml="001" data-snippet="s_card" data-name="Card" style="border-radius: 15px !important;">
                         <div class="card-body">
-                            <h4 class="card-title" style="text-align: center;">&amp;nbsp;<strong><h4><span class="h3-fs"><font style="color: rgb(101, 22, 19);">Become a Member</font></span><span style="font-size: 1.5625rem;"><font style="color: rgb(101, 22, 19);"><br/></font></span><span class="h5-fs"><font style="color: rgb(101, 22, 19);"/></span><font style="color: rgb(101, 22, 19);"><strong><br/></strong></font><span class="screen-font" style="font-size: 1.4375rem;"><span class="h4-fs"><font style="color: rgb(101, 22, 19);">Unlock premium benefits </font></span></span><span class="h4-fs"><font style="color: rgb(101, 22, 19);">and stay ahead in&amp;nbsp;the industry.</font></span></h4></strong></h4><ul><li style="text-align: left;"><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Access exclusive resources and networking events.&amp;nbsp;</font></span></li><li style="text-align: left;"><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Get early-bird discounts for future conferences.</font></span></li><li style="text-align: left;"><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Be part of a thriving community of professionals.</font></span><span class="h4-fs"/></li></ul>
+                            <h4 class="card-title" style="text-align: center;">&amp;nbsp;<strong><h4><span class="h3-fs"><font style="color: rgb(101, 22, 19);">Become a Member</font></span><span style="font-size: 1.5625rem;"><font style="color: rgb(101, 22, 19);"><br/></font></span><span class="h5-fs"><font style="color: rgb(101, 22, 19);"/></span><font style="color: rgb(101, 22, 19);"><strong><br/></strong></font><span class="screen-font" style="font-size: 1.4375rem;"><span class="h4-fs"><font style="color: rgb(101, 22, 19);">Unlock premium benefits </font></span></span><span class="h4-fs"><font style="color: rgb(101, 22, 19);">and stay ahead in&amp;nbsp;the industry.</font></span></h4></strong></h4><ul><li style="text-align: left;"><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Access exclusive resources and networking events.&amp;nbsp;</font></span></li>
+                                <li style="text-align: left;"><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Get early-bird discounts for future conferences.</font></span></li>
+                                <li style="text-align: left;"><span style="font-size: 1.25rem;"><font style="color: rgb(101, 22, 19);">Be part of a thriving community of professionals.</font></span></li></ul>
                             <a class="mb-0 btn btn-custom text-o-color-4 rounded-circle" style="border-width: 1px; border-style: solid; margin: auto; background-color: rgb(101, 22, 19);" href="/membership">​​​​Get Membe​​rship</a>
                         </div>
                     </div>
@@ -135,7 +137,7 @@
         <div class="s_allow_columns container-fluid">
             <div class="row o_grid_mode" data-row-count="19">
             <div class="o_grid_item o_grid_item_image o_colored_level g-col-lg-5 g-height-11 col-lg-5" style="z-index: 14; grid-area: 1 / 7 / 12 / 12;"><a href="https://view.publitas.com/orange-county-convention-center/occc-west-floor-plan-book/page/1" target="_blank"><img src="/web/image/1833-2bfbced2/Frame%20110.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="1832" data-original-src="/web/image/1832-c2726532/Frame%20110.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/></a></div>
-            <div class="o_grid_item o_grid_item_image o_colored_level g-height-3 g-col-lg-2 col-lg-2" style="z-index: 7; grid-area: 3 / 1 / 6 / 3;"><h1><img src="/web/image/993-313bcfad/632c795d4ef5e48fe2a8a3e4_hero-bg-yellow.svg.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="971" data-original-src="/web/image/971-6a1e97e8/632c795d4ef5e48fe2a8a3e4_hero-bg-yellow.svg.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/></h1></div>
+            <div class="o_grid_item o_grid_item_image o_colored_level g-height-3 g-col-lg-2 col-lg-2" style="z-index: 7; grid-area: 3 / 1 / 6 / 3;"><h1><img src="/web/image/993-313bcfad/632c795d4ef5e48fe2a8a3e4_hero-bg-yellow.svg.webp" alt="" class="img img-fluid o_we_custom_image mobile_hide" data-mimetype="image/webp" data-original-id="971" data-original-src="/web/image/971-6a1e97e8/632c795d4ef5e48fe2a8a3e4_hero-bg-yellow.svg.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/></h1></div>
         <div class="o_grid_item o_colored_level g-height-4 g-col-lg-5 col-lg-5" style="z-index: 8; grid-area: 3 / 2 / 7 / 7; position: relative;">
             <h1><span class="display-3-fs">EXPLORE THE ORLANDO CONVENTION CENTER</span></h1>
             <div style="position: relative; width: 100%; max-width: 1000px; margin: auto;">
@@ -146,7 +148,7 @@
             </div>
         </div>
             <div class="o_grid_item o_grid_item_image o_colored_level g-height-2 g-col-lg-3 col-lg-3" style="z-index: 13; grid-area: 18 / 6 / 20 / 9;"><img src="/web/image/998-54c821e9/632af7498246e4b22c327460_Big-star.svg.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="977" data-original-src="/web/image/977-f7f756b1/632af7498246e4b22c327460_Big-star.svg.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/></div>
-        <div class="o_grid_item o_colored_level g-height-2 g-col-lg-5 col-lg-5" style="z-index: 1; grid-area: 13 / 7 / 15 / 12;"><h1 style="text-align: right;"><span class="display-3-fs">More Revolutionary Updates Coming Soon...</span><br/></h1></div><div class="o_grid_item o_grid_item_image o_colored_level g-height-3 g-col-lg-2 col-lg-2" style="z-index: 6; grid-area: 10 / 10 / 13 / 12;"><p><img src="/web/image/992-b194a05b/632af7498246e4779d327461_Cube.svg.webp" alt="" class="img img-fluid o_we_custom_image" data-mimetype="image/webp" data-original-id="978" data-original-src="/web/image/978-ab75a24c/632af7498246e4779d327461_Cube.svg.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/></p></div></div></div>
+        <div class="o_grid_item o_colored_level g-height-2 g-col-lg-5 col-lg-5" style="z-index: 1; grid-area: 13 / 7 / 15 / 12;"><h1 style="text-align: right;"><span class="display-3-fs">More Revolutionary Updates Coming Soon...</span><br/></h1></div><div class="o_grid_item o_grid_item_image o_colored_level g-height-3 g-col-lg-2 col-lg-2" style="z-index: 6; grid-area: 10 / 10 / 13 / 12;"><p><img src="/web/image/992-b194a05b/632af7498246e4779d327461_Cube.svg.webp" alt="" class="img img-fluid o_we_custom_image mobile_hide" data-mimetype="image/webp" data-original-id="978" data-original-src="/web/image/978-ab75a24c/632af7498246e4779d327461_Cube.svg.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/></p></div></div></div>
     </section>
     <section data-snippet="s_events" class="s_events s_event_upcoming_snippet s_dynamic s_dynamic_empty pt32 pb32 o_colored_level s_event_event_card o_bg_img_opt_repeat bg-black o_dynamic_snippet_empty" data-custom-template-data="{&quot;events_event_time_active&quot;:true}" data-name="Events" data-number-of-records="6" data-filter-id="2" data-template-key="website_event.dynamic_filter_template_event_event_card" data-extra-classes="g-3" data-column-classes="col-12 col-sm-6 col-lg-4 col-xxl-3" style="background-size: 100px;">
             <section class="s_title pt40 pb40 o_colored_level bg-black o_bg_img_opt_repeat" data-vcss="001" data-snippet="s_title" data-name="Title">
@@ -189,8 +191,11 @@
             </div>
             <div class="row justify-content-center text-center" data-row-count="-Infinity">
                 <div class="col-lg-3 col-md-4 col-sm-6 p-3 o_colored_level pb0 pt48">
-                    <img src="/web/image/1001-c0bc6efb/High%20Quality%20KASH%20Tech%20logo%20%281%29%20%281%29%201.webp" alt="Sponsor KashTech" class="img img-fluid mx-auto o_we_custom_image my-auto" loading="lazy" data-mimetype="image/png" data-original-id="1937" data-original-src="/web/image/1937-4ef992d6/High%20Quality%20KASH%20Tech%20logo%20%281%29%20%281%29%201.png" data-mimetype-before-conversion="image/png" style="margin-top: 10%; transform: scaleX(0.75); animation-play-state: paused; transition: none;"/>
-                </div><div class="col-lg-3 col-md-4 col-sm-6 p-3 o_colored_level">
+                  <div class="sponsor-logo-container">
+                    <img src="/web/image/1001-c0bc6efb/High%20Quality%20KASH%20Tech%20logo%20%281%29%20%281%29%201.webp" alt="Sponsor KashTech" class="img img-fluid mx-auto o_we_custom_image my-auto" loading="lazy" style="transform: scaleX(0.75); animation-play-state: paused; transition: none;"/>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 p-3 o_colored_level">
                     <img src="/web/image/1958-ada60d29/Frame%2026.webp" alt="" class="img img-fluid mx-auto o_we_custom_image" data-mimetype="image/webp" data-original-id="1957" data-original-src="/web/image/1957-abc2ddee/Frame%2026.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
                 </div>
                 <div class="col-lg-3 col-md-4 col-sm-6 p-3 o_colored_level">

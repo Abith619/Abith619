@@ -8,7 +8,7 @@
             <field name="priority">5</field>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='contact_phone']" position="after">
-                    <field name="sales_person" />
+                    <field name="sales_persons" />
                 </xpath>
             </field>
         </record>
@@ -19,7 +19,7 @@
             <field name="inherit_id" ref="event_booth_sale.event_booth_registration_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='sale_order_line_id']" position="after">
-                    <field name="sales_person"/>
+                    <field name="sales_persons" />
                 </xpath>
             </field>
         </record>
@@ -30,10 +30,11 @@
             <field name="inherit_id" ref="event_booth_sale.event_booth_registration_view_tree"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='sale_order_line_id']" position="after">
-                    <field name="sales_person"/>
+                    <field name="sales_persons" />
                 </xpath>
             </field>
         </record>
 
     </data>
+
 </odoo>

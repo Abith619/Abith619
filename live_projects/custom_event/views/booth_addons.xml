@@ -1,21 +1,510 @@
 <odoo>
     <template id="booth_addons_template" name="Booth Addons Page">
-        <t t-call="website.layout">
-            <script type="text/javascript" src="/custom_event/static/js/booth_addons.js"/>
-            <div class="container mt-5 mb-5">
-                <h1>Thank You for Registering Your Booth!</h1>
-                    <p>We have received your details for event <strong><t t-esc="event.name"/></strong>.</p>
-                    <p>We’ll be in touch with further instructions.</p>
-                <a href="/" class="btn btn-primary mt-3">Return to Home</a>
+    <t t-call="website.layout">
+        <style>
+            #product_details .oe_structure div, #product_details .oe_structure table, #product_details .oe_structure ul, #product_details .oe_structure p {
+                font-size: small;
+            }
+        </style>
+        <h2 style="text-align: left; background-color: darkred;"><font class="text-o-color-3">Select Booth Package (Optional)</font></h2>
+        <div class="container">
+            <div class="row mt-md-4">
+                <t t-foreach="booth_a" t-as="prod">
+                    <t t-set="combination_info" t-value="prod._get_combination_info()"/>
+                        <t t-set="product_variant" t-value="request.env['product.product'].browse(combination_info['product_id'])"/>
+                    <t t-set="image_cols" t-value="website._get_product_page_proportions()"/>
+                    <h1 itemprop="name" t-field="prod.name" style="text-align: center;"/>
+                    <div class="col-lg-5">
+                        <div class="card h-100">
+                            <div t-attf-class="col-lg-#{image_cols[0]} o_wsale_product_images position-relative" t-if="website.product_page_image_width != 'none'" t-att-data-image-amount="len(prod._get_images())" style="width: fit-content;">
+                                <t t-set="product" t-value="prod"/>
+                                <t t-call="website_sale.shop_product_images"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div t-attf-class="col-lg-7" id="product_details" style="font-size: large;">
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <b><span t-field="prod.booth_des"/></b>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Imprint Line:</label></b>
+                                    <span t-field="prod.imprint_line"/>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Imprint Color:</label></b>
+                                    <span t-field="prod.imprint_color"/>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Personalization:</label></b>
+                                    <span t-field="prod.personalization"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Package Includes:</label></b>
+                                    <span t-field="prod.includes"/>
+                                </div>
+                                <div class="form-group mb-2" t-if="prod.size">
+                                    <b><label class="form-label">Graphic Size:</label></b>
+                                    <span t-field="prod.size"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="d-flex align-items-center flex-wrap gap-3" style="justify-content: space-evenly;">
+                                    <b class="fs-5" style="color: #2DA5F3;">
+                                        $ <t class="oe_currency_value" t-esc="prod.list_price"/>
+                                    </b>
+                                    <div class="s_add_to_cart" data-snippet="s_add_to_cart" data-name="Add to Cart Button"
+                                        t-att-data-product-template="prod.id" t-att-data-product-variant=""
+                                        data-action="buy_now" data-variants="" data-is-combo="false">
+                                        <button class="s_add_to_cart_btn custom-buy-btn"
+                                                t-att-data-product-template-id="prod.id"
+                                                t-att-data-product-variant-id="product_variant.id"
+                                                data-is-combo="false" data-action="buy_now" style="color: white; background-color: #FF3434;">
+                                            Buy now
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-2 mt-5">
+                                    <b><label class="form-label">Material:</label></b>
+                                    <span t-field="prod.material"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div t-field="prod.description_ecommerce" class="oe_structure" placeholder="A detailed, formatted description to promote your product on this page. Use '/' to discover more features."/>
+                            </div>
+                        </div>
+
+                        <t t-call="website_sale.product_accordion"/>
+                    </div>
+                </t>
             </div>
-            <div class="text-end o_carousel_product_card">
-                <a role="button" class="btn btn-primary js_add_cart w-100" title="Add to Cart" data-product-template-id="4" data-product-id="4" style="background-color: rgb(101, 22, 19) !important;">
-                    Add to Cart
-                <span class="o_ripple_item" style="animation-duration: 350ms; width: 226px; height: 226px; top: -86px; left: 59.5px;"/></a>
+            <div class="row mt-md-4">
+                <t t-foreach="booth_b" t-as="prod">
+                    <t t-set="combination_info" t-value="prod._get_combination_info()"/>
+                        <t t-set="product_variant" t-value="request.env['product.product'].browse(combination_info['product_id'])"/>
+                    <t t-set="image_cols" t-value="website._get_product_page_proportions()"/>
+                    <h1 itemprop="name" t-field="prod.name" style="text-align: center;"/>
+                    <div class="col-lg-5">
+                        <div class="card h-100">
+                            <div t-attf-class="col-lg-#{image_cols[0]} o_wsale_product_images position-relative" t-if="website.product_page_image_width != 'none'" t-att-data-image-amount="len(prod._get_images())" style="width: fit-content;">
+                                <t t-set="product" t-value="prod"/>
+                                <t t-call="website_sale.shop_product_images"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div t-attf-class="col-lg-7" id="product_details" style="font-size: large;">
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <b><span t-field="prod.booth_des"/></b>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Imprint Line:</label></b>
+                                    <span t-field="prod.imprint_line"/>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Imprint Color:</label></b>
+                                    <span t-field="prod.imprint_color"/>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Personalization:</label></b>
+                                    <span t-field="prod.personalization"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Package Includes:</label></b>
+                                    <span t-field="prod.includes"/>
+                                </div>
+                                <div class="form-group mb-2" t-if="prod.size">
+                                    <b><label class="form-label">Graphic Size:</label></b>
+                                    <span t-field="prod.size"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="d-flex align-items-center flex-wrap gap-3" style="justify-content: space-evenly;">
+                                    <b class="fs-5" style="color: #2DA5F3;">
+                                        $ <t class="oe_currency_value" t-esc="prod.list_price"/>
+                                    </b>
+                                    <div class="s_add_to_cart" data-snippet="s_add_to_cart" data-name="Add to Cart Button"
+                                        t-att-data-product-template="prod.id" t-att-data-product-variant=""
+                                        data-action="buy_now" data-variants="" data-is-combo="false">
+                                        <button class="s_add_to_cart_btn custom-buy-btn"
+                                                t-att-data-product-template-id="prod.id"
+                                                t-att-data-product-variant-id="product_variant.id"
+                                                data-is-combo="false" data-action="buy_now" style="color: white; background-color: #FF3434;">
+                                            Buy now
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-2 mt-5">
+                                    <b><label class="form-label">Material:</label></b>
+                                    <span t-field="prod.material"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div t-field="prod.description_ecommerce" class="oe_structure" placeholder="A detailed, formatted description to promote your product on this page. Use '/' to discover more features."/>
+                            </div>
+                        </div>
+
+                        <t t-call="website_sale.product_accordion"/>
+                    </div>
+                </t>
             </div>
-            <div class="text-end mt-4">
-                <a href="/shop/cart" class="btn btn-primary">Proceed to checkout</a>
+            <div class="row mt-md-4">
+                <t t-foreach="booth_d" t-as="prod">
+                    <t t-set="combination_info" t-value="prod._get_combination_info()"/>
+                        <t t-set="product_variant" t-value="request.env['product.product'].browse(combination_info['product_id'])"/>
+                    <t t-set="image_cols" t-value="website._get_product_page_proportions()"/>
+                    <h1 itemprop="name" t-field="prod.name" style="text-align: center;"/>
+                    <div class="col-lg-5">
+                        <div class="card h-100">
+                            <div t-attf-class="col-lg-#{image_cols[0]} o_wsale_product_images position-relative" t-if="website.product_page_image_width != 'none'" t-att-data-image-amount="len(prod._get_images())" style="width: fit-content;">
+                                <t t-set="product" t-value="prod"/>
+                                <t t-call="website_sale.shop_product_images"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div t-attf-class="col-lg-7" id="product_details" style="font-size: large;">
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <b><span t-field="prod.booth_des"/></b>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Imprint Line:</label></b>
+                                    <span t-field="prod.imprint_line"/>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Imprint Color:</label></b>
+                                    <span t-field="prod.imprint_color"/>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Personalization:</label></b>
+                                    <span t-field="prod.personalization"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-2 " t-if="prod.includes">
+                                    <b><label class="form-label">Package Includes:</label></b>
+                                    <span t-field="prod.includes"/>
+                                </div>
+                                <div class="form-group mb-2" t-if="prod.size">
+                                    <b><label class="form-label">Graphic Size:</label></b>
+                                    <span t-field="prod.size"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="d-flex align-items-center flex-wrap gap-3" style="justify-content: space-evenly;">
+                                    <b class="fs-5" style="color: #2DA5F3;">
+                                        $ <t class="oe_currency_value" t-esc="prod.list_price"/>
+                                    </b>
+                                    <div class="s_add_to_cart" data-snippet="s_add_to_cart" data-name="Add to Cart Button"
+                                        t-att-data-product-template="prod.id" t-att-data-product-variant=""
+                                        data-action="buy_now" data-variants="" data-is-combo="false">
+                                        <button class="s_add_to_cart_btn custom-buy-btn"
+                                                t-att-data-product-template-id="prod.id"
+                                                t-att-data-product-variant-id="product_variant.id"
+                                                data-is-combo="false" data-action="buy_now" style="color: white; background-color: #FF3434;">
+                                            Buy now
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-2 mt-5">
+                                    <b><label class="form-label">Material:</label></b>
+                                    <span t-field="prod.material"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div t-field="prod.description_ecommerce" class="oe_structure" placeholder="A detailed, formatted description to promote your product on this page. Use '/' to discover more features."/>
+                            </div>
+                        </div>
+
+                        <t t-call="website_sale.product_accordion"/>
+                    </div>
+                </t>
             </div>
-        </t>
+            <div class="row mt-md-4">
+                <t t-foreach="booth_f" t-as="prod">
+                    <t t-set="combination_info" t-value="prod._get_combination_info()"/>
+                        <t t-set="product_variant" t-value="request.env['product.product'].browse(combination_info['product_id'])"/>
+                    <t t-set="image_cols" t-value="website._get_product_page_proportions()"/>
+                    <h1 itemprop="name" t-field="prod.name" style="text-align: center;"/>
+                    <div class="col-lg-5">
+                        <div class="card h-100">
+                            <div t-attf-class="col-lg-#{image_cols[0]} o_wsale_product_images position-relative" t-if="website.product_page_image_width != 'none'" t-att-data-image-amount="len(prod._get_images())" style="width: fit-content;">
+                                <t t-set="product" t-value="prod"/>
+                                <t t-call="website_sale.shop_product_images"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div t-attf-class="col-lg-7" id="product_details" style="font-size: large;">
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <b><span t-field="prod.booth_des"/></b>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Imprint Line:</label></b>
+                                    <span t-field="prod.imprint_line"/>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Imprint Color:</label></b>
+                                    <span t-field="prod.imprint_color"/>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Personalization:</label></b>
+                                    <span t-field="prod.personalization"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Package Includes:</label></b>
+                                    <span t-field="prod.includes"/>
+                                </div>
+                                <div class="form-group mb-2" t-if="prod.size">
+                                    <b><label class="form-label">Graphic Size:</label></b>
+                                    <span t-field="prod.size"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="d-flex align-items-center flex-wrap gap-3" style="justify-content: space-evenly;">
+                                    <b class="fs-5" style="color: #2DA5F3;">
+                                        $ <t class="oe_currency_value" t-esc="prod.list_price"/>
+                                    </b>
+                                    <div class="s_add_to_cart" data-snippet="s_add_to_cart" data-name="Add to Cart Button"
+                                        t-att-data-product-template="prod.id" t-att-data-product-variant=""
+                                        data-action="buy_now" data-variants="" data-is-combo="false">
+                                        <button class="s_add_to_cart_btn custom-buy-btn"
+                                                t-att-data-product-template-id="prod.id"
+                                                t-att-data-product-variant-id="product_variant.id"
+                                                data-is-combo="false" data-action="buy_now" style="color: white; background-color: #FF3434;">
+                                            Buy now
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-2 mt-5">
+                                    <b><label class="form-label">Material:</label></b>
+                                    <span t-field="prod.material"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div t-field="prod.description_ecommerce" class="oe_structure" placeholder="A detailed, formatted description to promote your product on this page. Use '/' to discover more features."/>
+                            </div>
+                        </div>
+
+                        <t t-call="website_sale.product_accordion"/>
+                    </div>
+                </t>
+            </div>
+            <div class="row mt-md-4">
+                <t t-foreach="booth_g" t-as="prod">
+                    <t t-set="combination_info" t-value="prod._get_combination_info()"/>
+                        <t t-set="product_variant" t-value="request.env['product.product'].browse(combination_info['product_id'])"/>
+                    <t t-set="image_cols" t-value="website._get_product_page_proportions()"/>
+                    <h1 itemprop="name" t-field="prod.name" style="text-align: center;"/>
+                    <div class="col-lg-5">
+                        <div class="card h-100">
+                            <div t-attf-class="col-lg-#{image_cols[0]} o_wsale_product_images position-relative" t-if="website.product_page_image_width != 'none'" t-att-data-image-amount="len(prod._get_images())" style="width: fit-content;">
+                                <t t-set="product" t-value="prod"/>
+                                <t t-call="website_sale.shop_product_images"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div t-attf-class="col-lg-7" id="product_details" style="font-size: large;">
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <b><span t-field="prod.booth_des"/></b>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Imprint Line:</label></b>
+                                    <span t-field="prod.imprint_line"/>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Imprint Color:</label></b>
+                                    <span t-field="prod.imprint_color"/>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Personalization:</label></b>
+                                    <span t-field="prod.personalization"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Package Includes:</label></b>
+                                    <span t-field="prod.includes"/>
+                                </div>
+                                <div class="form-group mb-2" t-if="prod.size">
+                                    <b><label class="form-label">Graphic Size:</label></b>
+                                    <span t-field="prod.size"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="d-flex align-items-center flex-wrap gap-3" style="justify-content: space-evenly;">
+                                    <b class="fs-5" style="color: #2DA5F3;">
+                                        $ <t class="oe_currency_value" t-esc="prod.list_price"/>
+                                    </b>
+                                    <div class="s_add_to_cart" data-snippet="s_add_to_cart" data-name="Add to Cart Button"
+                                        t-att-data-product-template="prod.id" t-att-data-product-variant=""
+                                        data-action="buy_now" data-variants="" data-is-combo="false">
+                                        <button class="s_add_to_cart_btn custom-buy-btn"
+                                                t-att-data-product-template-id="prod.id"
+                                                t-att-data-product-variant-id="product_variant.id"
+                                                data-is-combo="false" data-action="buy_now" style="color: white; background-color: #FF3434;">
+                                            Buy now
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-2 mt-5">
+                                    <b><label class="form-label">Material:</label></b>
+                                    <span t-field="prod.material"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div t-field="prod.description_ecommerce" class="oe_structure" placeholder="A detailed, formatted description to promote your product on this page. Use '/' to discover more features."/>
+                            </div>
+                        </div>
+
+                        <t t-call="website_sale.product_accordion"/>
+                    </div>
+                </t>
+            </div>
+            <div class="row mt-md-4">
+                <t t-foreach="booth_h" t-as="prod">
+                    <t t-set="combination_info" t-value="prod._get_combination_info()"/>
+                        <t t-set="product_variant" t-value="request.env['product.product'].browse(combination_info['product_id'])"/>
+                    <t t-set="image_cols" t-value="website._get_product_page_proportions()"/>
+                    <h1 itemprop="name" t-field="prod.name" style="text-align: center;"/>
+                    <div class="col-lg-5">
+                        <div class="card h-100">
+                            <div t-attf-class="col-lg-#{image_cols[0]} o_wsale_product_images position-relative" t-if="website.product_page_image_width != 'none'" t-att-data-image-amount="len(prod._get_images())" style="width: fit-content;">
+                                <t t-set="product" t-value="prod"/>
+                                <t t-call="website_sale.shop_product_images"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div t-attf-class="col-lg-7" id="product_details" style="font-size: large;">
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <b><span t-field="prod.booth_des"/></b>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Imprint Line:</label></b>
+                                    <span t-field="prod.imprint_line"/>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Imprint Color:</label></b>
+                                    <span t-field="prod.imprint_color"/>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Personalization:</label></b>
+                                    <span t-field="prod.personalization"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-2">
+                                    <b><label class="form-label">Package Includes:</label></b>
+                                    <span t-field="prod.includes"/>
+                                </div>
+                                <div class="form-group mb-2" t-if="prod.size">
+                                    <b><label class="form-label">Graphic Size:</label></b>
+                                    <span t-field="prod.size"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="d-flex align-items-center flex-wrap gap-3" style="justify-content: space-evenly;">
+                                    <b class="fs-5" style="color: #2DA5F3;">
+                                        $ <t class="oe_currency_value" t-esc="prod.list_price"/>
+                                    </b>
+                                    <div class="s_add_to_cart" data-snippet="s_add_to_cart" data-name="Add to Cart Button"
+                                        t-att-data-product-template="prod.id" t-att-data-product-variant=""
+                                        data-action="buy_now" data-variants="" data-is-combo="false">
+                                        <button class="s_add_to_cart_btn custom-buy-btn"
+                                                t-att-data-product-template-id="prod.id"
+                                                t-att-data-product-variant-id="product_variant.id"
+                                                data-is-combo="false" data-action="buy_now" style="color: white; background-color: #FF3434;">
+                                            Buy now
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-2 mt-5">
+                                    <b><label class="form-label">Material:</label></b>
+                                    <span t-field="prod.material"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div t-field="prod.description_ecommerce" class="oe_structure" placeholder="A detailed, formatted description to promote your product on this page. Use '/' to discover more features."/>
+                            </div>
+                        </div>
+
+                        <t t-call="website_sale.product_accordion"/>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+</template>
+    <template id="event_booth_registration_details_inherit" inherit_id="website_event_booth.event_booth_registration_details">
+        <xpath expr="//t[@t-call='website_event_booth.event_booth_layout']" position="inside">
+            <script type="text/javascript" src="/custom_event/static/src/js/booth_addons.js"></script>
+        </xpath>
     </template>
 </odoo>

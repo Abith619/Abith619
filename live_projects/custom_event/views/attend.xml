@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="website.attend" name="attend">
+         <t t-call="website.layout">
+        <div id="wrap" class="oe_structure oe_empty"><section class="s_text_block pt40 pb0 o_colored_level" data-snippet="s_text_block" data-name="Text" style="background-color: rgb(101, 22, 19);">
+        <div class="container s_allow_columns">
+            <h1 style="text-align: left;"><font class="text-o-color-3">WHY ATTEND ?</font></h1>
+        </div>
+    </section>
+    <section class="s_text_block pt40 o_colored_level pb8" data-snippet="s_text_block" data-name="Text">
+        <div class="container s_allow_columns">
+            <h1><span class="oe-tabs" style="width: 17.5px;">	</span>​<span class="oe-tabs" style="width: 40px;">	</span>​Welcome to the <font class="text-o-color-1">Retail Rebel Revolution</font></h1>
+            <h2><span class="oe-tabs" style="width: 17.5px;">	</span>​<span class="oe-tabs" style="width: 40px;">	</span>​<span class="oe-tabs" style="width: 40px;">	</span>​<span class="oe-tabs" style="width: 40px;">	</span>​<span class="oe-tabs" style="width: 40px;">	</span>​<span class="oe-tabs" style="width: 40px;">	</span>​This isn’t just a trade show.</h2><h2><span class="oe-tabs" style="width: 17.5px;">	</span>​<span class="oe-tabs" style="width: 40px;">	</span>​<span class="oe-tabs" style="width: 40px;">	</span>​<span class="oe-tabs" style="width: 40px;">	</span>​<span class="oe-tabs" style="width: 40px;">	</span>​<span class="oe-tabs" style="width: 40px;">	</span>​<span class="oe-tabs" style="width: 40px;">	</span>​<span class="oe-tabs" style="width: 40px;">	</span>​This is a takeover.</h2>
+        </div>
+    </section>
+    <section class="s_text_image o_colored_level pb0 pt0" data-snippet="s_text_image" data-name="Text - Image">
+        <div class="container">
+            <div class="row o_grid_mode" data-row-count="9">
+                <div class="o_colored_level o_grid_item o_grid_item_image g-col-lg-4 g-height-9 col-lg-4" style="grid-area: 1 / 9 / 10 / 13; z-index: 2;"><img src="/web/image/1929-316cdc20/rrr_ball_book.webp" alt="" class="img img-fluid mx-auto rounded o_we_custom_image" data-mimetype="image/webp" data-original-id="1927" data-original-src="/web/image/1927-59e8db1b/rrr_ball_book.jpg" data-mimetype-before-conversion="image/jpeg" data-resize-width="NaN" loading="lazy"/></div>
+            <div class="o_colored_level o_grid_item g-height-6 g-col-lg-7 col-lg-7" style="z-index: 1; grid-area: 2 / 1 / 8 / 8;">
+                <h2>&amp;nbsp;At Retail Rebel Revolution™</h2>
+                <ul><li>Emerging brands get seen</li><li>Buyers get first dibs&amp;nbsp;on the next wave of innovation</li><li>Investors connect early&amp;nbsp;with the future's biggest success stories</li></ul>
+            </div><div class="o_grid_item g-height-1 o_colored_level g-col-lg-4 col-lg-4" style="z-index: 3; grid-area: 7 / 2 / 8 / 6;">
+
+            </div><div class="o_grid_item col-lg-2 g-col-lg-2 g-height-1 o_colored_level" style="z-index: 4; grid-area: 7 / 3 / 8 / 5;">
+                <a href="/event/retail-rebel-revolution-1/register">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="312" height="51" viewBox="0 0 312 51" fill="none">
+                        <rect width="312" height="50" fill="#FF3434"/>
+                            <path d="M65.4052 14.6735H70.9065C73.0524 14.6735 74.1254 15.8733 74.1254 18.2728V23.4522C74.1254 25.286 73.5694 26.4467 72.4574 26.9344L74.418 35.6838H71.7551L69.9116 27.1978H68.2144V35.6838H65.4052V14.6735ZM68.2144 24.7983H70.0579C70.8968 24.7983 71.3162 24.2911 71.3162 23.2766V18.741C71.3162 17.7266 70.8968 17.2194 70.0579 17.2194H68.2144V24.7983ZM76.4643 35.6838V14.6735H83.4287V17.2194H79.2735V23.5985H82.9605V26.1443H79.2735V33.138H83.4287V35.6838H76.4643ZM89.7681 27.9879V25.4421H94.0404V35.6838H88.5391C86.3737 35.6838 85.291 34.5036 85.291 32.1431V18.2728C85.291 15.8733 86.3737 14.6735 88.5391 14.6735H90.4704C92.8504 14.6735 94.0404 15.8928 94.0404 18.3313V20.6138H91.2312V18.741C91.2312 17.7266 90.8313 17.2194 90.0315 17.2194H89.3292C88.5098 17.2194 88.1001 17.7266 88.1001 18.741V31.6164C88.1001 32.6308 88.5098 33.138 89.3292 33.138H91.2312V27.9879H89.7681ZM96.3249 35.6838V14.6735H99.1341V35.6838H96.3249ZM107.139 20.3212V18.4776C107.139 17.6388 106.729 17.2194 105.91 17.2194H105.471C104.671 17.2194 104.271 17.6388 104.271 18.4776V21.9598C104.271 22.35 104.349 22.6134 104.505 22.7499C104.661 22.8865 104.915 23.0621 105.266 23.2766L107.929 24.7105C108.514 25.0421 108.924 25.3055 109.158 25.5006C109.411 25.6762 109.606 25.9005 109.743 26.1736C109.88 26.4272 109.948 26.9247 109.948 27.666V32.1431C109.948 34.5036 108.816 35.6838 106.553 35.6838H104.827C102.584 35.6838 101.462 34.3963 101.462 31.8212V30.7678H104.271V31.909C104.271 32.7284 104.69 33.138 105.529 33.138H106.027C106.768 33.138 107.139 32.7284 107.139 31.909V28.339C107.139 27.9489 107.061 27.6855 106.905 27.5489C106.749 27.4124 106.495 27.2368 106.144 27.0222L103.481 25.5298C102.896 25.2177 102.466 24.9543 102.193 24.7398C101.94 24.5252 101.754 24.2521 101.637 23.9204C101.52 23.5693 101.462 23.1206 101.462 22.5744V18.2728C101.462 15.8733 102.584 14.6735 104.827 14.6735H106.583C108.826 14.6735 109.948 15.8733 109.948 18.2728V20.3212H107.139ZM116.776 17.2194V35.6838H113.967V17.2194H111.275V14.6735H119.468V17.2194H116.776ZM121.072 35.6838V14.6735H128.036V17.2194H123.881V23.5985H127.568V26.1443H123.881V33.138H128.036V35.6838H121.072ZM130.045 14.6735H135.546C137.692 14.6735 138.765 15.8733 138.765 18.2728V23.4522C138.765 25.286 138.209 26.4467 137.097 26.9344L139.058 35.6838H136.395L134.551 27.1978H132.854V35.6838H130.045V14.6735ZM132.854 24.7983H134.698C135.537 24.7983 135.956 24.2911 135.956 23.2766V18.741C135.956 17.7266 135.537 17.2194 134.698 17.2194H132.854V24.7983ZM151.614 24.8275V14.6735H154.423V35.6838H151.614V31.4993L148.6 21.9306V35.6838H145.791V14.6735H148.6L151.614 24.8275ZM160.298 35.6838C158.035 35.6838 156.903 34.4938 156.903 32.1138V18.2728C156.903 15.8733 158.025 14.6735 160.269 14.6735H162.961C165.204 14.6735 166.326 15.8733 166.326 18.2728V32.1138C166.326 34.4938 165.194 35.6838 162.931 35.6838H160.298ZM160.971 33.138H162.405C163.146 33.138 163.517 32.7284 163.517 31.909V18.4484C163.517 17.629 163.097 17.2194 162.258 17.2194H160.942C160.122 17.2194 159.713 17.629 159.713 18.4484V31.909C159.713 32.7284 160.132 33.138 160.971 33.138ZM183.227 14.6735L180.125 35.6838H177.082L175.356 23.5107L173.658 35.6838H170.615L167.513 14.6735H170.293L172.283 30.4166L174.273 14.6735H176.468L178.457 30.4166L180.447 14.6735H183.227Z" fill="black"/>
+                                <path d="M215.264 17.3652L223.082 25.1838L215.264 33.0023" stroke="black" stroke-width="1.93209" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M201.186 25.1837H222.864" stroke="black" stroke-width="1.93209" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+            </div></div>
+        </div>
+    </section><section class="s_text_image o_colored_level pt0 pb32" data-snippet="s_image_text" data-name="Text - Image">
+        <div class="container">
+            <div class="row o_grid_mode" data-row-count="10">
+                <div class="o_colored_level o_grid_item o_grid_item_image g-col-lg-4 g-height-10 col-lg-4" style="grid-area: 1 / 1 / 11 / 5; z-index: 1;"><img src="/web/image/1930-adabcb8d/exhibit-page.webp" alt="" class="img img-fluid mx-auto rounded o_we_custom_image" data-mimetype="image/webp" data-original-id="1928" data-original-src="/web/image/1928-7d52a85e/exhibit-page.jpg" data-mimetype-before-conversion="image/jpeg" data-resize-width="NaN" loading="lazy"/></div>
+                <div class="o_grid_item o_colored_level g-col-lg-7 g-height-8 col-lg-7" style="grid-area: 2 / 6 / 10 / 13; z-index: 2;">
+                    <h1>What Makes <font class="text-o-color-1">RRR</font> Different?</h1>
+                    <ul><li>Curated Buyer Access:&amp;nbsp;No random looky-loos. Every brand is vetted for innovation and readiness to scale.</li><li>REAL Orders, REAL Deals:&amp;nbsp;Walk out with new vendors, new products, and new revenue streams.</li><li>Exclusive Rebel Education:&amp;nbsp;Insider secrets to buying, scaling, and dominating the next retail wave.</li><li>No Big Brand Overcrowding:&amp;nbsp;Independent brands finally get the spotlight — and YOU get the front row seat.</li></ul>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section class="s_title o_colored_level pt0 pb0" data-vcss="001" data-snippet="s_title" data-name="Title">
+        <div class="container s_allow_columns">
+            <h2 class="display-3-fs" style="text-align: center;">Why Attend?</h2>
+        </div>
+    </section><section class="s_text_block o_colored_level pt0 pb0" data-snippet="s_text_block" data-name="Text">
+        <div class="s_allow_columns o_container_small">
+            <p style="text-align: center;"><span class="h5-fs">Because you'll meet&amp;nbsp;brands that aren't just "ready"...they're about to be the next big thing.</span></p><h2 style="text-align: center;">Mark Your Calendar</h2>
+            <video src="/web/content/1834" muted="false" autoplay="true" playsinline="true" loop="true" data-mimetype="video/mp4" style="width: -webkit-fill-available;"/>
+        </div>
+    </section><section class="s_faq_list pb56 o_colored_level pt16" data-snippet="s_faq_list" data-name="FAQ List">
+        <div class="o_container_small">
+            <div class="row s_nb_column_fixed o_grid_mode" data-row-count="3">
+            <div class="o_grid_item o_colored_level g-height-1 g-col-lg-3 col-lg-3" style="z-index: 3; grid-area: 1 / 1 / 2 / 4;"><p><strong>Date</strong></p></div><div class="o_colored_level o_grid_item g-height-1 g-col-lg-3 col-lg-3" style="z-index: 1; grid-area: 2 / 1 / 3 / 4;">
+                    <p><strong>
+<strong>Show Venue</strong>:
+
+</strong><br/></p></div><div class="o_grid_item g-col-lg-4 o_colored_level g-height-1 col-lg-4" style="z-index: 4; grid-area: 1 / 4 / 2 / 8;"><p>
+<strong>August </strong><font class="text-o-color-1"><strong>27</strong></font><strong>-</strong><font class="text-o-color-1"><strong>28</strong></font><strong>, 2025</strong>
+
+</p></div><div class="o_colored_level o_grid_item g-height-1 g-col-lg-9 col-lg-9" style="z-index: 2; grid-area: 2 / 4 / 3 / 13;">
+                    <p><strong>
+Orange County Convention Center, Orlando, FL
+
+​</strong></p></div><div class="o_grid_item o_colored_level g-height-1 g-col-lg-3 col-lg-3" style="z-index: 5; grid-area: 3 / 1 / 4 / 4;"><p><strong>Mission</strong></p></div><div class="o_grid_item o_colored_level g-height-1 g-col-lg-9 col-lg-9" style="z-index: 6; grid-area: 3 / 4 / 4 / 13;"><p>
+<strong>To challenge outdated trade show models by providing real value, networking, and&amp;nbsp;immediate ROI for brands, retailers, and investors.</strong>
+
+</p></div></div>
+        </div>
+    </section>
+    <section class="s_title pt40 pb40 o_colored_level" data-vcss="001" data-snippet="s_title" data-name="Title">
+        <div class="container s_allow_columns">
+            <h2 class="display-3-fs" style="text-align: center;">Are you ready to discover <font class="text-o-color-1">the next wave of legends</font>?</h2><p style="text-align: center;">
+        </p>
+        <div class="mx-auto flex justify-center" style="text-align: center;">
+            <a href="/event/retail-rebel-revolution-1/register">
+            <svg xmlns="http://www.w3.org/2000/svg" width="312" height="51" viewBox="0 0 312 51" fill="none">
+                <rect width="312" height="50" fill="#FF3434"/>
+                    <path d="M65.4052 14.6735H70.9065C73.0524 14.6735 74.1254 15.8733 74.1254 18.2728V23.4522C74.1254 25.286 73.5694 26.4467 72.4574 26.9344L74.418 35.6838H71.7551L69.9116 27.1978H68.2144V35.6838H65.4052V14.6735ZM68.2144 24.7983H70.0579C70.8968 24.7983 71.3162 24.2911 71.3162 23.2766V18.741C71.3162 17.7266 70.8968 17.2194 70.0579 17.2194H68.2144V24.7983ZM76.4643 35.6838V14.6735H83.4287V17.2194H79.2735V23.5985H82.9605V26.1443H79.2735V33.138H83.4287V35.6838H76.4643ZM89.7681 27.9879V25.4421H94.0404V35.6838H88.5391C86.3737 35.6838 85.291 34.5036 85.291 32.1431V18.2728C85.291 15.8733 86.3737 14.6735 88.5391 14.6735H90.4704C92.8504 14.6735 94.0404 15.8928 94.0404 18.3313V20.6138H91.2312V18.741C91.2312 17.7266 90.8313 17.2194 90.0315 17.2194H89.3292C88.5098 17.2194 88.1001 17.7266 88.1001 18.741V31.6164C88.1001 32.6308 88.5098 33.138 89.3292 33.138H91.2312V27.9879H89.7681ZM96.3249 35.6838V14.6735H99.1341V35.6838H96.3249ZM107.139 20.3212V18.4776C107.139 17.6388 106.729 17.2194 105.91 17.2194H105.471C104.671 17.2194 104.271 17.6388 104.271 18.4776V21.9598C104.271 22.35 104.349 22.6134 104.505 22.7499C104.661 22.8865 104.915 23.0621 105.266 23.2766L107.929 24.7105C108.514 25.0421 108.924 25.3055 109.158 25.5006C109.411 25.6762 109.606 25.9005 109.743 26.1736C109.88 26.4272 109.948 26.9247 109.948 27.666V32.1431C109.948 34.5036 108.816 35.6838 106.553 35.6838H104.827C102.584 35.6838 101.462 34.3963 101.462 31.8212V30.7678H104.271V31.909C104.271 32.7284 104.69 33.138 105.529 33.138H106.027C106.768 33.138 107.139 32.7284 107.139 31.909V28.339C107.139 27.9489 107.061 27.6855 106.905 27.5489C106.749 27.4124 106.495 27.2368 106.144 27.0222L103.481 25.5298C102.896 25.2177 102.466 24.9543 102.193 24.7398C101.94 24.5252 101.754 24.2521 101.637 23.9204C101.52 23.5693 101.462 23.1206 101.462 22.5744V18.2728C101.462 15.8733 102.584 14.6735 104.827 14.6735H106.583C108.826 14.6735 109.948 15.8733 109.948 18.2728V20.3212H107.139ZM116.776 17.2194V35.6838H113.967V17.2194H111.275V14.6735H119.468V17.2194H116.776ZM121.072 35.6838V14.6735H128.036V17.2194H123.881V23.5985H127.568V26.1443H123.881V33.138H128.036V35.6838H121.072ZM130.045 14.6735H135.546C137.692 14.6735 138.765 15.8733 138.765 18.2728V23.4522C138.765 25.286 138.209 26.4467 137.097 26.9344L139.058 35.6838H136.395L134.551 27.1978H132.854V35.6838H130.045V14.6735ZM132.854 24.7983H134.698C135.537 24.7983 135.956 24.2911 135.956 23.2766V18.741C135.956 17.7266 135.537 17.2194 134.698 17.2194H132.854V24.7983ZM151.614 24.8275V14.6735H154.423V35.6838H151.614V31.4993L148.6 21.9306V35.6838H145.791V14.6735H148.6L151.614 24.8275ZM160.298 35.6838C158.035 35.6838 156.903 34.4938 156.903 32.1138V18.2728C156.903 15.8733 158.025 14.6735 160.269 14.6735H162.961C165.204 14.6735 166.326 15.8733 166.326 18.2728V32.1138C166.326 34.4938 165.194 35.6838 162.931 35.6838H160.298ZM160.971 33.138H162.405C163.146 33.138 163.517 32.7284 163.517 31.909V18.4484C163.517 17.629 163.097 17.2194 162.258 17.2194H160.942C160.122 17.2194 159.713 17.629 159.713 18.4484V31.909C159.713 32.7284 160.132 33.138 160.971 33.138ZM183.227 14.6735L180.125 35.6838H177.082L175.356 23.5107L173.658 35.6838H170.615L167.513 14.6735H170.293L172.283 30.4166L174.273 14.6735H176.468L178.457 30.4166L180.447 14.6735H183.227Z" fill="black"/>
+                        <path d="M215.264 17.3652L223.082 25.1838L215.264 33.0023" stroke="black" stroke-width="1.93209" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M201.186 25.1837H222.864" stroke="black" stroke-width="1.93209" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
+        </div>
+    </div>
+    </section></div>
+    </t>
+    </template>
+</odoo>

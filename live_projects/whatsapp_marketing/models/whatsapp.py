@@ -1,6 +1,6 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
-import requests, json
+import requests, json, re
 
 class WhatsappSettings(models.Model):
     _name = 'whatsapp.settings'
@@ -24,7 +24,7 @@ class WhatsappTemplate(models.Model):
         ('draft', 'Draft'),('pending','Pending'), ('approved', 'Approved'), ('rejected', 'Rejected')], string='Status', default='draft')
     template_name = fields.Char(string='Whatsapp Template Name', required=True, compute='_compute_template_name')
     api_id: fields.Many2one = fields.Many2one('whatsapp.settings', string='API', required=True)
-    body = fields.Html(string='Template Body', required=True)
+    body = fields.Text(string='Template Body', required=True)
     header = fields.Text(string='Header', required=True)
     footer = fields.Text(string='Footer', required=True)
 
@@ -61,7 +61,6 @@ class WhatsappTemplate(models.Model):
         else:
             raise ValidationError(f"Failed to sync template status: {response.text}")
 
-
     def approval_request(self):
         url = f"https://graph.facebook.com/v22.0/{self.api_id.business_account_id}/message_templates"
 
@@ -73,7 +72,7 @@ class WhatsappTemplate(models.Model):
         payload = {
             "name": f"{self.template_name}",
             "category": "MARKETING",
-            "language": "en_US",
+            "language": "en",
             "components": [
                 {
                     "type": "HEADER",
@@ -154,10 +153,6 @@ class Whatsapp(models.Model):
     message = fields.Text(string='Message')
 
     def send_message(self):
-        try:
-            self.api_template.refresh_access_token()
-        except ValidationError:
-            raise ValidationError("Access token expired. Please update manually.")
 
         url = f"https://graph.facebook.com/v22.0/{self.api.phone_number_id}/messages"
 
@@ -166,18 +161,30 @@ class Whatsapp(models.Model):
             "Content-Type": "application/json"
         }
 
+        responses = []
+
         for recipient in self.recipient_numbers:
-            if recipient.mobile:
+            if recipient.phone:
+                cleaned_number = re.sub(r'\D', '', recipient.phone)
                 payload = {
                     "messaging_product": "whatsapp",
-                    "to": recipient.mobile,
+                    "recipient_type": "individual",
+                    "to": cleaned_number,
                     "type": "template",
                     "template": {
                         "name": self.api_template.template_name,
-                        "language": {"code": "en_US"}
+                        "language": {"code": "en"}
                     }
                 }
 
-                response = requests.post(url, headers=headers, json=payload)
+                response = requests.post(url, json=payload, headers=headers)
+                try:
+                    data = response.json()
+                except ValueError:
+                    data = {"error": "Invalid JSON response", "raw": response.text}
+                print(f"Response for {cleaned_number}: {data}")
                 if response.status_code != 200:
-                    raise ValidationError(f"Failed to send message to {recipient.mobile}: {response.text}")
+                    raise ValidationError(f"Failed to send message to {recipient.phone}: {response.text}")
+                responses.append(data)
+
+        return responses
