@@ -1,0 +1,140 @@
+Metadata-Version: 2.1
+Name: skops
+Version: 0.9.0
+Summary: A set of tools to push scikit-learn based models to and pull from Hugging Face Hub
+Home-page: http://github.com/skops-dev/skops
+Download-URL: https://pypi.org/project/skops/#files
+Maintainer: Adrin Jalali
+Maintainer-email: adrin.jalali@gmail.com
+License: MIT
+Project-URL: Bug Tracker, http://github.com/skops-dev/skops/issues
+Project-URL: Documentation, http://github.com/skops-dev/skops
+Project-URL: Source Code, http://github.com/skops-dev/skops
+Classifier: Intended Audience :: Science/Research
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development
+Classifier: Topic :: Scientific/Engineering
+Classifier: Development Status :: 1 - Planning
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Operating System :: POSIX
+Classifier: Operating System :: Unix
+Classifier: Operating System :: MacOS
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Requires-Python: >=3.8
+Description-Content-Type: text/x-rst
+License-File: LICENSE
+Requires-Dist: scikit-learn >=0.24
+Requires-Dist: huggingface-hub >=0.17.0
+Requires-Dist: tabulate >=0.8.8
+Requires-Dist: packaging >=17.0
+Provides-Extra: docs
+Requires-Dist: scikit-learn-intelex >=2021.7.1 ; extra == 'docs'
+Requires-Dist: sphinx >=3.2.0 ; extra == 'docs'
+Requires-Dist: sphinx-gallery >=0.7.0 ; extra == 'docs'
+Requires-Dist: sphinx-rtd-theme >=1 ; extra == 'docs'
+Requires-Dist: numpydoc >=1.0.0 ; extra == 'docs'
+Requires-Dist: sphinx-prompt >=1.3.0 ; extra == 'docs'
+Requires-Dist: sphinx-issues >=1.2.0 ; extra == 'docs'
+Requires-Dist: matplotlib >=3.3 ; extra == 'docs'
+Requires-Dist: pandas >=1 ; extra == 'docs'
+Requires-Dist: fairlearn >=0.7.0 ; extra == 'docs'
+Provides-Extra: rich
+Requires-Dist: rich >=12 ; extra == 'rich'
+Provides-Extra: tests
+Requires-Dist: quantile-forest >=1.0.0 ; extra == 'tests'
+Requires-Dist: pytest >=5.0.1 ; extra == 'tests'
+Requires-Dist: pytest-cov >=2.9.0 ; extra == 'tests'
+Requires-Dist: flake8 >=3.8.2 ; extra == 'tests'
+Requires-Dist: types-requests >=2.28.5 ; extra == 'tests'
+Requires-Dist: flaky >=3.7.0 ; extra == 'tests'
+Requires-Dist: matplotlib >=3.3 ; extra == 'tests'
+Requires-Dist: pandas >=1 ; extra == 'tests'
+Requires-Dist: lightgbm >=3 ; extra == 'tests'
+Requires-Dist: xgboost >=1.6 ; extra == 'tests'
+Requires-Dist: catboost >=1.0 ; extra == 'tests'
+Requires-Dist: fairlearn >=0.7.0 ; extra == 'tests'
+Requires-Dist: rich >=12 ; extra == 'tests'
+
+.. -*- mode: rst -*-
+
+|readthedocs| |github-actions| |Codecov| |PyPI| |Black|
+
+.. |readthedocs| image:: https://readthedocs.org/projects/skops/badge/?version=latest&style=flat
+    :target: https://skops.readthedocs.io/en/latest/
+    :alt: Documentation
+
+.. |github-actions| image:: https://github.com/skops-dev/skops/workflows/pytest/badge.svg
+    :target: https://github.com/skops-dev/skops/actions
+    :alt: Linux, macOS, Windows tests
+
+.. |Codecov| image:: https://codecov.io/gh/skops-dev/skops/branch/main/graph/badge.svg
+    :target: https://codecov.io/gh/skops-dev/skops
+    :alt: Codecov
+
+.. |PyPI| image:: https://img.shields.io/pypi/v/skops
+    :target: https://pypi.org/project/skops
+    :alt: PyPi
+
+.. |Black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/psf/black
+    :alt: Black
+
+.. image:: https://raw.githubusercontent.com/skops-dev/skops/main/docs/images/logo.png
+  :width: 500
+  :target: https://skops.readthedocs.io/en/latest/
+
+SKOPS
+=====
+
+``skops`` is a Python library helping you share your `scikit-learn
+<https://scikit-learn.org/stable/>`__ based models and put them in production.
+At the moment, it includes tools to easily integrate models on the Hugging Face
+Hub, which allows you to share your models, make them discoverable, and use the
+Hub's API inference and widgets to get outputs of the model without having to
+download or load the model.
+
+- ``skops.hub_utils``: tools to create a model repository to be stored on
+  `Hugging Face Hub <https://hf.co/models>`__, mainly through
+  ``skops.hub_utils.init`` and ``skops.hub_utils.push``. You can see all the
+  models uploaded to the hub using this library `here
+  <https://huggingface.co/models?other=skops>`__. Find out more `here
+  <https://skops.readthedocs.io/en/stable/hf_hub.html>`__.
+- ``skops.card``: tools to create a model card explaining what the model does
+  and how it should be used. The model card can then be stored as the
+  ``README.md`` file on the Hugging Face Hub, with pre-populated metadata to
+  help Hub understand the model. More information can be found `here
+  <https://skops.readthedocs.io/en/stable/model_card.html>`__.
+- ``skops.io``: Secure persistence of sklearn estimators and more, without using
+  ``pickle``. Visit `the docs
+  <https://skops.readthedocs.io/en/latest/persistence.html>`__ for more
+  information.
+
+Please refer to our `documentation <https://skops.readthedocs.io/en/latest/>`_
+on using the library as user, which includes user guides on the above topics as
+well as complete examples explaining how the features can be used.
+
+If you want to contribute to the library, please refer to our `contributing
+<CONTRIBUTING.rst>`_ guidelines.
+
+Installation
+------------
+
+You can install this library using:
+
+.. code-block:: bash
+
+    python -m pip install skops
+
+Bug Reports and Questions
+-------------------------
+
+Please send all your questions and report issues on `this repository's issue
+tracker <https://github.com/skops-dev/skops/issues>`_ as an issue. Try to look
+for existing ones before you create a new one.

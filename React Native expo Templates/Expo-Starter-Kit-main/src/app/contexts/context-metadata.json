@@ -1,0 +1,44 @@
+{
+  "I18nContext": {
+    "name": "I18nContext",
+    "description": "Provides I18nContext functionality",
+    "annotations": [
+      {
+        "key": "language",
+        "type": "string",
+        "description": "the current selected language"
+      },
+      {
+        "key": "setLanguage",
+        "type": "function",
+        "description": "updates the selected language"
+      },
+      {
+        "key": "t",
+        "type": "function",
+        "description": "returns the translated string for a key"
+      }
+    ]
+  },
+  "NetworkContext": {
+    "name": "NetworkContext",
+    "description": "Provides NetworkContext functionality",
+    "annotations": [
+      {
+        "key": "isConnected",
+        "type": "boolean",
+        "description": "true if the device is connected to the internet, false otherwise"
+      },
+      {
+        "key": "connectionType",
+        "type": "string",
+        "description": "the type of connection the device is using (wifi, cellular, etc.)"
+      },
+      {
+        "key": "networkDetails",
+        "type": "NetInfoState",
+        "description": "the details of the network connection"
+      }
+    ]
+  }
+}

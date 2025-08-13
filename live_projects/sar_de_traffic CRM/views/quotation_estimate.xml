@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_estimate_form" model="ir.ui.view">
+        <field name="name">quotation.estimate.form</field>
+        <field name="model">quotation.estimate</field>
+        <field name="arch" type="xml">
+            <form string="Estimate">
+                <header>
+                    <button name='action_validate' type='object' string='Validate' class='btn-primary'/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name='item_category'/>
+                            <field name='substrate_id'/>
+                            <field name='reflective_id'/>
+                            <field name='shape_id'/>
+                            <field name='size'/>
+                        </group>
+                        <group>
+                            <field name='name'/>
+                            <field name='customer_id'/>
+                            <field name='project_id'/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string='Sign'>
+                            <group>
+                                <group>
+                                    <group string='Substrate Value'>
+                                        <field name='substrate_make' widget="many2many_tags" invisible="1"/>
+                                        <field name='make_many2one'/>
+                                        <field name='substrate_area'/>
+                                        <field name='substrate_waste'/>
+                                        <field name='substrate_rate_kg'/>
+                                        <field name='substrate_rate_m2'/>
+                                        <field name='substrate_amount'/>
+                                        <field name='substrate_cutting_amt'/>
+                                        <field name='substrate_paint_rate'/>
+                                        <field name='substrate_paint_amt'/>
+                                        <field name='substrate_total'/>
+                                    </group>
+                                    <group string='Reflective Sheet'>
+                                        <field name='reflective_color' widget="many2many_tags" invisible='1'/>
+                                        <field name='reflective_make'/>
+                                        <field name='reflective_area'/>
+                                        <field name='reflective_wastage'/>
+                                        <field name='reflactive_rate'/>
+                                        <field name='reflective_amount'/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <group string="Vinyl Cost">
+                                        <field name='vinyl_type'/>
+                                        <field name='vinyl_color'/>
+                                        <field name='vinyl_make'/>
+                                        <field name='vinyl_area'/>
+                                        <field name='vinyl_rate'/>
+                                        <field name='vinyl_amt'/>
+                                    </group>
+                                    <group string="EC Flim Cost">
+                                        <field name='ec_flim_type'/>
+                                        <field name='ec_flim_color'/>
+                                        <field name='ec_flim_make'/>
+                                        <field name='ec_flim_area'/>
+                                        <field name='ec_flim_rate'/>
+                                        <field name='ec_flim_amt'/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <group string="Reflective Cost">
+                                        <field name='ref_cost_type'/>
+                                        <field name='ref_cost_color'/>
+                                        <field name='ref_cost_make'/>
+                                        <field name='ref_cost_area'/>
+                                        <field name='ref_cost_rate'/>
+                                        <field name='ref_cost_amt'/>
+                                    </group>
+                                    <group string="Screen Print">
+                                        <field name='screen_print_type'/>
+                                        <field name='screen_print_color'/>
+                                        <field name='screen_print_make'/>
+                                        <field name='screen_print_area'/>
+                                        <field name='screen_print_rate'/>
+                                        <field name='screen_print_amt'/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <group string="Process">
+                                        <field name='process_type'/>
+                                        <field name='process_color'/>
+                                        <field name='process_make'/>
+                                        <field name='process_area'/>
+                                        <field name='process_rate'/>
+                                        <field name='process_amt'/>
+                                    </group>
+                                    <group string="Total">
+                                        <field name='sign_sub_total'/>
+                                        <field name='sign_oh_percent'/>
+                                        <field name='sign_profit_percent'/>
+                                        <field name='sign_net_amount'/>
+                                    </group>
+                                </group>
+                            </group>
+                        </page>
+                        <page string='Frame'>
+                            <group>
+                                <group>
+                                    <group string='Material Spec'>
+                                        <field name='frame_material'/>
+                                        <field name='material_side_1'/>
+                                        <field name='material_side_2'/>
+                                        <field name='material_thick'/>
+                                        <field name='material_rate'/>
+                                    </group>
+                                    <group string='Frame Size'>
+                                        <field name='frame_size_len'/>
+                                        <field name='frame_size_width'/>
+                                        <field name='frame_cross_v'/>
+                                        <field name='frame_cross_h'/>
+                                        <field name='frame_total_length'/>
+                                        <field name='frame_weight'/>
+                                        <field name='frame_wastage'/>
+                                        <field name='frame_total_weight'/>
+                                    </group>
+                                </group>
+                                    <group string='Frame Accessories'>
+                                        <field name='frame_items_ids' string="">
+                                            <list editable='bottom'>
+                                                <field name='frame_items'/>
+                                                <field name='frame_item_qty'/>
+                                                <field name='frame_item_rate'/>
+                                                <field name='frame_item_amt' sum='Total'/>
+                                                <!-- <field name='estimate_id' invisible='1'/>
+                                                <field name='frame_items_total' invisible='1'/> -->
+                                            </list>
+                                        </field>
+                                    </group>
+                                <group>
+                                    <group>
+                                        <group string="Material">
+                                            <field name='frame_material_area'/>
+                                            <field name='frame_material_rate'/>
+                                            <field name='frame_material_amt'/>
+                                        </group>
+                                        <group string="Labour">
+                                            <field name='frame_labour_area'/>
+                                            <field name='frame_labour_rate'/>
+                                            <field name='frame_labour_amt'/>
+                                        </group>
+                                    </group>
+                                    <group>
+                                        <group string="Paint">
+                                            <field name='frame_paint_area'/>
+                                            <field name='frame_paint_rate'/>
+                                            <field name='frame_paint_amt'/>
+                                        </group>
+                                        <group string="Drilling">
+                                            <field name='frame_drilling_area'/>
+                                            <field name='frame_drilling_rate'/>
+                                            <field name='frame_drilling_amt'/>
+                                        </group>
+                                    </group>
+                                    <group>
+                                        <group string="Total">
+                                            <field name='frame_sub_total'/>
+                                            <field name='frame_oh_percent'/>
+                                            <field name='frame_profit_percent'/>
+                                            <field name='frame_total_amount'/>
+                                        </group>
+                                    </group>
+                                </group>
+                            </group>
+                        </page>
+                        <page string='Post'>
+                            <group>
+                                <group>
+                                    <group string='Material Spec'>
+                                        <field name="post_material"/>
+                                        <field name="post_material_size"/>
+                                    </group>
+                                    <group string="Post Details">
+                                        <field name='post_length'/>
+                                        <field name='post_qty'/>
+                                        <field name='post_weight'/>
+                                        <field name='post_area'/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <group string="Post">
+                                        <field name='post_weight_area'/>
+                                        <field name='post_rate'/>
+                                        <field name='post_amt'/>
+                                    </group>
+                                    <group string="Fabrication">
+                                        <field name='fabrication_amt'/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <group string="Paint">
+                                        <field name='paint_weight_area'/>
+                                        <field name='paint_rate'/>
+                                        <field name='paint_amt'/>
+                                    </group>
+                                    <group string="Transport">
+                                        <field name='transport_weight_area'/>
+                                        <field name='transport_rate'/>
+                                        <field name='transport_amt'/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <group string="Total">
+                                        <field name='post_sub_total'/>
+                                        <field name='post_oh_percent'/>
+                                        <field name='post_profit_percent'/>
+                                        <field name='post_total_amount'/>
+                                    </group>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_estimate_list" model="ir.ui.view">
+        <field name="name">quotation.estimate.list</field>
+        <field name="model">quotation.estimate</field>
+        <field name="arch" type="xml">
+            <list string="Estimates">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="customer_id" avatar_field="avatar_128" options="{'icon': 'fa fa-users'}"/>
+                <field name="project_id"/>
+                <field name="taxes_id"/>
+                <field name="currency_id" optional='hide'/>
+                <field name="subtotal" widget="monetary"/>
+                <field name="amount_total" widget="monetary" class="fw-bold text-info" sum="Total Amount"/>
+                <field name="status" widget="badge"
+                    decoration-info="status == 'draft'"
+                    decoration-success="status in ('done', 'confirmed')"
+                    decoration-danger="status == 'cancelled'"
+                />
+            </list>
+        </field>
+    </record>
+    <record id="action_estimate" model="ir.actions.act_window">
+        <field name="name">Estimates</field>
+        <field name="res_model">quotation.estimate</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_estimate"
+        name="Estimates"
+        sequence="2"
+        action="sar_de_traffic.action_estimate"
+        parent="sale.sale_order_menu"
+        active="True"
+    />
+
+</odoo>

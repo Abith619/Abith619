@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem id="menu_estimate_masters" name="Masters" parent="stock.menu_stock_root" sequence="5"/>
+
+    <record id="action_category_masters" model="ir.actions.act_window">
+        <field name="name">Estimate Masters</field>
+        <field name="res_model">sign.item.category</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_estimate_category_master"
+        name="Category Masters"
+        action="sar_de_traffic.action_category_masters"
+        parent="sar_de_traffic.menu_estimate_masters"
+        sequence="0"
+    />
+
+    <record id="action_sign_substrate_masters" model="ir.actions.act_window">
+        <field name="name">Sign Substrate Masters</field>
+        <field name="res_model">sign.substrate</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_sign_substrate_master"
+        name="Sign Substrate Masters"
+        action="sar_de_traffic.action_sign_substrate_masters"
+        parent="sar_de_traffic.menu_estimate_masters"
+        sequence="1"
+    />
+
+    <record id="action_sign_reflective_materials" model="ir.actions.act_window">
+        <field name="name">Reflective Materials</field>
+        <field name="res_model">sign.reflective.materials</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_sign_reflective_materials"
+        name="Reflective Materials"
+        action="sar_de_traffic.action_sign_reflective_materials"
+        parent="sar_de_traffic.menu_estimate_masters"
+        sequence="2"
+    />
+
+    <record id="action_product_shape" model="ir.actions.act_window">
+        <field name="name">Product Shapes</field>
+        <field name="res_model">product.shape</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_product_shape"
+        name="Product Shapes"
+        action="sar_de_traffic.action_product_shape"
+        parent="sar_de_traffic.menu_estimate_masters"
+        sequence="3"
+    />
+
+    <record id="action_sign_size" model="ir.actions.act_window">
+        <field name="name">Sign Sizes</field>
+        <field name="res_model">sign.size</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_sign_size"
+        name="Sign Sizes"
+        action="sar_de_traffic.action_sign_size"
+        parent="sar_de_traffic.menu_estimate_masters"
+        sequence="4"
+    />
+
+    <record id="action_sign_unit" model="ir.actions.act_window">
+        <field name="name">Sign Units</field>
+        <field name="res_model">sign.unit</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_sign_unit"
+        name="Sign Units"
+        action="sar_de_traffic.action_sign_unit"
+        parent="sar_de_traffic.menu_estimate_masters"
+        sequence="5"
+    />
+
+    <record id="action_sign_substrate_make" model="ir.actions.act_window">
+        <field name="name">Substrate Makes</field>
+        <field name="res_model">sign.substrate.make</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_sign_substrate_make"
+        name="Substrate Makes"
+        action="sar_de_traffic.action_sign_substrate_make"
+        parent="sar_de_traffic.menu_estimate_masters"
+        sequence="6"
+    />
+
+    <record id="action_sign_reflective_make" model="ir.actions.act_window">
+        <field name="name">Reflective Makes</field>
+        <field name="res_model">sign.reflective.make</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_sign_reflective_make"
+        name="Reflective Makes"
+        action="sar_de_traffic.action_sign_reflective_make"
+        parent="sar_de_traffic.menu_estimate_masters"
+        sequence="7"
+    />
+
+    <record id="action_sign_color" model="ir.actions.act_window">
+        <field name="name">Sign Colors</field>
+        <field name="res_model">sign.color</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_sign_color"
+        name="Sign Colors"
+        action="sar_de_traffic.action_sign_color"
+        parent="sar_de_traffic.menu_estimate_masters"
+        sequence="8"
+    />
+
+    <record id="action_sign_vinyl_type" model="ir.actions.act_window">
+        <field name="name">Vinyl Types</field>
+        <field name="res_model">sign.vinyl.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_sign_vinyl_type"
+        name="Vinyl Types"
+        action="sar_de_traffic.action_sign_vinyl_type"
+        parent="sar_de_traffic.menu_estimate_masters"
+        sequence="9"
+    />
+
+    <record id="action_road_marking" model="ir.actions.act_window">
+        <field name="name">Road Markings</field>
+        <field name="res_model">road.marking</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_road_marking"
+        name="Road Markings"
+        action="sar_de_traffic.action_road_marking"
+        parent="sar_de_traffic.menu_estimate_masters"
+        sequence="10"
+    />
+
+    <!-- Studs Master -->
+    <record id="action_studs_master" model="ir.actions.act_window">
+        <field name="name">Studs Master</field>
+        <field name="res_model">studs.master</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_studs_master" name="Studs Master" action="sar_de_traffic.action_studs_master" parent="sar_de_traffic.menu_estimate_masters" sequence="11"/>
+
+    <!-- Crash Barrier -->
+    <record id="action_crash_barrier" model="ir.actions.act_window">
+        <field name="name">Crash Barrier</field>
+        <field name="res_model">crash.barrier</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_crash_barrier" name="Crash Barrier" action="sar_de_traffic.action_crash_barrier" parent="sar_de_traffic.menu_estimate_masters" sequence="12"/>
+
+    <!-- Substrate Thickness -->
+    <record id="action_substrate_thickness" model="ir.actions.act_window">
+        <field name="name">Substrate Thickness</field>
+        <field name="res_model">substrate.thickness</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_substrate_thickness" name="Substrate Thickness" action="sar_de_traffic.action_substrate_thickness" parent="sar_de_traffic.menu_estimate_masters" sequence="13"/>
+
+    <!-- Item Parameters -->
+    <record id="action_item_parameters" model="ir.actions.act_window">
+        <field name="name">Item Parameters</field>
+        <field name="res_model">item.parameter</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_item_parameters" name="Item Parameters" action="sar_de_traffic.action_item_parameters" parent="sar_de_traffic.menu_estimate_masters" sequence="14"/>
+
+    <!-- Sheet Suppliers -->
+    <record id="action_sheet_suppliers" model="ir.actions.act_window">
+        <field name="name">Sheet Suppliers</field>
+        <field name="res_model">sheet.supplier</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_sheet_suppliers" name="Sheet Suppliers" action="sar_de_traffic.action_sheet_suppliers" parent="sar_de_traffic.menu_estimate_masters" sequence="15"/>
+
+    <!-- Vinyl Stickers -->
+    <record id="action_vinyl_stickers" model="ir.actions.act_window">
+        <field name="name">Vinyl Stickers</field>
+        <field name="res_model">vinyl.sticker</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_vinyl_stickers" name="Vinyl Stickers" action="sar_de_traffic.action_vinyl_stickers" parent="sar_de_traffic.menu_estimate_masters" sequence="16"/>
+
+    <!-- EC Flims -->
+    <record id="action_ec_flims" model="ir.actions.act_window">
+        <field name="name">EC Flims</field>
+        <field name="res_model">ec.flim</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_ec_flims" name="EC Flims" action="sar_de_traffic.action_ec_flims" parent="sar_de_traffic.menu_estimate_masters" sequence="17"/>
+
+    <!-- Aluminium Suppliers -->
+    <record id="action_aluminium_suppliers" model="ir.actions.act_window">
+        <field name="name">Aluminium Suppliers</field>
+        <field name="res_model">aluminium.supplier</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_aluminium_suppliers" name="Aluminium Suppliers" action="sar_de_traffic.action_aluminium_suppliers" parent="sar_de_traffic.menu_estimate_masters" sequence="18"/>
+
+    <!-- Screen Printing -->
+    <record id="action_screen_printing" model="ir.actions.act_window">
+        <field name="name">Screen Printing</field>
+        <field name="res_model">screen.printing</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_screen_printing" name="Screen Printing" action="sar_de_traffic.action_screen_printing" parent="sar_de_traffic.menu_estimate_masters" sequence="19"/>
+
+    <!-- Printing Vendors -->
+    <record id="action_printing_vendors" model="ir.actions.act_window">
+        <field name="name">Printing Vendors</field>
+        <field name="res_model">printing.vendor</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_printing_vendors" name="Printing Vendors" action="sar_de_traffic.action_printing_vendors" parent="sar_de_traffic.menu_estimate_masters" sequence="20"/>
+
+    <!-- Sign Processing -->
+    <record id="action_sign_processing" model="ir.actions.act_window">
+        <field name="name">Sign Processing</field>
+        <field name="res_model">sign.processing</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_sign_processing" name="Sign Processing" action="sar_de_traffic.action_sign_processing" parent="sar_de_traffic.menu_estimate_masters" sequence="21"/>
+
+    <!-- Processing Vendors -->
+    <record id="action_processing_vendors" model="ir.actions.act_window">
+        <field name="name">Processing Vendors</field>
+        <field name="res_model">processing.vendor</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_processing_vendors" name="Processing Vendors" action="sar_de_traffic.action_processing_vendors" parent="sar_de_traffic.menu_estimate_masters" sequence="22"/>
+
+    <!-- Steel Items -->
+    <record id="action_steel_items" model="ir.actions.act_window">
+        <field name="name">Steel Items</field>
+        <field name="res_model">steel.item</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_steel_items" name="Steel Items" action="sar_de_traffic.action_steel_items" parent="sar_de_traffic.menu_estimate_masters" sequence="23"/>
+
+    <!-- Material Thickness -->
+    <record id="action_material_thickness" model="ir.actions.act_window">
+        <field name="name">Material Thickness</field>
+        <field name="res_model">material.thickness</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_material_thickness" name="Material Thickness" action="sar_de_traffic.action_material_thickness" parent="sar_de_traffic.menu_estimate_masters" sequence="24"/>
+
+    <!-- Support Posts -->
+    <record id="action_support_posts" model="ir.actions.act_window">
+        <field name="name">Support Posts</field>
+        <field name="res_model">support.post</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_support_posts" name="Support Posts" action="sar_de_traffic.action_support_posts" parent="sar_de_traffic.menu_estimate_masters" sequence="25"/>
+
+</odoo>

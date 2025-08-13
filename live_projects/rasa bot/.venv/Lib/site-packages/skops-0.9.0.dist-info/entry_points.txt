@@ -1,0 +1,2 @@
+[console_scripts]
+skops = skops.cli.entrypoint:main_cli

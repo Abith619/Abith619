@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "sdkVersion": "53.0.0",
+    "scheme": "acme",
+    "userInterfaceStyle": "automatic",
+    "orientation": "default",
+    "android": {
+      "package": "com.abith619.rrr",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "output": "static",
+      "bundler": "metro"
+    },
+    "plugins": [
+      [
+        "expo-router",
+        {
+          "origin": "https://n"
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./src/app/assets/notification-icon.png",
+          "color": "#ffffff",
+          "sounds": [
+            "./src/app/assets/notification-sound.wav"
+          ]
+        }
+      ],
+      "expo-sqlite"
+    ],
+    "name": "expotemplate",
+    "slug": "expotemplate"
+  }
+}

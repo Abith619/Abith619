@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id='product_shape_views' model='ir.ui.view'>
+        <field name="name">product.shape.form</field>
+        <field name="model">product.shape</field>
+        <field name="arch" type="xml">
+            <form string="Product Shape">
+                <sheet>
+                    <group>
+                        <field name='name'/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_product_shape" model="ir.actions.act_window">
+        <field name="name">Product Shape</field>
+        <field name="res_model">product.shape</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_product_shape"
+        name="Product Shape"
+        sequence="3"
+        action="sar_de_traffic.action_product_shape"
+        parent="stock.menu_stock_inventory_control"
+        active="True"
+    />
+</odoo>

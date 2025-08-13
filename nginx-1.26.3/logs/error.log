@@ -1,0 +1,9 @@
+2025/03/16 19:36:05 [emerg] 14504#8600: cannot load certificate "F:
+ginx-1.26.3\ssl\localhost.pem": BIO_new_file() failed (SSL: error:8000007B:system library::Unknown error:calling fopen(F:
+ginx-1.26.3\ssl\localhost.pem, r) error:10080002:BIO routines::system lib)
+2025/03/16 19:59:40 [emerg] 6572#500: cannot load certificate "F:
+ginx-1.26.3\ssl\localhost.pem": BIO_new_file() failed (SSL: error:8000007B:system library::Unknown error:calling fopen(F:
+ginx-1.26.3\ssl\localhost.pem, r) error:10080002:BIO routines::system lib)
+2025/03/16 20:00:11 [emerg] 5360#1496: cannot load certificate "F:
+ginx-1.26.3\ssl\localhost.pem": BIO_new_file() failed (SSL: error:8000007B:system library::Unknown error:calling fopen(F:
+ginx-1.26.3\ssl\localhost.pem, r) error:10080002:BIO routines::system lib)

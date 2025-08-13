@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="bom_line_view_form_inherit_custom" model="ir.ui.view">
+        <field name="name">mrp.bom.inherit.custom</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='bom_line_ids']//field[@name='product_qty']" position="before">
+                <field name="area"/>
+                <field name="measure"/>
+            </xpath>
+            <xpath expr="//div[@class='o_row']" position="after">
+                <field name="area_bool" widget="boolean_toggle"/>
+            </xpath>
+            <xpath expr="//field[@name='bom_line_ids']//field[@name='product_qty']" position="after">
+                <field name="area_bool" widget="boolean_toggle"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

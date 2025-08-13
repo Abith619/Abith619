@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id='purchase_revision_wizard' model='ir.ui.view'>
+        <field name="name">purchase.revision.wizard.form</field>
+        <field name="model">purchase.revision.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="row">
+                        <div class="col-sm-5 col-md-4 col-lg-4 col-4">
+                                <label for="order_ref_id" string="Order Refrence"/>
+                                <field name="order_ref_id" nolabel="1"/>
+                            </div>
+                            <div class="col-sm-5 col-md-4 col-lg-4 col-4">
+                                <label for="rev_reason" string="Revision Reason"/>
+                                <field name="rev_reason" nolabel="1"/>
+                        </div>
+                    </div>
+                </sheet>
+                <footer>
+                    <button type="object" string="Apply" name="purchase_revision" class="btn btn-primary" data-hotkey="q"/>
+                    <button special="cancel" string="Discard" class="btn btn-secondary" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

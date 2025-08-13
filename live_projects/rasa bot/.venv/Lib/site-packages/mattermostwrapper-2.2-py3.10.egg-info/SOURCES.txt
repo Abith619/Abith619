@@ -1,0 +1,10 @@
+README.md
+setup.cfg
+setup.py
+mattermostwrapper/__init__.py
+mattermostwrapper/wrapper.py
+mattermostwrapper.egg-info/PKG-INFO
+mattermostwrapper.egg-info/SOURCES.txt
+mattermostwrapper.egg-info/dependency_links.txt
+mattermostwrapper.egg-info/requires.txt
+mattermostwrapper.egg-info/top_level.txt

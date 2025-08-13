@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_quotation_estimate" model="ir.sequence">
+            <field name="name">Quotation Estimate</field>
+            <field name="code">quotation.estimate</field>
+            <field name="prefix">EST</field>
+            <field name="padding">7</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

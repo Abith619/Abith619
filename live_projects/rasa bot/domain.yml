@@ -1,0 +1,50 @@
+version: "3.1"
+
+intents:
+  - greet
+  - ask_services
+  - ask_pricing
+  - ask_contact
+  - ask_tech_stack
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+
+responses:
+  utter_greet:
+  - text: "Hi there! 👋 How can I help you today?"
+
+  utter_cheer_up:
+  - text: "Here is something to cheer you up:"
+    image: "https://i.imgur.com/nGF1K8f.jpg"
+
+  utter_did_that_help:
+  - text: "Did that help you?"
+
+  utter_happy:
+  - text: "Great, carry on!"
+
+  utter_goodbye:
+  - text: "Bye"
+
+  utter_iamabot:
+  - text: "I am a bot, powered by Rasa."
+
+  utter_ask_services:
+    - text: "We offer Website Development, ERP, E-Commerce, Mobile Apps, and Digital Marketing."
+
+  utter_ask_pricing:
+    - text: "Our pricing varies based on the project. Contact us for a free quote!"
+
+  utter_ask_contact:
+    - text: "You can call us at +91-9876543210 or email info@yourcompany.com."
+
+  utter_ask_tech_stack:
+    - text: "Yes! We work with React, Flutter, Python, Odoo, and more."
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
