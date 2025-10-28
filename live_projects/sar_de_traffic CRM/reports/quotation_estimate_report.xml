@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="report_quotation_estimate">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="doc">
+                    <main>
+                    <style>
+                        .default_widthpx {
+                            display: inline-block;
+                            width: 100px !important;
+                        }
+
+                        .default_widths {
+                            display: inline-block;
+                            width: 130px !important;
+                        }
+                        .default_width {
+                            display: inline-block;
+                            width: 200px !important;
+                        }
+                    </style>
+                        <div class="page">
+
+                            <h2><strong>Quotation Estimate :</strong><t t-esc="doc.name"/></h2>
+                            <div class="row mt-4 mb-4">
+                                <div class="col-6 text-left">
+                                        <p ><strong class='default_widthpx'>Date</strong><span t-esc="doc.date_from"/> </p>
+                                        <p><strong class='default_widthpx'>Customer</strong> <span t-esc="doc.customer_id.name"/> </p>
+                                        <P><strong class='default_widthpx'>Product</strong> <t t-esc="doc.item_product.name"/></P>
+                                        <P><strong class='default_widthpx'>Category</strong> <t t-esc="doc.item_category.name"/></P>
+                                </div>
+                                <div class="col-6 text-right">
+                                        <P><strong class='default_widths'>Quantity</strong> <t t-esc="doc.estimate_qty"/></P>
+                                        <P><strong class='default_widths'>Rate Per Quantity</strong> <t t-esc="round(doc.rate_per_quantity, 3)"/></P>
+                                        <P><strong class='default_widths'>Total Amount</strong> <t t-esc="doc.amount_total"/></P>
+                                </div>
+                            </div>
+                            <h3 class='text-center'>Items</h3>
+                            <t t-if="doc.stage_one_sign">
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th><strong>Component</strong></th>
+                                            <th><strong>Make</strong></th>
+                                            <th><strong>Supplier</strong></th>
+                                            <th><strong>Net Amount</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="doc.stage_one_sign" t-as="line">
+                                            <td><t t-esc="line.resource_name.name"/></td>
+                                            <td><t t-esc="line.make_id.name"/></td>
+                                            <td><t t-esc="line.supplier_id.name"/></td>
+                                            <td><t t-esc="line.net_amount"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-sm" style="width:40%; float:right;">
+                                    <tr>
+                                        <td class="text-right">
+                                            <strong>Total Amount</strong>
+                                        </td>
+                                        <td class="text-right">
+                                            <t t-set="total_amount" t-value="sum(line.net_amount for line in doc.stage_one_sign)"/>
+                                            <span t-esc="total_amount" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </t>
+                            <br/>
+                            <br/>
+
+                            <div class="row mt-4 mb-4">
+                                <div class="col-6 text-right">
+                                <h3>Corporate Summary</h3>
+                                    <p><strong class='default_width'>Net Amount</strong> <t t-esc="doc.net_amount"/></p>
+                                    <p><strong class='default_width'>Corporate O/H (%)</strong> <t t-esc="doc.corporate_oh"/></p>
+                                    <p><strong class='default_width'>Corporate O/H Amount</strong> <t t-esc="doc.corporate_oh_rate"/></p>
+                                    <p><strong class='default_width'>Corporate Profit(%)</strong> <t t-esc="doc.corporate_profit"/></p>
+                                    <p><strong class='default_width'>Corporate Profit</strong> <t t-esc="doc.corporate_profit_rate"/></p>
+                                    <p><strong class='default_width'>Grand Total</strong> <t t-esc="doc.amount_total"/></p>
+                                </div>
+
+                                <div class="col-6 text-left">
+                                <h3> Net Summary</h3>
+                                    <p><strong class='default_width'>Sub Total</strong> <t t-esc="doc.sign_sub_total"/></p>
+                                    <p><strong class='default_width'>Over Head Expenses (%)</strong> <t t-esc="doc.sign_over_head_expense"/></p>
+                                    <p><strong class='default_width'>Net Amount</strong> <t t-esc="doc.sign_expense_rate"/></p>
+                                    <p><strong class='default_width'>Profit (%)</strong> <t t-esc="doc.sign_profit"/></p>
+                                    <p><strong class='default_width'>Profit Amount</strong> <t t-esc="doc.sign_profit_rate"/></p>
+                                    <p><strong class='default_width'>Grand Total</strong> <t t-esc="doc.sign_grand_total"/></p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </main>
+                </t>
+            </t>
+        </template>
+        <record id="action_report_quotation_estimate" model="ir.actions.report">
+            <field name="name">Quotation Estimate</field>
+            <field name="model">quotation.estimate</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sar_de_traffic.report_quotation_estimate</field>
+            <field name="binding_model_id" ref="model_quotation_estimate"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

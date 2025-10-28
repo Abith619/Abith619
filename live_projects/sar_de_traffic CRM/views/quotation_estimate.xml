@@ -15,7 +15,7 @@
                             <field name='substrate_id'/>
                             <field name='reflective_id'/>
                             <field name='shape_id'/>
-                            <field name='size'/>
+                            <field name='size_id'/>
                         </group>
                         <group>
                             <field name='name'/>

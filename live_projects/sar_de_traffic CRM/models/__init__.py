@@ -6,4 +6,7 @@ from . import stock_quantity_inherit
 from . import bom_inherit
 from . import crm_inherit
 from . import quotation_estimate
-from . import estimate_masters
+# from . import masters
+from . import estimate_form
+# from . import quotation_estimate
+# from . import estimate_masters

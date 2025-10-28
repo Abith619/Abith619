@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="report_ledger_xml_template">
+            <ENVELOPE>
+                <HEADER>
+                    <VERSION>1</VERSION>
+                    <STATUS>1</STATUS>
+                </HEADER>
+                <BODY>
+                    <DATA>
+                        <COLLECTION>
+                            <t t-foreach="docs" t-as="o">
+                                <LEDGER NAME="&lt;t t-esc='o.name'/&gt;" RESERVEDNAME="">
+                                    <ADDRESS.LIST TYPE="String">
+                                        <!-- <ADDRESS><t t-esc='o.street or ""'/></ADDRESS> -->
+                                    </ADDRESS.LIST>
+                                </LEDGER>
+                            </t>
+                        </COLLECTION>
+                    </DATA>
+                </BODY>
+            </ENVELOPE>
+        </template>
+    </data>
+</odoo>

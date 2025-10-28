@@ -1,35 +1,38 @@
 from odoo import models, fields
 
 #                                           Sign Masters
-class customItemCategory(models.Model):
-    _name='sign.item.category'
-    _description="Item Category Masters"
+class SignMasters(models.Model):
+    _name='sign.master'
+    _description="Sign Masters"
 
     name = fields.Char("Name", required=True)
-
-class CustomSignSubstrate(models.Model):
-    _name = "sign.substrate"
-    _description="Sign Substrate Masters"
-
-    name = fields.Char("Name", required=True)
-
-class SignReflectiveMaterials(models.Model):
-    _name='sign.reflective.materials'
-    _description="Reflective Material Masters"
-
-    name = fields.Char("Name", required=True)
+    category_id : fields.Many2one = fields.Many2one("product.category", string="Category")
+    shape_id : fields.Many2one = fields.Many2one('product.shape', string='Shape')
+    size_id : fields.Many2one = fields.Many2one('custom.size', string='Size')
+    common_area = fields.Float(string="Common Area")
+    substrate_area = fields.Float(string="Substrate Area")
+    substrate_paint_area = fields.Float(string="Substrate Paint Area")
+    base_sheet_area = fields.Float(string="Base Sheet Area")
+    vinyl_area = fields.Float(string="Vinyl Area")
+    flim_area = fields.Float(string="Flim Area")
+    hip_area = fields.Float(string="HIP Area")
+    base_sheet_waste_area = fields.Float(string="Base Sheet Wastage Area")
+    screen_print_area = fields.Float(string="Screen Print Area")
+    processing_area = fields.Float(string="Processing Area")
 
 class ProductShapeCustom(models.Model):
     _name='product.shape'
     _description="Product Shape Masters"
 
     name = fields.Char("Name", required=True)
-    category_id : fields.Many2one = fields.Many2one("sign.item.category", string="Parent")
+    size_id : fields.Many2one = fields.Many2one("custom.size", string="Size")
+    # category_id : fields.Many2one = fields.Many2one("product.category", string="Parent")
 
-class CustomSignSize(models.Model):
-    _name='sign.size'
+class CustomSize(models.Model):
+    _name='custom.size'
     _description="Size Masters"
 
+    # size_id : fields.Many2one = fields.Many2one("custom.size", string="Size")
     name = fields.Char("Name", required=True)
 
 class signUnits(models.Model):

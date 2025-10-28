@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_tally_bill_wizard" model="ir.ui.view">
+        <field name="name">tally.bill.wizard.form</field>
+        <field name="model">tally.bill.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Bill Export">
+                <group>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="branch_id"/>
+                </group>
+                <footer>
+                    <button string="Export XML"
+                            type="object"
+                            name="action_export_bill_xml"
+                            class="btn-primary"/>
+                    <button string="Cancel"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

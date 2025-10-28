@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record id="view_appointment_booking_form" model="ir.ui.view">
+            <field name="name">appointment.booking.form</field>
+            <field name="model">appointment.booking</field>
+            <field name="arch" type="xml">
+                <form string="Appointment Bookings">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="email"/>
+                                <field name="phone"/>
+                                <field name="service"/>
+                            </group>
+                            <group>
+                                <field name="date"/>
+                                <field name="slot"/>
+                                <field name="notes"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_appointment_booking_tree" model="ir.ui.view">
+            <field name="name">appointment.booking.list</field>
+            <field name="model">appointment.booking</field>
+            <field name="arch" type="xml">
+                <list string="Appointment Booking">
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="service"/>
+                    <field name="phone"/>
+                    <field name="date"/>
+                    <field name="slot"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_appointment_booking" model="ir.actions.act_window">
+            <field name="name">Appointment Booking</field>
+            <field name="res_model">appointment.booking</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="menu_appointment_booking" name="Appointments" action="action_appointment_booking" />
+</odoo>

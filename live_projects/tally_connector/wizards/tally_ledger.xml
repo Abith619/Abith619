@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_tally_ledger_wizard" model="ir.ui.view">
+        <field name="name">tally.ledger.wizard.form</field>
+        <field name="model">tally.ledger.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Ledger Export">
+                <group>
+                    <field name="location"/>
+                </group>
+                <footer>
+                    <button string="Check" type="object" name="action_check_ledger" class="btn-primary"/>
+                    <button string="Export XML" type="object" name="action_export_ledger_xml" class="btn-secondary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

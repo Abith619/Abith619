@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_slide_channel_form_inherit" model="ir.ui.view">
+        <field name="name">slide.channel.form.inherit</field>
+        <field name="model">slide.channel</field>
+        <field name="inherit_id" ref="website_slides.view_slide_channel_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='image_1920']" position="after">
+                <field name="moodle_course_id" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_slide_channel_tag_group_inherit" model="ir.ui.view">
+        <field name="name">slide.channel.tag.group.inherit</field>
+        <field name="model">slide.channel.tag.group</field>
+        <field name="inherit_id" ref="website_slides.slide_channel_tag_group_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="moodle_id" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="appointment_form_template" name="Appointment Booking">
+        <t t-call="website.layout">
+                        <!--  <section class="s_title_form o_cc o_cc2 pb48 o_colored_level pt0" data-snippet="s_title_form" data-name="Title - Form" id="enquiry_form">-->
+<!--    <div class="o_container_small">-->
+<!--        <h2 class="text-center o_default_snippet_text" style="padding-top: 10%;">Let's Connect</h2>-->
+<!--        <p class="text-center lead o_default_snippet_text">-->
+<!--            Get in touch with our team. Fill in the form and we’ll respond shortly.-->
+<!--        </p>-->
+<!--        <section class="s_website_form" data-vcss="001" data-snippet="s_website_form" data-name="Form">-->
+<!--            <div class="container">-->
+<!--                <form id="lead_form" action="/website/form/" method="post" enctype="multipart/form-data" class="o_mark_required" data-mark="*" data-model_name="crm.lead" data-success-mode="redirect" data-success-page="/contactus-thank-you" data-pre-fill="true">-->
+
+<!--                    <div class="s_website_form_rows row s_col_no_bgcolor">-->
+
+<!--                    <div class="row">-->
+
+
+                        <!-- Customer Name -->
+<!--                        <div data-name="Field" class="s_website_form_field mb-3 col-6 s_website_form_model_required" data-type="char" data-translated-name="Field">-->
+<!--                            <div class="row s_col_no_resize s_col_no_bgcolor">-->
+<!--                                <label class="col-form-label col-sm-auto s_website_form_label" for="lead_contact" style="width: 27%;">-->
+<!--                                    <span class="s_website_form_label_content">Name</span><span class="s_website_form_mark"> *</span>-->
+<!--                                </label>-->
+<!--                                <div class="col-sm">-->
+<!--                                    <input class="form-control s_website_form_input" type="text" name="contact_name" required="1" id="lead_contact"/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <div data-name="Field" class="s_website_form_field mb-3 col-6 s_website_form_required" data-type="email" data-translated-name="Field">-->
+<!--                            <div class="row s_col_no_resize s_col_no_bgcolor">-->
+<!--                                <label class="col-form-label col-sm-auto s_website_form_label" for="lead_email" style="width: 27%;">-->
+<!--                                    <span class="s_website_form_label_content">Email</span><span class="s_website_form_mark"> *</span>-->
+<!--                                </label>-->
+<!--                                <div class="col-sm">-->
+<!--                                    <input class="form-control s_website_form_input" type="email" name="email_from" required="1" id="lead_email"/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+
+<!--                    <div class="row">-->
+                        <!-- Phone -->
+<!--                        <div data-name="Field" class="s_website_form_field mb-3 col-6 s_website_form_required" data-type="tel" data-translated-name="Field">-->
+<!--                            <div class="row s_col_no_resize s_col_no_bgcolor">-->
+<!--                                <label class="col-form-label col-sm-auto s_website_form_label" for="lead_phone" style="width: 27%;">-->
+<!--                                    <span class="s_website_form_label_content">Phone</span><span class="s_website_form_mark"> *</span>-->
+<!--                                </label>-->
+<!--                                <div class="col-sm">-->
+<!--                                    <input class="form-control s_website_form_input" type="tel" name="phone" required="1" id="lead_phone"/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+                        <!-- Company -->
+<!--                        <div data-name="Field" class="s_website_form_field mb-3 col-6" data-type="char" data-translated-name="Field">-->
+<!--                            <div class="row s_col_no_resize s_col_no_bgcolor">-->
+<!--                                <label class="col-form-label col-sm-auto s_website_form_label" for="lead_company" style="width: 28%;">-->
+<!--                                    <span class="s_website_form_label_content">Company</span><span class="s_website_form_mark">*</span>-->
+<!--                                </label>-->
+<!--                                <div class="col-sm">-->
+<!--                                    <input class="form-control s_website_form_input" type="text" name="partner_name" required="1" id="lead_company"/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                <div data-name="Field" class="s_website_form_field mb-3 col-12 s_website_form_model_required" data-type="char" data-translated-name="Field">-->
+<!--                        <div class="row s_col_no_resize s_col_no_bgcolor">-->
+<!--                            <label class="col-form-label col-sm-auto s_website_form_label" for="lead_title">-->
+<!--                                <span class="s_website_form_label_content">Subject</span><span class="s_website_form_mark"> *</span>-->
+<!--                            </label>-->
+<!--                            <div class="col-sm">-->
+<!--                                <input class="form-control s_website_form_input" type="text" name="name" required="1" id="lead_title"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                        <!-- Description -->
+<!--                        <div data-name="Field" class="s_website_form_field mb-3 col-12" data-type="text" data-translated-name="Field">-->
+<!--                            <div class="row s_col_no_resize s_col_no_bgcolor">-->
+<!--                                <label class="col-form-label col-sm-auto s_website_form_label" for="lead_description">-->
+<!--                                    <span class="s_website_form_label_content">Message</span>-->
+<!--                                </label>-->
+<!--                                <div class="col-sm">-->
+<!--                                    <textarea class="form-control s_website_form_input" name="description" id="lead_description"/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+                        <!-- Submit -->
+<!--                        <div class="mb-0 py-2 col-12 s_website_form_submit s_website_form_no_submit_label text-end" data-name="Submit Button">-->
+<!--                            <div style="width: 200px;" class="s_website_form_label"/>-->
+<!--                            <a href="#" role="button" class="btn btn-primary s_website_form_send">Submit</a>-->
+<!--                            <span id="s_website_form_result"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </section>-->
+<!--    </div>-->
+<!--</section>-->
+
+        <div class="container my-5" id="appointment_container">
+            <h2 class="text-center mb-4"><b>Let's Talk</b></h2>
+                <form action="/appointment/submit" method="post" class="o_website_form" data-model_name="appointment.booking" data-success-mode="message" data-success_page="/thank-you">
+
+                    <!-- Row 1: Customer Info -->
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <label for="name">Full Name</label>
+                            <input type="text" name="name" class="form-control" required="1"/>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="phone">Phone</label>
+                            <input type="text" name="phone" class="form-control" required="1" pattern="[0-9]{10}"/>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Email -->
+                    <div class="row">
+                        <div class="mb-3 col-12">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" class="form-control" required="1"/>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Appointment Type & Services -->
+                     <div class="row d-none">
+                        <div class="mb-3 col-6">
+                            <label for="services">Service</label>
+                            <select name="services" class="form-control" required="1">
+                                <option value="erp" selected="selected">ERP</option>
+                                <option value="manufacturing">Manufacturing</option>
+                                <option value="healthcare">HealthCare</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="appointment_type">Appointment Type</label>
+                            <select name="appointment_type_id" class="form-control" required="1" readonly="1">
+                                <option value="online" selected="selected">Online</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Row 4: Date & Slot -->
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <label for="date">Select Date</label>
+                            <input type="date" name="date" class="form-control" required="1"/>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="slot">Select Timeslot</label>
+                            <select name="slot" class="form-control" required="1">
+                                <option value="09:00-09:30">09:00 AM - 09:30 AM</option>
+                                <option value="09:30-10:00">09:30 AM - 10:00 AM</option>
+                                <option value="10:00-10:30">10:00 AM - 10:30 AM</option>
+                                <option value="10:30-11:00">10:30 AM - 11:00 AM</option>
+                                <option value="11:00-11:30">11:00 AM - 11:30 AM</option>
+                                <option value="11:30-12:00">11:30 AM - 12:00 PM</option>
+                                <option value="12:00-12:30">12:00 PM - 12:30 PM</option>
+                                <option value="12:30-13:00">12:30 PM - 01:00 PM</option>
+                                <option value="13:00-13:30">01:00 PM - 01:30 PM</option>
+                                <option value="13:30-14:00">01:30 PM - 02:00 PM</option>
+                                <option value="14:00-14:30">02:00 PM - 02:30 PM</option>
+                                <option value="14:30-15:00">02:30 PM - 03:00 PM</option>
+                                <option value="15:00-15:30">03:00 PM - 03:30 PM</option>
+                                <option value="15:30-16:00">03:30 PM - 04:00 PM</option>
+                                <option value="16:00-16:30">04:00 PM - 04:30 PM</option>
+                                <option value="16:30-17:00">04:30 PM - 05:00 PM</option>
+                                <option value="17:00-17:30">05:00 PM - 05:30 PM</option>
+                                <option value="17:30-18:00">05:30 PM - 06:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Row 5: Notes -->
+                    <div class="row">
+                        <div class="mb-3 col-12">
+                            <label for="notes">Message (Optional):</label>
+                            <textarea name="notes" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="btn btn-primary">Book Now</button>
+                </form>
+                </div>
+    </t>
+    </template>
+
+    <template id="appointment_thanks" name="Appointment Thanks">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h2 class="text-center text-success">Thank you!</h2>
+                <p class="text-center">Your appointment has been booked successfully.</p>
+            </div>
+        </t>
+    </template>
+</odoo>

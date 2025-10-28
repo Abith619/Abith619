@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_partner_form_tally" model="ir.ui.view">
+        <field name="name">res.partner.form.tally</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+                <!-- Add inside the button box -->
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <button name="export_to_tally"
+                    string="Export to Tally"
+                    type="object"
+                    class="oe_stat_button btn-primary"
+                    icon="fa-upload"
+                    invisible="tally_synced"
+                />
+            </xpath>
+                <!-- Add synced field in sheet -->
+            <xpath expr="//sheet/notebook" position="before">
+                <group>
+                    <field name="tally_synced" readonly="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="report_ledger_xml" model="ir.actions.report">
+            <field name="name">Ledger XML</field>
+            <field name="model">tally.ledger.wizard</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">tally_connector.report_ledger_xml_template</field>
+            <field name="report_file">tally_connector.report_ledger_xml_template</field>
+            <field name="binding_model_id" ref="tally_connector.model_tally_ledger_wizard"/>
+            <field name="binding_type">report</field>
+            <field name="print_report_name">'Ledger XML'</field>
+        </record>
+    </data>
+</odoo>

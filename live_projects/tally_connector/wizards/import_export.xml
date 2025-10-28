@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Wizard Form View -->
+    <record id="view_tally_integration_wizard_form" model="ir.ui.view">
+        <field name="name">tally.integration.wizard.form</field>
+        <field name="model">tally.integration.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Tally Integration">
+                <group>
+                    <field name="company_id" required="1"/>
+                    <field name="tally_account" required="1"/>
+                </group>
+
+                <!-- Accounts -->
+                <separator string="Accounts"/>
+                <group>
+                    <field name="import_ledgers" widget="radio"/>
+                    <field name="import_groups" widget="radio"/>
+                </group>
+
+                <!-- Journal Entries -->
+                <separator string="Journal Entries" />
+                <group>
+                    <field name="import_journal_entries" widget="radio"/>
+                </group>
+                <group>
+                    <field name="journal_start_date"/>
+                    <field name="journal_end_date"/>
+                </group>
+
+                <!-- Inventory -->
+                <separator string="Inventory"/>
+                <group>
+                    <field name="import_stock_items" widget="radio"/>
+                    <field name="import_stock_categories" widget="radio"/>
+                </group>
+                <group>
+                    <field name="import_uom" widget="radio"/>
+                    <field name="import_godowns" widget="radio"/>
+                </group>
+
+                <!-- Sale Orders -->
+                <separator string="Sale Orders"/>
+                <group>
+                    <field name="import_sale_orders" widget="radio"/>
+                </group>
+                <group>
+                    <field name="sale_start_date"/>
+                    <field name="sale_end_date"/>
+                </group>
+
+                <footer>
+                    <button name="action_import" type="object" string="Import" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

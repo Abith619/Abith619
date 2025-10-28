@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_tally_root" name="Tally Connector" sequence="10"/>
+    <menuitem id="menu_tally_config" name="Configuration" parent="menu_tally_root" action="action_tally_config"/>
+    <menuitem id="menu_tally_sync" name="Sync" parent="menu_tally_root" action="action_tally_sync"/>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="email_template_appointment_booking" model="mail.template">
+            <field name="name">Appointment Booking Confirmation</field>
+            <field name="model_id" ref="model_appointment_booking"/>
+            <field name="subject">Appointment Confirmation - ${object.name}</field>
+            <field name="email_from">${(object.company_id.email or 'reports@kashtechllc.com') if object.company_id else 'reports@kashtechllc.com'}</field>
+            <field name="email_to">${object.email}</field>
+            <field name="body_html"><![CDATA[
+                <p>Hello ${object.name},</p>
+                <p>Thank you for booking an appointment.</p>
+                <p><strong>Date:</strong> ${object.date} <br/>
+                   <strong>Time Slot:</strong> ${object.slot} <br/>
+                   <strong>Service:</strong> ${object.service}</p>
+                <p>We will contact you shortly.</p>
+                <p>Regards,<br/>${object.company_id.name}</p>
+            ]]></field>
+        </record>
+    </data>
+</odoo>

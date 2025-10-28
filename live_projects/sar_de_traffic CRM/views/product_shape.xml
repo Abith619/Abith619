@@ -22,8 +22,8 @@
     <menuitem id="menu_product_shape"
         name="Product Shape"
         sequence="3"
-        action="sar_de_traffic.action_product_shape"
-        parent="stock.menu_stock_inventory_control"
+        action="action_product_shape"
+        parent="sar_de_traffic.menu_estimate_masters"
         active="True"
     />
 </odoo>

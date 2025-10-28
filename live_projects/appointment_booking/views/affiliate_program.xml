@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record id="view_affiliate_program_form" model="ir.ui.view">
+            <field name="name">affiliate.program.form</field>
+            <field name="model">affiliate.program</field>
+            <field name="arch" type="xml">
+                <form string="Affiliate Program Registrations">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="company_name"/>
+                                <field name="designation"/>
+                                <field name="contact_number"/>
+                                <field name="industry_influence_focus"/>
+                            </group>
+                            <group>
+                                <field name="pan_gst" widget="image" class="oe_avatar" options="{'size': [200, 200], 'img_class': 'h-100'}"/>
+                                <field name="email"/>
+                                <field name="linked_in_profile"/>
+                                <field name="expected_monthly_referrals"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_affiliate_program_tree" model="ir.ui.view">
+            <field name="name">affiliate.program.list</field>
+            <field name="model">affiliate.program</field>
+            <field name="arch" type="xml">
+                <list string="Affiliate Programs">
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="company_name"/>
+                    <field name="designation"/>
+                    <field name="contact_number"/>
+                    <field name="linked_in_profile"/>
+                    <field name="industry_influence_focus"/>
+                    <field name="expected_monthly_referrals"/>
+                    <field name="pan_gst" widget="image"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_affiliate_program" model="ir.actions.act_window">
+            <field name="name">Affiliate Programs</field>
+            <field name="res_model">affiliate.program</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="menu_affiliate_program" name="Affiliate Programs" action="action_affiliate_program"/>
+</odoo>

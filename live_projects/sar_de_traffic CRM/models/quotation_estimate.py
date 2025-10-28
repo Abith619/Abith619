@@ -1,5 +1,5 @@
 from odoo import models, fields, api
-from odoo.exceptions import ValidationError
+# from odoo.exceptions import ValidationError
 
 class QuotationEstimate(models.Model):
     _name = 'quotation.estimate'
@@ -27,9 +27,9 @@ class QuotationEstimate(models.Model):
     subtotal = fields.Monetary(string='Subtotal', currency_field='currency_id', store=True)
     amount_total = fields.Monetary(string='Total Amount', currency_field='currency_id', store=True)
 
-    item_category : fields.Many2one = fields.Many2one('product.template', string='Item Category')
+    item_category : fields.Many2one = fields.Many2one('product.category', string='Item Category')
     shape_id : fields.Many2one = fields.Many2one('product.shape', string='Shape')
-    size = fields.Integer(string='Size')
+    size_id : fields.Many2one = fields.Many2one('custom.size', string='Size')
     measure = fields.Selection([
         ('meter', '(m)'),
         ('msq', '(m2)'),
@@ -57,10 +57,10 @@ class QuotationEstimate(models.Model):
         return res
 
     #                                                                                           Sign Fields
-    substrate_id : fields.Many2one = fields.Many2one('product.template', string='Substrate')
-    reflective_id : fields.Many2one = fields.Many2one('product.template', string='Reflective')
+    substrate_id : fields.Many2one = fields.Many2one('product.template', string='Substrate', domain="[('categ_id', '=', item_category)]")
+    reflective_id : fields.Many2one = fields.Many2one('product.template', string='Reflective', domain="[('categ_id', '=', item_category)]")
 
-    # Sign Substrate Value
+    #                                                                                   Sign Substrate Value
     substrate_make : fields.Many2many = fields.Many2many(
         'product.attribute.value',
         relation='quotation_estimate_substrate_make_rel',
@@ -81,25 +81,50 @@ class QuotationEstimate(models.Model):
     substrate_paint_amt = fields.Float(string="Paint Amount")
     substrate_total = fields.Float(string="Total", compute='_compute_total_amount')
 
-    @api.onchange('item_category')
-    def _onchange_item_category(self):
-        for line in self.item_category.attribute_line_ids:
+    @api.onchange('substrate_id')
+    def _onchange_substrate_make(self):
+        for line in self.substrate_id.attribute_line_ids:
             if line.attribute_id.name == 'Make':
                 ids = line.value_ids.ids
                 self.substrate_make = ids
                 self.make_many2one = ids[0]
+        self.substrate_amount = self.substrate_id.list_price
+
+    @api.onchange('reflective_id')
+    def _onchange_reflective_make(self):
+        for line in self.reflective_id.attribute_line_ids:
             if line.attribute_id.name == 'Color':
                 ids = line.value_ids.ids
                 self.reflective_color = ids
                 self.reflective_make = ids[0]
-        self.substrate_amount = self.item_category.list_price
+        self.reflective_amount = self.reflective_id.list_price
 
     @api.depends('substrate_amount', 'substrate_cutting_amt', 'substrate_paint_amt', 'substrate_total')
     def _compute_total_amount(self):
         for rec in self:
             rec.substrate_total = (rec.substrate_amount + rec.substrate_cutting_amt + rec.substrate_paint_amt)
 
-    # Sign Reflective Sheet
+    @api.onchange('item_category', 'shape_id', 'size_id')
+    def _get_from_master(self):
+        if self.item_category and self.shape_id and self.size_id:
+            master = self.env['sign.master'].search([
+                ('category_id', '=', self.item_category.id),
+                ('shape_id', '=', self.shape_id.id),
+                ('size_id', '=', self.size_id.id),
+            ], limit=1)
+            if master:
+                wastage = (master.substrate_area - master.common_area)
+                self.write({
+                    'substrate_area': master.common_area,
+                    'substrate_waste': wastage,
+                    'reflective_area': master.base_sheet_area,
+                    'vinyl_area': master.vinyl_area,
+                    'ec_flim_area': master.flim_area,
+                    'screen_print_area': master.screen_print_area,
+                    'process_area': master.processing_area,
+                })
+
+    #                                                                                                                  Sign Reflective Sheet
     reflective_color : fields.Many2many = fields.Many2many(
         'product.attribute.value',
         relation='quotation_estimate_reflective_color_rel',

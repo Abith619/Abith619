@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tally_config,tally.config,model_tally_config,base.group_user,1,1,1,1
+access_tally_sync,tally.sync,model_tally_sync,base.group_user,1,1,1,1
+access_tally_bill_wizard,tally.bill.wizard,model_tally_bill_wizard,base.group_user,1,1,1,1
+access_tally_invoice_wizard,tally.invoice.wizard,model_tally_invoice_wizard,base.group_user,1,1,1,1
+access_tally_ledger_wizard,tally.ledger.wizard,model_tally_ledger_wizard,base.group_user,1,1,1,1
+access_tally_integration_wizard,tally.integration.wizard,model_tally_integration_wizard,base.group_user,1,1,1,1

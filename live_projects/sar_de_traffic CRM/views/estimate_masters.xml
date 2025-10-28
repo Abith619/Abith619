@@ -3,43 +3,17 @@
 
     <menuitem id="menu_estimate_masters" name="Masters" parent="stock.menu_stock_root" sequence="5"/>
 
-    <record id="action_category_masters" model="ir.actions.act_window">
-        <field name="name">Estimate Masters</field>
-        <field name="res_model">sign.item.category</field>
+    <record id="action_sign_masters" model="ir.actions.act_window">
+        <field name="name">Sign Masters</field>
+        <field name="res_model">sign.master</field>
         <field name="view_mode">list,form</field>
     </record>
 
     <menuitem id="menu_estimate_category_master"
-        name="Category Masters"
-        action="sar_de_traffic.action_category_masters"
+        name="Sign Masters"
+        action="sar_de_traffic.action_sign_masters"
         parent="sar_de_traffic.menu_estimate_masters"
         sequence="0"
-    />
-
-    <record id="action_sign_substrate_masters" model="ir.actions.act_window">
-        <field name="name">Sign Substrate Masters</field>
-        <field name="res_model">sign.substrate</field>
-        <field name="view_mode">list,form</field>
-    </record>
-
-    <menuitem id="menu_sign_substrate_master"
-        name="Sign Substrate Masters"
-        action="sar_de_traffic.action_sign_substrate_masters"
-        parent="sar_de_traffic.menu_estimate_masters"
-        sequence="1"
-    />
-
-    <record id="action_sign_reflective_materials" model="ir.actions.act_window">
-        <field name="name">Reflective Materials</field>
-        <field name="res_model">sign.reflective.materials</field>
-        <field name="view_mode">list,form</field>
-    </record>
-
-    <menuitem id="menu_sign_reflective_materials"
-        name="Reflective Materials"
-        action="sar_de_traffic.action_sign_reflective_materials"
-        parent="sar_de_traffic.menu_estimate_masters"
-        sequence="2"
     />
 
     <record id="action_product_shape" model="ir.actions.act_window">
@@ -55,15 +29,15 @@
         sequence="3"
     />
 
-    <record id="action_sign_size" model="ir.actions.act_window">
-        <field name="name">Sign Sizes</field>
-        <field name="res_model">sign.size</field>
+    <record id="action_custom_size" model="ir.actions.act_window">
+        <field name="name">custom Sizes</field>
+        <field name="res_model">custom.size</field>
         <field name="view_mode">list,form</field>
     </record>
 
-    <menuitem id="menu_sign_size"
-        name="Sign Sizes"
-        action="sar_de_traffic.action_sign_size"
+    <menuitem id="menu_custom_size"
+        name="custom Sizes"
+        action="sar_de_traffic.action_custom_size"
         parent="sar_de_traffic.menu_estimate_masters"
         sequence="4"
     />

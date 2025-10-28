@@ -8,6 +8,18 @@
             <xpath expr="//button[@name='action_set_won_rainbowman']" position="before">
                 <button name="action_new_estimate" type="object" string="New Estimate" class="btn-primary"/>
             </xpath>
+             <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_estimates"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-file-text-o">
+                    <field name="estimate_ids" invisible="1"/>
+                    <field name="estimate_count" widget="statinfo" string="Estimates"/>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="project_id" />
+            </xpath>
         </field>
     </record>
 </odoo>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Root menu -->
+    <menuitem id="menu_tally_root" name="Tally Connector" sequence="10"/>
+
+    <!-- Ledger Wizard Menu -->
+    <record id="action_tally_ledger_wizard" model="ir.actions.act_window">
+        <field name="name">Ledger Export</field>
+        <field name="res_model">tally.ledger.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="menu_tally_ledger"
+        parent="menu_tally_root"
+        name="Ledger"
+        action="action_tally_ledger_wizard"
+        sequence="20"
+    />
+
+    <!-- Invoice Wizard Menu -->
+    <record id="action_tally_invoice_wizard" model="ir.actions.act_window">
+        <field name="name">Invoice Export</field>
+        <field name="res_model">tally.invoice.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="menu_tally_invoice"
+        parent="menu_tally_root"
+        name="Invoice"
+        action="action_tally_invoice_wizard"
+        sequence="30"
+    />
+
+    <!-- Bill Wizard Menu -->
+    <record id="action_tally_bill_wizard" model="ir.actions.act_window">
+        <field name="name">Bill Export</field>
+        <field name="res_model">tally.bill.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="menu_tally_bill"
+        parent="menu_tally_root"
+        name="Bill"
+        action="action_tally_bill_wizard"
+        sequence="40"
+    />
+
+    <record id="action_tally_integration_wizard" model="ir.actions.act_window">
+        <field name="name">Tally Integration</field>
+        <field name="res_model">tally.integration.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_tally_integration_root" name="Tally Integration" parent="tally_connector.menu_tally_root" sequence="10" action="action_tally_integration_wizard"/>
+
+    <menuitem id="menu_chart_of_accounts"
+        name="Chart of Accounts"
+        parent="account.menu_finance_configuration"
+        action="account.action_account_form"
+        sequence="5"
+    />
+
+</odoo>

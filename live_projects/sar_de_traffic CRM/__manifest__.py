@@ -7,14 +7,15 @@
     'data': [
         'security/ir.model.access.csv',
         'data/ir_sequence.xml',
-        'views/estimate_masters.xml',
+        # 'views/estimate_masters.xml',
         'views/purchase_inherit_views.xml',
         'views/stock_inherit_views.xml',
         'views/bom_inherit.xml',
         'views/crm_inherit.xml',
-        'views/quotation_estimate.xml',
+        'views/estimate_form.xml',
+        # 'views/quotation_estimate.xml',
         'views/manufacturing_inherit.xml',
-        'views/product_shape.xml',
+        'reports/quotation_estimate_report.xml',
         'wizards/purchase_wizard.xml',
     ],
     'assets': {
