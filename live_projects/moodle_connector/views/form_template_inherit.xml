@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <template id="shop_cart_inherit" name="Address Management" inherit_id="website_sale.address">
+            <xpath expr="//div[@id='div_phone']" position="after">
+                <div class="row mt-4 mb-4">
+                    <div class="col-6 text-right">
+                        <div class="form-group mb-3">
+                            <label>Gender:</label>
+                                <select name="gender" class="form-control">
+                                    <option value="">Select Gender</option>
+                                    <option value="m">Male</option>
+                                    <option value="f">Female</option>
+                                    <option value="o">Other</option>
+                                </select>
+                        </div>
+                    </div>
+                    <div class="col-6 text-left">
+                        <div class="form-group mb-3">
+                            <label>Date of Birth:</label>
+                            <input type="date" name="dob" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//div[@id='div_state']" position="after">
+                <div class="row mt-4 mb-4">
+                <h4>Previous Qualification</h4>
+                    <div class="col-6 text-right">
+                            <div class="form-group mb-3">
+                                <label>Institution Name:</label>
+                                <input type="text" name="institution_name" class="form-control"/>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label>Institution Address:</label>
+                                <textarea name="institution_address" class="form-control"></textarea>
+                            </div>
+                    </div>
+                    <div class="col-6 text-left">
+                        <div class="form-group mb-3">
+                            <label>Qualification:</label>
+                            <input type="text" name="qualification" class="form-control"/>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <h4>Course :</h4>
+                            <select name="Course_details" class="form-control">
+                                <option value="">Select Course</option>
+                                <t t-foreach="courses" t-as="course">
+                                    <option t-att-value="course.id"
+                                        t-att-selected="selected_course and course.id == selected_course.id and 'selected' or None">
+                                        <t t-esc="course.name"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                    </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

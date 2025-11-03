@@ -12,6 +12,7 @@
                 <header>
                     <button name='test_moodle' type='object' string='Test' class='btn-primary'/>
                     <button name='fetch_contents' type='object' string='Import' class='btn-primary'/>
+                    <button name='export_contents' type='object' string='Export' class='btn-primary'/>
                 </header>
                 <sheet>
                     <group>

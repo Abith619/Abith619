@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="template_footer_custom" inherit_id="website.layout" name="Custom Footer">
+        <xpath expr="//div[@id='footer']" position="replace">
+            <style>
+                .o_footer_copyright{
+                    display: none !important;
+                }
+            </style>
+            <footer id="footer" class="o_footer text-white pt-3 pb-3">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <!-- Left: Logo -->
+                        <div class="col-md-6 text-start">
+                            <a href="/" class="navbar-brand">
+                                <img src="/moodle_connector/static/src/img/logo.png" alt="Logo" style="height:50px;"/>
+                            </a>
+                        </div>
+
+                        <!-- Right: Social Icons -->
+                        <div class="col-md-6 text-end">
+                            <a href="https://facebook.com" target="_blank" class="text-white me-2">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a href="https://instagram.com" target="_blank" class="text-white me-2">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                            <a href="https://twitter.com" target="_blank" class="text-white">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row align-items-center mt-2">
+
+                    <!-- Center: Menu Links -->
+                        <div class="col-md-6 text-left">
+                            <ul class="list-inline mb-0">
+                                <li class="list-inline-item"><a href="/" class="text-white">Home</a></li>
+                                <li class="list-inline-item"><a href="/degrees" class="text-white">Degrees</a></li>
+                                <li class="list-inline-item"><a href="/about" class="text-white">About</a></li>
+                                <li class="list-inline-item"><a href="/contactus" class="text-white">Contact</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Bottom Copyright -->
+                        <div class="col text-end">
+                            <small>©2025 - Landmark Christian University | All Rights Reserved</small>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </xpath>
+    </template>
+</odoo>

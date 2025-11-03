@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_slide_channel_tag_form_inherit" model="ir.ui.view">
+        <field name="name">slide.channel.tag.form.inherit.price</field>
+        <field name="model">slide.channel.tag</field>
+        <field name="inherit_id" ref="website_slides.slide_channel_tag_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="price"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="product_id"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="slide_channel_inherit" model="ir.ui.view">
+        <field name="name">slide.channel.inherit.form</field>
+        <field name="model">slide.channel</field>
+        <field name="inherit_id" ref="website_slides.view_slide_channel_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <label for="application_product_id" string="Application Product"/>
+                <field name="application_product_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
