@@ -8,12 +8,19 @@
             <xpath expr="//button[@name='action_set_won_rainbowman']" position="before">
                 <button name="action_approve_lead" type="object" string="Approve &amp; Send" class="btn-primary"/>
             </xpath>
+
+            <!-- <xpath expr="//button[@name='action_set_won_rainbowman']" position="before">
+                <button name="action_checkout" type="object" string="Checkout" class="btn-primary"/>
+            </xpath> -->
+
+
             <xpath expr="//field[@name='tag_ids']" position="after">
                 <field name="course_id"/>
             </xpath>
-            <xpath expr="//field[@name='phone']" position="after">
-                <label for="payment_link" string="Payment Link"/>
-                <field name="payment_link" />
+            <xpath expr="//field[@name='user_company_ids']" position="after">
+                <field name="payment_link"/>
+                <field name="payment_status" widget="radio"/>
+                <field name="unique_token" invisible="1"/>
                 <field name="paypal_order_id" invisible="1"/>
                 <field name="paypal_temp_token" invisible="1"/>
             </xpath>

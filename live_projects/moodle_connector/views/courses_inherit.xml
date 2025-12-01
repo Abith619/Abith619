@@ -24,6 +24,9 @@
                     box-shadow: 0 8px 20px rgba(122, 0, 194, 0.5);
                     color: #fff;
                 }
+                .o_wslides_js_channel_unsubscribe[data-is-follower="True"] ~ .text-center {
+                    display: none !important;
+                }
             </style>
             <t t-if="channel.application_product_id">
                 <div class="text-center mt-2">

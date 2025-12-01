@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="inherit_course_join" inherit_id="website_slides.course_join" name="Inherit Course Join Template" >
+        <xpath expr="//div[contains(@class, 'o_wslides_js_course_join')]" position="inside">
+            <style>
+                .o_wslides_js_course_join_link{
+                    display: none !important;
+                }
+                .o_js_add_to_cart{
+                    display: none !important;
+                }
+                .btn-purple {
+                    background: linear-gradient(135deg, #46006d, #7a00c2);
+                    color: #fff;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 10px 20px;
+                    transition: all 0.4s ease;
+                    box-shadow: 0 4px 10px rgba(70, 0, 109, 0.3);
+                }
+                .btn-purple:hover {
+                    background: linear-gradient(135deg, #7a00c2, #a200ff);
+                    transform: translateY(-3px) scale(1.03);
+                    box-shadow: 0 8px 20px rgba(122, 0, 194, 0.5);
+                    color: #fff;
+                }
+            </style>
+            <t t-if="channel.application_product_id">
+                <div class="text-center mt-2">
+                    <form action="/shop/cart/update" method="post" class="d-inline">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="product_id" t-att-value="channel.application_product_id.id"/>
+                        <input type="hidden" name="custom_course_id" t-att-value="channel.id"/>
+                        <input type="hidden" name="add_qty" value="1"/>
+                        <button type="submit" class="btn btn-purple d-block">
+                            <i class="fa fa-bolt"></i>
+                            Register (Pay Application Fee)
+                        </button>
+                    </form>
+                </div>
+            </t>
+        </xpath>
+    </template>
+    <template id="inherit_course_home" inherit_id="website_slides.courses_home" name="Inherit Courses Homepage">
+        <xpath expr="//div[@id='wrap']/div[contains(@class, 'oe_structure')]/section[contains(@class, 's_banner')]" position="replace">
+            <style>
+                .course-banner-section {
+                    background: linear-gradient(90deg, #2b174f 20%, #3c1c66 80%);
+                    position: relative;
+                    padding: 60px 0;
+                    overflow: hidden;
+                }
+
+                .course-banner-section::after {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 80px;
+                    background: url('/moodle_connector/static/src/img/banner_wave.svg') no-repeat bottom center;
+                    background-size: cover;
+                }
+
+                .course-banner-section .church-bg {
+                    position: absolute;
+                    bottom: 0;
+                    right: 50px;
+                    opacity: 0.15;
+                    width: 260px;
+                }
+
+                .course-banner-section img.student-img {
+                    width: 100%;
+                    max-width: 360px;
+                    border-radius: 4px;
+                    object-fit: cover;
+                }
+
+                .course-banner-content h1 {
+                    font-size: 2rem;
+                    font-weight: 600;
+                    color: #fff;
+                    margin-bottom: 15px;
+                }
+
+                .course-banner-content p {
+                    color: #d6cde7;
+                    margin-bottom: 10px;
+                    line-height: 1.6;
+                }
+
+                .course-banner-content ul {
+                    list-style: none;
+                    padding: 0;
+                    margin: 20px 0 0 0;
+                }
+
+                .course-banner-content ul li::before {
+                    content: "•";
+                    color: #ccb363;
+                    font-weight: bold;
+                    display: inline-block;
+                    width: 1em;
+                    margin-left: -1em;
+                }
+
+                .course-banner-content ul li {
+                    margin-bottom: 8px;
+                    font-size: 15px;
+                    color: #e7e4f1;
+                }
+
+                @media (max-width: 991px) {
+                    .course-banner-section {
+                        padding: 40px 0;
+                    }
+
+                    .course-banner-section img.student-img {
+                        max-width: 80%;
+                        margin: 0 auto 20px;
+                        display: block;
+                    }
+
+                    .course-banner-content {
+                        text-align: center;
+                    }
+
+                    .course-banner-section .church-bg {
+                        display: none;
+                    }
+                }
+            </style>
+            <section class="course-banner-section text-white position-relative overflow-hidden">
+                <div class="container position-relative">
+                <div class="row align-items-center">
+                    <!-- Left Image -->
+                    <div class="col-lg-4 text-center text-lg-start mb-4 mb-lg-0">
+                        <img src="/moodle_connector/static/src/img/course.png"
+                             alt="Christian Counseling Student"
+                             class="student-img shadow-lg"/>
+                    </div>
+
+                    <!-- Right Content -->
+                    <div class="col-lg-8 course-banner-content">
+                        <h1>Bachelor of Arts in Christian Counseling</h1>
+                        <p>
+                            Our Christian Counseling Degree focuses on equipping the student for a career in Spirit-led counseling.
+                            Career opportunities include private practice, schools, hospitals, nonprofit service, churches, and behavioral health care.
+                        </p>
+
+                        <h5 class="mt-4 mb-2" style="color: #ccb363;">What You’ll Learn</h5>
+                        <ul>
+                            <li>Integrate Psychological Theories with the Scriptures</li>
+                            <li>Apply Biblical Principles to Become an Effective Christian Counselor</li>
+                            <li>Demonstrate Competence in Christian Counseling Practice</li>
+                            <li>Address Ethical Considerations in Counseling</li>
+                            <li>Recognize that the Counselor’s Heart Must Be Dealt With</li>
+                            <li>Understand the Relationship Between Personal Life and Ministry</li>
+                            <li>Apply Principles of Christian Counseling in the Local Church</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Background Illustration -->
+                <img src="/moodle_connector/static/src/img/church_outline.png"
+                     alt="Church Illustration"
+                     class="church-bg"/>
+            </div>
+            </section>
+        </xpath>
+    </template>
+
+</odoo>

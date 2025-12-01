@@ -13,6 +13,178 @@
                     max-width: 100% !important;
                 }
             </style>
+            <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const REQUIRED_FIELDS = ["legal_first_name","legal_last_name","certificate_name","dob","gender",
+                    "nationality","time_zone","country_of_residence","highest_qualification","last_institution",
+                    "graduation_year","internet_access","primary_device","english_proficiency","hear_about",
+                    "academic_level","Course_details","enrollment_load","rolling_admission_start",
+                    "preferred_start_month","preferred_start_year","pacing_expectation","academic_transcript",
+                    "certificates","government_id","recommendation_letter","personal_statement","online_policies",
+                    "privacy_consent","esign_consent","honor_code","marketing_consent","truthfulness",
+                    "electronic_signature","signature_date","photo"];
+
+                function applyRequired() {
+                    REQUIRED_FIELDS.forEach(name => {
+                        const field = document.querySelector(`[name='${name}']`);
+                        if (field) {
+                            field.setAttribute("required", "required");
+                        }
+                    });
+                    console.log("Required restored to FINAL inputs");
+                }
+
+                setTimeout(applyRequired, 1500);
+
+                const target = document.querySelector("form");
+                if (target) {
+                    const observer = new MutationObserver(() => {
+                        applyRequired();
+                    });
+                    observer.observe(target, { childList: true, subtree: true });
+                }
+                const form = document.querySelector("form");
+                const underYes = document.getElementById("underage_yes");
+                const underNo = document.getElementById("underage_no");
+                const guardianSection = document.querySelector(".guardian-section");
+
+                guardianSection.style.display = "none";
+
+                underYes?.addEventListener("change", function () {
+                    guardianSection.style.display = "block";
+                    guardianSection.querySelectorAll("input").forEach(f => {
+                        f.setAttribute("required", "required");
+                    });
+                });
+
+                underNo?.addEventListener("change", function () {
+                    guardianSection.style.display = "none";
+                    guardianSection.querySelectorAll("input").forEach(f => {
+                        f.removeAttribute("required");
+                    });
+                });
+
+                /* REQUIRED VALIDATION FOR RADIO */
+                form.addEventListener("submit", function (e) {
+                    const selected = document.querySelector('input[name="underage_consent"]:checked');
+                    if (!selected) {
+                        e.preventDefault();
+                        alert("Please select Yes or No for Underage.");
+                        return false;
+                    }
+                });
+                const sponsorYes = document.getElementById("sponsor_yes");
+                const sponsorNo = document.getElementById("sponsor_no");
+                const sponsorSection = document.querySelector(".sponsor-section");
+
+                sponsorSection.style.display = "none";
+
+                sponsorYes?.addEventListener("change", function () {
+                    sponsorSection.style.display = "block";
+                    sponsorSection.querySelectorAll("input").forEach(f => {
+                        f.setAttribute("required", "required");
+                    });
+                });
+
+                sponsorNo?.addEventListener("change", function () {
+                    sponsorSection.style.display = "none";
+                    sponsorSection.querySelectorAll("input").forEach(f => {
+                        f.removeAttribute("required");
+                    });
+                });
+                const priorYes = document.getElementById("prior_yes");
+                const priorNo = document.getElementById("prior_no");
+                const priorSection = document.querySelector(".prior-institution-section");
+
+                priorSection.style.display = "none";
+
+                priorYes?.addEventListener("change", function () {
+                    priorSection.style.display = "block";
+                    priorSection.querySelectorAll("input").forEach(f => {
+                        f.setAttribute("required", "required");
+                    });
+                });
+
+                priorNo?.addEventListener("change", function () {
+                    priorSection.style.display = "none";
+                    priorSection.querySelectorAll("input").forEach(f => {
+                        f.removeAttribute("required");
+                    });
+                });
+
+                const transferYes = document.getElementById("transfer_yes");
+                const transferNo = document.getElementById("transfer_no");
+                const transferSection = document.querySelector(".transfer-section");
+                const transcriptInput = document.querySelector("input[name='transcript_upload']");
+
+                transferSection.style.display = "none";
+
+                transferYes?.addEventListener("change", function () {
+                    transferSection.style.display = "block";
+                    transcriptInput?.setAttribute("required", "required");
+                });
+
+                transferNo?.addEventListener("change", function () {
+                    transferSection.style.display = "none";
+                    transcriptInput?.removeAttribute("required");
+                });
+
+                const christianYes = document.getElementById("christian_yes");
+                const christianNo = document.getElementById("christian_no");
+                const christianSection = document.querySelector(".christian-section");
+
+                christianSection.style.display = "none";
+
+                christianYes?.addEventListener("change", function () {
+                    christianSection.style.display = "block";
+                    christianSection.querySelectorAll("input, textarea").forEach(f => {
+                        f.setAttribute("required", "required");
+                    });
+                });
+
+                christianNo?.addEventListener("change", function () {
+                    christianSection.style.display = "none";
+                    christianSection.querySelectorAll("input, textarea").forEach(f => {
+                        f.removeAttribute("required");
+                    });
+                });
+
+                const accessYes = document.getElementById("accessibility_yes");
+                const accessNo = document.getElementById("accessibility_no");
+                const accessSection = document.querySelector(".accessibility-section");
+                const accessDetails = document.querySelector("textarea[name='accessibility_details']");
+
+                accessSection.style.display = "none";
+
+                accessYes?.addEventListener("change", function () {
+                    accessSection.style.display = "block";
+                    accessDetails?.setAttribute("required", "required");
+                });
+
+                accessNo?.addEventListener("change", function () {
+                    accessSection.style.display = "none";
+                    accessDetails?.removeAttribute("required");
+                });
+
+                const dismissedYes = document.getElementById("dismissed_yes");
+                const dismissedNo = document.getElementById("dismissed_no");
+                const dismissedSection = document.querySelector(".dismissed-section");
+                const dismissedText = document.querySelector("textarea[name='dismissed_explanation']");
+
+                dismissedSection.style.display = "none";
+
+                dismissedYes?.addEventListener("change", function () {
+                    dismissedSection.style.display = "block";
+                    dismissedText?.setAttribute("required", "required");
+                });
+
+                dismissedNo?.addEventListener("change", function () {
+                    dismissedSection.style.display = "none";
+                    dismissedText?.removeAttribute("required");
+                });
+
+            });
+            </script>
         </xpath>
 
         <!-- ✅ Make the form handle file uploads -->
@@ -27,8 +199,7 @@
             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
         </xpath>
 
-        <!-- =================== PERSONAL INFORMATION =================== -->
-        <xpath expr="//div[@id='div_phone']" position="after">
+         <xpath expr="//div[@id='div_phone']" position="after">
             <div class="row mt-4 mb-4">
                 <h4>Personal Information</h4>
 
@@ -49,12 +220,12 @@
                     </div>
 
                     <div class="form-group mb-3">
-                        <label>Gender</label>
+                        <label>Gender *</label>
                         <select name="gender" class="form-control" required="required">
                             <option value="">Select Gender</option>
-                            <option value="m">Male</option>
-                            <option value="f">Female</option>
-                            <option value="o">Others</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Others</option>
                         </select>
                     </div>
 
@@ -346,7 +517,7 @@
                         </select>
                     </div>
                     <div class="col-md-6 mb-2">
-                        <label>Preferred Start Year</label>
+                        <label>Preferred Start Year *</label>
                         <select name="preferred_start_year" class="form-select" required="required">
                             <option value="">Select Year</option>
                             <t t-foreach="years" t-as="y">
@@ -355,7 +526,7 @@
                         </select>
                     </div>
                     <div class="col-md-6 mb-2">
-                        <label>Pacing Expectation (self-reported)</label>
+                        <label>Pacing Expectation (self-reported) *</label>
                         <select name="pacing_expectation" class="form-select" required="required">
                             <option value="">Select Pacing</option>
                             <option value="5">≤5 hrs/week</option>
@@ -485,9 +656,9 @@
 
                     <div class="col-md-6 mb-2">
                         <label>Preferred Communication Channels</label><br/>
-                        <input type="checkbox" name="communication_channels" value="Email"/> Email
-                        <input type="checkbox" name="communication_channels" value="WhatsApp"/> WhatsApp
-                        <input type="checkbox" name="communication_channels" value="SMS"/> SMS
+                        <input type="checkbox" name="communication_channels[]" value="Email"/> Email
+                        <input type="checkbox" name="communication_channels[]" value="WhatsApp"/> WhatsApp
+                        <input type="checkbox" name="communication_channels[]" value="SMS"/> SMS
                     </div>
 
                     <div class="col-md-6 mb-2">
@@ -611,208 +782,6 @@
                     </div>
                 </div>
             </div>
-            <script>
-            document.addEventListener("DOMContentLoaded", function () {
-
-                /* ============================================================
-                1. RESTORE REQUIRED FIELDS AFTER ODOO REWRITES THE FORM
-                ============================================================ */
-                const REQUIRED_FIELDS = ["legal_first_name","legal_last_name","certificate_name","dob","gender",
-                    "nationality","time_zone","country_of_residence","highest_qualification","last_institution",
-                    "graduation_year","internet_access","primary_device","english_proficiency","hear_about",
-                    "academic_level","Course_details","enrollment_load","rolling_admission_start",
-                    "preferred_start_month","preferred_start_year","pacing_expectation","academic_transcript",
-                    "certificates","government_id","recommendation_letter","personal_statement","online_policies",
-                    "privacy_consent","esign_consent","honor_code","marketing_consent","truthfulness",
-                    "electronic_signature","signature_date","photo"];
-
-                function applyRequired() {
-                    REQUIRED_FIELDS.forEach(name => {
-                        const field = document.querySelector(`[name='${name}']`);
-                        if (field) {
-                            field.setAttribute("required", "required");
-                            field.classList.add("o_required");
-                        }
-                    });
-                    console.log("🔥 Required restored to FINAL inputs");
-                }
-
-                setTimeout(applyRequired, 1500);
-
-                const target = document.querySelector("form");
-                if (target) {
-                    const observer = new MutationObserver(() => {
-                        applyRequired();
-                    });
-                    observer.observe(target, { childList: true, subtree: true });
-                }
-
-                /* ============================================================
-                2. UNDERAGE → GUARDIAN LOGIC
-                ============================================================ */
-                const form = document.querySelector("form");
-                const underYes = document.getElementById("underage_yes");
-                const underNo = document.getElementById("underage_no");
-                const guardianSection = document.querySelector(".guardian-section");
-
-                guardianSection.style.display = "none";
-
-                underYes?.addEventListener("change", function () {
-                    guardianSection.style.display = "block";
-                    guardianSection.querySelectorAll("input").forEach(f => {
-                        f.setAttribute("required", "required");
-                    });
-                });
-
-                underNo?.addEventListener("change", function () {
-                    guardianSection.style.display = "none";
-                    guardianSection.querySelectorAll("input").forEach(f => {
-                        f.removeAttribute("required");
-                    });
-                });
-
-                /* REQUIRED VALIDATION FOR RADIO */
-                form.addEventListener("submit", function (e) {
-                    const selected = document.querySelector('input[name="underage_consent"]:checked');
-                    if (!selected) {
-                        e.preventDefault();
-                        alert("Please select Yes or No for Underage.");
-                        return false;
-                    }
-                });
-
-                /* ============================================================
-                3. SPONSOR LOGIC
-                ============================================================ */
-                const sponsorYes = document.getElementById("sponsor_yes");
-                const sponsorNo = document.getElementById("sponsor_no");
-                const sponsorSection = document.querySelector(".sponsor-section");
-
-                sponsorSection.style.display = "none";
-
-                sponsorYes?.addEventListener("change", function () {
-                    sponsorSection.style.display = "block";
-                    sponsorSection.querySelectorAll("input").forEach(f => {
-                        f.setAttribute("required", "required");
-                    });
-                });
-
-                sponsorNo?.addEventListener("change", function () {
-                    sponsorSection.style.display = "none";
-                    sponsorSection.querySelectorAll("input").forEach(f => {
-                        f.removeAttribute("required");
-                    });
-                });
-
-                /* ============================================================
-                4. PRIOR INSTITUTION LOGIC
-                ============================================================ */
-                const priorYes = document.getElementById("prior_yes");
-                const priorNo = document.getElementById("prior_no");
-                const priorSection = document.querySelector(".prior-institution-section");
-
-                priorSection.style.display = "none";
-
-                priorYes?.addEventListener("change", function () {
-                    priorSection.style.display = "block";
-                    priorSection.querySelectorAll("input").forEach(f => {
-                        f.setAttribute("required", "required");
-                    });
-                });
-
-                priorNo?.addEventListener("change", function () {
-                    priorSection.style.display = "none";
-                    priorSection.querySelectorAll("input").forEach(f => {
-                        f.removeAttribute("required");
-                    });
-                });
-
-                /* ============================================================
-                5. TRANSFER CREDIT LOGIC
-                ============================================================ */
-                const transferYes = document.getElementById("transfer_yes");
-                const transferNo = document.getElementById("transfer_no");
-                const transferSection = document.querySelector(".transfer-section");
-                const transcriptInput = document.querySelector("input[name='transcript_upload']");
-
-                transferSection.style.display = "none";
-
-                transferYes?.addEventListener("change", function () {
-                    transferSection.style.display = "block";
-                    transcriptInput?.setAttribute("required", "required");
-                });
-
-                transferNo?.addEventListener("change", function () {
-                    transferSection.style.display = "none";
-                    transcriptInput?.removeAttribute("required");
-                });
-
-                /* ============================================================
-                6. CHRISTIAN LOGIC
-                ============================================================ */
-                const christianYes = document.getElementById("christian_yes");
-                const christianNo = document.getElementById("christian_no");
-                const christianSection = document.querySelector(".christian-section");
-
-                christianSection.style.display = "none";
-
-                christianYes?.addEventListener("change", function () {
-                    christianSection.style.display = "block";
-                    christianSection.querySelectorAll("input, textarea").forEach(f => {
-                        f.setAttribute("required", "required");
-                    });
-                });
-
-                christianNo?.addEventListener("change", function () {
-                    christianSection.style.display = "none";
-                    christianSection.querySelectorAll("input, textarea").forEach(f => {
-                        f.removeAttribute("required");
-                    });
-                });
-
-                /* ============================================================
-                7. ACCESSIBILITY LOGIC
-                ============================================================ */
-                const accessYes = document.getElementById("accessibility_yes");
-                const accessNo = document.getElementById("accessibility_no");
-                const accessSection = document.querySelector(".accessibility-section");
-                const accessDetails = document.querySelector("textarea[name='accessibility_details']");
-
-                accessSection.style.display = "none";
-
-                accessYes?.addEventListener("change", function () {
-                    accessSection.style.display = "block";
-                    accessDetails?.setAttribute("required", "required");
-                });
-
-                accessNo?.addEventListener("change", function () {
-                    accessSection.style.display = "none";
-                    accessDetails?.removeAttribute("required");
-                });
-
-                /* ============================================================
-                8. DISMISSED LOGIC
-                ============================================================ */
-                const dismissedYes = document.getElementById("dismissed_yes");
-                const dismissedNo = document.getElementById("dismissed_no");
-                const dismissedSection = document.querySelector(".dismissed-section");
-                const dismissedText = document.querySelector("textarea[name='dismissed_explanation']");
-
-                dismissedSection.style.display = "none";
-
-                dismissedYes?.addEventListener("change", function () {
-                    dismissedSection.style.display = "block";
-                    dismissedText?.setAttribute("required", "required");
-                });
-
-                dismissedNo?.addEventListener("change", function () {
-                    dismissedSection.style.display = "none";
-                    dismissedText?.removeAttribute("required");
-                });
-
-            });
-            </script>
-
             <!-- Consents and Policies -->
             <div class="Consents mt-3">
                 <div class="row">
@@ -820,42 +789,42 @@
 
                     <div class="col-md-6 mb-2">
                         <label>
-                            <input type="checkbox" name="privacy_consent" required="required"/>
+                            <input type="checkbox" name="privacy_consent" required="required" value="Yes"/>
                             I consent to LCU processing my data for admissions, enrollment, and student services in accordance with the Privacy Policy.
                         </label>
                     </div>
 
                     <div class="col-md-6 mb-2">
                         <label>
-                            <input type="checkbox" name="esign_consent" required="required"/>
+                            <input type="checkbox" name="esign_consent" required="required" value="Yes"/>
                             I agree to receive disclosures and complete transactions electronically.
                         </label>
                     </div>
 
                     <div class="col-md-6 mb-2">
                         <label>
-                            <input type="checkbox" name="honor_code" required="required"/>
+                            <input type="checkbox" name="honor_code" required="required" value="Yes"/>
                             I agree to abide by LCU's academic integrity policies and honor code.
                         </label>
                     </div>
 
                     <div class="col-md-6 mb-2">
                         <label>
-                            <input type="checkbox" name="online_policies" required="required"/>
+                            <input type="checkbox" name="online_policies" required="required" value="Yes"/>
                             I understand and agree to LCU's online learning policies.
                         </label>
                     </div>
 
                     <div class="col-md-6 mb-2">
                         <label>
-                            <input type="checkbox" name="marketing_consent"  required="required"/>
+                            <input type="checkbox" name="marketing_consent"  required="required" value="Yes"/>
                             I agree to receive marketing communications.
                         </label>
                     </div>
 
                     <div class="col-md-6 mb-2">
                         <label>
-                            <input type="checkbox" name="truthfulness" required="required"/>
+                            <input type="checkbox" name="truthfulness" required="required" value="Yes"/>
                             I certify the information provided is true and accurate.
                         </label>
                     </div>
@@ -867,7 +836,7 @@
                     </div>
                     <div class="col-md-6 mb-2">
                         <label>Date *</label>
-                        <input type="date" name="signature_date" class="form-control" required="required"/>
+                        <input type="date" name="signature_date" class="form-control" required="required" t-att-value="today"/>
                     </div>
                 </div>
             </div>

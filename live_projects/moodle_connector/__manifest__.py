@@ -19,11 +19,12 @@
         'views/courses_inherit.xml',
         'views/footer_template.xml',
         'views/form_template_inherit.xml',
-        'views/respartner.xml',
+        'views/sale_order.xml',
     ],
     'assets': {
         'web.assets_frontend': [
             'moodle_connector/static/src/js/address_patch.js',
+
         ],
 
         'web.assets_backend': [

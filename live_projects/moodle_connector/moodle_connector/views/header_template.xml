@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- DESKTOP HEADER -->
+    <template id="custom_header_layout" inherit_id="website.layout">
+        <xpath expr="//header" position="replace">
+            <style>
+                #top.navbar, #top .navbar {
+                    background: #ffffff !important;
+                }
+
+                /* Remove default shadows from Odoo */
+                .o_header_standard {
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+                }
+
+                /* -------------------------------------
+                MENU LINKS LEFT SIDE
+                -------------------------------------- */
+                .nav > li > a.nav-link {
+                    color: #000 !important;
+                    font-weight: 600;
+                    letter-spacing: 0.5px;
+                    font-size: 14px;
+                    padding: 10px 0 !important;
+                }
+
+                .nav > li > a.nav-link:hover {
+                    color: #C2922E !important;
+                }
+
+                /* Dropdown */
+                .dropdown-menu .dropdown-item {
+                    font-weight: 500;
+                    color: #333;
+                }
+
+                .dropdown-menu .dropdown-item:hover {
+                    background: #C2922E;
+                    color: #000;
+                }
+
+                /* -------------------------------------
+                LOGO CENTER
+                -------------------------------------- */
+                .navbar-brand img {
+                    transition: 0.2s ease-in-out;
+                }
+
+                .navbar-brand img:hover {
+                    transform: scale(1.07);
+                }
+
+                /* -------------------------------------
+                RIGHT SIDE BUTTONS
+                -------------------------------------- */
+                .btn-gold {
+                    background: #C2922E !important;
+                    border: none !important;
+                    color: #000 !important;
+                    font-weight: 600;
+                    padding: 8px 24px !important;
+                    border-radius: 4px !important;
+                    transition: 0.25s;
+                }
+
+                .btn-gold:hover {
+                    background: #a77d22 !important;
+                    color: #fff !important;
+                }
+
+                /* Smaller variant for mobile */
+                .btn-gold-sm {
+                    background: #C2922E !important;
+                    border: none !important;
+                    color: #000 !important;
+                    font-weight: 600;
+                    padding: 6px 18px !important;
+                    border-radius: 4px !important;
+                }
+
+                /* -------------------------------------
+                MOBILE HEADER STYLES
+                -------------------------------------- */
+                @media (max-width: 991px) {
+
+                    /* Mobile header spacing */
+                    #top .navbar {
+                        padding-top: 8px !important;
+                        padding-bottom: 8px !important;
+                    }
+
+                    /* Align items neatly */
+                    .o_header_mobile_buttons_wrap,
+                    .mobile-login-buttons {
+                        display: flex !important;
+                        align-items: center !important;
+                        gap: 8px !important;
+                    }
+
+                    /* Mobile Offcanvas */
+                    #mobile_menu_canvas .nav-link {
+                        font-size: 16px;
+                        font-weight: 600;
+                        padding: 10px 0;
+                        color: #000 !important;
+                    }
+
+                    #mobile_menu_canvas .nav-link:hover {
+                        color: #C2922E !important;
+                    }
+
+                    #mobile_menu_canvas .dropdown-item:hover {
+                        background: #C2922E;
+                        color: #fff !important;
+                    }
+
+                }
+            </style>
+            <header id="top" class="o_header_standard o_no_autohide_menu o_top_fixed_element">
+
+                <!-- DESKTOP NAVBAR -->
+                <nav class="navbar navbar-light o_colored_level o_cc shadow-sm py-2 d-none d-lg-block">
+                    <div class="container d-flex justify-content-between align-items-center">
+
+                        <!-- LEFT MENU -->
+                        <ul class="nav gap-4">
+                            <li><a class="nav-link fw-semibold" href="/">HOME</a></li>
+                            <li><a class="nav-link fw-semibold" href="/slides">PROGRAMS</a></li>
+                            <li><a class="nav-link fw-semibold" href="/about-us">ABOUT</a></li>
+                            <!-- <li class="dropdown">
+                                <a class="nav-link dropdown-toggle fw-semibold" data-bs-toggle="dropdown" href="#">
+                                    MORE
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/contactus">Contact</a></li>
+                                    <li><a class="dropdown-item" href="/shop">Shop</a></li>
+                                </ul>
+                            </li> -->
+                        </ul>
+
+                        <!-- CENTER LOGO -->
+                        <a href="/" class="navbar-brand mx-auto text-center">
+                            <img src="/web/image/website/1/logo" style="height:55px;" class="img-fluid"/>
+                        </a>
+
+                        <!-- RIGHT BUTTONS -->
+                        <div class="d-flex gap-2 align-items-center">
+
+                            <!-- If NOT logged in -->
+                            <t t-if="not request.env.user or request.env.user._is_public()">
+                                <a href="/web/login"
+                                class="btn btn-warning text-dark px-4 fw-semibold"
+                                style="background:#C2922E;border:none;">
+                                    LOGIN
+                                </a>
+                                <a href="/web/signup"
+                                class="btn btn-warning text-dark px-4 fw-semibold"
+                                style="background:#C2922E;border:none;">
+                                    SIGN UP
+                                </a>
+                            </t>
+
+                            <!-- If logged in -->
+                            <t t-else="">
+                                <div class="dropdown">
+                                    <a href="#" class="btn btn-light d-flex align-items-center px-3"
+                                    data-bs-toggle="dropdown"
+                                    style="background:#C2922E; border:1px solid #ddd;">
+                                        <i class="fa fa-user me-2"></i>
+                                        <span t-esc="request.env.user.name"/>
+                                    </a>
+
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <!-- Backend link for admins -->
+                                        <t t-if="request.env.user.has_group('base.group_system')">
+                                            <li>
+                                                <a class="dropdown-item" href="/odoo">
+                                                    <i class="fa fa-th me-2"></i> Apps
+                                                </a>
+                                            </li>
+                                        </t>
+
+                                        <!-- My Account -->
+                                        <li>
+                                            <a class="dropdown-item" href="/my/home">
+                                                <i class="fa fa-id-card-o me-2"></i> My Account
+                                            </a>
+                                        </li>
+
+                                        <li><hr class="dropdown-divider"/></li>
+
+                                        <!-- Logout -->
+                                        <li>
+                                            <a class="dropdown-item" href="/web/session/logout?redirect=/">
+                                                <i class="fa fa-sign-out me-2"></i> Logout
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- MOBILE NAVBAR -->
+                <nav class="navbar navbar-light o_colored_level o_cc shadow-sm d-flex d-lg-none py-2">
+                    <div class="container d-flex justify-content-between align-items-center">
+
+                        <!-- MOBILE HAMBURGER -->
+                        <button class="btn border-0 p-0" type="button"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#mobile_menu_canvas">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <!-- CENTERED LOGO -->
+                        <a href="/" class="navbar-brand mx-auto text-center">
+                            <img src="/web/image/website/1/logo" style="height:45px;" class="img-fluid"/>
+                        </a>
+
+                        <!-- LOGIN/SIGNUP ICONS RIGHT -->
+                        <div class="d-flex gap-2 align-items-center">
+
+                            <!-- If NOT logged in -->
+                            <t t-if="request.env.user._is_public()">
+                                <a href="/web/login"
+                                class="btn btn-gold-sm text-dark">
+                                    LOGIN
+                                </a>
+                                <a href="/web/signup"
+                                class="btn btn-gold-sm text-dark">
+                                    SIGN UP
+                                </a>
+                            </t>
+
+                            <!-- If logged in -->
+                            <t t-else="">
+                                <div class="dropdown dropup">
+                                    <a href="#" class="btn btn-light d-flex align-items-center px-3"
+                                    data-bs-toggle="dropdown" style="background:#C2922E; border:1px solid #ddd;">
+                                        <i class="fa fa-user me-2"></i>
+                                        <span class="small" t-esc="request.env.user.name"/>
+                                    </a>
+
+                                    <ul class="dropdown-menu dropdown-menu-end w-100">
+
+                                        <!-- Backend link for admins -->
+                                        <t t-if="request.env.user.has_group('base.group_system')">
+                                            <li>
+                                                <a class="dropdown-item" href="/odoo">
+                                                    <i class="fa fa-th me-2"></i> Apps
+                                                </a>
+                                            </li>
+                                        </t>
+
+                                        <li>
+                                            <a class="dropdown-item" href="/my/home">
+                                                <i class="fa fa-id-card-o me-2"></i> My Account
+                                            </a>
+                                        </li>
+
+                                        <li><hr class="dropdown-divider"/></li>
+
+                                        <li>
+                                            <a class="dropdown-item" href="/web/session/logout?redirect=/">
+                                                <i class="fa fa-sign-out me-2"></i> Logout
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </t>
+
+                        </div>
+
+                    </div>
+                </nav>
+
+                <!-- MOBILE OFFCANVAS MENU -->
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="mobile_menu_canvas">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title">Menu</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+                    </div>
+
+                    <div class="offcanvas-body">
+                        <ul class="nav flex-column gap-2">
+
+                            <li><a class="nav-link fw-semibold" href="/">HOME</a></li>
+                            <li><a class="nav-link fw-semibold" href="/slides">PROGRAMS</a></li>
+                            <li><a class="nav-link fw-semibold" href="/about-us">ABOUT</a></li>
+
+                            <!-- <li class="dropdown">
+                                <a class="nav-link fw-semibold dropdown-toggle" data-bs-toggle="dropdown" href="#">
+                                    MORE
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/contactus">Contact</a></li>
+                                    <li><a class="dropdown-item" href="/shop">Shop</a></li>
+                                </ul>
+                            </li> -->
+
+                        </ul>
+                    </div>
+                </div>
+
+            </header>
+        </xpath>
+    </template>
+
+</odoo>
