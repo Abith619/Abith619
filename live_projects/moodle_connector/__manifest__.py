@@ -8,7 +8,11 @@
     "depends": ["base", "web", "website", "crm", "website_slides", "website_sale"],
     "data": [
         'security/ir.model.access.csv',
-        "data/mail_template.xml",
+        'data/mail_template.xml',
+        'views/header_template.xml',
+        'views/about_us.xml',
+        'views/home_page.xml',
+        'views/crm_inherit.xml',
         'views/config_views.xml',
         'views/slide_inherit_views.xml',
         'views/channel_inherit.xml',
@@ -19,10 +23,12 @@
     ],
     'assets': {
         'web.assets_frontend': [
-            # 'custom_course/static/src/img/*.png',
+            'moodle_connector/static/src/js/address_patch.js',
         ],
+
         'web.assets_backend': [
-            # 'sar_de_traffic/static/src/js/moves_list_renderer_ext.js',
+            'moodle_connector/static/src/js/image_preview_widget.js',
+            'moodle_connector/static/src/xml/image_preview.xml',
         ],
     },
     'application': True,

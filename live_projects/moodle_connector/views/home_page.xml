@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="template_home_custom" inherit_id="website.homepage" name="Custom Home Page">
+        <xpath expr="//div[@id='wrap']" position="replace">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"/>
+            <style>
+                .lcu-bg-decoration {
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                /* Vector image background */
+                .lcu-bg-vector {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 180px;
+                    opacity: 0.5;
+                    z-index: 1;
+                    pointer-events: none;
+                }
+
+                /* Ensure content stays above the vector */
+                .lcu-bg-decoration .container,
+                .lcu-bg-decoration > *:not(.lcu-bg-vector) {
+                    position: relative;
+                    z-index: 2;
+                }
+
+                /* Optional: make vector smaller on mobile */
+                @media (max-width: 768px) {
+                    .lcu-bg-vector {
+                        width: 120px;
+                        opacity: 0.4;
+                    }
+                }
+                .section-why-lcu {
+                    background-color: #2b174f;
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .feature-card {
+                    background-color: rgba(255, 255, 255, 0.05);
+                    border: 1px solid rgba(255, 255, 255, 0.15);
+                    border-radius: 12px;
+                    transition: all 0.3s ease;
+                }
+
+                .feature-card:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                    transform: translateY(-5px);
+                }
+
+                .feature-card .icon i {
+                    font-size: 2rem;
+                    color: #CCB363; /* gold accent */
+                }
+
+                .section-why-lcu h2 {
+                    font-weight: 600;
+                    color: #fff;
+                }
+
+                .feature-card h5 {
+                    color: #fff;
+                }
+
+                .feature-card p {
+                    color: #ddd;
+                    font-size: 0.95rem;
+                    line-height: 1.6;
+                }
+                /* Custom Button */
+                .btn-custom {
+                    background-color: #CCB363 !important;
+                    color: black !important;
+                    border: 2px solid #CCB363 !important;
+                    font-weight: 600;
+                    padding: 10px 25px;
+                    border-radius: 6px;
+                    transition: all 0.3s ease;
+                }
+                .btn-custom:hover {
+                    background-color: transparent !important;
+                    color: #CCB363 !important;
+                    border-color: #CCB363 !important;
+                    transform: translateY(-2px);
+                }
+                .btn-custom i {
+                    transition: transform 0.3s ease;
+                }
+                .btn-custom:hover i {
+                    transform: translateX(5px);
+                }
+
+                /* Section Styling */
+                .section-kingdom-leader {
+                    padding: 80px 0;
+                    background-color: #fff;
+                }
+                .section-kingdom-leader .title {
+                    font-size: 32px;
+                    font-weight: 700;
+                    color: #220233;
+                }
+                .section-kingdom-leader p {
+                    color: #333;
+                    line-height: 1.8;
+                }
+                .section-kingdom-leader .highlight-btn {
+                    background-color: #CCB363 !important;
+                    color: black !important;
+                    border: 2px solid #CCB363 !important;
+                    font-weight: 600;
+                    padding: 10px 25px;
+                    border-radius: 6px;
+                    transition: all 0.3s ease;
+                }
+                .section-kingdom-leader .highlight-btn:hover {
+                    background-color: transparent !important;
+                    color: #CCB363 !important;
+                    border-color: #CCB363 !important;
+                }
+                .section-kingdom-leader img {
+                    border-radius: 10px;
+                    width: 100%;
+                    height: auto;
+                    object-fit: cover;
+                }
+                @media (max-width: 768px) {
+                    .section-kingdom-leader {
+                        text-align: center;
+                    }
+                }
+                .section-degree-programs {
+                    background-color: #faf8f4; /* soft ivory tone */
+                }
+
+                    .section-degree-programs h2 {
+                    font-weight: 600;
+                    color: #2b174f; /* deep purple */
+                }
+
+                    .degree-card {
+                    background-color: #fff;
+                    border: 1px solid #eee;
+                    transition: all 0.3s ease;
+                    }
+
+                    .degree-card:hover {
+                    transform: translateY(-6px);
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+                    }
+
+                    .btn-gold {
+                    background-color: #ccb363;
+                    color: #000;
+                    border-radius: 6px;
+                    font-weight: 500;
+                    padding: 8px 18px;
+                    transition: all 0.3s ease;
+                    border: none;
+                    }
+
+                    .btn-gold:hover {
+                    background-color: #bda554;
+                    color: #000;
+                    }
+
+                    .btn-gold i {
+                    margin-left: 6px;
+                    }
+            </style>
+
+            <!-- 🌅 Hero Section -->
+            <section class="s_cover parallax s_parallax_is_fixed o_cc o_cc5 pt232 pb232 o_colored_level"
+                     data-scroll-background-ratio="1"
+                     data-snippet="s_cover"
+                     data-name="Cover"
+                     style="position: relative;"
+                     data-oe-shape-data="{&quot;shape&quot;:&quot;web_editor/Origins/14_001&quot;,
+                     &quot;colors&quot;:{&quot;c3&quot;:&quot;#F9F4E9&quot;,&quot;c4&quot;:&quot;#46006D&quot;},
+                     &quot;flip&quot;:[],&quot;showOnMobile&quot;:false,&quot;shapeAnimationSpeed&quot;:&quot;0&quot;}">
+
+                <span class="s_parallax_bg oe_img_bg o_bg_img_center"
+                      style="background-position: 50% 75%;
+                             background-image: url('/moodle_connector/static/src/img/home_cover.jpg');"
+                      data-mimetype="image/jpeg"
+                      data-original-src="/moodle_connector/static/src/img/home_cover.jpg"
+                      data-filter-options="{&quot;filterColor&quot;:&quot;rgba(0, 0, 0, 0.25)&quot;}"/>
+
+                <div class="o_we_bg_filter bg-black-50"></div>
+                <div class="o_we_shape o_web_editor_Origins_14_001"
+                     style="background-image: url('/web_editor/shape/web_editor%2FOrigins%2F14_001.svg?c3=%23F9F4E9&amp;c4=%2346006D');"></div>
+
+                <div class="container s_allow_columns text-center">
+                    <h1 class="display-3 text-white">
+                        Online Christian Degrees &amp; Ministry
+                    </h1>
+                    <p class="lead text-white">Training for Global Impact.</p>
+                    <h6 class="text-white">
+                        Accredited, Christ-Centered Programs in Theology, Ministry, Counseling, and Business – Flexible Online Study.
+                    </h6>
+                    <p class="mt-5">
+                        <a class="btn btn-custom mb-2" href="/slides">
+                            Explore Degrees <i class="fa fa-arrow-right ms-2"></i>
+                        </a>
+                    </p>
+                </div>
+            </section>
+
+            <!-- 🎓 Become a Kingdom Leader Section -->
+            <section class="section-kingdom-leader">
+                <div class="container">
+                    <div class="row align-items-center g-5">
+                        <div class="col-md-6">
+                            <div class="position-relative d-flex align-items-center" style="height: 420px;">
+                                <img src="/moodle_connector/static/src/img/student_2.jpg"
+                                    alt="Students"
+                                    class="img-fluid shadow rounded"
+                                    style="width: 55%; height: 70%; object-fit: cover; position: relative; z-index: 2; border-radius: 12px;"/>
+                                <img src="/moodle_connector/static/src/img/student_1.png"
+                                    alt="Student"
+                                    class="img-fluid shadow rounded position-absolute"
+                                    style="width: 55%; height: 70%; object-fit: cover; right: -30px; top: 40px; z-index: 1; border-radius: 12px;"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h2 class="title mb-4">
+                                Become A Kingdom Leader<br/>With Landmark Christian University
+                            </h2>
+                            <p>
+                                At Landmark Christian University (LCU), our mission is to equip aspiring individuals with both theological foundations, essential life skills, and practical ministry tools. Through a Christ-centered, Scripture-based, and practically driven online academic environment, we prepare you to be effective in both life and the work of ministry.
+                            </p>
+                            <p>
+                                Join our global community of learners and transform your calling into impactful leadership. We welcome you to this citadel of quality Christian learning.
+                            </p>
+                            <a href="/contactus" class="highlight-btn mt-3">Get Started Today</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="section-why-lcu py-5 text-light">
+                <div class="container text-center">
+                    <h2 class="mb-5">Why Choose Landmark Christian University?</h2>
+                        <img src="/moodle_connector/static/src/img/bell.png" alt="Ornament" class="mb-4 text-end" style="width: 80px;"/>
+                    <div class="row g-4 justify-content-center">
+                        <!-- Card 1 -->
+                        <div class="col-md-4">
+                            <div class="feature-card p-4 h-100">
+                                <div class="icon mb-3">
+                                    <i class="bi bi-heart"></i>
+                                </div>
+                                <h5 class="fw-bold">Fully Accredited Online Christian University</h5>
+                                <p class="mb-0">
+                                    Gain confidence in quality, credibility, and recognition for advanced study and ministry roles with our fully accredited Christian degrees.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="col-md-4">
+                            <div class="feature-card p-4 h-100">
+                                <div class="icon mb-3">
+                                    <i class="bi bi-laptop"></i>
+                                </div>
+                                <h5 class="fw-bold">100% Online &amp; Flexible Learning</h5>
+                                <p class="mb-0">
+                                    Study anywhere, on your schedule — ideal for busy professionals, ministry leaders, and international students.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="col-md-4">
+                            <div class="feature-card p-4 h-100">
+                                <div class="icon mb-3">
+                                    <i class="bi bi-hourglass-split"></i>
+                                </div>
+                                <h5 class="fw-bold">Learn at Your Own Pace</h5>
+                                <p class="mb-0">
+                                    Program lengths range from 6 to 36 months, allowing you to graduate without pausing your life or ministry commitments.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Card 4 -->
+                        <div class="col-md-4">
+                            <div class="feature-card p-4 h-100">
+                                <div class="icon mb-3">
+                                    <i class="bi bi-globe"></i>
+                                </div>
+                                <h5 class="fw-bold">Global &amp; Accessible Christian Education</h5>
+                                <p class="mb-0">
+                                    Designed for international students and lifelong learners seeking to make a Kingdom impact worldwide.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Card 5 -->
+                        <div class="col-md-4">
+                            <div class="feature-card p-4 h-100">
+                                <div class="icon mb-3">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <h5 class="fw-bold">Supportive Christian Community</h5>
+                                <p class="mb-0">
+                                    Join a Christ-centered community with caring faculty, mentors, and peers dedicated to your success.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Card 6 -->
+                        <div class="col-md-4">
+                            <div class="feature-card p-4 h-100">
+                                <div class="icon mb-3">
+                                    <i class="bi bi-lightbulb"></i>
+                                </div>
+                                <h5 class="fw-bold">Clear Ministry &amp; Career Pathways</h5>
+                                <p class="mb-0">
+                                    Practical preparation for leadership in church, counseling, workplace ministry, and Christian entrepreneurship.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <img src="/moodle_connector/static/src/img/Vector.png"
+                    class="lcu-bg-vector"
+                    alt="Church Background" loading="lazy" />
+            </section>
+            <section class="section-degree-programs py-5">
+                <div class="container text-center">
+                    <h2 class="mb-3">Our Degree Programs</h2>
+                    <p class="text-muted mb-5" style="max-width: 700px; margin: 0 auto;">
+                    Embark on spiritual and professional growth with comprehensive undergraduate and graduate programs tailored to your calling. Explore our diverse offerings designed to prepare you for leadership in ministry, business, and life.
+                    </p>
+
+                    <div class="row g-4 justify-content-center">
+                    <!-- Bachelor's Degree -->
+                    <div class="col-md-4">
+                        <div class="degree-card p-3 rounded shadow-sm h-100">
+                                <img src="/moodle_connector/static/src/img/bachelor.jpg" alt="Bachelor Degree" class="img-fluid rounded mb-3" style="height: 230px; width: 100%; object-fit: cover;"/>
+                            <h5 class="fw-semibold mb-2">Bachelor Degree Programs</h5>
+                            <p class="text-muted mb-4">
+                                Explore our Bachelor programs in Christian Leadership, Entrepreneurship, Counseling, Theology, Divinity, Chaplaincy, and so many more.
+                            </p>
+                            <a href="/slides/all/tag/bachelors-4?prevent_redirect=True" class="btn btn-gold">Learn More <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Master's Degree -->
+                    <div class="col-md-4">
+                        <div class="degree-card p-3 rounded shadow-sm h-100">
+                        <img src="/moodle_connector/static/src/img/masters.jpg" alt="Master Degree" class="img-fluid rounded mb-3" style="height: 230px; width: 100%; object-fit: cover;"/>
+                        <h5 class="fw-semibold mb-2">Master’s Degree Programs</h5>
+                        <p class="text-muted mb-4">
+                            Take your skills to the next level in both ministry and the marketplace with our Master’s degree programs.
+                        </p>
+                        <a href="/slides/all/tag/masters-6?prevent_redirect=True" class="btn btn-gold">Learn More <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Doctoral Degree -->
+                    <div class="col-md-4">
+                        <div class="degree-card p-3 rounded shadow-sm h-100">
+                        <img src="/moodle_connector/static/src/img/doctoral.jpg" alt="Doctoral Degree" class="img-fluid rounded mb-3" style="height: 230px; width: 100%; object-fit: cover;"/>
+                        <h5 class="fw-semibold mb-2">Doctoral Degree Programs</h5>
+                        <p class="text-muted mb-4">
+                            Build your skills in areas like Christian Leadership &amp; Business, Christian Counseling with emphasis in Marriage, Family and Child Therapy, and so much more.
+                        </p>
+                        <a href="/slides/all/tag/doctrorate-8?prevent_redirect=True" class="btn btn-gold">Learn More <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </section>
+            <section class="section-degree-cta py-5 text-center position-relative">
+                <div class="container">
+                    <h2 class="fw-semibold mb-4 text-primary-title">
+                        Ready To Start Your Online Christian Degree Journey?
+                    </h2>
+                    <p class="mb-5 text-muted" style="max-width: 800px; margin: 0 auto; line-height: 1.8;">
+                        Apply to Landmark Christian University and join a Christ-centered community built for real-life impact.
+                        We offer flexible, accredited programs in Theology, Ministry, Counseling, and more—designed to complement
+                        your work, family, and ministry.
+                    </p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="/slides/all" class="btn btn-gold px-4 py-2">Start Application</a>
+                        <a href="/contactus" class="btn btn-outline-dark px-4 py-2">Request Info</a>
+                    </div>
+                </div>
+
+                <!-- Left church illustration -->
+                <img src="/moodle_connector/static/src/img/church.png"
+                    alt="Church Illustration"
+                    class="position-absolute start-0 bottom-0 opacity-25 d-none d-md-block"
+                    style="width: 220px; left: 40px; bottom: 20px;"/>
+
+                <!-- Right crucifix illustration -->
+                <img src="/moodle_connector/static/src/img/crucifix.png"
+                    alt="Crucifix Illustration"
+                    class="position-absolute end-0 bottom-0 opacity-25 d-none d-md-block"
+                    style="width: 180px; right: 40px; bottom: 20px;"/>
+                </section>
+
+        </xpath>
+    </template>
+</odoo>

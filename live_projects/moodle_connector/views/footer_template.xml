@@ -1,51 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
     <template id="template_footer_custom" inherit_id="website.layout" name="Custom Footer">
         <xpath expr="//div[@id='footer']" position="replace">
             <style>
-                .o_footer_copyright{
+                .o_footer_copyright {
                     display: none !important;
                 }
-            </style>
-            <footer id="footer" class="o_footer text-white pt-3 pb-3">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <!-- Left: Logo -->
-                        <div class="col-md-6 text-start">
-                            <a href="/" class="navbar-brand">
-                                <img src="/moodle_connector/static/src/img/logo.png" alt="Logo" style="height:50px;"/>
-                            </a>
-                        </div>
 
-                        <!-- Right: Social Icons -->
-                        <div class="col-md-6 text-end">
-                            <a href="https://facebook.com" target="_blank" class="text-white me-2">
-                                <i class="fa fa-facebook"></i>
-                            </a>
-                            <a href="https://instagram.com" target="_blank" class="text-white me-2">
-                                <i class="fa fa-instagram"></i>
-                            </a>
-                            <a href="https://twitter.com" target="_blank" class="text-white">
-                                <i class="fa fa-twitter"></i>
-                            </a>
+                .o_footer {
+                    background-color: #220233EB !important;
+                    color: #ffffff !important;
+                    font-size: 14px;
+                    line-height: 1.6;
+                    position: relative;
+                    overflow: hidden;
+                }
+
+                .o_footer h5 {
+                    font-weight: 600;
+                    margin-bottom: 15px;
+                    font-size: 16px;
+                }
+
+                .o_footer a {
+                    text-decoration: none;
+                    color: #ffffff !important;
+                    display: inline-block;
+                    transition: color 0.3s ease;
+                }
+
+                .o_footer a:hover {
+                    color: #f0a500 !important;
+                }
+
+                .o_footer p {
+                    margin-bottom: 8px;
+                }
+
+                .footer-logo img {
+                    max-height: 80px;
+                    width: auto;
+                }
+
+                .footer-bottom {
+                    border-top: 1px solid rgba(255,255,255,0.2);
+                    padding-top: 10px;
+                    margin-top: 25px;
+                }
+
+                /* Newsletter Section */
+                .footer-newsletter {
+                    text-align: left;
+                    border-bottom: 1px solid rgba(255,255,255,0.2);
+                    padding: 40px 0 30px;
+                    margin-bottom: 40px;
+                }
+
+                .footer-newsletter h5 {
+                    color: #fff;
+                    font-size: 20px;
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                }
+
+                .footer-newsletter p {
+                    color: #ddd;
+                    font-size: 15px;
+                    margin-bottom: 20px;
+                }
+
+                .footer-newsletter .input-group {
+                    max-width: 400px;
+                    margin-left: auto;
+                }
+
+                .footer-newsletter input {
+                    border-radius: 0 !important;
+                    border: none;
+                    padding: 10px 15px;
+                    height: 45px;
+                }
+
+                .footer-newsletter .btn-primary {
+                    background-color: #ccb363 !important;
+                    color: #000 !important;
+                    border: none;
+                    border-radius: 0 !important;
+                    font-weight: 500;
+                    padding: 10px 25px;
+                    height: 45px;
+                    transition: all 0.3s ease;
+                }
+
+                .footer-newsletter .btn-primary:hover {
+                    background-color: #bda554 !important;
+                }
+
+                @media (max-width: 767px) {
+                    .footer-logo {
+                        text-align: center !important;
+                    }
+
+                    .footer-logo p,
+                    .footer-logo .social-links {
+                        text-align: center;
+                    }
+
+                    .o_footer h5 {
+                        text-align: center;
+                        margin-top: 20px;
+                    }
+
+                    .o_footer ul,
+                    .o_footer p {
+                        text-align: center;
+                    }
+
+                    .footer-bottom {
+                        text-align: center !important;
+                    }
+
+                    .footer-newsletter {
+                        text-align: center;
+                    }
+
+                    .footer-newsletter .input-group {
+                        margin: 20px auto 0;
+                        max-width: 100%;
+                        flex-direction: column;
+                    }
+
+                    .footer-newsletter input {
+                        border-radius: 6px !important;
+                        margin-bottom: 10px;
+                    }
+
+                    .footer-newsletter .btn-primary {
+                        border-radius: 6px !important;
+                        width: 100%;
+                    }
+                }
+            </style>
+
+            <footer id="footer" class="o_footer text-white pt-0 pb-4">
+                <div class="container">
+                    <!-- Newsletter Section -->
+                    <div class="footer-newsletter d-flex flex-wrap justify-content-between align-items-center">
+                        <div class="col-md-6">
+                            <h5>Join With Us, Subscribe Our Newsletter</h5>
+                            <p>Integer in dolor ut ex fringilla vestibulum. Fusce ut congue augue.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="s_newsletter_subscribe_form s_newsletter_list js_subscribe"
+                                 data-vxml="001" data-list-id="1" data-name="Newsletter" data-snippet="s_newsletter_subscribe_form">
+                                <div class="js_subscribed_wrap d-none">
+                                    <p class="h4-fs text-center text-success o_default_snippet_text">
+                                        <i class="fa fa-check-circle-o" role="img"></i> Thanks for registering!
+                                    </p>
+                                </div>
+                                <div class="js_subscribe_wrap">
+                                    <div class="input-group">
+                                        <input type="email" name="email" class="js_subscribe_value form-control"
+                                               placeholder="Email Address" required="required"/>
+                                        <a role="button" href="#" class="btn btn-primary js_subscribe_btn o_submit o_default_snippet_text">
+                                            Subscribe Now
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row align-items-center mt-2">
 
-                    <!-- Center: Menu Links -->
-                        <div class="col-md-6 text-left">
-                            <ul class="list-inline mb-0">
-                                <li class="list-inline-item"><a href="/" class="text-white">Home</a></li>
-                                <li class="list-inline-item"><a href="/degrees" class="text-white">Degrees</a></li>
-                                <li class="list-inline-item"><a href="/about" class="text-white">About</a></li>
-                                <li class="list-inline-item"><a href="/contactus" class="text-white">Contact</a></li>
+                    <!-- Main Footer Content -->
+                    <div class="row gy-4 mt-4">
+                        <!-- Left: Logo & Description -->
+                        <div class="col-lg-3 col-md-6 footer-logo text-start">
+                            <a href="/" class="navbar-brand d-block mb-3">
+                                <img src="/moodle_connector/static/src/img/logo.png" alt="Logo"/>
+                            </a>
+                            <p>Equipping Kingdom leaders through Christ-centered online education in theology, ministry, counseling, and business.</p>
+                            <div class="mt-3 social-links">
+                                <a href="https://facebook.com" target="_blank" class="me-3">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                                <a href="https://instagram.com" target="_blank" class="me-3">
+                                    <i class="fa fa-instagram"></i>
+                                </a>
+                                <a href="https://twitter.com" target="_blank">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Quick Links -->
+                        <div class="col-lg-2 col-md-6 text-start">
+                            <h5>Quick Link</h5>
+                            <ul class="list-unstyled mb-0">
+                                <li><a href="/about-us" class="d-block mb-2">About Us</a></li>
+                                <li><a href="/slides" class="d-block mb-2">Academic Programs</a></li>
+                                <li><a href="/slides" class="d-block mb-2">Admissions</a></li>
+                                <li><a href="/contactus" class="d-block mb-2">Tuition &amp; Financial Aid</a></li>
+                                <li><a href="/slides" class="d-block mb-2">Student Portal</a></li>
                             </ul>
                         </div>
 
-                        <!-- Bottom Copyright -->
-                        <div class="col text-end">
-                            <small>©2025 - Landmark Christian University | All Rights Reserved</small>
+                        <!-- Programs -->
+                        <div class="col-lg-2 col-md-6 text-start">
+                            <h5>Program</h5>
+                            <ul class="list-unstyled mb-0">
+                                <li><a href="/slides/all/tag/bachelors-4?prevent_redirect=True" class="d-block mb-2">Bachelor’s Degrees</a></li>
+                                <li><a href="/slides/all/tag/masters-6?prevent_redirect=True" class="d-block mb-2">Master’s Degrees</a></li>
+                                <li><a href="/slides/all/tag/doctrorate-8?prevent_redirect=True" class="d-block mb-2">Doctoral Programs</a></li>
+                                <li><a href="/slides/all/tag/hybrid-dual-degree-9?prevent_redirect=True" class="d-block mb-2">Certificate Programs</a></li>
+                                <li><a href="/slides/all/tag/hybrid-dual-degree-9?prevent_redirect=True" class="d-block mb-2">Continuing Education</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Directions -->
+                        <div class="col-lg-3 col-md-6 text-start">
+                            <h5>Directions</h5>
+                            <p>1401 US-18, Hot Springs,<br/> SD 57747, United States</p>
+                            <p>303 S Hewitt St, Los Angeles,<br/> CA 90013, United States</p>
+                        </div>
+
+                        <!-- Contacts -->
+                        <div class="col-lg-2 col-md-6 text-start">
+                            <h5>Contacts</h5>
+                            <p>+1 213-545-4695<br/> usachurch@example.com</p>
+                            <p>+1 605-745-4411<br/> loschurch@example.com</p>
+                        </div>
+                    </div>
+
+                    <!-- Footer Bottom -->
+                    <div class="row footer-bottom align-items-center mt-4">
+                        <div class="col-md-6 text-start text-md-start">
+                            <small>©2025 Landmark Christian University. All Rights Reserved.</small>
+                        </div>
+                        <div class="col-md-6 text-end text-md-end">
+                            <a href="/terms" target="_blank" class="text-white"><small>Terms and Conditions</small></a>
+                            <span class="mx-1">|</span>
+                            <a href="/privacy" target="_blank" class="text-white"><small>Privacy Policy</small></a>
                         </div>
                     </div>
                 </div>

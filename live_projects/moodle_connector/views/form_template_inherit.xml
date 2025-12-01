@@ -1,60 +1,877 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-        <template id="shop_cart_inherit" name="Address Management" inherit_id="website_sale.address">
-            <xpath expr="//div[@id='div_phone']" position="after">
-                <div class="row mt-4 mb-4">
-                    <div class="col-6 text-right">
-                        <div class="form-group mb-3">
-                            <label>Gender:</label>
-                                <select name="gender" class="form-control">
-                                    <option value="">Select Gender</option>
-                                    <option value="m">Male</option>
-                                    <option value="f">Female</option>
-                                    <option value="o">Other</option>
-                                </select>
-                        </div>
+    <template id="shop_cart_full_form" name="Full Admission Address Form" inherit_id="website_sale.address">
+        <xpath expr="//div[contains(@class, 'o_wsale_address_fill')]" position="inside">
+            <style>
+                .oe_cart {
+                    max-width: 100% !important;
+                    flex: 0 0 100% !important;
+                    width: 100% !important;
+                }
+                .oe_cart.col-lg-8 {
+                    flex: 0 0 100% !important;
+                    max-width: 100% !important;
+                }
+            </style>
+        </xpath>
+
+        <!-- ✅ Make the form handle file uploads -->
+        <xpath expr="//form[contains(@action, '/shop/address')]" position="attributes">
+            <attribute name="action">/shop/address/submit</attribute>
+            <attribute name="enctype">multipart/form-data</attribute>
+            <attribute name="method">post</attribute>
+        </xpath>
+
+        <!-- ✅ Add CSRF token -->
+        <xpath expr="//form[contains(@action, '/shop/address')]" position="inside">
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+        </xpath>
+
+        <!-- =================== PERSONAL INFORMATION =================== -->
+        <xpath expr="//div[@id='div_phone']" position="after">
+            <div class="row mt-4 mb-4">
+                <h4>Personal Information</h4>
+
+                <div class="col-6">
+                    <div class="form-group mb-3">
+                        <label>Legal First Name *</label>
+                        <input type="text" name="legal_first_name" class="form-control" required="required"/>
                     </div>
-                    <div class="col-6 text-left">
-                        <div class="form-group mb-3">
-                            <label>Date of Birth:</label>
-                            <input type="date" name="dob" class="form-control"/>
+
+                    <div class="form-group mb-3">
+                        <label>Legal Last Name *</label>
+                        <input type="text" name="legal_last_name" class="form-control" required="required"/>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Name to appear on Certificate/Diploma *</label>
+                        <input type="text" name="certificate_name" class="form-control" required="required"/>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Gender</label>
+                        <select name="gender" class="form-control" required="required">
+                            <option value="">Select Gender</option>
+                            <option value="m">Male</option>
+                            <option value="f">Female</option>
+                            <option value="o">Others</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Country of Residence *</label>
+                        <select name="country_of_residence" class="form-control" required="required">
+                            <option value="">Select Country</option>
+                            <t t-foreach="countries" t-as="country">
+                                <option t-att-value="country.name">
+                                    <t t-esc="country.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="form-group mb-3">
+                        <label>Middle Name</label>
+                        <input type="text" name="middle_name" class="form-control"/>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Preferred Name</label>
+                        <input type="text" name="preferred_name" class="form-control"/>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Date of Birth *</label>
+                        <input type="date" name="dob" class="form-control" required="required"/>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Nationality *</label>
+                        <select name="nationality" class="form-control" required="required">
+                            <option value="">Select Nationality</option>
+                            <t t-foreach="countries" t-as="country">
+                                <option t-att-value="country.name">
+                                    <t t-esc="country.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label>Time Zone *</label>
+                        <select name="time_zone" class="form-control" required="required">
+                            <option value="">Select Time Zone</option>
+                            <t t-foreach="time_zones" t-as="tz">
+                                <option t-att-value="tz"><t t-esc="tz"/></option>
+                            </t>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+
+        <!-- =================== UPLOADS, GUARDIAN, SPONSOR, ACADEMIC, PROGRAM =================== -->
+        <xpath expr="//div[@id='div_state']" position="after">
+
+            <!-- Uploads -->
+            <div class="row mt-4 mb-4">
+                <div class="col-6">
+                    <label>Passport Photo (JPG/PNG) *</label>
+                    <input type="file" name="photo" class="form-control" accept=".jpg,.jpeg,.png" required="required"/>
+                    <small class="text-muted">🛈 Accepted formats: JPG, PNG — Max size: 5MB</small>
+                </div>
+
+                <!-- <div class="col-6">
+                    <label>Government ID (PDF/JPG) *</label>
+                    <input type="file" name="government_id_upload" class="form-control" accept=".pdf,.jpg,.jpeg,.png" required="required"/>
+                </div> -->
+            </div>
+
+            <!-- Guardian & Sponsor -->
+            <div class="col-12 mt-4">
+                <h5>Guardian / Sponsor (if applicable)</h5>
+
+                <div class="form-group mb-3">
+                    <label>Are you under the age required for independent consent? *</label><br/>
+                    <input type="radio" id="underage_yes" name="underage_consent" value="yes"/>
+                    <label for="underage_yes">Yes</label>
+                    <input type="radio" id="underage_no" name="underage_consent" value="no" class="ms-2"/>
+                    <label for="underage_no">No</label>
+                </div>
+
+                <div class="guardian-section mt-3">
+                    <h6>Parent / Guardian Details</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <label>Full Name *</label>
+                            <input type="text" name="guardian_name" class="form-control" />
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <label>Relationship *</label>
+                            <input type="text" name="guardian_relationship" class="form-control" />
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <label>Phone *</label>
+                            <input type="text" name="guardian_phone" class="form-control" />
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <label>Email *</label>
+                            <input type="email" name="guardian_email" class="form-control" />
                         </div>
                     </div>
                 </div>
-            </xpath>
-            <xpath expr="//div[@id='div_state']" position="after">
-                <div class="row mt-4 mb-4">
-                <h4>Previous Qualification</h4>
-                    <div class="col-6 text-right">
-                            <div class="form-group mb-3">
-                                <label>Institution Name:</label>
-                                <input type="text" name="institution_name" class="form-control"/>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label>Institution Address:</label>
-                                <textarea name="institution_address" class="form-control"></textarea>
-                            </div>
-                    </div>
-                    <div class="col-6 text-left">
-                        <div class="form-group mb-3">
-                            <label>Qualification:</label>
-                            <input type="text" name="qualification" class="form-control"/>
-                        </div>
 
-                        <div class="form-group mb-3">
-                            <h4>Course :</h4>
-                            <select name="Course_details" class="form-control">
-                                <option value="">Select Course</option>
-                                <t t-foreach="courses" t-as="course">
-                                    <option t-att-value="course.id"
-                                        t-att-selected="selected_course and course.id == selected_course.id and 'selected' or None">
-                                        <t t-esc="course.name"/>
-                                    </option>
-                                </t>
-                            </select>
+                <div class="form-group mt-4 mb-3">
+                    <label>Sponsor responsible for tuition? *</label><br/>
+                    <input type="radio" id="sponsor_yes" name="has_sponsor" value="yes" />
+                    <label for="sponsor_yes">Yes</label>
+                    <input type="radio" id="sponsor_no" name="has_sponsor" value="no" class="ms-2"/>
+                    <label for="sponsor_no">No</label>
+                </div>
+
+                <div class="sponsor-section mt-3">
+                    <h6>Sponsor Details</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <label>Name *</label>
+                            <input type="text" name="sponsor_name" class="form-control" />
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <label>Relationship *</label>
+                            <input type="text" name="sponsor_relationship" class="form-control" />
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <label>Phone *</label>
+                            <input type="text" name="sponsor_phone" class="form-control" />
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <label>Email *</label>
+                            <input type="email" name="sponsor_email" class="form-control" />
                         </div>
                     </div>
+                </div>
             </div>
+
+            <!-- Academic Background -->
+            <div class="Academic mt-3">
+                <h5>Academic Background</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label>Highest Qualification Obtained *</label>
+                        <select name="highest_qualification" class="form-control" required="required">
+                            <option value="">Select...</option>
+                            <option value="high_school">High School Diploma</option>
+                            <option value="waec">WAEC/NECO</option>
+                            <option value="alevels">A-Levels</option>
+                            <option value="associate">Associate</option>
+                            <option value="bachelor">Bachelor’s</option>
+                            <option value="master">Master’s</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Last Institution Attended *</label>
+                        <input type="text" name="last_institution" class="form-control" required="required"/>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>Graduation / Completion Year *</label>
+                        <input type="number" id="graduation_year_input" name="graduation_year"
+                                class="form-control" min="1900" max="2100" pattern="[0-9]{4}"
+                                title="Please enter a four-digit year." maxlength="4" required="required"/>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label>GPA / Overall Grade</label>
+                        <input type="text" name="gpa" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="form-group mt-4 mb-3">
+                                    <label>Prior College / University Attendance? *</label><br/>
+
+                                    <input type="radio" id="prior_yes" name="prior_attendance" value="yes"/>
+                                    <label for="prior_yes" class="me-2">Yes</label>
+
+                                    <input type="radio" id="prior_no" name="prior_attendance" value="no" class="ms-2"/>
+                                    <label for="prior_no">No</label>
+                                </div>
+
+                                <!-- PRIOR INSTITUTION SECTION (hidden) -->
+                                <div class="prior-institution-section mt-3" style="display:none;">
+                                    <h6>Prior Institution Details *</h6>
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <label>Institution Name *</label>
+                                            <input type="text" name="prior_institution_name" class="form-control"/>
+                                        </div>
+
+                                        <div class="col-md-6 mb-2">
+                                            <label>Program *</label>
+                                            <input type="text" name="prior_program" class="form-control"/>
+                                        </div>
+
+                                        <div class="col-md-6 mb-2">
+                                            <label>Dates Attended *</label>
+                                            <input type="date" name="prior_dates" class="form-control"/>
+                                        </div>
+
+                                        <div class="col-md-6 mb-2">
+                                            <label>Credits Earned *</label>
+                                            <input type="text" name="prior_credits" class="form-control"/>
+                                        </div>
+
+                                        <div class="col-md-12 mb-2">
+                                            <label>Reason for Leaving *</label>
+                                            <input type="text" name="prior_reason" class="form-control"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-4 mb-3">
+                                    <label>Transfer Credit / PLA Request *</label><br/>
+
+                                    <input type="radio" id="transfer_yes" name="transfer_credit" value="yes"/>
+                                    <label for="transfer_yes" class="me-2">Yes</label>
+
+                                    <input type="radio" id="transfer_no" name="transfer_credit" value="no" class="ms-2"/>
+                                    <label for="transfer_no">No</label>
+                                </div>
+
+                                <!-- TRANSCRIPT UPLOAD SECTION (hidden until YES) -->
+                                <div class="transfer-section mt-3" style="display:none;">
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <label>Upload Official Transcript(s)</label>
+                                            <input type="file" name="transcript_upload" class="form-control" accept=".pdf"/>
+                                            <small class="text-muted">🛈 Upload clear PDF files only — Max size: 5MB</small>
+                                        </div>
+                                    </div>
+                                </div>
+            </div>
+
+            <!-- Program Selection -->
+            <div class="Program mt-3">
+                <div class="row">
+                    <h5>Program Selection (Online / Self-Paced)</h5>
+                    <div class="col-md-6 mb-2">
+                        <label>Academic Level Applying For *</label>
+                        <select name="academic_level" class="form-select" required="required">
+                            <option value="">Select Level</option>
+                            <option value="certificate">Certificate</option>
+                            <option value="diploma">Diploma</option>
+                            <option value="undergraduate">Undergraduate</option>
+                            <option value="graduate">Graduate</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label>Select Course *</label>
+                        <select name="Course_details" class="form-control" required="required">
+                            <option value="">Select Course</option>
+                            <t t-foreach="courses" t-as="course">
+                                <option t-att-value="course.id"
+                                        t-att-selected="selected_course and course.id == selected_course.id and 'selected' or None">
+                                    <t t-esc="course.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label>Enrollment Load *</label>
+                        <select name="enrollment_load" class="form-select" required="required">
+                            <option value="">Select Load</option>
+                            <option value="full_time">Full-time</option>
+                            <option value="part_time">Part-time</option>
+                            <option value="course_by_course">Course-by-Course</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label>Rolling Admissions Start Preference *</label>
+                        <select name="rolling_admission_start" class="form-select" required="required">
+                            <option value="">Select Option</option>
+                            <option value="immediate">As soon as I’m admitted</option>
+                            <option value="preferred">Preferred start month</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label>Preferred Start Month *</label>
+                        <select name="preferred_start_month" class="form-select" required="required">
+                            <option value="">Select Month</option>
+                            <t t-foreach="months" t-as="m">
+                                <option t-att-value="m"><t t-esc="m"/></option>
+                            </t>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label>Preferred Start Year</label>
+                        <select name="preferred_start_year" class="form-select" required="required">
+                            <option value="">Select Year</option>
+                            <t t-foreach="years" t-as="y">
+                                <option t-att-value="y"><t t-esc="y"/></option>
+                            </t>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label>Pacing Expectation (self-reported)</label>
+                        <select name="pacing_expectation" class="form-select" required="required">
+                            <option value="">Select Pacing</option>
+                            <option value="5">≤5 hrs/week</option>
+                            <option value="10">6–10 hrs/week</option>
+                            <option value="15">11–15 hrs/week</option>
+                            <option value="20">16–20 hrs/week</option>
+                            <option value="20+">20+ hrs/week</option>
+                        </select>
+                    </div>
+                </div>
+            </div> 
+
+            <!-- Faith and Personal Commitment -->
+            <div class="Faith mt-3">
+                <div class="row">
+                    <h4>Faith and Personal Commitment (LCU Distinctives)</h4>
+
+                    <!-- QUESTION ALWAYS VISIBLE -->
+                    <div class="col-md-6 mb-2">
+                        <label>Are you a Christian? *</label><br/>
+                        <input type="radio" id="christian_yes" name="is_christian" value="yes"/>
+                        <label for="christian_yes">Yes</label>
+
+                        <input type="radio" id="christian_no" name="is_christian" value="no" class="ms-2"/>
+                        <label for="christian_no">No</label>
+                    </div>
+                </div>
+                <div class="christian-section mt-3" style="display:none;">
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <label>Denomination / Church Affiliation*</label>
+                            <input type="text" name="church_affiliation" class="form-control"
+                                placeholder="e.g., Baptist, Pentecostal, etc."/>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <label>Church / Ministry Name*</label>
+                            <input type="text" name="church_name" class="form-control"
+                                placeholder="Your local church or ministry name"/>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <label>Pastor’s Name*</label>
+                            <input type="text" name="pastor_name" class="form-control" placeholder="Full Name"/>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <label>Pastor’s Contact (Phone or Email)*</label>
+                            <input type="text" name="pastor_contact" class="form-control" placeholder="Phone or Email"/>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <label>Briefly describe your relationship with Jesus Christ*</label>
+                            <textarea name="relationship_with_christ" class="form-control" rows="6"
+                                    placeholder="(200–500 words)"></textarea>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <label>Why do you want to study at Landmark Christian University? *</label>
+                            <textarea name="why_study_lcu" class="form-control" rows="5"
+                                    placeholder="(150–300 words)"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>               
+            <!-- Online Readiness -->
+            <div class="Online mt-3">
+                <div class="row">
+                    <h4>Online Readiness and Accessibility</h4>
+
+                    <div class="col-md-6 mb-2">
+                        <label>Internet Access Reliability *</label>
+                        <select name="internet_access" class="form-control" required="required">
+                            <option value="">Select</option>
+                            <option value="excellent">Excellent</option>
+                            <option value="good">Good</option>
+                            <option value="fair">Fair</option>
+                            <option value="poor">Poor</option>
+                        </select>
+                    </div>
+
+
+                    <div class="col-md-6 mb-2">
+                        <label>Primary Device *</label>
+                        <select name="primary_device" class="form-control" required="required">
+                            <option value="">Select</option>
+                            <option value="laptop">Laptop/Desktop</option>
+                            <option value="tablet">Tablet</option>
+                            <option value="phone">Phone Only</option>
+                        </select>
+                    </div>
+
+
+                    <div class="col-md-6 mb-2">
+                        <label>Operating System</label>
+                        <select name="operating_system" class="form-control">
+                            <option value="">Select</option>
+                            <option value="windows">Windows</option>
+                            <option value="mac">macOS</option>
+                            <option value="linux">Linux</option>
+                            <option value="chrome">ChromeOS</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+
+                    <div class="col-md-6 mb-2">
+                        <label>Headset/Webcam Availability *</label><br/>
+                        <input type="radio" id= "headset_webcam_yes" name="headset_webcam" value="yes"/> 
+                        <label for="accessibility_yes">Yes</label>
+                        <input type="radio" id= "headset_webcam_no" name="headset_webcam" value="no"/> 
+                        <label for="headset_webcam_no">No</label>
+                    </div>
+
+                    <!-- ACCESSIBILITY QUESTION (visible always) -->
+                    <div class="col-md-6 mb-2">
+                        <label>Accessibility and Accommodations Needed *</label><br/>
+
+                        <input type="radio" id="accessibility_yes" name="accessibility" value="yes"/>
+                        <label for="accessibility_yes">Yes</label>
+
+                        <input type="radio" id="accessibility_no" name="accessibility" value="no"/>
+                        <label for="accessibility_no">No</label>
+                    </div>
+
+                    <!-- ACCESSIBILITY DETAILS (hidden until YES) -->
+                    <div class="accessibility-section col-md-6 mb-2" style="display:none;">
+                        <label>Describe Accommodations</label>
+                        <textarea name="accessibility_details" class="form-control" rows="3"></textarea>
+                    </div>
+
+
+                    <div class="col-md-6 mb-2">
+                        <label>Preferred Communication Channels</label><br/>
+                        <input type="checkbox" name="communication_channels" value="Email"/> Email
+                        <input type="checkbox" name="communication_channels" value="WhatsApp"/> WhatsApp
+                        <input type="checkbox" name="communication_channels" value="SMS"/> SMS
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <label>Weekly Availability Windows (for live support)</label>
+                        <input type="text" name="availability_windows" class="form-control" placeholder="e.g., Mon–Fri 6–8 PM"/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Information -->
+            <div class="Additional mt-3">
+                <div class="row">
+                    <h4>Additional Information</h4>
+
+                    <!-- DISMISSED QUESTION (always visible) -->
+                    <div class="col-md-6 mb-2">
+                        <label>Have you ever been dismissed or suspended from an institution? *</label><br/>
+
+                        <input type="radio" id="dismissed_yes" name="dismissed" value="yes"/>
+                        <label for="dismissed_yes">Yes</label>
+
+                        <input type="radio" id="dismissed_no" name="dismissed" value="no"/>
+                        <label for="dismissed_no">No</label>
+                    </div>
+
+                    <!-- DISMISSED EXPLANATION (hidden until YES) -->
+                    <div class="dismissed-section col-md-6 mb-2" style="display:none;">
+                        <label>Explain</label>
+                        <textarea name="dismissed_explanation" class="form-control" rows="3"></textarea>
+                    </div>
+
+                    <!-- ENGLISH PROFICIENCY -->
+                    <div class="col-md-6 mb-2">
+                        <label>English Proficiency *</label>
+                        <select name="english_proficiency" class="form-control" required="required">
+                            <option value="">Select</option>
+                            <option value="native">Native</option>
+                            <option value="toefl">TOEFL</option>
+                            <option value="ielts">IELTS</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- PROOF UPLOAD -->
+                    <div class="col-md-6 mb-2">
+                        <label>Upload Proof (PDF)</label>
+                        <input type="file" name="proof_upload" class="form-control" accept=".pdf"/>
+                        <small class="text-muted">🛈 Upload clear PDF files only — Max size: 5MB</small>
+                    </div>
+
+                    <!-- HOW DID YOU HEAR ABOUT LCU -->
+                    <div class="col-md-6 mb-2">
+                        <label>How did you hear about LCU? *</label>
+                        <select name="hear_about" class="form-control" required="required">
+                            <option value="">Select</option>
+                            <option value="website">Website</option>
+                            <option value="church">Church</option>
+                            <option value="social">Social Media</option>
+                            <option value="friend">Friend</option>
+                            <option value="alumni">Alumni</option>
+                            <option value="agent">Agent</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- AGENT/OTHER TEXT -->
+                    <div class="col-md-6 mb-2">
+                        <label>If Agent/Other, specify</label>
+                        <input type="text" name="agent_other" class="form-control"/>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- Document Uploads -->
+            <div class="Document mt-3">
+                <div class="row">
+                    <h4>Document Uploads *</h4>
+
+                    <!-- <div class="col-md-6 mb-2">
+                        <label>Passport-style Photo (JPG/PNG/JPEG) *</label>
+                        <input type="file" name="passport_photo" class="form-control"
+                                accept=".jpg,.jpeg,.png" required="required"/>
+                    </div> -->
+
+                    <div class="col-md-6 mb-2">
+                        <label>Academic Transcript(s) (PDF) *</label>
+                        <input type="file" name="academic_transcript" class="form-control"
+                                accept=".pdf" required="required"/>
+                        <small class="text-muted">🛈 Upload clear PDF files only — Max size: 5MB</small>
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <label>Certificates (WAEC/A-Levels/Bachelor's) *</label>
+                        <input type="file" name="certificates" class="form-control"
+                                accept=".jpg,.jpeg" required="required"/>
+                        <small class="text-muted">🛈 Upload clear image files only — Max size: 5MB</small>
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <label>Government ID (PDF/JPG) *</label>
+                        <input type="file" name="government_id" class="form-control"
+                                accept=".jpg,.jpeg" required="required"/>
+                        <small class="text-muted">🛈 Upload clear image files only — Max size: 5MB</small>
+                            
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <label>Recommendation Letter (PDF) *</label>
+                        <input type="file" name="recommendation_letter" class="form-control"
+                                accept=".pdf" required="required"/>
+                        <small class="text-muted">🛈 Upload clear PDF files only — Max size: 5MB</small>
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <label>Personal Statement / Essay (PDF) *</label>
+                        <input type="file" name="personal_statement" class="form-control"
+                                accept=".pdf" required="required"/>
+                        <small class="text-muted">🛈 Upload clear PDF files only — Max size: 5MB</small>
+                    </div>
+                </div>
+            </div>
+            <script>
+            document.addEventListener("DOMContentLoaded", function () {
+
+                /* ============================================================
+                1. RESTORE REQUIRED FIELDS AFTER ODOO REWRITES THE FORM
+                ============================================================ */
+                const REQUIRED_FIELDS = ["legal_first_name","legal_last_name","certificate_name","dob","gender",
+                    "nationality","time_zone","country_of_residence","highest_qualification","last_institution",
+                    "graduation_year","internet_access","primary_device","english_proficiency","hear_about",
+                    "academic_level","Course_details","enrollment_load","rolling_admission_start",
+                    "preferred_start_month","preferred_start_year","pacing_expectation","academic_transcript",
+                    "certificates","government_id","recommendation_letter","personal_statement","online_policies",
+                    "privacy_consent","esign_consent","honor_code","marketing_consent","truthfulness",
+                    "electronic_signature","signature_date","photo"];
+
+                function applyRequired() {
+                    REQUIRED_FIELDS.forEach(name => {
+                        const field = document.querySelector(`[name='${name}']`);
+                        if (field) {
+                            field.setAttribute("required", "required");
+                            field.classList.add("o_required");
+                        }
+                    });
+                    console.log("🔥 Required restored to FINAL inputs");
+                }
+
+                setTimeout(applyRequired, 1500);
+
+                const target = document.querySelector("form");
+                if (target) {
+                    const observer = new MutationObserver(() => {
+                        applyRequired();
+                    });
+                    observer.observe(target, { childList: true, subtree: true });
+                }
+
+                /* ============================================================
+                2. UNDERAGE → GUARDIAN LOGIC
+                ============================================================ */
+                const form = document.querySelector("form");
+                const underYes = document.getElementById("underage_yes");
+                const underNo = document.getElementById("underage_no");
+                const guardianSection = document.querySelector(".guardian-section");
+
+                guardianSection.style.display = "none";
+
+                underYes?.addEventListener("change", function () {
+                    guardianSection.style.display = "block";
+                    guardianSection.querySelectorAll("input").forEach(f => {
+                        f.setAttribute("required", "required");
+                    });
+                });
+
+                underNo?.addEventListener("change", function () {
+                    guardianSection.style.display = "none";
+                    guardianSection.querySelectorAll("input").forEach(f => {
+                        f.removeAttribute("required");
+                    });
+                });
+
+                /* REQUIRED VALIDATION FOR RADIO */
+                form.addEventListener("submit", function (e) {
+                    const selected = document.querySelector('input[name="underage_consent"]:checked');
+                    if (!selected) {
+                        e.preventDefault();
+                        alert("Please select Yes or No for Underage.");
+                        return false;
+                    }
+                });
+
+                /* ============================================================
+                3. SPONSOR LOGIC
+                ============================================================ */
+                const sponsorYes = document.getElementById("sponsor_yes");
+                const sponsorNo = document.getElementById("sponsor_no");
+                const sponsorSection = document.querySelector(".sponsor-section");
+
+                sponsorSection.style.display = "none";
+
+                sponsorYes?.addEventListener("change", function () {
+                    sponsorSection.style.display = "block";
+                    sponsorSection.querySelectorAll("input").forEach(f => {
+                        f.setAttribute("required", "required");
+                    });
+                });
+
+                sponsorNo?.addEventListener("change", function () {
+                    sponsorSection.style.display = "none";
+                    sponsorSection.querySelectorAll("input").forEach(f => {
+                        f.removeAttribute("required");
+                    });
+                });
+
+                /* ============================================================
+                4. PRIOR INSTITUTION LOGIC
+                ============================================================ */
+                const priorYes = document.getElementById("prior_yes");
+                const priorNo = document.getElementById("prior_no");
+                const priorSection = document.querySelector(".prior-institution-section");
+
+                priorSection.style.display = "none";
+
+                priorYes?.addEventListener("change", function () {
+                    priorSection.style.display = "block";
+                    priorSection.querySelectorAll("input").forEach(f => {
+                        f.setAttribute("required", "required");
+                    });
+                });
+
+                priorNo?.addEventListener("change", function () {
+                    priorSection.style.display = "none";
+                    priorSection.querySelectorAll("input").forEach(f => {
+                        f.removeAttribute("required");
+                    });
+                });
+
+                /* ============================================================
+                5. TRANSFER CREDIT LOGIC
+                ============================================================ */
+                const transferYes = document.getElementById("transfer_yes");
+                const transferNo = document.getElementById("transfer_no");
+                const transferSection = document.querySelector(".transfer-section");
+                const transcriptInput = document.querySelector("input[name='transcript_upload']");
+
+                transferSection.style.display = "none";
+
+                transferYes?.addEventListener("change", function () {
+                    transferSection.style.display = "block";
+                    transcriptInput?.setAttribute("required", "required");
+                });
+
+                transferNo?.addEventListener("change", function () {
+                    transferSection.style.display = "none";
+                    transcriptInput?.removeAttribute("required");
+                });
+
+                /* ============================================================
+                6. CHRISTIAN LOGIC
+                ============================================================ */
+                const christianYes = document.getElementById("christian_yes");
+                const christianNo = document.getElementById("christian_no");
+                const christianSection = document.querySelector(".christian-section");
+
+                christianSection.style.display = "none";
+
+                christianYes?.addEventListener("change", function () {
+                    christianSection.style.display = "block";
+                    christianSection.querySelectorAll("input, textarea").forEach(f => {
+                        f.setAttribute("required", "required");
+                    });
+                });
+
+                christianNo?.addEventListener("change", function () {
+                    christianSection.style.display = "none";
+                    christianSection.querySelectorAll("input, textarea").forEach(f => {
+                        f.removeAttribute("required");
+                    });
+                });
+
+                /* ============================================================
+                7. ACCESSIBILITY LOGIC
+                ============================================================ */
+                const accessYes = document.getElementById("accessibility_yes");
+                const accessNo = document.getElementById("accessibility_no");
+                const accessSection = document.querySelector(".accessibility-section");
+                const accessDetails = document.querySelector("textarea[name='accessibility_details']");
+
+                accessSection.style.display = "none";
+
+                accessYes?.addEventListener("change", function () {
+                    accessSection.style.display = "block";
+                    accessDetails?.setAttribute("required", "required");
+                });
+
+                accessNo?.addEventListener("change", function () {
+                    accessSection.style.display = "none";
+                    accessDetails?.removeAttribute("required");
+                });
+
+                /* ============================================================
+                8. DISMISSED LOGIC
+                ============================================================ */
+                const dismissedYes = document.getElementById("dismissed_yes");
+                const dismissedNo = document.getElementById("dismissed_no");
+                const dismissedSection = document.querySelector(".dismissed-section");
+                const dismissedText = document.querySelector("textarea[name='dismissed_explanation']");
+
+                dismissedSection.style.display = "none";
+
+                dismissedYes?.addEventListener("change", function () {
+                    dismissedSection.style.display = "block";
+                    dismissedText?.setAttribute("required", "required");
+                });
+
+                dismissedNo?.addEventListener("change", function () {
+                    dismissedSection.style.display = "none";
+                    dismissedText?.removeAttribute("required");
+                });
+
+            });
+            </script>
+
+            <!-- Consents and Policies -->
+            <div class="Consents mt-3">
+                <div class="row">
+                    <h4>Consents and Policies (E-Learning) *</h4>
+
+                    <div class="col-md-6 mb-2">
+                        <label>
+                            <input type="checkbox" name="privacy_consent" required="required"/>
+                            I consent to LCU processing my data for admissions, enrollment, and student services in accordance with the Privacy Policy.
+                        </label>
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <label>
+                            <input type="checkbox" name="esign_consent" required="required"/>
+                            I agree to receive disclosures and complete transactions electronically.
+                        </label>
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <label>
+                            <input type="checkbox" name="honor_code" required="required"/>
+                            I agree to abide by LCU's academic integrity policies and honor code.
+                        </label>
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <label>
+                            <input type="checkbox" name="online_policies" required="required"/>
+                            I understand and agree to LCU's online learning policies.
+                        </label>
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <label>
+                            <input type="checkbox" name="marketing_consent"  required="required"/>
+                            I agree to receive marketing communications.
+                        </label>
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <label>
+                            <input type="checkbox" name="truthfulness" required="required"/>
+                            I certify the information provided is true and accurate.
+                        </label>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label>Electronic Signature *</label>
+                        <input type="file" name="electronic_signature" class="form-control"
+                                accept=".jpg,.jpeg" required="required"/>
+                        <small class="text-muted">🛈 Upload clear image files only — Max size: 5MB</small>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label>Date *</label>
+                        <input type="date" name="signature_date" class="form-control" required="required"/>
+                    </div>
+                </div>
+            </div>
+
         </xpath>
     </template>
 </odoo>
