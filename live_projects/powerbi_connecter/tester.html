@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Power BI Embed Test</title>
+    <script src="https://aka.ms/powerbi-client-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.22.2/dist/powerbi.min.js"></script>
+
+</head>
+
+<body>
+    <h2>Power BI Embedded Report</h2>
+    <div id="reportContainer" style="height: 800px;"></div>
+
+    <script>
+        (async function () {
+            const models = window['powerbi-client'].models;
+
+            // ✅ Эдгээр утгуудыг өөрийнхөө бодит мэдээллээр солино уу
+            const accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IkNOdjBPSTNSd3FsSEZFVm5hb01Bc2hDSDJYRSIsImtpZCI6IkNOdjBPSTNSd3FsSEZFVm5hb01Bc2hDSDJYRSJ9.eyJhdWQiOiJodHRwczovL2FuYWx5c2lzLndpbmRvd3MubmV0L3Bvd2VyYmkvYXBpIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvZGNhMzlmMGUtZTYxYy00NzE3LTkyODQtMDVkNzNkNTM2NWU1LyIsImlhdCI6MTc0ODg2MjkyMiwibmJmIjoxNzQ4ODYyOTIyLCJleHAiOjE3NDg4Njg1MTUsImFjY3QiOjAsImFjciI6IjEiLCJhaW8iOiJBVVFBdS84WkFBQUFybWQ3b2lpQkN0WmRkS0puL1prTnFWWXBFd3ZWOFBEMkJFYkx2QzFsTXkyL1pVSldwR1hRaXpwTjlvVGxLSnJiZTFPRGVTRlVIdFY4eHdyZGZJNytoUT09IiwiYW1yIjpbInB3ZCJdLCJhcHBpZCI6IjUwMmM2ZTcyLTQ2MzAtNGZkOS05MWJlLTllNDE3ZWQ5NjI3YyIsImFwcGlkYWNyIjoiMCIsImZhbWlseV9uYW1lIjoi0JHRg9GP0L3QtNGN0LvQs9GN0YAiLCJnaXZlbl9uYW1lIjoi0KbQsNGG0YDQsNC7IiwiaWR0eXAiOiJ1c2VyIiwiaXBhZGRyIjoiMjQwNTo1NzAwOjMxMTplYjBjOjY1ZmY6NzE1Yzo2NjcyOmE0MWUiLCJuYW1lIjoi0KbQsNGG0YDQsNC7INCR0YPRj9C90LTRjdC70LPRjdGAIiwib2lkIjoiMTQxMjkwMjItMGM2MS00NzA4LWFkZDQtYmU0Y2FjOWEwMTUwIiwicHVpZCI6IjEwMDMyMDAxMkEzMEFFN0QiLCJyaCI6IjEuQVhBQURwLWozQnptRjBlU2hBWFhQVk5sNVFrQUFBQUFBQUFBd0FBQUFBQUFBQUJ3QUpSd0FBLiIsInNjcCI6IkNhcGFjaXR5LlJlYWQuQWxsIERhc2hib2FyZC5SZWFkLkFsbCBEYXRhc2V0LlJlYWQuQWxsIFJlcG9ydC5SZWFkLkFsbCBXb3Jrc3BhY2UuUmVhZC5BbGwiLCJzaWQiOiIwMDViZTM4OS0xMzQxLWI1MzgtZDY1ZS1iMzkxNmUwMTc3NmUiLCJzdWIiOiJncVZ4MktjQkhPcHZ6aWg5bWIzT1Y5UzlseUxaRF96WW1KTlNJYnJfWjRBIiwidGlkIjoiZGNhMzlmMGUtZTYxYy00NzE3LTkyODQtMDVkNzNkNTM2NWU1IiwidW5pcXVlX25hbWUiOiJ0c2F0c3JhbEBhbmFseXRpY2FsbWluZC5tbiIsInVwbiI6InRzYXRzcmFsQGFuYWx5dGljYWxtaW5kLm1uIiwidXRpIjoiNk5mYnZFUkl3RXV0VmpkZEdfSk9BQSIsInZlciI6IjEuMCIsIndpZHMiOlsiNjJlOTAzOTQtNjlmNS00MjM3LTkxOTAtMDEyMTc3MTQ1ZTEwIiwiYjc5ZmJmNGQtM2VmOS00Njg5LTgxNDMtNzZiMTk0ZTg1NTA5Il0sInhtc19mdGQiOiJueFFWSjI2dUd5QkpjQ1djakk4Nmp0M0RtaTZRT2VYSjhWRUhfVTgwZGtBQmEyOXlaV0ZqWlc1MGNtRnNMV1J6YlhNIiwieG1zX2lkcmVsIjoiMiAxIiwieG1zX3BsIjoiZW4tVVMifQ.ePCvLoQFJbStbkoIezokZN_WONfY7aOtAW24fpHZwVPLM_TVXvXj3RqyogjMxKpLTluoPzqPjmLufzDYpKh3rIYy4Rsa5omY8Iocb7XtWFppqLPF7LDdLeYL5tiCZL2dy30yaYhxS5E7MBhWP9FOngec1pUkGsKsXk8X59uetn3y3rAJfKGU-JeKJErMcTzuznGANNgyzG_ajZ37eh5i7Zgqn07AthrVdGILqNVe_KZucGZqDb7q5dP0pWJ0Eslm4v9-1g_Uw0xMFbRw8SgV2Q_wBJmyj8sTCcu6BQ1bfqLUFONei6mS6Ihkj1COdHZG5xmpfmN1Z88MDyKxmPpfCA";
+            const embedUrl = "https://app.powerbi.com/reportEmbed?reportId=779202f7-893e-457b-95c5-e5e8597b6c48&groupId=245c36f7-a903-4095-b1b4-b750d6c3483b&w=2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLUVBU1QtQVNJQS1BLVBSSU1BUlktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQiLCJlbWJlZEZlYXR1cmVzIjp7InVzYWdlTWV0cmljc1ZOZXh0Ijp0cnVlfX0%3d";
+            const reportId = "779202f7-893e-457b-95c5-e5e8597b6c48";
+
+            // DOM элемент
+            const embedContainer = document.getElementById("reportContainer");
+
+            // Config
+            //   const embedConfig = {
+            //     type: 'report',
+            //     id: reportId,
+            //     embedUrl: embedUrl,
+            //     accessToken: accessToken,
+            //     tokenType: models.TokenType.Aad,
+            //     settings: {
+            //       panes: {
+            //         filters: { visible: false },
+            //         pageNavigation: { visible: true }
+            //       }
+            //     }
+            //   };
+
+            const embedConfig = {
+                type: 'report',
+                // uniqueId:this.state.data.report_id,
+                id: reportId,
+                accessToken: accessToken,
+                embedUrl: embedUrl,
+                permissions: models.Permissions.All,
+                tokenType: models.TokenType.Aad,
+                settings: {
+                    panes: {
+                        filters: { visible: false },
+                        pageNavigation: { visible: true }
+                    }
+                }
+
+            };
+
+            // Clear container
+            powerbi.bootstrap(embedContainer, { type: "report" });
+
+            // Embed report
+            const report = powerbi.embed(embedContainer, embedConfig);
+
+            // 🔍 Алдааг шалгах log
+            report.on("loaded", function () {
+                console.log("✅ Report loaded");
+            });
+
+            report.on("rendered", function () {
+                console.log("✅ Report rendered");
+            });
+
+            report.on("error", function (event) {
+                console.error("❌ Embed error:", event.detail);
+            });
+
+        })();
+    </script>
+</body>
+
+</html>

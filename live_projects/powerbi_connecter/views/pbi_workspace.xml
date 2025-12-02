@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="pbi_workspace_form" model="ir.ui.view">
+        <field name="name">Power BI workspace Form</field>
+        <field name="model">pbi.workspace</field>
+        <field name="arch" type="xml">
+            <form string="powerbiworkspace">
+                <header>
+                    <button name="get_reports" type="object" string="Get report" class="btn-primary"/>
+                </header>
+                <group name="powerbiws">
+                    <field name="workspace_id" />
+                    <field name="name" />
+                    <list name="connection_id">
+                        <field name="id"/>
+                    </list>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="pbi_workspace_tree" model="ir.ui.view">
+        <field name="name">Power BI workspace Tree</field>
+        <field name="model">pbi.workspace</field>
+        <field name="arch" type="xml">
+            <list string="powerbi workspace">
+                <field name="workspace_id" />
+                <field name="name" />
+                <field name="connection_id" />
+            </list>
+        </field>
+    </record>
+
+    <record id="action_pbi_workspace" model="ir.actions.act_window">
+        <field name="name">Power BI workspace</field>
+        <field name="res_model">pbi.workspace</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="pbi_workspace_tree"/>
+    </record>
+
+    <menuitem id="menu_action_pbi_workspace"
+        name="Workspace"
+        parent="menu_pbi_connect_root"
+        groups="base.group_erp_manager,group_powerbi_admin"
+        action="action_pbi_workspace"
+    />
+
+</odoo>

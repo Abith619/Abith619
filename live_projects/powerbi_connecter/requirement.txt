@@ -1,0 +1,3 @@
+msal
+cryptography==38.0.4
+pyOpenSSL==21.0.0

@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_powerbiconnect_manager,powerbiconnect.manager,model_pbi_connect,base.group_erp_manager,1,1,1,1
+access_powerbiworkspace_manager,powerbiworkspace.manager,model_pbi_workspace,base.group_erp_manager,1,1,1,1
+access_powerbireport_manager,powerbireport.manager,model_pbi_report,base.group_erp_manager,1,1,1,1
+access_powerbiconnect_manager,powerbiconnect.manager,model_pbi_connect,powerbi_connecter.group_powerbi_admin,1,1,1,1
+access_powerbiworkspace_manager,powerbiworkspace.manager,model_pbi_workspace,powerbi_connecter.group_powerbi_admin,1,1,1,1
+access_powerbireport_manager,powerbireport.manager,model_pbi_report,powerbi_connecter.group_powerbi_admin,1,1,1,1
+access_powerbiconnect_user,powerbiconnect.user,model_pbi_connect,powerbi_connecter.group_powerbi_user,1,0,0,0
+access_powerbiworkspace_user,powerbiworkspace.user,model_pbi_workspace,powerbi_connecter.group_powerbi_user,1,0,0,0
+access_powerbireport_user,powerbireport.user,model_pbi_report,powerbi_connecter.group_powerbi_user,1,0,0,0
+access_powerbidashboard_user,powerbidashboard.user,model_pbi_dashboard,powerbi_connecter.group_powerbi_user,1,0,0,0
+access_powerbidashboard_manager,powerbidashboard.manager,model_pbi_dashboard,base.group_erp_manager,1,1,1,1

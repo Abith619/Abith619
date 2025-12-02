@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="pbi_connect_form" model="ir.ui.view">
+        <field name="name">Power BI connect Form</field>
+        <field name="model">pbi.connect</field>
+        <field name="arch" type="xml">
+            <form string="powerbiconnect">
+                <header>
+                    <button name="connect_manual" type="object" string="Connect" class="btn-primary"/>
+                    <button name="get_workspaces" type="object" string="Get workspace" class="btn-primary"/>
+                </header>
+            <div class="ribbon" invisible="is_connect == False">
+                <span>CONNECTED</span>
+            </div>
+                <group name="powerbiconnect">
+                    <field name="app_id" />
+                    <field name="tenant_id" />
+                    <field name="username" />
+                    <field name="password" password="True" />
+                    <field name="is_connect" invisible="1" />
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="pbi_connect_tree" model="ir.ui.view">
+        <field name="name">Power BI connect Tree</field>
+        <field name="model">pbi.connect</field>
+        <field name="arch" type="xml">
+            <list string="powerbiconnect">
+                    <field name="app_id" />
+                    <field name="tenant_id" />
+                    <field name="username" />
+                    <field name="password" password="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_pbi_connect" model="ir.actions.act_window">
+        <field name="name">Power BI action</field>
+        <field name="res_model">pbi.connect</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="pbi_connect_tree"/>
+    </record>
+
+    <menuitem
+        id="menu_pbi_connect_root"
+        name="PowerBI"
+        sequence="25"
+    />
+
+    <menuitem id="menu_action_pbi_connect"
+        groups="base.group_erp_manager,group_powerbi_admin"
+        name="Power BI Connect Test"
+        parent="menu_pbi_connect_root"
+        action="action_pbi_connect"
+    />
+
+</odoo>
