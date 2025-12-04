@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="kanban_inherit_add_whatsapp_button" model="ir.ui.view">
+        <field name="name">mailing.list.view.kanban.whatsapp</field>
+        <field name="model">mailing.list</field>
+        <field name="inherit_id" ref="mass_mailing.mailing_list_view_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_send_mailing']" position="after">
+                <button type="object"
+                    class="oe_stat_button"
+                    icon="fa-whatsapp"
+                    name="action_open_partner_wa_channels"
+                    title="WhatsApp Chats">
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

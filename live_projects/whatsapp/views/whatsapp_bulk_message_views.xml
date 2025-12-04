@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="whatsapp_bulk_view_form" model="ir.ui.view">
+        <field name="name">whatsapp.bulk.view.form</field>
+        <field name="model">whatsapp.bulk.message</field>
+        <field name="arch" type="xml">
+            <form string="WhatsApp Template">
+                <header>
+                    <button string="Send" type="object" name="action_send_bulk_message" />
+                    <field name="state" readonly="1" widget="statusbar" statusbar_visible="draft,sent,error"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name" placeholder="Enter Template Name"/>
+                        <field name="whatsapp_account" placeholder="Select WhatsApp Account"/>
+                    </group>
+                    <group>
+                        <field name="template_id" options="{'no_create': True}"/>
+                        <field name="is_published"/>
+                    </group>
+                    <notebook>
+                        <page string="Contacts">
+                            <field name="recipient_ids">
+                                <list string="Recipients" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="number"/>
+                                    <field name="email"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="whatsapp_bulk_message_view_tree" model="ir.ui.view">
+        <field name="name">whatsapp.bulk.message.view.list</field>
+        <field name="model">whatsapp.bulk.message</field>
+        <field name="arch" type="xml">
+            <list string="WhatsApp Bulk Message">
+                <field name="name" />
+                <field name="template_id" />
+                <field name="state" decoration-info="state == 'draft'" decoration-success="state in ['sent']" decoration-danger="state in ['error']" widget="badge"/>
+                <field name="create_date" />
+            </list>
+        </field>
+    </record>
+
+    <record id="whatsapp_bulk_message_action" model="ir.actions.act_window">
+        <field name="name">Bulk Message</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">whatsapp.bulk.message</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
