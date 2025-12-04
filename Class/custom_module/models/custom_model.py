@@ -3,6 +3,7 @@ from odoo.exceptions import ValidationError
 
 class CustomModel(models.Model):
     _name = 'custom.model'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Custom Model Description'
 
     name = fields.Char(string="Name", required=True)
@@ -11,6 +12,14 @@ class CustomModel(models.Model):
     age = fields.Integer(string="Age")
     email = fields.Char(string="Email")
     date = fields.Date(string="Date")
+
+    serial_number = fields.Char(string="Serial Number", readonly=True)
+
+    grand_total = fields.Float(string="Grand Total", compute="_compute_grand_total")
+
+    def _compute_grand_total(self):
+        for rec in self:
+            rec.grand_total = sum(rec.custom_model_related_ids.mapped('total'))
 
     currency_id : fields.Many2one = fields.Many2one(
         comodel_name='res.currency',
@@ -24,10 +33,11 @@ class CustomModel(models.Model):
         ('unpaid', 'Unpaid'),
     ], string="Payment Status", default='unpaid')
 
+    @api.model_create_multi
     def create(self, vals_list):
+        for vals in vals_list:
+            vals['serial_number'] = self.env['ir.sequence'].next_by_code('custom.model')
         res = super(CustomModel, self).create(vals_list)
-        if vals_list.get('age') <= 18:
-            raise ValidationError("Age should be greater than 18")
         return res
 
     def open_wizard(self):
@@ -49,19 +59,6 @@ class CustomModel(models.Model):
         for partner in partners:
             partner_list.append(partner.name)
         raise ValidationError(partner_list)
-
-    # @api.depends('age')
-    # def _compute_age(self):
-
-    # @api.constrains('age')
-    # def check_age(self):
-    #     if self.age <= 18:
-    #         raise ValidationError("this is constrains")
-
-    @api.onchange('age')
-    def change_age(self):
-        if self.age <= 18:
-            raise ValidationError("this is onchange")
 
 
 class CustomModelRelated(models.Model):

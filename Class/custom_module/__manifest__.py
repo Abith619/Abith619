@@ -6,6 +6,7 @@
     'author': "Abith",
     'data': [
         "security/user_groups.xml",
+        "data/ir_sequence.xml",
         "security/ir.model.access.csv",
         'reports/custom_pdf_report.xml',
         'reports/custom_pdf_report_template.xml',
