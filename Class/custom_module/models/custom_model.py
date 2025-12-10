@@ -33,6 +33,12 @@ class CustomModel(models.Model):
         ('unpaid', 'Unpaid'),
     ], string="Payment Status", default='unpaid')
 
+    @api.model
+    def send_mail(self):
+        for model in self:
+            template = self.env['mail.template'].browse(self.env.ref('custom_module.mail_template_sale_order').id)
+            template.send_mail(model.id, force_send=True)
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
