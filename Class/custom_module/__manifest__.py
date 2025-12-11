@@ -12,6 +12,7 @@
         "security/ir.model.access.csv",
         'reports/custom_pdf_report.xml',
         'reports/custom_pdf_report_template.xml',
+        "views/website_template.xml",
         "views/sale_order_inherit.xml",
         "views/custom_views.xml",
         'views/crm_inherit.xml',
