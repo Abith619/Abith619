@@ -2,7 +2,7 @@
     'name': "Custom Module",
     'description': "Online Appointment Booking System",
     'version': "1.0",
-    'depends': ['base', 'web', 'crm', 'mail', 'sale'],
+    'depends': ['base', 'web', 'crm', 'mail', 'sale', 'website', 'website_sale'],
     'author': "Abith",
     'data': [
         "security/user_groups.xml",
@@ -12,6 +12,8 @@
         "security/ir.model.access.csv",
         'reports/custom_pdf_report.xml',
         'reports/custom_pdf_report_template.xml',
+        "views/e-commerce_inheritance.xml",
+        # "views/website_layout.xml",
         "views/website_template.xml",
         "views/sale_order_inherit.xml",
         "views/custom_views.xml",
