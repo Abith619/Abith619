@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+        <record id="zoho_form_inherit" model="ir.ui.view">
+          <field name="name">Items</field>
+          <field name="model">product.template</field>
+          <field name="inherit_id" ref="product.product_template_form_view"/>
+          <field name="arch" type="xml">
+              <xpath expr="//field[@name='company_id']" position="after">
+                      <field name="zoho_id"/>
+                      <field name="is_zoho"/>
+              </xpath>
+             
+
+          </field>
+       </record>
+
+       <record model="ir.actions.act_window" id="zoho_item_action">
+            <field name="name">Items</field>
+            <field name="res_model">product.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('is_zoho','=', True)]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_smiling_face">
+                  Create your First Items
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

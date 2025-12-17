@@ -1,0 +1,98 @@
+<odoo>
+    <data>
+        <record id="customer_zoho_form_inherit" model="ir.ui.view">
+          <field name="name">Contacts</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_partner_form"/>
+          <field name="arch" type="xml">
+              <xpath expr="//field[@name='vat']" position="after">
+                      <field name="zoho_id"/>
+                      <field name="is_zoho"/>
+              </xpath>
+            
+
+          </field>
+       </record>
+
+       <record model="ir.actions.act_window" id="zoho_contact_action">
+            <field name="name">Contacts</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('is_zoho','=', True)]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_smiling_face">
+                  Create your First Contacts
+                </p>
+            </field>
+        </record>
+
+        <record id="zoho_company_form_inherit" model="ir.ui.view">
+          <field name="name">Credentials</field>
+          <field name="model">res.company</field>
+          <field name="inherit_id" ref="base.view_company_form"/>
+          <field name="arch" type="xml">
+              <xpath expr="//notebook" position="inside">
+                <page string="Zoho Information" name="zoho_info">
+                  <group>
+                      <group string="Zoho Credentials" class="">
+                          <field name="zoho_username" class="mt-3"/>
+                          <field name="zoho_password" password="True" />
+                          <field name="organization_id" />
+                          <!-- <field name="zoho_url" /> -->
+                          <field name="zoho_token" />
+                          <!-- <field name="logfile_path" invisible="1" /> -->
+                          <button string="Authenticate" class="oe_highlight mt-3" type="object" name="generate_authtoken" />
+                      </group>
+					  
+					  <group string="Triggers" class="">
+					    <group>
+					      <field name="trigger" string="Triggers" widget='radio' options="{'horizontal': true}"/>
+						</group>
+					  </group>
+                      <group string="Zoho Options">
+                        <group class="mt-3">
+                          <field name="import_contacts" />
+                          <field name="import_items" />
+                          
+                        </group>
+                        <group class="mt-3">
+                          <field name="export_contacts" />
+                          <field name="export_items" />
+                          
+                        </group>
+                      </group>
+                      
+                      <group string="Manual Sync" class="">
+					               <group>
+                            <button string="Import Contacts" class="oe_highlight" type="object" name="import_contacts_zoho" attrs='{"invisible":[("import_contacts","=",False)]}'/>
+                          </group>
+                          <group>
+                          <button string="Export Contacts"  class="oe_highlight" type="object" name="export_contacts_zoho" attrs='{"invisible":[("export_contacts","=",False)]}' />
+                        </group>
+                          <group>
+                          <button string="Import  Items"  class="oe_highlight" type="object" name="import_items_zoho" attrs='{"invisible":[("import_items","=",False)]}'/>
+                        </group>
+                          <group>
+                          <button string="Export Items"  class="oe_highlight" type="object" name="export_items_zoho" attrs='{"invisible":[("export_items","=",False)]}' />
+                        </group>
+
+                          
+
+
+                      </group>
+                      <group string="Auto Sync" class="mt-5">
+                        
+                          <field name="auto_sync" class="text-center" widget='radio' options="{'horizontal': true}" />
+                        
+                      </group>
+                </group>
+                </page>
+              </xpath>
+
+          </field>
+       </record>
+
+
+    </data>
+</odoo>

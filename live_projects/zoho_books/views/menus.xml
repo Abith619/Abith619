@@ -1,0 +1,10 @@
+<odoo>
+
+		<menuitem id="main_menu_zoho" name="Zoho Books" sequence="1"/>
+		
+		
+		
+		<menuitem id="sub_menu_zoho_customer" name="Contacts" parent="main_menu_zoho" action="zoho_contact_action" sequence="2"/>
+		<menuitem id="submenu_items" name="Items" parent="main_menu_zoho" action="zoho_item_action" sequence="3" />
+		
+</odoo>
