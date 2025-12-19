@@ -26,3 +26,14 @@ class CustomController(Controller):
         request.env["crm.lead"].sudo().create(vals)
 
         return request.redirect('/shop')
+
+    @route(['/my/appointments'], type="http", auth="public", website=True)
+    def my_appointments(self, **kw):
+        partner = request.env.user.partner_id
+        appointments = request.env['custom.model'].sudo().search([('contact', '=', partner.id)])
+        return request.render('custom_module.portal_appointments_page', {
+            'appointments': appointments,
+        })
+
+# request.session.uid
+# request.httprequest.cookies.get('session_id')
