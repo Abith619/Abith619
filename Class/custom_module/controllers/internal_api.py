@@ -9,11 +9,9 @@ class APIController(Controller):
     @route('/api/patients/create', type='http', auth='public', methods=['POST'], csrf=False)
     def create_patient(self, **kwargs):
         name = kwargs.get('name')
-        # age = kwargs.get('age')
         phone = kwargs.get('phone')
         patient = request.env['res.partner'].sudo().create({
             'name': name,
-            # 'age': age,
             'phone': phone,
             'is_patient': True,
         })
@@ -84,12 +82,16 @@ class APIController(Controller):
 
     @route('/api/patients/<int:patient_id>', type='http', auth='public', methods=['GET','PUT'], csrf=False)
     def patient_api(self, patient_id, **kwargs):
-        token = request.httprequest.headers.get('Authorization')
-        user = request.env.user
-        if token and user and user.token == token:
+        auth_header = request.httprequest.headers.get('Authorization')
+        token = auth_header.replace('Bearer ', '').strip()
+        token_check = request.env['res.users'].sudo().search(
+            [('api_token', '=', token)],
+            limit=1
+        )
+        if token_check and token_check.token == token:
             if request.httprequest.method == 'GET':
                 patient = request.env['res.partner'].sudo().browse(patient_id)
-                if patient:
+                if patient.exists():
                     return Response(
                         json.dumps({
                             'id': patient.id,
@@ -116,6 +118,63 @@ class APIController(Controller):
                         json.dumps({'status': 'updated', 'message': 'Patient updated successfully'}),
                         content_type='application/json'
                     )
+                                                                # Start a New Odoo Session (Login) in Postman to get the session cookie
+    # POST http://localhost:8069/web/session/authenticate
+    # Headers = Content-Type: application/json
+    # Body = {
+        # "jsonrpc": "2.0",
+        # "method": "call",
+        # "params": {
+        #     "db": "your_database_name",
+        #     "login": "admin",
+        #     "password": "admin"
+        # },
+        # "id": 1
+        # }
+                                                                # auth = User
+    @route('/api/patients/user/<int:patient_id>', type='http', auth='user', methods=['GET', 'PUT'], csrf=False)
+    def patient_user_api(self, patient_id, **kwargs):
+
+        user = request.env.user
+        print(user.name)
+
+        patient = request.env['res.partner'].sudo().browse(patient_id)
+        if not patient.exists():
+            return Response(
+                json.dumps({'error': 'Patient not found'}),
+                status=404,
+                headers=[('Content-Type', 'application/json')]
+            )
+
+        if request.httprequest.method == 'GET':
+            return Response(
+                json.dumps({
+                    'id': patient.id,
+                    'name': patient.name,
+                    'phone': patient.phone,
+                    'email': patient.email,
+                }),
+                status=200,
+                headers=[('Content-Type', 'application/json')]
+            )
+
+        if request.httprequest.method == 'PUT':
+            data = request.jsonrequest or {}
+
+            patient.write({
+                'name': data.get('name', patient.name),
+                'phone': data.get('phone', patient.phone),
+                'email': data.get('email', patient.email),
+            })
+
+            return Response(
+                json.dumps({
+                    'status': 'updated',
+                    'message': 'Patient updated successfully'
+                }),
+                status=200,
+                headers=[('Content-Type', 'application/json')]
+            )
 #                                                                   https://www.cybrosys.com/blog/how-to-call-json-rpc-to-webcontroller-in-odoo18
     # Add the below headers and body in postman while making JSON-RPC call
     # JSON-RPC is used to call a method on the server and pass parameters
@@ -148,7 +207,7 @@ class APIController(Controller):
     #         "count": len(data),
     #         "patients": data
     #     }
-        # Call json-rpc function from UI by using the below js code
+                                                                        # Call json-rpc function from UI by using the below js code
     # /** @odoo-module **/
     # import publicWidget from "@web/legacy/js/public/public_widget";
     # import { rpc } from "@web/core/network/rpc";
