@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="crm_lead_form_inherit_custom" model="ir.ui.view">
+        <field name="name">crm.lead.form.inherit.custom</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+        <xpath expr="//header/button[@name='action_set_won_rainbowman']" position="after">
+                <button name="action_custom_module"
+                        type="object"
+                        string="Test &amp; Send"
+                        class="oe_highlight"/>
+        </xpath>        
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="custom_field"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

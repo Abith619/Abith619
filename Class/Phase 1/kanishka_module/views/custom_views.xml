@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_custom_form" model="ir.ui.view">
+        <field name="name">custom.model.form</field>
+        <field name="model">custom.model</field>
+        <field name="arch" type="xml">
+        <form string="Custom Model">
+        <header>
+                <button name="action_test_method" string="Check" type="object" class="btn-primary"/>
+                <button name="open_wizard" string="Run Demo" type="object" class="btn-primary"/>
+                <button name="call_test" type="object" string="Model Api" class="btn-primary"/>
+               
+        </header>
+           <sheet>
+                 <field name="profile" widget="image" class="oe_avatar"/>
+                    <group>
+                        <group>
+                            <field name='serial_number'/>   
+                            <field name="name"/>
+                            <field name="email"/>
+                            <field name="reference"/>
+                            <field name="resume"/>
+                            <field name="joinDate"/>
+                            <field name="fees"/>
+                            <field name="gender"/>
+                            <field name="busfees"/>
+                            <field name="totalfees"/> 
+                            <field name="payment_status"/>       
+                        </group>
+                        <group>
+                            <field name="dob"/>
+                            <field name="age"/>
+                            <field name="phone"/>
+                            <field name="active"/>
+                            <field name="totalcost"/>
+                            <field name="currency_id"/>
+                            <field name="address"/>
+                            <field name="description"/>
+                        </group>
+                        <notebook>
+                        <page string="Related Records">
+                            <field name="custom_model_related_ids">
+                                <list editable="bottom">
+                                    <field name="product"/>
+                                    <field name="purchase_date"/>
+                                    <field name="quantity"/>
+                                    <field name="price"  />
+                                    <field name="total" />
+        
+                                    
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer oe_left">
+                                <field name="grand_total" widget="monetary"/>
+                            </group>
+                        </page>
+                        <page string="Other info">
+                        </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_custom_tree" model="ir.ui.view">
+            <field name="name">custom.model.list</field>
+            <field name="model">custom.model</field>
+            <field name="arch" type="xml">
+                <list string="Custom Model">
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="reference"/>
+                    <field name="phone"/>
+                    <field name="dob"/>
+                    <field name="address"/>
+                    <field name="gender" widget="badge" decoration-success="gender=='male'" decoration-warning="gender=='female'"/>
+                </list>
+            </field>
+        </record>
+    <record id="action_custom_model" model="ir.actions.act_window">
+        <field name="name">Custom Model</field>
+        <field name="res_model">custom.model</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_custom_roots"
+        name="Custom Module"
+        sequence="5"
+    />
+
+    <menuitem id="menu_custom_model"
+        name="Custom Model"
+        parent="menu_custom_roots"
+        action="custom_module.action_custom_model"
+    />
+</odoo>
+
+

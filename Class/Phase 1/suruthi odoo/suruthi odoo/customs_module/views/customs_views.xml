@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- FORM VIEW -->
+    <record id="view_customs_form" model="ir.ui.view">
+        <field name="name">customs.models.form</field>
+        <field name="model">customs.models</field>
+        <field name="arch" type="xml">
+            <form string="Customs Model">
+                <header>
+                    <button name="action_test_method" type="object" string="Search Partners" class="btn-secondary"/>
+                    <button name="action_browse_record" type="object" string="Browse" class="btn-primary"/>
+                    <button name="action_create_record" type="object" string="Create" class="btn-success"/>
+                    <button name="action_unlink_record" type="object" string="Delete" class="btn-danger"/>
+                    <button name="action_copy_record" type="object" string="Copy" class="btn-info"/>
+                </header>
+                    <sheet>
+                        <group>
+                            <field name='serial_number'/>
+                            <field name="name"/>
+                            <field name="age"/>
+                            <field name="email"/>
+                            <field name="payment_status"/>
+                        </group>
+
+                        <group>
+                            <field name="contact"/>
+                            <field name="phone"/>
+                            <field name="date"/>
+                        </group>
+
+                        <notebook>
+                            <page string="Related Records">
+                                <field name="custom_related_ids">
+                                    <list editable="bottom">
+                                        <field name="name"/>
+                                        <field name="purchase_date"/>
+                                        <field name="quantity"/>
+                                        <field name="price"/>
+                                        <field name="total" readonly="1"/>
+                                    </list>
+                                </field>
+                                   <group class="oe_subtotal_footer oe_left">
+                                        <field name="grand_total" readonly="1"/>
+                                    </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    <!-- LIST VIEW -->
+    <record id="view_customs_list" model="ir.ui.view">
+        <field name="name">customs.models.list</field>
+        <field name="model">customs.models</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="payment_status"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_customs_models" model="ir.actions.act_window">
+        <field name="name">Customs Model</field>
+        <field name="res_model">customs.models</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_customs_list"/>
+    </record>
+
+    <!-- MENU ITEMS -->
+    <menuitem id="menu_customs_root" name="Customs Module"/>
+    <menuitem id="menu_customs_models"
+              name="Customs Model"
+              parent="menu_customs_root"
+              action="action_customs_models"/>
+
+</odoo>

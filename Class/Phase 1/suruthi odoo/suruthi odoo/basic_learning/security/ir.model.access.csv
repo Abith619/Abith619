@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id,perm_read,perm_write,perm_create,perm_unlink
+access_basic_business,basic_business,model_basic_business,,1,1,1,1

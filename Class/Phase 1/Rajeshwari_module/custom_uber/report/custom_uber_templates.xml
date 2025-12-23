@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_custom_uber_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>Custom Uber Report</h2>
+                <p><strong>Name:</strong> <t t-esc="doc.name"/></p>
+                <p><strong>Age:</strong> <t t-esc="doc.age"/></p>
+                <p><strong>Email:</strong> <t t-esc="doc.email"/></p>
+                <p><strong>Total:</strong> <t t-esc="doc.total"/></p>
+            </div>
+        </t>
+    </template>
+</odoo>

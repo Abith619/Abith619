@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Report Action -->
+    <report
+        id="action_custom_uber_report"
+        model="custom.uber"
+        string="Custom Uber PDF"
+        report_type="qweb-pdf"
+        file="custom_uber.report_custom_uber_document"
+        name="custom_uber.report_custom_uber_document"
+        print_report_name="'Custom_Uber_Report_' + object.name"
+    />
+
+</odoo>

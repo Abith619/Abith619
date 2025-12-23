@@ -1,0 +1,23 @@
+{
+    'name': "Custom Module in manifest",
+    'description': "Online Appointment Booking System",
+    'version': "1.0",
+    'depends': ['base','web','crm','sale','mail','website'],
+    'author': "KK",
+    'data': [
+        'security/user_groups.xml',
+        "data/ir_cron.xml",
+        "data/ir_sequence.xml",
+        "data/email_template.xml",
+        'security/ir.model.access.csv',
+        'reports/custom_pdf_report.xml',
+        'reports/custom_pdf_report_template.xml',
+        'views/custom_views.xml',
+        'views/website_template.xml',
+        'views/crm_lead_view.xml',
+        'views/sale_order_inherit.xml',
+        'wizards/wizard_view.xml',
+    ],
+     'application': True,
+    'license': 'LGPL-3',
+    }

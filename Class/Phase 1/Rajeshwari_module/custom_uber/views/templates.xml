@@ -1,0 +1,7 @@
+<odoo>
+    <template id="template_id">
+        <t t-foreach="partners" t-as="partner">
+            <p><t t-esc="partner.name"/></p>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_business_report" model="ir.actions.report">
+        <field name="name">Business Report</field>
+        <field name="model">basic.business</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">basics.report_business_pdf</field>
+        <field name="report_file">basics.report_business_pdf</field>
+        <field name="binding_model_id" ref="basic_learning.model_basic_business"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

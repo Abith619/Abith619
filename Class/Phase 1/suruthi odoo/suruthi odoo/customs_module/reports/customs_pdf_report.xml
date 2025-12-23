@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_custom_pdf_report" model="ir.actions.report">
+        <field name="name">Custom Report</field>
+        <field name="model">customs.models</field>
+        <field name="report_type">qweb-pdf</field>
+
+        <!-- Must match your template ID from customs_pdf_report_template.xml -->
+        <field name="report_name">customs_module.report_customs_pdf_template</field>
+        <field name="report_file">customs_module.report_customs_pdf_template</field>
+
+        <!-- Binding to your model -->
+        <field name="binding_model_id" ref="customs_module.model_customs_models"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

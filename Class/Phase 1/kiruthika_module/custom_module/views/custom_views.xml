@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_custom_form" model="ir.ui.view">
+        <field name="name">custom.model.form</field>
+        <field name="model">custom.model</field>
+        <field name="arch" type="xml">
+            <form string="Custom Model">
+                <header>
+                    <button name="action_test_method" string="Check" type="object" class="btn-primary"/>
+                    <button name="open_wizard" string="Run Demo" type="object" class="btn-primary"/>
+                    <button name="call_test" type="object" string="Model Api" class="btn-primary"/>
+                    <button name="create_multiple_records" type="object" string="Create Multiple Records" class="btn-primary"/>
+                        
+
+                </header>
+                <sheet>
+                    <field name="profile" widget="image" class="oe_avatar"/>
+
+                    <group>
+                        <group>
+                            <field name='serial_number'/>
+                            <field name="name"/>
+                            <field name="email"/>
+                            <field name="reference"/>
+                            <field name="resume"/>
+                            <field name="joinDate"/>
+                            <field name="fees"/>
+                            <field name="busfees"/>
+                            <field name="totalfees"/>
+                        </group>
+                        <group>
+                            <field name="gender"/>
+                            <field name="dob"/>
+                            <field name="age"/>
+                            <field name="phone"/>
+                            <field name="is_active"/>
+                            <field name="currency_id"/>
+                            <field name="payment_status"/>
+                            <field name="address"/>
+                            <field name="description"/>          
+                        </group>
+                        <notebook>
+                            <page string="Related Records">
+                                <field name="custom_model_related_ids">
+                                    <list editable="bottom">
+                                        <field name="product"/>
+                                        <field name="purchase_date"/>
+                                        <field name="quantity"/>
+                                        <field name="price"  />
+                                        <field name="total" />
+                
+                                            
+                                    </list>
+                                </field>
+                                <group class="oe_subtotal_footer oe_left">
+                                    <field name="grand_total" widget="monetary"/>
+                                </group>
+                            </page>
+                            <page string="Other info">
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_custom_tree" model="ir.ui.view">
+            <field name="name">custom.model.list</field>
+            <field name="model">custom.model</field>
+            <field name="arch" type="xml">
+                <list string="Custom Model">
+                               
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="reference"/>
+                    <field name="phone"/>
+                    <field name="dob"/>
+                    <field name="address"/>
+                    <field name="gender" widget="badge" decoration-success="gender=='male'" decoration-warning="gender=='female'"/>
+                </list>
+            </field>
+    </record>
+
+    <record id="custom_model_search_view" model="ir.ui.view">
+        <field name="name">Custom Model Search View</field>
+        <field name="model">custom.model</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="email"/>
+                <field name="name"/>
+                <filter name="filter_by_male" string="Male" domain="[('gender', '=', 'male')]"/>
+                <separator/>
+                <filter name="filter_by_female" string="Female" domain="[('gender', '=', 'female')]"/>
+                <filter name="group_by_gender" string="Gender" context="{'group_by': 'gender'}"/>
+            </search>
+        </field>
+    </record>
+        <!-- <record id="custom_model_kanban_view" model="ir.ui.view">
+            <field name="name">Custom Model Kanban View</field>
+            <field name="model">custom.model</field>
+            <field name="arch" type="xml">
+               <kanban>
+                    <field name="gender"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                        </div>
+                        
+                        </t>
+                    </templates>
+               </kanban>
+            </field>
+        </record> -->
+
+
+        <!-- name adjacent to new -->
+    <record id="action_custom_model" model="ir.actions.act_window">
+        <field name="name">Custom Model in NEW</field>
+        <field name="res_model">custom.model</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+        <!-- this name show in left sidebar apps and top menu bar -->
+    <menuitem id="menu_custom_roots"
+        name="Custom Module in menu"
+        sequence="5"
+    />
+
+        
+    <menuitem id="menu_custom_model"
+        name="Custom Model"
+        parent="menu_custom_roots"
+        action="custom_module.action_custom_model"
+    />
+
+    <!-- <menuitem id="menu_custom_model" name="Custom Model" sequence="10"/>
+
+
+    <menuitem id="secondMenu_custom_model" name="Model Management"
+              parent="menu_custom_model"
+              action="action_custom_model"
+              sequence="0"/>
+    <menuitem id="thirdMenu_custom_model" name="Model structure"
+              parent="menu_custom_model"
+              action="action_custom_model"
+              sequence="0"/> -->
+</odoo>
+

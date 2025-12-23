@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_business_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">Business Report</h2>
+                        <p><strong>Name :</strong> <span t-field="o.partnername"/></p>
+                        <p><strong>Email :</strong> <span t-field="o.email"/></p>
+                        <p><strong>Phone :</strong> <span t-field="o.phonenumber"/></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

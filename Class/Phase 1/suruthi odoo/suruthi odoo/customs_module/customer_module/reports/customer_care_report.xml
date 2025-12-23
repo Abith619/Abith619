@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_customer_care_report" model="ir.actions.report">
+        <field name="name">Customer Care PDF</field>
+        <field name="model">customer.care</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">customer_module.customer_care_report_template</field>
+        <field name="report_file">customer_module.customer_care_report_template</field>
+        <field name="binding_model_id" ref="customer_module.model_customer_care"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

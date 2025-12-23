@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Wizard Form View -->
+    <record id="view_send_message_wizard" model="ir.ui.view">
+        <field name="name">send.message.wizard.form</field>
+        <field name="model">send.message.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Send Message">
+                <sheet>
+                    <group>
+                        <field name="message"/>
+                    </group>
+                </sheet>
+
+                <footer>
+                    <button name="action_send" type="object" string="Send" class="btn-primary"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Wizard Action -->
+    <record id="action_send_message_wizard" model="ir.actions.act_window">
+        <field name="name">Send Message Wizard</field>
+        <field name="res_model">send.message.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

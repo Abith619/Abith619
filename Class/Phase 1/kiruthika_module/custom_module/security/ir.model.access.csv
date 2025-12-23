@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_custom_model,custom.model,model_custom_model,base.group_user,1,1,1,1
+access_custom_wizard,custom.wizard,model_custom_wizard,base.group_user,1,1,1,1
+access_custom_model_manager,custom.model.manager,model_custom_model,group_custom_event_manager,1,1,1,1
+access_custom_model_related,custom.model.related,model_custom_model_related,base.group_user,1,1,1,1

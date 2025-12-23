@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_customer_care_user,access_customer_care_user,model_customer_care,group_custom_event_user,1,0,0,0
+access_customer_care_manager,access_customer_care_manager,model_customer_care,group_custom_event_manager,1,1,1,1
+access_custom_wizard,access_custom_wizard,model_custom_wizard,base.group_user,1,1,1,1
+access_custom_model_related_all,access_custom_model_related_all,model_custom_model_related,,1,1,1,1

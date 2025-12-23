@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Sale Order Email Template -->
+        <record id="mail_template_sale_order" model="mail.template">
+            <field name="name">Sale Order Email Demo Template</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="email_from">{{ object.company_id.email }}</field>
+            <field name="email_to">{{ object.partner_id.email }}</field>
+            <field name="subject">Your Sale Order {{ object.name }}</field>
+
+            <field name="body_html" type="html">
+                <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+                    
+                    <p>
+                        Dear <strong><t t-out="object.partner_id.name"/></strong>,
+                    </p>
+
+                    <p>
+                        Thank you for your order! Please find the details of your sale order below:
+                    </p>
+
+                    <table style="border: 1px solid #ddd; border-collapse: collapse; width: 100%; margin-top: 10px;">
+                        <thead>
+                            <tr style="background-color: #f2f2f2; text-align: left;">
+                                <th style="border: 1px solid #ddd; padding: 8px;">Product</th>
+                                <th style="border: 1px solid #ddd; padding: 8px;">Quantity</th>
+                                <th style="border: 1px solid #ddd; padding: 8px;">Unit Price</th>
+                                <th style="border: 1px solid #ddd; padding: 8px;">Subtotal</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <t t-foreach="object.order_line" t-as="line">
+                                <tr>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">
+                                        <t t-out="line.product_id.display_name"/>
+                                    </td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">
+                                        <t t-out="line.product_uom_qty"/>
+                                    </td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">
+                                        <t t-out="line.price_unit"/>
+                                    </td>
+                                    <td style="border: 1px solid #ddd; padding: 8px;">
+                                        <t t-out="line.price_subtotal"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <p style="margin-top: 20px;">
+                        <strong>Total Amount:</strong>
+                        <t t-out="object.amount_total"/>
+                    </p>
+
+                    <p>Please feel free to contact us if you have any questions about your order.</p>
+
+                    <p>Best Regards,</p>
+
+                    <p><strong><t t-out="object.company_id.name"/></strong></p>
+
+                </div>
+            </field>
+        </record>
+
+    </data>
+</odoo>

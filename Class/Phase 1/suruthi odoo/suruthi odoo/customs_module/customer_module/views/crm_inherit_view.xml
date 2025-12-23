@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- 1) INHERIT CRM FORM TO ADD CUSTOM FIELD -->
+    <record id="view_crm_lead_form_inherit_custom" model="ir.ui.view">
+        <field name="name">crm.lead.form.inherit.custom</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="custom_field"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- 2) INHERIT CRM FORM TO ADD BUTTON -->
+    <record id="view_crm_lead_form_inherit_button" model="ir.ui.view">
+        <field name="name">crm.lead.form.inherit.button</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Button near WON/LOST -->
+            <xpath expr="//header" position="inside">
+                <button name="action_show_popup"
+                        type="object"
+                        string="Show Popup"
+                        class="btn-primary"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ACTION -->
+    <record id="action_customer_care" model="ir.actions.act_window">
+        <field name="name">Customer Care</field>
+        <field name="res_model">customer.care</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- MENU -->
+    <menuitem id="menu_customer_root" name="Customer Care" action="action_customer_care"/>
+
+    <!-- LIST (List) VIEW -->
+    <record id="view_customer_care_list" model="ir.ui.view">
+        <field name="name">customer.care.list</field>
+        <field name="model">customer.care</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="customer_name"/>
+                <field name="phone"/>
+                <field name="issue"/>
+                <field name="priority"/>
+                <field name="status"/>
+                <field name="assigned_to"/>
+                <field name="created_date"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_customer_care_form" model="ir.ui.view">
+        <field name="name">customer.care.form</field>
+        <field name="model">customer.care</field>
+        <field name="arch" type="xml">
+            <form string="Customer Information">
+                <sheet>
+                    <group>
+                        <field name="name">
+                        <field name="customer_name"/>
+                        <field name="email"/>
+                        <field name="phone"/>
+                        <field name="contact"/>
+                    </group>
+
+                    <group string="Issue Details">
+                        <field name="issue"/>
+                        <field name="description"/>
+                    </group>
+
+                    <group string="Status Priority">
+                        <field name="status"/>
+                        <field name="priority"/>
+                        <field name="assigned_to"/>
+                    </group>
+
+                    <group string="Dates">
+                        <field name="created_date"/>
+                        <field name="resolved_date"/>
+                        <field name="follow_up_date"/>
+                    </group>
+
+                    <group string="Attachments">
+                        <field name="attachment"/>
+                    </group>
+
+                    <group string="Customer Rating">
+                        <field name="customer_rating"/>
+                    </group>
+
+                    <!-- ONE2MANY LIST INSIDE NOTEBOOK -->
+                    <notebook>
+                        <page string="Related Records">
+                            <field name="custom_model_related_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="purchase_date"/>
+                                    <field name="quantity"/>
+                                    <field name="price"/>
+                                    <field name="total"/>
+                                    <field name="detail"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
