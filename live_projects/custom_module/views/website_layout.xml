@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="customize_header" inherit_id="website.layout">
+        <xpath expr="//header" position="replace">
+            <header >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h1>Custom Header</h1>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </xpath>
+    </template>
+    <template id="customize_footer" inherit_id="website.layout">
+        <xpath expr="//footer" position="replace">
+            <footer >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <p>Custom Footer</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </xpath>
+    </template>
+</odoo>

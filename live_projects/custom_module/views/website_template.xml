@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="custom_page" name="Custom Page">
+        <t t-call="website.layout">
+            <div class="oe_structure">
+                <div class="container">
+                    <h1>Welcome to the Custom Page</h1>
+                    <p>This is a custom page served by CustomController.</p>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="affiliate_program_form_templates" name="Affiliate Program Registration">
+        <t t-call="website.layout">
+            <div class="container my-5" id="affiliate_container">
+                <h2 class="text-center mb-4"><b>Join Our Affiliate Program</b></h2>
+                <form action="/custom/submit" method="post" enctype="multipart/form-data" class="o_website_form">
+
+                    <!-- Row 1: Name & Company -->
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <label for="name">Full Name *</label>
+                            <input type="text" name="name" class="form-control" required="1"/>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="company_name">Company Name</label>
+                            <input type="text" name="company_name" class="form-control"/>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Designation & Contact Number -->
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <label for="designation">Designation / Profession</label>
+                            <input type="text" name="designation" class="form-control"/>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="contact_number">Contact Number *</label>
+                            <input type="text" name="contact_number" class="form-control" pattern="[0-9]{10}" required="1"/>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Email & LinkedIn -->
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <label for="email">Email *</label>
+                            <input type="email" name="email" class="form-control" required="1"/>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="linked_in_profile">LinkedIn Profile Link</label>
+                            <input type="url" name="linked_in_profile" class="form-control" placeholder="https://linkedin.com/in/yourprofile"/>
+                        </div>
+                    </div>
+
+                    <!-- Row 4: Focus Area -->
+                    <div class="row">
+                        <div class="mb-3 col-12">
+                            <label for="industry_influence_focus">Industry Influence / Focus Area *</label>
+                            <textarea name="industry_influence_focus" class="form-control" rows="3" placeholder="Describe your industry expertise..." required="1"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Row 5: Expected Referrals -->
+                    <div class="row">
+                        <div class="mb-3 col-6">
+                            <label for="expected_monthly_referrals">Expected Monthly Referrals</label>
+                            <input type="number" name="expected_monthly_referrals" class="form-control" min="0"/>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="pan_gst">Upload PAN / GST Document *</label>
+                            <input type="file" name="pan_gst" class="form-control" accept="image/*" required="1"/>
+                        </div>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary px-4">Submit</button>
+                    </div>
+
+                </form>
+            </div>
+        </t>
+    </template>
+</odoo>

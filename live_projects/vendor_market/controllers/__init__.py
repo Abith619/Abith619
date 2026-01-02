@@ -1,1 +1,0 @@
-from . import vendor_products

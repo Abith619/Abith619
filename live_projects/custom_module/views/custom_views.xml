@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id='view_custom_form' model='ir.ui.view'>
+        <field name='name'>custom.model.form</field>
+        <field name='model'>custom.model</field>
+        <field name='arch' type='xml'>
+            <form string='Custom Model'>
+            <header>
+                <button name='action_test_method' type='object' string='Test Button' class='btn-primary'/>
+                <button name='open_wizard' type='object' string='Open Wizard' class='btn-secondary'/>
+            </header>
+                <sheet>
+                    <group>
+                        <field name='serial_number'/>
+                        <field name='name'/>
+                        <field name='age'/>
+                        <field name='email'/>
+                        <field name='payment_status'/>
+                    </group>
+                    <group>
+                        <field name='contact'/>
+                        <field name='phone'/>
+                        <field name='date'/>
+                        <field name='currency_id'/>
+                    </group>
+                    <notebook>
+                        <page string="Related Records">
+                            <field name="custom_model_related_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="purchase_date"/>
+                                    <field name="quantity"/>
+                                    <field name="price"/>
+                                    <field name="total"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer oe_left">
+                                <field name="grand_total" widget="monetary"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_custom_model" model="ir.actions.act_window">
+        <field name="name">Custom Model</field>
+        <field name="res_model">custom.model</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_custom_roots"
+        name="Custom Module"
+        sequence="5"
+    />
+
+    <menuitem id="menu_custom_model"
+        name="Custom Model"
+        parent="menu_custom_roots"
+        action="custom_module.action_custom_model"
+    />
+</odoo>

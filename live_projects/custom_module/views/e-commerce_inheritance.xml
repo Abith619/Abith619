@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="inherit_shop_page" inherit_id="website_sale.product">
+        <xpath expr="//div[@id='product_details']/h1" position="after">
+        <!-- <t t-set="partner" t-value="request.env['res.partner'].search([('id', '=', 75)])"/> -->
+            <div class="custom-message">
+                <p>This is a custom message added to the product page.</p>
+                <t t-esc="product.description_sale"/>
+                <!-- <t t-esc="partner.name"/> -->
+            </div>
+        </xpath>
+        <!-- positions : after, before, replace, inside -->
+    </template>
+</odoo>
