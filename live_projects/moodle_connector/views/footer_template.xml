@@ -196,11 +196,11 @@
                         <div class="col-lg-2 col-md-6 text-start">
                             <h5>Quick Link</h5>
                             <ul class="list-unstyled mb-0">
-                                <li><a href="/about" class="d-block mb-2">About Us</a></li>
-                                <li><a href="/shop" class="d-block mb-2">Academic Programs</a></li>
-                                <li><a href="/shop" class="d-block mb-2">Admissions</a></li>
-                                <li><a href="/shop" class="d-block mb-2">Tuition &amp; Financial Aid</a></li>
-                                <li><a href="/shop" class="d-block mb-2">Student Portal</a></li>
+                                <li><a href="/about-us" class="d-block mb-2">About Us</a></li>
+                                <li><a href="/slides" class="d-block mb-2">Academic Programs</a></li>
+                                <li><a href="/slides" class="d-block mb-2">Admissions</a></li>
+                                <li><a href="/slides" class="d-block mb-2">Tuition &amp; Financial Aid</a></li>
+                                <li><a href="/my/home" class="d-block mb-2">Student Portal</a></li>
                             </ul>
                         </div>
 
@@ -208,10 +208,10 @@
                         <div class="col-lg-2 col-md-6 text-start">
                             <h5>Program</h5>
                             <ul class="list-unstyled mb-0">
-                                <li><a href="/about" class="d-block mb-2">Bachelor’s Degrees</a></li>
-                                <li><a href="/shop" class="d-block mb-2">Master’s Degrees</a></li>
-                                <li><a href="/shop" class="d-block mb-2">Doctoral Programs</a></li>
-                                <li><a href="/shop" class="d-block mb-2">Certificate Programs</a></li>
+                                <li><a href="/slides/all/tag/bachelors-4?prevent_redirect=True" class="d-block mb-2">Bachelor’s Degrees</a></li>
+                                <li><a href="/slides/all/tag/masters-6?prevent_redirect=True" class="d-block mb-2">Master’s Degrees</a></li>
+                                <li><a href="/slides/all/tag/doctrorate-8?prevent_redirect=True" class="d-block mb-2">Doctoral Programs</a></li>
+                                <li><a href="/slides/all/tag/hybrid-dual-degree-9?prevent_redirect=True" class="d-block mb-2">Certificate Programs</a></li>
                                 <li><a href="/shop" class="d-block mb-2">Continuing Education</a></li>
                             </ul>
                         </div>

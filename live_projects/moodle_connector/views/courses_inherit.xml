@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template id="inherit_course_join" inherit_id="website_slides.course_join" name="Inherit Course Join Template" >
-        <xpath expr="//div[contains(@class, 'o_wslides_js_course_join')]" position="inside">
+        <xpath expr="//div[hasclass('o_wslides_js_course_join')]" position="inside">
+
             <style>
                 .o_wslides_js_course_join_link{
                     display: none !important;
@@ -28,24 +29,53 @@
                     display: none !important;
                 }
             </style>
-            <t t-if="channel.application_product_id">
-                <div class="text-center mt-2">
-                    <form action="/shop/cart/update" method="post" class="d-inline">
+            <div class="text-center mt-2">
+
+                <!-- REGISTER AGAIN (highest priority) -->
+                <t t-if="channel.show_register_again">
+                    <form action="/secondtimeregister" method="get">
+                        <input type="hidden" name="course_id" t-att-value="channel.id"/>
+                        <button type="submit" class="btn btn-purple d-block">
+                            <i class="fa fa-repeat"></i>
+                            Register Again
+                        </button>
+                    </form>
+                </t>
+
+                <!-- FIRST TIME REGISTER -->
+                <t t-elif="channel.show_register">
+                    <form action="/shop/cart/update" method="post">
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                         <input type="hidden" name="product_id" t-att-value="channel.application_product_id.id"/>
-                        <input type="hidden" name="custom_course_id" t-att-value="channel.id"/>
                         <input type="hidden" name="add_qty" value="1"/>
                         <button type="submit" class="btn btn-purple d-block">
                             <i class="fa fa-bolt"></i>
                             Register (Pay Application Fee)
                         </button>
                     </form>
-                </div>
-            </t>
+                </t>
+
+                <!-- ADD COURSE TO CART -->
+                <t t-elif="channel.show_add_to_cart">
+                    <form action="/shop/cart/update" method="post">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="product_id" t-att-value="channel.product_id.id"/>
+                        <input type="hidden" name="add_qty" value="1"/>
+                        <button type="submit" class="btn btn-purple d-block">
+                            <i class="fa fa-shopping-cart"></i>
+                            Add Course to Cart
+                        </button>
+                    </form>
+                </t>
+
+            </div>
+
         </xpath>
     </template>
+
     <template id="inherit_course_home" inherit_id="website_slides.courses_home" name="Inherit Courses Homepage">
-        <xpath expr="//div[@id='wrap']/div[contains(@class, 'oe_structure')]/section[contains(@class, 's_banner')]" position="replace">
+        <xpath expr="//div[@id='wrap']/div[hasclass('oe_structure')]/section[hasclass('s_banner')]" position="replace">
+
             <style>
                 .course-banner-section {
                     background: linear-gradient(90deg, #2b174f 20%, #3c1c66 80%);
@@ -140,8 +170,8 @@
                     <!-- Left Image -->
                     <div class="col-lg-4 text-center text-lg-start mb-4 mb-lg-0">
                         <img src="/moodle_connector/static/src/img/course.png"
-                             alt="Christian Counseling Student"
-                             class="student-img shadow-lg"/>
+                                alt="Christian Counseling Student"
+                                class="student-img shadow-lg"/>
                     </div>
 
                     <!-- Right Content -->
@@ -167,11 +197,14 @@
 
                 <!-- Background Illustration -->
                 <img src="/moodle_connector/static/src/img/church_outline.png"
-                     alt="Church Illustration"
-                     class="church-bg"/>
+                        alt="Church Illustration"
+                        class="church-bg"/>
             </div>
             </section>
         </xpath>
-    </template>
-
+    </template>  
 </odoo>
+
+
+
+

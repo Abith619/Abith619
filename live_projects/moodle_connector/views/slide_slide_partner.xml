@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_slide_slide_partner_form_assignment" model="ir.ui.view">
+        <field name="name">slide.slide.partner.form.assignment</field>
+        <field name="model">slide.slide.partner</field>
+        <field name="inherit_id" ref="website_slides.slide_slide_partner_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Insert assignment fields AFTER completed field -->
+            <xpath expr="//field[@name='completed']" position="after">
+                <field name="assignment_attachment_ids" widget="many2many_binary" invisible="not is_assignment"/>
+                <field name="assignment_marks" invisible="not is_assignment"/>
+                <field name="is_lesson_custom_marks"/>
+                <field name="lesson_custom_marks" invisible="not is_lesson_custom_marks"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

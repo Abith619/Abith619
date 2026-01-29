@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_student_master" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="res_model">student.master</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+    <!-- FACULTY -->
+    <record id="action_faculty_master" model="ir.actions.act_window">
+        <field name="name">Faculty</field>
+        <field name="res_model">faculty.master</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- COURSES -->
+    <record id="action_lcu_courses" model="ir.actions.act_window">
+        <field name="name">Courses</field>
+        <field name="res_model">slide.channel</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+    <!-- GRADES -->
+    <record id="action_course_grade" model="ir.actions.act_window">
+        <field name="name">Grades</field>
+        <field name="res_model">course.grade</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <!-- STUDENT ANALYTICS -->
+    <record id="action_lcu_student_analytics" model="ir.actions.act_window">
+        <field name="name">Student Analytics</field>
+        <field name="res_model">slide.channel.partner</field>
+        <field name="view_mode">graph,pivot,list</field>
+    </record>
+
+    <menuitem id="menu_lcu_root"
+                name="LCU"
+                sequence="40"/>
+
+    <!-- ACADEMICS -->
+    <menuitem id="menu_lcu_academics"
+                name="Academics"
+                parent="menu_lcu_root"
+                sequence="10"/>
+
+    <!-- STUDENTS -->
+    <menuitem id="menu_lcu_students"
+                name="Students"
+                parent="menu_lcu_academics"
+                action="action_student_master"
+                sequence="10"/>
+
+        <!-- FACULTY -->
+    <menuitem id="menu_lcu_faculty"
+                name="Faculty"
+                parent="menu_lcu_academics"
+                action="action_faculty_master"
+                sequence="20"/>
+
+    <!-- COURSES -->
+    <menuitem id="menu_lcu_courses"
+                name="Courses"
+                parent="menu_lcu_academics"
+                action="action_lcu_courses"
+                sequence="30"/>
+
+    <!-- CONFIGURATION -->
+    <menuitem id="menu_lcu_configuration"
+                name="Configuration"
+                parent="menu_lcu_root"
+                sequence="50"/>
+    <!-- STUDENT ANALYTICS MENU -->
+    <menuitem id="menu_lcu_student_analytics"
+            name="Student Analytics"
+            parent="menu_lcu_academics"
+            action="action_lcu_student_analytics"
+            sequence="40"/>
+
+
+    <!-- GRADES MENU -->
+    <menuitem id="menu_lcu_grades"
+                name="Grades"
+                parent="menu_lcu_configuration"
+                action="action_course_grade"
+                sequence="10"/>
+
+</odoo>

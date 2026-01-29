@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_crm_stage_form_is_approved" model="ir.ui.view">
+        <field name="name">crm.stage.form.is.approved</field>
+        <field name="model">crm.stage</field>
+        <field name="priority">20</field>
+
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="is_approved"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

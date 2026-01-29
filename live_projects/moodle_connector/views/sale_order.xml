@@ -9,6 +9,8 @@
             <!-- Add field under Customer -->
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="lead_id" options="{'no_open': True}"/>
+                <field name="payment_proof" filename="payment_proof_filename"/>
+                <field name="payment_proof_filename" invisible="1"/>
             </xpath>
 
         </field>

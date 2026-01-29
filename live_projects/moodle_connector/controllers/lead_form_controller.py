@@ -20,9 +20,9 @@ class WebsiteSaleController(WebsiteSale):
         'proof_upload', 'transcript_upload'
     ]
 
-    # ------------------------------------------------------------------------------------
-    # Build HTML Description For Lead
-    # ------------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
+    # BUILD LEAD DESCRIPTION
+    # -------------------------------------------------------------------------
     def _section_html(self, title, fields, post):
         html = [f"<h3 style='color:#004080;'>{title}</h3>"]
         for key in fields:
@@ -80,202 +80,608 @@ class WebsiteSaleController(WebsiteSale):
         ]
         return "".join(parts)
 
-    # ------------------------------------------------------------------------------------
-    # Upload all binaries + PDFs to CRM Lead
-    # ------------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
+    # FILE UPLOADS
+    # -------------------------------------------------------------------------
     def _upload_files_to_lead(self, lead):
         if not lead:
             return
 
-        _logger.info("Uploading all files to CRM Lead %s", lead.id)
-
-        # ---------------- Binary Uploads ----------------
         for field_name in self.binary_fields:
             file = request.httprequest.files.get(field_name)
             if file:
-                try:
-                    data = base64.b64encode(file.read())
-                    lead.sudo().write({field_name: data})
-                    _logger.info("Uploaded binary/image for %s to Lead %s", field_name, lead.id)
-                except Exception as e:
-                    _logger.warning("Binary upload failed for %s: %s", field_name, e)
+                lead.sudo().write({
+                    field_name: base64.b64encode(file.read())
+                })
 
-        # ---------------- PDF Uploads (multi-upload) ----------------
         for field_name in self.pdf_fields:
-            uploaded_files = request.httprequest.files.getlist(field_name)
-            if not uploaded_files:
-                _logger.debug("No files provided for %s", field_name)
-                continue
-
+            files = request.httprequest.files.getlist(field_name)
             attachment_ids = []
-            for file in uploaded_files:
-                try:
-                    filename = file.filename
-                    if not filename.lower().endswith('.pdf'):
-                        _logger.warning("Skipped non-PDF file: %s", filename)
-                        continue
-
-                    data = base64.b64encode(file.read())
-
-                    attachment = request.env['ir.attachment'].sudo().create({
-                        'name': filename,
+            for file in files:
+                if file.filename.lower().endswith('.pdf'):
+                    att = request.env['ir.attachment'].sudo().create({
+                        'name': file.filename,
                         'type': 'binary',
-                        'mimetype': 'application/pdf',
-                        'datas': data,
+                        'datas': base64.b64encode(file.read()),
                         'res_model': 'crm.lead',
                         'res_id': lead.id,
+                        'mimetype': 'application/pdf'
                     })
-                    attachment_ids.append(attachment.id)
-
-                    _logger.info("Uploaded PDF '%s' for %s", filename, field_name)
-
-                except Exception as e:
-                    _logger.error("Failed PDF upload (%s) for field %s: %s", filename, field_name, e)
+                    attachment_ids.append(att.id)
 
             if attachment_ids:
-                lead.sudo().write({field_name: [(6, 0, attachment_ids)]})
-                _logger.info("Linked %d PDFs to field %s", len(attachment_ids), field_name)
+                lead.sudo().write({
+                    field_name: [(6, 0, attachment_ids)]
+                })
 
-        _logger.info("File upload complete for Lead %s", lead.id)
-
-    # ------------------------------------------------------------------------------------
-    # Partner Handling
-    # ------------------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
+    # PARTNER
+    # -------------------------------------------------------------------------
     def _get_or_create_partner(self, post):
         email = (post.get('email') or '').strip()
         if not email:
-            return None
+            return False
+        return request.env['res.partner'].sudo().search(
+            [('email', '=', email)], limit=1
+        )
 
-        partner = request.env['res.partner'].sudo().search([('email', '=', email)], limit=1)
-        if partner:
-            return partner
+    # -------------------------------------------------------------------------
+    # LEAD
+    # -------------------------------------------------------------------------
+    def _get_or_create_lead(self, post, partner, description):
+        email = post.get('email')
+        course_id = post.get('Course_details')
 
-        # Do NOT create new partner — requirement says reuse only
-        return None
-
-    # ------------------------------------------------------------------------------------
-    # Lead Handling
-    # ------------------------------------------------------------------------------------
-    def _get_or_create_lead(self, post, partner, description_html):
-        email = (post.get('email') or '').strip()
-        course = post.get('Course_details')
-
-        _logger.info("course Value", course)
-
-        lead = request.env['crm.lead'].sudo().search([('email_from', '=', email)], limit=1)
+        lead = request.env['crm.lead'].sudo().search(
+            [('email_from', '=', email)], limit=1
+        )
         if lead:
             return lead
 
         vals = {
-            'name': f"Admission Enquiry - {post.get('legal_first_name', '')} {post.get('legal_last_name', '')}",
+            'name': f"Admission Enquiry - {post.get('legal_first_name','')}",
             'email_from': email,
             'phone': post.get('phone'),
             'partner_id': partner.id if partner else False,
-            'description': description_html,
-            'course_id': course
+            'description': description,
         }
 
-        # Link course
-        course_id = post.get('Course_details')
         if course_id:
             course = request.env['slide.channel'].sudo().browse(int(course_id))
-            if course :
-                _logger.info("Linking Course %s to Lead", course.name)
-                vals['course_id'] = course.id
-                vals['expected_revenue'] = course.product_id.lst_price
+            if course:
+                vals.update({
+                    'course_id': course.id,
+                    'expected_revenue': course.product_id.lst_price
+                })
 
         return request.env['crm.lead'].sudo().create(vals)
 
-    @http.route('/shop/address/submit', type='http', methods=['POST'], auth='public', website=True, csrf=False)
-    def shop_address_submit(self, **post):
-        _logger.info("Admission Submit Hit — Creating/Updating Lead")
+    # def _create_or_update_student(self, post, lead, partner):
+    #     Student = request.env['student.master'].sudo()
+    #     email = post.get('email')
 
-        com_channels = request.httprequest.form.getlist('communication_channels[]')
-        post['communication_channels'] = com_channels
+    #     # ---------- NAME FALLBACK ----------
+    #     first_name = post.get('legal_first_name')
+    #     last_name = post.get('legal_last_name')
+
+    #     if first_name or last_name:
+    #         name = f"{first_name or ''} {last_name or ''}".strip()
+    #     elif partner and partner.name:
+    #         name = partner.name
+    #     elif email:
+    #         name = email.split('@')[0]
+    #     else:
+    #         name = "Student"
+
+    #     # ---------- SAFE DATE HANDLING ----------
+    #     dob = post.get('dob') or False
+    #     prior_dates = post.get('prior_dates') or False
+
+    #     student = Student.search([
+    #         '|',
+    #         ('lead_id', '=', lead.id),
+    #         ('email', '=', email)
+    #     ], limit=1)
+
+    #     vals = {
+    #         # BASIC
+    #         'name': name,
+    #         'email': email,
+    #         'phone': post.get('phone'),
+    #         'dob': dob,   # ✅ SAFE
+    #         'gender': post.get('gender'),
+
+    #         'country_of_residence': post.get('country_of_residence'),
+    #         'nationality': post.get('nationality'),
+    #         'time_zone': post.get('time_zone'),
+
+    #         # GUARDIAN
+    #         'underage_consent': post.get('underage_consent'),
+    #         'guardian_name': post.get('guardian_name'),
+    #         'guardian_relationship': post.get('guardian_relationship'),
+    #         'guardian_phone': post.get('guardian_phone'),
+    #         'guardian_email': post.get('guardian_email'),
+
+    #         # SPONSOR
+    #         'has_sponsor': post.get('has_sponsor'),
+    #         'sponsor_name': post.get('sponsor_name'),
+    #         'sponsor_relationship': post.get('sponsor_relationship'),
+    #         'sponsor_phone': post.get('sponsor_phone'),
+    #         'sponsor_email': post.get('sponsor_email'),
+
+    #         # ACADEMIC
+    #         'highest_qualification': post.get('highest_qualification'),
+    #         'last_institution': post.get('last_institution'),
+    #         'graduation_year': post.get('graduation_year'),
+    #         'gpa': post.get('gpa'),
+
+    #         'prior_attendance': post.get('prior_attendance'),
+    #         'prior_institution_name': post.get('prior_institution_name'),
+    #         'prior_program': post.get('prior_program'),
+    #         'prior_dates': prior_dates,   # ✅ SAFE
+    #         'prior_credits': post.get('prior_credits'),
+    #         'prior_reason': post.get('prior_reason'),
+
+    #         # RELATIONS
+    #         'partner_id': partner.id if partner else False,
+    #         'lead_id': lead.id,
+    #     }
+
+    #     if student:
+    #         student.write(vals)
+    #     else:
+    #         student = Student.create(vals)
+
+    #     lead.sudo().write({'student_id': student.id})
+    #     return student
+    def _create_or_update_student(self, post, lead, partner):
+        Student = request.env['student.master'].sudo()
+        email = post.get('email')
+
+        # ---------- NAME ----------
+        first = post.get('legal_first_name')
+        last = post.get('legal_last_name')
+        name = (
+            f"{first or ''} {last or ''}".strip()
+            or (partner.name if partner else False)
+            or email.split('@')[0]
+        )
+
+        student = Student.search([
+            '|',
+            ('lead_id', '=', lead.id),
+            ('email', '=', email)
+        ], limit=1)
+
+        # ---------- BASIC ----------
+        vals = {
+            'name': name,
+            'email': email,
+            'phone': post.get('phone'),
+            'dob': post.get('dob') or False,
+            'gender': post.get('gender'),
+            'country_of_residence': post.get('country_of_residence'),
+            'nationality': post.get('nationality'),
+            'time_zone': post.get('time_zone'),
+            'highest_qualification': post.get('highest_qualification'),
+            'last_institution': post.get('last_institution'),
+            'graduation_year': post.get('graduation_year'),
+            'gpa': post.get('gpa'),
+            'partner_id': partner.id if partner else False,
+            'lead_id': lead.id,
+        }
+
+        # ---------- GUARDIAN ----------
+        if post.get('underage_consent') == 'yes':
+            vals.update({
+                'underage_consent': 'yes',
+                'guardian_name': post.get('guardian_name'),
+                'guardian_relationship': post.get('guardian_relationship'),
+                'guardian_phone': post.get('guardian_phone'),
+                'guardian_email': post.get('guardian_email'),
+            })
+        else:
+            vals.update({
+                'underage_consent': 'no',
+                'guardian_name': False,
+                'guardian_relationship': False,
+                'guardian_phone': False,
+                'guardian_email': False,
+            })
+
+        # ---------- SPONSOR ----------
+        if post.get('has_sponsor') == 'yes':
+            vals.update({
+                'has_sponsor': 'yes',
+                'sponsor_name': post.get('sponsor_name'),
+                'sponsor_relationship': post.get('sponsor_relationship'),
+                'sponsor_phone': post.get('sponsor_phone'),
+                'sponsor_email': post.get('sponsor_email'),
+            })
+        else:
+            vals.update({
+                'has_sponsor': 'no',
+                'sponsor_name': False,
+                'sponsor_relationship': False,
+                'sponsor_phone': False,
+                'sponsor_email': False,
+            })
+
+        # ---------- PRIOR ATTENDANCE ----------
+        if post.get('prior_attendance') == 'yes':
+            vals.update({
+                'prior_attendance': 'yes',
+                'prior_institution_name': post.get('prior_institution_name'),
+                'prior_program': post.get('prior_program'),
+                'prior_dates': post.get('prior_dates') or False,
+                'prior_credits': post.get('prior_credits'),
+                'prior_reason': post.get('prior_reason'),
+            })
+        else:
+            vals.update({
+                'prior_attendance': 'no',
+                'prior_institution_name': False,
+                'prior_program': False,
+                'prior_dates': False,
+                'prior_credits': False,
+                'prior_reason': False,
+            })
+
+        # ---------- CREATE / UPDATE ----------
+        if student:
+            student.write(vals)
+        else:
+            student = Student.create(vals)
+
+        lead.sudo().write({'student_id': student.id})
+        return student
+
+    # -------------------------------------------------------------------------
+    # FIRST TIME SUBMISSION
+    # -------------------------------------------------------------------------
+    @http.route('/shop/address/submit', type='http', methods=['POST'],
+                auth='public', website=True, csrf=False)
+    def shop_address_submit(self, **post):
+
+        post['communication_channels'] = request.httprequest.form.getlist(
+            'communication_channels[]'
+        )
 
         description = self._build_description(post)
-
         partner = self._get_or_create_partner(post)
         lead = self._get_or_create_lead(post, partner, description)
 
-        # ---- Upload all files ----
-        try:
-            self._upload_files_to_lead(lead)
-        except Exception:
-            _logger.exception("File upload block failed")
+        # self._create_or_update_student(post, lead, partner)
+        self._upload_files_to_lead(lead)
+        # 🔹 STEP 2: Create / Update STUDENT
+        student = self._create_or_update_student(post, lead, partner)
 
-        # ---- Save into session ----
-        try:
-            if partner:
-                request.session['partner_id'] = partner.id
-            request.session['lead_id_from_admission'] = lead.id
-        except Exception:
-            _logger.exception("Failed to store partner/lead in session")
+        # 🔹 STEP 3: COPY PHOTO → STUDENT
+        if lead.photo and student:
+            student.sudo().write({
+                'photo': lead.photo
+            })
 
-        # ---- Attach lead/partner to cart ----
-        try:
-            order = request.website.sale_get_order(force_create=False)
-            if order:
-                write_vals = {
-                    'lead_id': lead.id,
-                }
-                if partner:
-                    write_vals.update({
-                        'partner_id': partner.id,
-                        'partner_invoice_id': partner.id,
-                        'partner_shipping_id': partner.id,
-                    })
-                order.sudo().write(write_vals)
-        except Exception:
-            _logger.exception("Failed attaching partner/lead to cart")
 
-        return super(WebsiteSaleController, self).shop_address_submit(**post)
+        request.session['lead_id_from_admission'] = lead.id
+        if partner:
+            request.session['partner_id'] = partner.id
 
-    # ------------------------------------------------------------------------------------
-    # Checkout Route — Apply Session Partner
-    # ------------------------------------------------------------------------------------
-    @http.route(['/shop/checkout'], type='http', auth="public", website=True)
-    def shop_checkout(self, try_skip_step=None, **query_params):
-        partner_id = request.session.get('partner_id')
+        order = request.website.sale_get_order(force_create=False)
+        if order:
+            order.sudo().write({
+                'lead_id': lead.id,
+                'partner_id': partner.id if partner else False,
+                'partner_invoice_id': partner.id if partner else False,
+                'partner_shipping_id': partner.id if partner else False,
+            })
 
-        if partner_id:
-            try:
-                order = request.website.sale_get_order(force_create=False)
-                if order:
-                    partner = request.env['res.partner'].sudo().browse(partner_id)
-                    order.sudo().write({
-                        'partner_id': partner.id,
-                        'partner_invoice_id': partner.id,
-                        'partner_shipping_id': partner.id,
-                    })
-            except Exception:
-                _logger.exception("Failed enforcing session partner on checkout")
+        return super().shop_address_submit(**post)
+    def _section_second_html(self, title, fields, post):
+        html = [f"<h3 style='color:#004080;'>{title}</h3>"]
+        for key in fields:
+            val = post.get(key)
+            if val:
+                html.append(
+                    f"<b>{key.replace('_', ' ').title()}:</b> {val}<br/>"
+                )
+        return "".join(html)
 
-        return super(WebsiteSaleController, self).shop_checkout(try_skip_step=try_skip_step, **query_params)
+    def _build_second_description(self, post):
 
-    # ------------------------------------------------------------------------------------
-    # Shop Address (adds dynamic fields)
-    # ------------------------------------------------------------------------------------
+        html = [
+            "<h2>🎓 Admission Form – Reapplying Course</h2><hr/>"
+        ]
+        if post.get('previous_course_id'):
+            course = request.env['slide.channel'].sudo().browse(
+                int(post.get('previous_course_id'))
+            )
+            html.append("<h3 style='color:#004080;'>Previous Enrollment Details</h3>")
+            html.append(f"<b>Previously Enrolled Course (Lead):</b> {course.name}<br/>")
+        if post.get('previous_lead_id'):
+            html.append(f"<b>Previous Lead ID:</b> {post.get('previous_lead_id')}<br/>")
+
+        if post.get('previous_course'):
+            html.append(
+                f"<b>Previous Courses Applied / Purchased:</b> {post.get('previous_course')}<br/>"
+            )
+
+        html.append(self._section_second_html(
+            "Academic Information",
+            [
+                'academic_level',
+                'enrollment_load',
+                'pacing_expectation',
+                'rolling_admission_start'
+            ],
+            post
+        ))
+
+        return "".join(html)
+
+    @http.route('/secondtimeregister', type='http',
+            auth='public', website=True)
+    def second_time_register_form(self, **kw):
+
+        course_id = int(kw.get('course_id', 0))
+        course = request.env['slide.channel'].sudo().browse(course_id)
+
+        if not course.exists():
+            return request.redirect('/slides')
+
+        partner = (
+            request.env.user.partner_id
+            if not request.env.user._is_public()
+            else False
+        )
+
+        old_lead = False
+        previous_courses = False
+
+        if partner and partner.email:
+            won_stage = request.env['crm.stage'].sudo().search(
+                [('name', '=', 'Won')], limit=1
+            )
+
+            old_leads = request.env['crm.lead'].sudo().search([
+                ('email_from', '=', partner.email),
+                ('course_id', '!=', False),
+                ('stage_id', '=', won_stage.id),
+            ])
+
+            old_lead = old_leads[:1] if old_leads else False
+            previous_courses = ', '.join(old_leads.mapped('course_id.name'))
+
+        return request.render(
+            'moodle_connector.second_time_register_form',
+            {
+                'course': course,
+                'partner': partner,
+                'old_lead': old_lead,
+                'previous_course': previous_courses,
+                'months': [
+                    'january','february','march','april','may','june',
+                    'july','august','september','october','november','december'
+                ],
+                'years': list(range(2020, 2031)),
+                'today': date.today().strftime("%Y-%m-%d"),
+            }
+        )
+    # @http.route('/secondtimeregister/submit', type='http',
+    #         auth="public", website=True, csrf=False)
+    # def second_time_register_submit(self, **post):
+    #     course_id = int(post.get('course_id', 0))
+    #     course = request.env['slide.channel'].sudo().browse(course_id)
+
+    #     if not course.exists():
+    #         return request.redirect('/courses')
+        
+
+    #     partner = request.env['res.partner'].sudo().search(
+    #         [('email', '=', post.get('email'))], limit=1
+    #     )
+    #     student = request.env['student.master'].sudo().search(
+    #         [('email', '=', post.get('email'))],
+    #         limit=1
+    #     )
+    #     previous_leads = request.env['crm.lead'].sudo().search([
+    #         ('email_from', '=', post.get('email')),
+    #         ('course_id', '!=', False),
+    #     ])
+
+    #     previous_lead = previous_leads[:1] if previous_leads else False
+    #     previous_courses = ', '.join(
+    #         set(previous_leads.mapped('course_id.name'))
+    #     ) if previous_leads else False
+
+    #     lead = request.env['crm.lead'].sudo().create({
+    #         'name': f"Admission Enquiry - {post.get('email')}",
+    #         'email_from': post.get('email'),
+    #         'phone': post.get('phone'),
+    #         'partner_id': partner.id if partner else False,
+    #         'course_id': course.id,
+    #         'description': self._build_second_description(post),
+    #         'expected_revenue': (
+    #             course.application_product_id.lst_price
+    #             if course.application_product_id else 0.0
+    #         ),
+    #     })
+
+    #     if student:
+    #         student.sudo().write({
+    #             'previous_lead_id': previous_lead.id if previous_lead else False,
+    #             'previous_courses': previous_courses,
+    #             'lead_id': lead.id,  # latest application
+    #         })
+    #     order = request.website.sale_get_order(force_create=True)
+
+    #     if course.application_product_id:
+    #         order._cart_update(
+    #             product_id=course.application_product_id.id,
+    #             add_qty=1
+    #         )
+
+    #     order.sudo().write({
+    #         'lead_id': lead.id,
+    #         'partner_id': partner.id if partner else False,
+    #         'partner_invoice_id': partner.id if partner else False,
+    #         'partner_shipping_id': partner.id if partner else False,
+    #     })
+
+    #     request.session['lead_id_from_admission'] = lead.id
+    #     if partner:
+    #         request.session['partner_id'] = partner.id
+
+    #     return request.redirect('/shop/checkout')
+    @http.route('/secondtimeregister/submit', type='http',
+            auth="public", website=True, csrf=False)
+    def second_time_register_submit(self, **post):
+
+        # --------------------------------------------------
+        # COURSE
+        # --------------------------------------------------
+        course_id = int(post.get('course_id', 0))
+        course = request.env['slide.channel'].sudo().browse(course_id)
+
+        if not course.exists():
+            return request.redirect('/slides')
+
+        # --------------------------------------------------
+        # BUILD APPLICANT NAME (FIRST + LAST)
+        # --------------------------------------------------
+        first_name = (post.get('legal_first_name') or '').strip()
+        last_name = (post.get('legal_last_name') or '').strip()
+
+        if first_name or last_name:
+            applicant_name = f"{first_name} {last_name}".strip()
+        else:
+            applicant_name = post.get('email')
+
+        # --------------------------------------------------
+        # PARTNER
+        # --------------------------------------------------
+        partner = request.env['res.partner'].sudo().search(
+            [('email', '=', post.get('email'))],
+            limit=1
+        )
+
+        # --------------------------------------------------
+        # STUDENT (DO NOT OVERWRITE DETAILS)
+        # --------------------------------------------------
+        student = request.env['student.master'].sudo().search(
+            [('email', '=', post.get('email'))],
+            limit=1
+        )
+
+        # --------------------------------------------------
+        # FETCH PREVIOUS LEADS (READ ONLY)
+        # --------------------------------------------------
+        previous_leads = request.env['crm.lead'].sudo().search([
+            ('email_from', '=', post.get('email')),
+            ('course_id', '!=', False),
+        ])
+
+        previous_lead = previous_leads[:1] if previous_leads else False
+
+        previous_courses = (
+            ', '.join(set(previous_leads.mapped('course_id.name')))
+            if previous_leads else False
+        )
+
+        # --------------------------------------------------
+        # CREATE NEW LEAD (IMPORTANT)
+        # --------------------------------------------------
+        lead = request.env['crm.lead'].sudo().create({
+            'name': f"Admission Enquiry - {applicant_name}",
+            'email_from': post.get('email'),
+            'phone': post.get('phone'),
+            'partner_id': partner.id if partner else False,
+            'course_id': course.id,
+            'description': self._build_second_description(post),
+            'previous_lead_id': previous_lead.id if previous_lead else False,
+            'expected_revenue': (
+                course.application_product_id.lst_price
+                if course.application_product_id else 0.0
+            
+            ),
+        })
+
+        # --------------------------------------------------
+        # UPDATE STUDENT MASTER (HISTORY ONLY)
+        # --------------------------------------------------
+        if student:
+            student.sudo().write({
+                'previous_lead_id': previous_lead.id if previous_lead else False,
+                'previous_courses': previous_courses,
+                'lead_id': lead.id,   # latest application
+            })
+        else:
+            # safety fallback (should not usually happen)
+            student = request.env['student.master'].sudo().create({
+                'name': applicant_name,
+                'email': post.get('email'),
+                'phone': post.get('phone'),
+                'partner_id': partner.id if partner else False,
+                'lead_id': lead.id,
+                'previous_lead_id': previous_lead.id if previous_lead else False,
+                'previous_courses': previous_courses,
+            })
+
+        # --------------------------------------------------
+        # 🔥 THIS IS THE MISSING LINK (MOST IMPORTANT)
+        # --------------------------------------------------
+        lead.sudo().write({
+            'student_id': student.id
+        })
+
+
+        # --------------------------------------------------
+        # CART + CHECKOUT
+        # --------------------------------------------------
+        order = request.website.sale_get_order(force_create=True)
+
+        if course.application_product_id:
+            order._cart_update(
+                product_id=course.application_product_id.id,
+                add_qty=1
+            )
+
+        order.sudo().write({
+            'lead_id': lead.id,
+            'partner_id': partner.id if partner else False,
+            'partner_invoice_id': partner.id if partner else False,
+            'partner_shipping_id': partner.id if partner else False,
+        })
+
+        # --------------------------------------------------
+        # SESSION
+        # --------------------------------------------------
+        request.session['lead_id_from_admission'] = lead.id
+        if partner:
+            request.session['partner_id'] = partner.id
+
+        return request.redirect('/shop/checkout')
+
+
+
+    # -------------------------------------------------------------------------
+    # SHOP ADDRESS EXTENSION
+    # -------------------------------------------------------------------------
     @http.route(['/shop/address'], type='http', auth="public", website=True)
     def shop_address(self, **kw):
         response = super().shop_address(**kw)
 
-        courses = request.env['slide.channel'].sudo().search([])
-        time_zones = pytz.all_timezones
-        months = [
-            'january','february','march','april','may','june',
-            'july','august','september','october','november','december'
-        ]
-        years = list(range(2020, 2031))
-
-        today = date.today().strftime("%Y-%m-%d")
-
         response.qcontext.update({
-            'courses': courses,
-            'time_zones': time_zones,
-            'months': months,
-            'years': years,
-            'today': today,
+            'courses': request.env['slide.channel'].sudo().search([]),
+            'time_zones': pytz.all_timezones,
+            'months': [
+                'january','february','march','april','may','june',
+                'july','august','september','october','november','december'
+            ],
+            'years': list(range(2020, 2031)),
+            'today': date.today().strftime("%Y-%m-%d"),
         })
-
         return response
+
+
+

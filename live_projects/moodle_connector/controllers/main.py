@@ -3,6 +3,8 @@ from odoo.http import request
 import requests
 import logging
 import uuid
+import base64
+from odoo.addons.sale.controllers.portal import CustomerPortal
 
 _logger = logging.getLogger(__name__)
 
@@ -253,3 +255,71 @@ class PayPalCustomController(http.Controller):
         order._cart_update(product_id=product.id, add_qty=1)
         checkout_url = f"/shop/cart?product_id={product.id}&token={token}&lead_id={lead.id}"
         return request.redirect(checkout_url)
+
+    @http.route('/manual/payment/submit', type='http', auth='public', website=True, csrf=False)
+    def submit_manual_payment(self, **post):
+
+        lead_id = post.get("lead_id")
+        file = request.httprequest.files.get("upload_proof")
+
+        if not file:
+            _logger.info("No file uploaded for manual payment.")
+            return request.redirect("/shop")
+
+        if lead_id:
+            lead = request.env["crm.lead"].sudo().browse(int(lead_id))
+            if not lead.exists():
+                return request.redirect("/shop")
+
+            lead.write({
+                "payment_proof": base64.b64encode(file.read()),
+                "payment_proof_filename": file.filename,
+            })
+
+            sale_order = request.env["sale.order"].sudo().search(
+                [("lead_id", "=", lead.id)],
+                limit=1
+            )
+
+        # =====================================================
+        # CASE 2️⃣ : ADD TO CART FLOW (NO LEAD)
+        # =====================================================
+        else:
+            website = request.env['website'].get_current_website()
+            sale_order = website.sale_get_order()
+
+            if not sale_order:
+                return request.redirect("/shop")
+
+            # Save proof on SALE ORDER
+            sale_order.sudo().write({
+                "payment_proof": base64.b64encode(file.read()),
+                "payment_proof_filename": file.filename,
+            })
+
+        # =====================================================
+        # COMMON SALE ORDER LOGIC (UNCHANGED)
+        # =====================================================
+        if sale_order:
+            portal_partner = request.env.user.partner_id.commercial_partner_id
+
+            sale_order.write({
+                "partner_id": portal_partner.id,
+                "partner_invoice_id": portal_partner.id,
+                "partner_shipping_id": portal_partner.id,
+            })
+
+            sale_order.message_subscribe([portal_partner.id])
+            sale_order._portal_ensure_token()
+
+            if sale_order.state == 'draft':
+                sale_order.write({'state': 'sent'})
+
+                template = request.env.ref('sale.email_template_edi_sale')
+                template.sudo().send_mail(
+                    sale_order.id,
+                    force_send=True
+                )
+
+        return request.redirect('/my/quotes')
+

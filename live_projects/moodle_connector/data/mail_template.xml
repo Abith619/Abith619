@@ -4,14 +4,19 @@
         <record id="email_template_approve_lead" model="mail.template">
             <field name="name">Lead Approved Email</field>
             <field name="model_id" ref="crm.model_crm_lead"/>
-            <field name="email_from">${(object.company_id.email or user.email_formatted) or ''}</field>
-            <field name="email_to">${object.email_from}</field>
+            <field name="email_from">{{object.company_id.email}}</field>
+            <field name="email_to">{{ object.partner_id.email }}</field>
             <field name="subject">Your Application has been Approved</field>
             <field name="body_html" type="html">
-                <p>Dear ${object.partner_name or object.contact_name or 'Customer'},</p>
+                <p>Dear
+                        <strong>
+                            <t t-out="object.partner_id.name"/>
+                        </strong>
+                        ,
+                    </p>
                 <p>Thank you for your interest.</p>
                 <p>Please complete your payment using the link below:</p>
-                <p><a href="${object.payment_link}">Pay Now via PayPal</a></p>
+                <p><a t-att-href="object.payment_link"><b>Pay Now via PayPal</b> </a></p>
                 <p>Once payment is confirmed, your course will be automatically assigned.</p>
             </field>
         </record>
@@ -19,8 +24,8 @@
         <record id="email_template_reject_lead" model="mail.template">
             <field name="name">Lead Rejected Email</field>
             <field name="model_id" ref="crm.model_crm_lead"/>
-            <field name="email_from">{{ object.user_id }}</field>
-            <field name="email_to">{{ object.email_from }}</field>
+            <field name="email_from">{{object.company_id.email}}</field>
+            <field name="email_to">{{ object.partner_id.email }}</field>
             <field name="subject">Your Application has been Declined</field>
             <field name="body_html" type="html">
                     <p>Dear

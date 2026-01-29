@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="portal_my_quotations_pending_only"
+                inherit_id="sale.portal_my_quotations"
+                name="Portal My Quotations - Pending Only">
+
+        <xpath expr="//t[@t-call='portal.portal_searchbar']" position="inside">
+            <script type="text/javascript">
+                document.addEventListener('DOMContentLoaded', function () {
+
+                    /* 1️⃣ Change browser tab title safely */
+                    document.title = "Pending Quotations";
+
+                    /* 2️⃣ Change portal page heading safely */
+                    var titleEl =
+                        document.querySelector('.o_portal_searchbar h1') ||
+                        document.querySelector('.o_portal_searchbar_title') ||
+                        document.querySelector('h1');
+
+                    if (titleEl) {
+                        titleEl.textContent = "Pending Quotations";
+                    }
+
+                    /* 3️⃣ Change breadcrumb text safely */
+                    var breadcrumb = document.getElementById('portal_breadcrumbs_sale');
+                    if (breadcrumb) {
+                        breadcrumb.textContent = "Pending Quotations";
+                    }
+                });
+            </script>
+        </xpath>
+
+
+        <xpath expr="//t[@t-call='portal.portal_table']/thead/tr" position="replace">
+            <tr class="active">
+                <th>Pending Quotation #</th>
+                <th class="text-end">Pending Quotation Date</th>
+                <th class="text-end">Valid Until</th>
+                <th class="text-center">Status</th>
+                <th class="text-end">Total</th>
+            </tr>
+        </xpath>
+
+    </template>
+
+</odoo>

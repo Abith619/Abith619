@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- =========================================================
+         COURSE RESULT CARD (WEBSITE)
+    ========================================================== -->
+    <template id="course_xp_card" name="Course Result Card">
+
+        <t t-if="not user._is_public()">
+
+            <!-- Progress Percentage -->
+            <t t-set="progress_percent"
+               t-value="int((channel.website_completed_slides / channel.website_total_slides) * 100)
+                        if channel.website_total_slides else 0"/>
+
+            <div class="o_course_xp_card mt-3 p-3 text-center border rounded">
+
+                <!-- ================= Progress Ring ================= -->
+                <div class="o_course_xp_ring mx-auto mb-2">
+                    <svg viewBox="0 0 36 36">
+                        <path class="o_course_xp_bg"
+                              d="M18 2.0845
+                                 a 15.9155 15.9155 0 0 1 0 31.831
+                                 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                        <path class="o_course_xp_progress"
+                              t-attf-stroke-dasharray="#{progress_percent}, 100"
+                              d="M18 2.0845
+                                 a 15.9155 15.9155 0 0 1 0 31.831
+                                 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                    </svg>
+                    <div class="fw-bold">
+                        <t t-esc="progress_percent"/>%
+                    </div>
+                </div>
+
+                <hr/>
+
+                <!-- ================= Lesson Completion ================= -->
+                <small class="text-muted d-block mb-2">
+                    <t t-esc="channel.website_completed_slides"/>
+                    /
+                    <t t-esc="channel.website_total_slides"/>
+                    lessons completed
+                </small>
+
+                <!-- ================= Lesson Marks (ALWAYS VISIBLE) ================= -->
+                <t t-if="channel.website_show_results">
+                    <div>
+                        Lesson Marks:
+                        <b>
+                            <t t-esc="channel.website_total_lesson_marks"/>
+                        </b>
+                    </div>
+
+                    <!-- ================= Quiz Marks (ALWAYS VISIBLE) ================= -->
+                    <div>
+                        Quiz Marks:
+                        <b>
+                            <t t-esc="channel.website_quiz_marks"/>
+                            /
+                            <t t-esc="channel.website_quiz_out_of"/>
+                        </b>
+                    </div>
+
+                    <div>
+                        Assignment Marks:
+                        <b>
+                            <t t-esc="channel.website_assignment_marks"/>
+                        </b>
+                    </div>
+
+                    <div>
+                        Total User Marks:
+                        <b>
+                            <t t-esc="round(channel.website_user_total_marks)"/>
+                        </b>
+                    </div>
+
+                    <div>
+                        Total Marks:
+                        <b>
+                            <t t-esc="round(channel.website_overall_total_marks)"/>
+                        </b>
+                    </div>
+
+                    <div>
+                        Total Percentage:
+                        <b>
+                            <t t-esc="round(channel.website_overall_percentage)"/>%
+                        </b>
+                    </div>
+
+                    <div class="mt-2" t-if="channel.website_grade_name">
+                        Grade:
+                        <span class="badge"
+                              t-att-class="
+                                  'bg-success' if channel.website_grade_name in ['A', 'A+'] else
+                                  'bg-info' if channel.website_grade_name == 'B' else
+                                  'bg-warning' if channel.website_grade_name == 'C' else
+                                  'bg-danger'
+                              ">
+                            <t t-esc="channel.website_grade_name"/>
+                        </span>
+                    </div>
+
+                </t>
+
+            </div>
+        </t>
+    </template>
+
+    <!-- =========================================================
+         INHERIT COURSE SIDEBAR
+    ========================================================== -->
+    <template id="inherit_course_sidebar_xp"
+                inherit_id="website_slides.course_sidebar">
+
+        <xpath expr="//button[hasclass('o_wslides_share')]/parent::div"
+            position="after">
+
+            <t t-call="moodle_connector.course_xp_card"/>
+        </xpath>
+
+    </template>
+
+</odoo>

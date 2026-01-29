@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ================= LIST VIEW ================= -->
+    <record id="view_student_master_list" model="ir.ui.view">
+        <field name="name">student.master.list</field>
+        <field name="model">student.master</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="photo"
+                       widget="image"
+                       class="oe_avatar"
+                       options="{'size': [36, 36]}"/>
+
+                <field name="sequence" string="Student ID"/>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="gender"/>
+                <field name="nationality"/>
+                <field name="highest_qualification"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ================= KANBAN VIEW ================= -->
+    <record id="view_student_master_kanban" model="ir.ui.view">
+        <field name="name">student.master.kanban</field>
+        <field name="model">student.master</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_small_column">
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+
+                            <div class="d-flex align-items-center mb-2">
+                                <field name="photo"
+                                       widget="image"
+                                       class="oe_avatar me-2"
+                                       options="{'size': [48, 48]}"/>
+
+                                <div>
+                                    <strong>
+                                        <field name="sequence"/>
+                                    </strong>
+                                    <div class="text-muted">
+                                        <field name="name"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-muted small">
+                                <i class="fa fa-envelope me-1" title="Email"/>
+                                <field name="email"/>
+                            </div>
+
+                            <div class="text-muted small">
+                                <i class="fa fa-phone me-1" title="Phone"/>
+                                <field name="phone"/>
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ================= FORM VIEW ================= -->
+    <record id="view_student_master_form" model="ir.ui.view">
+        <field name="name">student.master.form</field>
+        <field name="model">student.master</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+
+                    <!-- HEADER -->
+                    <div class="oe_title">
+                        <div class="d-flex align-items-center">
+                            <field name="photo"
+                                   widget="image"
+                                   class="oe_avatar me-3"
+                                   options="{'preview_image': 'photo'}"/>
+
+                            <h1>
+                                <field name="sequence"
+                                       readonly="1"
+                                       class="oe_inline text-muted me-2"/>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                    </div>
+
+                    <!-- SMART BUTTONS -->
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object"
+                                name="action_view_applications"
+                                class="oe_stat_button"
+                                icon="fa-folder-open">
+                            <field name="application_count"
+                                   widget="statinfo"
+                                   string="Applications"/>
+                        </button>
+
+                        <button type="object"
+                                name="action_open_enrolled_courses"
+                                class="oe_stat_button"
+                                icon="fa-book">
+                            <field name="enrolled_course_count"
+                                   widget="statinfo"
+                                   string="Enrolled Courses"/>
+                        </button>
+                    </div>
+
+                    <!-- BASIC INFORMATION -->
+                    <separator string="Basic Information"/>
+                    <group col="2">
+                        <group>
+                            <field name="email"/>
+                            <field name="phone"/>
+                            <field name="dob"/>
+                        </group>
+                        <group>
+                            <field name="gender"/>
+                            <field name="nationality"/>
+                            <field name="country_of_residence"/>
+                            <field name="time_zone"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+
+                    <!-- RELATIONS -->
+                    <separator string="Relations"/>
+                    <group col="2">
+                        <field name="lead_id"/>
+                        <field name="partner_id"/>
+                    </group>
+
+                    <!-- FACULTY -->
+                    <separator string="Faculty (From Enrolled Courses)"/>
+                    <group>
+                        <field name="faculty_ids"
+                               widget="many2many_tags"
+                               readonly="1"/>
+                    </group>
+
+                    <!-- ACADEMIC -->
+                    <separator string="Academic Background"/>
+                    <group col="2">
+                        <group>
+                            <field name="highest_qualification"/>
+                            <field name="last_institution"/>
+                        </group>
+                        <group>
+                            <field name="graduation_year"/>
+                            <field name="gpa"/>
+                        </group>
+                    </group>
+
+                    <!-- GUARDIAN -->
+                    <separator string="Guardian Details"/>
+                    <group>
+                        <field name="underage_consent"/>
+                    </group>
+
+                    <group col="2" invisible="underage_consent == 'no'">
+                        <group>
+                            <field name="guardian_name"/>
+                            <field name="guardian_relationship"/>
+                        </group>
+                        <group>
+                            <field name="guardian_phone"/>
+                            <field name="guardian_email"/>
+                        </group>
+                    </group>
+
+                    <!-- SPONSOR -->
+                    <separator string="Sponsor Details"/>
+                    <group>
+                        <field name="has_sponsor"/>
+                    </group>
+
+                    <group col="2" invisible="has_sponsor == 'no'">
+                        <group>
+                            <field name="sponsor_name"/>
+                            <field name="sponsor_relationship"/>
+                        </group>
+                        <group>
+                            <field name="sponsor_phone"/>
+                            <field name="sponsor_email"/>
+                        </group>
+                    </group>
+
+                    <!-- PREVIOUS APPLICATION -->
+                    <separator string="Previous Application"/>
+                    <group col="2" invisible="not previous_lead_id">
+                        <field name="previous_lead_id"/>
+                        <field name="previous_courses"/>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

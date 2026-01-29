@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="slide_assignment_upload"
+                inherit_id="website_slides.course_slides_list_slide"
+                name="Assignment Upload">
+
+        <xpath expr="//li[@t-att-data-slide-id]" position="inside">
+
+            <t t-if="slide.is_assignment and channel.is_member">
+                <t t-set="assignment_line"
+                    t-value="request.env['slide.slide.partner'].sudo().search([
+                        ('slide_id','=',slide.id),
+                        ('partner_id','=',request.env.user.partner_id.id),
+                        ('channel_id','=',channel.id),
+                        ('is_assignment','=',True)
+                    ], limit=1)"/>
+
+                <div class="mt-2 ms-4 p-3 border rounded bg-light">
+
+                    <!-- ✅ IF SUBMITTED -->
+                    <t t-if="assignment_line and assignment_line.assignment_attachment_ids">
+                        <span class="badge bg-success">Submitted</span>
+
+                        <ul class="mt-2">
+                            <li t-foreach="assignment_line.assignment_attachment_ids"
+                                t-as="att">
+                                <a t-att-href="'/web/content/%s?download=true' % att.id">
+                                    <t t-esc="att.name"/>
+                                </a>
+                            </li>
+                        </ul>
+                    </t>
+
+                    <!-- ❌ IF NOT SUBMITTED -->
+                    <t t-else="">
+                        <form method="post"
+                              action="/assignment/submit"
+                              enctype="multipart/form-data">
+
+                            <input type="hidden"
+                                   name="csrf_token"
+                                   t-att-value="request.csrf_token()"/>
+
+                            <input type="hidden"
+                                   name="slide_id"
+                                   t-att-value="slide.id"/>
+
+                            <input type="hidden"
+                                   name="channel_id"
+                                   t-att-value="channel.id"/>
+
+                            <label class="fw-bold">
+                                Upload Assignment (PDF)
+                            </label>
+
+                            <input type="file"
+                                   name="assignment_file"
+                                   class="form-control mt-1"
+                                   accept=".pdf"
+                                   required="required"/>
+
+                            <button type="submit"
+                                    class="btn btn-primary btn-sm mt-2">
+                                Submit Assignment
+                            </button>
+                        </form>
+                    </t>
+
+                </div>
+
+            </t>
+
+        </xpath>
+
+    </template>
+
+</odoo>

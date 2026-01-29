@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ACTION -->
+    <record id="action_faculty_master" model="ir.actions.act_window">
+        <field name="name">Faculty</field>
+        <field name="res_model">faculty.master</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- LIST VIEW -->
+    <record id="view_faculty_master_list" model="ir.ui.view">
+        <field name="name">faculty.master.list</field>
+        <field name="model">faculty.master</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="department"/>
+                <field name="email"/>
+                <field name="phone"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_faculty_master_form" model="ir.ui.view">
+        <field name="name">faculty.master.form</field>
+        <field name="model">faculty.master</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+
+                    <!-- SMART BUTTONS -->
+                    <div class="oe_button_box" name="button_box">
+
+                        <!-- STUDENTS -->
+                        <button type="object"
+                                name="action_view_students"
+                                class="oe_stat_button"
+                                icon="fa-users">
+                            <field name="student_count"
+                                widget="statinfo"
+                                string="Students"/>
+                        </button>
+
+                        <!-- COURSES -->
+                        <button type="object"
+                                name="action_view_courses"
+                                class="oe_stat_button"
+                                icon="fa-book">
+                            <field name="course_count"
+                                widget="statinfo"
+                                string="Courses Count"/>
+                        </button>
+
+                    </div>
+
+                    <!-- BASIC INFO -->
+                    <group col="2">
+                        <field name="name"/>
+                        <field name="email"/>
+                        <field name="phone"/>
+                        <field name="department"/>
+                        <field name="qualification"/>
+                    </group>
+
+                    <!-- COURSES -->
+                    <group string="Courses Taught">
+                        <field name="course_ids" widget="many2many_tags"/>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+</odoo>

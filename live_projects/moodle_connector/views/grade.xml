@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="grade_a" model="course.grade">
+        <field name="name">A</field>
+        <field name="min_percentage">75</field>
+        <field name="max_percentage">100</field>
+    </record>
+
+    <record id="grade_b" model="course.grade">
+        <field name="name">B</field>
+        <field name="min_percentage">60</field>
+        <field name="max_percentage">75</field>
+    </record>
+
+    <record id="grade_c" model="course.grade">
+        <field name="name">C</field>
+        <field name="min_percentage">50</field>
+        <field name="max_percentage">59</field>
+    </record>
+
+    <record id="grade_f" model="course.grade">
+        <field name="name">F</field>
+        <field name="min_percentage">0</field>
+        <field name="max_percentage">49</field>
+    </record>
+
+</odoo>

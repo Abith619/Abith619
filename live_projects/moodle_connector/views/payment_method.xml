@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="add_manual_payment_button" inherit_id="payment.form">
+
+        <xpath expr="//div[@id='o_payment_form_options']" position="after">
+
+            <t t-if="sale_order.show_manual_payment">
+                <div class="d-flex gap-2 align-items-center mt-3">
+                    <input id="o_manual_payment"
+                            name="o_payment_radio"
+                            type="radio"
+                            class="form-check-input"
+                            data-payment-option-type="manual"
+                            data-payment-option-id="manual"/>
+                    <label for="o_manual_payment"
+                            class="o_payment_option_label mb-0 text-break">
+                        Manual Payment
+                    </label>
+                </div>
+
+            
+                <div id="o_manual_payment_fields"
+                        style="display:none; margin-top:1rem; margin-left:1.5rem;">
+
+                    <div class="row g-2">
+                        <div class="col-6"><small class="text-muted fw-bold">Beneficiary</small></div>
+                        <div class="col-6"><small class="text-muted">Your Name</small></div>
+
+                        <div class="col-6"><small class="text-muted fw-bold">Account Number</small></div>
+                        <div class="col-6"><small class="text-muted">1234567890123</small></div>
+
+                        <div class="col-6"><small class="text-muted fw-bold">Address</small></div>
+                        <div class="col-6"><small class="text-muted">Chennai, India</small></div>
+
+                        <div class="col-6"><small class="text-muted fw-bold">Country</small></div>
+                        <div class="col-6"><small class="text-muted">India</small></div>
+
+                        <div class="col-6"><small class="text-muted fw-bold">SWIFT Code</small></div>
+                        <div class="col-6"><small class="text-muted">ABCDEXYZ123</small></div>
+
+                        <div class="col-12 mt-2">
+                            <small class="text-muted fw-bold">
+                                Kindly attach payment receipt or screenshot.
+                                Our team will review and confirm your application within 24 hours.
+                            </small>
+                        </div>
+
+                        <div class="col-12 mt-3" id="manual_payment_box">
+
+                            <input type="hidden" id="lead_id" t-att-value="sale_order.lead_id.id"/>
+
+                            <label class="fw-bold">Upload Payment Proof (JPG Only) *</label>
+                            <input type="file"
+                                    id="upload_proof"
+                                    class="form-control"
+                                    accept=".jpg,.jpeg"
+                                    required="required"/>
+
+                            <small class="text-muted">🛈 JPG only — Max 5MB</small>
+
+                            <button id="manual_submit_btn"
+                                    type="button"
+                                    class="btn btn-primary w-100 mt-3">
+                                Submit Payment Proof
+                            </button>
+
+                            <div id="manual_upload_msg" class="text-success mt-2" style="display:none;">
+                                Upload successful ✔ Redirecting...
+                            </div>
+
+                        </div>
+                
+
+                    </div>
+                </div>
+
+            <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+ 
+                        const manualRadio = document.getElementById("o_manual_payment");
+                        const manualSection = document.getElementById("o_manual_payment_fields");
+                        const payNowBtn = document.querySelector('button[name="o_payment_submit_button"]');
+                        const radios = document.querySelectorAll('input[name="o_payment_radio"]');
+ 
+                        /* Show / Hide Logic */
+                        function showManual() {
+                            manualSection.style.display = "block";
+                            if (payNowBtn) payNowBtn.disabled = true;
+                        }
+                        function hideManual() {
+                            manualSection.style.display = "none";
+                            if (payNowBtn) payNowBtn.disabled = false;
+                        }
+ 
+                        radios.forEach(r => {
+                            r.addEventListener("change", function () {
+                                manualRadio.checked ? showManual() : hideManual();
+                            });
+                        });
+ 
+                        hideManual();
+ 
+                        /* ======================= FILE UPLOAD ======================= */
+                        const btn = document.getElementById("manual_submit_btn");
+                        const msg = document.getElementById("manual_upload_msg");
+ 
+                        btn.addEventListener("click", async function () {
+ 
+                            const fileInput = document.getElementById("upload_proof");
+                            const leadId = document.getElementById("lead_id").value;
+ 
+                            if (!fileInput.files.length) {
+                                alert("Please upload a file.");
+                                return;
+                            }
+ 
+                            let formData = new FormData();
+                            formData.append("lead_id", leadId);
+                            formData.append("upload_proof", fileInput.files[0]);
+ 
+                            const response = await fetch("/manual/payment/submit?db=odoo", {
+                                method: "POST",
+                                body: formData,
+				credentials: "same-origin"
+                            });
+ 
+                            if (response.redirected) {
+                                msg.style.display = "block";
+                                window.location.href = response.url;
+                            }
+                        });
+ 
+                    });
+                </script>
+                    
+
+
+            </t>
+
+        </xpath>
+
+    </template>
+
+</odoo>

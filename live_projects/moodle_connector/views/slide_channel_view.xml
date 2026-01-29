@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+
+        <record id="slide_channel_form_hide_delete_faculty" model="ir.ui.view">
+            <field name="name">slide.channel.form.hide.delete.faculty</field>
+            <field name="model">slide.channel</field>
+            <field name="inherit_id" ref="website_slides.view_slide_channel_form"/>
+            <field name="arch" type="xml">
+
+                <!-- Apply only for Faculty group -->
+                <xpath expr="//form" position="attributes"
+                        groups="moodle_connector.group_moodle_connector_faculty">
+                    <attribute name="delete">false</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

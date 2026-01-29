@@ -9,6 +9,8 @@
             <!-- Add token just below origin -->
             <xpath expr="//field[@name='origin']" position="after">
                 <field name="moodle_token"/>
+                <field name="payment_proof" filename="payment_proof_filename"/>
+                <field name="payment_proof_filename" invisible="1"/>
             </xpath>
 
         </field>

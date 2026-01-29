@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="student_grade_report_template">
+        <t t-call="web.external_layout">
+
+            <!-- 🔴 REQUIRED FOR PDF -->
+            <main>
+
+                <t t-foreach="docs" t-as="doc">
+
+                    <div class="page">
+
+                        <h2 style="text-align:center;">
+                            STATEMENT OF RESULTS
+                        </h2>
+
+                        <br/>
+
+                        <!-- STUDENT DETAILS -->
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Student Name</strong></td>
+                                <td><t t-esc="doc.partner_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Email</strong></td>
+                                <td><t t-esc="doc.partner_email"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Course</strong></td>
+                                <td><t t-esc="doc.channel_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Status</strong></td>
+                                <td><t t-esc="doc.member_status"/></td>
+                            </tr>
+                        </table>
+
+                        <br/>
+
+                        <!-- MARKS SUMMARY -->
+                        <h4>Marks Summary</h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Marks Obtained</th>
+                                    <th>Out Of</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Lessons</td>
+                                    <td><t t-esc="doc.total_lesson_marks"/></td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>Assignments</td>
+                                    <td><t t-esc="doc.total_assignment_marks"/></td>
+                                    <td><t t-esc="doc.total_assignment_out_of"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Quizzes</td>
+                                    <td><t t-esc="doc.total_quiz_xp"/></td>
+                                    <td><t t-esc="doc.total_quiz_out_of"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <br/>
+
+                        <!-- FINAL RESULT -->
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><strong>Total Marks</strong></td>
+                                <td>
+                                    <t t-esc="doc.user_total_marks"/> /
+                                    <t t-esc="doc.overall_total_marks"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Percentage</strong></td>
+                                <td>
+                                    <t t-esc="'%.2f' % doc.overall_percentage"/> %
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Grade</strong></td>
+                                <td>
+                                    <t t-esc="doc.grade_id.name"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                </t>
+
+            </main>
+        </t>
+    </template>
+
+</odoo>

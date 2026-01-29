@@ -6,16 +6,43 @@
         <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//button[@name='action_set_won_rainbowman']" position="before">
-                <button name="action_approve_lead" type="object" string="Approve &amp; Send" class="btn-primary"/>
+                <button name="action_approve_lead"
+                        type="object"
+                        string="Approve &amp; Send"
+                        class="btn-primary"
+                        invisible='is_approved'/>
             </xpath>
 
-            <!-- <xpath expr="//button[@name='action_set_won_rainbowman']" position="before">
-                <button name="action_checkout" type="object" string="Checkout" class="btn-primary"/>
+            <xpath expr="//button[@name='action_set_won_rainbowman']" position="before">
+                <button name="action_reject_lead" type="object" string="Reject" class="btn-primary"
+                invisible='is_rejected'/>
+            </xpath>
+
+            <xpath expr="//button[@name='action_set_won_rainbowman']" position="before">
+                <button name="action_reset_lead" type="object" string="Reset" class="btn-primary"
+                invisible='is_reset'/>
+            </xpath>
+
+            <xpath expr="//button[@name='action_sale_quotations_new']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='action_set_won_rainbowman']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- <xpath expr="//button[@name='362']" position="attributes">
+                <attribute name="invisible">1</attribute>
             </xpath> -->
-
-
+        
             <xpath expr="//field[@name='tag_ids']" position="after">
                 <field name="course_id"/>
+                <field name="is_approved" invisible="1"/>
+                <field name="is_rejected" invisible="1"/>
+                <field name="is_reset" invisible="1"/>
+                <field name="student_id" readonly="1"/>
+                <field name="category_ids" widget="many2many_tags"/>
+
+
             </xpath>
             <xpath expr="//field[@name='user_company_ids']" position="after">
                 <field name="payment_link"/>
@@ -23,6 +50,7 @@
                 <field name="unique_token" invisible="1"/>
                 <field name="paypal_order_id" invisible="1"/>
                 <field name="paypal_temp_token" invisible="1"/>
+                <field name="previous_lead_id" string="Previous Lead (For Re-admission)"/>
             </xpath>
             <xpath expr="//notebook/page[@name='internal_notes']" position="after">
                 <page string="Documents">
@@ -39,6 +67,10 @@
                         <group>
                             <field name="electronic_signature" widget="image" style="width:100px; height:100px;"/>
                         </group>
+                        <group>
+                            <field name="payment_proof" widget="image" style="width:100px; height:100px;" filename="payment_proof_filename"/>
+                            <field name="payment_proof_filename" invisible="1"/>
+                        </group>
                     </group>
 
                     <group string="Attachments (PDF)">
@@ -50,10 +82,23 @@
                         <group>
                             <field name="proof_upload" widget="many2many_binary"/>
                             <field name="transcript_upload" widget="many2many_binary"/>
+                        
                         </group>
                     </group>
                 </page>
             </xpath>
         </field>
     </record>
+    <record id="view_crm_lead_tree_inherit_course" model="ir.ui.view">
+        <field name="name">crm.lead.tree.inherit.course</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="course_id" />
+                <field name="category_ids" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="slide_channel_partner_tree_bulk_csv"
+            model="ir.ui.view">
+        <field name="name">slide.channel.partner.tree.bulk.csv</field>
+        <field name="model">slide.channel.partner</field>
+        <field name="inherit_id" ref="website_slides.slide_channel_partner_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <header>
+                    <button name="action_bulk_grade_csv"
+                            type="object"
+                            string="Bulk Grade Download (CSV)"
+                            class="btn-primary"
+                            icon="fa-download"/>
+                </header>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

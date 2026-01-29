@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="slide_slide_form_assignment" model="ir.ui.view">
+        <field name="name">slide.slide.form.assignment</field>
+
+        <!-- ✅ CORRECT MODEL -->
+        <field name="model">slide.slide</field>
+
+        <!-- ✅ THIS IS THE ONLY VALID inherit_id -->
+        <field name="inherit_id" ref="website_slides.view_slide_slide_form"/>
+
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='slide_category']" position="after">
+                <field name="is_assignment"
+                        attrs="{'invisible': [('slide_category', '!=', 'document')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

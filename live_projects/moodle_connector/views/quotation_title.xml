@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="portal_my_quotations_pending"
+                inherit_id="sale.portal_my_quotations"
+                name="Portal My Quotations - Pending Title &amp; Breadcrumb">
+
+        <!-- PAGE TITLE -->
+        <xpath expr="//t/t[1]/[@t-set='title']" position="replace">
+            <t t-set="title">Pending Quotations</t>
+        </xpath>
+
+        <!-- BREADCRUMB TEXT -->
+        <xpath expr="//li[@id='portal_breadcrumbs_sale']" position="replace">
+            <li id="portal_breadcrumbs_sale" class="breadcrumb-item active">
+                Pending Quotations
+            </li>
+        </xpath>
+
+    </template>
+
+</odoo>

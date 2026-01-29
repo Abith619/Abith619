@@ -5,10 +5,15 @@
     "summary": "Custom module for managing Moodle online courses",
     "description": "A comprehensive solution for creating and managing online courses within Odoo. Sync and push courses and other datas from moodle and odoo",
     "category": "Education",
-    "depends": ["base", "web", "website", "crm", "website_slides", "website_sale"],
-    "data": [
+    "depends": ["base", "web", "website", "crm", "website_slides", "website_sale","website_slides_survey"],
+    "data": [     
+        'security/group.xml',
+        'security/slide_channel_rules.xml',
         'security/ir.model.access.csv',
         'data/mail_template.xml',
+        'data/sequence.xml',
+        'reports/student_grade_report_action.xml',
+        'reports/student_grade_report.xml',
         'views/header_template.xml',
         'views/about_us.xml',
         'views/home_page.xml',
@@ -20,16 +25,38 @@
         'views/footer_template.xml',
         'views/form_template_inherit.xml',
         'views/sale_order.xml',
+        'views/payment_method.xml',
+        'views/course_description.xml',
+        'views/sale_order_status.xml',
+        'views/second_time_register.xml',
+        'views/resuser.xml',
+        'views/rank_card.xml',
+        'views/student_details.xml',
+        'views/faculty.xml',
+        'views/menus.xml',
+        'views/slide_channel_partner.xml',
+        'views/slide_slide_partner.xml',
+        'views/assignment_template.xml',
+        'views/grade.xml',
+        'views/grade_download.xml',
+        
+       
+        # 'views/slide_channel_view.xml',
+        # 'views/slide_assignment.xml',
+        # 'views/slide_slide.xml',
+        # 'views/crm_stage.xml',
+        # 'views/quotation_title.xml',
     ],
     'assets': {
         'web.assets_frontend': [
             'moodle_connector/static/src/js/address_patch.js',
-
+            'moodle_connector/static/src/css/course_xp.css',
         ],
 
         'web.assets_backend': [
             'moodle_connector/static/src/js/image_preview_widget.js',
             'moodle_connector/static/src/xml/image_preview.xml',
+            'moodle_connector/static/src/js/action_manager.js',
         ],
     },
     'application': True,

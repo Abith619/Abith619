@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="shop_cart_full_form" name="Full Admission Address Form" inherit_id="website_sale.address">
-        <xpath expr="//div[contains(@class, 'o_wsale_address_fill')]" position="inside">
+        <xpath expr="//div[hasclass('o_wsale_address_fill')]" position="inside">
             <style>
                 .oe_cart {
                     max-width: 100% !important;
@@ -199,7 +199,7 @@
             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
         </xpath>
 
-         <xpath expr="//div[@id='div_phone']" position="after">
+        <xpath expr="//div[@id='div_phone']" position="after">
             <div class="row mt-4 mb-4">
                 <h4>Personal Information</h4>
 
@@ -631,7 +631,7 @@
                     <div class="col-md-6 mb-2">
                         <label>Headset/Webcam Availability *</label><br/>
                         <input type="radio" id= "headset_webcam_yes" name="headset_webcam" value="yes"/> 
-                        <label for="accessibility_yes">Yes</label>
+                        <label for="headset_webcam">Yes</label>
                         <input type="radio" id= "headset_webcam_no" name="headset_webcam" value="no"/> 
                         <label for="headset_webcam_no">No</label>
                     </div>

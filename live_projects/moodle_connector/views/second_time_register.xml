@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Menu -->
+        <record id="menu_contact_lead" model="website.menu">
+            <field name="name">Application</field>
+            <field name="url">/secondtimeregister</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">50</field>
+        </record>
+
+        <!-- Template -->
+        <template id="second_time_register_form" name="Second Time Registration">
+            <t t-call="website.layout">
+                <main id="wrap">
+                    <div class="container mt-5 mb-5">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-6">
+
+                                <h3 class="mb-3 text-center">Quick Registration</h3>
+                                <p class="text-muted text-center">
+                                    Please confirm your details to continue
+                                </p>
+
+                                <form action="/secondtimeregister/submit" method="post">
+
+                                    <!-- CSRF -->
+                                    <input type="hidden" name="csrf_token"
+                                            t-att-value="request.csrf_token()"/>
+
+                                    <!-- COURSE -->
+                                    <input type="hidden" name="course_id"
+                                            t-att-value="course.id"/>
+
+                                    <!-- BASIC DETAILS -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Name</label>
+                                        <input type="text"
+                                                name="name"
+                                                class="form-control"
+                                                t-att-value="partner.name if partner else ''"
+                                                required="required"/>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email"
+                                                name="email"
+                                                class="form-control"
+                                                t-att-value="partner.email if partner else ''"
+                                                required="required"/>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Phone</label>
+                                        <input type="text"
+                                                name="phone"
+                                                class="form-control"
+                                                t-att-value="partner.phone if partner else ''"/>
+                                    </div>
+
+                                    <!-- PREVIOUS ENROLLMENT (AUTO) -->
+                                    <t t-if="previous_course">
+                                        <div class="mt-4">
+                                            <h5>Previous Education Details</h5>
+
+                                            <div class="mb-3">
+                                                <label class="form-label fw-bold">
+                                                    Previously Enrolled Courses
+                                                </label>
+                                                <textarea class="form-control"
+                                                            rows="3"
+                                                            readonly="readonly"
+                                                            t-esc="previous_course"/>
+                                            </div>
+
+                                            <!-- Only lead reference is required -->
+                                                <input type="hidden" name="previous_lead_id"
+                                                    t-att-value="old_lead.id if old_lead else ''"/>
+                                                
+                                            <input type="hidden"  name="previous_course"
+                                                    t-att-value="previous_course or ''"/>
+                                        </div>
+                                    </t>
+
+                                    <!-- PROGRAM SELECTION -->
+                                    <div class="mt-4">
+                                        <h5>Program Selection (Online / Self-Paced)</h5>
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb-2">
+                                                <label>Academic Level Applying For *</label>
+                                                <select name="academic_level"
+                                                        class="form-select"
+                                                        required="required">
+                                                    <option value="">Select Level</option>
+                                                    <option value="certificate">Certificate</option>
+                                                    <option value="diploma">Diploma</option>
+                                                    <option value="undergraduate">Undergraduate</option>
+                                                    <option value="graduate">Graduate</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6 mb-2">
+                                                <label>Enrollment Load *</label>
+                                                <select name="enrollment_load"
+                                                        class="form-select"
+                                                        required="required">
+                                                    <option value="">Select Load</option>
+                                                    <option value="full_time">Full-time</option>
+                                                    <option value="part_time">Part-time</option>
+                                                    <option value="course_by_course">
+                                                        Course-by-Course
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6 mb-2">
+                                                <label>Rolling Admissions Start *</label>
+                                                <select name="rolling_admission_start"
+                                                        class="form-select"
+                                                        required="required">
+                                                    <option value="">Select Option</option>
+                                                    <option value="immediate">
+                                                        As soon as I’m admitted
+                                                    </option>
+                                                    <option value="preferred">
+                                                        Preferred start month
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6 mb-2">
+                                                <label>Preferred Start Month *</label>
+                                                <select name="preferred_start_month"
+                                                        class="form-select"
+                                                        required="required">
+                                                    <option value="">Select Month</option>
+                                                    <t t-foreach="months" t-as="m">
+                                                        <option t-att-value="m">
+                                                            <t t-esc="m"/>
+                                                        </option>
+                                                    </t>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6 mb-2">
+                                                <label>Preferred Start Year *</label>
+                                                <select name="preferred_start_year"
+                                                        class="form-select"
+                                                        required="required">
+                                                    <option value="">Select Year</option>
+                                                    <t t-foreach="years" t-as="y">
+                                                        <option t-att-value="y">
+                                                            <t t-esc="y"/>
+                                                        </option>
+                                                    </t>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6 mb-2">
+                                                <label>Pacing Expectation *</label>
+                                                <select name="pacing_expectation"
+                                                        class="form-select"
+                                                        required="required">
+                                                    <option value="">Select Pacing</option>
+                                                    <option value="5">≤ 5 hrs/week</option>
+                                                    <option value="10">6–10 hrs/week</option>
+                                                    <option value="15">11–15 hrs/week</option>
+                                                    <option value="20">16–20 hrs/week</option>
+                                                    <option value="20+">20+ hrs/week</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit"
+                                            class="btn btn-primary w-100 mt-4">
+                                        Proceed to Checkout
+                                    </button>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </t>
+        </template>
+
+    </data>
+</odoo>

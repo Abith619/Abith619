@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="slide_details_course"
+                inherit_id="website_slides.course_slides_list_slide">
+
+        <xpath expr="//a[@name='o_wslides_list_slide_add_quizz']" position="after">
+            <button type="button"
+                    class="badge text-bg-primary fw-normal m-1 slide_desc_toggle"
+                    t-att-data-slide-id="slide.id">
+                Details
+            </button>
+        </xpath>
+        <xpath expr="//li[@t-att-data-category-id]" position="after">
+            <div t-att-id="'desc_' + str(slide.id)"
+                    class="desc-box mt-1 small text-muted d-none">
+                <t t-if="slide.course_description">
+                    <t t-out="slide.course_description"/>
+                </t>
+            </div>
+        </xpath>
+        
+    </template>
+    <template id="slide_details_course_js" inherit_id="website.layout">
+        <xpath expr="//body" position="inside">
+            <script type="text/javascript">
+                document.addEventListener("DOMContentLoaded", function () {
+                    document.querySelectorAll(".text-truncate").forEach(el => {
+                        el.classList.remove("text-truncate");
+                    });
+                });
+        
+                document.addEventListener("click", function (e) {
+                    if (!e.target.classList.contains("slide_desc_toggle")) {
+                        return;
+                    }
+
+                    const slideId = e.target.dataset.slideId;
+                    const desc = document.getElementById("desc_" + slideId);
+
+                    if (!desc) return;
+
+                    desc.classList.toggle("d-none");
+                });
+            </script>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <record model="ir.ui.menu" id="base.menu_administration">
+            <field name="groups_id"
+                    eval="[(6, 0, [ref('moodle_connector.group_moodle_connector_super_admin'),ref('moodle_connector.group_moodle_connector_developer')])]"/>
+        </record>
+
+        <!-- LCU MENUS ACCESS -->
+        <record model="ir.ui.menu" id="menu_lcu_root">
+            <field name="groups_id"
+                    eval="[(6, 0, [ref('moodle_connector.group_moodle_connector_super_admin'),ref('moodle_connector.group_moodle_connector_faculty'),ref('moodle_connector.group_moodle_connector_developer')])]"/>
+        </record>
+
+        <record model="ir.ui.menu" id="menu_lcu_academics">
+            <field name="groups_id"
+                    eval="[(6, 0, [ref('moodle_connector.group_moodle_connector_super_admin'),ref('moodle_connector.group_moodle_connector_faculty'),ref('moodle_connector.group_moodle_connector_developer')])]"/>
+        </record>
+
+        <record model="ir.ui.menu" id="menu_lcu_configuration">
+            <field name="groups_id"
+                    eval="[(6, 0, [ref('moodle_connector.group_moodle_connector_super_admin'),ref('moodle_connector.group_moodle_connector_developer')])]"/>
+        </record>
+
+        <record model="ir.ui.menu" id="menu_lcu_students">
+            <field name="groups_id"
+                    eval="[(6, 0, [ref('moodle_connector.group_moodle_connector_super_admin'),ref('moodle_connector.group_moodle_connector_developer')])]"/>
+        </record>
+
+        <record model="ir.ui.menu" id="menu_lcu_courses">
+            <field name="groups_id"
+                    eval="[(6, 0, [ref('moodle_connector.group_moodle_connector_super_admin'),ref('moodle_connector.group_moodle_connector_developer')])]"/>
+        </record>
+
+        <!-- WEBSITE SLIDES -->
+        <record model="ir.ui.menu" id="website_slides.website_slides_menu_root">
+            <field name="groups_id"
+                    eval="[(6, 0, [ref('moodle_connector.group_moodle_connector_academic_admin'),ref('moodle_connector.group_moodle_connector_developer'),ref('moodle_connector.group_moodle_connector_super_admin')])]"/>
+        </record>
+
+        <!-- ACCOUNTING -->
+        <record model="ir.ui.menu" id="account.menu_finance">
+            <field name="groups_id"
+                    eval="[(6, 0, [ref('moodle_connector.group_moodle_connector_finance_admin'),ref('moodle_connector.group_moodle_connector_super_admin'),ref('moodle_connector.group_moodle_connector_developer')])]"/>
+        </record>
+
+        <!-- SALES -->
+        <record model="ir.ui.menu" id="sale.sale_menu_root">
+            <field name="groups_id" eval="[(6, 0, [ref('moodle_connector.group_moodle_connector_super_admin'),ref('moodle_connector.group_moodle_connector_finance_admin'),ref('moodle_connector.group_moodle_connector_developer')])]"/>
+        </record>
+        <record model="ir.ui.menu" id="base.menu_management">
+            <field name="groups_id" eval="[(6, 0, [ref('moodle_connector.group_moodle_connector_developer')])]"/>
+        </record>
+        <record model="ir.ui.menu" id="utm.menu_link_tracker_root">
+            <field name="groups_id" eval="[(6, 0, [ref('moodle_connector.group_moodle_connector_developer')])]"/>
+        </record>
+        <record model="ir.ui.menu" id="mass_mailing.mass_mailing_menu_root">
+            <field name="groups_id" eval="[(6, 0, [ref('moodle_connector.group_moodle_connector_developer')])]"/>
+        </record>
+        <record model="ir.ui.menu" id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root">
+            <field name="groups_id" eval="[(6, 0, [ref('moodle_connector.group_moodle_connector_developer')])]"/>
+        </record>
+        <record model="ir.ui.menu" id="calendar.mail_menu_calendar">
+            <field name="groups_id" eval="[(6, 0, [ref('moodle_connector.group_moodle_connector_developer')])]"/>
+        </record>
+
+    </data>
+</odoo>

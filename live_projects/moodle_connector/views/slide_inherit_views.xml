@@ -8,6 +8,67 @@
             <xpath expr="//field[@name='image_1920']" position="after">
                 <field name="moodle_course_id" invisible="1"/>
             </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <label for="faculty_ids"/>
+                <field name="faculty_ids" widget="many2many_tags"/>
+            </xpath>
+
+            <xpath expr="//field[@name='slide_ids']//field[@name='name']" position="after">
+                <field name="course_description"/>
+                <field name="is_assignment"/>
+                <field name="assignment_total_marks" invisible="not is_assignment"/>
+                <field name="is_lesson"/>
+                <field name="lesson_marks" invisible="not is_lesson"/>
+            </xpath>
+        
+        </field>
+    </record>
+    <record id="slide_channel_tree_inherit_faculty" model="ir.ui.view">
+        <field name="name">slide.channel.tree.inherit.faculty</field>
+        <field name="model">slide.channel</field>
+        <field name="inherit_id" ref="website_slides.slide_channel_view_tree"/>
+        <field name="arch" type="xml">
+
+            <!-- Show Faculty in list -->
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="faculty_ids"/>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="slide_channel_search_inherit_faculty" model="ir.ui.view">
+        <field name="name">slide.channel.search.inherit.faculty</field>
+        <field name="model">slide.channel</field>
+        <field name="inherit_id" ref="website_slides.slide_channel_view_search"/>
+        <field name="arch" type="xml">
+
+            <!-- Inject directly into search -->
+            <xpath expr="//search" position="inside">
+                <filter string="Faculty"
+                        name="faculty"
+                        context="{'group_by': 'faculty_ids'}"/>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="view_slide_slide_form_inherit" model="ir.ui.view">
+        <field name="name">slide.slide.form.inherit</field>
+        <field name="model">slide.slide</field>
+        <field name="inherit_id" ref="website_slides.view_slide_slide_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Custom fields -->
+            <xpath expr="//field[@name='slide_category']" position="after">
+                <field name="course_description"/>
+                <field name="is_assignment"/>
+                <field name="assignment_total_marks" invisible="not is_assignment"/>
+                <field name="is_lesson"/>
+                <field name="lesson_marks" invisible="not is_lesson"/>
+            </xpath>
+            <!-- QUIZ NOTEBOOK VISIBILITY CONTROL -->
+            <xpath expr="//notebook/page[@name='quiz']" position="attributes">
+                <attribute name="invisible">not is_quiz</attribute>
+            </xpath>
         </field>
     </record>
     <record id="view_slide_channel_tag_group_inherit" model="ir.ui.view">
@@ -16,6 +77,20 @@
         <field name="inherit_id" ref="website_slides.slide_channel_tag_group_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
+                <field name="moodle_id" invisible="1"/>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="view_slide_channel_tag_form_inherit_moodle" model="ir.ui.view">
+        <field name="name">slide.channel.tag.form.moodle.inherit</field>
+        <field name="model">slide.channel.tag</field>
+
+        <!-- FIXED: Correct view XML ID -->
+        <field name="inherit_id" ref="website_slides.slide_channel_tag_view_form"/>
+
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="inside">
                 <field name="moodle_id" invisible="1"/>
             </xpath>
         </field>
