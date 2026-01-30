@@ -8,7 +8,6 @@
         "security/groups.xml",
         "security/ir.model.access.csv",
         "security/record_rules.xml",
-        "security/menus.xml",
         "data/ir_cron.xml",
         "data/ir_sequence.xml",
         'data/email_template.xml',
@@ -21,6 +20,7 @@
         "views/custom_views.xml",
         'views/crm_inherit.xml',
         'wizards/wizard_view.xml',
+        "security/menus.xml",
     ],
     'assets': {
         'web.assets_frontend': [
