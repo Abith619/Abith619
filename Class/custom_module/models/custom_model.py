@@ -13,6 +13,8 @@ class CustomModel(models.Model):
     email = fields.Char(string="Email")
     date = fields.Date(string="Date")
 
+    user_id = fields.Many2one('res.users', string="Responsible", default=lambda self: self.env.user)
+
     serial_number = fields.Char(string="Serial Number", readonly=True)
 
     grand_total = fields.Float(string="Grand Total", compute="_compute_grand_total")

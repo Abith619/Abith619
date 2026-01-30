@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <record model='ir.ui.menu' id='custom_module.menu_custom_model'>
+            <field name="groups_id" eval="[(6, 0, [ref('group_custom_event_manager'), ref('group_custom_event_user')])]"/>
+        </record>
+    </data>
+</odoo>

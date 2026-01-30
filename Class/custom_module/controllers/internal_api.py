@@ -1,6 +1,6 @@
 from odoo import http
 from odoo.http import request, Controller, route, Response
-import json
+import json, uuid
 
 class APIController(Controller):
 
@@ -27,67 +27,69 @@ class APIController(Controller):
             )
     # <int:patient_id> to get the patient id from the URL
 
-    @route('/api/patients/<int:patient_id>', type='http', auth='public', methods=['PUT'], csrf=False)
-    def update_patient(self, patient_id, **kwargs):
+    # @route('/api/patients/<int:patient_id>', type='http', auth='public', methods=['PUT'], csrf=False)
+    # def update_patient(self, patient_id, **kwargs):
 
-        name = kwargs.get('name')
-        phone = kwargs.get('phone')
+    #     name = kwargs.get('name')
+    #     phone = kwargs.get('phone')
 
-        patient = request.env['res.partner'].sudo().browse(patient_id)
+    #     patient = request.env['res.partner'].sudo().browse(patient_id)
 
-        if not patient.exists():
-            return Response(
-                json.dumps({'error': 'Patient not found'}),
-                status=404,
-                headers=[('Content-Type', 'application/json')]
-            )
+    #     if not patient.exists():
+    #         return Response(
+    #             json.dumps({'error': 'Patient not found'}),
+    #             status=404,
+    #             headers=[('Content-Type', 'application/json')]
+    #         )
 
-        patient.write({
-            'name': name,
-            'phone': phone,
-        })
+    #     patient.write({
+    #         'name': name,
+    #         'phone': phone,
+    #     })
 
-        return Response(
-            json.dumps({'success': True}),
-            status=200,
-            headers=[('Content-Type', 'application/json')]
-        )
+    #     return Response(
+    #         json.dumps({'success': True}),
+    #         status=200,
+    #         headers=[('Content-Type', 'application/json')]
+    #     )
 
     # csrf only used in Forms, not in API calls
 
-    @route('/api/patients', type='http', auth='public', methods=['GET'], csrf=False)
-    def get_patients_rest(self, **kwargs):
-        patients = request.env['res.partner'].sudo().search([
-            ('is_patient', '=', True)
-        ])
+    # @route('/api/patients', type='http', auth='public', methods=['GET'], csrf=False)
+    # def get_patients_rest(self, **kwargs):
+    #     patients = request.env['res.partner'].sudo().search([
+    #         # ('is_patient', '=', True)
+    #     ])
 
-        data = []
-        for patient in patients:
-            data.append({
-                'id': patient.id,
-                'name': patient.name,
-                'phone': patient.phone,
-                'email': patient.email,
-            })
+    #     data = []
+    #     for patient in patients:
+    #         data.append({
+    #             'id': patient.id,
+    #             'name': patient.name,
+    #             'phone': patient.phone,
+    #             'email': patient.email,
+    #         })
 
-        return request.make_response(
-            json.dumps({
-                "status": "success",
-                "count": len(data),
-                "patients": data
-            }),
-            headers=[('Content-Type', 'application/json')],
-            status=200
-        )
+    #     return Response(
+    #         json.dumps({
+    #             "status": "success",
+    #             "count": len(data),
+    #             "patients": data
+    #         }),
+    #         headers=[('Content-Type', 'application/json')],
+    #         status=200
+    #     )
 
     @route('/api/patients/<int:patient_id>', type='http', auth='public', methods=['GET','PUT'], csrf=False)
     def patient_api(self, patient_id, **kwargs):
         auth_header = request.httprequest.headers.get('Authorization')
         token = auth_header.replace('Bearer ', '').strip()
         token_check = request.env['res.users'].sudo().search(
-            [('api_token', '=', token)],
+            [('api_token', '=', token),
+            ('id', '=', request.session.uid)],
             limit=1
         )
+        token_test = uuid.uuid4().hex
         if token_check and token_check.token == token:
             if request.httprequest.method == 'GET':
                 patient = request.env['res.partner'].sudo().browse(patient_id)
@@ -119,18 +121,19 @@ class APIController(Controller):
                         content_type='application/json'
                     )
                                                                 # Start a New Odoo Session (Login) in Postman to get the session cookie
+                        # JSON-RPC Call to authenticate user and get session cookie
     # POST http://localhost:8069/web/session/authenticate
     # Headers = Content-Type: application/json
-    # Body = {
-        # "jsonrpc": "2.0",
-        # "method": "call",
-        # "params": {
-        #     "db": "your_database_name",
-        #     "login": "admin",
-        #     "password": "admin"
-        # },
-        # "id": 1
-        # }
+    # # Body = {
+    #     "jsonrpc": "2.0",
+    #     "method": "call",
+    #     "params": {
+    #         "db": "ECourses",
+    #         "login": "abith@odoo.com",
+    #         "password": "224847"
+    #     },
+    #     "id": 1
+    #     }
                                                                 # auth = User
     @route('/api/patients/user/<int:patient_id>', type='http', auth='user', methods=['GET', 'PUT'], csrf=False)
     def patient_user_api(self, patient_id, **kwargs):
@@ -187,35 +190,24 @@ class APIController(Controller):
     #     "params": {},
     #     "id": 1
     # }
-    # @route('/api/patients', type='json', auth='public', methods=['GET'], csrf=False)
-    # def get_patients_rpc(self, **kwargs):
-    #     partners = request.env['res.partner'].sudo().search([
-    #         ('is_patient', '=', True)
-    #     ])
+    @route('/api/patients', type='json', auth='public', methods=['GET'], csrf=False)
+    def get_patients_rpc(self, **kwargs):
+        partners = request.env['res.partner'].sudo().search([
+            ('is_patient', '=', True)
+        ])
 
-    #     data = []
-    #     for partner in partners:
-    #         data.append({
-    #             'id': partner.id,
-    #             'name': partner.name,
-    #             'phone': partner.phone,
-    #             'email': partner.email,
-    #         })
+        data = []
+        for partner in partners:
+            data.append({
+                'id': partner.id,
+                'name': partner.name,
+                'phone': partner.phone,
+                'email': partner.email,
+            })
 
-    #     return {
-    #         "status": "success",
-    #         "count": len(data),
-    #         "patients": data
-    #     }
+        return {
+            "status": "success",
+            "count": len(data),
+            "patients": data
+        }
                                                                         # Call json-rpc function from UI by using the below js code
-    # /** @odoo-module **/
-    # import publicWidget from "@web/legacy/js/public/public_widget";
-    # import { rpc } from "@web/core/network/rpc";
-    # import { onWillStart } from "@odoo/owl";
-    # publicWidget.registry.TestRpcController = publicWidget.Widget.extend({
-    #     selector: ".o_test_widget",
-    #     start: function () {
-    #         return this._super(...arguments).then(async () => {
-    #         const data = await rpc("/my/route", {});
-    #     });},
-    # });

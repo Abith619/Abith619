@@ -5,11 +5,13 @@
     'depends': ['base', 'web', 'crm', 'mail', 'sale', 'website', 'website_sale'],
     'author': "Abith",
     'data': [
-        "security/user_groups.xml",
+        "security/groups.xml",
+        "security/ir.model.access.csv",
+        "security/record_rules.xml",
+        "security/menus.xml",
         "data/ir_cron.xml",
         "data/ir_sequence.xml",
         'data/email_template.xml',
-        "security/ir.model.access.csv",
         'reports/custom_pdf_report.xml',
         'reports/custom_pdf_report_template.xml',
         "views/e-commerce_inheritance.xml",
@@ -20,6 +22,12 @@
         'views/crm_inherit.xml',
         'wizards/wizard_view.xml',
     ],
+    'assets': {
+        'web.assets_frontend': [
+            # 'custom_module/static/src/css/custom_styles.css',
+            'custom_module/static/src/js/rpc_call.js',
+        ],
+    },
     'application': True,
     'license': 'LGPL-3',
 }
