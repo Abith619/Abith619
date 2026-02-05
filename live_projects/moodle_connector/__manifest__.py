@@ -22,7 +22,7 @@
         'views/slide_inherit_views.xml',
         'views/channel_inherit.xml',
         'views/courses_inherit.xml',
-        'views/footer_template.xml',
+        # 'views/footer_template.xml',
         'views/form_template_inherit.xml',
         'views/sale_order.xml',
         'views/payment_method.xml',
@@ -39,8 +39,7 @@
         'views/assignment_template.xml',
         'views/grade.xml',
         'views/grade_download.xml',
-        
-       
+
         # 'views/slide_channel_view.xml',
         # 'views/slide_assignment.xml',
         # 'views/slide_slide.xml',

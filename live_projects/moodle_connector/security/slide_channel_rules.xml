@@ -2,19 +2,16 @@
 <odoo>
     <data noupdate="1">
 
-        <!-- Faculty: edit only own courses -->
         <record id="faculty_master_readonly_faculty" model="ir.rule">
             <field name="name">Faculty read-only faculty master</field>
             <field name="model_id" ref="model_faculty_master"/>
-            <field name="groups"
-                eval="[(4, ref('moodle_connector.group_moodle_connector_faculty'))]"/>
+            <field name="groups" eval="[(4, ref('moodle_connector.group_moodle_connector_faculty'))]"/>
             <field name="domain_force">[(1,'=',1)]</field>
             <field name="perm_read" eval="True"/>
             <field name="perm_write" eval="False"/>
             <field name="perm_create" eval="False"/>
             <field name="perm_unlink" eval="False"/>
         </record>
-
 
     </data>
 </odoo>
