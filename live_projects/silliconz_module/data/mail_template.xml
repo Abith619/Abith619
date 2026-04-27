@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="1">
+    
+        <record id="email_template_material_request_approved" model="mail.template">
+            <field name="name">Material Request Approved</field>
+            <field name="model_id" ref="silliconz_module.model_material_request"/>
+            <field name="email_from">{{object.env.company.email}}</field>
+            <field name="email_to">{{ object.requester_id.partner_id.email }}</field>
+            <field name="subject">Your Application has been Approved</field>
+            <field name="use_default_to" eval="False"/>
+            <field name="body_html" type="html">
+                <p>Dear
+                        <strong>
+                            <t t-out="object.requester_id.name"/>
+                        </strong>
+                        ,
+                    </p>
+                <p>Your material request has been approved.</p>
+                <p>Approved Items:</p>
+                <ul>
+                    <t t-foreach="object.line_ids" t-as="line">
+                        <li>
+                            <t t-out="line.product_id.name"/> - 
+                            Approved Quantity: <t t-out="line.approved_qty"/> <t t-out="line.uom_id.name"/>
+                        </li>
+                    </t>
+                </ul>
+                <p>Please proceed to the stock department to collect your items.</p>
+                <p>Best regards,</p>
+                <p><t t-out="object.env.company.name"/></p>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+        <record id="email_template_material_request_rejected" model="mail.template">
+            <field name="name">Material Request Rejected</field>
+            <field name="model_id" ref="silliconz_module.model_material_request"/>
+            <field name="email_from">{{object.env.company.email}}</field>
+            <field name="email_to">{{ object.requester_id.partner_id.email }}</field>
+            <field name="subject">Your Application has been Declined</field>
+            <field name="body_html" type="html">
+            <field name="use_default_to" eval="False"/>
+                    <p>Dear
+                        <strong>
+                            <t t-out="object.requester_id.name"/>
+                        </strong>
+                        ,
+                    </p>
+                <p>We regret to inform you that your material request has been declined. Thank you for your interest.</p>
+                <p>Best regards,</p>
+                <p><t t-out="object.env.company.name"/></p>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+        <record id="email_template_material_request_submitted" model="mail.template">
+            <field name="name">Material Request Submitted</field>
+            <field name="model_id" ref="silliconz_module.model_material_request"/>
+            <field name="email_from">{{ object.requester_id.partner_id.email }}</field>
+            <field name="email_to">{{ object.env.company.email }}</field>
+            <field name="subject">Material Request Submitted by {{ object.requester_id.name }}</field>
+            <field name="body_html" type="html">
+            <field name="use_default_to" eval="False"/>
+            
+                <p>Dear
+                        <strong>
+                            <t t-out="object.env.company.email"/>
+                        </strong>
+                        ,
+                    </p>
+                <p> Please review the submitted material request.</p>
+                <p>Notify me about the status of my request.</p>
+                <p>Best regards,</p>
+                <p><t t-out="object.requester_id.name"/></p>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

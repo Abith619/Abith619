@@ -1,0 +1,18 @@
+<odoo>
+
+    <record id="view_stock_location_form_inherit_source" model="ir.ui.view">
+        <field name="name">stock.location.form.inherit.source</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//group[field[@name='company_id']]" position="after">
+                <group string="Material Request">
+                    <field name="is_material_source"/>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="atp_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+
+                <style>
+                    /* ── Global ── */
+                    body { font-family: 'DejaVu Sans', Arial, sans-serif; font-size: 8pt; color: #1a1a1a; }
+
+                    /* ── Report Header ── */
+                    .atp-main-title {
+                        background: #1F3864;
+                        color: #ffffff;
+                        text-align: center;
+                        font-size: 15pt;
+                        font-weight: bold;
+                        padding: 10px 0;
+                        letter-spacing: 1px;
+                        border-radius: 4px 4px 0 0;
+                    }
+                    .atp-meta-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+                    .atp-meta-table td {
+                        padding: 4px 8px;
+                        border: 1px solid #bcd1e8;
+                        font-size: 8pt;
+                    }
+                    .atp-meta-table .meta-label {
+                        background: #D6E4F0;
+                        font-weight: bold;
+                        width: 140px;
+                    }
+                    .atp-meta-table .meta-val { background: #EBF5FB; }
+
+                    /* ── FG Block ── */
+                    .fg-block { margin-bottom: 20px; }
+                    .fg-header {
+                        background: #2E75B6;
+                        color: #ffffff;
+                        font-weight: bold;
+                        font-size: 9pt;
+                        padding: 6px 10px;
+                        border-radius: 3px 3px 0 0;
+                    }
+                    .fg-kpi-row { display: flex; gap: 0; border: 1px solid #bcd1e8; border-top: none; }
+                    .fg-kpi-cell {
+                        flex: 1;
+                        padding: 4px 10px;
+                        border-right: 1px solid #bcd1e8;
+                        background: #EBF5FB;
+                    }
+                    .fg-kpi-cell:last-child { border-right: none; }
+                    .fg-kpi-cell .kpi-label { font-size: 7pt; color: #5d6d7e; text-transform: uppercase; }
+                    .fg-kpi-cell .kpi-val { font-size: 11pt; font-weight: bold; color: #1F3864; }
+                    .atp-val { color: #1E8449; }
+
+                    /* ── Component Table ── */
+                    .comp-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 0;
+                        font-size: 7.5pt;
+                    }
+                    .comp-table thead tr th {
+                        background: #1F3864;
+                        color: #ffffff;
+                        text-align: center;
+                        padding: 5px 4px;
+                        border: 1px solid #144170;
+                        font-size: 7.5pt;
+                    }
+                    .comp-table tbody tr td {
+                        border: 1px solid #cbd5df;
+                        padding: 4px 5px;
+                        vertical-align: middle;
+                    }
+                    .comp-table tbody tr:nth-child(even) td { background: #f4f8fc; }
+                    .comp-table tbody tr:hover td { background: #ddeeff; }
+                    td.center { text-align: center; }
+                    td.right { text-align: right; }
+                    .shortage-cell { color: #C0392B; font-weight: bold; background: #FDECEA !important; text-align: center; }
+                    .ok-cell { color: #1E8449; background: #E9F7EF !important; text-align: center; }
+
+                    /* ── Totals ── */
+                    .totals-row td {
+                        background: #D6E4F0 !important;
+                        font-weight: bold;
+                        font-size: 8pt;
+                        border: 1px solid #bcd1e8;
+                        padding: 5px;
+                    }
+
+                    /* ── Page break ── */
+                    .page-break { page-break-before: always; }
+                </style>
+
+                <div class="page">
+
+                    <!-- Report Title -->
+                    <div class="atp-main-title">
+                        &#x1F4CA; Available-To-Promise (ATP) Report
+                    </div>
+
+                    <!-- Meta Table -->
+                    <table class="atp-meta-table" style="margin-top:6px;">
+                        <tr>
+                            <td class="meta-label">Warehouse</td>
+                            <td class="meta-val"><t t-esc="warehouse"/></td>
+                            <td class="meta-label">MO Status</td>
+                            <td class="meta-val"><t t-esc="mo_state_label"/></td>
+                        </tr>
+                        <tr>
+                            <td class="meta-label">Report Generated By</td>
+                            <td class="meta-val"><t t-esc="company.name"/> — <t t-esc="docs.env.user.name"/></td>
+                            <td class="meta-label">Date</td>
+                            <td class="meta-val"><t t-esc="report_date"/></td>
+                        </tr>
+                    </table>
+
+                    <hr style="border: 2px solid #1F3864; margin-bottom: 12px;"/>
+
+                    <!-- FG Blocks -->
+                    <t t-foreach="atp_data" t-as="fg">
+
+                        <div class="fg-block">
+
+                            <!-- FG Header -->
+                            <div class="fg-header">
+                                FG Code: <t t-esc="fg['fg_code']"/> &#160;|&#160;
+                                <t t-esc="fg['fg_name']"/> &#160;|&#160;
+                                BOM: <t t-esc="fg['bom_name']"/>
+                            </div>
+
+                            <!-- FG KPIs -->
+                            <table style="width:100%; border-collapse:collapse; border:1px solid #bcd1e8; border-top:none; margin-bottom:0;">
+                                <tr>
+                                    <td style="width:20%; padding:6px 10px; background:#EBF5FB; border-right:1px solid #bcd1e8; vertical-align:top;">
+                                        <div style="font-size:7pt; color:#5d6d7e; text-transform:uppercase;">Demand Qty</div>
+                                        <div style="font-size:11pt; font-weight:bold; color:#1F3864;">
+                                            <t t-esc="'{:,.2f}'.format(fg['demand_qty'])"/>
+                                        </div>
+                                    </td>
+                                    <td style="width:20%; padding:6px 10px; background:#EBF5FB; border-right:1px solid #bcd1e8; vertical-align:top;">
+                                        <div style="font-size:7pt; color:#5d6d7e; text-transform:uppercase;">FG Available</div>
+                                        <div style="font-size:11pt; font-weight:bold; color:#1F3864;">
+                                            <t t-esc="'{:,.2f}'.format(fg['fg_available'])"/>
+                                        </div>
+                                    </td>
+                                    <td style="width:20%; padding:6px 10px; background:#EBF5FB; border-right:1px solid #bcd1e8; vertical-align:top;">
+                                        <div style="font-size:7pt; color:#5d6d7e; text-transform:uppercase;">ATP Qty</div>
+                                        <div style="font-size:11pt; font-weight:bold; color:#1E8449;">
+                                            <t t-esc="'{:,.2f}'.format(fg['atp_qty'])"/>
+                                        </div>
+                                    </td>
+                                    <td style="width:20%; padding:6px 10px; background:#EBF5FB; border-right:1px solid #bcd1e8; vertical-align:top;">
+                                        <div style="font-size:7pt; color:#5d6d7e; text-transform:uppercase;">Total Shortage</div>
+                                        <div style="font-size:11pt; font-weight:bold; color:#C0392B;">
+                                            <t t-esc="'{:,.2f}'.format(fg['total_shortage'])"/>
+                                        </div>
+                                    </td>
+                                    <td style="width:20%; padding:6px 10px; background:#EBF5FB; vertical-align:top;">
+                                        <div style="font-size:7pt; color:#5d6d7e; text-transform:uppercase;">Components</div>
+                                        <div style="font-size:11pt; font-weight:bold; color:#1F3864;">
+                                            <t t-esc="fg['total_components']"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Component Table -->
+                            <table class="comp-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width:4%">S.No</th>
+                                        <th style="width:10%">Component Code</th>
+                                        <th style="width:22%">Description</th>
+                                        <th style="width:5%">UoM</th>
+                                        <th style="width:5%">QPU</th>
+                                        <th style="width:8%">Required Qty</th>
+                                        <th style="width:8%">Available Qty</th>
+                                        <th style="width:8%">Free Qty</th>
+                                        <th style="width:8%">Shortage Qty</th>
+                                        <th style="width:12%">Manufacturer</th>
+                                        <th style="width:10%">Part No.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="fg['components']" t-as="comp">
+                                        <tr>
+                                            <td class="center"><t t-esc="comp['sno']"/></td>
+                                            <td><t t-esc="comp['component_code']"/></td>
+                                            <td><t t-esc="comp['description']"/></td>
+                                            <td class="center"><t t-esc="comp['uom']"/></td>
+                                            <td class="center"><t t-esc="'{:,.3f}'.format(comp['qpu'])"/></td>
+                                            <td class="center"><t t-esc="'{:,.2f}'.format(comp['required_qty'])"/></td>
+                                            <td class="center"><t t-esc="'{:,.2f}'.format(comp['available_qty'])"/></td>
+                                            <td class="center"><t t-esc="'{:,.2f}'.format(comp['free_qty'])"/></td>
+                                            <td t-attf-class="#{comp['shortage_qty'] > 0 and 'shortage-cell' or 'ok-cell'}">
+                                                <t t-esc="'{:,.2f}'.format(comp['shortage_qty'])"/>
+                                            </td>
+                                            <td><t t-esc="comp['manufacturer']"/></td>
+                                            <td><t t-esc="comp['part_no']"/></td>
+                                        </tr>
+                                    </t>
+
+                                    <!-- Totals Row -->
+                                    <tr class="totals-row">
+                                        <td colspan="8" style="text-align:right;">
+                                            Total Components: <t t-esc="fg['total_components']"/> &#160;|&#160;
+                                            Total Shortage Units:
+                                        </td>
+                                        <td class="center" style="color:#C0392B;">
+                                            <t t-esc="'{:,.2f}'.format(fg['total_shortage'])"/>
+                                        </td>
+                                        <td colspan="2"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div><!-- /fg-block -->
+
+                        <!-- Page break between FGs (except last) -->
+                        <!-- <t t-if="not fg_last">
+                            <div class="page-break"/>
+                        </t> -->
+
+                    </t><!-- /t-foreach fg -->
+
+                </div><!-- /page -->
+
+            </t>
+        </t>
+    </template>
+</odoo>

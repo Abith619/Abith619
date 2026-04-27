@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Inherit product.template form to add Tolerance % field -->
+    <record id="product_template_form_inherit_silliconz" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.silliconz</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+
+                    <field name="approval_state" widget="statusbar"
+                        statusbar_visible="draft,submitted,approved,rejected"/>
+
+                    <button name="action_submit"
+                        string="Submit for Approval"
+                        type="object"
+                        class="btn-primary"
+                        invisible="approval_state != 'draft'"/>
+
+                    <button name="action_approve"
+                        string="Approve"
+                        type="object"
+                        class="btn-success"
+                        invisible="approval_state != 'submitted'"
+                        groups="silliconz_module.group_product_approval_manager"
+                    />
+
+                    <button name="action_reject"
+                        string="Reject"
+                        type="object"
+                        class="btn-danger"
+                        invisible="approval_state != 'submitted'"
+                        groups="silliconz_module.group_product_approval_manager"
+                    />
+                </header>
+
+            </xpath>
+            <!-- Place the field in the General Information tab, after the UoM fields -->
+            <xpath expr="//page[@name='general_information']//group[1]" position="after">
+                <group string="Quality &amp; Tolerance">
+                    <field name="tolerance_percent"
+                            string="Tolerance (%)"
+                            help="Enter plain percentage: e.g. 10 for ±10%, 5 for ±5%."/>
+                </group>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page name="manufacturers" string="Manufacturers">
+                    <field name="manufacturer_line_ids">
+                        <list editable="bottom">
+                            <field name="manufacturer_id"/>
+                            <field name="part_number" 
+                            />
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_manufacturer_info_form_view" model="ir.ui.view">
+        <field name="name">product.manufacturer.info.form</field>
+        <field name="model">product.manufacturer.info</field>
+        <field name="arch" type="xml">
+            <form string="Part Number">
+                <sheet>
+                    <group>
+                        <field name="manufacturer_id"/>
+                        <field name="part_number"/>
+                        <field name="product_tmpl_id" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_manufacturer_form_view" model="ir.ui.view">
+        <field name="name">product.manufacturer.form</field>
+        <field name="model">product.manufacturer</field>
+        <field name="arch" type="xml">
+            <form string="Manufacturer">
+                <sheet>
+                    <group>
+                        <field name="manufacturer"/>
+                        <field name="part_number"/>
+                        <field name="product_tmpl_id" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

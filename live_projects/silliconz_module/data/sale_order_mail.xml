@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ============================================================
+         1. SUBMIT LEVEL 1 - notify L1 Approver
+         ============================================================ -->
+    <record id="email_template_submit_lvl1" model="mail.template">
+        <field name="name">Sale Order: Submitted for L1 Approval</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">Action Required: Sale Order {{ object.name }} Submitted for L1 Approval</field>
+        <field name="partner_to">{{ ','.join(
+            str(u.partner_id.id)
+            for u in env.ref('silliconz_module.group_sale_order_manager').users
+            if u.partner_id
+        ) }}</field>
+        <field name="body_html"><![CDATA[
+            <p>Dear Approver,</p>
+            <p>A Sale Order has been submitted for <strong>Level 1 Approval</strong> and requires your review.</p>
+            <table style="border-collapse:collapse; width:100%; max-width:600px;">
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd; width:40%;">Order Number</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.name }}</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd;">Customer</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.partner_id.name }}</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd;">Submitted By</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.user_id.name }}</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd;">Quotation Type</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ dict(object._fields['quotation_type'].selection).get(object.quotation_type, '') }}</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd;">Amount Total</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.currency_id.symbol }} {{ '%.2f' % object.amount_total }}</td>
+                </tr>
+            </table>
+            <br/>
+            <p>
+                <a href="/web#id={{ object.id }}&amp;model=sale.order&amp;view_type=form"
+                   style="background:#875a7b; color:#fff; padding:8px 16px; text-decoration:none; border-radius:4px;">
+                    Open Order
+                </a>
+            </p>
+            <p>Please log in to Odoo to approve or reject this order.</p>
+        ]]></field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <!-- ============================================================
+         2. APPROVE LEVEL 1 - notify Salesperson
+         ============================================================ -->
+    <record id="email_template_approve_lvl1" model="mail.template">
+        <field name="name">Sale Order: L1 Approved</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">Sale Order {{ object.name }} - Level 1 Approved</field>
+        <field name="email_to">{{ object.user_id.email }}</field>
+        <field name="body_html"><![CDATA[
+            <p>Dear {{ object.user_id.name }},</p>
+            <p>Your Sale Order has been <strong style="color:green;">Approved at Level 1</strong>.
+            The order is now in <em>Quotation Sent</em> status and can be submitted for Level 2 approval.</p>
+            <table style="border-collapse:collapse; width:100%; max-width:600px;">
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd; width:40%;">Order Number</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.name }}</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd;">Customer</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.partner_id.name }}</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd;">Amount Total</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.currency_id.symbol }} {{ '%.2f' % object.amount_total }}</td>
+                </tr>
+            </table>
+            <br/>
+            <p>
+                <a href="/web#id={{ object.id }}&amp;model=sale.order&amp;view_type=form"
+                   style="background:#875a7b; color:#fff; padding:8px 16px; text-decoration:none; border-radius:4px;">
+                    Open Order
+                </a>
+            </p>
+        ]]></field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <!-- ============================================================
+         3. REJECT LEVEL 1 - notify Salesperson
+         ============================================================ -->
+    <record id="email_template_reject_lvl1" model="mail.template">
+        <field name="name">Sale Order: L1 Rejected</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">Sale Order {{ object.name }} - Level 1 Rejected</field>
+        <field name="email_to">{{ object.user_id.email }}</field>
+        <field name="body_html"><![CDATA[
+            <p>Dear {{ object.user_id.name }},</p>
+            <p>Your Sale Order has been <strong style="color:red;">Rejected at Level 1</strong>.
+            Please review the reason below, make the necessary corrections, and resubmit.</p>
+            <table style="border-collapse:collapse; width:100%; max-width:600px;">
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd; width:40%;">Order Number</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.name }}</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd;">Customer</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.partner_id.name }}</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd; vertical-align:top;">Rejection Reason</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.rejection_reason or 'No reason provided.' }}</td>
+                </tr>
+            </table>
+            <br/>
+            <p>
+                <a href="/web#id={{ object.id }}&amp;model=sale.order&amp;view_type=form"
+                   style="background:#875a7b; color:#fff; padding:8px 16px; text-decoration:none; border-radius:4px;">
+                    Open Order
+                </a>
+            </p>
+        ]]></field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <!-- ============================================================
+         4. SUBMIT LEVEL 2 - notify L2 Approver
+         ============================================================ -->
+    <record id="email_template_submit_lvl2" model="mail.template">
+        <field name="name">Sale Order: Submitted for L2 Approval</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">Action Required: Sale Order {{ object.name }} Submitted for L2 Approval</field>
+        <field name="partner_to">{{ ','.join(
+            str(u.partner_id.id)
+            for u in env.ref('silliconz_module.group_sale_order_manager').users
+            if u.partner_id
+        ) }}</field>
+        <field name="body_html"><![CDATA[
+            <p>Dear Approver,</p>
+            <p>A Sale Order has been submitted for <strong>Level 2 (Final) Approval</strong> and requires your action.</p>
+            <table style="border-collapse:collapse; width:100%; max-width:600px;">
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd; width:40%;">Order Number</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.name }}</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd;">Customer</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.partner_id.name }}</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd;">Submitted By</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.user_id.name }}</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd;">Customer PO Reference</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.customer_po_reference or 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd;">Amount Total</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.currency_id.symbol }} {{ '%.2f' % object.amount_total }}</td>
+                </tr>
+            </table>
+            <br/>
+            <p>
+                <a href="/web#id={{ object.id }}&amp;model=sale.order&amp;view_type=form"
+                   style="background:#875a7b; color:#fff; padding:8px 16px; text-decoration:none; border-radius:4px;">
+                    Open Order
+                </a>
+            </p>
+            <p>Please log in to Odoo to confirm or cancel this order.</p>
+        ]]></field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <!-- ============================================================
+         5. APPROVE LEVEL 2 - notify Salesperson
+         ============================================================ -->
+    <record id="email_template_approve_lvl2" model="mail.template">
+        <field name="name">Sale Order: L2 Approved (Confirmed)</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">Sale Order {{ object.name }} - Confirmed</field>
+        <field name="email_to">{{ object.user_id.email }}</field>
+        <field name="body_html"><![CDATA[
+            <p>Dear {{ object.user_id.name }},</p>
+            <p>Your Sale Order has been <strong style="color:green;">Approved at Level 2</strong>
+            and is now a confirmed <em>Sales Order</em>.
+            Manufacturing Orders have been created automatically.</p>
+            <table style="border-collapse:collapse; width:100%; max-width:600px;">
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd; width:40%;">Order Number</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.name }}</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd;">Customer</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.partner_id.name }}</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd;">Customer PO Reference</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.customer_po_reference or 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd;">Amount Total</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.currency_id.symbol }} {{ '%.2f' % object.amount_total }}</td>
+                </tr>
+            </table>
+            <br/>
+            <p>
+                <a href="/web#id={{ object.id }}&amp;model=sale.order&amp;view_type=form"
+                   style="background:#875a7b; color:#fff; padding:8px 16px; text-decoration:none; border-radius:4px;">
+                    Open Order
+                </a>
+            </p>
+        ]]></field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+    <!-- ============================================================
+         6. REJECT LEVEL 2 - notify Salesperson
+         ============================================================ -->
+    <record id="email_template_reject_lvl2" model="mail.template">
+        <field name="name">Sale Order: L2 Rejected / Cancelled</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">Sale Order {{ object.name }} - Level 2 Rejected</field>
+        <field name="email_to">{{ object.user_id.email }}</field>
+        <field name="body_html"><![CDATA[
+            <p>Dear {{ object.user_id.name }},</p>
+            <p>Your Sale Order has been <strong style="color:red;">Rejected at Level 2</strong> and the order has been cancelled.
+            Please contact your manager for further instructions or create an amendment if required.</p>
+            <table style="border-collapse:collapse; width:100%; max-width:600px;">
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd; width:40%;">Order Number</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.name }}</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd;">Customer</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.partner_id.name }}</td>
+                </tr>
+                <tr>
+                    <td style="padding:6px 12px; font-weight:bold; background:#f5f5f5; border:1px solid #ddd;">Amount Total</td>
+                    <td style="padding:6px 12px; border:1px solid #ddd;">{{ object.currency_id.symbol }} {{ '%.2f' % object.amount_total }}</td>
+                </tr>
+            </table>
+            <br/>
+            <p>
+                <a href="/web#id={{ object.id }}&amp;model=sale.order&amp;view_type=form"
+                   style="background:#875a7b; color:#fff; padding:8px 16px; text-decoration:none; border-radius:4px;">
+                    Open Order
+                </a>
+            </p>
+        ]]></field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+</odoo>

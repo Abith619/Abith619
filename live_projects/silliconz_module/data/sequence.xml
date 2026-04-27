@@ -1,0 +1,16 @@
+<odoo>
+    <record id="seq_material_request" model="ir.sequence">
+        <field name="name">Material Request</field>
+        <field name="code">material.request</field>
+        <field name="prefix">MR/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="seq_purchase_request" model="ir.sequence">
+        <field name="name">Purchase Request</field>
+        <field name="code">purchase.request</field>
+        <field name="prefix">PR/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

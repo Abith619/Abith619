@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="sale_order_form_inherit_silliconz" model="ir.ui.view">
+
+        <field name="name">sale.order.form.inherit.silliconz</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- ===================================================== -->
+            <!-- ADD CUSTOM FIELDS AFTER CUSTOMER -->
+            <!-- ===================================================== -->
+            <!-- Hide original -->
+            <xpath expr="//button[@id='create_invoice']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_confirm']" position="replace">
+            </xpath>
+
+            <!-- Add new one only for Account Manager -->
+            <xpath expr="//header" position="inside">
+                <button name="%(sale.action_view_sale_advance_payment_inv)d"
+                        type="action"
+                        string="Create Invoice"
+                        class="btn-primary"
+                        groups="account.group_account_manager"
+                        invisible="invoice_status != 'to invoice'"/>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+
+                <field name="lead_id" invisible="1"/>
+                <field name="opportunity_id" readonly="1"/>
+                <field name="enquiry_type_id" readonly="1"/>
+                <field name="expected_delivery_date" readonly="1"/>
+                <field name="quotation_type" required="1"/>
+                <field name="rejection_reason" readonly="1"/>
+
+            </xpath>
+
+            <!-- ===================================================== -->
+            <!-- ADD FIELDS AFTER PAYMENT TERMS -->
+            <!-- ===================================================== -->
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+
+                <field name="expected_quantity" readonly="1"/>
+                <field name="terms_id" required="1"/>
+                <field name="quotation_validity_date" required="1"/>
+                <field name="transporter_id"
+                       options="{'no_create': True}"
+                       placeholder="Select Transporter..."/>
+
+            </xpath>
+
+            <!-- ===================================================== -->
+            <!-- CUSTOMER PO NOTEBOOK PAGE -->
+            <!-- ===================================================== -->
+            <xpath expr="//notebook" position="inside">
+
+                <page string="Customer PO Details">
+                    <group>
+                        <field name="customer_po_reference" readonly="1"/>
+                        <field name="customer_po_date" readonly="1"/>
+                        <field name="customer_po_attachment"
+                                filename="customer_po_filename"
+                                readonly="1"/>
+                        <field name="customer_po_filename" invisible="1"/>
+                    </group>
+                </page>
+
+            </xpath>
+
+            <!-- ===================================================== -->
+            <!-- STATUSBAR (CUSTOM STATES) -->
+            <!-- ===================================================== -->
+            <xpath expr="//field[@name='state']" position="replace">
+
+                <field name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,submitted_lvl1,rejected_lvl1,submitted_lvl2,sale"/>
+
+            </xpath>
+
+            <!-- ===================================================== -->
+            <!-- MODIFY EXISTING BUTTONS -->
+            <!-- ===================================================== -->
+            <xpath expr="//button[@name='action_confirm']" position="attributes">
+                <attribute name="string">Approve Level 2</attribute>
+                <attribute name="invisible">state != 'submitted_lvl2'</attribute>
+                <attribute name="groups">silliconz_module.group_sale_order_manager</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='action_cancel']" position="attributes">
+                <attribute name="string">Cancel Order</attribute>
+                <attribute name="invisible">state != 'submitted_lvl2'</attribute>
+                <attribute name="groups">silliconz_module.group_sale_order_manager</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='action_quotation_send']" position="replace">
+                <!-- <attribute name="invisible">state not in ('sent','sale')</attribute> -->
+            </xpath>
+            <!-- <xpath expr="//header" position="inside">
+                    <button name="action_quotation_send"
+                            type="object"
+                            string="Send Quote"
+                            class="btn-primary"
+                            groups="silliconz_module.group_sale_order_salesperson,silliconz_module.group_sale_order_manager"
+                            invisible="state not in ('sent','sale')"/>
+            </xpath> -->
+                            <!-- ===================================================== -->
+            <!-- ADD CUSTOM HEADER BUTTONS -->
+            <!-- ===================================================== -->
+            <xpath expr="//header" position="inside">
+
+                <!-- Submit Level 1 -->
+                <button name="action_submit_lvl1"
+                        string="Submit Level 1"
+                        type="object"
+                        class="btn-primary"
+                        groups="silliconz_module.group_sale_order_salesperson, silliconz_module.group_sale_order_manager"
+                        invisible="state != 'draft'"/>
+
+                <!-- Reject Level 1 -->
+                <button name="action_reject_lvl1"
+                        string="Reject Level 1"
+                        type="object"
+                        class="btn-danger"
+                        groups="silliconz_module.group_sale_order_manager"
+                        invisible="state != 'submitted_lvl1'"/>
+
+                <!-- Reset to Draft -->
+                <button name="reset_to_draft"
+                        string="Reset to Draft"
+                        type="object"
+                        class="btn-secondary"
+                        groups="silliconz_module.group_sale_order_salesperson"
+                        invisible="state != 'rejected_lvl1'"/>
+
+                <!-- Approve Level 1 -->
+                <button name="action_approve_lvl1"
+                        string="Approve Level 1"
+                        type="object"
+                        class="btn-success"
+                        groups="silliconz_module.group_sale_order_manager"
+                        invisible="state != 'submitted_lvl1'"/>
+
+                <!-- Submit Level 2 -->
+                <button name="action_submit_lvl2"
+                        string="Submit Level 2"
+                        type="object"
+                        class="btn-primary"
+                        groups="silliconz_module.group_sale_order_salesperson, silliconz_module.group_sale_order_manager"
+                        invisible="state != 'sent'"/>
+
+                <!-- Amendment -->
+                <button name="action_amend_order"
+                        string="Amendment"
+                        type="object"
+                        class="btn-secondary"
+                        groups="silliconz_module.group_sale_order_salesperson"
+                        invisible="state != 'sale' and state != 'sent'"/>
+
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+
+                <button name="action_view_amendments"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-copy"
+                        groups="silliconz_module.group_sale_order_manager"
+                        invisible="amendment_count &lt;= 1">
+                    <field name="amendment_count"
+                            widget="statinfo"
+                            string="Amendments"/>
+                </button>
+                <button name="action_view_mo"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-industry">
+
+                    <field name="production_count"
+                            widget="statinfo"
+                            string="Manufacturing Orders"/>
+                </button>
+
+            </xpath>
+
+        </field>
+
+    </record>
+    
+
+</odoo> 

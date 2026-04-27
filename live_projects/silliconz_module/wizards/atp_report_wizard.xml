@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Wizard Form View -->
+    <record id="atp_report_wizard_form_view" model="ir.ui.view">
+        <field name="name">atp.report.wizard.form</field>
+        <field name="model">atp.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Available-To-Promise (ATP) Report">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <span>Available-To-Promise (ATP) Report</span>
+                        </h1>
+                        <p class="text-muted">
+                            Generates ATP stock analysis from Draft &amp; Confirmed Manufacturing Orders.
+                        </p>
+                    </div>
+
+                    <group string="Filters" col="2">
+                        <group>
+                            <field name="product_ids"
+                                   widget="many2many_tags"
+                                   options="{'no_create': True}"
+                                   placeholder="Leave empty for all FG products..."/>
+                            <field name="warehouse_id" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="mo_state"/>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                    </group>
+
+                    <div class="alert alert-info" role="alert">
+                        <i class="fa fa-info-circle"/> &amp;nbsp;
+                        The report will include all Manufacturing Orders in the selected state(s).
+                        Stock availability is calculated from the selected warehouse's internal location.
+                        Shortage = Required Qty − Free (Unreserved) Qty.
+                    </div>
+                </sheet>
+
+                <footer>
+                    <button name="action_print_pdf"
+                            string="Generate PDF"
+                            type="object"
+                            class="btn-primary"
+                            icon="fa-file-pdf-o"/>
+                    <button name="action_print_xlsx"
+                            string="Generate Excel"
+                            type="object"
+                            class="btn-success"
+                            icon="fa-file-excel-o"/>
+                    <button string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Wizard Action -->
+    <record id="action_atp_report_wizard" model="ir.actions.act_window">
+        <field name="name">ATP Report</field>
+        <field name="res_model">atp.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="atp_report_wizard_form_view"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="mrp.model_mrp_production"/>
+        <field name="context">{}</field>
+    </record>
+
+</odoo>

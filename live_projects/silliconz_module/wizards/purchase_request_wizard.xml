@@ -1,0 +1,35 @@
+<odoo>
+    <record id="purchase_request_wizard_form_view" model="ir.ui.view">
+        <field name="name">purchase.request.wizard.form</field>
+        <field name="model">purchase.request.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Create Purchase Request">
+                <sheet>
+                    <group>
+                        <field name="material_request_id"/>
+                        <field name="mo_id" string="Source Document"/>
+                    </group>
+                    <notebook>
+                        <page string="Products">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="requested_qty"/>
+                                    <field name="available_qty"/>
+                                    <field name="remaining_qty"/>
+                                    <field name="purchase_qty"/>
+                                    <field name="uom_id"/>
+
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button string="Create" type="object" name="action_create_purchase_request" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

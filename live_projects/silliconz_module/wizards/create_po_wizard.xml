@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="create_po_wizard_form_view" model="ir.ui.view">
+        <field name="name">create.po.wizard.form</field>
+        <field name="model">create.po.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Create Purchase Order">
+                <sheet>
+                    <group>
+                        <field name="vendor_id"/>
+                        <field name="request_id" invisible="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Products">
+                            <field name="line_ids">
+                                <list editable="bottom" create="0">
+                                    <field name="product_id" force_save="1"/>
+                                    <field name="quantity" force_save="1"/>
+                                    <field name="uom_id" force_save="1"/>
+                                    <field name="purchase_price" force_save="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button name="action_create_po" string="Create PO" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

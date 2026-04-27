@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_hide_price_tax" inherit_id="sale.report_saleorder_document">
+
+        <!-- ================= HEADER ================= -->
+
+        <!-- Unit Price Header -->
+        <xpath expr="//th[@name='th_priceunit']" position="attributes">
+            <attribute name="t-if">doc.state not in ('draft', 'submitted_lvl1')</attribute>
+        </xpath>
+
+        <!-- Taxes Header -->
+        <xpath expr="//th[@name='th_taxes']" position="attributes">
+            <attribute name="t-if">doc.state not in ('draft', 'submitted_lvl1')</attribute>
+        </xpath>
+
+        <!-- Subtotal Header -->
+        <xpath expr="//th[@name='th_subtotal']" position="attributes">
+            <attribute name="t-if">doc.state not in ('draft', 'submitted_lvl1')</attribute>
+        </xpath>
+
+        <!-- ================= BODY ================= -->
+
+        <!-- Unit Price -->
+        <xpath expr="//td[@name='td_product_priceunit']" position="attributes">
+            <attribute name="t-if">doc.state not in ('draft', 'submitted_lvl1')</attribute>
+        </xpath>
+
+        <!-- Taxes -->
+        <xpath expr="//td[@name='td_product_taxes']" position="attributes">
+            <attribute name="t-if">doc.state not in ('draft', 'submitted_lvl1')</attribute>
+        </xpath>
+
+        <!-- Subtotal -->
+        <xpath expr="//td[@name='td_product_subtotal']" position="attributes">
+            <attribute name="t-if">doc.state not in ('draft', 'submitted_lvl1')</attribute>
+        </xpath>
+
+        <!-- Total -->
+        <xpath expr="//div[@name='total']" position="attributes">
+            <attribute name="t-if">doc.state not in ('draft', 'submitted_lvl1')</attribute>
+        </xpath>
+
+    </template>
+</odoo>

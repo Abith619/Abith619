@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<!-- Hide Default Purchase Order Reports from Print Menu -->
+    <record id="purchase.action_report_purchase_order" model="ir.actions.report">
+        <field name="binding_model_id" eval="False"/>
+    </record>
+    <record id="purchase.report_purchase_quotation" model="ir.actions.report">
+        <field name="binding_model_id" eval="False"/>
+    </record>
+
+    <!-- 1. Custom Paperformat to remove the massive default Odoo margin-top -->
+    <record id="paperformat_custom_po_no_margin" model="report.paperformat">
+        <field name="name">Custom PO Paperformat</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">8</field>
+        <field name="margin_right">8</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <!-- 2. The Custom Report Action (Links paperformat + model) -->
+    <record id="action_report_custom_purchase_order" model="ir.actions.report">
+        <field name="name">Purchase Order</field>
+        <field name="model">purchase.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">silliconz_module.report_custom_purchase_order</field>
+        <field name="report_file">silliconz_module.report_custom_purchase_order</field>
+        <field name="print_report_name">'Purchase Order - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="silliconz_module.paperformat_custom_po_no_margin"/>
+    </record>
+
+    <record id="action_report_purchase_request" model="ir.actions.report">
+        <field name="name">Purchase Request</field>
+        <field name="model">purchase.request</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">silliconz_module.report_purchase_request</field>
+        <field name="report_file">silliconz_module.report_purchase_request</field>
+        <field name="print_report_name">'Purchase Request - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_purchase_request"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="silliconz_module.paperformat_custom_po_no_margin"/>
+    </record>
+
+    <record id="action_atp_report_pdf" model="ir.actions.report">
+        <field name="name">ATP Report</field>
+        <field name="model">atp.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">silliconz_module.atp_report_template</field>
+        <field name="report_file">silliconz_module.atp_report_template</field>
+        <field name="print_report_name">'ATP_Report_%s' % (object.warehouse_id.name or 'All')</field>
+        <field name="paperformat_id" ref="silliconz_module.paperformat_custom_po_no_margin"/>
+    </record>
+
+    <record id="action_bom_report_pdf" model="ir.actions.report">
+        <field name="name">BOM Consolidated Report</field>
+        <field name="model">bom.consolidated.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">silliconz_module.bom_consolidated_report_template</field>
+        <field name="report_file">silliconz_module.bom_report_template</field>
+        <field name="print_report_name">'BOM_Report_%s' % (object.warehouse_id.name or 'All')</field>
+        <field name="paperformat_id" ref="silliconz_module.paperformat_custom_po_no_margin"/>
+    </record>
+
+    <!-- Material Request PDF Report -->
+    <record id="action_report_material_request" model="ir.actions.report">
+        <field name="name">Materials Request Form</field>
+        <field name="model">material.request</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">silliconz_module.report_material_request</field>
+        <field name="report_file">silliconz_module.report_material_request</field>
+        <field name="print_report_name">'Materials Request - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_material_request"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="silliconz_module.paperformat_custom_po_no_margin"/>
+    </record>
+
+    <!-- Material Request PDF from Sale Order Print menu -->
+    <record id="action_report_sale_order_material_requests" model="ir.actions.report">
+        <field name="name">Materials Request Form</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">silliconz_module.report_sale_order_material_requests</field>
+        <field name="report_file">silliconz_module.report_sale_order_material_requests</field>
+        <field name="print_report_name">'Materials Request - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="silliconz_module.paperformat_custom_po_no_margin"/>
+    </record>
+
+</odoo>

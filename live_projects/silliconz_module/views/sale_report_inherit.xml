@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="report_saleorder_inherit_terms"
+                inherit_id="sale.report_saleorder_document">
+
+        <!-- <xpath expr="//div[@class='page']"
+                position="inside">
+
+            <t t-if="doc.terms_content">
+                <div style="margin-top:40px; page-break-inside: avoid;">
+                    <h4>Terms &amp; Conditions</h4>
+                    <div t-field="doc.terms_content"/>
+                </div>
+            </t>
+
+        </xpath> -->
+
+    </template>
+
+</odoo>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Main Template for Purchase Request -->
+    <template id="report_purchase_request">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="silliconz_module.report_purchase_request_document"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_purchase_request_document">
+        <t t-call="web.basic_layout">
+            <div class="page" style="font-size: 11px; margin: 0; padding: 0; font-family: 'Italic', sans-serif;">
+                
+                <!-- ===== COMPANY HEADER (No Borders) ===== -->
+                <table style="width: 100%; border: none; margin-bottom: 5px;">
+                    <colgroup>
+                        <col style="width: 25%;"/>
+                        <col style="width: 55%;"/>
+                        <col style="width: 20%;"/>
+                    </colgroup>
+                    <tr>
+                        <!-- Company Logo -->
+                        <td style="padding: 4px; text-align: left; vertical-align: top;">
+                            <img t-if="res_company.logo"
+                                t-att-src="image_data_uri(res_company.logo)"
+                                style="max-height: 100px; max-width: 100%;"
+                                alt="Logo"/>
+                        </td>
+
+                        <!-- Company Details -->
+                        <td style="padding: 4px; text-align: left; vertical-align: top;">
+                            <div style="font-size: 15px; font-weight: bold; font-style: italic; margin-bottom: 2px;">
+                                <span t-field="res_company.name"/>
+                            </div>
+                            <div style="font-size: 10px;">
+                                <t t-if="res_company.street"><span t-field="res_company.street"/></t>
+                                <t t-if="res_company.street2">, <span t-field="res_company.street2"/></t>
+                                <t t-if="res_company.city"> <span t-field="res_company.city"/></t>
+                                <t t-if="res_company.zip"> - <span t-field="res_company.zip"/></t>
+                                <t t-if="res_company.state_id"> <span t-field="res_company.state_id.name"/></t>
+                                <t t-if="res_company.country_id"> <span t-field="res_company.country_id.name"/></t>
+                            </div>
+                            <div style="font-size: 10px;">
+                                <t t-if="res_company.phone">Tel: <span t-field="res_company.phone"/></t>
+                                <t t-if="res_company.email"> | Email: <span t-field="res_company.email"/></t>
+                            </div>
+                        </td>
+
+                        <td style="padding: 4px; text-align: right; vertical-align: top;">
+                            <img src="/silliconz_module/static/src/iso.jpg"
+                                style="max-height: 100px; max-width: 100%;"
+                                alt="ISO 9001"/>
+                            
+                        </td>
+                    </tr>
+                </table>
+                
+                <!-- Title -->
+                <div style="text-align: center; font-weight: bold; font-size: 14px; border-top: 1.5px solid #000; border-bottom: 1px solid #000; padding: 4px 0; margin-bottom: 8px;">
+                    PURCHASE REQUEST
+                </div>
+
+                <!-- PR Header Info -->
+                <table style="font-size: 10px; width: 100%; margin-bottom: 10px; border: none;">
+                    <colgroup>
+                        <col style="width: 15%;"/>
+                        <col style="width: 35%;"/>
+                        <col style="width: 20%;"/>
+                        <col style="width: 30%;"/>
+                    </colgroup>
+                    <tr>
+                        <td style="padding: 2px;"><strong>PR Ref</strong></td>
+                        <td style="padding: 2px;"><span t-field="o.name"/></td>
+                        <td style="padding: 2px;"><strong>Expected Date</strong></td>
+                        <td style="padding: 2px;">
+                            <span t-if="o.expected_date" t-field="o.expected_date" t-options="{'widget': 'date'}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 2px;"><strong>Status</strong></td>
+                        <td style="padding: 2px;"><span style="text-transform: capitalize;" t-field="o.state"/></td>
+                        <td style="padding: 2px;"><strong>MR Ref</strong></td>
+                        <td style="padding: 2px;">
+                            <span t-if="o.material_request_id" t-field="o.material_request_id.name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 2px;"><strong>Received Date</strong></td>
+                        <td style="padding: 2px;">
+                            <span t-if="o.received_date" t-field="o.received_date" t-options="{'widget': 'date'}"/>
+                        </td>
+                        <td style="padding: 2px;"><strong>Source Doc</strong></td>
+                        <td style="padding: 2px;">
+                            <span t-if="o.mo_id" t-field="o.mo_id.name"/>
+                        </td>
+                    </tr>
+                
+                </table>
+
+                <!-- Line Items Table -->
+                <table style="font-size: 9px; width: 100%; border-collapse: collapse; margin-top: 5px;">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center; padding: 2px; width: 5%; border: 1px solid #000;">Sl No</th>
+                            <th style="text-align: left; padding: 2px; width: 35%; border: 1px solid #000;">Product / Description</th>
+                            <th style="text-align: center; padding: 2px; width: 25%; border: 1px solid #000;">Mfr / Part No</th>
+                            <th style="text-align: center; padding: 2px; width: 10%; border: 1px solid #000;">MOQ</th>
+                            <th style="text-align: center; padding: 2px; width: 15%; border: 1px solid #000;">Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="line_index" t-value="0"/>
+                        <t t-foreach="o.line_ids" t-as="line">
+                            <t t-set="line_index" t-value="line_index + 1"/>
+                            <tr>
+                                <td style="text-align: center; padding: 2px; border: 1px solid #000;"><t t-out="line_index"/></td>
+                                <td style="text-align: left; padding: 2px; border: 1px solid #000;">
+                                    <b><span t-field="line.product_id.display_name"/></b><br/>
+                                    <span t-field="line.description"/>
+                                </td>
+                                <td style="text-align: center; padding: 2px; border: 1px solid #000;">
+                                    <t t-if="line.manufacturer_part_number_ids">
+                                        <span t-field="line.manufacturer_part_number_ids.part_number"/>
+                                    </t>
+                                    <t t-if="line.manufacturer_ids">
+                                        - <span t-out="line.manufacturer_ids.manufacturer"/>
+                                    </t>
+                                </td>
+                                <td style="text-align: center; padding: 2px; border: 1px solid #000;">
+                                    <t t-set="seller" t-value="line.product_id.seller_ids[:1]"/>
+                                    <t t-if="seller">
+                                        <span t-out="int(seller.min_qty)"/>
+                                    </t>
+                                    <t t-else="">-</t>
+                                </td>
+                                <td style="text-align: center; padding: 2px; border: 1px solid #000;">
+                                    <span t-out="int(line.quantity)"/> <span t-field="line.uom_id.name"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+
+                <!-- Signatures -->
+                <table style="width: 100%; margin-top: 50px; page-break-inside: avoid; border: none; text-align: center;">
+                    <tr>
+                        <td style="width: 50%; vertical-align: bottom; text-align: center;">
+                            <t t-if="o.pr_requestor_signature">
+                                <img t-att-src="image_data_uri(o.pr_requestor_signature)"
+                                    style="max-height: 50px; max-width: 150px;"
+                                    alt="Requestor Signature"/>
+                            </t>
+                            <br/>
+                            <div style="border-top: 1px solid #000; width: 60%; margin: 5px auto 0; padding-top: 2px;">
+                                <div style="font-size: 10px; font-weight: bold;">Requested By</div>
+                                <div style="font-size: 10px;">
+                                    <t t-if="o.pr_requestor_id">
+                                        <span t-field="o.pr_requestor_id.name"/>
+                                    </t>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td style="width: 50%; vertical-align: bottom; text-align: center;">
+                            <t t-if="o.pr_approver_signature">
+                                <img t-att-src="image_data_uri(o.pr_approver_signature)"
+                                    style="max-height: 50px; max-width: 150px;"
+                                    alt="Approver Signature"/>
+                            </t>
+                            <br/>
+                            <div style="border-top: 1px solid #000; width: 60%; margin: 5px auto 0; padding-top: 2px;">
+                                <div style="font-size: 10px; font-weight: bold;">Approved By</div>
+                                <div style="font-size: 10px;">
+                                    <t t-if="o.pr_approver_id">
+                                        <span t-field="o.pr_approver_id.name"/>
+                                    </t>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_crm_lead_form_inherit_silliconz" model="ir.ui.view">
+        <field name="name">crm.lead.form.inherit.silliconz</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="enquiry_type_id" required="1"/>
+                <field name="expected_quantity" required="1" />
+                <field name="expected_delivery_date" required="1"/>
+                <field name="enquiry_date" readonly="1"/>
+            </xpath>
+            <xpath expr="//button[@name='action_sale_quotations_new']" position="attributes">
+                <attribute name="invisible">probability == 100</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_view_sale_order']" position="attributes">
+                <attribute name="invisible">not has_confirmed_sale</attribute>
+            </xpath>
+
+
+
+
+            <!-- Add Products Notebook -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Products">
+                    <field name="product_line_ids">
+                        <list editable="bottom">
+                            <field name="product_id" required="1"/>
+                            <field name="description"/>
+                            <field name="quantity"/>
+                            <field name="uom_id"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="crm_lead_quick_create_inherit_silliconz" model="ir.ui.view">
+        <field name="name">crm.lead.quick.create.inherit.silliconz</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.quick_create_opportunity_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='contact_name']" position="after">
+                <field name="enquiry_type_id" required="1"/>
+                <field name="expected_quantity" required="1"/>
+                <field name="expected_delivery_date" required="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

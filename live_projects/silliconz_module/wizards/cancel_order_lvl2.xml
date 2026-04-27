@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_cancel_lvl2_wizard_form" model="ir.ui.view">
+        <field name="name">cancel.lvl2.wizard.form</field>
+        <field name="model">cancel.lvl2.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Cancel Order">
+                <group>
+                    <field name="reason"/>
+                </group>
+                <footer>
+                    <button name="action_confirm_cancel"
+                            type="object"
+                            string="Confirm Cancel"
+                            class="btn-danger"/>
+                    <button string="Close" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

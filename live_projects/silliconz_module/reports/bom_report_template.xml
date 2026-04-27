@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="bom_consolidated_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+
+                <style>
+                    /* ── Global ── */
+                    body { font-family: 'DejaVu Sans', Arial, sans-serif; font-size: 8pt; color: #1a1a1a; }
+
+                    /* ── Report Title ── */
+                    .bom-main-title {
+                        background: #1B3A5C;
+                        color: #ffffff;
+                        text-align: center;
+                        font-size: 14pt;
+                        font-weight: bold;
+                        padding: 10px 0;
+                        letter-spacing: 1px;
+                        border-radius: 4px 4px 0 0;
+                    }
+
+                    /* ── Meta Table ── */
+                    .bom-meta-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+                    .bom-meta-table td { padding: 4px 8px; border: 1px solid #bcd1e8; font-size: 8pt; }
+                    .bom-meta-table .meta-label { background: #D6E4F0; font-weight: bold; width: 140px; }
+                    .bom-meta-table .meta-val { background: #EBF5FB; }
+
+                    /* ── FG Block ── */
+                    .fg-block { margin-bottom: 22px; }
+
+                    .fg-header {
+                        background: #2E75B6;
+                        color: #ffffff;
+                        font-weight: bold;
+                        font-size: 9pt;
+                        padding: 6px 10px;
+                        border-radius: 3px 3px 0 0;
+                    }
+
+                    /* ── KPI Table ── */
+                    .kpi-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        border: 1px solid #bcd1e8;
+                        border-top: none;
+                        margin-bottom: 0;
+                    }
+                    .kpi-table td {
+                        padding: 5px 10px;
+                        background: #EBF5FB;
+                        border-right: 1px solid #bcd1e8;
+                        vertical-align: top;
+                    }
+                    .kpi-table td:last-child { border-right: none; }
+                    .kpi-label {
+                        font-size: 6.5pt;
+                        color: #5d6d7e;
+                        text-transform: uppercase;
+                        letter-spacing: 0.3px;
+                    }
+                    .kpi-val {
+                        font-size: 10pt;
+                        font-weight: bold;
+                        color: #1B3A5C;
+                        margin-top: 1px;
+                    }
+                    .kpi-val-green { color: #1E8449; }
+                    .kpi-val-red   { color: #C0392B; }
+                    .kpi-val-blue  { color: #2E75B6; }
+
+                    /* ── Component Table ── */
+                    .comp-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 0;
+                        font-size: 7pt;
+                    }
+                    .comp-table thead tr th {
+                        background: #1B3A5C;
+                        color: #ffffff;
+                        text-align: center;
+                        padding: 5px 3px;
+                        border: 1px solid #144170;
+                        font-size: 7pt;
+                    }
+                    .comp-table tbody tr td {
+                        border: 1px solid #cbd5df;
+                        padding: 3px 4px;
+                        vertical-align: middle;
+                    }
+                    .comp-table tbody tr:nth-child(even) td { background: #f4f8fc; }
+                    td.center { text-align: center; }
+                    td.right  { text-align: right;  }
+
+                    .shortage-cell {
+                        color: #C0392B; font-weight: bold;
+                        background: #FDECEA !important; text-align: center;
+                    }
+                    .ok-cell {
+                        color: #1E8449;
+                        background: #E9F7EF !important; text-align: center;
+                    }
+
+                    /* ── Totals ── */
+                    .totals-row td {
+                        background: #D6E4F0 !important;
+                        font-weight: bold;
+                        font-size: 7.5pt;
+                        border: 1px solid #bcd1e8;
+                        padding: 4px 5px;
+                    }
+
+                    /* ── Page break ── */
+                    .page-break { page-break-before: always; }
+                </style>
+
+                <div class="page">
+
+                    <!-- ── Report Title ── -->
+                    <div class="bom-main-title">
+                        All-FG BOM Consolidated Report
+                    </div>
+
+                    <!-- ── Meta Table ── -->
+                    <table class="bom-meta-table" style="margin-top:6px;">
+                        <tr>
+                            <td class="meta-label">Warehouse</td>
+                            <td class="meta-val"><t t-esc="warehouse"/></td>
+                            <td class="meta-label">BOM / MO Source</td>
+                            <td class="meta-val"><t t-esc="mo_state_label"/></td>
+                        </tr>
+                        <tr>
+                            <td class="meta-label">Report Generated By</td>
+                            <td class="meta-val">
+                                <t t-esc="company.name"/> — <t t-esc="docs.env.user.name"/>
+                            </td>
+                            <td class="meta-label">Date</td>
+                            <td class="meta-val"><t t-esc="report_date"/></td>
+                        </tr>
+                    </table>
+
+                    <hr style="border: 2px solid #1B3A5C; margin-bottom: 12px;"/>
+
+                    <!-- ── FG Blocks ── -->
+                    <t t-foreach="bom_data" t-as="fg">
+
+                        <div class="fg-block">
+
+                            <!-- FG Header -->
+                            <div class="fg-header">
+                                FG Code: <t t-esc="fg['fg_code']"/> &#160;|&#160;
+                                <t t-esc="fg['fg_name']"/> &#160;|&#160;
+                                BOM: <t t-esc="fg['bom_name']"/> &#160;|&#160;
+                                BOM Qty: <t t-esc="fg['bom_qty']"/>
+                                <t t-esc="fg['bom_uom']"/>
+                            </div>
+
+                            <!-- KPI Row (table-based for wkhtmltopdf) -->
+                            <table class="kpi-table">
+                                <tr>
+                                    <td style="width:16%;">
+                                        <div class="kpi-label">Demand Qty</div>
+                                        <div class="kpi-val">
+                                            <t t-esc="'{:,.2f}'.format(fg['demand_qty'])"/>
+                                        </div>
+                                    </td>
+                                    <td style="width:16%;">
+                                        <div class="kpi-label">FG Available</div>
+                                        <div class="kpi-val kpi-val-green">
+                                            <t t-esc="'{:,.2f}'.format(fg['fg_available'])"/>
+                                        </div>
+                                    </td>
+                                    <td style="width:18%;">
+                                        <div class="kpi-label">FG Std Cost (<t t-esc="currency_symbol"/>)</div>
+                                        <div class="kpi-val kpi-val-blue">
+                                            <t t-esc="'{:,.2f}'.format(fg['fg_cost'])"/>
+                                        </div>
+                                    </td>
+                                    <td style="width:14%;">
+                                        <div class="kpi-label">Components</div>
+                                        <div class="kpi-val">
+                                            <t t-esc="fg['total_components']"/>
+                                        </div>
+                                    </td>
+                                    <td style="width:16%;">
+                                        <div class="kpi-label">Shortage Lines</div>
+                                        <div class="kpi-val kpi-val-red">
+                                            <t t-esc="fg['total_shortage_lines']"/>
+                                        </div>
+                                    </td>
+                                    <td style="width:20%;">
+                                        <div class="kpi-label">Total BOM Cost (<t t-esc="currency_symbol"/>)</div>
+                                        <div class="kpi-val kpi-val-blue">
+                                            <t t-esc="'{:,.2f}'.format(fg['total_component_cost'])"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Component Table -->
+                            <table class="comp-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width:3%">S.No</th>
+                                        <th style="width:9%">Component Code</th>
+                                        <th style="width:20%">Description</th>
+                                        <th style="width:4%">UoM</th>
+                                        <th style="width:5%">QPU</th>
+                                        <th style="width:7%">Required Qty</th>
+                                        <th style="width:7%">Available Qty</th>
+                                        <th style="width:7%">Free Qty</th>
+                                        <th style="width:7%">Shortage Qty</th>
+                                        <th style="width:8%">Unit Cost (<t t-esc="currency_symbol"/>)</th>
+                                        <th style="width:8%">Total Cost (<t t-esc="currency_symbol"/>)</th>
+                                        <th style="width:10%">Manufacturer</th>
+                                        <th style="width:9%">Part No.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="fg['components']" t-as="comp">
+                                        <tr>
+                                            <td class="center"><t t-esc="comp['sno']"/></td>
+                                            <td><t t-esc="comp['component_code']"/></td>
+                                            <td><t t-esc="comp['description']"/></td>
+                                            <td class="center"><t t-esc="comp['uom']"/></td>
+                                            <td class="center"><t t-esc="'{:,.3f}'.format(comp['qpu'])"/></td>
+                                            <td class="center"><t t-esc="'{:,.2f}'.format(comp['required_qty'])"/></td>
+                                            <td class="center"><t t-esc="'{:,.2f}'.format(comp['available_qty'])"/></td>
+                                            <td class="center"><t t-esc="'{:,.2f}'.format(comp['free_qty'])"/></td>
+                                            <td t-attf-class="#{comp['shortage_qty'] > 0 and 'shortage-cell' or 'ok-cell'}">
+                                                <t t-esc="'{:,.2f}'.format(comp['shortage_qty'])"/>
+                                            </td>
+                                            <td class="right"><t t-esc="'{:,.2f}'.format(comp['unit_cost'])"/></td>
+                                            <td class="right"><t t-esc="'{:,.2f}'.format(comp['total_cost'])"/></td>
+                                            <td><t t-esc="comp['manufacturer']"/></td>
+                                            <td><t t-esc="comp['part_no']"/></td>
+                                        </tr>
+                                    </t>
+
+                                    <!-- Totals Row -->
+                                    <tr class="totals-row">
+                                        <td colspan="8" style="text-align:right;">
+                                            Total: <t t-esc="fg['total_components']"/> components &#160;|&#160;
+                                            Shortage lines: <t t-esc="fg['total_shortage_lines']"/> &#160;|&#160;
+                                            Total BOM Cost:
+                                        </td>
+                                        <td class="center" style="color:#C0392B;">
+                                            <!-- shortage qty total intentionally blank in cost-focused totals -->
+                                        </td>
+                                        <td colspan="2" class="right" style="color:#2E75B6;">
+                                            <t t-esc="currency_symbol"/>
+                                            <t t-esc="'{:,.2f}'.format(fg['total_component_cost'])"/>
+                                        </td>
+                                        <td colspan="2"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div><!-- /fg-block -->
+
+                        <!-- Page break between FGs (except last) -->
+                        <!-- <t t-if="not fg_last">
+                            <div class="page-break"/>
+                        </t> -->
+
+                    </t><!-- /t-foreach fg -->
+
+                </div><!-- /page -->
+
+            </t>
+        </t>
+    </template>
+</odoo>

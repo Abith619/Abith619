@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_picking_form_material_request" model="ir.ui.view">
+        <field name="name">stock.picking.form.material.request</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="material_request_id" invisible="1"/>
+                <field name="terms_id"/>
+            </xpath>
+
+            <xpath expr="//field[@name='move_ids']//field[@name='product_id']" position="after">
+                <field name="allowed_manufacturer_ids" column_invisible="1"/>
+                <field name="allowed_part_number_ids" column_invisible="1"/>
+                <field name="manufacturer_ids" domain="[('id', 'in', allowed_manufacturer_ids)]" options="{'no_create': True}"/>
+                <field name="manufacturer_part_number_ids" domain="[('id', 'in', allowed_part_number_ids)]" options="{'no_create': True}"/>
+                <field name="manufacturing_date" column_invisible="parent.picking_type_code != 'incoming'"/>
+                <field name="warranty_info" column_invisible="parent.picking_type_code != 'incoming'"/>
+                <field name="expiry_date" column_invisible="parent.picking_type_code != 'incoming'"/>
+                <field name="ex_rate" column_invisible="parent.picking_type_code != 'incoming'"/>
+                <field name="tolerance_percent"
+                        string="Tolerance (%)"
+                        optional="show"
+                        column_invisible="parent.picking_type_code not in ('incoming','outgoing')"
+                        help="Allowed deviation from demanded quantity for this product."/>
+            </xpath>
+
+            <!-- Overwrite standard buttons -->
+            <xpath expr="//button[@name='action_confirm']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_cancel']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_validate'][1]" position="attributes">
+                <attribute name="invisible">state not in ('submitted', 'assigned')</attribute>
+                <attribute name="groups">silliconz_module.group_internal_transfer_manager,silliconz_module.group_delivery_manager,silliconz_module.group_grn_manager</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_validate'][hasclass('o_btn_validate')]" position="attributes">
+                <attribute name="invisible">state not in ('waiting', 'confirmed')</attribute>
+                <attribute name="groups">silliconz_module.group_internal_transfer_manager,silliconz_module.group_delivery_manager,silliconz_module.group_grn_manager</attribute>
+            </xpath>
+
+            <!-- Custom Workflow Buttons -->
+            <xpath expr="//header" position="inside">
+                <!-- Submit -->
+                <button name="action_submit" string="Submit" type="object" class="btn-primary" invisible="state != 'draft'" groups="silliconz_module.group_internal_transfer_user,silliconz_module.group_delivery_user,silliconz_module.group_grn_user,silliconz_module.group_internal_transfer_manager,silliconz_module.group_delivery_manager,silliconz_module.group_grn_manager" />
+            </xpath>
+
+            <!-- Change Statusbars -->
+            <xpath expr="//header/field[@name='state'][1]" position="attributes">
+                <attribute name="statusbar_visible">draft,submitted,assigned,done</attribute>
+            </xpath>
+            <xpath expr="//header/field[@name='state'][2]" position="attributes">
+                <attribute name="statusbar_visible">draft,submitted,assigned,done</attribute>
+            </xpath>
+            <!-- Hide the existing Note tab to prevent duplication -->
+            <xpath expr="//page[@name='note']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!-- Add the note field below the notebook, just like Sale/Purchase Orders -->
+            <xpath expr="//notebook" position="after">
+                <field name="note" placeholder="Terms and conditions..." nolabel="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

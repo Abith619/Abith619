@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="material_request_user_own_rule" model="ir.rule">
+            <field name="name">Material Request: User Own Records</field>
+            <field name="model_id" ref="silliconz_module.model_material_request"/>
+            <field name="groups" eval="[(4, ref('silliconz_module.group_material_request_user'))]"/>
+            <field name="domain_force">
+                [('requester_id', '=', user.id)]
+            </field>
+        </record>
+
+    </data>
+</odoo>

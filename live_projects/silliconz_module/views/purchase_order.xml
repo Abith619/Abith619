@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="purchase_order_form_inherit_silliconz"
+            model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit.silliconz</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="terms_id"/>
+                <field name="mo_reference"/>
+                <field name="purchase_request_id" readonly="1"/>
+                <field name="amendment_origin_id" readonly="1" invisible="not amendment_origin_id"/>
+    
+                <field name="reference_date" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='date_order']" position="after">
+                <field name="po_type"/>
+                <field name="billing_address_id"/>
+                <field name="shipping_address_id"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <!-- Submit for Approval : PO User — visible on RFQ stage -->
+                <button name="action_submit_po"
+                    string="Submit for Approval"
+                    type="object"
+                    class="btn-primary"
+                    groups="silliconz_module.group_purchase_order_salesperson"
+                    invisible="po_display_state != 'draft'"/>
+
+                <!-- Approve : PO Manager — calls native Send RFQ, visible on Submitted stage -->
+                <button name="action_rfq_send"
+                    string="Approve"
+                    type="object"
+                    class="btn-primary"
+                    context="{'send_rfq': True}"
+                    groups="silliconz_module.group_purchase_order_manager"
+                    invisible="po_display_state != 'submitted'"/>
+
+                <!-- Amendment button -->
+                <button name="action_amend_order"
+                    string="Amendment"
+                    type="object"
+                    class="btn-secondary"
+                    groups="silliconz_module.group_purchase_order_salesperson"
+                    invisible="po_display_state != 'purchase'"
+                />
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+
+                <button name="action_view_amendments"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-copy"
+                        groups="silliconz_module.group_sale_order_manager"
+                        invisible="amendment_count &lt;= 1">
+                    <field name="amendment_count"
+                            widget="statinfo"
+                            string="Amendments"/>
+                </button>
+
+
+            </xpath>
+
+            <xpath expr="//field[@name='note']" position="before">
+                <group>
+                    <field name="additional_comments"/>
+                    <field name="amount_in_words" readonly="1"/>
+                </group>
+            </xpath>
+
+            <!-- Additional Info and Manufacturer columns in PO line items -->
+            <xpath expr="//field[@name='order_line']/list//field[@name='product_qty']" position="after">
+                <field name="manufacturer_ids" string="Manufacturers"
+                                            domain="[('id', 'in', allowed_manufacturer_ids)]"
+                                            options="{'no_open': True, 'no_create_edit': True}"
+                                            />
+                <field name="manufacturer_part_number_ids" string="Part Numbers"
+                                            domain="[('id', 'in', allowed_part_number_ids)]"
+                                            context="{'default_product_tmpl_id': product_tmpl_id, 'default_manufacturer_id': manufacturer_ids}"
+                                            options="{'no_open': True, 'no_create_edit': True}"/>
+                <field name="product_tmpl_id" invisible="1"/>
+                <field name="additional_info" optional="show"/>
+                <field name="vendor_min_qty" string="Vendor MOQ" optional="show" readonly="1"/>
+            </xpath>
+
+            <!-- Replace native statusbar with our 4-stage statusbar -->
+            <xpath expr="//field[@name='state'][@widget='statusbar']" position="replace">
+                <field name="po_display_state" widget="statusbar"
+                       statusbar_visible="draft,submitted,sent,purchase"/>
+            </xpath>
+
+            <!-- Hide native "Confirm Order" (sent state) from PO Users -->
+            <xpath expr="//button[@id='bid_confirm']" position="attributes">
+                <attribute name="groups">silliconz_module.group_purchase_order_manager</attribute>
+                <attribute name="invisible">po_display_state != 'sent'</attribute>
+            </xpath>
+
+            <!-- Hide native "Confirm Order" (draft state) from PO Users -->
+            <xpath expr="//button[@id='draft_confirm']" position="attributes">
+                <attribute name="groups">silliconz_module.group_purchase_order_manager</attribute>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <!-- Hide native Send RFQ (draft state, oe_highlight) -->
+            <xpath expr="//button[@name='action_rfq_send'][@class='oe_highlight']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <!-- Hide native Send RFQ (sent state, no oe_highlight) -->
+            <xpath expr="//button[@name='action_rfq_send'][not(@class='oe_highlight')]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <!-- Cancel: only manager can cancel in RFQ or Submitted stage -->
+            <xpath expr="//button[@name='button_cancel']" position="attributes">
+                <attribute name="invisible">po_display_state in ('draft', 'submitted') and not is_po_manager</attribute>
+            </xpath>
+
+            <!-- Show submitted-by info in form body -->
+            <xpath expr="//field[@name='note']" position="before">
+                <field name="po_submitted_state" invisible="1"/>
+                <field name="po_display_state" invisible="1"/>
+                <field name="is_po_manager" invisible="1"/>
+                <group invisible="po_display_state != 'submitted'">
+                    <field name="po_submitted_by_id" readonly="1" string="Submitted By"/>
+                </group>
+            </xpath>
+
+
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ── Form View ───────────────────────────────────────────────── -->
+    <record id="view_vendor_application_form" model="ir.ui.view">
+        <field name="name">vendor.application.form</field>
+        <field name="model">vendor.application</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit"
+                        string="Submit"
+                        type="object"
+                        class="btn-primary"
+                        groups="silliconz_module.group_purchase_order_salesperson,silliconz_module.group_purchase_order_manager"
+                        invisible="stage != 'draft'"
+                    />
+                    <button name="action_approve"
+                        string="Approve"
+                        type="object"
+                        class="btn-success"
+                        groups="silliconz_module.group_purchase_order_manager"
+                        invisible="stage != 'waiting'"
+                    />
+                    <button name="action_reject"
+                        string="Reject"
+                        type="object"
+                        class="btn-danger"
+                        groups="silliconz_module.group_purchase_order_manager"
+                        invisible="stage != 'waiting'"
+                    />
+                    <button name="action_reset_draft"
+                        string="Reset to Draft"
+                        type="object"
+                        groups="silliconz_module.group_purchase_order_salesperson"
+                        invisible="stage != 'rejected'"
+                    />
+                    <field name="stage" widget="statusbar"
+                        statusbar_visible="draft,waiting,approved,rejected"
+                    />
+                </header>
+                <sheet>
+                    <!-- Smart button: link to created vendor -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_vendor"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-user"
+                            invisible="partner_id == False"
+                        >
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">View Vendor</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Applicant Name" context="{'res_partner_search_mode': 'supplier', 'show_vat': True}"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group string="Contact Info">
+                            <field name="email"/>
+                            <field name="phone"/>
+                            <field name="website"/>
+                            <field name="company_name"/>
+                        </group>
+                        <group string="Address">
+                            <field name="street"/>
+                            <field name="city"/>
+                            <field name="zip"/>
+                            <field name="country_id"/>
+                        </group>
+                        <group string="Onboarding">
+                            <field name="onboarding_date"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ── List View ───────────────────────────────────────────────── -->
+    <record id="view_vendor_application_list" model="ir.ui.view">
+        <field name="name">vendor.application.list</field>
+        <field name="model">vendor.application</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="company_name"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="stage"
+                    decoration-info="stage == 'draft'"
+                    decoration-warning="stage == 'waiting'"
+                    decoration-success="stage == 'approved'"
+                    decoration-danger="stage == 'rejected'"
+                    widget="badge"
+                />
+            </list>
+        </field>
+    </record>
+
+    <!-- ── Action ──────────────────────────────────────────────────── -->
+    <record id="action_vendor_application" model="ir.actions.act_window">
+        <field name="name">Vendor Applications</field>
+        <field name="res_model">vendor.application</field>
+        <field name="view_mode">list,form</field>
+    </record>    
+
+    <!-- Hide the default purchase Vendors menu -->
+    <record id="purchase.menu_procurement_management_supplier_name" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+
+</odoo>

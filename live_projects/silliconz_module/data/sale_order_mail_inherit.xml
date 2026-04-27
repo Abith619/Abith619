@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval="[('name', '=', 'email_template_edi_sale'), ('module', '=', 'sale')]"/>
+            </function>
+            <value eval="{'noupdate': False}"/>
+        </function>
+
+        <record id="sale.email_template_edi_sale" model="mail.template">
+            <field name="subject">Proposal for [${object.name}]</field>
+            <field name="body_html" type="html"><![CDATA[
+                <div style="font-size:13px;">
+                    Dear ${object.partner_id.name or 'Sir'},
+                    <br/><br/>
+                    Herewith attached the Proposal for <b>${object.name}</b>.
+                    <br/>
+                    We look forward to your PO and let us know for any clarifications, if required.
+                    <br/><br/>
+                    Thanks &amp; Regards,<br/>
+                    ${object.user_id.name or ''}<br/>
+                    Sales Executive<br/>
+                    Mobile: ${object.user_id.mobile or object.user_id.phone or ''}<br/>
+                    Siliconz Embedded Solutions
+                </div>
+            ]]></field>
+        </record>
+
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval="[('name', '=', 'email_template_edi_sale'), ('module', '=', 'sale')]"/>
+            </function>
+            <value eval="{'noupdate': True}"/>
+        </function>
+    </data>
+</odoo>

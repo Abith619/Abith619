@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         Wizard Form View
+    ══════════════════════════════════════════════════════════════ -->
+    <record id="view_bom_consolidated_report_wizard" model="ir.ui.view">
+        <field name="name">bom.consolidated.report.wizard.form</field>
+        <field name="model">bom.consolidated.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="All-FG BOM Consolidated Report">
+                <group string="Filters">
+                    <group>
+                        <field name="product_ids" widget="many2many_tags"
+                               options="{'no_create': True}"/>
+                        <field name="warehouse_id"/>
+                    </group>
+                    <group>
+                        <field name="mo_state"/>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_print_bom_pdf"
+                            string="Print PDF"
+                            type="object"
+                            class="btn-primary"/>
+                    <button name="action_print_bom_xlsx"
+                            string="Export Excel"
+                            type="object"
+                            class="btn-secondary"/>
+                    <button string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_bom_consolidated_report_wizard" model="ir.actions.act_window">
+        <field name="name">BOM Consolidated Report</field>
+        <field name="res_model">bom.consolidated.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_bom_consolidated_report_wizard"/>
+        <field name="binding_model_id" ref="mrp.model_mrp_production"/>
+        <field name="context">{}</field>
+    </record>
+
+</odoo>

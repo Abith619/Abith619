@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+        id="menu_atp_report"
+        name="ATP Report"
+        parent="stock.menu_warehouse_report"
+        action="silliconz_module.action_atp_report_wizard"
+        sequence="1"
+    />
+
+    <menuitem
+        id="menu_vendor_application"
+        name="Vendors"
+        action="action_vendor_application"
+        parent="purchase.menu_procurement_management"
+        sequence="5"
+    />
+
+    <menuitem id="menu_purchase_request_root"
+        name="Purchase Request"
+        sequence="30"
+    />
+
+    <menuitem id="menu_purchase_request"
+        name="Requests"
+        parent="menu_purchase_request_root"
+        action="action_purchase_request"
+        sequence="10"
+    />
+
+    <menuitem id="menu_material_request_root"
+        name="Material Request"
+        sequence="10"
+        groups="silliconz_module.group_material_request_user,silliconz_module.group_material_request_approver"
+    />
+
+    <menuitem id="menu_material_request"
+        name="Requests"
+        parent="menu_material_request_root"
+        action="action_material_request"
+        sequence="10"
+        groups="silliconz_module.group_material_request_user,silliconz_module.group_material_request_approver"
+    />
+
+    <menuitem
+        id="menu_bom_consolidated_reports"
+        name="BOM Consolidated Report"
+        parent="mrp.menu_mrp_reporting"
+        sequence="5"
+        action="silliconz_module.action_bom_consolidated_report_wizard"
+    />
+
+    <menuitem id="menu_customer_application"
+        name="Customers"
+        parent="sale.sale_order_menu"
+        action="action_customer_application"
+        sequence="15"
+        groups="sales_team.group_sale_salesman"
+    />
+
+    <menuitem id="menu_transporter_master"
+        name="Transporters"
+        parent="sale.menu_sale_config"
+        action="action_transporter_master"
+        sequence="20"
+        groups="silliconz_module.group_sale_order_manager"
+    />
+</odoo>

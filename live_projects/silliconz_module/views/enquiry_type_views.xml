@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- List View -->
+    <record id="view_crm_enquiry_type_list" model="ir.ui.view">
+        <field name="name">crm.enquiry.type.list</field>
+        <field name="model">crm.enquiry.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_crm_enquiry_type_form" model="ir.ui.view">
+        <field name="name">crm.enquiry.type.form</field>
+        <field name="model">crm.enquiry.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_crm_enquiry_type" model="ir.actions.act_window">
+        <field name="name">Enquiry Types</field>
+        <field name="res_model">crm.enquiry.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu Under CRM Configuration -->
+    <menuitem
+        id="menu_crm_enquiry_type"
+        name="Enquiry Types"
+        parent="crm.crm_menu_config"
+        action="action_crm_enquiry_type"
+        sequence="20"/>
+
+</odoo>

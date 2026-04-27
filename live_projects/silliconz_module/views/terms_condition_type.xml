@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ================= FORM VIEW ================= -->
+    <record id="view_terms_and_condition_form" model="ir.ui.view">
+        <field name="name">terms.and.condition.form</field>
+        <field name="model">terms.and.condition</field>
+        <field name="arch" type="xml">
+            <form string="Terms and Condition">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Terms Title" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Standard Sale Terms"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="type"/>
+                        </group>
+                        <group>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Conditions Description">
+                            <field name="content" placeholder="Enter terms and conditions content here..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- ================= LIST VIEW (Odoo 19) ================= -->
+    <record id="view_terms_and_condition_list" model="ir.ui.view">
+        <field name="name">terms.and.condition.list</field>
+        <field name="model">terms.and.condition</field>
+        <field name="arch" type="xml">
+            <list string="Terms and Conditions">
+                <field name="name"/>
+                <field name="type"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+
+    <!-- ================= SALES ACTION ================= -->
+    <!-- <record id="action_terms_and_condition_sale" model="ir.actions.act_window">
+        <field name="name">Terms and Conditions</field>
+        <field name="res_model">terms.and.condition</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('type','=','sale')]</field>
+        <field name="context">{'default_type':'sale'}</field>
+    </record>
+
+    <menuitem id="menu_terms_and_condition_sale"
+                name="Terms and Conditions"
+                parent="sale.menu_sale_config"
+                action="action_terms_and_condition_sale"
+                sequence="30"/> -->
+
+
+    <!-- ================= PURCHASE ACTION ================= -->
+    <record id="action_terms_and_condition_purchase" model="ir.actions.act_window">
+        <field name="name">Terms and Conditions</field>
+        <field name="res_model">terms.and.condition</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('type','=','purchase')]</field>
+        <field name="context">{'default_type':'purchase'}</field>
+    </record>
+
+    <menuitem id="menu_terms_and_condition_purchase"
+                name="Terms and Conditions"
+                parent="purchase.menu_purchase_config"
+                action="action_terms_and_condition_purchase"
+                sequence="30"/>
+
+    <record id="action_terms_and_condition_quotation" model="ir.actions.act_window">
+        <field name="name">Terms and Conditions</field>
+        <field name="res_model">terms.and.condition</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('type','=','quotation')]</field>
+        <field name="context">{'default_type':'quotation'}</field>
+    </record>
+    
+    <menuitem id="menu_terms_and_condition_quotation"
+                name="Terms and Conditions"
+                parent="sale.menu_sale_config"
+                action="action_terms_and_condition_quotation"
+                sequence="40"/>
+
+    <record id="action_terms_and_condition_general" model="ir.actions.act_window">
+        <field name="name">Terms and Conditions</field>
+        <field name="res_model">terms.and.condition</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('type','=','invoice')]</field>
+        <field name="context">{'default_type':'invoice'}</field>
+    </record>
+
+    <menuitem id="menu_terms_and_condition_general"
+                name="Terms and Conditions"
+                parent="account.menu_finance_configuration"
+                action="action_terms_and_condition_general"
+                sequence="30"/>
+
+
+    <record id ="action_terms_and_condition_delivery" model="ir.actions.act_window">
+        <field name="name">Terms and Conditions</field>
+        <field name="res_model">terms.and.condition</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('type','=','delivery')]</field>
+        <field name="context">{'default_type':'delivery'}</field>
+    </record>
+
+    <menuitem id="menu_terms_and_condition_delivery"
+                name="Terms and Conditions"
+                parent="stock.menu_stock_config_settings"
+                action="action_terms_and_condition_delivery"
+                sequence="30"/>
+
+</odoo>

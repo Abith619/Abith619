@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Create Custom Category -->
+    <record id="module_category_silliconz_sales" model="ir.module.category">
+        <field name="name">Silliconz Sales</field>
+        <field name="description">Custom Sales Approval Management</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Salesperson Group -->
+    <record id="group_sale_order_salesperson" model="res.groups">
+        <field name="name">Salesperson</field>
+        
+    </record>
+
+    <!-- Manager Group (Approver) -->
+    <record id="group_sale_order_manager" model="res.groups">
+        <field name="name">Sales Manager</field>
+        <field name="implied_ids" eval="[(4, ref('silliconz_module.group_sale_order_salesperson'))]"/>
+    </record>
+
+    <record id="account.group_account_manager" model="res.groups">
+        <field name="name">Invoice Creator</field>
+    </record>
+
+
+    <record id="group_material_request_user" model="res.groups">
+        <field name="name">Material Request User</field>
+    </record>
+
+    <record id="group_material_request_approver" model="res.groups">
+        <field name="name">Material Request Approver</field>
+        <field name="implied_ids" eval="[(4, ref('silliconz_module.group_material_request_user'))]"/>
+    </record>
+
+    <!-- Purchase Order Salesperson -->
+    <record id="group_purchase_order_salesperson" model="res.groups">
+        <field name="name">Purchase Order User</field>
+    </record>
+
+    <!-- Purchase Order Manager -->
+    <record id="group_purchase_order_manager" model="res.groups">
+        <field name="name">Purchase Order Manager</field>
+        <field name="implied_ids" eval="[(4, ref('silliconz_module.group_purchase_order_salesperson'))]"/>
+    </record>
+
+    <record id="group_purchase_request_user" model="res.groups">
+        <field name="name">Purchase Request User</field>
+    </record>
+
+    <record id="group_production_user" model="res.groups">
+        <field name="name">Production User</field>
+    </record>
+
+    <record id="group_purchase_request_manager" model="res.groups">
+        <field name="name">Purchase Request Manager</field>
+        <field name="implied_ids" eval="[(4, ref('silliconz_module.group_purchase_request_user'))]"/>
+    </record>
+
+    <record id="group_production_manager" model="res.groups">
+        <field name="name">Operations Manager</field>
+        <field name="implied_ids" eval="[(4, ref('silliconz_module.group_production_user'))]"/>
+    </record>
+
+    <!-- Transfer Groups -->
+    <record id="group_internal_transfer_user" model="res.groups">
+        <field name="name">Internal Transfer User</field>
+    </record>
+    <record id="group_internal_transfer_manager" model="res.groups">
+        <field name="name">Internal Transfer Manager</field>
+        <field name="implied_ids" eval="[(4, ref('silliconz_module.group_internal_transfer_user'))]"/>  
+    </record>
+
+    <record id="group_delivery_user" model="res.groups">
+        <field name="name">Delivery User</field>
+    </record>
+    <record id="group_delivery_manager" model="res.groups">
+        <field name="name">Delivery Manager</field>
+        <field name="implied_ids" eval="[(4, ref('silliconz_module.group_delivery_user'))]"/>
+    </record>
+
+    <record id="group_grn_user" model="res.groups">
+        <field name="name">GRN User</field>
+        <field name="implied_ids" eval="[(4, ref('account.group_account_readonly'))]"/>
+    </record>
+    <record id="group_grn_manager" model="res.groups">
+        <field name="name">GRN Manager</field>
+        <field name="implied_ids" eval="[(6, 0, [ref('account.group_account_readonly')])]"/>
+    </record>
+
+    <record id="rule_picking_type_access" model="ir.rule">
+        <field name="name">Restrict Pickings by Custom Roles</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            [
+                '|', ('picking_type_code', '=', False),
+                '|', ('id', '!=', False) if user.has_group('base.group_system') else ('id', '=', False),
+                ('picking_type_code', 'in', [
+                    'internal' if user.has_group('silliconz_module.group_internal_transfer_user') or user.has_group('silliconz_module.group_internal_transfer_manager') else 'NONE',
+                    'outgoing' if user.has_group('silliconz_module.group_delivery_user') or user.has_group('silliconz_module.group_delivery_manager') else 'NONE',
+                    'incoming' if user.has_group('silliconz_module.group_grn_user') or user.has_group('silliconz_module.group_grn_manager') else 'NONE',
+                ])
+            ]
+        </field>
+    </record>
+
+    <record id="rule_picking_type_card_access" model="ir.rule">
+        <field name="name">Restrict Dashboard Cards by Custom Roles</field>
+        <field name="model_id" ref="stock.model_stock_picking_type"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">
+            [
+                '|', ('id', '!=', False) if user.has_group('base.group_system') else ('id', '=', False),
+                ('code', 'in', [
+                    'internal' if user.has_group('silliconz_module.group_internal_transfer_user') or user.has_group('silliconz_module.group_internal_transfer_manager') else 'NONE',
+                    'outgoing' if user.has_group('silliconz_module.group_delivery_user') or user.has_group('silliconz_module.group_delivery_manager') else 'NONE',
+                    'incoming' if user.has_group('silliconz_module.group_grn_user') or user.has_group('silliconz_module.group_grn_manager') else 'NONE',
+                ])
+            ]
+        </field>
+    </record>
+
+    <record id="group_product_approval_user" model="res.groups">
+        <field name="name">Product Approval User</field>
+    </record>
+    <record id="group_product_approval_manager" model="res.groups">
+        <field name="name">Product Approval Manager</field>
+    </record>
+
+</odoo>
+

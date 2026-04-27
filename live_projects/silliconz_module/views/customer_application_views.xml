@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══════════════════════════════════════════════
+         FORM VIEW
+    ══════════════════════════════════════════════ -->
+    <record id="view_customer_application_form" model="ir.ui.view">
+        <field name="name">customer.application.form</field>
+        <field name="model">customer.application</field>
+        <field name="arch" type="xml">
+            <form string="Customer Application">
+
+                <header>
+                    <button name="action_submit"
+                            string="Submit for Approval"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_approve"
+                            string="Approve"
+                            type="object"
+                            class="btn-primary"
+                            groups="sales_team.group_sale_manager"
+                            invisible="state != 'submitted'"/>
+                    <button name="action_reject"
+                            string="Reject"
+                            type="object"
+                            class="btn-danger"
+                            groups="sales_team.group_sale_manager"
+                            invisible="state != 'submitted'"/>
+                    <button name="action_reset_draft"
+                            string="Reset to Draft"
+                            type="object"
+                            invisible="state != 'rejected'"/>
+                    <button name="action_open_partner"
+                            string="View Customer Record"
+                            type="object"
+                            class="btn-secondary"
+                            invisible="state != 'approved' or not partner_id"/>
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="draft,submitted,approved"/>
+                </header>
+
+                <sheet>
+                    <!-- Approved banner -->
+                    <div class="alert alert-success mb-0"
+                         role="alert"
+                         invisible="state != 'approved'">
+                        <strong>Approved.</strong>
+                        Customer record has been created in the system.
+                        <span invisible="not partner_id">
+                            Partner: <field name="partner_id" readonly="1" nolabel="1"/>
+                        </span>
+                    </div>
+
+                    <!-- Rejected banner -->
+                    <div class="alert alert-danger mb-0"
+                         role="alert"
+                         invisible="state != 'rejected'">
+                        <strong>Rejected.</strong>
+                        <span invisible="not rejection_reason">
+                            Reason: <field name="rejection_reason" readonly="1" nolabel="1"/>
+                        </span>
+                    </div>
+
+                    <widget name="web_ribbon"
+                            title="Waiting Approval"
+                            bg_color="text-bg-warning"
+                            invisible="state != 'submitted'"/>
+
+                    <div class="oe_title">
+                        <field name="company_type" widget="radio" options="{'horizontal': true}"/>
+                        <h1>
+                            <field name="name"
+                                   placeholder="Customer Name"
+                                   readonly="state in ('approved', 'rejected')"/>
+                        </h1>
+                        <field name="parent_id"
+                               invisible="company_type != 'person'"
+                               placeholder="Company"
+                               readonly="state in ('approved', 'rejected')"/>
+                    </div>
+
+                    <group>
+                        <group string="Address">
+                            <field name="street"
+                                   placeholder="Street..."
+                                   readonly="state in ('approved', 'rejected')"/>
+                            <field name="street2"
+                                   placeholder="Street 2..."
+                                   readonly="state in ('approved', 'rejected')"/>
+                            <field name="city"
+                                   placeholder="City"
+                                   readonly="state in ('approved', 'rejected')"/>
+                            <field name="state_id"
+                                   placeholder="State"
+                                   options="{'no_open': True}"
+                                   readonly="state in ('approved', 'rejected')"/>
+                            <field name="zip"
+                                   placeholder="ZIP"
+                                   readonly="state in ('approved', 'rejected')"/>
+                            <field name="country_id"
+                                   placeholder="Country"
+                                   options="{'no_open': True}"
+                                   readonly="state in ('approved', 'rejected')"/>
+                            <field name="phone"
+                                   readonly="state in ('approved', 'rejected')"/>
+                            <field name="mobile"
+                                   readonly="state in ('approved', 'rejected')"/>
+                            <field name="email"
+                                   readonly="state in ('approved', 'rejected')"/>
+                        </group>
+
+                        <group string="Business Information">
+                            <field name="vat"
+                                    string="GSTIN / Tax ID"
+                                    placeholder="e.g. 29ABCDE1234F1Z5"
+                                    readonly="state in ('approved', 'rejected')"/>
+                            <field name="website"
+                                    placeholder="http://www.example.com"
+                                    readonly="state in ('approved', 'rejected')"/>
+                            <field name="category_id"
+                                    widget="many2many_tags"
+                                    options="{'color_field': 'color', 'no_create_edit': True}"
+                                    placeholder='e.g. "B2B", "VIP"'
+                                    readonly="state in ('approved', 'rejected')"/>
+                            <field name="ref"
+                                    string="Internal Reference"
+                                    readonly="state in ('approved', 'rejected')"/>
+                            <field name="supply_type"
+                                    readonly="state in ('approved', 'rejected')"/>
+                            <field name="tax_applicability"
+                                    readonly="state in ('approved', 'rejected')"/>
+                            <field name="msme_acknowledgement"
+                                    readonly="state in ('approved', 'rejected')"/>
+                            <field name="rcm_acknowledgement"
+                                    readonly="state in ('approved', 'rejected')"/>
+                            <field name="onboarding_date" string="Onboarding Date" readonly="1"/>
+ 
+                        </group>
+                    </group>
+
+                    <!-- Single tab: Contacts only -->
+                    <notebook>
+                        <page string="Contacts" name="contacts_tab">
+                            <field name="contact_ids"
+                                   readonly="state in ('approved', 'rejected')">
+                                <list editable="bottom">
+                                    <field name="name" placeholder="Contact Name"/>
+                                    <field name="contact_type"/>
+                                    <field name="email" placeholder="email@example.com"/>
+                                    <field name="phone"/>
+                                    <field name="mobile"/>
+                                    <field name="function" placeholder="Job Position"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════
+         LIST VIEW
+    ══════════════════════════════════════════════ -->
+    <record id="view_customer_application_list" model="ir.ui.view">
+        <field name="name">customer.application.list</field>
+        <field name="model">customer.application</field>
+        <field name="arch" type="xml">
+            <list string="Customer Applications"
+                  decoration-info="state == 'draft'"
+                  decoration-warning="state == 'submitted'"
+                  decoration-success="state == 'approved'"
+                  decoration-danger="state == 'rejected'">
+                <field name="name"/>
+                <field name="company_type"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="country_id"/>
+                <field name="submitted_date" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'submitted'"
+                       decoration-success="state == 'approved'"
+                       decoration-danger="state == 'rejected'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════
+         SEARCH VIEW
+    ══════════════════════════════════════════════ -->
+    <record id="view_customer_application_search" model="ir.ui.view">
+        <field name="name">customer.application.search</field>
+        <field name="model">customer.application</field>
+        <field name="arch" type="xml">
+            <search string="Customer Applications">
+                <field name="name"/>
+                <field name="email"/>
+                <field name="vat"/>
+                <separator/>
+                <filter string="Draft"
+                        name="draft"
+                        domain="[('state','=','draft')]"/>
+                <filter string="Waiting Approval"
+                        name="submitted"
+                        domain="[('state','=','submitted')]"/>
+                <filter string="Approved"
+                        name="approved"
+                        domain="[('state','=','approved')]"/>
+                <filter string="Rejected"
+                        name="rejected"
+                        domain="[('state','=','rejected')]"/>
+                <separator/>
+                <filter string="Group by Status"
+                        name="group_state"
+                        context="{'group_by': 'state'}"/>
+                <filter string="Group by Country"
+                        name="group_country"
+                        context="{'group_by': 'country_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════
+         KANBAN VIEW
+    ══════════════════════════════════════════════ -->
+    <record id="view_customer_application_kanban" model="ir.ui.view">
+        <field name="name">customer.application.kanban</field>
+        <field name="model">customer.application</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="name"/>
+                <field name="state"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="company_type"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div t-if="record.email.value" class="mt-1">
+                                <i class="fa fa-envelope me-1"/>
+                                <field name="email"/>
+                            </div>
+                            <div t-if="record.phone.value">
+                                <i class="fa fa-phone me-1"/>
+                                <field name="phone"/>
+                            </div>
+                            <div class="d-flex justify-content-between mt-2">
+                                <field name="state" widget="badge"
+                                       decoration-info="state == 'draft'"
+                                       decoration-warning="state == 'submitted'"
+                                       decoration-success="state == 'approved'"
+                                       decoration-danger="state == 'rejected'"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════
+         WINDOW ACTION
+    ══════════════════════════════════════════════ -->
+    <record id="action_customer_application" model="ir.actions.act_window">
+        <field name="name">Customers</field>
+        <field name="res_model">customer.application</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="view_customer_application_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first customer application!
+            </p>
+            <p>
+                Submit customer applications for approval. Once approved,
+                the customer will be created automatically in the system.
+            </p>
+        </field>
+    </record>
+
+    <!-- ══════════════════════════════════════════════
+         REJECTION WIZARD FORM VIEW
+    ══════════════════════════════════════════════ -->
+    <record id="view_customer_application_reject_wizard_form" model="ir.ui.view">
+        <field name="name">customer.application.reject.wizard.form</field>
+        <field name="model">customer.application.reject.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Reject Application">
+                <group>
+                    <field name="application_id" readonly="1"/>
+                    <field name="reason"
+                           placeholder="Enter the reason for rejection..."
+                           required="1"/>
+                </group>
+                <footer>
+                    <button name="action_confirm_reject"
+                            string="Confirm Rejection"
+                            type="object"
+                            class="btn-danger"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="sale.res_partner_menu" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+
+</odoo>
